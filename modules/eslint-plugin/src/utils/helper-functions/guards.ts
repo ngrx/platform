@@ -47,7 +47,7 @@ export const isTSInstantiationExpression = isNodeOfType(
 );
 export const isProperty = isNodeOfType(AST_NODE_TYPES.Property);
 export const isArrayExpression = isNodeOfType(AST_NODE_TYPES.ArrayExpression);
-
+export const isBlockStatement = isNodeOfType(AST_NODE_TYPES.BlockStatement);
 export function isIdentifierOrMemberExpression(
   node: TSESTree.Node
 ): node is TSESTree.Identifier | TSESTree.MemberExpression {

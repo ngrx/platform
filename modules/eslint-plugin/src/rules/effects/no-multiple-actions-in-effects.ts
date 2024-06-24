@@ -7,8 +7,9 @@ import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
   createEffectExpression,
-  mapLikeOperatorsExplicitReturn,
-  mapLikeOperatorsImplicitReturn,
+  isBlockStatement,
+  isReturnStatement,
+  mapLikeOperatorCallExpressions,
 } from '../../utils';
 
 export const messageId = 'noMultipleActionsInEffects';
@@ -18,6 +19,7 @@ type Options = readonly unknown[];
 type EffectsMapLikeOperatorsReturn =
   | TSESTree.ArrowFunctionExpression
   | TSESTree.CallExpression
+  | TSESTree.FunctionExpression
   | TSESTree.ReturnStatement;
 
 export default createRule<Options, MessageIds>({
@@ -37,7 +39,7 @@ export default createRule<Options, MessageIds>({
   defaultOptions: [],
   create: (context) => {
     return {
-      [`${createEffectExpression} :matches(${mapLikeOperatorsImplicitReturn}, ${mapLikeOperatorsExplicitReturn})`](
+      [`${createEffectExpression} ${mapLikeOperatorCallExpressions}`](
         node: EffectsMapLikeOperatorsReturn
       ) {
         const nodeToReport = getNodeToReport(node);
@@ -71,10 +73,20 @@ export default createRule<Options, MessageIds>({
 function getNodeToReport(node: EffectsMapLikeOperatorsReturn) {
   switch (node.type) {
     case AST_NODE_TYPES.ArrowFunctionExpression:
-      return node.body;
+    case AST_NODE_TYPES.FunctionExpression:
+      return isBlockStatement(node.body)
+        ? findReturnStatement(node.body.body)
+        : node.body;
     case AST_NODE_TYPES.CallExpression:
-      return node.arguments[0];
+      return findReturnStatement(node.arguments) ?? node.arguments[0];
     default:
       return node.argument;
   }
+}
+
+function findReturnStatement(nodes: TSESTree.Node[]) {
+  const returnNode = nodes.find((n): n is TSESTree.ReturnStatement =>
+    isReturnStatement(n)
+  );
+  return returnNode?.argument;
 }

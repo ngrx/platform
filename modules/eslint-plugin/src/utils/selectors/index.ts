@@ -78,7 +78,5 @@ export const actionReducerMap = `VariableDeclarator[id.typeAnnotation.typeAnnota
 
 const mapLikeOperators = '/^(concat|exhaust|flat|merge|switch)Map$/';
 const mapLikeToOperators = '/^(concat|merge|switch)MapTo$/';
-export const mapLikeOperatorsExplicitReturn =
-  `CallExpression[callee.name=${mapLikeOperators}] ReturnStatement` as const;
-export const mapLikeOperatorsImplicitReturn =
-  `:matches(CallExpression[callee.name=${mapLikeToOperators}], CallExpression[callee.name=${mapLikeOperators}] > ArrowFunctionExpression)` as const;
+export const mapLikeOperatorCallExpressions =
+  `:matches(CallExpression[callee.name=${mapLikeToOperators}], CallExpression[callee.name=${mapLikeOperators}] > :matches(ReturnStatement,ArrowFunctionExpression,FunctionExpression))` as const;
