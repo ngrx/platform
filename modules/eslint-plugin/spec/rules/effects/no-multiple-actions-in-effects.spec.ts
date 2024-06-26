@@ -85,7 +85,7 @@ export const saveSearchCriteria$ = createEffect(
               return of(SearchCriteriaActions.saveAlreadyExists({ searchCriteriaName, tags }));
             }
 
-            return defaultErrorHadnler(error, 'inventoryDomain.messages.saveSearchFailed', SearchCriteriaActions.saveFailed());
+            return defaultErrorHandler(error, 'inventoryDomain.messages.saveSearchFailed', SearchCriteriaActions.saveFailed());
           })
         );
       })
