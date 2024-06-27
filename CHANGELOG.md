@@ -1,3 +1,22 @@
+<a name="18.0.1"></a>
+
+## [18.0.1](https://github.com/ngrx/platform/compare/18.0.0...18.0.1) (2024-06-27)
+
+### Bug Fixes
+
+- **component-store:** resolve issues in migration script to v18 ([#4403](https://github.com/ngrx/platform/issues/4403)) ([a15d53e](https://github.com/ngrx/platform/commit/a15d53e))
+- **effects:** fix bugs in migration script to v18 ([#4402](https://github.com/ngrx/platform/issues/4402)) ([6ae4723](https://github.com/ngrx/platform/commit/6ae4723))
+- **eslint-plugin:** only take return statement into account with no-multiple-actions-in-effects ([#4410](https://github.com/ngrx/platform/issues/4410)) ([c9c646c](https://github.com/ngrx/platform/commit/c9c646c)), closes [#4409](https://github.com/ngrx/platform/issues/4409)
+
+### Features
+
+- **signals:** rename signals to computed when defining custom features with input ([#4395](https://github.com/ngrx/platform/issues/4395)) ([05f0940](https://github.com/ngrx/platform/commit/05f0940)), closes [#4391](https://github.com/ngrx/platform/issues/4391)
+- **signals:** replace `idKey` with `selectId` when defining custom entity ID ([#4396](https://github.com/ngrx/platform/issues/4396)) ([67a5a93](https://github.com/ngrx/platform/commit/67a5a93)), closes [#4217](https://github.com/ngrx/platform/issues/4217) [#4392](https://github.com/ngrx/platform/issues/4392)
+
+<a name="18.0.1"></a>
+
+## [18.0.1](https://github.com/ngrx/platform/compare/18.0.0...18.0.1) (2024-06-27)
+
 <a name="18.0.0"></a>
 
 # [18.0.0](https://github.com/ngrx/platform/compare/18.0.0-rc.1...18.0.0) (2024-06-13)
