@@ -1,5 +1,5 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
-import { addEntities, withEntities } from '../../src';
+import { addEntities, entityConfig, withEntities } from '../../src';
 import { Todo, todo1, todo2, todo3, User, user1, user2, user3 } from '../mocks';
 import { selectTodoId as selectId } from '../helpers';
 
@@ -205,18 +205,18 @@ describe('addEntities', () => {
   });
 
   it('does not add entities with a custom id to the specified collection if they already exist', () => {
-    const todoMeta = {
+    const todoConfig = entityConfig({
       entity: type<Todo>(),
       collection: 'todo',
       selectId,
-    } as const;
+    });
 
-    const Store = signalStore(withEntities(todoMeta));
+    const Store = signalStore(withEntities(todoConfig));
     const store = new Store();
 
     patchState(
       store,
-      addEntities([todo2, { ...todo2, text: 'NgRx' }, todo3, todo2], todoMeta)
+      addEntities([todo2, { ...todo2, text: 'NgRx' }, todo3, todo2], todoConfig)
     );
 
     const todoEntityMap = store.todoEntityMap();
@@ -225,8 +225,8 @@ describe('addEntities', () => {
 
     patchState(
       store,
-      addEntities([] as Todo[], todoMeta),
-      addEntities([todo3, todo2, { ...todo3, text: 'NgRx' }], todoMeta)
+      addEntities([] as Todo[], todoConfig),
+      addEntities([todo3, todo2, { ...todo3, text: 'NgRx' }], todoConfig)
     );
 
     expect(store.todoEntityMap()).toBe(todoEntityMap);
@@ -238,8 +238,8 @@ describe('addEntities', () => {
 
     patchState(
       store,
-      addEntities([todo1, todo2, todo3], todoMeta),
-      addEntities([todo2, todo3, todo1], todoMeta)
+      addEntities([todo1, todo2, todo3], todoConfig),
+      addEntities([todo2, todo3, todo1], todoConfig)
     );
 
     expect(store.todoEntityMap()).toEqual({ y: todo2, z: todo3, x: todo1 });

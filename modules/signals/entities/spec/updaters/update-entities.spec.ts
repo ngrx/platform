@@ -1,5 +1,10 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
-import { addEntities, updateEntities, withEntities } from '../../src';
+import {
+  addEntities,
+  entityConfig,
+  updateEntities,
+  withEntities,
+} from '../../src';
 import { Todo, todo1, todo2, todo3, User, user1, user2, user3 } from '../mocks';
 import { selectTodoId } from '../helpers';
 
@@ -100,15 +105,15 @@ describe('updateEntities', () => {
   });
 
   it('updates entities by ids from specified collection', () => {
-    const userMeta = {
+    const userConfig = entityConfig({
       entity: type<User>(),
       collection: 'users',
-    } as const;
+    });
 
-    const Store = signalStore(withEntities(userMeta));
+    const Store = signalStore(withEntities(userConfig));
     const store = new Store();
 
-    patchState(store, addEntities([user1, user2, user3], userMeta));
+    patchState(store, addEntities([user1, user2, user3], userConfig));
     patchState(
       store,
       updateEntities(
@@ -116,14 +121,14 @@ describe('updateEntities', () => {
           ids: [user1.id, user2.id, 20, 30],
           changes: { lastName: 'Hendrix' },
         },
-        userMeta
+        userConfig
       ),
       updateEntities(
         {
           ids: [user1.id, user3.id],
           changes: ({ id }) => ({ firstName: `Jimmy${id}` }),
         },
-        userMeta
+        userConfig
       )
     );
 
@@ -141,30 +146,30 @@ describe('updateEntities', () => {
   });
 
   it('updates entities by predicate from specified collection', () => {
-    const userMeta = {
+    const userConfig = entityConfig({
       entity: type<User>(),
       collection: 'users',
-    } as const;
+    });
 
-    const Store = signalStore(withEntities(userMeta));
+    const Store = signalStore(withEntities(userConfig));
     const store = new Store();
 
     patchState(
       store,
-      addEntities([user1, user2, user3], userMeta),
+      addEntities([user1, user2, user3], userConfig),
       updateEntities(
         {
           predicate: ({ id }) => id < 3,
           changes: { lastName: 'Hendrix' },
         },
-        userMeta
+        userConfig
       ),
       updateEntities(
         {
           predicate: ({ id }) => id > 2,
           changes: ({ id }) => ({ firstName: `Jimmy${id}` }),
         },
-        userMeta
+        userConfig
       )
     );
 
@@ -182,16 +187,16 @@ describe('updateEntities', () => {
   });
 
   it('does not modify entity state if entities do not exist in specified collection', () => {
-    const todoMeta = {
+    const todoConfig = entityConfig({
       entity: type<Todo>(),
       collection: 'todo',
-      selectId: selectTodoId,
-    } as const;
+      selectId: (todo) => todo._id,
+    });
 
-    const Store = signalStore(withEntities(todoMeta));
+    const Store = signalStore(withEntities(todoConfig));
     const store = new Store();
 
-    patchState(store, addEntities([todo1, todo2, todo3], todoMeta));
+    patchState(store, addEntities([todo1, todo2, todo3], todoConfig));
 
     const todoEntityMap = store.todoEntityMap();
     const todoIds = store.todoIds();
@@ -204,14 +209,14 @@ describe('updateEntities', () => {
           ids: ['a', 'b'],
           changes: { completed: false },
         },
-        todoMeta
+        todoConfig
       ),
       updateEntities(
         {
           predicate: (todo) => todo.text === 'NgRx',
           changes: ({ text }) => ({ text: `Don't ${text}` }),
         },
-        todoMeta
+        todoConfig
       )
     );
 

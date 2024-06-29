@@ -1,5 +1,5 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
-import { setAllEntities, withEntities } from '../../src';
+import { entityConfig, setAllEntities, withEntities } from '../../src';
 import { Todo, todo1, todo2, todo3, User, user1, user2, user3 } from '../mocks';
 import { selectTodoId as selectId } from '../helpers';
 
@@ -82,28 +82,28 @@ describe('setAllEntities', () => {
   });
 
   it('replaces specified entity collection with provided entities with a custom id', () => {
-    const todoMeta = {
+    const todoConfig = entityConfig({
       entity: type<Todo>(),
       collection: 'todo',
       selectId,
-    } as const;
+    });
 
-    const Store = signalStore(withEntities(todoMeta));
+    const Store = signalStore(withEntities(todoConfig));
     const store = new Store();
 
-    patchState(store, setAllEntities([todo1, todo3], todoMeta));
+    patchState(store, setAllEntities([todo1, todo3], todoConfig));
 
     expect(store.todoEntityMap()).toEqual({ x: todo1, z: todo3 });
     expect(store.todoIds()).toEqual(['x', 'z']);
     expect(store.todoEntities()).toEqual([todo1, todo3]);
 
-    patchState(store, setAllEntities([todo3, todo2, todo1], todoMeta));
+    patchState(store, setAllEntities([todo3, todo2, todo1], todoConfig));
 
     expect(store.todoEntityMap()).toEqual({ z: todo3, y: todo2, x: todo1 });
     expect(store.todoIds()).toEqual(['z', 'y', 'x']);
     expect(store.todoEntities()).toEqual([todo3, todo2, todo1]);
 
-    patchState(store, setAllEntities([] as Todo[], todoMeta));
+    patchState(store, setAllEntities([] as Todo[], todoConfig));
 
     expect(store.todoEntityMap()).toEqual({});
     expect(store.todoIds()).toEqual([]);

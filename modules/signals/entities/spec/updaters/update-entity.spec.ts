@@ -1,5 +1,10 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
-import { addEntities, updateEntity, withEntities } from '../../src';
+import {
+  addEntities,
+  entityConfig,
+  updateEntity,
+  withEntities,
+} from '../../src';
 import { Todo, todo1, todo2, todo3, User, user1, user2, user3 } from '../mocks';
 import { selectTodoId } from '../helpers';
 
@@ -55,15 +60,15 @@ describe('updateEntity', () => {
   });
 
   it('does not modify entity state if entity do not exist', () => {
-    const todoMeta = {
+    const todoConfig = entityConfig({
       entity: type<Todo>(),
       selectId: selectTodoId,
-    } as const;
+    });
 
-    const Store = signalStore(withEntities(todoMeta));
+    const Store = signalStore(withEntities(todoConfig));
     const store = new Store();
 
-    patchState(store, addEntities([todo2, todo3], todoMeta));
+    patchState(store, addEntities([todo2, todo3], todoConfig));
 
     const entityMap = store.entityMap();
     const ids = store.ids();
@@ -132,15 +137,16 @@ describe('updateEntity', () => {
   });
 
   it('does not modify entity state if entity do not exist in specified collection', () => {
-    const userMeta = {
+    const userConfig = entityConfig({
       entity: type<User>(),
       collection: 'user',
-    } as const;
+      selectId: (user) => user.id,
+    });
 
-    const Store = signalStore(withEntities(userMeta));
+    const Store = signalStore(withEntities(userConfig));
     const store = new Store();
 
-    patchState(store, addEntities([user1, user2, user3], userMeta));
+    patchState(store, addEntities([user1, user2, user3], userConfig));
 
     const userEntityMap = store.userEntityMap();
     const userEntities = store.userEntities();
@@ -148,13 +154,13 @@ describe('updateEntity', () => {
 
     patchState(
       store,
-      updateEntity({ id: 10, changes: { firstName: '' } }, userMeta),
+      updateEntity({ id: 10, changes: { firstName: '' } }, userConfig),
       updateEntity(
         {
           id: 100,
           changes: ({ id, lastName }) => ({ lastName: `${lastName}${id}` }),
         },
-        userMeta
+        userConfig
       )
     );
 

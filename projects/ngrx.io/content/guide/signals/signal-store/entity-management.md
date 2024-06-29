@@ -340,6 +340,36 @@ const Store = signalStore(
 
 Try to avoid multiple entity types in one store. It is better to have multiple stores, each with a single entity type.
 
+---
+
+To avoid repetitive code, it's recommended to use the `entityConfig` function when defining a custom entity configuration:
+
+```typescript
+const todoConfig = entityConfig({
+  entity: type<Todo>(),
+  collection: 'todo',
+  selectId: (todo) => todo.key,
+});
+
+const userConfig = entityConfig({
+  entity: type<User>(),
+  collection: 'user',
+});
+
+const Store = signalStore(
+  withEntities(todoConfig),
+  withEntities(userConfig),
+  withMethods((store) => ({
+    addTodo(todo: Todo): void {
+      patchState(store, addEntity(todo, todoConfig));
+    },
+    addUser(user: User): void {
+      patchState(store, addEntity(user, userConfig));
+    },
+  }))
+);
+```
+
 ## Extending and Integrating
 
 You will usually want to persist your entities to a backend. Therefore, you must additionally implement `withMethods` and add the necessary methods.

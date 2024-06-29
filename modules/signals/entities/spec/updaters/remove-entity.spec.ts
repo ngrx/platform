@@ -1,5 +1,10 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
-import { addEntities, removeEntity, withEntities } from '../../src';
+import {
+  addEntities,
+  entityConfig,
+  removeEntity,
+  withEntities,
+} from '../../src';
 import { Todo, todo1, todo2, todo3, User, user1, user2 } from '../mocks';
 import { selectTodoId } from '../helpers';
 
@@ -37,26 +42,26 @@ describe('removeEntity', () => {
   });
 
   it('removes entity from specified collection', () => {
-    const todoMeta = {
+    const todoConfig = entityConfig({
       entity: type<Todo>(),
       collection: 'todo',
       selectId: selectTodoId,
-    } as const;
+    });
 
-    const Store = signalStore(withEntities(todoMeta));
+    const Store = signalStore(withEntities(todoConfig));
     const store = new Store();
 
     patchState(
       store,
-      addEntities([todo1, todo2, todo3], todoMeta),
-      removeEntity(todo1._id, todoMeta)
+      addEntities([todo1, todo2, todo3], todoConfig),
+      removeEntity(todo1._id, todoConfig)
     );
 
     expect(store.todoEntityMap()).toEqual({ y: todo2, z: todo3 });
     expect(store.todoIds()).toEqual(['y', 'z']);
     expect(store.todoEntities()).toEqual([todo2, todo3]);
 
-    patchState(store, removeEntity(todo2._id, todoMeta));
+    patchState(store, removeEntity(todo2._id, todoConfig));
 
     expect(store.todoEntityMap()).toEqual({ z: todo3 });
     expect(store.todoIds()).toEqual(['z']);
