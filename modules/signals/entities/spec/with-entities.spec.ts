@@ -1,6 +1,6 @@
 import { isSignal } from '@angular/core';
 import { patchState, signalStore, type } from '@ngrx/signals';
-import { addEntities, withEntities } from '../src';
+import { addEntities, entityConfig, withEntities } from '../src';
 import { Todo, todo2, todo3, User, user1, user2 } from './mocks';
 import { selectTodoId } from './helpers';
 
@@ -48,13 +48,13 @@ describe('withEntities', () => {
   });
 
   it('combines multiple entity features', () => {
-    const todoMeta = {
+    const todoConfig = entityConfig({
       entity: type<Todo>(),
       collection: 'todo',
       selectId: selectTodoId,
-    } as const;
+    });
 
-    const Store = signalStore(withEntities<User>(), withEntities(todoMeta));
+    const Store = signalStore(withEntities<User>(), withEntities(todoConfig));
     const store = new Store();
 
     expect(isSignal(store.entityMap)).toBe(true);
@@ -75,7 +75,7 @@ describe('withEntities', () => {
     patchState(
       store,
       addEntities([user2, user1]),
-      addEntities([todo2, todo3], todoMeta)
+      addEntities([todo2, todo3], todoConfig)
     );
 
     expect(store.entityMap()).toEqual({ 2: user2, 1: user1 });

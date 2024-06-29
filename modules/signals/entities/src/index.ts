@@ -10,6 +10,7 @@ export { updateEntity } from './updaters/update-entity';
 export { updateEntities } from './updaters/update-entities';
 export { updateAllEntities } from './updaters/update-all-entities';
 
+export { entityConfig } from './entity-config';
 export {
   EntityId,
   EntityMap,
