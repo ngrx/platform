@@ -217,9 +217,9 @@ patchState(this.todoStore, removeEntities([2, 4]));
 
 The default property name for an identifier is `id` and is of type `string` or `number`.
 
-It is possible to specify a custom ID selector, but the return type must still be a `string` or `number`. Custom ID selectors should be provided when adding or setting an entity. It is not possible to define it via `withEntities`.
+It is possible to specify a custom ID selector, but the return type must still be a `string` or `number`. Custom ID selectors should be provided when adding, setting, or updating an entity. It is not possible to define it via `withEntities`.
 
-Therefore, all variations of the `add*` and `set*` functions have an optional (last) parameter, which is an object literal that allows to specify the `selectId` function.
+Therefore, all variations of the `add*`, `set*`, and `update*` functions have an optional (last) parameter, which is a config object that allows to specify the `selectId` function.
 
 For example:
 
@@ -244,9 +244,11 @@ patchState(
 );
 
 patchState(this.todoStore, setEntity({ key: 4, name: 'Dog Feeding', finished: false }, { selectId }));
+
+patchState(this.todoStore, updateAllEntities({ finished: true }, { selectId }));
 ```
 
-The `update*` and `remove*` methods, which expect an id value, automatically pick the right one. That is possible because every entity belongs to a map with its id as the key.
+The `remove*` methods, which expect an id value, automatically pick the right one. That is possible because every entity belongs to a map with its id as the key.
 
 Theoretically, adding the same entity twice with different id names would be possible. For obvious reasons, we discourage you from doing that.
 

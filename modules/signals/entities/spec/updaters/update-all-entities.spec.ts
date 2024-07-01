@@ -51,8 +51,10 @@ describe('updateAllEntities', () => {
 
     patchState(
       store,
-      updateAllEntities({ text: '' }),
-      updateAllEntities((todo) => ({ completed: !todo.completed }))
+      updateAllEntities({ text: '' }, { selectId: (todo) => todo._id }),
+      updateAllEntities((todo) => ({ completed: !todo.completed }), {
+        selectId: (todo) => todo._id,
+      })
     );
 
     expect(store.entityMap()).toBe(entityMap);
@@ -79,7 +81,13 @@ describe('updateAllEntities', () => {
         collection: 'todo',
         selectId: selectTodoId,
       }),
-      updateAllEntities({ completed: false }, { collection: 'todo' })
+      updateAllEntities(
+        { completed: false },
+        {
+          collection: 'todo',
+          selectId: (todo) => todo._id,
+        }
+      )
     );
 
     expect(store.todoEntityMap()).toEqual({
@@ -98,6 +106,7 @@ describe('updateAllEntities', () => {
       store,
       updateAllEntities(({ completed }) => ({ completed: !completed }), {
         collection: 'todo',
+        selectId: (todo) => todo._id,
       })
     );
 

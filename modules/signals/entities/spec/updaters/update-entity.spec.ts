@@ -76,14 +76,20 @@ describe('updateEntity', () => {
 
     patchState(
       store,
-      updateEntity({
-        id: todo1._id,
-        changes: { text: '' },
-      }),
-      updateEntity({
-        id: 'a',
-        changes: ({ completed }) => ({ completed: !completed }),
-      })
+      updateEntity(
+        {
+          id: todo1._id,
+          changes: { text: '' },
+        },
+        todoConfig
+      ),
+      updateEntity(
+        {
+          id: 'a',
+          changes: ({ completed }) => ({ completed: !completed }),
+        },
+        todoConfig
+      )
     );
 
     expect(store.entityMap()).toBe(entityMap);
@@ -112,14 +118,14 @@ describe('updateEntity', () => {
       }),
       updateEntity(
         { id: todo1._id, changes: { text: '' } },
-        { collection: 'todo' }
+        { collection: 'todo', selectId: selectTodoId }
       ),
       updateEntity(
         {
           id: todo2._id,
           changes: ({ completed }) => ({ completed: !completed }),
         },
-        { collection: 'todo' }
+        { collection: 'todo', selectId: (todo) => todo._id }
       )
     );
 
@@ -171,5 +177,154 @@ describe('updateEntity', () => {
     expect(store.userEntityMap()).toEqual({ 1: user1, 2: user2, 3: user3 });
     expect(store.userIds()).toEqual([1, 2, 3]);
     expect(store.userEntities()).toEqual([user1, user2, user3]);
+  });
+
+  it('updates an entity id', () => {
+    const Store = signalStore(withEntities<User>());
+    const store = new Store();
+
+    patchState(
+      store,
+      addEntities([user1, user2, user3]),
+      updateEntity({
+        id: user1.id,
+        changes: ({ id }) => ({ id: id + 10 }),
+      })
+    );
+
+    expect(store.entityMap()).toEqual({
+      11: { ...user1, id: 11 },
+      2: user2,
+      3: user3,
+    });
+    expect(store.ids()).toEqual([11, 2, 3]);
+    expect(store.entities()).toEqual([{ ...user1, id: 11 }, user2, user3]);
+
+    patchState(
+      store,
+      updateEntity({
+        id: 11,
+        changes: { id: 101, firstName: 'Jimmy1' },
+      }),
+      updateEntity({
+        id: user3.id,
+        changes: ({ id }) => ({ id: 303, firstName: `Stevie${id}` }),
+      })
+    );
+
+    expect(store.entityMap()).toEqual({
+      101: { ...user1, id: 101, firstName: 'Jimmy1' },
+      2: user2,
+      303: { ...user3, id: 303, firstName: 'Stevie3' },
+    });
+    expect(store.ids()).toEqual([101, 2, 303]);
+  });
+
+  it('updates a custom entity id', () => {
+    const Store = signalStore(withEntities<Todo>());
+    const store = new Store();
+
+    patchState(
+      store,
+      addEntities([todo1, todo2, todo3], {
+        selectId: (todo) => todo._id,
+      }),
+      updateEntity(
+        {
+          id: todo2._id,
+          changes: ({ _id, text }) => ({ _id: _id + 200, text: `${text} 200` }),
+        },
+        { selectId: (todo) => todo._id }
+      ),
+      updateEntity(
+        {
+          id: todo3._id,
+          changes: { _id: 'z300', text: 'Todo 300' },
+        },
+        { selectId: (todo) => todo._id }
+      )
+    );
+
+    expect(store.entityMap()).toEqual({
+      x: todo1,
+      y200: { ...todo2, _id: 'y200', text: 'Buy eggs 200' },
+      z300: { ...todo3, _id: 'z300', text: 'Todo 300' },
+    });
+    expect(store.ids()).toEqual(['x', 'y200', 'z300']);
+  });
+
+  it('updates an entity id from specified entity collection', () => {
+    const Store = signalStore(
+      withEntities({
+        entity: type<User>(),
+        collection: 'user',
+      })
+    );
+    const store = new Store();
+
+    patchState(
+      store,
+      addEntities([user1, user2, user3], { collection: 'user' }),
+      updateEntity(
+        {
+          id: user1.id,
+          changes: ({ id }) => ({ id: id + 100, firstName: 'Jimi' }),
+        },
+        { collection: 'user' }
+      ),
+      updateEntity(
+        {
+          id: user2.id,
+          changes: { id: 202, lastName: 'Hendrix' },
+        },
+        { collection: 'user' }
+      )
+    );
+
+    expect(store.userEntityMap()).toEqual({
+      101: { ...user1, id: 101, firstName: 'Jimi' },
+      202: { ...user2, id: 202, lastName: 'Hendrix' },
+      3: user3,
+    });
+    expect(store.userIds()).toEqual([101, 202, 3]);
+  });
+
+  it('updates a custom entity id from specified entity collection', () => {
+    const Store = signalStore(
+      withEntities({
+        entity: type<Todo>(),
+        collection: 'todo',
+      })
+    );
+    const store = new Store();
+
+    patchState(
+      store,
+      addEntities([todo1, todo2, todo3], {
+        collection: 'todo',
+        selectId: (todo) => todo._id,
+      }),
+      updateEntity(
+        {
+          id: todo2._id,
+          changes: ({ _id }) => ({ _id: `${_id}200`, text: 'Todo 200' }),
+        },
+        { collection: 'todo', selectId: (todo) => todo._id }
+      ),
+      updateEntity(
+        {
+          id: todo3._id,
+          changes: { _id: '303' },
+        },
+        { collection: 'todo', selectId: (todo) => todo._id }
+      )
+    );
+
+    expect(store.todoEntityMap()).toEqual({
+      x: todo1,
+      y200: { ...todo2, _id: 'y200', text: 'Todo 200' },
+      303: { ...todo3, _id: '303' },
+    });
+    expect(store.todoIds()).toEqual(['x', 'y200', '303']);
   });
 });
