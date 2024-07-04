@@ -11,3 +11,5 @@ export { withComputed } from './with-computed';
 export { withHooks } from './with-hooks';
 export { withMethods } from './with-methods';
 export { withState } from './with-state';
+
+export { SelectEntityId } from './entities';
