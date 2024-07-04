@@ -94,6 +94,24 @@ export const saveSearchCriteria$ = createEffect(
   { functional: true }
 );
   `,
+  `
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { createAction, props } from '@ngrx/store';
+import { of, switchMap } from 'rxjs';
+const foo = createAction('foo', props<{ payload: string }>());
+const bar = createAction('bar');
+const baz = createAction('baz');
+
+@Injectable()
+export class Effects {
+  constructor(private actions$: Actions) {}
+  effect$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(foo),
+            switchMap(({ payload }: { payload: string }) => (payload === 'value' ? of(bar()) : of(baz()))),
+        ),
+    );
+}`,
 ];
 
 const invalid: () => RunTests['invalid'] = () => [
