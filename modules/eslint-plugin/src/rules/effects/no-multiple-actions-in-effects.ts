@@ -58,7 +58,7 @@ export default createRule<Options, MessageIds>({
           });
         } else if (
           type.isUnion() &&
-          type.types.some((ut) => !typeChecker.isArrayType(ut))
+          type.types.some((ut) => typeChecker.isArrayType(ut))
         ) {
           context.report({
             node: nodeToReport,
