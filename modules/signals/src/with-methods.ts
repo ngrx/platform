@@ -1,7 +1,6 @@
-import { excludeKeys } from './helpers';
-import { STATE_SIGNAL, StateSignal } from './state-signal';
+import { STATE_SOURCE, StateSource } from './state-source';
+import { assertUniqueStoreMembers } from './signal-store-assertions';
 import {
-  EmptyFeatureResult,
   InnerSignalStore,
   MethodsDictionary,
   SignalsDictionary,
@@ -20,25 +19,21 @@ export function withMethods<
       StateSignals<Input['state']> &
         Input['computed'] &
         Input['methods'] &
-        StateSignal<Prettify<Input['state']>>
+        StateSource<Prettify<Input['state']>>
     >
   ) => Methods
-): SignalStoreFeature<Input, EmptyFeatureResult & { methods: Methods }> {
+): SignalStoreFeature<Input, { state: {}; computed: {}; methods: Methods }> {
   return (store) => {
     const methods = methodsFactory({
-      [STATE_SIGNAL]: store[STATE_SIGNAL],
+      [STATE_SOURCE]: store[STATE_SOURCE],
       ...store.stateSignals,
       ...store.computedSignals,
       ...store.methods,
     });
-    const methodsKeys = Object.keys(methods);
-    const stateSignals = excludeKeys(store.stateSignals, methodsKeys);
-    const computedSignals = excludeKeys(store.computedSignals, methodsKeys);
+    assertUniqueStoreMembers(store, Object.keys(methods));
 
     return {
       ...store,
-      stateSignals,
-      computedSignals,
       methods: { ...store.methods, ...methods },
     } as InnerSignalStore<Record<string, unknown>, SignalsDictionary, Methods>;
   };

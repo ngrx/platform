@@ -1,7 +1,7 @@
 import { computed } from '@angular/core';
+import { assertUniqueStoreMembers } from './signal-store-assertions';
 import { toDeepSignal } from './deep-signal';
-import { excludeKeys } from './helpers';
-import { STATE_SIGNAL } from './state-signal';
+import { STATE_SOURCE } from './state-source';
 import {
   EmptyFeatureResult,
   InnerSignalStore,
@@ -14,44 +14,42 @@ export function withState<State extends object>(
   stateFactory: () => State
 ): SignalStoreFeature<
   EmptyFeatureResult,
-  EmptyFeatureResult & { state: State }
+  { state: State; computed: {}; methods: {} }
 >;
 export function withState<State extends object>(
   state: State
 ): SignalStoreFeature<
   EmptyFeatureResult,
-  EmptyFeatureResult & { state: State }
+  { state: State; computed: {}; methods: {} }
 >;
 export function withState<State extends object>(
   stateOrFactory: State | (() => State)
 ): SignalStoreFeature<
   SignalStoreFeatureResult,
-  EmptyFeatureResult & { state: State }
+  { state: State; computed: {}; methods: {} }
 > {
   return (store) => {
     const state =
       typeof stateOrFactory === 'function' ? stateOrFactory() : stateOrFactory;
     const stateKeys = Object.keys(state);
 
-    store[STATE_SIGNAL].update((currentState) => ({
+    assertUniqueStoreMembers(store, stateKeys);
+
+    store[STATE_SOURCE].update((currentState) => ({
       ...currentState,
       ...state,
     }));
 
     const stateSignals = stateKeys.reduce((acc, key) => {
       const sliceSignal = computed(
-        () => (store[STATE_SIGNAL]() as Record<string, unknown>)[key]
+        () => (store[STATE_SOURCE]() as Record<string, unknown>)[key]
       );
       return { ...acc, [key]: toDeepSignal(sliceSignal) };
     }, {} as SignalsDictionary);
-    const computedSignals = excludeKeys(store.computedSignals, stateKeys);
-    const methods = excludeKeys(store.methods, stateKeys);
 
     return {
       ...store,
       stateSignals: { ...store.stateSignals, ...stateSignals },
-      computedSignals,
-      methods,
     } as InnerSignalStore<State>;
   };
 }

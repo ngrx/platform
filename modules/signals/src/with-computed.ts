@@ -1,6 +1,5 @@
-import { excludeKeys } from './helpers';
+import { assertUniqueStoreMembers } from './signal-store-assertions';
 import {
-  EmptyFeatureResult,
   InnerSignalStore,
   SignalsDictionary,
   SignalStoreFeature,
@@ -18,22 +17,18 @@ export function withComputed<
   ) => ComputedSignals
 ): SignalStoreFeature<
   Input,
-  EmptyFeatureResult & { computed: ComputedSignals }
+  { state: {}; computed: ComputedSignals; methods: {} }
 > {
   return (store) => {
     const computedSignals = signalsFactory({
       ...store.stateSignals,
       ...store.computedSignals,
     });
-    const computedSignalsKeys = Object.keys(computedSignals);
-    const stateSignals = excludeKeys(store.stateSignals, computedSignalsKeys);
-    const methods = excludeKeys(store.methods, computedSignalsKeys);
+    assertUniqueStoreMembers(store, Object.keys(computedSignals));
 
     return {
       ...store,
-      stateSignals,
       computedSignals: { ...store.computedSignals, ...computedSignals },
-      methods,
     } as InnerSignalStore<Record<string, unknown>, ComputedSignals>;
   };
 }

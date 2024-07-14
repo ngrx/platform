@@ -1,18 +1,18 @@
 import { isSignal, signal } from '@angular/core';
 import { withComputed, withMethods, withState } from '../src';
-import { STATE_SIGNAL } from '../src/state-signal';
+import { STATE_SOURCE } from '../src/state-source';
 import { getInitialInnerStore } from '../src/signal-store';
 
 describe('withState', () => {
-  it('patches state signal and updates slices immutably', () => {
+  it('patches state source and updates slices immutably', () => {
     const initialStore = getInitialInnerStore();
-    const initialState = initialStore[STATE_SIGNAL]();
+    const initialState = initialStore[STATE_SOURCE]();
 
     const store = withState({
       foo: 'bar',
       x: { y: 'z' },
     })(initialStore);
-    const state = store[STATE_SIGNAL]();
+    const state = store[STATE_SOURCE]();
 
     expect(state).toEqual({ foo: 'bar', x: { y: 'z' } });
     expect(initialState).toEqual({});
@@ -39,14 +39,14 @@ describe('withState', () => {
     expect(isSignal(store.stateSignals.x.y)).toBe(true);
   });
 
-  it('patches state signal and creates deep signals for state slices provided via factory', () => {
+  it('patches state source and creates deep signals for state slices provided via factory', () => {
     const initialStore = getInitialInnerStore();
 
     const store = withState(() => ({
       foo: 'bar',
       x: { y: 'z' },
     }))(initialStore);
-    const state = store[STATE_SIGNAL]();
+    const state = store[STATE_SOURCE]();
 
     expect(state).toEqual({ foo: 'bar', x: { y: 'z' } });
     expect(store.stateSignals.foo()).toBe('bar');
@@ -54,7 +54,7 @@ describe('withState', () => {
     expect(store.stateSignals.x.y()).toBe('z');
   });
 
-  it('overrides previously defined state signals, computed signals, and methods with the same name', () => {
+  it('logs warning if previously defined signal store members have the same name', () => {
     const initialStore = [
       withState({
         p1: 10,
@@ -69,24 +69,21 @@ describe('withState', () => {
         m2() {},
       })),
     ].reduce((acc, feature) => feature(acc), getInitialInnerStore());
+    jest.spyOn(console, 'warn').mockImplementation();
 
-    const store = withState(() => ({
+    withState(() => ({
       p2: 100,
+      s: 's',
       s2: 's2',
+      m: { s: 10 },
       m2: { m: 2 },
       p3: 'p3',
     }))(initialStore);
 
-    expect(Object.keys(store.stateSignals)).toEqual([
-      'p1',
-      'p2',
-      's2',
-      'm2',
-      'p3',
-    ]);
-    expect(store.stateSignals.p2()).toBe(100);
-
-    expect(Object.keys(store.computedSignals)).toEqual(['s1']);
-    expect(Object.keys(store.methods)).toEqual(['m1']);
+    expect(console.warn).toHaveBeenCalledWith(
+      '@ngrx/signals: SignalStore members cannot be overridden.',
+      'Trying to override:',
+      'p2, s2, m2'
+    );
   });
 });
