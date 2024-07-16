@@ -8,7 +8,7 @@ import {
   withMethods,
   withState,
 } from '../src';
-import { STATE_SIGNAL } from '../src/state-signal';
+import { STATE_SOURCE } from '../src/state-source';
 import { createLocalService } from './helpers';
 
 describe('signalStore', () => {
@@ -17,11 +17,11 @@ describe('signalStore', () => {
       const Store = signalStore(withState({}));
 
       const store = new Store();
-      const stateSignal = store[STATE_SIGNAL];
+      const stateSource = store[STATE_SOURCE];
 
-      expect(isSignal(stateSignal)).toBe(true);
-      expect(typeof stateSignal.update === 'function').toBe(true);
-      expect(stateSignal()).toEqual({});
+      expect(isSignal(stateSource)).toBe(true);
+      expect(typeof stateSource.update === 'function').toBe(true);
+      expect(stateSource()).toEqual({});
     });
 
     it('creates a store as injectable service', () => {
@@ -29,11 +29,11 @@ describe('signalStore', () => {
 
       TestBed.configureTestingModule({ providers: [Store] });
       const store = TestBed.inject(Store);
-      const stateSignal = store[STATE_SIGNAL];
+      const stateSource = store[STATE_SOURCE];
 
-      expect(isSignal(stateSignal)).toBe(true);
-      expect(typeof stateSignal.update === 'function').toBe(true);
-      expect(stateSignal()).toEqual({});
+      expect(isSignal(stateSource)).toBe(true);
+      expect(typeof stateSource.update === 'function').toBe(true);
+      expect(stateSource()).toEqual({});
     });
 
     it('creates a store that is provided in root when providedIn option is specified', () => {
@@ -41,12 +41,12 @@ describe('signalStore', () => {
 
       const store1 = TestBed.inject(Store);
       const store2 = TestBed.inject(Store);
-      const stateSignal = store1[STATE_SIGNAL];
+      const stateSource = store1[STATE_SOURCE];
 
       expect(store1).toBe(store2);
-      expect(isSignal(stateSignal)).toBe(true);
-      expect(typeof stateSignal.update === 'function').toBe(true);
-      expect(stateSignal()).toEqual({});
+      expect(isSignal(stateSource)).toBe(true);
+      expect(typeof stateSource.update === 'function').toBe(true);
+      expect(stateSource()).toEqual({});
     });
   });
 
@@ -61,7 +61,7 @@ describe('signalStore', () => {
 
       const store = new Store();
 
-      expect(store[STATE_SIGNAL]()).toEqual({
+      expect(store[STATE_SOURCE]()).toEqual({
         foo: 'foo',
         x: { y: { z: 10 } },
       });
@@ -129,7 +129,7 @@ describe('signalStore', () => {
 
       const store = new Store();
 
-      expect(store[STATE_SIGNAL]()).toEqual({ foo: 'foo' });
+      expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo' });
       expect(store.foo()).toBe('foo');
       expect(store.bar()).toBe('bar');
       expect(store.baz()).toBe('baz');
@@ -156,7 +156,7 @@ describe('signalStore', () => {
         withComputed(() => ({ bar: signal('bar').asReadonly() })),
         withMethods(() => ({ baz: () => 'baz' })),
         withMethods((store) => {
-          expect(store[STATE_SIGNAL]()).toEqual({ foo: 'foo' });
+          expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo' });
           expect(store.foo()).toBe('foo');
           expect(store.bar()).toBe('bar');
           expect(store.baz()).toBe('baz');
@@ -167,7 +167,7 @@ describe('signalStore', () => {
 
       const store = new Store();
 
-      expect(store[STATE_SIGNAL]()).toEqual({ foo: 'foo' });
+      expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo' });
       expect(store.foo()).toBe('foo');
       expect(store.bar()).toBe('bar');
       expect(store.baz()).toBe('baz');
@@ -233,7 +233,7 @@ describe('signalStore', () => {
         withMethods(() => ({ baz: () => 'baz' })),
         withHooks({
           onInit(store) {
-            expect(store[STATE_SIGNAL]()).toEqual({ foo: 'foo' });
+            expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo' });
             expect(store.foo()).toBe('foo');
             expect(store.bar()).toBe('bar');
             expect(store.baz()).toBe('baz');
@@ -340,43 +340,39 @@ describe('signalStore', () => {
   });
 
   describe('composition', () => {
-    it('overrides previously defined store properties immutably', () => {
+    it('logs warning if previously defined signal store members have the same name', () => {
       const Store = signalStore(
         withState({ i: 1, j: 2, k: 3, l: 4 }),
-        withComputed(({ i, j, k, l }) => {
-          expect(i()).toBe(1);
-          expect(j()).toBe(2);
-          expect(k()).toBe(3);
-          expect(l()).toBe(4);
-
-          return {
-            l: signal('l').asReadonly(),
-            m: signal('m').asReadonly(),
-          };
-        }),
-        withMethods((store) => {
-          expect(store.i()).toBe(1);
-          expect(store.j()).toBe(2);
-          expect(store.k()).toBe(3);
-          expect(store.l()).toBe('l');
-          expect(store.m()).toBe('m');
-
-          return {
-            j: () => 'j',
-            m: () => true,
-            n: (value: number) => value,
-          };
-        })
+        withComputed(() => ({
+          l: signal('l').asReadonly(),
+          m: signal('m').asReadonly(),
+        })),
+        withMethods(() => ({
+          j: () => 'j',
+          m: () => true,
+          n: (value: number) => value,
+        }))
       );
+      const warnings: string[][] = [];
+      jest
+        .spyOn(console, 'warn')
+        .mockImplementation((...args: string[]) => warnings.push(args));
 
-      const store = new Store();
+      new Store();
 
-      expect(store.i()).toBe(1);
-      expect(store.j()).toBe('j');
-      expect(store.k()).toBe(3);
-      expect(store.l()).toBe('l');
-      expect(store.m()).toBe(true);
-      expect(store.n(10)).toBe(10);
+      expect(console.warn).toHaveBeenCalledTimes(2);
+      expect(warnings).toEqual([
+        [
+          '@ngrx/signals: SignalStore members cannot be overridden.',
+          'Trying to override:',
+          'l',
+        ],
+        [
+          '@ngrx/signals: SignalStore members cannot be overridden.',
+          'Trying to override:',
+          'j, m',
+        ],
+      ]);
     });
   });
 });

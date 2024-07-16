@@ -18,7 +18,7 @@ describe('withMethods', () => {
     expect(store.methods.m2).toBe(m2);
   });
 
-  it('overrides previously defined state signals, computed signals, and methods with the same name', () => {
+  it('logs warning if previously defined signal store members have the same name', () => {
     const initialStore = [
       withState({
         p1: 'p1',
@@ -33,19 +33,22 @@ describe('withMethods', () => {
         m2() {},
       })),
     ].reduce((acc, feature) => feature(acc), getInitialInnerStore());
-
     const m2 = () => 10;
-    const store = withMethods(() => ({
+    jest.spyOn(console, 'warn').mockImplementation();
+
+    withMethods(() => ({
+      p() {},
       p2() {},
+      s: () => {},
       s1: () => 100,
       m2,
       m3: () => 'm3',
     }))(initialStore);
 
-    expect(Object.keys(store.methods)).toEqual(['m1', 'm2', 'p2', 's1', 'm3']);
-    expect(store.methods.m2).toBe(m2);
-
-    expect(Object.keys(store.stateSignals)).toEqual(['p1']);
-    expect(Object.keys(store.computedSignals)).toEqual(['s2']);
+    expect(console.warn).toHaveBeenCalledWith(
+      '@ngrx/signals: SignalStore members cannot be overridden.',
+      'Trying to override:',
+      'p2, s1, m2'
+    );
   });
 });
