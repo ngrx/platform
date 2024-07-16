@@ -139,6 +139,55 @@ class UserEffects implements OnInitEffects, OnRunEffects, OnIdentifyEffects {
 }`,
     }
   ),
+  fromFixture(
+    `
+import { Injectable, inject } from "@angular/core";
+import { Actions, EffectNotification, ofType } from "@ngrx/effects";
+import { Observable, exhaustMap, takeUntil } from "rxjs";
+
+@Injectable()
+export class Effects {
+  private actions$ = inject(Actions);
+
+  ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {
+  ~~~~~~~~~~~~~~~~ [${messageId} { "interfaceName": "OnRunEffects", "methodName": "ngrxOnRunEffects" }]
+    return this.actions$.pipe(
+      ofType("Login"),
+      exhaustMap(() =>
+        resolvedEffects$.pipe(
+          takeUntil(
+            this.actions$.pipe(ofType("Logout"))
+          )
+        )
+      )
+    );
+  }
+}`,
+    {
+      output: `
+import { Injectable, inject } from "@angular/core";
+import { Actions, EffectNotification, ofType, OnRunEffects } from "@ngrx/effects";
+import { Observable, exhaustMap, takeUntil } from "rxjs";
+
+@Injectable()
+export class Effects implements OnRunEffects {
+  private actions$ = inject(Actions);
+
+  ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {
+    return this.actions$.pipe(
+      ofType("Login"),
+      exhaustMap(() =>
+        resolvedEffects$.pipe(
+          takeUntil(
+            this.actions$.pipe(ofType("Logout"))
+          )
+        )
+      )
+    );
+  }
+}`,
+    }
+  ),
 ];
 
 ruleTester().run(path.parse(__filename).name, rule, {
