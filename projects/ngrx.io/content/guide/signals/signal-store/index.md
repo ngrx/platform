@@ -10,7 +10,7 @@ A SignalStore is created using the `signalStore` function. This function accepts
 Through the combination of store features, the SignalStore gains state, computed signals, and methods, allowing for a flexible and extensible store implementation.
 Based on the utilized features, the `signalStore` function returns an injectable service that can be provided and injected where needed.
 
-The `withState` feature is used to add state properties to the SignalStore.
+The `withState` feature is used to add state slices to the SignalStore.
 This feature accepts initial state as an input argument. As with `signalState`, the state's type must be a record/object literal.
 
 <code-example header="books.store.ts">
@@ -36,7 +36,7 @@ export const BooksStore = signalStore(
 
 </code-example>
 
-For each state property, a corresponding signal is automatically created.
+For each state slice, a corresponding signal is automatically created.
 The same applies to nested state properties, with all deeply nested signals being generated lazily on demand.
 
 The `BooksStore` instance will contain the following properties:
@@ -110,7 +110,7 @@ This is beneficial for managing global state, as it ensures a single shared inst
 
 ## Consuming State
 
-Signals generated for state properties can be utilized to access state values, as demonstrated below.
+Signals generated for state slices can be utilized to access state values, as demonstrated below.
 
 <code-example header="books.component.ts">
 
@@ -406,13 +406,13 @@ export const BooksStore = signalStore(
 
 The `BooksStore` instance will contain the following properties and methods:
 
-- State properties:
+- State signals:
   - `books: Signal<Book[]>`
   - `isLoading: Signal<boolean>`
   - `filter: DeepSignal<{ query: string; order: 'asc' | 'desc' }>`
   - `filter.query: Signal<string>`
   - `filter.order: Signal<'asc' | 'desc'>`
-- Computed properties:
+- Computed signals:
   - `booksCount: Signal<number>`
   - `sortedBooks: Signal<Book[]>`
 - Methods:
