@@ -1,9 +1,9 @@
 import { signal } from '@angular/core';
-import { STATE_SOURCE, StateSource } from './state-source';
+import { STATE_SOURCE, WritableStateSource } from './state-source';
 import { DeepSignal, toDeepSignal } from './deep-signal';
 
 export type SignalState<State extends object> = DeepSignal<State> &
-  StateSource<State>;
+  WritableStateSource<State>;
 
 export function signalState<State extends object>(
   initialState: State

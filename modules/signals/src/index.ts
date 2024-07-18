@@ -8,6 +8,7 @@ export {
   PartialStateUpdater,
   patchState,
   StateSource,
+  WritableStateSource,
 } from './state-source';
 
 export { withComputed } from './with-computed';

@@ -1,4 +1,4 @@
-import { STATE_SOURCE, StateSource } from './state-source';
+import { STATE_SOURCE, WritableStateSource } from './state-source';
 import {
   EmptyFeatureResult,
   SignalStoreFeature,
@@ -12,7 +12,7 @@ type HookFn<Input extends SignalStoreFeatureResult> = (
     StateSignals<Input['state']> &
       Input['computed'] &
       Input['methods'] &
-      StateSource<Prettify<Input['state']>>
+      WritableStateSource<Prettify<Input['state']>>
   >
 ) => void;
 
@@ -21,7 +21,7 @@ type HooksFactory<Input extends SignalStoreFeatureResult> = (
     StateSignals<Input['state']> &
       Input['computed'] &
       Input['methods'] &
-      StateSource<Prettify<Input['state']>>
+      WritableStateSource<Prettify<Input['state']>>
   >
 ) => {
   onInit?: () => void;

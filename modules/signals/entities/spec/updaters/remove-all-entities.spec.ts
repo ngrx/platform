@@ -5,7 +5,7 @@ import { selectTodoId } from '../helpers';
 
 describe('removeAllEntities', () => {
   it('removes all entities', () => {
-    const Store = signalStore(withEntities<User>());
+    const Store = signalStore({ protectedState: false }, withEntities<User>());
     const store = new Store();
 
     patchState(store, setAllEntities([user1, user2]), removeAllEntities());
@@ -17,6 +17,7 @@ describe('removeAllEntities', () => {
 
   it('removes all entities from specified entity collection', () => {
     const Store = signalStore(
+      { protectedState: false },
       withEntities({
         entity: type<Todo>(),
         collection: 'todo',

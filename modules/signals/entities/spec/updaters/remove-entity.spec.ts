@@ -10,7 +10,7 @@ import { selectTodoId } from '../helpers';
 
 describe('removeEntity', () => {
   it('removes entity', () => {
-    const Store = signalStore(withEntities<User>());
+    const Store = signalStore({ protectedState: false }, withEntities<User>());
     const store = new Store();
 
     patchState(store, addEntities([user1, user2]), removeEntity(user1.id));
@@ -21,7 +21,7 @@ describe('removeEntity', () => {
   });
 
   it('does not modify entity state if entity does not exist', () => {
-    const Store = signalStore(withEntities<Todo>());
+    const Store = signalStore({ protectedState: false }, withEntities<Todo>());
     const store = new Store();
 
     patchState(store, addEntities([todo2, todo3], { selectId: selectTodoId }));
@@ -48,7 +48,10 @@ describe('removeEntity', () => {
       selectId: selectTodoId,
     });
 
-    const Store = signalStore(withEntities(todoConfig));
+    const Store = signalStore(
+      { protectedState: false },
+      withEntities(todoConfig)
+    );
     const store = new Store();
 
     patchState(
@@ -70,6 +73,7 @@ describe('removeEntity', () => {
 
   it('does not modify entity state if entity does not exist in specified collection', () => {
     const Store = signalStore(
+      { protectedState: false },
       withEntities({
         entity: type<User>(),
         collection: 'user',

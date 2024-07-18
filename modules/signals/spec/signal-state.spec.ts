@@ -15,7 +15,7 @@ describe('signalState', () => {
     ngrx: 'signals',
   };
 
-  it('has state source', () => {
+  it('has writable state source', () => {
     const state = signalState({});
     const stateSource = state[STATE_SOURCE];
 
