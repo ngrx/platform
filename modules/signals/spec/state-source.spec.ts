@@ -5,6 +5,7 @@ import {
   patchState,
   signalState,
   signalStore,
+  withMethods,
   withState,
 } from '../src';
 import { STATE_SOURCE } from '../src/state-source';
@@ -29,7 +30,11 @@ describe('StateSource', () => {
       {
         name: 'with signalStore',
         stateFactory: () => {
-          const SignalStore = signalStore(withState(initialState));
+          const SignalStore = signalStore(
+            { protectedState: false },
+            withState(initialState)
+          );
+
           return new SignalStore();
         },
       },
@@ -104,21 +109,31 @@ describe('StateSource', () => {
 
   describe('getState', () => {
     describe('with signalStore', () => {
+      function storeFactory() {
+        const Store = signalStore(
+          withState(initialState),
+          withMethods((store) => ({
+            setFoo(foo: string): void {
+              patchState(store, { foo });
+            },
+          }))
+        );
+
+        return new Store();
+      }
+
       it('returns the state object', () => {
-        const Store = signalStore(withState(initialState));
-        const store = new Store();
+        const store = storeFactory();
 
         expect(getState(store)).toEqual(initialState);
 
-        patchState(store, { foo: 'baz' });
+        store.setFoo('baz');
 
         expect(getState(store)).toEqual({ ...initialState, foo: 'baz' });
       });
 
       it('executes in the reactive context', () => {
-        const Store = signalStore(withState(initialState));
-        const store = new Store();
-
+        const store = storeFactory();
         let executionCount = 0;
 
         TestBed.runInInjectionContext(() => {
@@ -131,7 +146,7 @@ describe('StateSource', () => {
         TestBed.flushEffects();
         expect(executionCount).toBe(1);
 
-        patchState(store, { foo: 'baz' });
+        store.setFoo('baz');
 
         TestBed.flushEffects();
         expect(executionCount).toBe(2);

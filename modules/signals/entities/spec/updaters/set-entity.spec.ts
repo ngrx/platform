@@ -5,7 +5,7 @@ import { selectTodoId as selectId } from '../helpers';
 
 describe('setEntity', () => {
   it('adds entity if it does not exist', () => {
-    const Store = signalStore(withEntities<User>());
+    const Store = signalStore({ protectedState: false }, withEntities<User>());
     const store = new Store();
 
     patchState(store, setEntity(user1));
@@ -22,7 +22,7 @@ describe('setEntity', () => {
   });
 
   it('replaces entity if it already exists', () => {
-    const Store = signalStore(withEntities<User>());
+    const Store = signalStore({ protectedState: false }, withEntities<User>());
     const store = new Store();
 
     patchState(store, setEntity(user1), setEntity(user2));
@@ -38,6 +38,7 @@ describe('setEntity', () => {
 
   it('adds entity to the specified collection if it does not exist', () => {
     const Store = signalStore(
+      { protectedState: false },
       withEntities({
         entity: type<User>(),
         collection: 'user',
@@ -58,6 +59,7 @@ describe('setEntity', () => {
 
   it('replaces entity to the specified collection if it already exists', () => {
     const Store = signalStore(
+      { protectedState: false },
       withEntities({
         entity: type<User>(),
         collection: 'user',
@@ -88,7 +90,7 @@ describe('setEntity', () => {
   });
 
   it('adds entity with a custom id if it does not exist', () => {
-    const Store = signalStore(withEntities<Todo>());
+    const Store = signalStore({ protectedState: false }, withEntities<Todo>());
     const store = new Store();
 
     patchState(store, setEntity(todo1, { selectId }));
@@ -105,7 +107,7 @@ describe('setEntity', () => {
   });
 
   it('replaces entity with a custom id if it already exists', () => {
-    const Store = signalStore(withEntities<Todo>());
+    const Store = signalStore({ protectedState: false }, withEntities<Todo>());
     const store = new Store();
 
     patchState(
@@ -125,6 +127,7 @@ describe('setEntity', () => {
 
   it('adds entity with a custom id to the specified collection if it does not exist', () => {
     const Store = signalStore(
+      { protectedState: false },
       withEntities({
         entity: type<Todo>(),
         collection: 'todo',
@@ -152,7 +155,10 @@ describe('setEntity', () => {
       selectId,
     });
 
-    const Store = signalStore(withEntities(todoConfig));
+    const Store = signalStore(
+      { protectedState: false },
+      withEntities(todoConfig)
+    );
     const store = new Store();
 
     patchState(

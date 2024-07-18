@@ -1,4 +1,4 @@
-import { STATE_SOURCE, StateSource } from './state-source';
+import { STATE_SOURCE, WritableStateSource } from './state-source';
 import { assertUniqueStoreMembers } from './signal-store-assertions';
 import {
   InnerSignalStore,
@@ -19,7 +19,7 @@ export function withMethods<
       StateSignals<Input['state']> &
         Input['computed'] &
         Input['methods'] &
-        StateSource<Prettify<Input['state']>>
+        WritableStateSource<Prettify<Input['state']>>
     >
   ) => Methods
 ): SignalStoreFeature<Input, { state: {}; computed: {}; methods: Methods }> {

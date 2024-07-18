@@ -5,7 +5,7 @@ import { selectTodoId as selectId } from '../helpers';
 
 describe('setAllEntities', () => {
   it('replaces entity collection with provided entities', () => {
-    const Store = signalStore(withEntities<User>());
+    const Store = signalStore({ protectedState: false }, withEntities<User>());
     const store = new Store();
 
     patchState(store, setAllEntities([user1, user2]));
@@ -29,6 +29,7 @@ describe('setAllEntities', () => {
 
   it('replaces specified entity collection with provided entities', () => {
     const Store = signalStore(
+      { protectedState: false },
       withEntities({
         entity: type<User>(),
         collection: 'user',
@@ -59,7 +60,7 @@ describe('setAllEntities', () => {
   });
 
   it('replaces entity collection with provided entities with a custom id', () => {
-    const Store = signalStore(withEntities<Todo>());
+    const Store = signalStore({ protectedState: false }, withEntities<Todo>());
     const store = new Store();
 
     patchState(store, setAllEntities([todo2, todo3], { selectId }));
@@ -88,7 +89,10 @@ describe('setAllEntities', () => {
       selectId,
     });
 
-    const Store = signalStore(withEntities(todoConfig));
+    const Store = signalStore(
+      { protectedState: false },
+      withEntities(todoConfig)
+    );
     const store = new Store();
 
     patchState(store, setAllEntities([todo1, todo3], todoConfig));

@@ -6,6 +6,7 @@ describe('signalStore', () => {
     (code) => `
         import { computed, inject, Signal } from '@angular/core';
         import {
+          getState,
           patchState,
           signalStore,
           signalStoreFeature,
@@ -453,6 +454,134 @@ describe('signalStore', () => {
     expectSnippet(`const Store = signalStore(withState(true));`).toFail();
   });
 
+  it('exposes readonly state source when protectedState is not provided', () => {
+    const snippet = `
+      const CounterStore1 = signalStore(withState({ count: 0 }));
+      const CounterStore2 = signalStore(
+        { providedIn: 'root' },
+        withState({ count: 0 })
+      );
+
+      const store1 = new CounterStore1();
+      const state1 = getState(store1);
+
+      const store2 = new CounterStore2();
+      const state2 = getState(store2);
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer(
+      'store1',
+      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
+    );
+
+    expectSnippet(snippet).toInfer('state1', '{ count: number; }');
+
+    expectSnippet(`
+      ${snippet}
+      patchState(store1, { count: 1 });
+    `).toFail();
+
+    expectSnippet(snippet).toInfer(
+      'store2',
+      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
+    );
+
+    expectSnippet(snippet).toInfer('state2', '{ count: number; }');
+
+    expectSnippet(`
+      ${snippet}
+      patchState(store2, { count: 1 });
+    `).toFail();
+  });
+
+  it('exposes readonly state source when protectedState is true', () => {
+    const snippet = `
+      const CounterStore1 = signalStore(
+        { protectedState: true },
+        withState({ count: 0 })
+      );
+      const CounterStore2 = signalStore(
+        { providedIn: 'root', protectedState: true },
+        withState({ count: 0 })
+      );
+
+      const store1 = new CounterStore1();
+      const state1 = getState(store1);
+
+      const store2 = new CounterStore2();
+      const state2 = getState(store2);
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer(
+      'store1',
+      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
+    );
+
+    expectSnippet(snippet).toInfer('state1', '{ count: number; }');
+
+    expectSnippet(`
+      ${snippet}
+      patchState(store1, { count: 10 });
+    `).toFail();
+
+    expectSnippet(snippet).toInfer(
+      'store2',
+      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
+    );
+
+    expectSnippet(snippet).toInfer('state2', '{ count: number; }');
+
+    expectSnippet(`
+      ${snippet}
+      patchState(store2, { count: 10 });
+    `).toFail();
+  });
+
+  it('exposes writable state source when protectedState is false', () => {
+    const snippet = `
+      const CounterStore1 = signalStore(
+        { protectedState: false },
+        withState({ count: 0 })
+      );
+      const CounterStore2 = signalStore(
+        { providedIn: 'root', protectedState: false },
+        withState({ count: 0 })
+      );
+
+      const store1 = new CounterStore1();
+      const state1 = getState(store1);
+
+      const store2 = new CounterStore2();
+      const state2 = getState(store2);
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer(
+      'store1',
+      '{ count: Signal<number>; } & WritableStateSource<{ count: number; }>'
+    );
+
+    expectSnippet(snippet).toInfer('state1', '{ count: number; }');
+
+    expectSnippet(snippet).toInfer(
+      'store2',
+      '{ count: Signal<number>; } & WritableStateSource<{ count: number; }>'
+    );
+
+    expectSnippet(snippet).toInfer('state2', '{ count: number; }');
+
+    expectSnippet(`
+      ${snippet}
+      patchState(store1, { count: 100 });
+      patchState(store2, { count: 100 });
+    `).toSucceed();
+  });
+
   it('patches state via sequence of partial state objects and updater functions', () => {
     expectSnippet(`
       const Store = signalStore(
@@ -475,37 +604,45 @@ describe('signalStore', () => {
             (state) => ({ flags: [...state.flags, true] })
           );
 
+          patchState(
+            store,
+            { flags: [true] },
+            (state) => ({ user: { ...state.user, age: state.user.age + 1 } }),
+            { ngrx: 'store' }
+          );
+
           return {};
         })
-      );
-
-      const store = new Store();
-      patchState(
-        store,
-        { flags: [true] },
-        (state) => ({ user: { ...state.user, age: state.user.age + 1 } }),
-        { ngrx: 'store' }
       );
     `).toSucceed();
   });
 
   it('fails when state is patched with a non-record', () => {
     expectSnippet(`
-      const Store = signalStore(withState({ foo: 'bar' }));
+      const Store = signalStore(
+        { protectedState: false },
+        withState({ foo: 'bar' })
+      );
 
       const store = new Store();
       patchState(store, 10);
     `).toFail();
 
     expectSnippet(`
-      const Store = signalStore(withState({ foo: 'bar' }));
+      const Store = signalStore(
+        { protectedState: false },
+        withState({ foo: 'bar' })
+      );
 
       const store = new Store();
       patchState(store, undefined);
     `).toFail();
 
     expectSnippet(`
-      const Store = signalStore(withState({ foo: 'bar' }));
+      const Store = signalStore(
+        { protectedState: false },
+        withState({ foo: 'bar' })
+      );
 
       const store = new Store();
       patchState(store, [1, 2, 3]);
@@ -514,7 +651,10 @@ describe('signalStore', () => {
 
   it('fails when state is patched with a wrong record', () => {
     expectSnippet(`
-      const Store = signalStore(withState({ foo: 'bar' }));
+      const Store = signalStore(
+        { protectedState: false },
+        withState({ foo: 'bar' })
+      );
 
       const store = new Store();
       patchState(store, { foo: 10 });
@@ -544,6 +684,7 @@ describe('signalStore', () => {
   it('fails when state is patched with a wrong updater function', () => {
     expectSnippet(`
       const Store = signalStore(
+        { protectedState: false },
         withState({ user: { first: 'John', age: 20 } })
       );
 
