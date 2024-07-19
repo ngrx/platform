@@ -1,4 +1,10 @@
 {
   "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
-  "schematics": {}
+  "schematics": {
+    "18_0_0-beta-replace-statesignal-with-writablestatesource": {
+      "description": "Replace StateSignal usages with WritableStateSource",
+      "version": "18_0_0-beta-replace-statesignal-with-writablestatesource",
+      "factory": "./18_0_0-beta-replace-statesignal-with-writablestatesource/index"
+    }
+  }
 }
