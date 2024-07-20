@@ -1,4 +1,13 @@
-import { Signal, WritableSignal } from '@angular/core';
+import {
+  assertInInjectionContext,
+  DestroyRef,
+  inject,
+  Injector,
+  Signal,
+  untracked,
+  WritableSignal,
+} from '@angular/core';
+import { SIGNAL } from '@angular/core/primitives/signals';
 import { Prettify } from './ts-helpers';
 
 export const STATE_SOURCE = Symbol('STATE_SOURCE');
@@ -30,10 +39,76 @@ export function patchState<State extends object>(
       currentState
     )
   );
+
+  notifyWatchers(stateSource);
 }
 
 export function getState<State extends object>(
   stateSource: StateSource<State>
 ): State {
   return stateSource[STATE_SOURCE]();
+}
+
+export function watchState<State extends object>(
+  stateSource: StateSource<State>,
+  watcher: StateWatcher<State>,
+  config?: { injector?: Injector }
+): { destroy(): void } {
+  if (!config?.injector) {
+    assertInInjectionContext(watchState);
+  }
+
+  const injector = config?.injector ?? inject(Injector);
+  const destroyRef = injector.get(DestroyRef);
+
+  addWatcher(stateSource, watcher);
+  watcher(getState(stateSource));
+
+  const destroy = () => removeWatcher(stateSource, watcher);
+  destroyRef.onDestroy(destroy);
+
+  return { destroy };
+}
+
+const STATE_WATCHERS = new WeakMap<object, Array<StateWatcher<any>>>();
+
+type StateWatcher<State extends object> = (state: NoInfer<State>) => void;
+
+function getWatchers<State extends object>(
+  stateSource: StateSource<State>
+): Array<StateWatcher<State>> {
+  return STATE_WATCHERS.get(stateSource[STATE_SOURCE][SIGNAL] as object) || [];
+}
+
+function notifyWatchers<State extends object>(
+  stateSource: StateSource<State>
+): void {
+  const watchers = getWatchers(stateSource);
+
+  for (const watcher of watchers) {
+    const state = untracked(() => getState(stateSource));
+    watcher(state);
+  }
+}
+
+function addWatcher<State extends object>(
+  stateSource: StateSource<State>,
+  watcher: StateWatcher<State>
+): void {
+  const watchers = getWatchers(stateSource);
+  STATE_WATCHERS.set(stateSource[STATE_SOURCE][SIGNAL] as object, [
+    ...watchers,
+    watcher,
+  ]);
+}
+
+function removeWatcher<State extends object>(
+  stateSource: StateSource<State>,
+  watcher: StateWatcher<State>
+): void {
+  const watchers = getWatchers(stateSource);
+  STATE_WATCHERS.set(
+    stateSource[STATE_SOURCE][SIGNAL] as object,
+    watchers.filter((w) => w !== watcher)
+  );
 }

@@ -141,30 +141,6 @@ export class BooksComponent {
 
 </code-example>
 
-The `@ngrx/signals` package also offers the `getState` function to get the current state value of the SignalStore.
-When used within the reactive context, state changes are automatically tracked.
-
-<code-example header="books.component.ts">
-
-import { Component, effect, inject } from '@angular/core';
-import { getState } from '@ngrx/signals';
-import { BooksStore } from './books.store';
-
-@Component({ /* ... */ })
-export class BooksComponent {
-  readonly store = inject(BooksStore);
-
-  constructor() {
-    effect(() => {
-      // 👇 The effect will be re-executed whenever the state changes.
-      const state = getState(this.store);
-      console.log('books state changed', state);
-    });
-  }
-}
-
-</code-example>
-
 ## Defining Computed Signals
 
 Computed signals can be added to the store using the `withComputed` feature.
