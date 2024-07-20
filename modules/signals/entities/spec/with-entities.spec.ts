@@ -1,12 +1,19 @@
 import { isSignal } from '@angular/core';
-import { patchState, signalStore, type } from '@ngrx/signals';
+import { patchState, signalStore, type, withMethods } from '@ngrx/signals';
 import { addEntities, entityConfig, withEntities } from '../src';
 import { Todo, todo2, todo3, User, user1, user2 } from './mocks';
 import { selectTodoId } from './helpers';
 
 describe('withEntities', () => {
   it('adds entity feature to the store', () => {
-    const Store = signalStore(withEntities<User>());
+    const Store = signalStore(
+      withEntities<User>(),
+      withMethods((store) => ({
+        addUsers(): void {
+          patchState(store, addEntities([user1, user2]));
+        },
+      }))
+    );
     const store = new Store();
 
     expect(isSignal(store.entityMap)).toBe(true);
@@ -18,7 +25,7 @@ describe('withEntities', () => {
     expect(isSignal(store.entities)).toBe(true);
     expect(store.entities()).toEqual([]);
 
-    patchState(store, addEntities([user1, user2]));
+    store.addUsers();
 
     expect(store.entityMap()).toEqual({ 1: user1, 2: user2 });
     expect(store.ids()).toEqual([1, 2]);
@@ -27,7 +34,15 @@ describe('withEntities', () => {
 
   it('adds named entity feature to the store', () => {
     const Store = signalStore(
-      withEntities({ entity: type<User>(), collection: 'user' })
+      withEntities({ entity: type<User>(), collection: 'user' }),
+      withMethods((store) => ({
+        addUsers(): void {
+          patchState(
+            store,
+            addEntities([user2, user1], { collection: 'user' })
+          );
+        },
+      }))
     );
     const store = new Store();
 
@@ -40,7 +55,7 @@ describe('withEntities', () => {
     expect(isSignal(store.userEntities)).toBe(true);
     expect(store.userEntities()).toEqual([]);
 
-    patchState(store, addEntities([user2, user1], { collection: 'user' }));
+    store.addUsers();
 
     expect(store.userEntityMap()).toEqual({ 2: user2, 1: user1 });
     expect(store.userIds()).toEqual([2, 1]);
@@ -54,7 +69,19 @@ describe('withEntities', () => {
       selectId: selectTodoId,
     });
 
-    const Store = signalStore(withEntities<User>(), withEntities(todoConfig));
+    const Store = signalStore(
+      withEntities<User>(),
+      withEntities(todoConfig),
+      withMethods((store) => ({
+        addEntities(): void {
+          patchState(
+            store,
+            addEntities([user2, user1]),
+            addEntities([todo2, todo3], todoConfig)
+          );
+        },
+      }))
+    );
     const store = new Store();
 
     expect(isSignal(store.entityMap)).toBe(true);
@@ -72,11 +99,7 @@ describe('withEntities', () => {
     expect(isSignal(store.todoEntities)).toBe(true);
     expect(store.todoEntities()).toEqual([]);
 
-    patchState(
-      store,
-      addEntities([user2, user1]),
-      addEntities([todo2, todo3], todoConfig)
-    );
+    store.addEntities();
 
     expect(store.entityMap()).toEqual({ 2: user2, 1: user1 });
     expect(store.ids()).toEqual([2, 1]);

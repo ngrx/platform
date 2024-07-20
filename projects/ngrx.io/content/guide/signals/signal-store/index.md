@@ -10,7 +10,7 @@ A SignalStore is created using the `signalStore` function. This function accepts
 Through the combination of store features, the SignalStore gains state, computed signals, and methods, allowing for a flexible and extensible store implementation.
 Based on the utilized features, the `signalStore` function returns an injectable service that can be provided and injected where needed.
 
-The `withState` feature is used to add state properties to the SignalStore.
+The `withState` feature is used to add state slices to the SignalStore.
 This feature accepts initial state as an input argument. As with `signalState`, the state's type must be a record/object literal.
 
 <code-example header="books.store.ts">
@@ -36,7 +36,7 @@ export const BooksStore = signalStore(
 
 </code-example>
 
-For each state property, a corresponding signal is automatically created.
+For each state slice, a corresponding signal is automatically created.
 The same applies to nested state properties, with all deeply nested signals being generated lazily on demand.
 
 The `BooksStore` instance will contain the following properties:
@@ -47,7 +47,7 @@ The `BooksStore` instance will contain the following properties:
 - `filter.query: Signal<string>`
 - `filter.order: Signal<'asc' | 'desc'>`
 
-<div class="alert alert is-helpful">
+<div class="alert is-helpful">
 
 The `withState` feature also has a signature that takes the initial state factory as an input argument.
 The factory is executed within the injection context, allowing initial state to be obtained from a service or injection token.
@@ -108,9 +108,9 @@ export const BooksStore = signalStore(
 When provided globally, the store is registered with the root injector and becomes accessible anywhere in the application.
 This is beneficial for managing global state, as it ensures a single shared instance of the store across the entire application.
 
-## Consuming State
+## Reading State
 
-Signals generated for state properties can be utilized to access state values, as demonstrated below.
+Signals generated for state slices can be utilized to access state values, as demonstrated below.
 
 <code-example header="books.component.ts">
 
@@ -239,10 +239,35 @@ export const BooksStore = signalStore(
 
 </code-example>
 
-<div class="alert alert is-important">
+<div class="alert is-helpful">
 
 The state of the SignalStore is updated using the `patchState` function.
 For more details on the `patchState` function, refer to the [Updating State](/guide/signals/signal-state#updating-state) guide.
+
+</div>
+
+<div class="alert is-important">
+
+By default, SignalStore's state is protected from external modifications, ensuring a consistent and predictable data flow.
+This is the recommended approach.
+However, external updates to the state can be enabled by setting the `protectedState` option to `false` when creating a SignalStore.
+
+```ts
+export const BooksStore = signalStore(
+  { protectedState: false }, // 👈
+  withState(initialState)
+);
+
+@Component({ /* ... */ })
+export class BooksComponent {
+  readonly store = inject(BooksStore);
+
+  addBook(book: Book): void {
+    // ⚠️ The state of the `BooksStore` is unprotected from external modifications.
+    patchState(this.store, ({ books }) => ({ books: [...books, book] }));
+  }
+}
+```
 
 </div>
 
@@ -326,7 +351,7 @@ export const BooksStore = signalStore(
 
 </code-example>
 
-<div class="alert alert is-helpful">
+<div class="alert is-helpful">
 
 To learn more about the `rxMethod` function, visit the [RxJS Integration](/guide/signals/rxjs-integration) page.
 
@@ -406,13 +431,13 @@ export const BooksStore = signalStore(
 
 The `BooksStore` instance will contain the following properties and methods:
 
-- State properties:
+- State signals:
   - `books: Signal<Book[]>`
   - `isLoading: Signal<boolean>`
   - `filter: DeepSignal<{ query: string; order: 'asc' | 'desc' }>`
   - `filter.query: Signal<string>`
   - `filter.order: Signal<'asc' | 'desc'>`
-- Computed properties:
+- Computed signals:
   - `booksCount: Signal<number>`
   - `sortedBooks: Signal<Book[]>`
 - Methods:
@@ -420,7 +445,7 @@ The `BooksStore` instance will contain the following properties and methods:
   - `updateOrder(order: 'asc' | 'desc'): void`
   - `loadByQuery: RxMethod<string>`
 
-<div class="alert alert is-helpful">
+<div class="alert is-helpful">
 
 The `BooksStore` implementation can be enhanced further by utilizing the `entities` plugin and creating custom SignalStore features.
 For more details, refer to the [Entity Management](guide/signals/signal-store/entity-management) and [Custom Store Features](guide/signals/signal-store/custom-store-features) guides.
@@ -469,7 +494,7 @@ export class BooksComponent implements OnInit {
 
 </code-example>
 
-<div class="alert alert is-helpful">
+<div class="alert is-helpful">
 
 In addition to component lifecycle hooks, SignalStore also offers the ability to define them at the store level.
 Learn more about SignalStore lifecycle hooks [here](/guide/signals/signal-store/lifecycle-hooks).

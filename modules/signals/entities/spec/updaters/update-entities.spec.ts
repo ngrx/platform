@@ -10,7 +10,7 @@ import { selectTodoId } from '../helpers';
 
 describe('updateEntities', () => {
   it('updates entities by ids', () => {
-    const Store = signalStore(withEntities<User>());
+    const Store = signalStore({ protectedState: false }, withEntities<User>());
     const store = new Store();
 
     patchState(
@@ -40,7 +40,7 @@ describe('updateEntities', () => {
   });
 
   it('updates entities by predicate', () => {
-    const Store = signalStore(withEntities<Todo>());
+    const Store = signalStore({ protectedState: false }, withEntities<Todo>());
     const store = new Store();
 
     patchState(
@@ -80,7 +80,7 @@ describe('updateEntities', () => {
   });
 
   it('does not modify entity state if entities do not exist', () => {
-    const Store = signalStore(withEntities<User>());
+    const Store = signalStore({ protectedState: false }, withEntities<User>());
     const store = new Store();
 
     patchState(store, addEntities([user1, user2, user3]));
@@ -116,7 +116,10 @@ describe('updateEntities', () => {
       collection: 'users',
     });
 
-    const Store = signalStore(withEntities(userConfig));
+    const Store = signalStore(
+      { protectedState: false },
+      withEntities(userConfig)
+    );
     const store = new Store();
 
     patchState(store, addEntities([user1, user2, user3], userConfig));
@@ -157,7 +160,10 @@ describe('updateEntities', () => {
       collection: 'users',
     });
 
-    const Store = signalStore(withEntities(userConfig));
+    const Store = signalStore(
+      { protectedState: false },
+      withEntities(userConfig)
+    );
     const store = new Store();
 
     patchState(
@@ -199,7 +205,10 @@ describe('updateEntities', () => {
       selectId: (todo) => todo._id,
     });
 
-    const Store = signalStore(withEntities(todoConfig));
+    const Store = signalStore(
+      { protectedState: false },
+      withEntities(todoConfig)
+    );
     const store = new Store();
 
     patchState(store, addEntities([todo1, todo2, todo3], todoConfig));
@@ -236,7 +245,7 @@ describe('updateEntities', () => {
   });
 
   it('updates entity ids', () => {
-    const Store = signalStore(withEntities<User>());
+    const Store = signalStore({ protectedState: false }, withEntities<User>());
     const store = new Store();
 
     patchState(
@@ -280,7 +289,7 @@ describe('updateEntities', () => {
   });
 
   it('updates custom entity ids', () => {
-    const Store = signalStore(withEntities<Todo>());
+    const Store = signalStore({ protectedState: false }, withEntities<Todo>());
     const store = new Store();
 
     patchState(
@@ -337,6 +346,7 @@ describe('updateEntities', () => {
 
   it('updates entity ids from specified collection', () => {
     const Store = signalStore(
+      { protectedState: false },
       withEntities({
         entity: type<User>(),
         collection: 'user',
@@ -398,6 +408,7 @@ describe('updateEntities', () => {
 
   it('updates custom entity ids from specified collection', () => {
     const Store = signalStore(
+      { protectedState: false },
       withEntities({
         entity: type<Todo>(),
         collection: 'todo',

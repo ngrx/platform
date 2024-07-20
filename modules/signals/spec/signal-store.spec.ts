@@ -14,39 +14,70 @@ import { createLocalService } from './helpers';
 describe('signalStore', () => {
   describe('creation', () => {
     it('creates a store via new operator', () => {
-      const Store = signalStore(withState({}));
+      const Store = signalStore(withState({ foo: 'bar' }));
+      const store = new Store();
 
+      expect(store.foo()).toBe('bar');
+    });
+
+    it('creates a store as injectable service', () => {
+      const Store = signalStore(withState({ foo: 'bar' }));
+      TestBed.configureTestingModule({ providers: [Store] });
+      const store = TestBed.inject(Store);
+
+      expect(store.foo()).toBe('bar');
+    });
+
+    it('creates a store that is provided in root when providedIn option is root', () => {
+      const Store = signalStore(
+        { providedIn: 'root' },
+        withState({ foo: 'bar' })
+      );
+      const store1 = TestBed.inject(Store);
+      const store2 = TestBed.inject(Store);
+
+      expect(store1).toBe(store2);
+      expect(store1.foo()).toBe('bar');
+    });
+
+    it('creates a store with readonly state source by default', () => {
+      const Store = signalStore(withState({ foo: 'bar' }));
       const store = new Store();
       const stateSource = store[STATE_SOURCE];
 
       expect(isSignal(stateSource)).toBe(true);
-      expect(typeof stateSource.update === 'function').toBe(true);
-      expect(stateSource()).toEqual({});
+      expect(stateSource()).toEqual({ foo: 'bar' });
+      expect(typeof (stateSource as any).update === 'undefined').toBe(true);
     });
 
-    it('creates a store as injectable service', () => {
-      const Store = signalStore(withState({}));
-
-      TestBed.configureTestingModule({ providers: [Store] });
-      const store = TestBed.inject(Store);
+    it('creates a store with readonly state source when protectedState option is true', () => {
+      const Store = signalStore(
+        { protectedState: true },
+        withState({ foo: 'bar' })
+      );
+      const store = new Store();
       const stateSource = store[STATE_SOURCE];
 
       expect(isSignal(stateSource)).toBe(true);
-      expect(typeof stateSource.update === 'function').toBe(true);
-      expect(stateSource()).toEqual({});
+      expect(stateSource()).toEqual({ foo: 'bar' });
+      expect(typeof (stateSource as any).update === 'undefined').toBe(true);
     });
 
-    it('creates a store that is provided in root when providedIn option is specified', () => {
-      const Store = signalStore({ providedIn: 'root' }, withState({}));
+    it('creates a store with writable state source when protectedState option is false', () => {
+      const Store = signalStore(
+        { protectedState: false },
+        withState({ foo: 'bar' })
+      );
+      const store = new Store();
+      const stateSource = store[STATE_SOURCE];
 
-      const store1 = TestBed.inject(Store);
-      const store2 = TestBed.inject(Store);
-      const stateSource = store1[STATE_SOURCE];
-
-      expect(store1).toBe(store2);
       expect(isSignal(stateSource)).toBe(true);
+      expect(stateSource()).toEqual({ foo: 'bar' });
       expect(typeof stateSource.update === 'function').toBe(true);
-      expect(stateSource()).toEqual({});
+
+      patchState(store, { foo: 'baz' });
+
+      expect(stateSource()).toEqual({ foo: 'baz' });
     });
   });
 
@@ -90,7 +121,10 @@ describe('signalStore', () => {
     it('does not create signals for optional state slices without initial value', () => {
       type State = { x?: number; y?: { z: number } };
 
-      const Store = signalStore(withState<State>({ x: 10 }));
+      const Store = signalStore(
+        { protectedState: false },
+        withState<State>({ x: 10 })
+      );
       const store = new Store();
 
       expect(store.x!()).toBe(10);

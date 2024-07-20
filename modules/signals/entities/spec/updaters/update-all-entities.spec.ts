@@ -5,7 +5,7 @@ import { selectTodoId } from '../helpers';
 
 describe('updateAllEntities', () => {
   it('updates all entities', () => {
-    const Store = signalStore(withEntities<User>());
+    const Store = signalStore({ protectedState: false }, withEntities<User>());
     const store = new Store();
 
     patchState(
@@ -42,7 +42,7 @@ describe('updateAllEntities', () => {
   });
 
   it('does not modify entity state if entities do not exist', () => {
-    const Store = signalStore(withEntities<Todo>());
+    const Store = signalStore({ protectedState: false }, withEntities<Todo>());
     const store = new Store();
 
     const entityMap = store.entityMap();
@@ -68,6 +68,7 @@ describe('updateAllEntities', () => {
 
   it('updates all entities from specified entity collection', () => {
     const Store = signalStore(
+      { protectedState: false },
       withEntities({
         entity: type<Todo>(),
         collection: 'todo',
@@ -125,6 +126,7 @@ describe('updateAllEntities', () => {
 
   it('does not modify entity state if entities do not exist in specified collection', () => {
     const Store = signalStore(
+      { protectedState: false },
       withEntities({
         entity: type<User>(),
         collection: 'user',

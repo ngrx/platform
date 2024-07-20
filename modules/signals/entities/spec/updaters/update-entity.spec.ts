@@ -10,7 +10,7 @@ import { selectTodoId } from '../helpers';
 
 describe('updateEntity', () => {
   it('updates entity', () => {
-    const Store = signalStore(withEntities<User>());
+    const Store = signalStore({ protectedState: false }, withEntities<User>());
     const store = new Store();
 
     patchState(
@@ -65,7 +65,10 @@ describe('updateEntity', () => {
       selectId: selectTodoId,
     });
 
-    const Store = signalStore(withEntities(todoConfig));
+    const Store = signalStore(
+      { protectedState: false },
+      withEntities(todoConfig)
+    );
     const store = new Store();
 
     patchState(store, addEntities([todo2, todo3], todoConfig));
@@ -103,6 +106,7 @@ describe('updateEntity', () => {
 
   it('updates entity from specified entity collection', () => {
     const Store = signalStore(
+      { protectedState: false },
       withEntities({
         entity: type<Todo>(),
         collection: 'todo',
@@ -149,7 +153,10 @@ describe('updateEntity', () => {
       selectId: (user) => user.id,
     });
 
-    const Store = signalStore(withEntities(userConfig));
+    const Store = signalStore(
+      { protectedState: false },
+      withEntities(userConfig)
+    );
     const store = new Store();
 
     patchState(store, addEntities([user1, user2, user3], userConfig));
@@ -180,7 +187,7 @@ describe('updateEntity', () => {
   });
 
   it('updates an entity id', () => {
-    const Store = signalStore(withEntities<User>());
+    const Store = signalStore({ protectedState: false }, withEntities<User>());
     const store = new Store();
 
     patchState(
@@ -221,7 +228,7 @@ describe('updateEntity', () => {
   });
 
   it('updates a custom entity id', () => {
-    const Store = signalStore(withEntities<Todo>());
+    const Store = signalStore({ protectedState: false }, withEntities<Todo>());
     const store = new Store();
 
     patchState(
@@ -255,6 +262,7 @@ describe('updateEntity', () => {
 
   it('updates an entity id from specified entity collection', () => {
     const Store = signalStore(
+      { protectedState: false },
       withEntities({
         entity: type<User>(),
         collection: 'user',
@@ -291,6 +299,7 @@ describe('updateEntity', () => {
 
   it('updates a custom entity id from specified entity collection', () => {
     const Store = signalStore(
+      { protectedState: false },
       withEntities({
         entity: type<Todo>(),
         collection: 'todo',

@@ -10,7 +10,7 @@ import { selectTodoId } from '../helpers';
 
 describe('removeEntities', () => {
   it('removes entities by ids', () => {
-    const Store = signalStore(withEntities<User>());
+    const Store = signalStore({ protectedState: false }, withEntities<User>());
     const store = new Store();
 
     patchState(
@@ -25,7 +25,7 @@ describe('removeEntities', () => {
   });
 
   it('removes entities by predicate', () => {
-    const Store = signalStore(withEntities<Todo>());
+    const Store = signalStore({ protectedState: false }, withEntities<Todo>());
     const store = new Store();
 
     patchState(
@@ -40,7 +40,7 @@ describe('removeEntities', () => {
   });
 
   it('does not modify entity state if entities do not exist', () => {
-    const Store = signalStore(withEntities<User>());
+    const Store = signalStore({ protectedState: false }, withEntities<User>());
     const store = new Store();
 
     patchState(store, addEntities([user1, user2, user3]));
@@ -70,7 +70,10 @@ describe('removeEntities', () => {
       collection: 'users',
     });
 
-    const Store = signalStore(withEntities(userConfig));
+    const Store = signalStore(
+      { protectedState: false },
+      withEntities(userConfig)
+    );
     const store = new Store();
 
     patchState(store, addEntities([user1, user2, user3], userConfig));
@@ -87,7 +90,10 @@ describe('removeEntities', () => {
       collection: 'users',
     });
 
-    const Store = signalStore(withEntities(userConfig));
+    const Store = signalStore(
+      { protectedState: false },
+      withEntities(userConfig)
+    );
     const store = new Store();
 
     patchState(
@@ -108,7 +114,10 @@ describe('removeEntities', () => {
       selectId: selectTodoId,
     });
 
-    const Store = signalStore(withEntities(todoConfig));
+    const Store = signalStore(
+      { protectedState: false },
+      withEntities(todoConfig)
+    );
     const store = new Store();
 
     patchState(store, addEntities([todo1, todo2, todo3], todoConfig));

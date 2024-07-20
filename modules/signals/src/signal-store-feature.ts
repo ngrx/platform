@@ -78,6 +78,98 @@ export function signalStoreFeature<
   EmptyFeatureResult,
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6>
 >;
+export function signalStoreFeature<
+  F1 extends SignalStoreFeatureResult,
+  F2 extends SignalStoreFeatureResult,
+  F3 extends SignalStoreFeatureResult,
+  F4 extends SignalStoreFeatureResult,
+  F5 extends SignalStoreFeatureResult,
+  F6 extends SignalStoreFeatureResult,
+  F7 extends SignalStoreFeatureResult
+>(
+  f1: SignalStoreFeature<EmptyFeatureResult, F1>,
+  f2: SignalStoreFeature<{} & F1, F2>,
+  f3: SignalStoreFeature<F1 & F2, F3>,
+  f4: SignalStoreFeature<F1 & F2 & F3, F4>,
+  f5: SignalStoreFeature<F1 & F2 & F3 & F4, F5>,
+  f6: SignalStoreFeature<F1 & F2 & F3 & F4 & F5, F6>,
+  f7: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6, F7>
+): SignalStoreFeature<
+  EmptyFeatureResult,
+  PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7>
+>;
+export function signalStoreFeature<
+  F1 extends SignalStoreFeatureResult,
+  F2 extends SignalStoreFeatureResult,
+  F3 extends SignalStoreFeatureResult,
+  F4 extends SignalStoreFeatureResult,
+  F5 extends SignalStoreFeatureResult,
+  F6 extends SignalStoreFeatureResult,
+  F7 extends SignalStoreFeatureResult,
+  F8 extends SignalStoreFeatureResult
+>(
+  f1: SignalStoreFeature<EmptyFeatureResult, F1>,
+  f2: SignalStoreFeature<{} & F1, F2>,
+  f3: SignalStoreFeature<F1 & F2, F3>,
+  f4: SignalStoreFeature<F1 & F2 & F3, F4>,
+  f5: SignalStoreFeature<F1 & F2 & F3 & F4, F5>,
+  f6: SignalStoreFeature<F1 & F2 & F3 & F4 & F5, F6>,
+  f7: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6, F7>,
+  f8: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7, F8>
+): SignalStoreFeature<
+  EmptyFeatureResult,
+  PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8>
+>;
+export function signalStoreFeature<
+  F1 extends SignalStoreFeatureResult,
+  F2 extends SignalStoreFeatureResult,
+  F3 extends SignalStoreFeatureResult,
+  F4 extends SignalStoreFeatureResult,
+  F5 extends SignalStoreFeatureResult,
+  F6 extends SignalStoreFeatureResult,
+  F7 extends SignalStoreFeatureResult,
+  F8 extends SignalStoreFeatureResult,
+  F9 extends SignalStoreFeatureResult
+>(
+  f1: SignalStoreFeature<EmptyFeatureResult, F1>,
+  f2: SignalStoreFeature<{} & F1, F2>,
+  f3: SignalStoreFeature<F1 & F2, F3>,
+  f4: SignalStoreFeature<F1 & F2 & F3, F4>,
+  f5: SignalStoreFeature<F1 & F2 & F3 & F4, F5>,
+  f6: SignalStoreFeature<F1 & F2 & F3 & F4 & F5, F6>,
+  f7: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6, F7>,
+  f8: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7, F8>,
+  f9: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8, F9>
+): SignalStoreFeature<
+  EmptyFeatureResult,
+  PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9>
+>;
+export function signalStoreFeature<
+  F1 extends SignalStoreFeatureResult,
+  F2 extends SignalStoreFeatureResult,
+  F3 extends SignalStoreFeatureResult,
+  F4 extends SignalStoreFeatureResult,
+  F5 extends SignalStoreFeatureResult,
+  F6 extends SignalStoreFeatureResult,
+  F7 extends SignalStoreFeatureResult,
+  F8 extends SignalStoreFeatureResult,
+  F9 extends SignalStoreFeatureResult,
+  F10 extends SignalStoreFeatureResult
+>(
+  f1: SignalStoreFeature<EmptyFeatureResult, F1>,
+  f2: SignalStoreFeature<{} & F1, F2>,
+  f3: SignalStoreFeature<F1 & F2, F3>,
+  f4: SignalStoreFeature<F1 & F2 & F3, F4>,
+  f5: SignalStoreFeature<F1 & F2 & F3 & F4, F5>,
+  f6: SignalStoreFeature<F1 & F2 & F3 & F4 & F5, F6>,
+  f7: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6, F7>,
+  f8: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7, F8>,
+  f9: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8, F9>,
+  f10: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9, F10>
+): SignalStoreFeature<
+  EmptyFeatureResult,
+  PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9 & F10>
+>;
 
 export function signalStoreFeature<
   Input extends Partial<SignalStoreFeatureResult>,
@@ -165,6 +257,115 @@ export function signalStoreFeature<
 ): SignalStoreFeature<
   Prettify<EmptyFeatureResult & Input>,
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6>
+>;
+export function signalStoreFeature<
+  Input extends Partial<SignalStoreFeatureResult>,
+  F1 extends SignalStoreFeatureResult,
+  F2 extends SignalStoreFeatureResult,
+  F3 extends SignalStoreFeatureResult,
+  F4 extends SignalStoreFeatureResult,
+  F5 extends SignalStoreFeatureResult,
+  F6 extends SignalStoreFeatureResult,
+  F7 extends SignalStoreFeatureResult
+>(
+  input: Input,
+  f1: SignalStoreFeature<EmptyFeatureResult & NoInfer<Input>, F1>,
+  f2: SignalStoreFeature<NoInfer<Input> & F1, F2>,
+  f3: SignalStoreFeature<NoInfer<Input> & F1 & F2, F3>,
+  f4: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3, F4>,
+  f5: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4, F5>,
+  f6: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4 & F5, F6>,
+  f7: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4 & F5 & F6, F7>
+): SignalStoreFeature<
+  Prettify<EmptyFeatureResult & Input>,
+  PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7>
+>;
+export function signalStoreFeature<
+  Input extends Partial<SignalStoreFeatureResult>,
+  F1 extends SignalStoreFeatureResult,
+  F2 extends SignalStoreFeatureResult,
+  F3 extends SignalStoreFeatureResult,
+  F4 extends SignalStoreFeatureResult,
+  F5 extends SignalStoreFeatureResult,
+  F6 extends SignalStoreFeatureResult,
+  F7 extends SignalStoreFeatureResult,
+  F8 extends SignalStoreFeatureResult
+>(
+  input: Input,
+  f1: SignalStoreFeature<EmptyFeatureResult & NoInfer<Input>, F1>,
+  f2: SignalStoreFeature<NoInfer<Input> & F1, F2>,
+  f3: SignalStoreFeature<NoInfer<Input> & F1 & F2, F3>,
+  f4: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3, F4>,
+  f5: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4, F5>,
+  f6: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4 & F5, F6>,
+  f7: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4 & F5 & F6, F7>,
+  f8: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4 & F5 & F6 & F7, F8>
+): SignalStoreFeature<
+  Prettify<EmptyFeatureResult & Input>,
+  PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8>
+>;
+export function signalStoreFeature<
+  Input extends Partial<SignalStoreFeatureResult>,
+  F1 extends SignalStoreFeatureResult,
+  F2 extends SignalStoreFeatureResult,
+  F3 extends SignalStoreFeatureResult,
+  F4 extends SignalStoreFeatureResult,
+  F5 extends SignalStoreFeatureResult,
+  F6 extends SignalStoreFeatureResult,
+  F7 extends SignalStoreFeatureResult,
+  F8 extends SignalStoreFeatureResult,
+  F9 extends SignalStoreFeatureResult
+>(
+  input: Input,
+  f1: SignalStoreFeature<EmptyFeatureResult & NoInfer<Input>, F1>,
+  f2: SignalStoreFeature<NoInfer<Input> & F1, F2>,
+  f3: SignalStoreFeature<NoInfer<Input> & F1 & F2, F3>,
+  f4: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3, F4>,
+  f5: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4, F5>,
+  f6: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4 & F5, F6>,
+  f7: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4 & F5 & F6, F7>,
+  f8: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4 & F5 & F6 & F7, F8>,
+  f9: SignalStoreFeature<
+    NoInfer<Input> & F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8,
+    F9
+  >
+): SignalStoreFeature<
+  Prettify<EmptyFeatureResult & Input>,
+  PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9>
+>;
+export function signalStoreFeature<
+  Input extends Partial<SignalStoreFeatureResult>,
+  F1 extends SignalStoreFeatureResult,
+  F2 extends SignalStoreFeatureResult,
+  F3 extends SignalStoreFeatureResult,
+  F4 extends SignalStoreFeatureResult,
+  F5 extends SignalStoreFeatureResult,
+  F6 extends SignalStoreFeatureResult,
+  F7 extends SignalStoreFeatureResult,
+  F8 extends SignalStoreFeatureResult,
+  F9 extends SignalStoreFeatureResult,
+  F10 extends SignalStoreFeatureResult
+>(
+  input: Input,
+  f1: SignalStoreFeature<EmptyFeatureResult & NoInfer<Input>, F1>,
+  f2: SignalStoreFeature<NoInfer<Input> & F1, F2>,
+  f3: SignalStoreFeature<NoInfer<Input> & F1 & F2, F3>,
+  f4: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3, F4>,
+  f5: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4, F5>,
+  f6: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4 & F5, F6>,
+  f7: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4 & F5 & F6, F7>,
+  f8: SignalStoreFeature<NoInfer<Input> & F1 & F2 & F3 & F4 & F5 & F6 & F7, F8>,
+  f9: SignalStoreFeature<
+    NoInfer<Input> & F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8,
+    F9
+  >,
+  f10: SignalStoreFeature<
+    NoInfer<Input> & F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9,
+    F10
+  >
+): SignalStoreFeature<
+  Prettify<EmptyFeatureResult & Input>,
+  PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9 & F10>
 >;
 
 export function signalStoreFeature(

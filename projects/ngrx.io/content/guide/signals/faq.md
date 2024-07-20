@@ -50,9 +50,12 @@ withMethods(() => {
 
 ```ts
 @Injectable()
-export class CounterStore extends signalStore(withState({ count: 0 })) {
+export class CounterStore extends signalStore(
+  { protectedState: false },
+  withState({ count: 0 })
+) {
   readonly doubleCount = computed(() => this.count() * 2);
-  
+
   increment(): void {
     patchState(this, { count: this.count() + 1 });
   }

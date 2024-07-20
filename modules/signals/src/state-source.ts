@@ -1,10 +1,14 @@
-import { WritableSignal } from '@angular/core';
+import { Signal, WritableSignal } from '@angular/core';
 import { Prettify } from './ts-helpers';
 
 export const STATE_SOURCE = Symbol('STATE_SOURCE');
 
-export type StateSource<State extends object> = {
+export type WritableStateSource<State extends object> = {
   [STATE_SOURCE]: WritableSignal<State>;
+};
+
+export type StateSource<State extends object> = {
+  [STATE_SOURCE]: Signal<State>;
 };
 
 export type PartialStateUpdater<State extends object> = (
@@ -12,7 +16,7 @@ export type PartialStateUpdater<State extends object> = (
 ) => Partial<State>;
 
 export function patchState<State extends object>(
-  stateSource: StateSource<State>,
+  stateSource: WritableStateSource<State>,
   ...updaters: Array<
     Partial<Prettify<State>> | PartialStateUpdater<Prettify<State>>
   >
