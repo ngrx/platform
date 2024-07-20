@@ -1,5 +1,6 @@
 import { computed, Signal } from '@angular/core';
 import {
+  EmptyFeatureResult,
   SignalStoreFeature,
   signalStoreFeature,
   withComputed,
@@ -16,7 +17,7 @@ import {
 import { getEntityStateKeys } from './helpers';
 
 export function withEntities<Entity>(): SignalStoreFeature<
-  { state: {}; computed: {}; methods: {} },
+  EmptyFeatureResult,
   {
     state: EntityState<Entity>;
     computed: EntityComputed<Entity>;
@@ -27,7 +28,7 @@ export function withEntities<Entity, Collection extends string>(config: {
   entity: Entity;
   collection: Collection;
 }): SignalStoreFeature<
-  { state: {}; computed: {}; methods: {} },
+  EmptyFeatureResult,
   {
     state: NamedEntityState<Entity, Collection>;
     computed: NamedEntityComputed<Entity, Collection>;
@@ -37,7 +38,7 @@ export function withEntities<Entity, Collection extends string>(config: {
 export function withEntities<Entity>(config: {
   entity: Entity;
 }): SignalStoreFeature<
-  { state: {}; computed: {}; methods: {} },
+  EmptyFeatureResult,
   {
     state: EntityState<Entity>;
     computed: EntityComputed<Entity>;
