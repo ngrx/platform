@@ -7,7 +7,7 @@ import { tags } from '@angular-devkit/core';
 import * as path from 'path';
 import { LogEntry } from '@angular-devkit/core/src/logger';
 
-describe('18_0_0-rc-replace-statesignal-with-writablestatesource', () => {
+describe('18_0_0-rc_3-writablestatesource', () => {
   const collectionPath = path.join(__dirname, '../migration.json');
   const schematicRunner = new SchematicTestRunner('schematics', collectionPath);
 
@@ -27,7 +27,7 @@ describe('18_0_0-rc-replace-statesignal-with-writablestatesource', () => {
     schematicRunner.logger.subscribe((logEntry) => logEntries.push(logEntry));
 
     const tree = await schematicRunner.runSchematic(
-      `18_0_0-rc-replace-statesignal-with-writablestatesource`,
+      `18_0_0-rc_3-writablestatesource`,
       {},
       appTree
     );
