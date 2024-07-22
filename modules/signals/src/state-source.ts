@@ -10,6 +10,8 @@ import {
 import { SIGNAL } from '@angular/core/primitives/signals';
 import { Prettify } from './ts-helpers';
 
+const STATE_WATCHERS = new WeakMap<object, Array<StateWatcher<any>>>();
+
 export const STATE_SOURCE = Symbol('STATE_SOURCE');
 
 export type WritableStateSource<State extends object> = {
@@ -23,6 +25,10 @@ export type StateSource<State extends object> = {
 export type PartialStateUpdater<State extends object> = (
   state: State
 ) => Partial<State>;
+
+export type StateWatcher<State extends object> = (
+  state: NoInfer<State>
+) => void;
 
 export function patchState<State extends object>(
   stateSource: WritableStateSource<State>,
@@ -69,10 +75,6 @@ export function watchState<State extends object>(
 
   return { destroy };
 }
-
-const STATE_WATCHERS = new WeakMap<object, Array<StateWatcher<any>>>();
-
-type StateWatcher<State extends object> = (state: NoInfer<State>) => void;
 
 function getWatchers<State extends object>(
   stateSource: StateSource<State>
