@@ -92,5 +92,14 @@
     "website": "https://github.com/markostanimirovic",
     "bio": "Marko is a core member of the NgRx team, a Google Developer Expert in Angular, and an organizer of the Angular Belgrade group. He enjoys contributing to open source software, sharing knowledge through technical articles and talks, and playing guitar. He is also a Master of Science in Software Engineering from the University of Belgrade.",
     "group": "Core"
+  },
+
+  "rainerhahnekamp": {
+    "name": "Rainer Hahnekamp",
+    "picture": "rainer.jpg",
+    "twitter": "rainerhahnekamp",
+    "website": "https://www.rainerhahnekamp.com/",
+    "bio": "Passionate Angular and Spring developer. Google Developer Expert in Angular. Trainer and Consultant at AngularArchitects.",
+    "group": "Collaborator"
   }
 }
