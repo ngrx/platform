@@ -20,7 +20,7 @@ describe('migrate protectedState', () => {
     appTree.create('main.ts', input);
 
     const tree = await schematicRunner.runSchematic(
-      `ngrx-signals-migration-18-beta-disable-protected-state`,
+      `18_0_0-rc_3-protected-state`,
       {},
       appTree
     );
@@ -189,7 +189,7 @@ class PersonStore {
     appTree.create('main2.ts', inputMain2);
 
     const tree = await schematicRunner.runSchematic(
-      `ngrx-signals-migration-18-beta-disable-protected-state`,
+      `18_0_0-rc_3-protected-state`,
       {},
       appTree
     );
