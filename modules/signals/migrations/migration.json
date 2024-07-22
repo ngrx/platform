@@ -1,10 +1,10 @@
 {
   "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
-    "ngrx-signals-migration-18-beta-disable-protected-state": {
-      "description": "Make all existing Signal Stores unprotected",
-      "version": "18.0.0-beta",
-      "factory": "./18_0_0-beta-disable-protected-state/index"
+    "18_0_0-rc_3-protected-state": {
+      "description": "Make the state of all existing SignalStores unprotected",
+      "version": "18.0.0-rc.3",
+      "factory": "./18_0_0-rc_3-protected-state/index"
     }
   }
 }
