@@ -5,6 +5,11 @@
       "description": "Make the state of all existing SignalStores unprotected",
       "version": "18.0.0-rc.3",
       "factory": "./18_0_0-rc_3-protected-state/index"
+    },
+    "18_0_0-rc_3-writablestatesource": {
+      "description": "Replace StateSignal usages with WritableStateSource",
+      "version": "18.0.0-rc.3",
+      "factory": "./18_0_0-rc_3-writablestatesource/index"
     }
   }
 }
