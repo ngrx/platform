@@ -1,4 +1,10 @@
 {
   "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
-  "schematics": {}
+  "schematics": {
+    "18_0_0-rc_3-protected-state": {
+      "description": "Make the state of all existing SignalStores unprotected",
+      "version": "18.0.0-rc.3",
+      "factory": "./18_0_0-rc_3-protected-state/index"
+    }
+  }
 }
