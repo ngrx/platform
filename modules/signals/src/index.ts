@@ -13,6 +13,7 @@ export {
   PartialStateUpdater,
   patchState,
   StateSource,
+  watchState,
   WritableStateSource,
 } from './state-source';
 export { Prettify } from './ts-helpers';
