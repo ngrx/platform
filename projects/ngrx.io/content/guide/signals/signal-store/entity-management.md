@@ -387,7 +387,7 @@ export const TodosStore = signalStore(
 
 ## Private Entity Collections
 
-Private entity collection can be defined by using the `_` prefix for the collection name.
+Private entity collections are defined by using the `_` prefix for the collection name.
 
 ```ts
 const todoConfig = entityConfig({
@@ -419,6 +419,6 @@ class TodosComponent {
 
 <div class="alert is-helpful">
 
-Learn more about private store members on [the following page](/guide/signals/signal-store/private-store-members).
+Learn more about private store members in the [Private Store Members](/guide/signals/signal-store/private-store-members) guide.
 
 </div>
