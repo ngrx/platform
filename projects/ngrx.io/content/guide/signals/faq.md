@@ -7,29 +7,6 @@
 </details>
 
 <details>
-  <summary>Is there a way to define private methods on a SignalStore?</summary>
-
-    Currently there's no built-in support for private properties.
-    To achieve this in the current version, you can resort to workarounds, e.g. by not returning them.
-
-```ts
-withMethods(() => {
-  function privateFunction() {
-    /* implementation here */ 
-  }
-  function publicFunction() {
-    /* implementation here */
-  }
-  function publicFunction2() {
-    privateFunction();
-  }
-
-  return { publicFunction, publicFunction2 };
-})
-```
-</details>
-
-<details>
   <summary>Can I interact with my NgRx Actions within a SignalStore?</summary>
 
     Signals are not meant to have a concept of time. Also, the effect is somewhat tied to Angular change detection, so you can't observe every action that would be dispatched over time through some sort of Signal API.

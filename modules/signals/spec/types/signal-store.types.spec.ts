@@ -781,6 +781,58 @@ describe('signalStore', () => {
     expectSnippet(snippet + `store.log(10);`).toFail();
   });
 
+  it('omits private store members from the public instance', () => {
+    const snippet = `
+      const CounterStore = signalStore(
+        withState({ count1: 0, _count2: 0 }),
+        withComputed(({ count1, _count2 }) => ({
+          _doubleCount1: computed(() => count1() * 2),
+          doubleCount2: computed(() => _count2() * 2),
+        })),
+        withMethods(() => ({
+          increment1() {},
+          _increment2() {},
+        })),
+        withHooks({
+          onInit({ increment1, _increment2 }) {
+            increment1();
+            _increment2();
+          },
+        })
+      );
+
+      const store = new CounterStore();
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer(
+      'store',
+      '{ count1: Signal<number>; doubleCount2: Signal<number>; increment1: () => void; } & StateSource<{ count1: number; }>'
+    );
+  });
+
+  it('prevents private state slices from being updated from the outside', () => {
+    const snippet = `
+      const CounterStore = signalStore(
+        { protectedState: false },
+        withState({ count1: 0, _count2: 0 }),
+      );
+
+      const store = new CounterStore();
+    `;
+
+    expectSnippet(`
+      ${snippet}
+      patchState(store, { count1: 1 });
+    `).toSucceed();
+
+    expectSnippet(`
+      ${snippet}
+      patchState(store, { count1: 1, _count2: 1 });
+    `).toFail(/'_count2' does not exist in type/);
+  });
+
   describe('custom features', () => {
     const baseSnippet = `
       function withX() {
