@@ -31,7 +31,9 @@ import selectStyle from './store/select-style';
 import useConsistentGlobalStoreName from './store/use-consistent-global-store-name';
 // operators
 import preferConcatLatestFrom from './operators/prefer-concat-latest-from';
+// signals
 import signalStateNoArraysAtRootLevel from './signals/signal-state-no-arrays-at-root-level';
+import signalStoreFeatureShouldUseGenericType from './signals/signal-store-feature-should-use-generic-type';
 import withStateNoArraysAtRootLevel from './signals/with-state-no-arrays-at-root-level';
 
 export const rules = {
@@ -75,5 +77,7 @@ export const rules = {
   'prefer-concat-latest-from': preferConcatLatestFrom,
   // signals
   'signal-state-no-arrays-at-root-level': signalStateNoArraysAtRootLevel,
+  'signal-store-feature-should-use-generic-type':
+    signalStoreFeatureShouldUseGenericType,
   'with-state-no-arrays-at-root-level': withStateNoArraysAtRootLevel,
 };

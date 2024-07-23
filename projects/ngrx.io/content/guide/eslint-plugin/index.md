@@ -68,11 +68,11 @@ Optionally override some rules via the `rules` property.
 Import the NgRx Plugin via `@ngrx/eslint-plugin/v9` and use one or more predefined [configurations](#configurations) by adding them to the `extends` array.
 
 ```ts
-const tseslint = require("typescript-eslint");
-const ngrx = require("@ngrx/eslint-plugin/v9");
+const tseslint = require('typescript-eslint');
+const ngrx = require('@ngrx/eslint-plugin/v9');
 
 module.exports = tseslint.config({
-  files: ["**/*.ts"],
+  files: ['**/*.ts'],
   extends: [
     // 👇 Use all rules at once
     ...ngrx.configs.all,
@@ -85,7 +85,7 @@ module.exports = tseslint.config({
   ],
   rules: {
     // 👇 Configure specific rules
-    "@ngrx/with-state-no-arrays-at-root-level": "warn",
+    '@ngrx/with-state-no-arrays-at-root-level': 'warn',
   },
 });
 ```
@@ -123,10 +123,11 @@ module.exports = tseslint.config({
 
 ### signals
 
-| Name                                                                                                          | Description                                                            | Category | Fixable | Has suggestions | Configurable | Requires type information |
-| ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------- | ------- | --------------- | ------------ | ------------------------- |
-| [@ngrx/signal-state-no-arrays-at-root-level](/guide/eslint-plugin/rules/signal-state-no-arrays-at-root-level) | signalState should accept a record or dictionary as an input argument. | problem  | No      | No              | No           | No                        |
-| [@ngrx/with-state-no-arrays-at-root-level](/guide/eslint-plugin/rules/with-state-no-arrays-at-root-level)     | withState should accept a record or dictionary as an input argument.   | problem  | No      | No              | No           | Yes                       |
+| Name                                                                                                                          | Description                                                                       | Category | Fixable | Has suggestions | Configurable | Requires type information |
+| ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | -------- | ------- | --------------- | ------------ | ------------------------- |
+| [@ngrx/signal-state-no-arrays-at-root-level](/guide/eslint-plugin/rules/signal-state-no-arrays-at-root-level)                 | signalState should accept a record or dictionary as an input argument.            | problem  | No      | No              | No           | No                        |
+| [@ngrx/signal-store-feature-should-use-generic-type](/guide/eslint-plugin/rules/signal-store-feature-should-use-generic-type) | A custom Signal Store feature that accepts an input should define a generic type. | problem  | No      | No              | No           | No                        |
+| [@ngrx/with-state-no-arrays-at-root-level](/guide/eslint-plugin/rules/with-state-no-arrays-at-root-level)                     | withState should accept a record or dictionary as an input argument.              | problem  | No      | No              | No           | Yes                       |
 
 ### store
 
