@@ -21,25 +21,26 @@ const valid: () => RunTests['valid'] = () => [
 const invalid: () => RunTests['invalid'] = () => [
   fromFixture(`
 const withY = () => signalStoreFeature({ state: type<{ y: number }>() }, withState({}));
-              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                    ~~~~~~~~~~~~~~~~~~ [${messageId}]`),
   fromFixture(`
 const withY = () => signalStoreFeature(type<{ state: { y: number } }>(), withState({}));
-              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                    ~~~~~~~~~~~~~~~~~~ [${messageId}]`),
   fromFixture(`
 const withY = () => { return signalStoreFeature({ state: type<{ y: number }>() }, withState({})); }
-              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                             ~~~~~~~~~~~~~~~~~~ [${messageId}]`),
   fromFixture(`
 const withY = () => { return signalStoreFeature(type<{ state: { y: number } }>(), withState({})); }
-              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                             ~~~~~~~~~~~~~~~~~~ [${messageId}]`),
   fromFixture(`
-const withY = () => { return signalStoreFeature({ state: type<{ y: number }>() }, withState({})); }
-              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+const withY = () => { return signalStoreFeature(type<{ state: { y: number } }>(), withState({})); }
+                             ~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+
   fromFixture(`
 function withY() { return signalStoreFeature(type<{ state: { y: number } }>(), withState({})); }
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~~~~~~~~ [${messageId}]`),
   fromFixture(`
 function withY() { return signalStoreFeature({ state: type<{ y: number }>() }, withState({})); }
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~~~~~~~~ [${messageId}]`),
 ];
 
 ruleTester().run(path.parse(__filename).name, rule, {

@@ -28,7 +28,10 @@ export default createRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: (context) => {
-    function report(func?: TSESTree.Node) {
+    function report(
+      signalStoreFeature: TSESTree.CallExpression,
+      func?: TSESTree.Node
+    ) {
       if (
         !func ||
         (!isFunctionDeclaration(func) && !isArrowFunctionExpression(func))
@@ -39,7 +42,7 @@ export default createRule<Options, MessageIds>({
         func.typeParameters && func.typeParameters.params.length > 0;
       if (!parentHasGenerics) {
         context.report({
-          node: func,
+          node: signalStoreFeature.callee,
           messageId,
         });
       }
@@ -58,7 +61,7 @@ export default createRule<Options, MessageIds>({
         node: TSESTree.CallExpression
       ) {
         if (hasInputAsArgument(node)) {
-          report(node.parent);
+          report(node, node.parent);
         }
       },
       [`ArrowFunctionExpression > BlockStatement CallExpression[callee.name=signalStoreFeature]`](
@@ -69,7 +72,7 @@ export default createRule<Options, MessageIds>({
           while (parent && !isArrowFunctionExpression(parent)) {
             parent = parent.parent;
           }
-          report(parent);
+          report(node, parent);
         }
       },
       [`FunctionDeclaration > BlockStatement CallExpression[callee.name=signalStoreFeature]`](
@@ -80,7 +83,7 @@ export default createRule<Options, MessageIds>({
           while (parent && !isFunctionDeclaration(parent)) {
             parent = parent.parent;
           }
-          report(parent);
+          report(node, parent);
         }
       },
     };
