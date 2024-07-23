@@ -294,6 +294,10 @@
                   "url": "guide/signals/signal-store/lifecycle-hooks"
                 },
                 {
+                  "title": "State Tracking",
+                  "url": "guide/signals/signal-store/state-tracking"
+                },
+                {
                   "title": "Custom Store Features",
                   "url": "guide/signals/signal-store/custom-store-features"
                 },
