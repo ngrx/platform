@@ -21,6 +21,7 @@ export default createRule<Options, MessageIds>({
     docs: {
       description: `A custom Signal Store feature that accepts an input should define a generic type.`,
     },
+    fixable: 'code',
     schema: [],
     messages: {
       [messageId]: `Add an unused generic type to the function creating the signal store feature.`,
@@ -44,6 +45,15 @@ export default createRule<Options, MessageIds>({
         context.report({
           node: signalStoreFeature.callee,
           messageId,
+          fix(fixer) {
+            if (isFunctionDeclaration(func)) {
+              if (func.id) {
+                return fixer.insertTextAfter(func.id, '<_>');
+              }
+            }
+
+            return fixer.insertTextBefore(func, '<_>');
+          },
         });
       }
     }

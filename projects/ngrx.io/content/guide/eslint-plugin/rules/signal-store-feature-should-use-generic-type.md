@@ -3,7 +3,7 @@
 A custom Signal Store feature that accepts an input should define a generic type.
 
 - **Type**: problem
-- **Fixable**: No
+- **Fixable**: Yes
 - **Suggestion**: No
 - **Requires type checking**: No
 - **Configurable**: No
