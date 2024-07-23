@@ -20,6 +20,9 @@ export const isPropertyDefinition = isNodeOfType(
 export const isFunctionExpression = isNodeOfType(
   AST_NODE_TYPES.FunctionExpression
 );
+export const isFunctionDeclaration = isNodeOfType(
+  AST_NODE_TYPES.FunctionDeclaration
+);
 export const isIdentifier = isNodeOfType(AST_NODE_TYPES.Identifier);
 export const isImportDeclaration = isNodeOfType(
   AST_NODE_TYPES.ImportDeclaration
