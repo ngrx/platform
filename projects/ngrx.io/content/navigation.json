@@ -690,6 +690,11 @@
           "tooltip": "Twitter"
         },
         {
+          "url": "https://www.linkedin.com/company/ngrx/",
+          "title": "LinkedIn",
+          "tooltip": "LinkedIn"
+        },
+        {
           "url": "https://github.com/ngrx/platform",
           "title": "GitHub",
           "tooltip": "GitHub"
