@@ -683,6 +683,11 @@
           "url": "https://github.com/ngrx/platform/blob/main/CODE_OF_CONDUCT.md",
           "title": "Code of Conduct",
           "tooltip": "Code of Conduct"
+        }, 
+        {
+          "url": "https://www.linkedin.com/company/ngrx/",
+          "title": "LinkedIn",
+          "tooltip": "LinkedIn"
         },
         {
           "url": "https://twitter.com/ngrx_io",
