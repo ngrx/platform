@@ -881,13 +881,13 @@ BEFORE:
 
 `provideEffects` expecteded the effects to be passed as an array.
 
-````ts
+```ts
 // single effect
 provideEffects([MyEffect])
 
 // multiple effects
 provideEffects([MyEffect, MySecondEffect])
-```ts
+```
 
 AFTER:
 
@@ -899,7 +899,7 @@ provideEffects(MyEffect)
 
 // multiple effects
 provideEffects(MyEffect, MySecondEffect)
-```ts
+```
 
 
 
@@ -1087,7 +1087,7 @@ BEFORE:
 ```html
 <p *ngrxLet="null as n">{{ n }}</p>
 <p *ngrxLet="undefined as u">{{ u }}</p>
-````
+```
 
 - The type of `n` is `any`.
 - The type of `u` is `any`.
@@ -1996,7 +1996,7 @@ To reset the mock selector, use `mockSelector.clearResult()`.
 
 BEFORE:
 
-```
+```ts
 "@schematics/angular:component": {
       "inlineStyle": true,
       "prefix": "aio",
@@ -2007,7 +2007,7 @@ BEFORE:
 
 AFTER:
 
-```
+```ts
 "@schematics/angular:component": {
       "inlineStyle": true,
       "prefix": "aio",
@@ -2030,7 +2030,7 @@ If state or action is mutated then there will be a run time exception thrown.
 
 BEFORE:
 
-```
+```ts
 @NgModule({
   declarations: [
     AppComponent,
@@ -2053,7 +2053,7 @@ BEFORE:
 
 AFTER:
 
-```
+```ts
 @NgModule({
   declarations: [
     AppComponent,
@@ -2387,7 +2387,7 @@ export class AppModule {}
 
 BEFORE:
 
-```
+```ts
 const getTodosById = createSelector(
   (state: TodoAppSchema, id: number) => state.todos.find(p => p.id === id)
 );
@@ -2395,7 +2395,7 @@ const getTodosById = createSelector(
 
 AFTER:
 
-```
+```ts
 const getTodosById = createSelector(
   (state: TodoAppSchema) => state.todos,
   (todos: Todo[], id: number) => todos.find(p => p.id === id)
@@ -2581,13 +2581,13 @@ AFTER:
 
 BEFORE:
 
-```
+```ts
 this.actions.ofType('INCREMENT')
 ```
 
 AFTER:
 
-```
+```ts
 import { ofType } from '@ngrx/store';
 ...
 this.action.pipe(ofType('INCREMENT'))
@@ -2817,7 +2817,7 @@ Router state snapshot is returned as a SerializedRouterStateSnapshot with cyclic
 
   Before:
 
-  ```
+  ```ts
   entityAdapter.upsertOne({
     id: 'Entity ID',
     changes: { id: 'Entity ID', name: 'Entity Name' },
@@ -2826,7 +2826,7 @@ Router state snapshot is returned as a SerializedRouterStateSnapshot with cyclic
 
   After:
 
-  ```
+  ```ts
   entityAdapter.upsertOne({
     id: 'Entity ID',
     name: 'Entity Name',
@@ -3142,4 +3142,4 @@ export class AppModule {}
   imports: [EffectsModule.forFeature([FeatureSourceA, FeatureSourceB, FeatureSourceC])],
 })
 export class SomeFeatureModule {}
-```
+
