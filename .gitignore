@@ -81,3 +81,6 @@ modules/*/schematics-core/testing
 migrations.json
 .env
 .nx/**
+
+# www reference files
+projects/www/src/app/reference/**/*.json

@@ -12,9 +12,86 @@ import { REGISTERED_ACTION_TYPES } from './globals';
 // Action creators taken from ts-action library and modified a bit to better
 // fit current NgRx usage. Thank you Nicholas Jamieson (@cartant).
 
+/**
+ * @description
+ * Creates a configured `Creator` function that, when called, returns an object in the shape of the
+ * `Action` interface with no additional metadata.
+ *
+ * @param type Describes the action that will be dispatched
+ *
+ * @usageNotes
+ *
+ * Declaring an action creator:
+ *
+ * ```ts
+ * export const increment = createAction('[Counter] Increment');
+ * ```
+ *
+ * Dispatching an action:
+ *
+ * ```ts
+ * store.dispatch(increment());
+ * ```
+ *
+ * Referencing the action in a reducer:
+ *
+ * ```ts
+ * on(CounterActions.increment, (state) => ({ ...state, count: state.count + 1 }))
+ * ```
+ *
+ * Referencing the action in an effect:
+ * ```ts
+ * effectName$ = createEffect(
+ *   () => this.actions$.pipe(
+ *     ofType(CounterActions.increment),
+ *     // ...
+ *   )
+ * );
+ * ```
+ */
 export function createAction<T extends string>(
   type: T
 ): ActionCreator<T, () => Action<T>>;
+/**
+ * @description
+ * Creates a configured `Creator` function that, when called, returns an object in the shape of the
+ * `Action` interface with metadata provided by the `props` or `emptyProps` functions.
+ *
+ * @param type Describes the action that will be dispatched
+ *
+ * @usageNotes
+ *
+ * Declaring an action creator:
+ *
+ * ```ts
+ * export const loginSuccess = createAction(
+ *   '[Auth/API] Login Success',
+ *   props<{ user: User }>()
+ * );
+ * ```
+ *
+ * Dispatching an action:
+ *
+ * ```ts
+ * store.dispatch(loginSuccess({ user: newUser }));
+ * ```
+ *
+ * Referencing the action in a reducer:
+ *
+ * ```ts
+ * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
+ * ```
+ *
+ * Referencing the action in an effect:
+ * ```ts
+ * effectName$ = createEffect(
+ *   () => this.actions$.pipe(
+ *     ofType(AuthApiActions.loginSuccess),
+ *     // ...
+ *   )
+ * );
+ * ```
+ */
 export function createAction<T extends string, P extends object>(
   type: T,
   config: ActionCreatorProps<P> & NotAllowedCheck<P>

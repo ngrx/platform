@@ -24,11 +24,23 @@
             "command": "yarn tsc -p modules/signals/tsconfig.schematics.json"
           },
           {
+            "command": "yarn rimraf node_modules/@ngrx/signals"
+          },
+          {
+            "command": "yarn mkdirp node_modules/@ngrx/signals"
+          },
+          {
+            "command": "ncp dist/modules/signals node_modules/@ngrx/signals"
+          },
+          {
             "command": "cpy LICENSE dist/modules/signals"
           }
         ]
       },
-      "outputs": ["{workspaceRoot}/dist/modules/signals"]
+      "outputs": [
+        "{workspaceRoot}/dist/modules/signals",
+        "{workspaceRoot}/node_modules/@ngrx/signals"
+      ]
     },
     "lint": {
       "executor": "@nx/linter:eslint",

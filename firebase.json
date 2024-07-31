@@ -1,0 +1,22 @@
+{
+  "projects": {
+    "default": "ngrx--previews"
+  },
+  "functions": {
+    "source": "dist/projects/www/analog/server",
+    "runtime": "nodejs22"
+  },
+  "hosting": [
+    {
+      "site": "ngrx--previews",
+      "public": "dist/projects/www/analog/public",
+      "cleanUrls": true,
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "server"
+        }
+      ]
+    }
+  ]
+}
