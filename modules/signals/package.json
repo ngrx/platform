@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/signals",
-  "version": "18.0.0",
+  "version": "18.0.2",
   "description": "Reactive Store and Set of Utilities for Angular Signals",
   "repository": {
     "type": "git",
