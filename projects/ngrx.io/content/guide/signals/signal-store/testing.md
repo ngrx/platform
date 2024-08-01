@@ -18,44 +18,44 @@
     * [Partial Mocking via Spies](#partial-mocking-via-spies)
 <!-- TOC -->
 
-This is still a draft. Markdown is used for better reability. The rendered version of this guide is available at https://github.com/rainerhahnekamp/ngrx/blob/docs/signals/testing/projects/ngrx.io/content/guide/signals/signal-store/testing.md.
+This is still a draft. Markdown is used for better readability. The rendered version of this guide is available at https://github.com/rainerhahnekamp/ngrx/blob/docs/signals/testing/projects/ngrx.io/content/guide/signals/signal-store/testing.md.
 
-Once we see that the content is ready, we will replace markdown with `<code>`.
+Once the content is finalized, we will replace markdown with `<code>` tags.
 
 The examples used in this guide are available at https://github.com/rainerhahnekamp/ngrx-signal-store-testing
 
 ## Introduction
 
-### On Testing in general
+### On Testing in General
 
-A Signal Store is a simple Angular Service. So the same testing techniques you use for services apply to Signal Stores as well. Because of that, this testing guide will focus on providing examples for common testing scenarios.
+A Signal Store is a simple Angular Service, so the same testing techniques you use for services apply to Signal Stores as well. This guide focuses on providing examples for common testing scenarios.
 
-A challenging part of testing is to know how to handle asynchronous tasks and mocking. The examples are using the Jest (v29.5), but the same principles apply to other testing frameworks.
+A challenging part of testing is knowing how to handle asynchronous tasks and mocking. The examples use Jest (v29.5), but the same principles apply to other testing frameworks.
 
-There are two scenarios when it comes to testing:
+There are two main scenarios for testing:
 
 1. Testing the `signalStore` itself,
-2. Testing a component/service which uses the Signal Store.
+2. Testing a component or service that uses the Signal Store.
 
-Whereas in the first scenario, mocking will happen for dependencies of the Signal Store, scenario 2 requires to mock the Signal Store itself.
+In the first scenario, you’ll mock the dependencies of the Signal Store, while in the second scenario, you’ll mock the Signal Store itself.
 
 ### What to test
 
-We are testing the SignalStore and are therefore communicating with it as any component or service: Via its public API.
+When testing the Signal Store, you should interact with it as any component or service would: through its public API.
 
-One of the main concerns of testing is their maintenance. The more tests are coupled to the internal implementation, the more likely the more often they will break. Public APIs are more stable and therefore less likely going to change.
+One of the main concerns of testing is maintainability. The more tests are coupled to the internal implementation, the more likely they are to break frequently. Public APIs are more stable and less likely to change.
 
-For example, if we want to test our store in a loading state, we shouldn't set the loading property directly. Instead, we should trigger the a loading method and assert against an exposed computed or slice. Why? Because we don't want to depend on the internal implementation, e.g. what properties are set when the loading state is triggered.
+For example, if you want to test your store in a loading state, you shouldn’t set the loading property directly. Instead, trigger a loading method and assert against an exposed computed property or slice. This approach avoids dependency on the internal implementation, such as specific properties set during the loading state.
 
-Looking at testing from this perspective it is clear that we don't want in any way access any private properties or methods of the Signal Store. We also don't run `patchState`, if the state is protected.
+From this perspective, it’s clear that you shouldn’t access any private properties or methods of the Signal Store. Additionally, avoid running `patchState` if the state is protected.
 
 ### TestBed or not?
 
-The Signal Store is a function that returns a class. That means a test can instantiate the class and test it without the TestBed.
+The Signal Store is a function that returns a class, allowing a test to instantiate the class and test it without the `TestBed`.
 
-In practice, though, you will use the `TestBed` because among many advantages, it allows you to mock dependencies and triggers the execution of `effects`.
+However, in practice, you’ll use the `TestBed because it offers many advantages, such as mocking dependencies and triggering the execution of effects.
 
-Furthermore, crucial features of the SignalStore will not work, if they don't run in an injection context. Examples are the hooks `rxMethod` and `inject` in `withMethods()`.
+Furthermore, crucial features of the SignalStore will not work, if they don't run in an injection context. Examples include the `rxMethod`, `inject` in `withMethods()`, and `withHooks()`.
 
 <div class="alert is-helpful">
 
@@ -92,7 +92,7 @@ export const MoviesStore = signalStore(
 );
 ```
 
-The `TestBed` will instantiate the `MoviesStore` and can then test it right away.
+The `TestBed` will instantiate the `MoviesStore`, allowing you to test it immediately.
 
 _movies.store.spec.ts_
 
@@ -147,7 +147,7 @@ describe('MoviesStore', () => {
 
 ### `withComputed`
 
-Testing derived values `withComputed` is also straightforward.
+Testing derived values of `withComputed` is also straightforward.
 
 _movies.store.ts_
 
@@ -254,7 +254,9 @@ describe('MoviesStore', () => {
 
 </div>
 
-We use the tools of Jest to manage asynchronous tasks. We don't use `fakeAsync` or `waitForAsync` because they both depend on zone.js and don't work for zoneless applications. The "Angular way" of testing asynchronous code is to use the `ComponentFixture.whenStable` method, which is not available in this context.
+We use Jest's tools to manage asynchronous tasks. We avoid using `fakeAsync` or `waitForAsync` as they depend on zone.js and are incompatible with zoneless applications.
+
+The "Angular way" of testing asynchronous code is to use the `ComponentFixture.whenStable` method, which is not available in this context.
 
 ### `rxMethod`
 
@@ -286,7 +288,7 @@ export const MoviesStore = signalStore(
 
 Since `rxMethod` accepts a string as a parameter, the test from before is still valid.
 
-What we want to test in addition is the proper handling of race conditions. That's why we actually use `switchMap` in the first place.
+What we want to test in addition is the proper handling of race conditions. That's why we use `switchMap`.
 
 Next to `number`, the parameter's type can be `Signal<number>` or `Observable<number>`.
 
@@ -401,9 +403,9 @@ describe('MoviesStore', () => {
 });
 ```
 
-Be aware of the glitch-free effect when of Signal's. `rxMethod` relies on `effect` which might be required to be triggered manually via `TestBed.flushEffects()`.
+Be aware of the glitch-free effect when using Signals. The `rxMethod` relies on `effect`, which might need to be triggered manually via `TestBed.flushEffects()`.
 
-If the mocked `MovieService` would work in a synchronous way, the following test would fail without `TestBed.flushEffects()`.
+If the mocked `MovieService` operates synchronously, the following test would fail without calling `TestBed.flushEffects()`.
 
 ```typescript
 describe('MoviesStore', () => {
@@ -438,7 +440,7 @@ describe('MoviesStore', () => {
 
 ### Custom extensions
 
-Let's say we have an extension that plays the movie and tracks how long the user watched it. It exposes a `play` and `stop` method and a Signal which contains the id of the movies and the time spent watching it.
+Suppose we have an extension that plays a movie and tracks how long the user watches it. This extension provides a `play` and `stop` method, as well as a Signal that contains the movie’s ID and the time spent watching it.
 
 ```typescript
 type PlayTrackingState = {
@@ -489,11 +491,11 @@ export const withPlayTracking = () =>
   );
 ```
 
-There are two options to test this extension. In combination with the `MoviesStore` or in isolation.
+There are two options for testing this extension: in combination with the `MoviesStore` or in isolation.
 
-If it is tested with the `MoviesStore`, it would be a test in the same way as the previous examples.
+When tested with the `MoviesStore`, it follows the same approach as the previous examples.
 
-To test only the extension, we need to create an artificial "Wrapper" Signal Store. The test itself is then also straightforward.
+To test the extension in isolation, we need to create an artificial “Wrapper” Signal Store. The test itself is then straightforward.
 
 ```typescript
 describe('withTrackedPlay', () => {
@@ -529,7 +531,7 @@ describe('withTrackedPlay', () => {
 
 ## Mocking the Signal Store
 
-What was valid for testing the Signal Store itself is also valid for mocking the Signal Store. The Signal Store presents itself as a Service which can be mocked in the same way as any other service and by using the same tools.
+What applies to testing the Signal Store itself also applies to mocking it. The Signal Store behaves like any other service, meaning it can be mocked using the same tools and techniques used for other services.
 
 A `MovieComponent` uses the `MoviesStore` to display the movies:
 
@@ -600,7 +602,7 @@ it('should show movies (native Jest)', () => {
 });
 ```
 
-The test mocks only those properties/methods which are used by the component in that particular test. Even if a Signal Store might have more methods, it is not the case that all of them have to be mocked.
+The test mocks only the properties and methods that are used by the component in that particular test. Even if a Signal Store has additional methods, it is not necessary to mock all of them.
 
 ### ng-mocks
 
@@ -625,9 +627,9 @@ it('should show movies (ng-mocks)', () => {
 });
 ```
 
-### Partial Mocking via Spies
+### "Partial Mocking" via Spies
 
-We could also use partial mocking to mock only the `load` method. This has the advantage that computeds work as they should and we don't have to mock them.
+We can also use partial mocking to mock only the `load` method. This approach has the advantage of allowing computeds to function correctly without needing to mock them.
 
 ```typescript
 it('should show movies (spy)', () => {
@@ -678,13 +680,8 @@ it('should show movies (spy)', () => {
 })
 ```
 
-This version requires that the test can modify the - even a protected - state.
+This version requires that the test can modify the state, even if it is protected.
 
-We are currently evaluating options for test helpers that allow state modification for protected state by not introducing new mocking features which are already covered by the testing frameworks.
+We are currently evaluating options for test helpers that allow state modification for protected states without introducing new mocking features that are already covered by existing testing frameworks.
 
-There is also a community project by Gergely Szerovay that provides a full-blown mocking library for Signal Stores: https://www.angularaddicts.com/p/how-to-mock-ngrx-signal-stores
-
-
-
-
-
+Additionally, there is a community project by Gergely Szerovay that provides a comprehensive mocking library for Signal Stores. You can find more details here: https://www.angularaddicts.com/p/how-to-mock-ngrx-signal-stores
