@@ -15,7 +15,7 @@
   * [Mocking the Signal Store](#mocking-the-signal-store)
     * [Native Mocking](#native-mocking)
     * [ng-mocks](#ng-mocks)
-    * [Further thoughts](#further-thoughts)
+    * [Partial Mocking via Spies](#partial-mocking-via-spies)
 <!-- TOC -->
 
 This is still a draft. Markdown is used for better reability. The rendered version of this guide is available at https://github.com/rainerhahnekamp/ngrx/blob/docs/signals/testing/projects/ngrx.io/content/guide/signals/signal-store/testing.md.
@@ -625,10 +625,66 @@ it('should show movies (ng-mocks)', () => {
 });
 ```
 
-### Further thoughts
+### Partial Mocking via Spies
 
-It might be necessary not to mock everything. For example, computed value should be the original ones. If that is the case, one propably also needs to set the initial inner state or change it during the test. Even when the Signal Store runs with protected state.
+We could also use partial mocking to mock only the `load` method. This has the advantage that computeds work as they should and we don't have to mock them.
 
-Given the need for non-mocked state and computeds, the question is, if we have to mock the Signal Store at all or just its dependencies.
+```typescript
+it('should show movies (spy)', () => {
+  TestBed.configureTestingModule({
+    imports: [MoviesComponent],
+    providers: [
+      {
+        provide: MoviesService,
+        useValue: {},
+      },
+    ],
+  });
 
-We are currently looking into ways on how this can be done without introducing mocking features which are already available in other libraries.
+  const moviesStore = TestBed.inject(MoviesStore);
+  const loadSpy = jest.spyOn(moviesStore, 'load');
+  const fixture = TestBed.createComponent(MoviesComponent);
+
+  fixture.autoDetectChanges(true);
+
+  const studio = loadSpy.mock.calls[0][0];
+  if (studio instanceof Observable || typeof studio === 'string') {
+    throw new Error('Expected signal');
+  }
+
+  const input: HTMLInputElement = fixture.debugElement.query(
+    By.css('input')
+  ).nativeElement;
+
+  expect(studio()).toBe('');
+
+  input.value = 'Warner Bros';
+  input.dispatchEvent(new Event('input'));
+  expect(studio()).toBe('Warner Bros');
+
+  patchState(moviesStore, {
+      movies:
+        [
+          {id: 1, name: 'Harry Potter'},
+          {id: 2, name: 'The Dark Knight'},
+        ]
+    }
+  );
+
+  fixture.detectChanges();
+
+  const movies = fixture.debugElement.queryAll(By.css('p')).map((el) => el.nativeElement.textContent);
+  expect(movies).toEqual(['1: Harry Potter', '2: The Dark Knight']);
+})
+```
+
+This version requires that the test can modify the - even a protected - state.
+
+We are currently evaluating options for test helpers that allow state modification for protected state by not introducing new mocking features which are already covered by the testing frameworks.
+
+There is also a community project by Gergely Szerovay that provides a full-blown mocking library for Signal Stores: https://www.angularaddicts.com/p/how-to-mock-ngrx-signal-stores
+
+
+
+
+
