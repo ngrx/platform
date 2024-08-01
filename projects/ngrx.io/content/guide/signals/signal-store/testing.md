@@ -18,7 +18,9 @@
     * [Further thoughts](#further-thoughts)
 <!-- TOC -->
 
-This is still a draft. Once we see that the content is ready, we will replace markdown with `<code>`
+This is still a draft. Markdown is used for better reability. The rendered version of this guide is available at https://github.com/rainerhahnekamp/ngrx/blob/docs/signals/testing/projects/ngrx.io/content/guide/signals/signal-store/testing.md.
+
+Once we see that the content is ready, we will replace markdown with `<code>`.
 
 The examples used in this guide are available at https://github.com/rainerhahnekamp/ngrx-signal-store-testing
 
@@ -626,5 +628,7 @@ it('should show movies (ng-mocks)', () => {
 ### Further thoughts
 
 It might be necessary not to mock everything. For example, computed value should be the original ones. If that is the case, one propably also needs to set the initial inner state or change it during the test. Even when the Signal Store runs with protected state.
+
+Given the need for non-mocked state and computeds, the question is, if we have to mock the Signal Store at all or just its dependencies.
 
 We are currently looking into ways on how this can be done without introducing mocking features which are already available in other libraries.
