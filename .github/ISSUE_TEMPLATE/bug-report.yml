@@ -34,7 +34,7 @@ body:
     id: reproduction
     attributes:
       label: Minimal reproduction of the bug/regression with instructions
-      description: Use the [NgRx Global Store StackBlitz example](https://stackblitz.com/edit/ngrx-seed) or [NgRx Signal Store StackBlitz example](https://stackblitz.com/~/github.com/rainerhahnekamp/ngrx-signal-store-starter?file=main.ts) to create a reproduction.
+      description: Use the [NgRx Global Store StackBlitz example](https://stackblitz.com/edit/ngrx-seed) or [NgRx Signal Store StackBlitz example](https://stackblitz.com/github/ngrx/signal-store-starter?file=src%2Fmain.ts) to create a reproduction.
       placeholder: If the bug/regression does not include a reproduction via StackBlitz or GitHub repo, your issue may be closed without resolution.
     validations:
       required: true
