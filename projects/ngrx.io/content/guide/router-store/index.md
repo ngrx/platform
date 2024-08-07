@@ -8,40 +8,13 @@ Detailed installation instructions can be found on the [Installation](guide/rout
 
 ## Setup
 
-<code-example header="app.module.ts">
-import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
-import { AppComponent } from './app.component';
-
-@NgModule({
-  imports: [
-    BrowserModule,
-    StoreModule.forRoot({
-      router: routerReducer,
-    }),
-    RouterModule.forRoot([
-      // routes
-    ]),
-    // Connects RouterModule with StoreModule, uses MinimalRouterStateSerializer by default
-    StoreRouterConnectingModule.forRoot(),
-  ],
-  bootstrap: [AppComponent],
-})
-export class AppModule {}
-</code-example>
-
-### Using the Standalone API
-
-Registering the router bindings can also be done using the standalone APIs if you are bootstrapping an Angular application using standalone features.
-
-<code-example header="main.ts">
-import { bootstrapApplication } from '@angular/platform-browser';
+<code-example header="app.config.ts">
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideStore } from '@ngrx/store';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 
-import { AppComponent } from './app.component';
-
-bootstrapApplication(AppComponent, {
+export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter([
       // routes
@@ -51,5 +24,11 @@ bootstrapApplication(AppComponent, {
     }),
     provideRouterStore()
   ],
-});
+};
 </code-example>
+
+<div class="alert is-helpful">
+
+An example of the `@ngrx/router-store` setup in module-based applications is available at the [following link](https://v17.ngrx.io/guide/router-store#setup).
+
+</div>
