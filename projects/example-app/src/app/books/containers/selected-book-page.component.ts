@@ -6,10 +6,14 @@ import { Observable } from 'rxjs';
 import { SelectedBookPageActions } from '@example-app/books/actions/selected-book-page.actions';
 import { Book } from '@example-app/books/models';
 import * as fromBooks from '@example-app/books/reducers';
+import { BookDetailComponent } from '../components';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'bc-selected-book-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [BookDetailComponent, AsyncPipe],
   template: `
     <bc-book-detail
       [book]="(book$ | async)!"

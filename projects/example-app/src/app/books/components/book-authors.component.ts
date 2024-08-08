@@ -1,9 +1,13 @@
 import { Component, Input } from '@angular/core';
 
 import { Book } from '@example-app/books/models';
+import { MaterialModule } from '@example-app/material';
+import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 
 @Component({
+  standalone: true,
   selector: 'bc-book-authors',
+  imports: [MaterialModule, AddCommasPipe],
   template: `
     <h5 mat-subheader>Written By:</h5>
     <span>

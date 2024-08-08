@@ -4,15 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { BehaviorSubject } from 'rxjs';
 
-import {
-  BookAuthorsComponent,
-  BookDetailComponent,
-} from '@example-app/books/components';
-import { SelectedBookPageComponent } from '@example-app/books/containers';
 import { ViewBookPageComponent } from '@example-app/books/containers';
 import { ViewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
-import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
-import { MaterialModule } from '@example-app/material';
 
 describe('View Book Page', () => {
   let fixture: ComponentFixture<ViewBookPageComponent>;
@@ -21,20 +14,13 @@ describe('View Book Page', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MaterialModule],
+      imports: [ViewBookPageComponent],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: { params: new BehaviorSubject({}) },
         },
         provideMockStore(),
-      ],
-      declarations: [
-        ViewBookPageComponent,
-        SelectedBookPageComponent,
-        BookDetailComponent,
-        BookAuthorsComponent,
-        AddCommasPipe,
       ],
     });
 
