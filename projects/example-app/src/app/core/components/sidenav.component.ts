@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MaterialModule } from '@example-app/material';
 
 @Component({
+  standalone: true,
   selector: 'bc-sidenav',
+  imports: [MaterialModule],
   template: `
     <mat-sidenav
       #sidenav

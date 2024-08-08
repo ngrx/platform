@@ -1,9 +1,22 @@
 import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { Book } from '@example-app/books/models';
+import { MaterialModule } from '@example-app/material';
+import { EllipsisPipe } from '@example-app/shared/pipes/ellipsis.pipe';
+import { BookAuthorsComponent } from './book-authors.component';
+import { NgIf } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'bc-book-preview',
+  imports: [
+    MaterialModule,
+    RouterLink,
+    EllipsisPipe,
+    BookAuthorsComponent,
+    NgIf,
+  ],
   template: `
     <a [routerLink]="['/books', id]">
       <mat-card>
