@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
+import { MaterialModule } from '@example-app/material';
 
 /**
  * The dialog will close with true if user clicks the ok button,
  * otherwise it will close with undefined.
  */
 @Component({
+  standalone: true,
+  imports: [MaterialModule],
   template: `
     <h2 mat-dialog-title>Logout</h2>
     <mat-dialog-content>Are you sure you want to logout?</mat-dialog-content>

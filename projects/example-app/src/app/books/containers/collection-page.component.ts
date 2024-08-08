@@ -6,10 +6,15 @@ import { Observable } from 'rxjs';
 import { CollectionPageActions } from '@example-app/books/actions/collection-page.actions';
 import { Book } from '@example-app/books/models';
 import * as fromBooks from '@example-app/books/reducers';
+import { MaterialModule } from '@example-app/material';
+import { BookPreviewListComponent } from '../components';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'bc-collection-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MaterialModule, BookPreviewListComponent, AsyncPipe],
   template: `
     <mat-card>
       <mat-card-title>My Collection</mat-card-title>

@@ -1,7 +1,10 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { MaterialModule } from '@example-app/material';
 
 @Component({
+  standalone: true,
   selector: 'bc-toolbar',
+  imports: [MaterialModule],
   template: `
     <mat-toolbar color="primary">
       <button mat-icon-button (click)="openMenu.emit()" aria-label="menu">

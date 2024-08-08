@@ -1,20 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 import { CollectionPageActions } from '@example-app/books/actions/collection-page.actions';
-import {
-  BookAuthorsComponent,
-  BookPreviewComponent,
-  BookPreviewListComponent,
-} from '@example-app/books/components';
 import { CollectionPageComponent } from '@example-app/books/containers';
 import * as fromBooks from '@example-app/books/reducers';
-import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
-import { EllipsisPipe } from '@example-app/shared/pipes/ellipsis.pipe';
-import { MaterialModule } from '@example-app/material';
 
 describe('Collection Page', () => {
   let fixture: ComponentFixture<CollectionPageComponent>;
@@ -22,16 +13,9 @@ describe('Collection Page', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, MaterialModule, RouterTestingModule],
-      declarations: [
-        CollectionPageComponent,
-        BookPreviewListComponent,
-        BookPreviewComponent,
-        BookAuthorsComponent,
-        AddCommasPipe,
-        EllipsisPipe,
-      ],
+      imports: [CollectionPageComponent],
       providers: [
+        provideNoopAnimations(),
         provideMockStore({
           selectors: [{ selector: fromBooks.selectBookCollection, value: [] }],
         }),

@@ -7,10 +7,14 @@ import { take } from 'rxjs/operators';
 import { FindBookPageActions } from '@example-app/books/actions/find-book-page.actions';
 import { Book } from '@example-app/books/models';
 import * as fromBooks from '@example-app/books/reducers';
+import { BookPreviewListComponent, BookSearchComponent } from '../components';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'bc-find-book-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [BookSearchComponent, AsyncPipe, BookPreviewListComponent],
   template: `
     <bc-book-search
       [query]="(searchQuery$ | async)!"

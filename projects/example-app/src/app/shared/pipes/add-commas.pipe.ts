@@ -1,6 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'bcAddCommas' })
+@Pipe({
+  standalone: true,
+  name: 'bcAddCommas',
+})
 export class AddCommasPipe implements PipeTransform {
   transform(authors: null | string[]) {
     if (!authors) {

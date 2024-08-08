@@ -1,7 +1,11 @@
+import { NgIf } from '@angular/common';
 import { Component, Output, Input, EventEmitter } from '@angular/core';
+import { MaterialModule } from '@example-app/material';
 
 @Component({
+  standalone: true,
   selector: 'bc-book-search',
+  imports: [MaterialModule, NgIf],
   template: `
     <mat-card>
       <mat-card-title>Find a Book</mat-card-title>

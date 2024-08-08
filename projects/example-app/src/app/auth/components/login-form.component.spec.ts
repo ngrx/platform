@@ -1,7 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LoginFormComponent } from '@example-app/auth/components';
-import { ReactiveFormsModule } from '@angular/forms';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 describe('Login Page', () => {
   let fixture: ComponentFixture<LoginFormComponent>;
@@ -9,8 +9,8 @@ describe('Login Page', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
-      declarations: [LoginFormComponent],
+      imports: [LoginFormComponent],
+      providers: [provideNoopAnimations()],
       schemas: [NO_ERRORS_SCHEMA],
     });
 
