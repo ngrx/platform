@@ -24,7 +24,7 @@ export default createRule<Options, MessageIds>({
     schema: [],
     messages: {
       [signalStoreShouldPreferProtectedState]: '{ protectedState: false } should be removed to prevent external state mutations.',
-      [signalStoreShouldPreferProtectedStateSuggest]: `{ protectedState: false } should be removed to prevent external state mutations.`,
+      [signalStoreShouldPreferProtectedStateSuggest]: 'Remove `{protectedState: false}`.',
     },
   },
   defaultOptions: [],
