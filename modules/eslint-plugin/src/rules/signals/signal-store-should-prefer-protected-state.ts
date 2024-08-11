@@ -23,7 +23,7 @@ export default createRule<Options, MessageIds>({
     },
     schema: [],
     messages: {
-      [signalStoreShouldPreferProtectedState]: `State changes should only managed by the Signal Store to prevent unintended modifications and provide clear ownership of where changes occur`,
+      [signalStoreShouldPreferProtectedState]: '{ protectedState: false } should be removed to prevent external state mutations.',
       [signalStoreShouldPreferProtectedStateSuggest]: `{ protectedState: false } should be removed to prevent external state mutations.`,
     },
   },
