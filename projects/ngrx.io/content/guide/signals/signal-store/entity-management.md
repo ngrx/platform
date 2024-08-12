@@ -276,7 +276,7 @@ type Todo = {
 };
 
 export const TodosStore = signalStore(
-  // 💡 entity type is specified using the `type` function
+  // 💡 Entity type is specified using the `type` function.
   withEntities({ entity: type&lt;Todo&gt;(), collection: 'todo' }),
 );
 
@@ -384,3 +384,41 @@ export const TodosStore = signalStore(
 );
 
 </code-example>
+
+## Private Entity Collections
+
+Private entity collections are defined by using the `_` prefix for the collection name.
+
+```ts
+const todoConfig = entityConfig({
+  entity: type<Todo>(),
+  // 👇 private collection
+  collection: '_todo',
+});
+
+const TodosStore = signalStore(
+  withEntities(todoConfig),
+  withComputed(({ _todoEntities }) => ({
+    // 👇 exposing entity array publicly
+    todos: _todoEntities,
+  }))
+);
+
+@Component({
+  /* ... */
+  template: `
+    <h1>Todos</h1>
+    <ngrx-todo-list [todos]="store.todos()" />
+  `,
+  providers: [TodosStore],
+})
+class TodosComponent {
+  readonly store = inject(TodosStore);
+}
+```
+
+<div class="alert is-helpful">
+
+Learn more about private store members in the [Private Store Members](/guide/signals/signal-store/private-store-members) guide.
+
+</div>

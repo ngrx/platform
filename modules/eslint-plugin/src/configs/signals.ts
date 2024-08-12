@@ -31,6 +31,7 @@ export default (
     },
     rules: {
       '@ngrx/signal-state-no-arrays-at-root-level': 'error',
+      '@ngrx/signal-store-feature-should-use-generic-type': 'error',
       '@ngrx/with-state-no-arrays-at-root-level': 'error',
     },
   },

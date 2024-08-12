@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/eslint-plugin",
-  "version": "18.0.1",
+  "version": "18.0.2",
   "description": "NgRx ESLint Plugin",
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
       "@ngrx/component-store",
       "@ngrx/component",
       "@ngrx/eslint-plugin",
+      "@ngrx/operators",
       "@ngrx/signals"
     ],
     "migrations": "./migrations/migration.json"

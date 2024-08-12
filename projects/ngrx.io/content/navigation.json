@@ -298,6 +298,10 @@
                   "url": "guide/signals/signal-store/state-tracking"
                 },
                 {
+                  "title": "Private Store Members",
+                  "url": "guide/signals/signal-store/private-store-members"
+                },
+                {
                   "title": "Custom Store Features",
                   "url": "guide/signals/signal-store/custom-store-features"
                 },
@@ -684,6 +688,11 @@
           "url": "https://twitter.com/ngrx_io",
           "title": "Twitter",
           "tooltip": "Twitter"
+        },
+        {
+          "url": "https://www.linkedin.com/company/ngrx/",
+          "title": "LinkedIn",
+          "tooltip": "LinkedIn"
         },
         {
           "url": "https://github.com/ngrx/platform",

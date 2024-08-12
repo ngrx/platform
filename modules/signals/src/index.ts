@@ -13,6 +13,7 @@ export {
   PartialStateUpdater,
   patchState,
   StateSource,
+  StateWatcher,
   watchState,
   WritableStateSource,
 } from './state-source';

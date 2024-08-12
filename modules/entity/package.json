@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/entity",
-  "version": "18.0.1",
+  "version": "18.0.2",
   "description": "Common utilities for entity reducers",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
     "@angular/core": "^18.0.0",
-    "@ngrx/store": "18.0.1",
+    "@ngrx/store": "18.0.2",
     "rxjs": "^6.5.3 || ^7.5.0"
   },
   "schematics": "./schematics/collection.json",
@@ -37,6 +37,7 @@
       "@ngrx/component-store",
       "@ngrx/component",
       "@ngrx/eslint-plugin",
+      "@ngrx/operators",
       "@ngrx/signals"
     ],
     "migrations": "./migrations/migration.json"

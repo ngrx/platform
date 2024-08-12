@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/component",
-  "version": "18.0.1",
+  "version": "18.0.2",
   "description": "Reactive Extensions for Angular Components",
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
       "@ngrx/component-store",
       "@ngrx/component",
       "@ngrx/eslint-plugin",
+      "@ngrx/operators",
       "@ngrx/signals"
     ],
     "migrations": "./migrations/migration.json"

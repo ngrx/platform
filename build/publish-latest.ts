@@ -17,7 +17,7 @@ export async function publishLatestToNpm() {
     'schematics',
     'eslint-plugin',
     'data',
-    // 'signals',
+    'signals',
     'operators',
   ];
 
