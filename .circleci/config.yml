@@ -82,6 +82,7 @@ jobs:
       - run:
           name: Run All Unit Tests
           command: yarn nx run-many -t test
+          no_output_timeout: 20m
 
   test-affected:
     <<: *run_in_browser
