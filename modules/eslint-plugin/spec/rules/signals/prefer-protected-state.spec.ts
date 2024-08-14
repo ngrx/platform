@@ -1,9 +1,9 @@
 import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
 import * as path from 'path';
 import rule, {
-  signalStoreShouldPreferProtectedState,
-  signalStoreShouldPreferProtectedStateSuggest,
-} from '../../../src/rules/signals/signal-store-should-prefer-protected-state';
+  preferProtectedState,
+  preferProtectedStateSuggest,
+} from '../../../src/rules/signals/prefer-protected-state';
 import { ruleTester, fromFixture } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
@@ -21,11 +21,11 @@ const invalid: () => RunTests['invalid'] = () => [
   fromFixture(
     `
 const mySignalStore = signalStore({ providedIn: 'root', protectedState: false, });
-                                                        ~~~~~~~~~~~~~~~~~~~~~ [${signalStoreShouldPreferProtectedState} suggest]`,
+                                                        ~~~~~~~~~~~~~~~~~~~~~ [${preferProtectedState} suggest]`,
     {
       suggestions: [
         {
-          messageId: signalStoreShouldPreferProtectedStateSuggest,
+          messageId: preferProtectedStateSuggest,
           output: `
 const mySignalStore = signalStore({ providedIn: 'root',  });`,
         },
@@ -35,11 +35,11 @@ const mySignalStore = signalStore({ providedIn: 'root',  });`,
   fromFixture(
     `
 const mySignalStore = signalStore({ providedIn: 'root', protectedState: false  ,  });
-                                                        ~~~~~~~~~~~~~~~~~~~~~ [${signalStoreShouldPreferProtectedState} suggest]`,
+                                                        ~~~~~~~~~~~~~~~~~~~~~ [${preferProtectedState} suggest]`,
     {
       suggestions: [
         {
-          messageId: signalStoreShouldPreferProtectedStateSuggest,
+          messageId: preferProtectedStateSuggest,
           output: `
 const mySignalStore = signalStore({ providedIn: 'root',   });`,
         },
@@ -49,13 +49,13 @@ const mySignalStore = signalStore({ providedIn: 'root',   });`,
   fromFixture(
     `
 const mySignalStore = signalStore({ protectedState: false, });
-                                    ~~~~~~~~~~~~~~~~~~~~~ [${signalStoreShouldPreferProtectedState} suggest]`,
+                                    ~~~~~~~~~~~~~~~~~~~~~ [${preferProtectedState} suggest]`,
     {
       suggestions: [
         {
-          messageId: signalStoreShouldPreferProtectedStateSuggest,
+          messageId: preferProtectedStateSuggest,
           output: `
-const mySignalStore = signalStore({  });`,
+const mySignalStore = signalStore();`,
         },
       ],
     }
@@ -63,11 +63,11 @@ const mySignalStore = signalStore({  });`,
   fromFixture(
     `
 const mySignalStore = signalStore({ protectedState: false, providedIn: 'root' });
-                                    ~~~~~~~~~~~~~~~~~~~~~ [${signalStoreShouldPreferProtectedState} suggest]`,
+                                    ~~~~~~~~~~~~~~~~~~~~~ [${preferProtectedState} suggest]`,
     {
       suggestions: [
         {
-          messageId: signalStoreShouldPreferProtectedStateSuggest,
+          messageId: preferProtectedStateSuggest,
           output: `
 const mySignalStore = signalStore({  providedIn: 'root' });`,
         },

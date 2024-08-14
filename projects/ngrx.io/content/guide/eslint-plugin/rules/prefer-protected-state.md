@@ -1,6 +1,6 @@
-# signal-store-should-prefer-protected-state
+# prefer-protected-state
 
-A Signal Store should prefer protected state.
+A Signal Store prefers protected state.
 
 - **Type**: suggestion
 - **Fixable**: No
@@ -13,7 +13,7 @@ A Signal Store should prefer protected state.
 
 ## Rule Details
 
-This rule should ensure that state changes are only managed by the Signal Store to prevent unintended modifications and provide clear ownership of where changes occur.
+This rule ensures that state changes are only managed by the Signal Store to prevent unintended modifications and provide clear ownership of where changes occur.
 
 Examples of **incorrect** code for this rule:
 
