@@ -123,11 +123,12 @@ module.exports = tseslint.config({
 
 ### signals
 
-| Name                                                                                                                          | Description                                                                       | Category | Fixable | Has suggestions | Configurable | Requires type information |
-| ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | -------- | ------- | --------------- | ------------ | ------------------------- |
-| [@ngrx/signal-state-no-arrays-at-root-level](/guide/eslint-plugin/rules/signal-state-no-arrays-at-root-level)                 | signalState should accept a record or dictionary as an input argument.            | problem  | No      | No              | No           | No                        |
-| [@ngrx/signal-store-feature-should-use-generic-type](/guide/eslint-plugin/rules/signal-store-feature-should-use-generic-type) | A custom Signal Store feature that accepts an input should define a generic type. | problem  | Yes     | No              | No           | No                        |
-| [@ngrx/with-state-no-arrays-at-root-level](/guide/eslint-plugin/rules/with-state-no-arrays-at-root-level)                     | withState should accept a record or dictionary as an input argument.              | problem  | No      | No              | No           | Yes                       |
+| Name                                                                                                                         | Description                                                                       | Category   | Fixable | Has suggestions | Configurable | Requires type information |
+|------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------| ---------- |---------| --------------- | ------------ |--------------------------|
+| [@ngrx/signal-state-no-arrays-at-root-level](/guide/eslint-plugin/rules/signal-state-no-arrays-at-root-level)                | signalState should accept a record or dictionary as an input argument.            | problem    | No      | No              | No           | No                       |
+| [@ngrx/signal-store-feature-should-use-generic-type](/guide/eslint-plugin/rules/signal-store-feature-should-use-generic-type) | A custom Signal Store feature that accepts an input should define a generic type. | problem    | Yes     | No              | No           | No                       |
+| [@ngrx/prefer-protected-state](/guide/eslint-plugin/rules/prefer-protected-state)                                            | A Signal Store prefers protected state.                                           | suggestion | No      | Yes             | No           | No                       |
+| [@ngrx/with-state-no-arrays-at-root-level](/guide/eslint-plugin/rules/with-state-no-arrays-at-root-level)                    | withState should accept a record or dictionary as an input argument.              | problem    | No      | No              | No           | Yes                      |
 
 ### store
 
