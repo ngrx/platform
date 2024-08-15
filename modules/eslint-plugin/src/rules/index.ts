@@ -35,7 +35,7 @@ import preferConcatLatestFrom from './operators/prefer-concat-latest-from';
 import signalStateNoArraysAtRootLevel from './signals/signal-state-no-arrays-at-root-level';
 import signalStoreFeatureShouldUseGenericType from './signals/signal-store-feature-should-use-generic-type';
 import withStateNoArraysAtRootLevel from './signals/with-state-no-arrays-at-root-level';
-import signalStoreShouldPreferProtectedState from './signals/prefer-protected-state';
+import preferProtectedState from './signals/prefer-protected-state';
 
 export const rules = {
   // component-store
@@ -80,6 +80,6 @@ export const rules = {
   'signal-state-no-arrays-at-root-level': signalStateNoArraysAtRootLevel,
   'signal-store-feature-should-use-generic-type':
     signalStoreFeatureShouldUseGenericType,
-  'prefer-protected-state': signalStoreShouldPreferProtectedState,
+  'prefer-protected-state': preferProtectedState,
   'with-state-no-arrays-at-root-level': withStateNoArraysAtRootLevel,
 };
