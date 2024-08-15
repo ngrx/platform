@@ -68,6 +68,8 @@ export const reducers: ActionReducerMap&lt;State&gt; = {
 };
 </code-example>
 
+**In your application config**
+
 <code-example header="app.config.ts">
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
