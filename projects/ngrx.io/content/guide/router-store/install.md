@@ -20,7 +20,7 @@ This command will automate the following steps:
 
 1. Update `package.json` > `dependencies` with `@ngrx/router-store`.
 2. Run `npm install` to install those dependencies.
-3. By default it adds provideRouterStore() to the ApplicationConfig in the app.config.ts file. If you provided flags then the command will attempt to locate and update the corresponding config found by the flags.
+3. By default it adds `provideRouterStore()` to the `ApplicationConfig` in the `app.config.ts` file. If you provided flags then the command will attempt to locate and update the corresponding config found by the flags.
 
 ## Installing with `npm`
 
