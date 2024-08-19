@@ -68,27 +68,10 @@ export const reducers: ActionReducerMap&lt;State&gt; = {
 };
 </code-example>
 
-**In your AppModule**
+**In your application config**
 
-<code-example header="app.module.ts">
-@NgModule({
-  imports: [
-    StoreModule.forRoot(reducers),
-    RouterModule.forRoot([
-      // routes
-    ]),
-    StoreRouterConnectingModule.forRoot({
-      serializer: CustomSerializer
-    })
-  ]
-})
-export class AppModule {}
-</code-example>
-
-### Using the Standalone API
-
-<code-example header="main.ts">
-import { bootstrapApplication } from '@angular/platform-browser';
+<code-example header="app.config.ts">
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideStore } from '@ngrx/store';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
@@ -96,7 +79,7 @@ import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { AppComponent } from './app.component';
 import { CustomSerializer } from './custom-serializer';
 
-bootstrapApplication(AppComponent, {
+export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter([
       // routes
@@ -108,15 +91,15 @@ bootstrapApplication(AppComponent, {
       serializer: CustomSerializer
     })
   ],
-});
+};
 </code-example>
 
 ## Navigation action timing
 
 `ROUTER_NAVIGATION` is by default dispatched before any guards or resolvers run. This may not always be ideal, for example if you rely on the action to be dispatched after guards and resolvers successfully ran and the new route will be activated. You can change the dispatch timing by providing the corresponding config:
 
-<code-example header="app.module.ts">
-StoreRouterConnectingModule.forRoot({
+<code-example header="app.config.ts">
+provideRouterStore({
   navigationActionTiming: NavigationActionTiming.PostActivation,
 });
 </code-example>
@@ -131,8 +114,8 @@ This property decides which router serializer should be used. If there is a cust
 
 The difference between `FullRouterStateSerializer` and the `MinimalRouterStateSerializer` is that this serializer is fully serializable. To make the state and the actions serializable, the properties `paramMap`, `queryParamMap` and `component` are ignored.
 
-<code-example header="app.module.ts">
-StoreRouterConnectingModule.forRoot({
+<code-example header="app.config.ts">
+provideRouterStore({
   routerState: RouterState.Minimal,
 });
 </code-example>
@@ -143,8 +126,8 @@ When this property is set to `RouterState.Full`, `@ngrx/router-store` uses the `
 
 The metadata on the action contains the Angular router event, e.g. `NavigationStart` and `RoutesRecognized`.
 
-<code-example header="app.module.ts">
-StoreRouterConnectingModule.forRoot({
+<code-example header="app.config.ts">
+provideRouterStore({
   routerState: RouterState.Full,
 });
 </code-example>
