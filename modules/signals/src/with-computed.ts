@@ -13,7 +13,7 @@ export function withComputed<
   ComputedSignals extends SignalsDictionary
 >(
   signalsFactory: (
-    store: Prettify<StateSignals<Input['state']> & Input['computed']>
+    store: Prettify<StateSignals<Input['state']> & Input['computed'] & Input['methods']>
   ) => ComputedSignals
 ): SignalStoreFeature<
   Input,
@@ -23,6 +23,7 @@ export function withComputed<
     const computedSignals = signalsFactory({
       ...store.stateSignals,
       ...store.computedSignals,
+      ...store.methods
     });
     assertUniqueStoreMembers(store, Object.keys(computedSignals));
 
