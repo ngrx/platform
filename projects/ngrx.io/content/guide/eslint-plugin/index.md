@@ -44,7 +44,7 @@ To override a specific rule, add it to the `rules` section and adjust the severi
 
 ```json
 {
-  "extends": ["@ngrx/all"],
+  "extends": ["plugin:@ngrx/all"],
   "rules": {
     "@ngrx/good-action-hygiene": "warn"
   }
