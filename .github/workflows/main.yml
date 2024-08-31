@@ -1,7 +1,9 @@
-name: CI
+name: main
 
 on:
-  pull_request: {}
+  push:
+    branches:
+      - main
 
 permissions:
   actions: read
@@ -25,7 +27,7 @@ jobs:
           cache-dependency-path: 'yarn.lock'
       - run: yarn --frozen-lockfile --non-interactive
 
-  lint-affected:
+  lint:
     runs-on: ubuntu-latest
     needs: install
     steps:
@@ -39,9 +41,9 @@ jobs:
           cache-dependency-path: 'yarn.lock'
       - run: yarn --frozen-lockfile --non-interactive
       - uses: nrwl/nx-set-shas@v4
-      - run: yarn nx affected -t lint
+      - run: yarn nx run-many -t lint
 
-  test-affected:
+  test:
     runs-on: ubuntu-latest
     needs: install
     steps:
@@ -55,9 +57,9 @@ jobs:
           cache-dependency-path: 'yarn.lock'
       - run: yarn --frozen-lockfile --non-interactive
       - uses: nrwl/nx-set-shas@v4
-      - run: yarn nx affected -t test
+      - run: yarn nx run-many -t test
 
-  e2e-affected:
+  e2e:
     runs-on: ubuntu-latest
     needs: install
     steps:
@@ -71,9 +73,9 @@ jobs:
           cache-dependency-path: 'yarn.lock'
       - run: yarn --frozen-lockfile --non-interactive
       - uses: nrwl/nx-set-shas@v4
-      - run: yarn nx affected -t e2e --exclude=docs-app
+      - run: yarn nx run-many -t e2e --exclude=docs-app
 
-  build-affected:
+  build:
     runs-on: ubuntu-latest
     needs: install
     steps:
@@ -87,7 +89,7 @@ jobs:
           cache-dependency-path: 'yarn.lock'
       - run: yarn --frozen-lockfile --non-interactive
       - uses: nrwl/nx-set-shas@v4
-      - run: yarn nx affected -t build
+      - run: yarn build
 
   schematics-core-check:
     runs-on: ubuntu-latest
