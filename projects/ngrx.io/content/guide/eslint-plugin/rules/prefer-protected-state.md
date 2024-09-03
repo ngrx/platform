@@ -17,17 +17,19 @@ This rule ensures that state changes are only managed by the Signal Store to pre
 
 Examples of **incorrect** code for this rule:
 
+<!-- prettier-ignore -->
 ```ts
 // SUGGESTION ❗
 const Store = signalStore(
   { protectedState: false },
-    ~~~~~~~~~~~~~~~~~~~~~ [warning]
+//  ~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
   withState({}),
 );
 ```
 
 Examples of **correct** code for this rule:
 
+<!-- prettier-ignore -->
 ```ts
 // GOOD ✅
 const Store = signalStore(
@@ -35,6 +37,7 @@ const Store = signalStore(
 );
 ```
 
+<!-- prettier-ignore -->
 ```ts
 // GOOD ✅
 const Store = signalStore(

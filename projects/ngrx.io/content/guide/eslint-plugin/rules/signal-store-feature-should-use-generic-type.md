@@ -10,3 +10,177 @@ A custom Signal Store feature that accepts an input should define a generic type
 
 <!-- Everything above this generated, do not edit -->
 <!-- MANUAL-DOC:START -->
+
+## Rule Details
+
+This rule ensure that Signal Store feature that accepts an input defines a generic type.
+
+Examples of **incorrect** code for this rule:
+
+<!-- prettier-ignore -->
+```ts
+// PROBLEM ❌
+const withY = () => signalStoreFeature(
+//                  ~~~~~~~~~~~~~~~~~~ [${messageId}]
+    { state: type<{ y: number }>() },
+    withState({})
+  );
+```
+
+```ts
+// PROBLEM ❌
+const withY = () => signalStoreFeature(
+//                  ~~~~~~~~~~~~~~~~~~ [${messageId}]
+  type<{ state: { y: number } }>(),
+  withState({})
+);
+```
+
+<!-- prettier-ignore -->
+```ts
+// PROBLEM ❌
+const withY = () => {
+  return signalStoreFeature(
+//       ~~~~~~~~~~~~~~~~~~ [${messageId}]
+    { state: type<{ y: number }>() },
+    withState({})
+  );
+}
+```
+
+<!-- prettier-ignore -->
+```ts
+// PROBLEM ❌
+const withY = () => {
+  return signalStoreFeature(
+//       ~~~~~~~~~~~~~~~~~~ [${messageId}]
+    type<{ state: { y: number } }>(),
+    withState({})
+  );
+}
+```
+
+<!-- prettier-ignore -->
+```ts
+// PROBLEM ❌
+const withY = () => {
+  return signalStoreFeature(
+//       ~~~~~~~~~~~~~~~~~~ [${messageId}]
+    type<{ state: { y: number } }>(),
+    withState({})
+  );
+}
+```
+
+<!-- prettier-ignore -->
+```ts
+// PROBLEM ❌
+function withY() {
+  return signalStoreFeature(
+//       ~~~~~~~~~~~~~~~~~~ [${messageId}]
+    type<{ state: { y: number } }>(),
+    withState({})
+  );
+}
+```
+
+<!-- prettier-ignore -->
+```ts
+// PROBLEM ❌
+function withY() {
+  return signalStoreFeature(
+//       ~~~~~~~~~~~~~~~~~~ [${messageId}]
+    { state: type<{ y: number }>() },
+    withState({})
+  );
+}
+```
+
+<!-- prettier-ignore -->
+```ts
+// PROBLEM ❌
+function withY() {
+  const feature = signalStoreFeature(
+//                ~~~~~~~~~~~~~~~~~~ [${messageId}]
+    { state: type<{ y: number }>() },
+    withState({})
+  );
+  return feature;
+}
+```
+
+Examples of **correct** code for this rule:
+
+<!-- prettier-ignore -->
+```ts
+// GOOD ✅
+const withY = <Y>() => signalStoreFeature(
+  { state: type<{ y: Y }>() },
+  withState({})
+);
+```
+
+<!-- prettier-ignore -->
+```ts
+// GOOD ✅
+export const withY = <Y>() => signalStoreFeature(
+  type<{ state: { y: Y } }>(),
+  withState({})
+);
+```
+
+<!-- prettier-ignore -->
+```ts
+// GOOD ✅
+const withY = <_>() => {
+  return signalStoreFeature(
+    { state: type<{ y: number }>() },
+    withState({})
+  );
+};
+```
+
+<!-- prettier-ignore -->
+```ts
+// GOOD ✅
+export const withY = <_>() => {
+  return signalStoreFeature(
+    type<{ state: { y: number } }>(),
+    withState({})
+  );
+};
+```
+
+<!-- prettier-ignore -->
+```ts
+// GOOD ✅
+function withY<Y>() {
+  return signalStoreFeature(
+    { state: type<{ y: Y }>() },
+    withState({})
+  );
+}
+```
+
+<!-- prettier-ignore -->
+```ts
+// GOOD ✅
+export function withY<_>() {
+  return signalStoreFeature(
+    type<{ state: { y: number } }>(),
+    withState({})
+  );
+}
+```
+
+<!-- prettier-ignore -->
+```ts
+// GOOD ✅
+function withY<_>() {
+  const feature = signalStoreFeature(
+    type<{ state: { y: number } }>(),
+    withState({})
+  );
+  return feature;
+}
+```
