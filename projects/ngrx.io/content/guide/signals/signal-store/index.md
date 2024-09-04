@@ -222,6 +222,8 @@ For more details on the `patchState` function, refer to the [Updating State](/gu
 
 </div>
 
+### SignalStore's state protection
+
 <div class="alert is-important">
 
 By default, SignalStore's state is protected from external modifications, ensuring a consistent and predictable data flow.

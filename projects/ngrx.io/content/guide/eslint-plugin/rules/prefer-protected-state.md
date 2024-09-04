@@ -42,3 +42,7 @@ const Store = signalStore(
   withState({}),
 );
 ```
+
+## Further reading
+
+- [SignalStore's state protection](guide/signals/signal-store#signalstores-state-protection)
