@@ -19,7 +19,6 @@ Examples of **incorrect** code for this rule:
 
 <!-- prettier-ignore -->
 ```ts
-// SUGGESTION ❗
 const Store = signalStore(
   { protectedState: false },
 //  ~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
@@ -31,7 +30,6 @@ Examples of **correct** code for this rule:
 
 <!-- prettier-ignore -->
 ```ts
-// GOOD ✅
 const Store = signalStore(
   withState({}),
 );
@@ -39,7 +37,6 @@ const Store = signalStore(
 
 <!-- prettier-ignore -->
 ```ts
-// GOOD ✅
 const Store = signalStore(
   { protectedState: true },
   withState({}),

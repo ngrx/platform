@@ -19,7 +19,6 @@ Examples of **incorrect** code for this rule:
 
 <!-- prettier-ignore -->
 ```ts
-// PROBLEM ❌
 const withY = () => signalStoreFeature(
 //                  ~~~~~~~~~~~~~~~~~~ [${messageId}]
     { state: type<{ y: number }>() },
@@ -28,17 +27,16 @@ const withY = () => signalStoreFeature(
 ```
 
 ```ts
-// PROBLEM ❌
-const withY = () => signalStoreFeature(
-//                  ~~~~~~~~~~~~~~~~~~ [${messageId}]
-  type<{ state: { y: number } }>(),
-  withState({})
-);
+const withY = () =>
+  signalStoreFeature(
+    //                  ~~~~~~~~~~~~~~~~~~ [${messageId}]
+    type<{ state: { y: number } }>(),
+    withState({})
+  );
 ```
 
 <!-- prettier-ignore -->
 ```ts
-// PROBLEM ❌
 const withY = () => {
   return signalStoreFeature(
 //       ~~~~~~~~~~~~~~~~~~ [${messageId}]
@@ -50,7 +48,6 @@ const withY = () => {
 
 <!-- prettier-ignore -->
 ```ts
-// PROBLEM ❌
 const withY = () => {
   return signalStoreFeature(
 //       ~~~~~~~~~~~~~~~~~~ [${messageId}]
@@ -62,7 +59,6 @@ const withY = () => {
 
 <!-- prettier-ignore -->
 ```ts
-// PROBLEM ❌
 const withY = () => {
   return signalStoreFeature(
 //       ~~~~~~~~~~~~~~~~~~ [${messageId}]
@@ -74,7 +70,6 @@ const withY = () => {
 
 <!-- prettier-ignore -->
 ```ts
-// PROBLEM ❌
 function withY() {
   return signalStoreFeature(
 //       ~~~~~~~~~~~~~~~~~~ [${messageId}]
@@ -86,7 +81,6 @@ function withY() {
 
 <!-- prettier-ignore -->
 ```ts
-// PROBLEM ❌
 function withY() {
   return signalStoreFeature(
 //       ~~~~~~~~~~~~~~~~~~ [${messageId}]
@@ -98,7 +92,6 @@ function withY() {
 
 <!-- prettier-ignore -->
 ```ts
-// PROBLEM ❌
 function withY() {
   const feature = signalStoreFeature(
 //                ~~~~~~~~~~~~~~~~~~ [${messageId}]
@@ -113,7 +106,6 @@ Examples of **correct** code for this rule:
 
 <!-- prettier-ignore -->
 ```ts
-// GOOD ✅
 const withY = <Y>() => signalStoreFeature(
   { state: type<{ y: Y }>() },
   withState({})
@@ -122,7 +114,6 @@ const withY = <Y>() => signalStoreFeature(
 
 <!-- prettier-ignore -->
 ```ts
-// GOOD ✅
 export const withY = <Y>() => signalStoreFeature(
   type<{ state: { y: Y } }>(),
   withState({})
@@ -131,7 +122,6 @@ export const withY = <Y>() => signalStoreFeature(
 
 <!-- prettier-ignore -->
 ```ts
-// GOOD ✅
 const withY = <_>() => {
   return signalStoreFeature(
     { state: type<{ y: number }>() },
@@ -142,7 +132,6 @@ const withY = <_>() => {
 
 <!-- prettier-ignore -->
 ```ts
-// GOOD ✅
 export const withY = <_>() => {
   return signalStoreFeature(
     type<{ state: { y: number } }>(),
@@ -153,7 +142,6 @@ export const withY = <_>() => {
 
 <!-- prettier-ignore -->
 ```ts
-// GOOD ✅
 function withY<Y>() {
   return signalStoreFeature(
     { state: type<{ y: Y }>() },
@@ -164,7 +152,6 @@ function withY<Y>() {
 
 <!-- prettier-ignore -->
 ```ts
-// GOOD ✅
 export function withY<_>() {
   return signalStoreFeature(
     type<{ state: { y: number } }>(),
@@ -175,7 +162,6 @@ export function withY<_>() {
 
 <!-- prettier-ignore -->
 ```ts
-// GOOD ✅
 function withY<_>() {
   const feature = signalStoreFeature(
     type<{ state: { y: number } }>(),
