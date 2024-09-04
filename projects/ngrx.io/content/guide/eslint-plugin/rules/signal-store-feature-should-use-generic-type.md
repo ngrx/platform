@@ -20,16 +20,17 @@ Examples of **incorrect** code for this rule:
 <!-- prettier-ignore -->
 ```ts
 const withY = () => signalStoreFeature(
-//                  ~~~~~~~~~~~~~~~~~~ [${messageId}]
+//                  ~~~~~~~~~~~~~~~~~~ [ESLint: Add an unused generic type to the function creating the signal store feature.]
     { state: type<{ y: number }>() },
     withState({})
   );
 ```
 
+<!-- prettier-ignore -->
 ```ts
 const withY = () =>
   signalStoreFeature(
-    //                  ~~~~~~~~~~~~~~~~~~ [${messageId}]
+//~~~~~~~~~~~~~~~~~~ [ESLint: Add an unused generic type to the function creating the signal store feature.]
     type<{ state: { y: number } }>(),
     withState({})
   );
@@ -39,7 +40,7 @@ const withY = () =>
 ```ts
 const withY = () => {
   return signalStoreFeature(
-//       ~~~~~~~~~~~~~~~~~~ [${messageId}]
+//       ~~~~~~~~~~~~~~~~~~ [ESLint: Add an unused generic type to the function creating the signal store feature.]
     { state: type<{ y: number }>() },
     withState({})
   );
@@ -50,7 +51,7 @@ const withY = () => {
 ```ts
 const withY = () => {
   return signalStoreFeature(
-//       ~~~~~~~~~~~~~~~~~~ [${messageId}]
+//       ~~~~~~~~~~~~~~~~~~ [ESLint: Add an unused generic type to the function creating the signal store feature.]
     type<{ state: { y: number } }>(),
     withState({})
   );
@@ -61,7 +62,7 @@ const withY = () => {
 ```ts
 const withY = () => {
   return signalStoreFeature(
-//       ~~~~~~~~~~~~~~~~~~ [${messageId}]
+//       ~~~~~~~~~~~~~~~~~~ [ESLint: Add an unused generic type to the function creating the signal store feature.]
     type<{ state: { y: number } }>(),
     withState({})
   );
@@ -72,7 +73,7 @@ const withY = () => {
 ```ts
 function withY() {
   return signalStoreFeature(
-//       ~~~~~~~~~~~~~~~~~~ [${messageId}]
+//       ~~~~~~~~~~~~~~~~~~ [ESLint: Add an unused generic type to the function creating the signal store feature.]
     type<{ state: { y: number } }>(),
     withState({})
   );
@@ -83,7 +84,7 @@ function withY() {
 ```ts
 function withY() {
   return signalStoreFeature(
-//       ~~~~~~~~~~~~~~~~~~ [${messageId}]
+//       ~~~~~~~~~~~~~~~~~~ [ESLint: Add an unused generic type to the function creating the signal store feature.]
     { state: type<{ y: number }>() },
     withState({})
   );
@@ -94,7 +95,7 @@ function withY() {
 ```ts
 function withY() {
   const feature = signalStoreFeature(
-//                ~~~~~~~~~~~~~~~~~~ [${messageId}]
+//                ~~~~~~~~~~~~~~~~~~ [ESLint: Add an unused generic type to the function creating the signal store feature.]
     { state: type<{ y: number }>() },
     withState({})
   );

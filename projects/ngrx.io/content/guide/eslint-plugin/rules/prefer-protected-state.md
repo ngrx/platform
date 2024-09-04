@@ -21,7 +21,7 @@ Examples of **incorrect** code for this rule:
 ```ts
 const Store = signalStore(
   { protectedState: false },
-//  ~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
+//  ~~~~~~~~~~~~~~~~~~~~~ [ESLint: { protectedState: false } should be removed to prevent external state mutations.]
   withState({}),
 );
 ```
