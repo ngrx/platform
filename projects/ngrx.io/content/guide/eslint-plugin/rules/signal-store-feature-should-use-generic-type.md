@@ -170,3 +170,7 @@ function withY<_>() {
   return feature;
 }
 ```
+
+## Further reading
+
+- [Custom Store Features](guide/signals/signal-store/custom-store-features)
