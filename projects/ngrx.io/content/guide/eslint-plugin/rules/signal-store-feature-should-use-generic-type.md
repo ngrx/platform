@@ -174,4 +174,4 @@ function withY<_>() {
 
 ## Further reading
 
-- [Custom Store Features](guide/signals/signal-store/custom-store-features)
+- [Known TypeScript Issues with Custom Store Features](guide/signals/signal-store/custom-store-features#known-typescript-issues)
