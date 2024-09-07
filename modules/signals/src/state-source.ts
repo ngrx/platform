@@ -8,7 +8,7 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { SIGNAL } from '@angular/core/primitives/signals';
-import { Prettify } from './ts-helpers';
+import { DeepReadonly, Prettify } from './ts-helpers';
 
 const STATE_WATCHERS = new WeakMap<object, Array<StateWatcher<any>>>();
 
@@ -23,8 +23,8 @@ export type StateSource<State extends object> = {
 };
 
 export type PartialStateUpdater<State extends object> = (
-  state: State
-) => Partial<State>;
+  state: DeepReadonly<State>
+) => Partial<State | DeepReadonly<State>>;
 
 export type StateWatcher<State extends object> = (
   state: NoInfer<State>

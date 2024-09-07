@@ -1,5 +1,6 @@
 import { expecter } from 'ts-snippet';
 import { compilerOptions } from './helpers';
+import { patchState, signalState } from '@ngrx/signals';
 
 describe('patchState', () => {
   const expectSnippet = expecter(
@@ -68,5 +69,48 @@ describe('patchState', () => {
     expectSnippet('patchState(state, addNumber(10), increment())').toFail(
       /Property 'numbers' is missing in type '{ count: number; foo: string; }'/
     );
+  });
+
+  describe('state in patchState', () => {
+    it('is readonly for primitive types', () => {
+      const state = signalState({ id: 1, name: 'Hugo' });
+
+      patchState(state, (value) => {
+        //@ts-expect-error cannot modify primitive type
+        value.id = 2;
+
+        return value;
+      });
+    });
+
+    it('is readonly for nested objects', () => {
+      const state = signalState({
+        user: { id: 1 },
+      });
+
+      patchState(state, (value) => {
+        //@ts-expect-error cannot modify nested object
+        value.user.id = 2;
+
+        return value;
+      });
+    });
+
+    it('is readonly for arrays', () => {
+      const state = signalState({
+        education: [
+          'Elementary School',
+          'Lycée Français',
+          'University of Technology',
+        ],
+      });
+
+      patchState(state, (value) => {
+        //@ts-expect-error cannot modify array
+        value.education.push('University of Applied Sciences');
+
+        return value;
+      });
+    });
   });
 });

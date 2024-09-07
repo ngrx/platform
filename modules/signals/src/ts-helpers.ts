@@ -27,3 +27,11 @@ export type IsKnownRecord<T> = IsRecord<T> extends true
 export type OmitPrivate<T> = {
   [K in keyof T as K extends `_${string}` ? never : K]: T[K];
 };
+
+export type DeepReadonly<T> = T extends object
+  ? {
+      readonly [P in keyof T]: DeepReadonly<T[P]>;
+    }
+  : T extends []
+  ? ReadonlyArray<DeepReadonly<T>>
+  : T;
