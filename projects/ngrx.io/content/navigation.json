@@ -308,6 +308,10 @@
                 {
                   "title": "Entity Management",
                   "url": "guide/signals/signal-store/entity-management"
+                },
+                {
+                  "title": "Testing",
+                  "url": "guide/signals/signal-store/testing"
                 }
               ]
             },

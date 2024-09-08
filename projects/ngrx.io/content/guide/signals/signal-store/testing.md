@@ -1,28 +1,4 @@
-<!-- TOC -->
-  * [Introduction](#introduction)
-    * [On Testing in general](#on-testing-in-general)
-    * [What to test](#what-to-test)
-    * [TestBed or not?](#testbed-or-not)
-  * [Testing the Signal Store](#testing-the-signal-store)
-    * [Globally provided](#globally-provided)
-    * [Locally provided](#locally-provided)
-    * [`withComputed`](#withcomputed)
-    * [`withMethods`, DI, and asynchronous tasks](#withmethods-di-and-asynchronous-tasks)
-    * [`rxMethod`](#rxmethod)
-      * [with Observables](#with-observables)
-      * [with Signals](#with-signals)
-    * [Custom extensions](#custom-extensions)
-  * [Mocking the Signal Store](#mocking-the-signal-store)
-    * [Native Mocking](#native-mocking)
-    * [ng-mocks](#ng-mocks)
-    * [Partial Mocking via Spies](#partial-mocking-via-spies)
-<!-- TOC -->
-
-This is still a draft. Markdown is used for better readability. The rendered version of this guide is available at https://github.com/rainerhahnekamp/ngrx/blob/docs/signals/testing/projects/ngrx.io/content/guide/signals/signal-store/testing.md.
-
-Once the content is finalized, we will replace markdown with `<code>` tags.
-
-The examples used in this guide are available at https://github.com/rainerhahnekamp/ngrx-signal-store-testing
+## Testing
 
 ## Introduction
 
@@ -49,17 +25,17 @@ For example, if you want to test your store in a loading state, you shouldn’t 
 
 From this perspective, it’s clear that you shouldn’t access any private properties or methods of the Signal Store. Additionally, avoid running `patchState` if the state is protected.
 
-### TestBed or not?
+### `TestBed` or not?
 
 The Signal Store is a function that returns a class, allowing a test to instantiate the class and test it without the `TestBed`.
 
-However, in practice, you’ll use the `TestBed because it offers many advantages, such as mocking dependencies and triggering the execution of effects.
+However, in practice, you’ll use the `TestBed` because it offers many advantages, such as mocking dependencies and triggering the execution of effects.
 
 Furthermore, crucial features of the SignalStore will not work, if they don't run in an injection context. Examples include the `rxMethod`, `inject` in `withMethods()`, and `withHooks()`.
 
 <div class="alert is-helpful">
 
-**Note:**: Using the TestBed is also the recommendation of the [Angular team](https://github.com/angular/angular/issues/54438#issuecomment-1971813177).
+**Note:**: Using the `TestBed` is also the recommendation of the [Angular team](https://github.com/angular/angular/issues/54438#issuecomment-1971813177).
 
 </div>
 
@@ -69,9 +45,8 @@ Let's assume, we want to test the following Signal Store:
 
 ### Globally provided
 
-_movies.store.ts_
+<code-example header="movies.store.ts">
 
-```typescript
 import { signalStore, withState } from '@ngrx/signals';
 
 type Movie = {
@@ -90,13 +65,13 @@ export const MoviesStore = signalStore(
     ],
   })
 );
-```
+
+</code-example>
 
 The `TestBed` will instantiate the `MoviesStore`, allowing you to test it immediately.
 
-_movies.store.spec.ts_
+<code-example header="movies.store.spec.ts">
 
-```typescript
 import { MoviesStore } from './movies-store';
 import { TestBed } from '@angular/core/testing';
 
@@ -107,15 +82,15 @@ describe('MoviesStore', () => {
     expect(store.movies()).toHaveLength(3);
   });
 });
-```
+
+</code-example>
 
 ### Locally provided
 
 This was possible because the `MoviesStore` is provided globally. For local providers, we have to tweak the test a bit.
 
-_movies.store.ts_
+<code-example header="movies.store.ts">
 
-```typescript
 export const MoviesStore = signalStore(
   withState({
     movies: [
@@ -123,13 +98,13 @@ export const MoviesStore = signalStore(
     ],
   })
 );
-```
+
+</code-example>
 
 The required addition is that the internal `TestingModule` must provide the `MoviesStore`.
 
-_movies.store.spec.ts_
+<code-example header="movies.store.spec.ts">
 
-```typescript
 import { MoviesStore } from './movies.store';
 
 describe('MoviesStore', () => {
@@ -143,15 +118,15 @@ describe('MoviesStore', () => {
     expect(store.movies()).toHaveLength(3);
   });
 });
-```
+
+</code-example>
 
 ### `withComputed`
 
 Testing derived values of `withComputed` is also straightforward.
 
-_movies.store.ts_
+<code-example header="movies.store.ts">
 
-```typescript
 export const MoviesStore = signalStore(
   withState({
     movies: [
@@ -162,11 +137,11 @@ export const MoviesStore = signalStore(
     moviesCount: computed(() => state.movies().length),
   }))
 );
-```
 
-_movies.store.spec.ts_
+</code-example>
 
-```typescript
+<code-example header="movies.store.spec.ts">
+
 import { MoviesStore } from './movies.store';
 
 describe('MoviesStore', () => {
@@ -176,13 +151,15 @@ describe('MoviesStore', () => {
     expect(store.moviesCount()).toBe(3);
   });
 });
-```
+
+</code-example>
 
 ### `withMethods`, DI, and asynchronous tasks
 
 Let's say we have a loading method which asynchronously loads movies by studio.
 
-```typescript
+<code-example header="movies.store.ts">
+
 import { signalStore, withState } from '@ngrx/signals';
 
 type State = { studio: string; movies: Movie[]; loading: boolean };
@@ -205,11 +182,13 @@ export const MoviesStore = signalStore(
     };
   })
 );
-```
+
+</code-example>
 
 We will mock the `MoviesService` in our test and let the implementation return the result as a `Promise`.
 
-```typescript
+<code-example header="movies.store.spec.ts">
+
 describe('MoviesStore', () => {
   beforeEach(() => {
     jest.useFakeTimers();
@@ -246,7 +225,8 @@ describe('MoviesStore', () => {
     expect(store.loading()).toBe(false);
   });
 });
-```
+
+</code-example>
 
 <div class="alert is-helpful">
 
@@ -264,7 +244,8 @@ Let's say, we created the `load` method with `rxMethod`. That is because a compo
 
 In this example, the `MovieService` returns an `Observable<Movie[]>` instead of a `Promise<Movie[]>`.
 
-```typescript
+<code-example header="movies.store.ts">
+
 export const MoviesStore = signalStore(
   // ... code ommitted
   withMethods((store, moviesService = inject(MoviesService)) => ({
@@ -284,7 +265,8 @@ export const MoviesStore = signalStore(
     ),
   }))
 );
-```
+
+</code-example>
 
 Since `rxMethod` accepts a string as a parameter, the test from before is still valid.
 
@@ -296,7 +278,8 @@ Next to `number`, the parameter's type can be `Signal<number>` or `Observable<nu
 
 We want to test, if the `load` method properly handles the case when the user types in a new studio name after and before the previous request has finished.
 
-```typescript
+<code-example header="movies.store.spec.ts">
+
 describe('MoviesStore', () => {
   // ... beforeEach and afterEach omitted
 
@@ -351,7 +334,8 @@ describe('MoviesStore', () => {
     expect(store.loading()).toBe(false);
   });
 });
-```
+
+</code-example>
 
 By making use of the testing framework's function to manage time, we can verify both scenarios.
 
@@ -363,7 +347,8 @@ Testing both scenarios with a type of `Signal` as an input is similar to Observa
 
 This is mainly due because of the asynchronous tasks we use here.
 
-```typescript
+<code-example header="movies.store.spec.ts">
+
 describe('MoviesStore', () => {
   // ... beforeEach, afterEach, and setup omitted
 
@@ -401,13 +386,15 @@ describe('MoviesStore', () => {
     expect(store.loading()).toBe(false);
   });
 });
-```
+
+</code-example>
 
 Be aware of the glitch-free effect when using Signals. The `rxMethod` relies on `effect`, which might need to be triggered manually via `TestBed.flushEffects()`.
 
 If the mocked `MovieService` operates synchronously, the following test would fail without calling `TestBed.flushEffects()`.
 
-```typescript
+<code-example header="movies.store.spec.ts">
+
 describe('MoviesStore', () => {
   // ... beforeEach, and afterEach omitted
 
@@ -436,13 +423,15 @@ describe('MoviesStore', () => {
     expect(store.movies()).toEqual([{ id: 2, name: 'Jurassic Park' }]);
   });
 });
-```
+
+</code-example>
 
 ### Custom extensions
 
 Suppose we have an extension that plays a movie and tracks how long the user watches it. This extension provides a `play` and `stop` method, as well as a Signal that contains the movie’s ID and the time spent watching it.
 
-```typescript
+<code-example header="with-play-tracking.ts">
+
 type PlayTrackingState = {
   _currentId: number;
   _status: 'playing' | 'stopped';
@@ -489,7 +478,8 @@ export const withPlayTracking = () =>
       };
     })
   );
-```
+
+</code-example>
 
 There are two options for testing this extension: in combination with the `MoviesStore` or in isolation.
 
@@ -497,7 +487,8 @@ When tested with the `MoviesStore`, it follows the same approach as the previous
 
 To test the extension in isolation, we need to create an artificial “Wrapper” Signal Store. The test itself is then straightforward.
 
-```typescript
+<code-example header="with-play-tracking.spec.ts">
+
 describe('withTrackedPlay', () => {
   const TrackedPlayStore = signalStore({providedIn: 'root'}, withPlayTracking();
 
@@ -527,7 +518,8 @@ describe('withTrackedPlay', () => {
     expect(store.trackedData()).toEqual({1: 2000, 2: 1000, 3: 1000});
   })
 });
-```
+
+</code-example>
 
 ## Mocking the Signal Store
 
@@ -535,7 +527,8 @@ What applies to testing the Signal Store itself also applies to mocking it. The 
 
 A `MovieComponent` uses the `MoviesStore` to display the movies:
 
-```typescript
+<code-example header="movies.component.ts">
+
 @Component({
   selector: 'app-movies',
   template: ` <input type="text" [(ngModel)]="studio" [disabled]="store.loading()" placeholder="Name of Studio" />
@@ -555,11 +548,13 @@ export class MoviesComponent {
     this.store.load(this.studio);
   }
 }
-```
+
+</code-example>
 
 ### Native Mocking
 
-```typescript
+<code-example header="movies.component.spec.ts">
+
 it('should show movies (native Jest)', () => {
   const load = jest.fn<void, [Signal<string>]>();
 
@@ -600,7 +595,8 @@ it('should show movies (native Jest)', () => {
   const movieNames = fixture.debugElement.queryAll(By.css('p')).map((el) => el.nativeElement.textContent);
   expect(movieNames).toEqual(['1: Harry Potter', '2: The Dark Knight']);
 });
-```
+
+</code-example>
 
 The test mocks only the properties and methods that are used by the component in that particular test. Even if a Signal Store has additional methods, it is not necessary to mock all of them.
 
@@ -608,7 +604,8 @@ The test mocks only the properties and methods that are used by the component in
 
 ng-mocks is a popular library and can be used to mock the Signal Store as well.
 
-```typescript
+<code-example header="movies.component.spec.ts">
+
 it('should show movies (ng-mocks)', () => {
   const movies = signal(new Array<Movie>());
   const loading = signal(false);
@@ -625,13 +622,15 @@ it('should show movies (ng-mocks)', () => {
 
   // ...rest as in the previous example
 });
-```
+
+</code-example>
 
 ### "Partial Mocking" via Spies
 
 We can also use partial mocking to mock only the `load` method. This approach has the advantage of allowing computeds to function correctly without needing to mock them.
 
-```typescript
+<code-example header="movies.component.spec.ts">
+
 it('should show movies (spy)', () => {
   TestBed.configureTestingModule({
     imports: [MoviesComponent],
@@ -654,9 +653,7 @@ it('should show movies (spy)', () => {
     throw new Error('Expected signal');
   }
 
-  const input: HTMLInputElement = fixture.debugElement.query(
-    By.css('input')
-  ).nativeElement;
+  const input: HTMLInputElement = fixture.debugElement.query(By.css('input')).nativeElement;
 
   expect(studio()).toBe('');
 
@@ -665,20 +662,19 @@ it('should show movies (spy)', () => {
   expect(studio()).toBe('Warner Bros');
 
   patchState(moviesStore, {
-      movies:
-        [
-          {id: 1, name: 'Harry Potter'},
-          {id: 2, name: 'The Dark Knight'},
-        ]
-    }
-  );
+    movies: [
+      { id: 1, name: 'Harry Potter' },
+      { id: 2, name: 'The Dark Knight' },
+    ],
+  });
 
   fixture.detectChanges();
 
   const movies = fixture.debugElement.queryAll(By.css('p')).map((el) => el.nativeElement.textContent);
   expect(movies).toEqual(['1: Harry Potter', '2: The Dark Knight']);
-})
-```
+});
+
+</code-example>
 
 This version requires that the test can modify the state, even if it is protected.
 
