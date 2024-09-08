@@ -1,37 +1,33 @@
-## Testing
+# Testing
 
-## Introduction
+A SignalStore is a straightforward Angular service, and the same testing techniques applied to other services also apply to SignalStore. This guide provides examples for common testing scenarios.
 
-### On Testing in General
+One of the challenges in testing is managing asynchronous tasks and mocking dependencies. Although the examples use Jest, the same principles are applicable to other testing frameworks.
 
-A Signal Store is a simple Angular Service, so the same testing techniques you use for services apply to Signal Stores as well. This guide focuses on providing examples for common testing scenarios.
+There are two primary scenarios for testing:
 
-A challenging part of testing is knowing how to handle asynchronous tasks and mocking. The examples use Jest (v29.5), but the same principles apply to other testing frameworks.
+1. Testing the SignalStore itself.
+2. Testing a component or service that utilizes the SignalStore.
 
-There are two main scenarios for testing:
+In the first scenario, the dependencies of the SignalStore should be mocked, while in the second scenario, the SignalStore itself needs to be mocked.
 
-1. Testing the `signalStore` itself,
-2. Testing a component or service that uses the Signal Store.
+---
 
-In the first scenario, you’ll mock the dependencies of the Signal Store, while in the second scenario, you’ll mock the Signal Store itself.
+When testing the SignalStore, interaction should occur through its public API, as any component or service would.
 
-### What to test
+A key concern in testing is maintainability. The more tests are coupled to internal implementations, the more frequently they are likely to break. Public APIs are generally more stable and less prone to change.
 
-When testing the Signal Store, you should interact with it as any component or service would: through its public API.
+For example, when testing the store in a loading state, avoid directly setting the loading property. Instead, trigger a loading method and assert against an exposed computed property or slice. This approach reduces dependency on internal implementations, such as properties set during the loading state.
 
-One of the main concerns of testing is maintainability. The more tests are coupled to the internal implementation, the more likely they are to break frequently. Public APIs are more stable and less likely to change.
+From this perspective, private properties or methods of the SignalStore should not be accessed. Additionally, avoid running `patchState` if the state is protected.
 
-For example, if you want to test your store in a loading state, you shouldn’t set the loading property directly. Instead, trigger a loading method and assert against an exposed computed property or slice. This approach avoids dependency on the internal implementation, such as specific properties set during the loading state.
+---
 
-From this perspective, it’s clear that you shouldn’t access any private properties or methods of the Signal Store. Additionally, avoid running `patchState` if the state is protected.
+The SignalStore is a function that returns a class, allowing tests to instantiate the class and test it without using `TestBed`.
 
-### `TestBed` or not?
+However, in practice, `TestBed` is typically used due to its numerous advantages, such as the ability to mock dependencies and trigger the execution of effects.
 
-The Signal Store is a function that returns a class, allowing a test to instantiate the class and test it without the `TestBed`.
-
-However, in practice, you’ll use the `TestBed` because it offers many advantages, such as mocking dependencies and triggering the execution of effects.
-
-Furthermore, crucial features of the SignalStore will not work, if they don't run in an injection context. Examples include the `rxMethod`, `inject` in `withMethods()`, and `withHooks()`.
+Additionally, key features of the SignalStore will not function properly if they do not run in an injection context. Examples include the `rxMethod`, the use of `inject` within `withMethods()`, and `withHooks()`.
 
 <div class="alert is-helpful">
 
@@ -39,9 +35,9 @@ Furthermore, crucial features of the SignalStore will not work, if they don't ru
 
 </div>
 
-## Testing the Signal Store
+## Testing the SignalStore
 
-Let's assume, we want to test the following Signal Store:
+The following example demonstrates the testing of a SignalStore:
 
 ### Globally provided
 
@@ -68,7 +64,7 @@ export const MoviesStore = signalStore(
 
 </code-example>
 
-The `TestBed` will instantiate the `MoviesStore`, allowing you to test it immediately.
+The `TestBed` instantiates the `MoviesStore`, enabling immediate testing.
 
 <code-example header="movies.store.spec.ts">
 
@@ -85,9 +81,9 @@ describe('MoviesStore', () => {
 
 </code-example>
 
-### Locally provided
+### Locally Provided
 
-This was possible because the `MoviesStore` is provided globally. For local providers, we have to tweak the test a bit.
+This is possible due to the `MoviesStore` being provided globally. For locally provided stores, some adjustments to the test are required.
 
 <code-example header="movies.store.ts">
 
@@ -154,9 +150,9 @@ describe('MoviesStore', () => {
 
 </code-example>
 
-### `withMethods`, DI, and asynchronous tasks
+### `withMethods`, Dependency Injection, and Asynchronous Tasks
 
-Let's say we have a loading method which asynchronously loads movies by studio.
+A loading method asynchronously retrieves movies by studio in this scenario.
 
 <code-example header="movies.store.ts">
 
@@ -185,21 +181,12 @@ export const MoviesStore = signalStore(
 
 </code-example>
 
-We will mock the `MoviesService` in our test and let the implementation return the result as a `Promise`.
+The `MoviesService` is mocked in the test, with the implementation returning the result as a `Promise`.
 
 <code-example header="movies.store.spec.ts">
 
 describe('MoviesStore', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
-  afterEach(async () => {
-    await jest.runOnlyPendingTimersAsync();
-    jest.useRealTimers();
-  });
-
-  it('should load movies of Warner Bros', async () => {
+  it('should load movies of Warner Bros', fakeAsync(() => {
     const moviesService = {
       load: () =>
         Promise.resolve([
@@ -220,29 +207,27 @@ describe('MoviesStore', () => {
     const store = TestBed.inject(MoviesStore);
     store.load('Warner Bros');
     expect(store.loading()).toBe(true);
-    await jest.runOnlyPendingTimersAsync();
+    
+    tick();
+
     expect(store.moviesCount()).toBe(2);
     expect(store.loading()).toBe(false);
-  });
+  }));
 });
 
 </code-example>
 
 <div class="alert is-helpful">
 
-**Note:**: You don't have to manually mock your dependencies. You can choose among libraries like ng-mocks, @testing-library/angular, [jest|jasmine]-auto-spies, etc.
+**Note:** Manually mocking dependencies is not required. Libraries such as ng-mocks, @testing-library/angular, and [jest|jasmine]-auto-spies can be used for this purpose.
 
 </div>
 
-We use Jest's tools to manage asynchronous tasks. We avoid using `fakeAsync` or `waitForAsync` as they depend on zone.js and are incompatible with zoneless applications.
-
-The "Angular way" of testing asynchronous code is to use the `ComponentFixture.whenStable` method, which is not available in this context.
-
 ### `rxMethod`
 
-Let's say, we created the `load` method with `rxMethod`. That is because a component provides an input field for the studio and wants to start loading as soon as the user types in a name.
+The `load` method is created using `rxMethod` to accommodate a component that provides an input field for the studio and initiates loading as soon as a user types in a name.
 
-In this example, the `MovieService` returns an `Observable<Movie[]>` instead of a `Promise<Movie[]>`.
+In this scenario, the `MovieService` returns an `Observable<Movie[]>` instead of a `Promise<Movie[]>`.
 
 <code-example header="movies.store.ts">
 
@@ -268,15 +253,15 @@ export const MoviesStore = signalStore(
 
 </code-example>
 
-Since `rxMethod` accepts a string as a parameter, the test from before is still valid.
+Since `rxMethod` accepts a string as a parameter, the previous test remains valid.
 
-What we want to test in addition is the proper handling of race conditions. That's why we use `switchMap`.
+An additional focus in testing is ensuring proper handling of race conditions, which is why `switchMap` is used.
 
-Next to `number`, the parameter's type can be `Signal<number>` or `Observable<number>`.
+The parameter's type can also be `Signal<number>` or `Observable<number>`, in addition to `number`.
 
-#### with Observables
+#### With Observables
 
-We want to test, if the `load` method properly handles the case when the user types in a new studio name after and before the previous request has finished.
+The goal is to test whether the `load` method properly handles the scenario where a new studio name is entered before or after the previous request has completed.
 
 <code-example header="movies.store.spec.ts">
 
@@ -300,72 +285,72 @@ describe('MoviesStore', () => {
     return TestBed.inject(MoviesStore);
   };
 
-  it('should load two times', async () => {
+  it('should load two times', fakeAsync(() => {
     const store = setup();
 
     const studio$ = new Subject<string>();
     store.load(studio$);
     studio$.next('Warner Bros');
 
-    await jest.advanceTimersByTimeAsync(100);
+    tick(100);
     expect(store.movies()).toEqual([{ id: 1, name: 'Harry Potter' }]);
 
     studio$.next('Universal');
-    await jest.advanceTimersByTimeAsync(100);
+    tick(100);
     expect(store.movies()).toEqual([{ id: 2, name: 'Jurassic Park' }]);
-  });
+  }));
 
-  it('should cancel a running request when a new one is made', async () => {
+  it('should cancel a running request when a new one is made', fakeAsync(() => {
     const store = setup();
 
     const studio$ = new Subject<string>();
     store.load(studio$);
     studio$.next('Warner Bros');
 
-    await jest.advanceTimersByTimeAsync(50);
+    tick(50);
     studio$.next('Universal');
 
-    await jest.advanceTimersByTimeAsync(50);
+    tick(50);
     expect(store.movies()).toEqual([]);
     expect(store.loading()).toBe(true);
 
-    await jest.advanceTimersByTimeAsync(50);
+    tick(50);
     expect(store.movies()).toEqual([{ id: 2, name: 'Jurassic Park' }]);
     expect(store.loading()).toBe(false);
-  });
+  }));
 });
 
 </code-example>
 
-By making use of the testing framework's function to manage time, we can verify both scenarios.
+By utilizing the testing framework's function to manage time, both scenarios can be verified.
 
-This test also uses a setup function to avoid code duplication. This is a common pattern in testing and an alternative to the `beforeEach` function. In our case, every test can decide if it wants to use the setup function or not.
+The test also employs a setup function to prevent code duplication, a common pattern in testing and an alternative to the `beforeEach` function. In this case, each test can choose whether to use the setup function or not.
 
-#### with Signals
+#### With Signals
 
-Testing both scenarios with a type of `Signal` as an input is similar to Observables.
+Testing both scenarios with a `Signal` type as input is similar to testing with Observables.
 
-This is mainly due because of the asynchronous tasks we use here.
+This similarity arises primarily due to the asynchronous tasks involved.
 
 <code-example header="movies.store.spec.ts">
 
 describe('MoviesStore', () => {
-  // ... beforeEach, afterEach, and setup omitted
+  // ... setup omitted
 
-  it('should test two sequential loads with a Signal', async () => {
+  it('should test two sequential loads with a Signal', fakeAsync(() => {
     const store = setup();
     const studio = signal('Warner Bros');
     store.load(studio);
 
-    await jest.advanceTimersByTimeAsync(100);
+    tick(100);
     expect(store.movies()).toEqual([{ id: 1, name: 'Harry Potter' }]);
 
     studio.set('Universal');
-    await jest.advanceTimersByTimeAsync(100);
+    tick(100);
     expect(store.movies()).toEqual([{ id: 2, name: 'Jurassic Park' }]);
-  });
+  }));
 
-  it('should cancel a running request when a new one is made via a Signal', async () => {
+  it('should cancel a running request when a new one is made via a Signal', fakeAsync(() => {
     const store = setup();
     const studio = signal('Warner Bros');
 
@@ -374,24 +359,24 @@ describe('MoviesStore', () => {
     });
     store.load(studio);
 
-    await jest.advanceTimersByTimeAsync(50);
+    tick(50);
 
     studio.set('Universal');
-    await jest.advanceTimersByTimeAsync(50);
+    tick(50);
     expect(store.movies()).toEqual([]);
     expect(store.loading()).toBe(true);
 
-    await jest.advanceTimersByTimeAsync(50);
+    tick(50);
     expect(store.movies()).toEqual([{ id: 2, name: 'Jurassic Park' }]);
     expect(store.loading()).toBe(false);
-  });
+  }));
 });
 
 </code-example>
 
-Be aware of the glitch-free effect when using Signals. The `rxMethod` relies on `effect`, which might need to be triggered manually via `TestBed.flushEffects()`.
+It is important to account for the glitch-free effect when using Signals. The `rxMethod` relies on `effect`, which may need to be triggered manually through `TestBed.flushEffects()`.
 
-If the mocked `MovieService` operates synchronously, the following test would fail without calling `TestBed.flushEffects()`.
+If the mocked `MovieService` operates synchronously, the following test will fail unless `TestBed.flushEffects()` is called.
 
 <code-example header="movies.store.spec.ts">
 
@@ -426,106 +411,11 @@ describe('MoviesStore', () => {
 
 </code-example>
 
-### Custom extensions
+## Mocking the SignalStore
 
-Suppose we have an extension that plays a movie and tracks how long the user watches it. This extension provides a `play` and `stop` method, as well as a Signal that contains the movie’s ID and the time spent watching it.
+What applies to testing the SignalStore also applies to mocking it. The SignalStore functions like any other service, meaning it can be mocked using the same tools and techniques applied to other services.
 
-<code-example header="with-play-tracking.ts">
-
-type PlayTrackingState = {
-  _currentId: number;
-  _status: 'playing' | 'stopped';
-  _startedAt: Date | undefined;
-  trackedData: Record<number, number>;
-};
-
-const initialState: PlayTrackingState = {
-  _currentId: 0,
-  _status: 'stopped',
-  _startedAt: undefined,
-  trackedData: {},
-};
-
-export const withPlayTracking = () =>
-  signalStoreFeature(
-    withState(initialState),
-    withMethods((store) => {
-      const stop = () => {
-        const startedAt = store._startedAt();
-        if (!startedAt || store._status() === 'stopped') {
-          return;
-        }
-
-        const timeSpent = new Date().getTime() - startedAt.getTime();
-        const alreadySpent = store.trackedData()[store._currentId()] ?? 0;
-        patchState(store, (state) => ({
-          _currentId: 0,
-          _status: 'stopped' as const,
-          trackedData: { ...state.trackedData, [state._currentId]: alreadySpent + timeSpent },
-        }));
-      };
-
-      return {
-        play(id: number) {
-          stop();
-          patchState(store, {
-            _currentId: id,
-            _status: 'playing',
-            _startedAt: new Date(),
-          });
-        },
-        stop,
-      };
-    })
-  );
-
-</code-example>
-
-There are two options for testing this extension: in combination with the `MoviesStore` or in isolation.
-
-When tested with the `MoviesStore`, it follows the same approach as the previous examples.
-
-To test the extension in isolation, we need to create an artificial “Wrapper” Signal Store. The test itself is then straightforward.
-
-<code-example header="with-play-tracking.spec.ts">
-
-describe('withTrackedPlay', () => {
-  const TrackedPlayStore = signalStore({providedIn: 'root'}, withPlayTracking();
-
-  afterEach(async () => {
-    await jest.runOnlyPendingTimersAsync()
-    jest.useRealTimers();
-  })
-
-  it('should track movies', () => {
-    useFakeTimers()
-    const store = TestBed.inject(TrackedPlayStore)
-
-    store.play(1);
-    jest.advanceTimersByTime(1000);
-
-    store.stop();
-    store.play(2)
-    jest.advanceTimersByTime(1000);
-
-    store.play(3);
-    jest.advanceTimersByTime(1000);
-
-    store.play(1)
-    jest.advanceTimersByTime(1000);
-    store.stop()
-
-    expect(store.trackedData()).toEqual({1: 2000, 2: 1000, 3: 1000});
-  })
-});
-
-</code-example>
-
-## Mocking the Signal Store
-
-What applies to testing the Signal Store itself also applies to mocking it. The Signal Store behaves like any other service, meaning it can be mocked using the same tools and techniques used for other services.
-
-A `MovieComponent` uses the `MoviesStore` to display the movies:
+The `MovieComponent` utilizes the `MoviesStore` to display movies:
 
 <code-example header="movies.component.ts">
 
@@ -598,36 +488,11 @@ it('should show movies (native Jest)', () => {
 
 </code-example>
 
-The test mocks only the properties and methods that are used by the component in that particular test. Even if a Signal Store has additional methods, it is not necessary to mock all of them.
-
-### ng-mocks
-
-ng-mocks is a popular library and can be used to mock the Signal Store as well.
-
-<code-example header="movies.component.spec.ts">
-
-it('should show movies (ng-mocks)', () => {
-  const movies = signal(new Array<Movie>());
-  const loading = signal(false);
-  const moviesStore = MockService(MoviesStore, {
-    movies,
-    loading,
-    load: jest.fn<void, [Signal<string>]>(),
-  });
-
-  TestBed.configureTestingModule({
-    imports: [MoviesComponent],
-    providers: [{ provide: MoviesStore, useValue: moviesStore }],
-  });
-
-  // ...rest as in the previous example
-});
-
-</code-example>
+The test mocks only the properties and methods used by the component in the specific test. Even if a SignalStore contains additional methods, it is not necessary to mock all of them.
 
 ### "Partial Mocking" via Spies
 
-We can also use partial mocking to mock only the `load` method. This approach has the advantage of allowing computeds to function correctly without needing to mock them.
+Partial mocking can be used to mock only the `load` method. This approach allows computed properties to function correctly without requiring them to be mocked.
 
 <code-example header="movies.component.spec.ts">
 
@@ -676,8 +541,136 @@ it('should show movies (spy)', () => {
 
 </code-example>
 
-This version requires that the test can modify the state, even if it is protected.
+This version requires the `MoviesStore` state to be unprotected.
 
-We are currently evaluating options for test helpers that allow state modification for protected states without introducing new mocking features that are already covered by existing testing frameworks.
+## Integration Tests
 
-Additionally, there is a community project by Gergely Szerovay that provides a comprehensive mocking library for Signal Stores. You can find more details here: https://www.angularaddicts.com/p/how-to-mock-ngrx-signal-stores
+Services attached to a component are often simple, and writing unit tests for them may not always be necessary, particularly when considering the returned value and maintenance costs. In such cases, it is more effective to test the services together with the component as a whole. This type of testing is commonly referred to as integration testing.
+
+The same applies to the SignalStore. If the SignalStore, such as the `MoviesStore`, is relatively simple, a single test can cover both the `MoviesComponent` and the `MoviesStore`. However, the `HttpClient` must still be replaced with a test double.
+
+<code-example header="movies.spec.ts">
+
+it('should show movies with MoviesStore', async () => {
+  const fixture = TestBed.configureTestingModule({
+    imports: [MoviesComponent],
+    providers: [provideHttpClient(), provideHttpClientTesting()],
+  }).createComponent(MoviesComponent);
+
+  const ctrl = TestBed.inject(HttpTestingController);
+
+  fixture.autoDetectChanges(true);
+
+  const input: HTMLInputElement = fixture.debugElement.query(
+    By.css('input')
+  ).nativeElement;
+  input.value = 'Warner Bros';
+  input.dispatchEvent(new Event('input'));
+
+
+  ctrl.expectOne('https://movies.com/studios?query=Warner%20Bros').flush(
+    [
+      {id: 1, name: 'Harry Potter'},
+      {id: 2, name: 'The Dark Knight'},
+    ]
+  )
+  await fixture.whenStable()
+
+  const movies = fixture.debugElement.queryAll(By.css('p')).map((el) => el.nativeElement.textContent);
+  expect(movies).toEqual(['1: Harry Potter', '2: The Dark Knight']);
+  ctrl.verify();
+});
+
+</code-example>
+
+
+This test assumes that the `MoviesService` sends a request to "https://movies.com".
+
+## Testing Custom Extensions
+
+An extension is responsible for playing a movie and tracking the duration of viewership. The extension provides `play` and `stop` methods, along with a Signal containing the movie's ID and the time spent watching it.
+
+<code-example header="with-play-tracking.ts">
+
+type PlayTrackingState = {
+  _currentId: number;
+  _status: 'playing' | 'stopped';
+  _startedAt: Date | undefined;
+  trackedData: Record<number, number>;
+};
+
+const initialState: PlayTrackingState = {
+  _currentId: 0,
+  _status: 'stopped',
+  _startedAt: undefined,
+  trackedData: {},
+};
+
+export const withPlayTracking = () =>
+  signalStoreFeature(
+    withState(initialState),
+    withMethods((store) => {
+      const stop = () => {
+        const startedAt = store._startedAt();
+        if (!startedAt || store._status() === 'stopped') {
+          return;
+        }
+
+        const timeSpent = new Date().getTime() - startedAt.getTime();
+        const alreadySpent = store.trackedData()[store._currentId()] ?? 0;
+        patchState(store, (state) => ({
+          _currentId: 0,
+          _status: 'stopped' as const,
+          trackedData: { ...state.trackedData, [state._currentId]: alreadySpent + timeSpent },
+        }));
+      };
+
+      return {
+        play(id: number) {
+          stop();
+          patchState(store, {
+            _currentId: id,
+            _status: 'playing',
+            _startedAt: new Date(),
+          });
+        },
+        stop,
+      };
+    })
+  );
+
+</code-example>
+
+There are two options for testing this extension: in combination with the `MoviesStore` or in isolation.
+
+When tested with the `MoviesStore`, the same approach as in previous examples is followed.
+
+To test the extension in isolation, an artificial "Wrapper" SignalStore is created. The test process remains straightforward.
+
+<code-example header="with-play-tracking.spec.ts">
+
+describe('withTrackedPlay', () => {
+  const TrackedPlayStore = signalStore({providedIn: 'root'}, withPlayTracking();
+
+  it('should track movies', fakeAsync(() => {
+    const store = TestBed.inject(TrackedPlayStore)
+
+    store.play(1);
+    tick(1000);
+
+    store.stop();
+    store.play(2)
+    tick(1000);
+
+    store.play(3);
+    tick(1000);
+
+    store.play(1)
+    tick(1000);
+    store.stop()
+
+    expect(store.trackedData()).toEqual({1: 2000, 2: 1000, 3: 1000});
+  }))
+});
+
+</code-example>
