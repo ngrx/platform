@@ -1,0 +1,107 @@
+name: CI
+
+on:
+  pull_request: {}
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'yarn'
+          cache-dependency-path: 'yarn.lock'
+      - run: yarn --frozen-lockfile --non-interactive
+
+  lint-affected:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'yarn'
+          cache-dependency-path: 'yarn.lock'
+      - run: yarn --frozen-lockfile --non-interactive
+      - uses: nrwl/nx-set-shas@v4
+      - run: yarn nx affected -t lint
+
+  test-affected:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'yarn'
+          cache-dependency-path: 'yarn.lock'
+      - run: yarn --frozen-lockfile --non-interactive
+      - uses: nrwl/nx-set-shas@v4
+      - run: yarn nx affected -t test
+
+  e2e-affected:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'yarn'
+          cache-dependency-path: 'yarn.lock'
+      - run: yarn --frozen-lockfile --non-interactive
+      - uses: nrwl/nx-set-shas@v4
+      - run: yarn nx affected -t e2e --exclude=docs-app
+
+  build-affected:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'yarn'
+          cache-dependency-path: 'yarn.lock'
+      - run: yarn --frozen-lockfile --non-interactive
+      - uses: nrwl/nx-set-shas@v4
+      - run: yarn nx affected -t build
+
+  schematics-core-check:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'yarn'
+          cache-dependency-path: 'yarn.lock'
+      - run: yarn --frozen-lockfile --non-interactive
+      - uses: nrwl/nx-set-shas@v4
+      - run: yarn copy:schematics
+      - run: yarn schematics:check
