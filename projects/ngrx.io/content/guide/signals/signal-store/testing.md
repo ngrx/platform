@@ -650,24 +650,24 @@ To test the extension in isolation, an artificial "Wrapper" SignalStore is creat
 <code-example header="with-play-tracking.spec.ts">
 
 describe('withTrackedPlay', () => {
-  const TrackedPlayStore = signalStore({providedIn: 'root'}, withPlayTracking();
+  const TrackedPlayStore = signalStore({providedIn: 'root'}, withPlayTracking());
 
   it('should track movies', fakeAsync(() => {
-    const store = TestBed.inject(TrackedPlayStore)
+    const store = TestBed.inject(TrackedPlayStore);
 
     store.play(1);
     tick(1000);
 
     store.stop();
-    store.play(2)
+    store.play(2);
     tick(1000);
 
     store.play(3);
     tick(1000);
 
-    store.play(1)
+    store.play(1);
     tick(1000);
-    store.stop()
+    store.stop();
 
     expect(store.trackedData()).toEqual({1: 2000, 2: 1000, 3: 1000});
   }))
