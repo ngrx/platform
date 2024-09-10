@@ -18,10 +18,8 @@ This rule ensures that state changes are only managed by the Signal Store to pre
 Examples of **incorrect** code for this rule:
 
 ```ts
-// SUGGESTION ❗
 const Store = signalStore(
   { protectedState: false },
-    ~~~~~~~~~~~~~~~~~~~~~ [warning]
   withState({}),
 );
 ```
@@ -29,14 +27,12 @@ const Store = signalStore(
 Examples of **correct** code for this rule:
 
 ```ts
-// GOOD ✅
 const Store = signalStore(
   withState({}),
 );
 ```
 
 ```ts
-// GOOD ✅
 const Store = signalStore(
   { protectedState: true },
   withState({}),
