@@ -23,13 +23,20 @@ In a service-based application, your components interact with data through many 
 
 Imagine that your application manages movies. Here is a component that fetches and displays a list of movies.
 
+
 <code-example header="movies-page.component.ts">
+
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 @Component({
   template: `
     &lt;li *ngFor="let movie of movies"&gt;
       {{ movie.name }}
     &lt;/li&gt;
   `
+  standalone: true,
+  imports: [CommonModule],
 })
 export class MoviesPageComponent {
   movies: Movie[];
@@ -68,12 +75,18 @@ The component has multiple responsibilities:
 Effects handle external data and interactions, allowing your services to be less stateful and only perform tasks related to external interactions. Next, refactor the component to put the shared movie data in the `Store`. Effects handle the fetching of movie data.
 
 <code-example header="movies-page.component.ts">
+
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 @Component({
   template: `
     &lt;div *ngFor="let movie of movies$ | async"&gt;
       {{ movie.name }}
     &lt;/div&gt;
-  `
+  `,
+  standalone: true,
+  imports: [CommonModule],
 })
 export class MoviesPageComponent {
   movies$: Observable&lt;Movie[]&gt; = this.store.select(state => state.movies);
@@ -229,31 +242,6 @@ It's recommended to inject all dependencies as effect function arguments for eas
 
 ## Registering Root Effects
 
-After you've written class-based or functional effects, you must register them so the effects start running. To register root-level effects, add the `EffectsModule.forRoot()` method with an array or sequence of effects classes and/or functional effects dictionaries to your `AppModule`.
-
-<code-example header="app.module.ts">
-import { NgModule } from '@angular/core';
-import { EffectsModule } from '@ngrx/effects';
-
-import { MoviesEffects } from './effects/movies.effects';
-import * as actorsEffects from './effects/actors.effects';
-
-@NgModule({
-  imports: [
-    EffectsModule.forRoot(MoviesEffects, actorsEffects),
-  ],
-})
-export class AppModule {}
-</code-example>
-
-<div class="alert is-critical">
-
-The `EffectsModule.forRoot()` method must be added to your `AppModule` imports even if you don't register any root-level effects.
-
-</div>
-
-### Using the Standalone API
-
 Registering effects can also be done using the standalone APIs if you are bootstrapping an Angular application using standalone features.
 
 <code-example header="main.ts">
@@ -280,25 +268,6 @@ Effects start running **immediately** after instantiation to ensure they are lis
 </div>
 
 ## Registering Feature Effects
-
-For feature modules, register your effects by adding the `EffectsModule.forFeature()` method in the `imports` array of your `NgModule`.
-
-<code-example header="admin.module.ts">
-import { NgModule } from '@angular/core';
-import { EffectsModule } from '@ngrx/effects';
-
-import { MoviesEffects } from './effects/movies.effects';
-import * as actorsEffects from './effects/actors.effects';
-
-@NgModule({
-  imports: [
-    EffectsModule.forFeature(MoviesEffects, actorsEffects)
-  ],
-})
-export class MovieModule {}
-</code-example>
-
-### Using the Standalone API
 
 Feature-level effects are registered in the `providers` array of the route config. The same `provideEffects()` function is used in root-level and feature-level effects.
 

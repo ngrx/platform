@@ -129,6 +129,7 @@ export function effectResubscriptionHandler&gt;T extends Action&lt;(
   );
 }
 
+- im not sure what should be done with that one
 @NgModule({
   imports: [EffectsModule.forRoot([MoviesEffects])],
   providers: [
