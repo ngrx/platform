@@ -1,10 +1,16 @@
 # @ngrx/effects
 
-Effects are an RxJS powered side effect model for [Store](guide/store). Effects use streams to provide [new sources](https://martinfowler.com/eaaDev/EventSourcing.html) of actions to reduce state based on external interactions such as network requests, web socket messages and time-based events.
+Effects are an RxJS powered side effect model for [Store](guide/store).
+Effects use streams to provide [new sources](https://martinfowler.com/eaaDev/EventSourcing.html) 
+of actions to reduce state based on external interactions
+such as network requests, web socket messages and time-based events.
 
 ## Introduction
 
-In a service-based Angular application, components are responsible for interacting with external resources directly through services. Instead, effects provide a way to interact with those services and isolate them from the components. Effects are where you handle tasks such as fetching data, long-running tasks that produce multiple events, and other external interactions where your components don't need explicit knowledge of these interactions.
+In a service-based Angular application, components are responsible for interacting with external resources directly through services.
+Instead, effects provide a way to interact with those services and isolate them from the components.
+Effects are where you handle tasks such as fetching data, long-running tasks that produce multiple events,
+and other external interactions where your components don't need explicit knowledge of these interactions.
 
 ## Key Concepts
 
@@ -19,15 +25,18 @@ Detailed installation instructions can be found on the [Installation](guide/effe
 
 ## Comparison with Component-Based Side Effects
 
-In a service-based application, your components interact with data through many different services that expose data through properties and methods. These services may depend on other services that manage other sets of data. Your components consume these services to perform tasks, giving your components many responsibilities.
+In a service-based application, your components interact with data through many 
+different services that expose data through properties and methods.
+These services may depend on other services that manage other sets of data.
+Your components consume these services to perform tasks, giving your components many responsibilities.
 
 Imagine that your application manages movies. Here is a component that fetches and displays a list of movies.
-
 
 <code-example header="movies-page.component.ts">
 
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   template: `
@@ -36,15 +45,16 @@ import { CommonModule } from '@angular/common';
     &lt;/li&gt;
   `
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MoviesService],
 })
 export class MoviesPageComponent {
+  private moviesService: inject(MoviesService);
   movies: Movie[];
 
-  constructor(private movieService: MoviesService) {}
-
   ngOnInit() {
-    this.movieService.getAll().subscribe(movies => this.movies = movies);
+    this.movieService.getAll()
+      .pipe(takeUntilDestroyed())
+      .subscribe(movies => this.movies = movies);
   }
 }
 </code-example>
@@ -53,10 +63,13 @@ You also have the corresponding service that handles the fetching of movies.
 
 <code-example header="movies.service.ts">
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
+  standalone: true,
+  imports: [HttpClient],
+
 })
 export class MoviesService {
-  constructor (private http: HttpClient) {}
+  private http: inject(HttpClient);
 
   getAll() {
     return this.http.get('/movies');
@@ -70,9 +83,13 @@ The component has multiple responsibilities:
 - Using the service to perform a _side effect_, reaching out to an external API to fetch the movies.
 - Changing the _state_ of the movies within the component.
 
-`Effects` when used along with `Store`, decrease the responsibility of the component. In a larger application, this becomes more important because you have multiple sources of data, with multiple services required to fetch those pieces of data, and services potentially relying on other services.
+`Effects` when used along with `Store`, decrease the responsibility of the component.
+In a larger application, this becomes more important because you have multiple sources of data,
+with multiple services required to fetch those pieces of data, and services potentially relying on other services.
 
-Effects handle external data and interactions, allowing your services to be less stateful and only perform tasks related to external interactions. Next, refactor the component to put the shared movie data in the `Store`. Effects handle the fetching of movie data.
+Effects handle external data and interactions, allowing your services to be less stateful
+and only perform tasks related to external interactions. 
+Next, refactor the component to put the shared movie data in the `Store`. Effects handle the fetching of movie data.
 
 <code-example header="movies-page.component.ts">
 
@@ -88,7 +105,8 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
 })
-export class MoviesPageComponent {
+export class MoviesPageComponent implements OnInit{
+  private store = inject(Store<{ movies: Movie[] }>)
   movies$: Observable&lt;Movie[]&gt; = this.store.select(state => state.movies);
 
   constructor(private store: Store&lt;{ movies: Movie[] }&gt;) {}
@@ -99,7 +117,10 @@ export class MoviesPageComponent {
 }
 </code-example>
 
-The movies are still fetched through the `MoviesService`, but the component is no longer concerned with how the movies are fetched and loaded. It's only responsible for declaring its _intent_ to load movies and using selectors to access movie list data. Effects are where the asynchronous activity of fetching movies happens. Your component becomes easier to test and less responsible for the data it needs.
+The movies are still fetched through the `MoviesService`, but the component is no longer concerned with how the movies are fetched and loaded.
+It's only responsible for declaring its _intent_ to load movies and using selectors to access movie list data.
+Effects are where the asynchronous activity of fetching movies happens. 
+Your component becomes easier to test and less responsible for the data it needs.
 
 ## Writing Effects
 
@@ -158,10 +179,15 @@ The `loadMovies$` effect is listening for all dispatched actions through the `Ac
 
 ## Handling Errors
 
-Effects are built on top of observable streams provided by RxJS. Effects are listeners of observable streams that continue until an error or completion occurs. In order for effects to continue running in the event of an error in the observable, or completion of the observable stream, they must be nested within a "flattening" operator, such as `mergeMap`, `concatMap`, `exhaustMap` and other flattening operators. The example below shows the `loadMovies$` effect handling errors when fetching movies.
+Effects are built on top of observable streams provided by RxJS.
+Effects are listeners of observable streams that continue until an error or completion occurs. 
+In order for effects to continue running in the event of an error in the observable,
+or completion of the observable stream, they must be nested within a "flattening" operator, 
+such as `mergeMap`, `concatMap`, `exhaustMap` and other flattening operators. 
+The example below shows the `loadMovies$` effect handling errors when fetching movies.
 
 <code-example header="movies.effects.ts">
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, exhaustMap, catchError } from 'rxjs/operators';
@@ -169,6 +195,8 @@ import { MoviesService } from './movies.service';
 
 @Injectable()
 export class MoviesEffects {
+  private actions$ = inject(Actions);
+  private moviesService = inject(MoviesService); 
 
   loadMovies$ = createEffect(() =>
     this.actions$.pipe(
@@ -181,21 +209,20 @@ export class MoviesEffects {
       )
     )
   );
-
-  constructor(
-    private actions$: Actions,
-    private moviesService: MoviesService
-  ) {}
 }
 </code-example>
 
-The `loadMovies$` effect returns a new observable in case an error occurs while fetching movies. The inner observable handles any errors or completions and returns a new observable so that the outer stream does not die. You still use the `catchError` operator to handle error events, but return an observable of a new action that is dispatched to the `Store`.
+The `loadMovies$` effect returns a new observable in case an error occurs while fetching movies. 
+The inner observable handles any errors or completions and returns a new observable so that the outer stream does not die. 
+You still use the `catchError` operator to handle error events, but return an observable of a new action that is dispatched to the `Store`.
 
 ## Functional Effects
 
-Functional effects are also created by using the `createEffect` function. They provide the ability to create effects outside the effect classes.
+Functional effects are also created by using the `createEffect` function.
+They provide the ability to create effects outside the effect classes.
 
-To create a functional effect, add the `functional: true` flag to the effect config. Then, to inject services into the effect, use the [`inject` function](https://angular.dev/api/core/inject).
+To create a functional effect, add the `functional: true` flag to the effect config. 
+Then, to inject services into the effect, use the [`inject` function](https://angular.dev/api/core/inject).
 
 <code-example header="actors.effects.ts">
 import { inject } from '@angular/core';
@@ -236,7 +263,9 @@ export const displayErrorAlert = createEffect(
 
 <div class="alert is-important">
 
-It's recommended to inject all dependencies as effect function arguments for easier testing. However, it's also possible to inject dependencies in the effect function body. In that case, the [`inject` function](https://angular.dev/api/core/inject) must be called within the synchronous context.
+It's recommended to inject all dependencies as effect function arguments for easier testing.
+However, it's also possible to inject dependencies in the effect function body.
+In that case, the [`inject` function](https://angular.dev/api/core/inject) must be called within the synchronous context.
 
 </div>
 
@@ -263,7 +292,8 @@ bootstrapApplication(AppComponent, {
 
 <div class="alert is-important">
 
-Effects start running **immediately** after instantiation to ensure they are listening for all relevant actions as soon as possible. Services used in root-level effects are **not** recommended to be used with services that are used with the `APP_INITIALIZER` token.
+Effects start running **immediately** after instantiation to ensure they are listening for all relevant actions as soon as possible.
+Services used in root-level effects are **not** recommended to be used with services that are used with the `APP_INITIALIZER` token.
 
 </div>
 
@@ -290,7 +320,10 @@ export const routes: Route[] = [
 
 <div class="alert is-important">
 
-**Note:** Registering an effects class multiple times, either by `forRoot()`, `forFeature()`, or `provideEffects()`, (for example in different lazy loaded features) will not cause the effects to run multiple times. There is no functional difference between effects loaded by `root` and `feature`; the important difference between the functions is that `root` providers sets up the providers required for effects.
+**Note:** Registering an effects class multiple times, either by `forRoot()`, `forFeature()`, or `provideEffects()`, 
+(for example in different lazy loaded features) will not cause the effects to run multiple times.
+There is no functional difference between effects loaded by `root` and `feature`; the important difference between the functions 
+is that `root` providers sets up the providers required for effects.
 
 </div>
 
@@ -311,7 +344,8 @@ providers: [
 
 <div class="alert is-critical">
 
-The `EffectsModule.forFeature()` method or `provideEffects()` function must be added to the module imports/route config even if you only provide effects over token, and don't pass them through parameters. (Same goes for `EffectsModule.forRoot()`)
+The `EffectsModule.forFeature()` method or `provideEffects()` function must be added to the module imports/route config 
+even if you only provide effects over token, and don't pass them through parameters. (Same goes for `EffectsModule.forRoot()`)
 
 </div>
 
@@ -319,7 +353,11 @@ The `EffectsModule.forFeature()` method or `provideEffects()` function must be a
 
 If you have a module-based Angular application, you can still use standalone components. NgRx standalone APIs support this workflow as well.
 
-For module-based apps, you have the `EffectsModule.forRoot([...])` included in the `imports` array of your `AppModule`, which registers the root effects for dependency injection. For a standalone component with feature state/effects registered in its route configuration to successfully run effects, you will need to use the `provideEffects([...])` function in the `providers` array of your `AppModule` to register the injection token. For module-based with standalone components, you will simply have both. 
+For module-based apps, you have the `EffectsModule.forRoot([...])` included in the `imports` array of your `AppModule`,
+which registers the root effects for dependency injection. 
+For a standalone component with feature state/effects registered in its route configuration to successfully run effects, 
+you will need to use the `provideEffects([...])` function in the `providers` array of your `AppModule` to register the injection token. 
+For module-based with standalone components, you will simply have both. 
 
 <code-example header="app.module.ts">
 import { NgModule } from '@angular/core';
@@ -342,7 +380,8 @@ export class AppModule {}
 
 ## Incorporating State
 
-If additional metadata is needed to perform an effect besides the initiating action's `type`, we should rely on passed metadata from an action creator's `props` method.
+If additional metadata is needed to perform an effect besides the initiating action's `type`, 
+we should rely on passed metadata from an action creator's `props` method.
 
 Let's look at an example of an action initiating a login request using an effect with additional passed metadata:
 
@@ -357,7 +396,7 @@ export const login = createAction(
 </code-example>
 
 <code-example header="auth.effects.ts">
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map } from 'rxjs/operators';
@@ -370,6 +409,9 @@ import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthEffects {
+  private actions$ = inject(Actions);
+  private authService = inject(AuthService);
+
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoginPageActions.login),
@@ -381,22 +423,18 @@ export class AuthEffects {
       )
     )
   );
-
-  constructor(
-    private actions$: Actions,
-    private authService: AuthService
-  ) {}
 }
 </code-example>
 
 The `login` action has additional `credentials` metadata which is passed to a service to log the specific user into the application.
 
-However, there may be cases when the required metadata is only accessible from state.  When state is needed, the RxJS `withLatestFrom` or the @ngrx/effects `concatLatestFrom` operators can be used to provide it.
+However, there may be cases when the required metadata is only accessible from state. 
+When state is needed, the RxJS `withLatestFrom` or the @ngrx/effects `concatLatestFrom` operators can be used to provide it.
 
 The example below shows the `addBookToCollectionSuccess$` effect displaying a different alert depending on the number of books in the collection state.
 
 <code-example header="collection.effects.ts">
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, ofType, createEffect, concatLatestFrom } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
@@ -405,6 +443,9 @@ import * as fromBooks from '../reducers';
 
 @Injectable()
 export class CollectionEffects {
+  private actions$ = inject(Actions);
+  private store = inject(Store<fromBooks.State>)
+
   addBookToCollectionSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -420,11 +461,6 @@ export class CollectionEffects {
       ),
     { dispatch: false }
   );
-
-  constructor(
-    private actions$: Actions,
-    private store: Store&lt;fromBooks.State&gt;
-  ) {}
 }
 </code-example>
 
@@ -438,12 +474,14 @@ To learn about testing effects that incorporate state, see the [Effects that use
 
 ## Using Other Observable Sources for Effects
 
-Because effects are merely consumers of observables, they can be used without actions and the `ofType` operator. This is useful for effects that don't need to listen to some specific actions, but rather to some other observable source. 
+Because effects are merely consumers of observables, they can be used without actions and the `ofType` operator.
+This is useful for effects that don't need to listen to some specific actions, but rather to some other observable source. 
 
-For example, imagine we want to track click events and send that data to our monitoring server. This can be done by creating an effect that listens to the `document` `click` event and emits the event data to our server.
+For example, imagine we want to track click events and send that data to our monitoring server.
+This can be done by creating an effect that listens to the `document` `click` event and emits the event data to our server.
 
 <code-example header="user-activity.effects.ts">  
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, fromEvent } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 import { createEffect } from '@ngrx/effects';
@@ -452,14 +490,12 @@ import { UserActivityService } from '../services/user-activity.service';
 
 @Injectable()
 export class UserActivityEffects {
+  private userActivityService: UserActivityService = inject(UserActivityService);
+  
   trackUserActivity$ = createEffect(() =>
     fromEvent(document, 'click').pipe(
       concatMap(event => this.userActivityService.trackUserActivity(event)),
     ), { dispatch: false }
   );
-
-  constructor(
-    private userActivityService: UserActivityService,
-  ) {}
 }
 </code-example>
