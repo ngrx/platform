@@ -14,6 +14,7 @@ import {
 } from '../components';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { AsyncPipe, NgIf } from '@angular/common';
+import { selectShowSidenav } from '../reducers/layout.reducer';
 
 @Component({
   standalone: true,
@@ -75,7 +76,7 @@ export class AppComponent {
      * Selectors can be applied with the `select` operator which passes the state
      * tree to the provided selector
      */
-    this.showSidenav$ = this.store.select(fromRoot.selectShowSidenav);
+    this.showSidenav$ = this.store.select(selectShowSidenav);
     this.loggedIn$ = this.store.select(fromAuth.selectLoggedIn);
   }
 

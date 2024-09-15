@@ -2,7 +2,7 @@ import { ApplicationConfig } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import { provideState, provideStore } from '@ngrx/store';
+import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideRouterStore } from '@ngrx/router-store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
@@ -12,8 +12,9 @@ import { rootReducers, metaReducers } from '@example-app/reducers';
 import { APP_ROUTES } from '@example-app/app.routing';
 import { UserEffects, RouterEffects } from '@example-app/core/effects';
 import { provideRouter, withHashLocation } from '@angular/router';
-import * as fromAuth from '@example-app/auth/reducers';
 import { AuthEffects } from './auth/effects';
+import { provideAuth } from '@example-app/auth/reducers';
+import { provideLayout } from '@example-app/core/reducers/layout.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -38,6 +39,20 @@ export const appConfig: ApplicationConfig = {
         strictActionTypeUniqueness: true,
       },
     }),
+
+    /**
+     * The layout feature manages the visibility of the sidenav.
+     */
+    provideLayout(),
+
+    /**
+     * The Auth state is provided here to ensure that the login details
+     * are available as soon as the application starts.
+     *
+     * It could also be part of the `rootReducers`, but is separated
+     * because of demonstration purposes.
+     */
+    provideAuth(),
 
     /**
      * @ngrx/router-store keeps router state up-to-date in the store.
@@ -65,14 +80,5 @@ export const appConfig: ApplicationConfig = {
      * so they are initialized when the application starts.
      */
     provideEffects(UserEffects, RouterEffects, AuthEffects),
-
-    /**
-     * The Auth state is provided here to ensure that the login details
-     * are available as soon as the application starts.
-     */
-    provideState({
-      name: fromAuth.authFeatureKey,
-      reducer: fromAuth.reducers,
-    }),
   ],
 };
