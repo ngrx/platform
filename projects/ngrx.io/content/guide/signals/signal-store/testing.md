@@ -162,7 +162,7 @@ import { signalStore, withState } from '@ngrx/signals';
 type State = { studio: string; movies: Movie[]; loading: boolean };
 
 export const MoviesStore = signalStore(
-  withState<State>({
+  withState&lt;State&gt;({
     studio: '',
     movies: [],
     loading: false,
@@ -295,7 +295,7 @@ describe('MoviesStore', () => {
   it('should load two times', fakeAsync(() => {
     const store = setup();
 
-    const studio$ = new Subject<string>();
+    const studio$ = new Subject&lt;string&gt;();
     store.load(studio$);
     studio$.next('Warner Bros');
 
@@ -467,10 +467,10 @@ export class MoviesComponent {
 <code-example header="movies.component.spec.ts">
 
 it('should show movies (native Jest)', () => {
-  const load = jest.fn<void, [Signal<string>]>();
+  const load = jest.fn&lt;void, [Signal&lt;string&gt;]&gt;();
 
   const moviesStore = {
-    movies: signal(new Array<Movie>()),
+    movies: signal(new Array&lt;Movie&gt;()),
     loading: signal(false),
     load,
   };
@@ -623,7 +623,7 @@ type PlayTrackingState = {
   _currentId: number;
   _status: 'playing' | 'stopped';
   _startedAt: Date | undefined;
-  trackedData: Record<number, number>;
+  trackedData: Record&lt;number, number&gt;;
 };
 
 const initialState: PlayTrackingState = {
