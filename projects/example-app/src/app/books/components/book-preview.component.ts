@@ -5,35 +5,29 @@ import { Book } from '@example-app/books/models';
 import { MaterialModule } from '@example-app/material';
 import { EllipsisPipe } from '@example-app/shared/pipes/ellipsis.pipe';
 import { BookAuthorsComponent } from './book-authors.component';
-import { NgIf } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'bc-book-preview',
-  imports: [
-    MaterialModule,
-    RouterLink,
-    EllipsisPipe,
-    BookAuthorsComponent,
-    NgIf,
-  ],
+  imports: [MaterialModule, RouterLink, EllipsisPipe, BookAuthorsComponent],
   template: `
     <a [routerLink]="['/books', id]">
       <mat-card>
         <mat-card-title-group>
-          <img
-            mat-card-sm-image
-            *ngIf="thumbnail"
-            [src]="thumbnail"
-            [alt]="title"
-          />
+          @if (thumbnail) {
+          <img mat-card-sm-image [src]="thumbnail" [alt]="title" />
+          }
           <mat-card-title>{{ title | bcEllipsis : 35 }}</mat-card-title>
-          <mat-card-subtitle *ngIf="subtitle">{{
+          @if (subtitle) {
+          <mat-card-subtitle>{{
             subtitle | bcEllipsis : 40
           }}</mat-card-subtitle>
+          }
         </mat-card-title-group>
         <mat-card-content>
-          <p *ngIf="description">{{ description | bcEllipsis }}</p>
+          @if (description) {
+          <p>{{ description | bcEllipsis }}</p>
+          }
         </mat-card-content>
         <mat-card-footer>
           <bc-book-authors [book]="book"></bc-book-authors>

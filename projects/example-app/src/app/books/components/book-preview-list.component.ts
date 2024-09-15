@@ -2,14 +2,15 @@ import { Component, Input } from '@angular/core';
 
 import { Book } from '@example-app/books/models';
 import { BookPreviewComponent } from './book-preview.component';
-import { NgFor } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'bc-book-preview-list',
-  imports: [BookPreviewComponent, NgFor],
+  imports: [BookPreviewComponent],
   template: `
-    <bc-book-preview *ngFor="let book of books" [book]="book"></bc-book-preview>
+    @for (book of books; track book) {
+    <bc-book-preview [book]="book"></bc-book-preview>
+    }
   `,
   styles: [
     `

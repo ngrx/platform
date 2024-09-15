@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Credentials } from '@example-app/auth/models';
@@ -7,7 +6,7 @@ import { MaterialModule } from '@example-app/material';
 @Component({
   standalone: true,
   selector: 'bc-login-form',
-  imports: [MaterialModule, ReactiveFormsModule, NgIf],
+  imports: [MaterialModule, ReactiveFormsModule],
   template: `
     <mat-card>
       <mat-card-title>Login</mat-card-title>
@@ -35,9 +34,11 @@ import { MaterialModule } from '@example-app/material';
             </mat-form-field>
           </p>
 
-          <p *ngIf="errorMessage" class="login-error">
+          @if (errorMessage) {
+          <p class="login-error">
             {{ errorMessage }}
           </p>
+          }
 
           <div class="login-buttons">
             <button type="submit" mat-button>Login</button>

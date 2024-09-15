@@ -13,7 +13,7 @@ import {
   ToolbarComponent,
 } from '../components';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { selectShowSidenav } from '../reducers/layout.reducer';
 
 @Component({
@@ -22,7 +22,6 @@ import { selectShowSidenav } from '../reducers/layout.reducer';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterOutlet,
-    NgIf,
     AsyncPipe,
     RouterLink,
     LayoutComponent,
@@ -33,33 +32,29 @@ import { selectShowSidenav } from '../reducers/layout.reducer';
   template: `
     <bc-layout>
       <bc-sidenav [open]="(showSidenav$ | async)!" (closeMenu)="closeSidenav()">
+        @if (loggedIn$ | async) {
         <bc-nav-item
           (navigate)="closeSidenav()"
-          *ngIf="loggedIn$ | async"
           routerLink="/"
           icon="book"
           hint="View your book collection"
         >
           My Collection
         </bc-nav-item>
+        } @if (loggedIn$ | async) {
         <bc-nav-item
           (navigate)="closeSidenav()"
-          *ngIf="loggedIn$ | async"
           routerLink="/books/find"
           icon="search"
           hint="Find your next book!"
         >
           Browse Books
         </bc-nav-item>
-        <bc-nav-item
-          (navigate)="closeSidenav()"
-          *ngIf="(loggedIn$ | async) === false"
-        >
-          Sign In
-        </bc-nav-item>
-        <bc-nav-item (navigate)="logout()" *ngIf="loggedIn$ | async">
-          Sign Out
-        </bc-nav-item>
+        } @if ((loggedIn$ | async) === false) {
+        <bc-nav-item (navigate)="closeSidenav()"> Sign In </bc-nav-item>
+        } @if (loggedIn$ | async) {
+        <bc-nav-item (navigate)="logout()"> Sign Out </bc-nav-item>
+        }
       </bc-sidenav>
       <bc-toolbar (openMenu)="openSidenav()"> Book Collection </bc-toolbar>
 

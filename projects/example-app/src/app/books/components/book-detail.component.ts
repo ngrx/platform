@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Book } from '@example-app/books/models';
@@ -8,13 +7,17 @@ import { BookAuthorsComponent } from './book-authors.component';
 @Component({
   standalone: true,
   selector: 'bc-book-detail',
-  imports: [MaterialModule, NgIf, BookAuthorsComponent],
+  imports: [MaterialModule, BookAuthorsComponent],
   template: `
-    <mat-card *ngIf="book">
+    @if (book) {
+    <mat-card>
       <mat-card-title-group>
         <mat-card-title>{{ title }}</mat-card-title>
-        <mat-card-subtitle *ngIf="subtitle">{{ subtitle }}</mat-card-subtitle>
-        <img mat-card-sm-image *ngIf="thumbnail" [src]="thumbnail" />
+        @if (subtitle) {
+        <mat-card-subtitle>{{ subtitle }}</mat-card-subtitle>
+        } @if (thumbnail) {
+        <img mat-card-sm-image [src]="thumbnail" />
+        }
       </mat-card-title-group>
       <mat-card-content>
         <p [innerHtml]="description"></p>
@@ -23,25 +26,18 @@ import { BookAuthorsComponent } from './book-authors.component';
         <bc-book-authors [book]="book"></bc-book-authors>
       </mat-card-footer>
       <mat-card-actions align="start">
-        <button
-          mat-raised-button
-          color="warn"
-          *ngIf="inCollection"
-          (click)="remove.emit(book)"
-        >
+        @if (inCollection) {
+        <button mat-raised-button color="warn" (click)="remove.emit(book)">
           Remove Book from Collection
         </button>
-
-        <button
-          mat-raised-button
-          color="primary"
-          *ngIf="!inCollection"
-          (click)="add.emit(book)"
-        >
+        } @if (!inCollection) {
+        <button mat-raised-button color="primary" (click)="add.emit(book)">
           Add Book to Collection
         </button>
+        }
       </mat-card-actions>
     </mat-card>
+    }
   `,
   styles: [
     `
