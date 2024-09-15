@@ -5,45 +5,137 @@ exports[`Login Page should compile 1`] = `
   form={[Function FormGroup]}
   submitted={[Function EventEmitter_]}
 >
-  <mat-card>
-    <mat-card-title>
+  <mat-card
+    class="mat-mdc-card mdc-card"
+  >
+    <mat-card-title
+      class="mat-mdc-card-title"
+    >
       Login
     </mat-card-title>
-    <mat-card-content>
+    <mat-card-content
+      class="mat-mdc-card-content"
+    >
       <form
         class="ng-untouched ng-pristine ng-valid"
         novalidate=""
       >
         <p>
-          <mat-form-field>
-            <input
-              class="ng-untouched ng-pristine ng-valid"
-              formcontrolname="username"
-              matinput=""
-              placeholder="Username"
-              type="text"
-            />
+          <mat-form-field
+            class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-no-animations mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine ng-valid"
+          >
+            <div
+              class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled mdc-text-field--no-label"
+            >
+              <div
+                class="mat-mdc-form-field-focus-overlay"
+              />
+              <div
+                class="mat-mdc-form-field-flex"
+              >
+                <div
+                  class="mat-mdc-form-field-infix"
+                >
+                  <input
+                    aria-invalid="false"
+                    aria-required="false"
+                    class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                    formcontrolname="username"
+                    matinput=""
+                    placeholder="Username"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div
+                class="mdc-line-ripple mdc-line-ripple--deactivating"
+                matformfieldlineripple=""
+              />
+            </div>
+            <div
+              class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"
+            >
+              <div
+                class="mat-mdc-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
+                style="opacity: 1; transform: translateY(0%);"
+              >
+                <div
+                  class="mat-mdc-form-field-hint-spacer"
+                />
+              </div>
+            </div>
           </mat-form-field>
         </p>
         <p>
-          <mat-form-field>
-            <input
-              class="ng-untouched ng-pristine ng-valid"
-              formcontrolname="password"
-              matinput=""
-              placeholder="Password"
-              type="password"
-            />
+          <mat-form-field
+            class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-no-animations mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine ng-valid"
+          >
+            <div
+              class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled mdc-text-field--no-label"
+            >
+              <div
+                class="mat-mdc-form-field-focus-overlay"
+              />
+              <div
+                class="mat-mdc-form-field-flex"
+              >
+                <div
+                  class="mat-mdc-form-field-infix"
+                >
+                  <input
+                    aria-invalid="false"
+                    aria-required="false"
+                    class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                    formcontrolname="password"
+                    matinput=""
+                    placeholder="Password"
+                    type="password"
+                  />
+                </div>
+              </div>
+              <div
+                class="mdc-line-ripple mdc-line-ripple--deactivating"
+                matformfieldlineripple=""
+              />
+            </div>
+            <div
+              class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"
+            >
+              <div
+                class="mat-mdc-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
+                style="opacity: 1; transform: translateY(0%);"
+              >
+                <div
+                  class="mat-mdc-form-field-hint-spacer"
+                />
+              </div>
+            </div>
           </mat-form-field>
         </p>
         <div
           class="login-buttons"
         >
           <button
+            class="mdc-button mat-mdc-button _mat-animation-noopable mat-unthemed mat-mdc-button-base"
             mat-button=""
+            mat-ripple-loader-class-name="mat-mdc-button-ripple"
+            mat-ripple-loader-uninitialized=""
             type="submit"
           >
-            Login
+            <span
+              class="mat-mdc-button-persistent-ripple mdc-button__ripple"
+            />
+            <span
+              class="mdc-button__label"
+            >
+              Login
+            </span>
+            <span
+              class="mat-mdc-focus-indicator"
+            />
+            <span
+              class="mat-mdc-button-touch-target"
+            />
           </button>
         </div>
       </form>
@@ -57,47 +149,133 @@ exports[`Login Page should disable the form if pending 1`] = `
   form={[Function FormGroup]}
   submitted={[Function EventEmitter_]}
 >
-  <mat-card>
-    <mat-card-title>
+  <mat-card
+    class="mat-mdc-card mdc-card"
+  >
+    <mat-card-title
+      class="mat-mdc-card-title"
+    >
       Login
     </mat-card-title>
-    <mat-card-content>
+    <mat-card-content
+      class="mat-mdc-card-content"
+    >
       <form
         class="ng-untouched ng-pristine"
         novalidate=""
       >
         <p>
-          <mat-form-field>
-            <input
-              class="ng-untouched ng-pristine"
-              disabled=""
-              formcontrolname="username"
-              matinput=""
-              placeholder="Username"
-              type="text"
-            />
+          <mat-form-field
+            class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-disabled mat-form-field-no-animations mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine"
+          >
+            <div
+              class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled mdc-text-field--no-label mdc-text-field--disabled"
+            >
+              <div
+                class="mat-mdc-form-field-flex"
+              >
+                <div
+                  class="mat-mdc-form-field-infix"
+                >
+                  <input
+                    aria-invalid="false"
+                    aria-required="false"
+                    class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine cdk-text-field-autofill-monitored"
+                    disabled=""
+                    formcontrolname="username"
+                    matinput=""
+                    placeholder="Username"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div
+                class="mdc-line-ripple mdc-line-ripple--deactivating"
+                matformfieldlineripple=""
+              />
+            </div>
+            <div
+              class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"
+            >
+              <div
+                class="mat-mdc-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
+                style="opacity: 1; transform: translateY(0%);"
+              >
+                <div
+                  class="mat-mdc-form-field-hint-spacer"
+                />
+              </div>
+            </div>
           </mat-form-field>
         </p>
         <p>
-          <mat-form-field>
-            <input
-              class="ng-untouched ng-pristine"
-              disabled=""
-              formcontrolname="password"
-              matinput=""
-              placeholder="Password"
-              type="password"
-            />
+          <mat-form-field
+            class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-disabled mat-form-field-no-animations mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine"
+          >
+            <div
+              class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled mdc-text-field--no-label mdc-text-field--disabled"
+            >
+              <div
+                class="mat-mdc-form-field-flex"
+              >
+                <div
+                  class="mat-mdc-form-field-infix"
+                >
+                  <input
+                    aria-invalid="false"
+                    aria-required="false"
+                    class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine cdk-text-field-autofill-monitored"
+                    disabled=""
+                    formcontrolname="password"
+                    matinput=""
+                    placeholder="Password"
+                    type="password"
+                  />
+                </div>
+              </div>
+              <div
+                class="mdc-line-ripple mdc-line-ripple--deactivating"
+                matformfieldlineripple=""
+              />
+            </div>
+            <div
+              class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"
+            >
+              <div
+                class="mat-mdc-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
+                style="opacity: 1; transform: translateY(0%);"
+              >
+                <div
+                  class="mat-mdc-form-field-hint-spacer"
+                />
+              </div>
+            </div>
           </mat-form-field>
         </p>
         <div
           class="login-buttons"
         >
           <button
+            class="mdc-button mat-mdc-button _mat-animation-noopable mat-unthemed mat-mdc-button-base"
             mat-button=""
+            mat-ripple-loader-class-name="mat-mdc-button-ripple"
+            mat-ripple-loader-uninitialized=""
             type="submit"
           >
-            Login
+            <span
+              class="mat-mdc-button-persistent-ripple mdc-button__ripple"
+            />
+            <span
+              class="mdc-button__label"
+            >
+              Login
+            </span>
+            <span
+              class="mat-mdc-focus-indicator"
+            />
+            <span
+              class="mat-mdc-button-touch-target"
+            />
           </button>
         </div>
       </form>
@@ -112,35 +290,111 @@ exports[`Login Page should display an error message if provided 1`] = `
   form={[Function FormGroup]}
   submitted={[Function EventEmitter_]}
 >
-  <mat-card>
-    <mat-card-title>
+  <mat-card
+    class="mat-mdc-card mdc-card"
+  >
+    <mat-card-title
+      class="mat-mdc-card-title"
+    >
       Login
     </mat-card-title>
-    <mat-card-content>
+    <mat-card-content
+      class="mat-mdc-card-content"
+    >
       <form
         class="ng-untouched ng-pristine ng-valid"
         novalidate=""
       >
         <p>
-          <mat-form-field>
-            <input
-              class="ng-untouched ng-pristine ng-valid"
-              formcontrolname="username"
-              matinput=""
-              placeholder="Username"
-              type="text"
-            />
+          <mat-form-field
+            class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-no-animations mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine ng-valid"
+          >
+            <div
+              class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled mdc-text-field--no-label"
+            >
+              <div
+                class="mat-mdc-form-field-focus-overlay"
+              />
+              <div
+                class="mat-mdc-form-field-flex"
+              >
+                <div
+                  class="mat-mdc-form-field-infix"
+                >
+                  <input
+                    aria-invalid="false"
+                    aria-required="false"
+                    class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                    formcontrolname="username"
+                    matinput=""
+                    placeholder="Username"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div
+                class="mdc-line-ripple mdc-line-ripple--deactivating"
+                matformfieldlineripple=""
+              />
+            </div>
+            <div
+              class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"
+            >
+              <div
+                class="mat-mdc-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
+                style="opacity: 1; transform: translateY(0%);"
+              >
+                <div
+                  class="mat-mdc-form-field-hint-spacer"
+                />
+              </div>
+            </div>
           </mat-form-field>
         </p>
         <p>
-          <mat-form-field>
-            <input
-              class="ng-untouched ng-pristine ng-valid"
-              formcontrolname="password"
-              matinput=""
-              placeholder="Password"
-              type="password"
-            />
+          <mat-form-field
+            class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-no-animations mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine ng-valid"
+          >
+            <div
+              class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled mdc-text-field--no-label"
+            >
+              <div
+                class="mat-mdc-form-field-focus-overlay"
+              />
+              <div
+                class="mat-mdc-form-field-flex"
+              >
+                <div
+                  class="mat-mdc-form-field-infix"
+                >
+                  <input
+                    aria-invalid="false"
+                    aria-required="false"
+                    class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                    formcontrolname="password"
+                    matinput=""
+                    placeholder="Password"
+                    type="password"
+                  />
+                </div>
+              </div>
+              <div
+                class="mdc-line-ripple mdc-line-ripple--deactivating"
+                matformfieldlineripple=""
+              />
+            </div>
+            <div
+              class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"
+            >
+              <div
+                class="mat-mdc-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
+                style="opacity: 1; transform: translateY(0%);"
+              >
+                <div
+                  class="mat-mdc-form-field-hint-spacer"
+                />
+              </div>
+            </div>
           </mat-form-field>
         </p>
         <p
@@ -152,10 +406,26 @@ exports[`Login Page should display an error message if provided 1`] = `
           class="login-buttons"
         >
           <button
+            class="mdc-button mat-mdc-button _mat-animation-noopable mat-unthemed mat-mdc-button-base"
             mat-button=""
+            mat-ripple-loader-class-name="mat-mdc-button-ripple"
+            mat-ripple-loader-uninitialized=""
             type="submit"
           >
-            Login
+            <span
+              class="mat-mdc-button-persistent-ripple mdc-button__ripple"
+            />
+            <span
+              class="mdc-button__label"
+            >
+              Login
+            </span>
+            <span
+              class="mat-mdc-focus-indicator"
+            />
+            <span
+              class="mat-mdc-button-touch-target"
+            />
           </button>
         </div>
       </form>
