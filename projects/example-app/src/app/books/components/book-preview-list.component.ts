@@ -23,5 +23,5 @@ import { BookPreviewComponent } from './book-preview.component';
   ],
 })
 export class BookPreviewListComponent {
-  @Input() books!: Book[];
+  @Input() books = new Array<Book>();
 }

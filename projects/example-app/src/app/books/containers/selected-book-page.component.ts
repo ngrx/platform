@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -25,15 +25,14 @@ import { AsyncPipe } from '@angular/common';
   `,
 })
 export class SelectedBookPageComponent {
-  book$: Observable<Book>;
-  isSelectedBookInCollection$: Observable<boolean>;
+  private readonly store = inject(Store);
 
-  constructor(private store: Store) {
-    this.book$ = store.select(fromBooks.selectSelectedBook) as Observable<Book>;
-    this.isSelectedBookInCollection$ = store.select(
-      fromBooks.isSelectedBookInCollection
-    );
-  }
+  protected readonly book$ = this.store.select(
+    fromBooks.selectSelectedBook
+  ) as Observable<Book>;
+  protected readonly isSelectedBookInCollection$ = this.store.select(
+    fromBooks.isSelectedBookInCollection
+  );
 
   addToCollection(book: Book) {
     this.store.dispatch(SelectedBookPageActions.addBook({ book }));

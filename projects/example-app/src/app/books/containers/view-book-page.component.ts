@@ -1,7 +1,11 @@
-import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  inject,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ViewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
@@ -25,13 +29,13 @@ import { SelectedBookPageComponent } from './selected-book-page.component';
   template: ` <bc-selected-book-page></bc-selected-book-page> `,
 })
 export class ViewBookPageComponent implements OnDestroy {
-  actionsSubscription: Subscription;
+  private readonly store = inject(Store);
 
-  constructor(store: Store, route: ActivatedRoute) {
-    this.actionsSubscription = route.params
-      .pipe(map((params) => ViewBookPageActions.selectBook({ id: params.id })))
-      .subscribe((action) => store.dispatch(action));
-  }
+  private readonly actionsSubscription = inject(ActivatedRoute)
+    .params.pipe(
+      map((params) => ViewBookPageActions.selectBook({ id: params.id }))
+    )
+    .subscribe((action) => this.store.dispatch(action));
 
   ngOnDestroy() {
     this.actionsSubscription.unsubscribe();

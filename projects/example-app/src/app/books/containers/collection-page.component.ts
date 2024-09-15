@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -39,11 +44,9 @@ import { AsyncPipe } from '@angular/common';
   ],
 })
 export class CollectionPageComponent implements OnInit {
-  books$: Observable<Book[]>;
+  private readonly store = inject(Store);
 
-  constructor(private store: Store) {
-    this.books$ = store.select(fromBooks.selectBookCollection);
-  }
+  protected books$ = this.store.select(fromBooks.selectBookCollection);
 
   ngOnInit() {
     this.store.dispatch(CollectionPageActions.enter());

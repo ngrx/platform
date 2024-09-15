@@ -23,9 +23,9 @@ import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
   ],
 })
 export class BookAuthorsComponent {
-  @Input() book!: Book;
+  @Input() book: Book | undefined = undefined;
 
   get authors() {
-    return this.book.volumeInfo.authors;
+    return this.book?.volumeInfo.authors || [];
   }
 }

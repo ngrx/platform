@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -63,17 +63,14 @@ import { selectShowSidenav } from '../reducers/layout.reducer';
   `,
 })
 export class AppComponent {
-  showSidenav$: Observable<boolean>;
-  loggedIn$: Observable<boolean>;
+  private readonly store = inject(Store);
 
-  constructor(private store: Store) {
-    /**
-     * Selectors can be applied with the `select` operator which passes the state
-     * tree to the provided selector
-     */
-    this.showSidenav$ = this.store.select(selectShowSidenav);
-    this.loggedIn$ = this.store.select(fromAuth.selectLoggedIn);
-  }
+  /**
+   * Selectors can be applied with the `select` operator which passes the state
+   * tree to the provided selector
+   */
+  protected readonly showSidenav$ = this.store.select(selectShowSidenav);
+  protected readonly loggedIn$ = this.store.select(fromAuth.selectLoggedIn);
 
   closeSidenav() {
     /**

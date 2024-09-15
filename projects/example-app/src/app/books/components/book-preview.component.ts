@@ -19,9 +19,9 @@ import { BookAuthorsComponent } from './book-authors.component';
           }
           <mat-card-title>{{ title | bcEllipsis : 35 }}</mat-card-title>
           @if (subtitle) {
-          <mat-card-subtitle>{{
-            subtitle | bcEllipsis : 40
-          }}</mat-card-subtitle>
+          <mat-card-subtitle
+            >{{ subtitle | bcEllipsis : 40 }}
+          </mat-card-subtitle>
           }
         </mat-card-title-group>
         <mat-card-content>
@@ -85,26 +85,26 @@ import { BookAuthorsComponent } from './book-authors.component';
   ],
 })
 export class BookPreviewComponent {
-  @Input() book!: Book;
+  @Input() book: Book | undefined = undefined;
 
   get id() {
-    return this.book.id;
+    return this.book?.id;
   }
 
   get title() {
-    return this.book.volumeInfo.title;
+    return this.book?.volumeInfo.title || '';
   }
 
   get subtitle() {
-    return this.book.volumeInfo.subtitle;
+    return this.book?.volumeInfo.subtitle;
   }
 
   get description() {
-    return this.book.volumeInfo.description;
+    return this.book?.volumeInfo.description;
   }
 
   get thumbnail(): string | boolean {
-    if (this.book.volumeInfo.imageLinks) {
+    if (this.book?.volumeInfo.imageLinks) {
       return this.book.volumeInfo.imageLinks.smallThumbnail.replace(
         'http:',
         ''

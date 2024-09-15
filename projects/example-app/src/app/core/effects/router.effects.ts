@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { map, tap } from 'rxjs/operators';
@@ -12,7 +12,11 @@ import * as fromRoot from '@example-app/reducers';
 
 @Injectable()
 export class RouterEffects {
-  updateTitle$ = createEffect(
+  private readonly actions$ = inject(Actions);
+  private readonly store = inject(Store);
+  private readonly titleService = inject(Title);
+
+  readonly updateTitle$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(routerNavigatedAction),
@@ -24,10 +28,4 @@ export class RouterEffects {
       dispatch: false,
     }
   );
-
-  constructor(
-    private actions$: Actions,
-    private store: Store,
-    private titleService: Title
-  ) {}
 }

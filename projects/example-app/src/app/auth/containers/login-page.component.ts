@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Credentials } from '@example-app/auth/models';
 import * as fromAuth from '@example-app/auth/reducers';
@@ -21,10 +21,12 @@ import { AsyncPipe } from '@angular/common';
   styles: [],
 })
 export class LoginPageComponent {
-  pending$ = this.store.select(fromAuth.selectLoginPagePending);
-  error$ = this.store.select(fromAuth.selectLoginPageError);
+  private store = inject(Store);
 
-  constructor(private store: Store) {}
+  protected readonly pending$ = this.store.select(
+    fromAuth.selectLoginPagePending
+  );
+  protected readonly error$ = this.store.select(fromAuth.selectLoginPageError);
 
   onSubmit(credentials: Credentials) {
     this.store.dispatch(LoginPageActions.login({ credentials }));

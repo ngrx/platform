@@ -3,6 +3,7 @@
 exports[`View Book Page should compile 1`] = `
 <bc-view-book-page
   actionsSubscription={[Function SafeSubscriber]}
+  store={[Function _MockStore]}
 >
   <bc-selected-book-page>
     <bc-book-detail>

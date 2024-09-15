@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { defer, of } from 'rxjs';
@@ -12,6 +12,9 @@ import { BookStorageService } from '@example-app/core/services';
 
 @Injectable()
 export class CollectionEffects {
+  private readonly actions$ = inject(Actions);
+  private readonly storageService = inject(BookStorageService);
+
   /**
    * This effect does not yield any actions back to the store. Set
    * `dispatch` to false to hint to @ngrx/effects that it should
@@ -22,12 +25,12 @@ export class CollectionEffects {
    * Wrapping the supported call in `defer` makes
    * effect easier to test.
    */
-  checkStorageSupport$ = createEffect(
+  readonly checkStorageSupport$ = createEffect(
     () => defer(() => this.storageService.supported()),
     { dispatch: false }
   );
 
-  loadCollection$ = createEffect(() =>
+  readonly loadCollection$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CollectionPageActions.enter),
       switchMap(() =>
@@ -43,7 +46,7 @@ export class CollectionEffects {
     )
   );
 
-  addBookToCollection$ = createEffect(() =>
+  readonly addBookToCollection$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SelectedBookPageActions.addBook),
       mergeMap(({ book }) =>
@@ -55,7 +58,7 @@ export class CollectionEffects {
     )
   );
 
-  removeBookFromCollection$ = createEffect(() =>
+  readonly removeBookFromCollection$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SelectedBookPageActions.removeBook),
       mergeMap(({ book }) =>
@@ -66,9 +69,4 @@ export class CollectionEffects {
       )
     )
   );
-
-  constructor(
-    private actions$: Actions,
-    private storageService: BookStorageService
-  ) {}
 }

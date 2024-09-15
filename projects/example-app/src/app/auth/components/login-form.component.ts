@@ -19,6 +19,7 @@ import { MaterialModule } from '@example-app/material';
                 matInput
                 placeholder="Username"
                 formControlName="username"
+                data-testid="username"
               />
             </mat-form-field>
           </p>
@@ -30,6 +31,7 @@ import { MaterialModule } from '@example-app/material';
                 matInput
                 placeholder="Password"
                 formControlName="password"
+                data-testid="password"
               />
             </mat-form-field>
           </p>
@@ -94,11 +96,11 @@ export class LoginFormComponent {
     }
   }
 
-  @Input() errorMessage!: string | null;
+  @Input() errorMessage: string | null = null;
 
   @Output() submitted = new EventEmitter<Credentials>();
 
-  form: FormGroup = new FormGroup({
+  protected readonly form: FormGroup = new FormGroup({
     username: new FormControl('ngrx'),
     password: new FormControl(''),
   });

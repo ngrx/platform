@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
@@ -14,7 +14,12 @@ import { UserActions } from '@example-app/core/actions/user.actions';
 
 @Injectable()
 export class AuthEffects {
-  login$ = createEffect(() =>
+  private readonly actions$ = inject(Actions);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
+
+  readonly login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoginPageActions.login),
       map((action) => action.credentials),
@@ -27,7 +32,7 @@ export class AuthEffects {
     )
   );
 
-  loginSuccess$ = createEffect(
+  readonly loginSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(AuthApiActions.loginSuccess),
@@ -36,7 +41,7 @@ export class AuthEffects {
     { dispatch: false }
   );
 
-  loginRedirect$ = createEffect(
+  readonly loginRedirect$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(AuthApiActions.loginRedirect, AuthActions.logout),
@@ -47,7 +52,7 @@ export class AuthEffects {
     { dispatch: false }
   );
 
-  logoutConfirmation$ = createEffect(() =>
+  readonly logoutConfirmation$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.logoutConfirmation),
       exhaustMap(() => {
@@ -65,17 +70,10 @@ export class AuthEffects {
     )
   );
 
-  logoutIdleUser$ = createEffect(() =>
+  readonly logoutIdleUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActions.idleTimeout),
       map(() => AuthActions.logout())
     )
   );
-
-  constructor(
-    private actions$: Actions,
-    private authService: AuthService,
-    private router: Router,
-    private dialog: MatDialog
-  ) {}
 }

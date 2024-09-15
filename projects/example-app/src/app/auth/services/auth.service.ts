@@ -7,7 +7,7 @@ import { Credentials, User } from '@example-app/auth/models';
   providedIn: 'root',
 })
 export class AuthService {
-  login({ username, password }: Credentials): Observable<User> {
+  login({ username }: Credentials): Observable<User> {
     /**
      * Simulate a failed login to display the error
      * message for the login form.

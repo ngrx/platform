@@ -78,8 +78,8 @@ export class BookDetailComponent {
    *
    * More on 'smart' and 'presentational' components: https://gist.github.com/btroncone/a6e4347326749f938510#utilizing-container-components
    */
-  @Input() book!: Book;
-  @Input() inCollection!: boolean;
+  @Input() book: Book | undefined = undefined;
+  @Input() inCollection = false;
   @Output() add = new EventEmitter<Book>();
   @Output() remove = new EventEmitter<Book>();
 
@@ -87,26 +87,22 @@ export class BookDetailComponent {
    * Tip: Utilize getters to keep templates clean
    */
   get id() {
-    return this.book.id;
+    return this.book?.id;
   }
 
   get title() {
-    return this.book.volumeInfo.title;
+    return this.book?.volumeInfo.title;
   }
 
   get subtitle() {
-    return this.book.volumeInfo.subtitle;
+    return this.book?.volumeInfo.subtitle;
   }
 
   get description() {
-    return this.book.volumeInfo.description;
+    return this.book?.volumeInfo.description;
   }
 
   get thumbnail() {
-    return (
-      this.book.volumeInfo.imageLinks &&
-      this.book.volumeInfo.imageLinks.smallThumbnail &&
-      this.book.volumeInfo.imageLinks.smallThumbnail.replace('http:', '')
-    );
+    return this.book?.volumeInfo.imageLinks.smallThumbnail.replace('http:', '');
   }
 }

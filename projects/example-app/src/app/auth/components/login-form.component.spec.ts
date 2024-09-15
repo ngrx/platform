@@ -2,6 +2,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LoginFormComponent } from '@example-app/auth/components';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
 
 describe('Login Page', () => {
   let fixture: ComponentFixture<LoginFormComponent>;
@@ -57,7 +58,19 @@ describe('Login Page', () => {
       username: 'user',
       password: 'pass',
     };
-    instance.form.setValue(credentials);
+
+    const inpUsername: HTMLInputElement = fixture.debugElement.query(
+      By.css('input[data-testid=username]')
+    ).nativeElement;
+    const inpPassword: HTMLInputElement = fixture.debugElement.query(
+      By.css('input[data-testid=password]')
+    ).nativeElement;
+
+    fixture.detectChanges();
+    inpUsername.value = credentials.username;
+    inpUsername.dispatchEvent(new Event('input'));
+    inpPassword.value = credentials.password;
+    inpPassword.dispatchEvent(new Event('input'));
 
     jest.spyOn(instance.submitted, 'emit');
     instance.submit();

@@ -2,6 +2,7 @@
 
 exports[`Login Page should compile 1`] = `
 <bc-login-form
+  errorMessage="null"
   form={[Function FormGroup]}
   submitted={[Function EventEmitter_]}
 >
@@ -40,6 +41,7 @@ exports[`Login Page should compile 1`] = `
                     aria-invalid="false"
                     aria-required="false"
                     class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                    data-testid="username"
                     formcontrolname="username"
                     matinput=""
                     placeholder="Username"
@@ -86,6 +88,7 @@ exports[`Login Page should compile 1`] = `
                     aria-invalid="false"
                     aria-required="false"
                     class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                    data-testid="password"
                     formcontrolname="password"
                     matinput=""
                     placeholder="Password"
@@ -146,6 +149,7 @@ exports[`Login Page should compile 1`] = `
 
 exports[`Login Page should disable the form if pending 1`] = `
 <bc-login-form
+  errorMessage="null"
   form={[Function FormGroup]}
   submitted={[Function EventEmitter_]}
 >
@@ -181,6 +185,7 @@ exports[`Login Page should disable the form if pending 1`] = `
                     aria-invalid="false"
                     aria-required="false"
                     class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine cdk-text-field-autofill-monitored"
+                    data-testid="username"
                     disabled=""
                     formcontrolname="username"
                     matinput=""
@@ -225,6 +230,7 @@ exports[`Login Page should disable the form if pending 1`] = `
                     aria-invalid="false"
                     aria-required="false"
                     class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine cdk-text-field-autofill-monitored"
+                    data-testid="password"
                     disabled=""
                     formcontrolname="password"
                     matinput=""
@@ -325,6 +331,7 @@ exports[`Login Page should display an error message if provided 1`] = `
                     aria-invalid="false"
                     aria-required="false"
                     class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                    data-testid="username"
                     formcontrolname="username"
                     matinput=""
                     placeholder="Username"
@@ -371,6 +378,7 @@ exports[`Login Page should display an error message if provided 1`] = `
                     aria-invalid="false"
                     aria-required="false"
                     class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
+                    data-testid="password"
                     formcontrolname="password"
                     matinput=""
                     placeholder="Password"

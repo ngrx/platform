@@ -8,11 +8,11 @@ import { UserActions } from '@example-app/core/actions/user.actions';
 
 @Injectable()
 export class UserEffects {
-  clicks$ = fromEvent(document, 'click');
-  keys$ = fromEvent(document, 'keydown');
-  mouse$ = fromEvent(document, 'mousemove');
+  private readonly clicks$ = fromEvent(document, 'click');
+  private readonly keys$ = fromEvent(document, 'keydown');
+  private readonly mouse$ = fromEvent(document, 'mousemove');
 
-  idle$ = createEffect(() =>
+  protected idle$ = createEffect(() =>
     merge(this.clicks$, this.keys$, this.mouse$).pipe(
       // 5 minute inactivity timeout
       switchMap(() => timer(5 * 60 * 1000)),
