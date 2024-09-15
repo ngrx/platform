@@ -53,7 +53,8 @@ type Movie = {
 type State = { movies: Movie[] };
 
 export const MoviesStore = signalStore(
-  withState<State>({
+  { providedIn: 'root' },
+  withState&lt;State&gt;({
     movies: [
       { id: 1, name: 'A New Hope' },
       { id: 2, name: 'Into Darkness' },
@@ -234,18 +235,18 @@ In this scenario, the `MovieService` returns an `Observable<Movie[]>` instead of
 export const MoviesStore = signalStore(
   // ... code ommitted
   withMethods((store, moviesService = inject(MoviesService)) => ({
-    load: rxMethod<string>(
+    load: rxMethod&lt;string&gt;(
       pipe(
         tap(() => patchState(store, { loading: true })),
-        switchMap((studio) => moviesService.load(studio)),
-        tapResponse({
-          next: (movies) =>
-            patchState(store, {
-              movies,
-              loading: false,
-            }),
-          error: console.error,
-        })
+        switchMap((studio) =>
+          moviesService.load(studio).pipe(
+            tapResponse({
+              next: (movies) =>
+                patchState(store, { movies, loading: false }),
+              error: console.error,
+            })
+          )
+        )
       )
     ),
   }))
@@ -270,7 +271,13 @@ describe('MoviesStore', () => {
 
   const setup = () => {
     const moviesService = {
-      load: jest.fn((studio: string) => of([studio === 'Warner Bros' ? { id: 1, name: 'Harry Potter' } : { id: 2, name: 'Jurassic Park' }]).pipe(delay(100))),
+      load: jest.fn((studio: string) =>
+        of([
+          studio === 'Warner Bros'
+            ? { id: 1, name: 'Harry Potter' }
+            : { id: 2, name: 'Jurassic Park' }
+        ]).pipe(delay(100))
+      ),
     };
 
     TestBed.configureTestingModule({
@@ -303,7 +310,7 @@ describe('MoviesStore', () => {
   it('should cancel a running request when a new one is made', fakeAsync(() => {
     const store = setup();
 
-    const studio$ = new Subject<string>();
+    const studio$ = new Subject&lt;string&gt;();
     store.load(studio$);
     studio$.next('Warner Bros');
 
@@ -385,7 +392,13 @@ describe('MoviesStore', () => {
 
   it('should depend on flushEffects because of synchronous execution', () => {
     const moviesService = {
-      load: jest.fn((studio: string) => of([studio === 'Warner Bros' ? { id: 1, name: 'Harry Potter' } : { id: 2, name: 'Jurassic Park' }])),
+      load: jest.fn((studio: string) =>
+        of([
+          studio === 'Warner Bros'
+            ? { id: 1, name: 'Harry Potter' }
+            : { id: 2, name: 'Jurassic Park' }
+        ])
+      ),
     };
 
     TestBed.configureTestingModule({
@@ -421,12 +434,20 @@ The `MovieComponent` utilizes the `MoviesStore` to display movies:
 
 @Component({
   selector: 'app-movies',
-  template: ` <input type="text" [(ngModel)]="studio" [disabled]="store.loading()" placeholder="Name of Studio" />
-    <ul>
+  template: `
+    &lt;input
+      type="text"
+      [(ngModel)]="studio"
+      [disabled]="store.loading()"
+      placeholder="Name of Studio"
+    /&gt;
+
+    &lt;ul&gt;
       @for (movie of store.movies(); track movie.id) {
-      <p>{{ movie.id }}: {{ movie.name }}</p>
+      &lt;p&gt;{{ movie.id }}: {{ movie.name }}&lt;/p&gt;
       }
-    </ul>`,
+    &lt;/ul&gt;
+  `,
   standalone: true,
   imports: [FormsModule],
 })
@@ -482,7 +503,9 @@ it('should show movies (native Jest)', () => {
   ]);
   fixture.detectChanges();
 
-  const movieNames = fixture.debugElement.queryAll(By.css('p')).map((el) => el.nativeElement.textContent);
+  const movieNames = fixture.debugElement.queryAll(By.css('p')).map((el) =>
+    el.nativeElement.textContent
+  );
   expect(movieNames).toEqual(['1: Harry Potter', '2: The Dark Knight']);
 });
 
@@ -535,7 +558,9 @@ it('should show movies (spy)', () => {
 
   fixture.detectChanges();
 
-  const movies = fixture.debugElement.queryAll(By.css('p')).map((el) => el.nativeElement.textContent);
+  const movies = fixture.debugElement.queryAll(By.css('p')).map((el) =>
+    el.nativeElement.textContent
+  );
   expect(movies).toEqual(['1: Harry Potter', '2: The Dark Knight']);
 });
 
@@ -576,7 +601,9 @@ it('should show movies with MoviesStore', async () => {
   )
   await fixture.whenStable()
 
-  const movies = fixture.debugElement.queryAll(By.css('p')).map((el) => el.nativeElement.textContent);
+  const movies = fixture.debugElement.queryAll(By.css('p')).map((el) =>
+    el.nativeElement.textContent
+  );
   expect(movies).toEqual(['1: Harry Potter', '2: The Dark Knight']);
   ctrl.verify();
 });
@@ -650,7 +677,7 @@ To test the extension in isolation, an artificial "Wrapper" SignalStore is creat
 <code-example header="with-play-tracking.spec.ts">
 
 describe('withTrackedPlay', () => {
-  const TrackedPlayStore = signalStore({providedIn: 'root'}, withPlayTracking());
+  const TrackedPlayStore = signalStore({ providedIn: 'root' }, withPlayTracking());
 
   it('should track movies', fakeAsync(() => {
     const store = TestBed.inject(TrackedPlayStore);
@@ -669,7 +696,7 @@ describe('withTrackedPlay', () => {
     tick(1000);
     store.stop();
 
-    expect(store.trackedData()).toEqual({1: 2000, 2: 1000, 3: 1000});
+    expect(store.trackedData()).toEqual({ 1: 2000, 2: 1000, 3: 1000 });
   }))
 });
 
