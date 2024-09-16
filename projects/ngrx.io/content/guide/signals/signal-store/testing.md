@@ -27,7 +27,7 @@ The SignalStore is a function that returns a class, allowing tests to instantiat
 
 However, in practice, `TestBed` is typically used due to its numerous advantages, such as the ability to mock dependencies and trigger the execution of effects.
 
-Additionally, key features of the SignalStore will not function properly if they do not run in an injection context. Examples include the `rxMethod`, the use of `inject` within `withMethods()`, and `withHooks()`.
+Additionally, key features of the SignalStore do not function properly if they do not run in an injection context. Examples include `rxMethod`, the use of `inject` within `withMethods()`, and `withHooks()`.
 
 <div class="alert is-helpful">
 
