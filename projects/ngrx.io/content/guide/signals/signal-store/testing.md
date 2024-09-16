@@ -31,7 +31,7 @@ Additionally, key features of the SignalStore will not function properly if they
 
 <div class="alert is-helpful">
 
-**Note:**: Using the `TestBed` is also the recommendation of the [Angular team](https://github.com/angular/angular/issues/54438#issuecomment-1971813177).
+**Note:** Using the `TestBed` is also the recommendation of the [Angular team](https://github.com/angular/angular/issues/54438#issuecomment-1971813177).
 
 </div>
 
