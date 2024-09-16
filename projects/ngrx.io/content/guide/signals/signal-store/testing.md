@@ -611,7 +611,7 @@ it('should show movies with MoviesStore', async () => {
 </code-example>
 
 
-This test assumes that the `MoviesService` sends a request to "https://movies.com".
+This test assumes that the `MoviesService` sends a request.
 
 ## Testing Custom Extensions
 
