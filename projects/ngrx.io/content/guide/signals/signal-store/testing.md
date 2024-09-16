@@ -233,7 +233,7 @@ In this scenario, the `MovieService` returns an `Observable<Movie[]>` instead of
 <code-example header="movies.store.ts">
 
 export const MoviesStore = signalStore(
-  // ... code ommitted
+  // ... code omitted
   withMethods((store, moviesService = inject(MoviesService)) => ({
     load: rxMethod&lt;string&gt;(
       pipe(
