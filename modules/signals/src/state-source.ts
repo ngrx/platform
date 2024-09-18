@@ -9,6 +9,9 @@ import {
 } from '@angular/core';
 import { SIGNAL } from '@angular/core/primitives/signals';
 import { Prettify } from './ts-helpers';
+import { deepFreeze } from './deep-freeze';
+
+declare const ngDevMode: boolean;
 
 const STATE_WATCHERS = new WeakMap<object, Array<StateWatcher<any>>>();
 
@@ -40,13 +43,19 @@ export function patchState<State extends object>(
     updaters.reduce(
       (nextState: State, updater) => ({
         ...nextState,
-        ...(typeof updater === 'function' ? updater(nextState) : updater),
+        ...(typeof updater === 'function'
+          ? updater(freezeInDevMode(nextState))
+          : updater),
       }),
       currentState
     )
   );
 
   notifyWatchers(stateSource);
+}
+
+function freezeInDevMode<State extends object>(value: State): State {
+  return ngDevMode ? deepFreeze(value) : value;
 }
 
 export function getState<State extends object>(
