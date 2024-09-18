@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, output } from '@angular/core';
 import { MaterialModule } from '@example-app/material';
 
 @Component({
@@ -15,5 +15,5 @@ import { MaterialModule } from '@example-app/material';
   `,
 })
 export class ToolbarComponent {
-  @Output() openMenu = new EventEmitter<void>();
+  openMenu = output<void>();
 }

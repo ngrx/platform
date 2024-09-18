@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  input,
+  output,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MaterialModule } from '@example-app/material';
 
@@ -7,11 +14,11 @@ import { MaterialModule } from '@example-app/material';
   selector: 'bc-nav-item',
   imports: [MaterialModule, RouterLink],
   template: `
-    <a mat-list-item [routerLink]="routerLink" (click)="navigate.emit()">
-      <mat-icon matListItemIcon>{{ icon }}</mat-icon>
+    <a mat-list-item [routerLink]="routerLink()" (click)="navigate.emit()">
+      <mat-icon matListItemIcon>{{ icon() }}</mat-icon>
       <div matListItemTitle><ng-content></ng-content></div>
-      @if (hint) {
-      <div matListItemLine>{{ hint }}</div>
+      @if (hint()) {
+      <div matListItemLine>{{ hint() }}</div>
       }
     </a>
   `,
@@ -24,8 +31,9 @@ import { MaterialModule } from '@example-app/material';
   ],
 })
 export class NavItemComponent {
-  @Input() icon = '';
-  @Input() hint = '';
-  @Input() routerLink: string | any[] = '/';
-  @Output() navigate = new EventEmitter<void>();
+  icon = input('');
+  hint = input('');
+  routerLink = input<string | unknown[]>('/');
+
+  navigate = output<void>();
 }

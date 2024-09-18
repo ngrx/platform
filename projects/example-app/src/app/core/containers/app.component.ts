@@ -31,8 +31,8 @@ import { selectShowSidenav } from '../reducers/layout.reducer';
   ],
   template: `
     <bc-layout>
-      <bc-sidenav [open]="(showSidenav$ | async)!" (closeMenu)="closeSidenav()">
-        @if (loggedIn$ | async) {
+      <bc-sidenav [open]="showSidenav()" (closeMenu)="closeSidenav()">
+        @if (loggedIn()) {
         <bc-nav-item
           (navigate)="closeSidenav()"
           routerLink="/"
@@ -41,7 +41,6 @@ import { selectShowSidenav } from '../reducers/layout.reducer';
         >
           My Collection
         </bc-nav-item>
-        } @if (loggedIn$ | async) {
         <bc-nav-item
           (navigate)="closeSidenav()"
           routerLink="/books/find"
@@ -50,13 +49,13 @@ import { selectShowSidenav } from '../reducers/layout.reducer';
         >
           Browse Books
         </bc-nav-item>
-        } @if ((loggedIn$ | async) === false) {
-        <bc-nav-item (navigate)="closeSidenav()"> Sign In </bc-nav-item>
-        } @if (loggedIn$ | async) {
-        <bc-nav-item (navigate)="logout()"> Sign Out </bc-nav-item>
+        } @if (!loggedIn()) {
+        <bc-nav-item (navigate)="closeSidenav()"> Sign In</bc-nav-item>
+        } @if (loggedIn()) {
+        <bc-nav-item (navigate)="logout()"> Sign Out</bc-nav-item>
         }
       </bc-sidenav>
-      <bc-toolbar (openMenu)="openSidenav()"> Book Collection </bc-toolbar>
+      <bc-toolbar (openMenu)="openSidenav()"> Book Collection</bc-toolbar>
 
       <router-outlet></router-outlet>
     </bc-layout>
@@ -69,8 +68,10 @@ export class AppComponent {
    * Selectors can be applied with the `select` operator which passes the state
    * tree to the provided selector
    */
-  protected readonly showSidenav$ = this.store.select(selectShowSidenav);
-  protected readonly loggedIn$ = this.store.select(fromAuth.selectLoggedIn);
+  protected readonly showSidenav = this.store.selectSignal(selectShowSidenav);
+  protected readonly loggedIn = this.store.selectSignal(
+    fromAuth.selectLoggedIn
+  );
 
   closeSidenav() {
     /**

@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  input,
+  Input,
+  output,
+  Output,
+} from '@angular/core';
 import { MaterialModule } from '@example-app/material';
 
 @Component({
@@ -8,7 +15,7 @@ import { MaterialModule } from '@example-app/material';
   template: `
     <mat-sidenav
       #sidenav
-      [opened]="open"
+      [opened]="open()"
       (keydown.escape)="sidenav.close()"
       (closedStart)="closeMenu.emit()"
       disableClose
@@ -27,6 +34,6 @@ import { MaterialModule } from '@example-app/material';
   ],
 })
 export class SidenavComponent {
-  @Input() open = false;
-  @Output() closeMenu = new EventEmitter<void>();
+  open = input(false);
+  closeMenu = output<void>();
 }
