@@ -1,13 +1,20 @@
 import {
+  Component,
   createEnvironmentInjector,
   EnvironmentInjector,
+  inject,
   Injectable,
+  Injector,
+  OnInit,
   signal,
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { BehaviorSubject, pipe, Subject, tap } from 'rxjs';
+import { BehaviorSubject, finalize, pipe, Subject, tap } from 'rxjs';
 import { rxMethod } from '../src';
 import { createLocalService } from '../../spec/helpers';
+import { provideRouter } from '@angular/router';
+import { provideLocationMocks } from '@angular/common/testing';
+import { RouterTestingHarness } from '@angular/router/testing';
 
 describe('rxMethod', () => {
   it('runs with a value', () => {
@@ -230,5 +237,123 @@ describe('rxMethod', () => {
 
     TestBed.flushEffects();
     expect(counter()).toBe(4);
+  });
+
+  it('completes on manual destroy with Signals', () => {
+    TestBed.runInInjectionContext(() => {
+      let completed = false;
+      const counter = signal(1);
+      const fn = rxMethod<number>(finalize(() => (completed = true)));
+      TestBed.flushEffects();
+      fn(counter);
+      fn.unsubscribe();
+      expect(completed).toBe(true);
+    });
+  });
+
+  describe('Signals and effect injector', () => {
+    @Injectable({ providedIn: 'root' })
+    class GlobalService {
+      rxMethodStatus = 'none';
+      log = rxMethod<string>(
+        pipe(
+          tap({
+            next: () => (this.rxMethodStatus = 'started'),
+            finalize: () => (this.rxMethodStatus = 'destroyed'),
+          })
+        )
+      );
+    }
+
+    @Component({
+      selector: `app-storeless`,
+      template: ``,
+      standalone: true,
+    })
+    class WithoutStoreComponent {}
+
+    function setup(WithStoreComponent: new () => unknown): GlobalService {
+      TestBed.configureTestingModule({
+        providers: [
+          provideRouter([
+            { path: 'with-store', component: WithStoreComponent },
+            {
+              path: 'without-store',
+              component: WithoutStoreComponent,
+            },
+          ]),
+          provideLocationMocks(),
+        ],
+      });
+
+      return TestBed.inject(GlobalService);
+    }
+
+    it('should destroy with component injector when rxMethod is in root and RxMethod in component', async () => {
+      @Component({
+        selector: 'app-with-store',
+        template: ``,
+        standalone: true,
+      })
+      class WithStoreComponent {
+        store = inject(GlobalService);
+
+        constructor() {
+          this.store.log(signal('test'));
+        }
+      }
+
+      const globalService = setup(WithStoreComponent);
+
+      const harness = await RouterTestingHarness.create('/with-store');
+      expect(globalService.rxMethodStatus).toBe('started');
+      await harness.navigateByUrl('/without-store');
+      expect(globalService.rxMethodStatus).toBe('destroyed');
+    });
+
+    it("should fallback to rxMethod's injector when RxMethod's call is outside of injection context", async () => {
+      @Component({
+        selector: `app-store`,
+        template: ``,
+        standalone: true,
+      })
+      class WithStoreComponent implements OnInit {
+        store = inject(GlobalService);
+
+        ngOnInit() {
+          this.store.log(signal('test'));
+        }
+      }
+
+      const globalService = setup(WithStoreComponent);
+
+      const harness = await RouterTestingHarness.create('/with-store');
+      expect(globalService.rxMethodStatus).toBe('started');
+      await harness.navigateByUrl('/without-store');
+      expect(globalService.rxMethodStatus).toBe('started');
+    });
+
+    it('should provide the injector for RxMethod on call', async () => {
+      @Component({
+        selector: `app-store`,
+        template: ``,
+        standalone: true,
+      })
+      class WithStoreComponent implements OnInit {
+        store = inject(GlobalService);
+        injector = inject(Injector);
+
+        ngOnInit() {
+          this.store.log(signal('test'), this.injector);
+        }
+      }
+
+      const globalService = setup(WithStoreComponent);
+
+      const harness = await RouterTestingHarness.create('/with-store');
+      expect(globalService.rxMethodStatus).toBe('started');
+      await harness.navigateByUrl('/without-store');
+      expect(globalService.rxMethodStatus).toBe('destroyed');
+    });
   });
 });

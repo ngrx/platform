@@ -11,7 +11,8 @@ import {
 import { isObservable, noop, Observable, Subject, Unsubscribable } from 'rxjs';
 
 type RxMethod<Input> = ((
-  input: Input | Signal<Input> | Observable<Input>
+  input: Input | Signal<Input> | Observable<Input>,
+  injector?: Injector
 ) => Unsubscribable) &
   Unsubscribable;
 
@@ -24,22 +25,32 @@ export function rxMethod<Input>(
   }
 
   const injector = config?.injector ?? inject(Injector);
-  const destroyRef = injector.get(DestroyRef);
   const source$ = new Subject<Input>();
-
   const sourceSub = generator(source$).subscribe();
-  destroyRef.onDestroy(() => sourceSub.unsubscribe());
 
-  const rxMethodFn = (input: Input | Signal<Input> | Observable<Input>) => {
+  const rxMethodFn = (
+    input: Input | Signal<Input> | Observable<Input>,
+    customInjector?: Injector
+  ) => {
     if (isSignal(input)) {
+      const callerInjector = getCallerInjectorIfAvailable();
+      const instanceInjector = customInjector ?? callerInjector ?? injector;
+
       const watcher = effect(
         () => {
           const value = input();
           untracked(() => source$.next(value));
         },
-        { injector }
+        { injector: instanceInjector }
       );
-      const instanceSub = { unsubscribe: () => watcher.destroy() };
+
+      instanceInjector.get(DestroyRef).onDestroy(() => {
+        sourceSub.unsubscribe();
+      });
+
+      const instanceSub = {
+        unsubscribe: () => watcher.destroy(),
+      };
       sourceSub.add(instanceSub);
 
       return instanceSub;
@@ -48,6 +59,9 @@ export function rxMethod<Input>(
     if (isObservable(input)) {
       const instanceSub = input.subscribe((value) => source$.next(value));
       sourceSub.add(instanceSub);
+
+      const destroyRef = injector.get(DestroyRef);
+      destroyRef.onDestroy(() => sourceSub.unsubscribe());
 
       return instanceSub;
     }
@@ -58,4 +72,12 @@ export function rxMethod<Input>(
   rxMethodFn.unsubscribe = sourceSub.unsubscribe.bind(sourceSub);
 
   return rxMethodFn;
+}
+
+function getCallerInjectorIfAvailable(): Injector | null {
+  try {
+    return inject(Injector);
+  } catch (e) {
+    return null;
+  }
 }
