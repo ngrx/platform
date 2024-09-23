@@ -1357,10 +1357,7 @@ export function signalStore(
       const { stateSignals, computedSignals, methods, hooks } = innerStore;
       const storeMembers = { ...stateSignals, ...computedSignals, ...methods };
 
-      (this as any)[STATE_SOURCE] =
-        config.protectedState === false
-          ? innerStore[STATE_SOURCE]
-          : innerStore[STATE_SOURCE].asReadonly();
+      (this as any)[STATE_SOURCE] = innerStore[STATE_SOURCE];
 
       for (const key in storeMembers) {
         (this as any)[key] = storeMembers[key];

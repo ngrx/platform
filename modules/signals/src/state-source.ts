@@ -7,7 +7,6 @@ import {
   untracked,
   WritableSignal,
 } from '@angular/core';
-import { SIGNAL } from '@angular/core/primitives/signals';
 import { Prettify } from './ts-helpers';
 
 const STATE_WATCHERS = new WeakMap<object, Array<StateWatcher<any>>>();
@@ -79,7 +78,7 @@ export function watchState<State extends object>(
 function getWatchers<State extends object>(
   stateSource: StateSource<State>
 ): Array<StateWatcher<State>> {
-  return STATE_WATCHERS.get(stateSource[STATE_SOURCE][SIGNAL] as object) || [];
+  return STATE_WATCHERS.get(stateSource[STATE_SOURCE] as object) || [];
 }
 
 function notifyWatchers<State extends object>(
@@ -98,7 +97,7 @@ function addWatcher<State extends object>(
   watcher: StateWatcher<State>
 ): void {
   const watchers = getWatchers(stateSource);
-  STATE_WATCHERS.set(stateSource[STATE_SOURCE][SIGNAL] as object, [
+  STATE_WATCHERS.set(stateSource[STATE_SOURCE] as object, [
     ...watchers,
     watcher,
   ]);
@@ -110,7 +109,7 @@ function removeWatcher<State extends object>(
 ): void {
   const watchers = getWatchers(stateSource);
   STATE_WATCHERS.set(
-    stateSource[STATE_SOURCE][SIGNAL] as object,
+    stateSource[STATE_SOURCE] as object,
     watchers.filter((w) => w !== watcher)
   );
 }
