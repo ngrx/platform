@@ -289,7 +289,7 @@ describe('rxMethod', () => {
       return TestBed.inject(GlobalService);
     }
 
-    it('should destroy with component injector when rxMethod is in root and RxMethod in component', async () => {
+    it('destroys with component injector when rxMethod is in root and RxMethod in component', async () => {
       @Component({
         selector: 'app-with-store',
         template: ``,
@@ -311,7 +311,7 @@ describe('rxMethod', () => {
       expect(globalService.rxMethodStatus).toBe('destroyed');
     });
 
-    it("should fallback to rxMethod's injector when RxMethod's call is outside of injection context", async () => {
+    it("falls back to rxMethod's injector when RxMethod's call is outside of injection context", async () => {
       @Component({
         selector: `app-store`,
         template: ``,
@@ -333,7 +333,7 @@ describe('rxMethod', () => {
       expect(globalService.rxMethodStatus).toBe('started');
     });
 
-    it('should provide the injector for RxMethod on call', async () => {
+    it('provides the injector for RxMethod on call', async () => {
       @Component({
         selector: `app-store`,
         template: ``,
