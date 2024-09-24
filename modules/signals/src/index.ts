@@ -1,4 +1,4 @@
-export { DeepSignal } from './deep-signal';
+export { DeepSignal, toDeepSignal } from './deep-signal';
 export { signalState, SignalState } from './signal-state';
 export { signalStore } from './signal-store';
 export { signalStoreFeature, type } from './signal-store-feature';
