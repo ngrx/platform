@@ -25,8 +25,11 @@ export function rxMethod<Input>(
   }
 
   const injector = config?.injector ?? inject(Injector);
+  const destroyRef = injector.get(DestroyRef);
   const source$ = new Subject<Input>();
+
   const sourceSub = generator(source$).subscribe();
+  destroyRef.onDestroy(() => sourceSub.unsubscribe());
 
   const rxMethodFn = (
     input: Input | Signal<Input> | Observable<Input>,
@@ -43,14 +46,7 @@ export function rxMethod<Input>(
         },
         { injector: instanceInjector }
       );
-
-      instanceInjector.get(DestroyRef).onDestroy(() => {
-        sourceSub.unsubscribe();
-      });
-
-      const instanceSub = {
-        unsubscribe: () => watcher.destroy(),
-      };
+      const instanceSub = { unsubscribe: () => watcher.destroy() };
       sourceSub.add(instanceSub);
 
       return instanceSub;
@@ -59,9 +55,6 @@ export function rxMethod<Input>(
     if (isObservable(input)) {
       const instanceSub = input.subscribe((value) => source$.next(value));
       sourceSub.add(instanceSub);
-
-      const destroyRef = injector.get(DestroyRef);
-      destroyRef.onDestroy(() => sourceSub.unsubscribe());
 
       return instanceSub;
     }
