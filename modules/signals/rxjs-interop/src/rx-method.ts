@@ -12,7 +12,7 @@ import { isObservable, noop, Observable, Subject, Unsubscribable } from 'rxjs';
 
 type RxMethod<Input> = ((
   input: Input | Signal<Input> | Observable<Input>,
-  injector?: Injector
+  config?: { injector?: Injector }
 ) => Unsubscribable) &
   Unsubscribable;
 
