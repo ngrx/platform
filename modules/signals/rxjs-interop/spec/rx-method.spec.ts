@@ -388,7 +388,7 @@ describe('rxMethod', () => {
         injector = inject(Injector);
 
         ngOnInit() {
-          this.store.log(this.store.globalSignal, this.injector);
+          this.store.log(this.store.globalSignal, { injector: this.injector });
         }
       }
 

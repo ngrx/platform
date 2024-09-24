@@ -4,6 +4,7 @@ import {
   effect,
   inject,
   Injector,
+  input,
   isSignal,
   Signal,
   untracked,
@@ -33,10 +34,11 @@ export function rxMethod<Input>(
 
   const rxMethodFn = (
     input: Input | Signal<Input> | Observable<Input>,
-    customInjector?: Injector
+    config?: { injector?: Injector }
   ) => {
     if (isSignal(input)) {
       const callerInjector = getCallerInjectorIfAvailable();
+      const customInjector = config?.injector;
       const instanceInjector = customInjector ?? callerInjector ?? injector;
 
       const watcher = effect(
