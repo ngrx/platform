@@ -36,9 +36,7 @@ export function rxMethod<Input>(
     config?: { injector?: Injector }
   ) => {
     if (isSignal(input)) {
-      const callerInjector = getCallerInjectorIfAvailable();
-      const customInjector = config?.injector;
-      const instanceInjector = customInjector ?? callerInjector ?? injector;
+      const instanceInjector = config?.injector ?? getCallerInjectorIfAvailable() ?? injector;
 
       const watcher = effect(
         () => {
