@@ -9,12 +9,12 @@ import {
   signal,
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { BehaviorSubject, finalize, pipe, Subject, tap } from 'rxjs';
+import { provideLocationMocks } from '@angular/common/testing';
+import { provideRouter } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
+import { BehaviorSubject, pipe, Subject, tap } from 'rxjs';
 import { rxMethod } from '../src';
 import { createLocalService } from '../../spec/helpers';
-import { provideRouter } from '@angular/router';
-import { provideLocationMocks } from '@angular/common/testing';
-import { RouterTestingHarness } from '@angular/router/testing';
 
 describe('rxMethod', () => {
   it('runs with a value', () => {
@@ -239,43 +239,44 @@ describe('rxMethod', () => {
     expect(counter()).toBe(4);
   });
 
-  it('completes on manual destroy with Signals', () => {
-    TestBed.runInInjectionContext(() => {
-      let completed = false;
-      const counter = signal(1);
-      const fn = rxMethod<number>(finalize(() => (completed = true)));
-      TestBed.flushEffects();
-      fn(counter);
-      fn.unsubscribe();
-      expect(completed).toBe(true);
-    });
-  });
-
   /**
-   * This test suite verifies that the internal effect of
-   * an RxMethod instance is executed with the correct injector
-   * and is destroyed at the specified time.
+   * This test suite verifies that a signal or observable passed to a reactive
+   * method that is initialized at the ancestor injector level is tracked within
+   * the correct injection context and untracked at the specified time.
    *
-   * Since we cannot directly observe the destruction of the effect from the outside,
-   * we test it indirectly.
-   *
-   * Components use the globalSignal from GlobalService and pass it
-   * to the `log` method. If the component is destroyed but a subsequent
-   * Signal change still increases the `globalSignalChangerCounter`,
-   * it indicates that the internal effect is still active.
+   * Components use `globalSignal` or `globalObservable` from `GlobalService`
+   * and pass it to the reactive method. If the component is destroyed but
+   * signal or observable change still increases the corresponding counter,
+   * the internal effect or subscription is still active.
    */
-  describe('Internal effect for Signal tracking', () => {
+  describe('with instance injector', () => {
     @Injectable({ providedIn: 'root' })
     class GlobalService {
-      globalSignal = signal(1);
-      globalSignalChangeCounter = 0;
+      readonly globalSignal = signal(1);
+      readonly globalObservable = new BehaviorSubject(1);
 
-      log = rxMethod<number>(pipe(tap(() => this.globalSignalChangeCounter++)));
+      globalSignalChangeCounter = 0;
+      globalObservableChangeCounter = 0;
+
+      readonly signalMethod = rxMethod<number>(
+        tap(() => this.globalSignalChangeCounter++)
+      );
+      readonly observableMethod = rxMethod<number>(
+        tap(() => this.globalObservableChangeCounter++)
+      );
+
+      incrementSignal(): void {
+        this.globalSignal.update((value) => value + 1);
+      }
+
+      incrementObservable(): void {
+        this.globalObservable.next(this.globalObservable.value + 1);
+      }
     }
 
     @Component({
-      selector: `app-storeless`,
-      template: ``,
+      selector: 'app-without-store',
+      template: '',
       standalone: true,
     })
     class WithoutStoreComponent {}
@@ -297,90 +298,75 @@ describe('rxMethod', () => {
       return TestBed.inject(GlobalService);
     }
 
-    it('it tracks the Signal when component is active', async () => {
+    it('tracks a signal until the component is destroyed', async () => {
       @Component({
         selector: 'app-with-store',
-        template: ``,
+        template: '',
         standalone: true,
       })
       class WithStoreComponent {
         store = inject(GlobalService);
 
         constructor() {
-          this.store.log(this.store.globalSignal);
+          this.store.signalMethod(this.store.globalSignal);
         }
       }
 
       const globalService = setup(WithStoreComponent);
+      const harness = await RouterTestingHarness.create('/with-store');
 
-      await RouterTestingHarness.create('/with-store');
       expect(globalService.globalSignalChangeCounter).toBe(1);
 
-      globalService.globalSignal.update((value) => value + 1);
+      globalService.incrementSignal();
       TestBed.flushEffects();
       expect(globalService.globalSignalChangeCounter).toBe(2);
 
-      globalService.globalSignal.update((value) => value + 1);
+      globalService.incrementSignal();
       TestBed.flushEffects();
+      expect(globalService.globalSignalChangeCounter).toBe(3);
+
+      await harness.navigateByUrl('/without-store');
+      globalService.incrementSignal();
+      TestBed.flushEffects();
+
       expect(globalService.globalSignalChangeCounter).toBe(3);
     });
 
-    it('destroys with component injector when rxMethod is in root and RxMethod in component', async () => {
+    it('tracks an observable until the component is destroyed', async () => {
       @Component({
         selector: 'app-with-store',
-        template: ``,
+        template: '',
         standalone: true,
       })
       class WithStoreComponent {
         store = inject(GlobalService);
 
         constructor() {
-          this.store.log(this.store.globalSignal);
+          this.store.observableMethod(this.store.globalObservable);
         }
       }
 
       const globalService = setup(WithStoreComponent);
-
       const harness = await RouterTestingHarness.create('/with-store');
 
-      // effect is destroyed → Signal is not tracked anymore
-      await harness.navigateByUrl('/without-store');
-      globalService.globalSignal.update((value) => value + 1);
-      TestBed.flushEffects();
+      expect(globalService.globalObservableChangeCounter).toBe(1);
 
-      expect(globalService.globalSignalChangeCounter).toBe(1);
+      globalService.incrementObservable();
+      expect(globalService.globalObservableChangeCounter).toBe(2);
+
+      globalService.incrementObservable();
+      expect(globalService.globalObservableChangeCounter).toBe(3);
+
+      await harness.navigateByUrl('/without-store');
+      globalService.incrementObservable();
+
+      expect(globalService.globalObservableChangeCounter).toBe(3);
     });
 
-    it("falls back to rxMethod's injector when RxMethod's call is outside of injection context", async () => {
+    it('tracks a signal until the provided injector is destroyed', async () => {
       @Component({
-        selector: `app-store`,
-        template: ``,
-        standalone: true,
-      })
-      class WithStoreComponent implements OnInit {
-        store = inject(GlobalService);
-
-        ngOnInit() {
-          this.store.log(this.store.globalSignal);
-        }
-      }
-
-      const globalService = setup(WithStoreComponent);
-
-      const harness = await RouterTestingHarness.create('/with-store');
-
-      // Signal is still tracked because RxMethod injector is used
-      await harness.navigateByUrl('/without-store');
-      globalService.globalSignal.update((value) => value + 1);
-      TestBed.flushEffects();
-
-      expect(globalService.globalSignalChangeCounter).toBe(2);
-    });
-
-    it('provides the injector for RxMethod on call', async () => {
-      @Component({
-        selector: `app-store`,
-        template: ``,
+        selector: 'app-with-store',
+        template: '',
         standalone: true,
       })
       class WithStoreComponent implements OnInit {
@@ -388,20 +374,85 @@ describe('rxMethod', () => {
         injector = inject(Injector);
 
         ngOnInit() {
-          this.store.log(this.store.globalSignal, { injector: this.injector });
+          this.store.signalMethod(this.store.globalSignal, {
+            injector: this.injector,
+          });
         }
       }
 
       const globalService = setup(WithStoreComponent);
-
       const harness = await RouterTestingHarness.create('/with-store');
 
-      // effect is destroyed → Signal is not tracked anymore
-      await harness.navigateByUrl('/without-store');
-      globalService.globalSignal.update((value) => value + 1);
+      globalService.incrementSignal();
       TestBed.flushEffects();
 
+      expect(globalService.globalSignalChangeCounter).toBe(2);
+
+      await harness.navigateByUrl('/without-store');
+      globalService.incrementSignal();
+      TestBed.flushEffects();
+
+      expect(globalService.globalSignalChangeCounter).toBe(2);
+    });
+
+    it('tracks an observable until the provided injector is destroyed', async () => {
+      @Component({
+        selector: 'app-with-store',
+        template: '',
+        standalone: true,
+      })
+      class WithStoreComponent implements OnInit {
+        store = inject(GlobalService);
+        injector = inject(Injector);
+
+        ngOnInit() {
+          this.store.observableMethod(this.store.globalObservable, {
+            injector: this.injector,
+          });
+        }
+      }
+
+      const globalService = setup(WithStoreComponent);
+      const harness = await RouterTestingHarness.create('/with-store');
+
+      globalService.incrementObservable();
+
+      expect(globalService.globalObservableChangeCounter).toBe(2);
+
+      await harness.navigateByUrl('/without-store');
+      globalService.incrementObservable();
+
+      expect(globalService.globalObservableChangeCounter).toBe(2);
+    });
+
+    it('falls back to source injector when reactive method is called is outside of injection context', async () => {
+      @Component({
+        selector: 'app-with-store',
+        template: '',
+        standalone: true,
+      })
+      class WithStoreComponent implements OnInit {
+        store = inject(GlobalService);
+
+        ngOnInit() {
+          this.store.signalMethod(this.store.globalSignal);
+          this.store.observableMethod(this.store.globalObservable);
+        }
+      }
+
+      const globalService = setup(WithStoreComponent);
+      const harness = await RouterTestingHarness.create('/with-store');
+
       expect(globalService.globalSignalChangeCounter).toBe(1);
+      expect(globalService.globalObservableChangeCounter).toBe(1);
+
+      await harness.navigateByUrl('/without-store');
+      globalService.incrementSignal();
+      TestBed.flushEffects();
+      globalService.incrementObservable();
+
+      expect(globalService.globalSignalChangeCounter).toBe(2);
+      expect(globalService.globalObservableChangeCounter).toBe(2);
     });
   });
 });
