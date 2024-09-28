@@ -1,3 +1,4 @@
+export { deepComputed } from './deep-computed';
 export { DeepSignal } from './deep-signal';
 export { signalState, SignalState } from './signal-state';
 export { signalStore } from './signal-store';
