@@ -425,7 +425,7 @@ describe('rxMethod', () => {
       expect(globalService.globalObservableChangeCounter).toBe(2);
     });
 
-    it('falls back to source injector when reactive method is called is outside of injection context', async () => {
+    it('falls back to source injector when reactive method is called outside of the injection context', async () => {
       @Component({
         selector: 'app-with-store',
         template: '',
