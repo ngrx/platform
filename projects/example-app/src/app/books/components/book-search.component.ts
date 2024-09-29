@@ -1,4 +1,11 @@
-import { Component, Output, Input, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Output,
+  Input,
+  EventEmitter,
+  output,
+  input,
+} from '@angular/core';
 import { MaterialModule } from '@example-app/material';
 
 @Component({
@@ -13,19 +20,19 @@ import { MaterialModule } from '@example-app/material';
           <input
             matInput
             placeholder="Search for a book"
-            [value]="query"
+            [value]="query()"
             (keyup)="onSearch($event)"
           />
         </mat-form-field>
         <mat-spinner
-          [class.show]="searching"
+          [class.show]="searching()"
           [diameter]="30"
           [strokeWidth]="3"
         ></mat-spinner>
       </mat-card-content>
       <mat-card-footer>
-        @if (error) {
-        <span>{{ error }}</span>
+        @if (error()) {
+        <span>{{ error() }}</span>
         }
       </mat-card-footer>
     </mat-card>
@@ -67,10 +74,10 @@ import { MaterialModule } from '@example-app/material';
   ],
 })
 export class BookSearchComponent {
-  @Input() query = '';
-  @Input() searching = false;
-  @Input() error = '';
-  @Output() search = new EventEmitter<string>();
+  readonly query = input('');
+  readonly searching = input(false);
+  readonly error = input('');
+  protected search = output<string>();
 
   onSearch(event: KeyboardEvent): void {
     this.search.emit((event.target as HTMLInputElement).value);

@@ -1,36 +1,36 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 
 import { SelectedBookPageActions } from '@example-app/books/actions/selected-book-page.actions';
 import { Book } from '@example-app/books/models';
 import * as fromBooks from '@example-app/books/reducers';
 import { BookDetailComponent } from '../components';
-import { AsyncPipe } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'bc-selected-book-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [BookDetailComponent, AsyncPipe],
+  imports: [BookDetailComponent],
   template: `
+    @let value = book(); @if (value) {
     <bc-book-detail
-      [book]="(book$ | async)!"
-      [inCollection]="(isSelectedBookInCollection$ | async)!"
+      [book]="value"
+      [inCollection]="isSelectedBookInCollection()"
       (add)="addToCollection($event)"
       (remove)="removeFromCollection($event)"
     >
     </bc-book-detail>
+    }
   `,
 })
 export class SelectedBookPageComponent {
   private readonly store = inject(Store);
 
-  protected readonly book$ = this.store.select(
+  protected readonly book = this.store.selectSignal(
     fromBooks.selectSelectedBook
-  ) as Observable<Book>;
-  protected readonly isSelectedBookInCollection$ = this.store.select(
+  );
+  protected readonly isSelectedBookInCollection = this.store.selectSignal(
     fromBooks.isSelectedBookInCollection
   );
 

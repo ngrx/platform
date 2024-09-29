@@ -13,20 +13,21 @@ import { AsyncPipe } from '@angular/common';
   template: `
     <bc-login-form
       (submitted)="onSubmit($event)"
-      [pending]="(pending$ | async)!"
-      [errorMessage]="error$ | async"
+      [pending]="pending()"
+      [errorMessage]="error()"
     >
     </bc-login-form>
   `,
-  styles: [],
 })
 export class LoginPageComponent {
-  private store = inject(Store);
+  private readonly store = inject(Store);
 
-  protected readonly pending$ = this.store.select(
+  protected readonly pending = this.store.selectSignal(
     fromAuth.selectLoginPagePending
   );
-  protected readonly error$ = this.store.select(fromAuth.selectLoginPageError);
+  protected readonly error = this.store.selectSignal(
+    fromAuth.selectLoginPageError
+  );
 
   onSubmit(credentials: Credentials) {
     this.store.dispatch(LoginPageActions.login({ credentials }));

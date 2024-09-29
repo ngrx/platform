@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs/operators';
 
 import { FindBookPageActions } from '@example-app/books/actions/find-book-page.actions';
 import * as fromBooks from '@example-app/books/reducers';
@@ -15,26 +14,30 @@ import { AsyncPipe } from '@angular/common';
   imports: [BookSearchComponent, AsyncPipe, BookPreviewListComponent],
   template: `
     <bc-book-search
-      [query]="(searchQuery$ | async)!"
-      [searching]="(loading$ | async)!"
-      [error]="(error$ | async)!"
+      [query]="searchQuery()"
+      [searching]="loading()"
+      [error]="error()"
       (search)="search($event)"
     >
     </bc-book-search>
-    <bc-book-preview-list [books]="(books$ | async)!"></bc-book-preview-list>
+    <bc-book-preview-list [books]="books()"></bc-book-preview-list>
   `,
 })
 export class FindBookPageComponent {
-  private store = inject(Store);
+  private readonly store = inject(Store);
 
-  protected readonly searchQuery$ = this.store
-    .select(fromBooks.selectSearchQuery)
-    .pipe(take(1));
-  protected readonly books$ = this.store.select(fromBooks.selectSearchResults);
-  protected readonly loading$ = this.store.select(
+  protected readonly searchQuery = this.store.selectSignal(
+    fromBooks.selectSearchQuery
+  );
+  protected readonly books = this.store.selectSignal(
+    fromBooks.selectSearchResults
+  );
+  protected readonly loading = this.store.selectSignal(
     fromBooks.selectSearchLoading
   );
-  protected readonly error$ = this.store.select(fromBooks.selectSearchError);
+  protected readonly error = this.store.selectSignal(
+    fromBooks.selectSearchError
+  );
 
   search(query: string) {
     this.store.dispatch(FindBookPageActions.searchBooks({ query }));

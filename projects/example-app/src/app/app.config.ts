@@ -11,7 +11,11 @@ import { rootReducers, metaReducers } from '@example-app/reducers';
 
 import { APP_ROUTES } from '@example-app/app.routing';
 import { UserEffects, RouterEffects } from '@example-app/core/effects';
-import { provideRouter, withHashLocation } from '@angular/router';
+import {
+  provideRouter,
+  withComponentInputBinding,
+  withHashLocation,
+} from '@angular/router';
 import { AuthEffects } from './auth/effects';
 import { provideAuth } from '@example-app/auth/reducers';
 import { provideLayout } from '@example-app/core/reducers/layout.reducer';
@@ -20,7 +24,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimationsAsync(),
     provideHttpClient(),
-    provideRouter(APP_ROUTES, withHashLocation()),
+    provideRouter(APP_ROUTES, withHashLocation(), withComponentInputBinding()),
 
     /**
      * provideStore() is imported once in the root providers, accepting a reducer

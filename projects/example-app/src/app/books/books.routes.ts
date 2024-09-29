@@ -8,7 +8,7 @@ import {
 import { bookExistsGuard } from '@example-app/books/guards';
 import { provideBooks } from '@example-app/books/reducers';
 
-export const BOOKS_ROUTES: Routes = [
+export default [
   {
     path: '',
     providers: [provideBooks()],
@@ -31,4 +31,4 @@ export const BOOKS_ROUTES: Routes = [
       },
     ],
   },
-];
+] satisfies Routes;

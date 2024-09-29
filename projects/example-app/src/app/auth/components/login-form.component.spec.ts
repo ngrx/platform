@@ -16,6 +16,7 @@ describe('Login Page', () => {
     });
 
     fixture = TestBed.createComponent(LoginFormComponent);
+    fixture.componentRef.setInput('pending', false);
     instance = fixture.componentInstance;
   });
 
@@ -38,7 +39,7 @@ describe('Login Page', () => {
   });
 
   it('should disable the form if pending', () => {
-    instance.pending = true;
+    fixture.componentRef.setInput('pending', true);
 
     fixture.detectChanges();
 
@@ -46,7 +47,7 @@ describe('Login Page', () => {
   });
 
   it('should display an error message if provided', () => {
-    instance.errorMessage = 'Invalid credentials';
+    fixture.componentRef.setInput('errorMessage', 'Invalid credentials');
 
     fixture.detectChanges();
 

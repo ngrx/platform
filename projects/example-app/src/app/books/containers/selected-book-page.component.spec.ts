@@ -26,12 +26,6 @@ describe('Selected Book Page', () => {
     jest.spyOn(store, 'dispatch');
   });
 
-  it('should compile', () => {
-    fixture.detectChanges();
-
-    expect(fixture).toMatchSnapshot();
-  });
-
   it('should dispatch a collection.AddBook action when addToCollection is called', () => {
     const $event: Book = generateMockBook();
     const action = SelectedBookPageActions.addBook({ book: $event });

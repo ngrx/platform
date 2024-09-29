@@ -2,12 +2,10 @@
 
 exports[`View Book Page should compile 1`] = `
 <bc-view-book-page
-  actionsSubscription={[Function SafeSubscriber]}
-  store={[Function _MockStore]}
+  id={[Function Function]}
+  selectBookEffect={[Function EffectHandle]}
+  store={[Function Object]}
 >
-  <bc-selected-book-page>
-    <bc-book-detail>
-    </bc-book-detail>
-  </bc-selected-book-page>
+  <bc-selected-book-page />
 </bc-view-book-page>
 `;

@@ -3,10 +3,11 @@ import {
   OnDestroy,
   ChangeDetectionStrategy,
   inject,
+  input,
+  effect,
+  untracked,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs/operators';
 
 import { ViewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
 import { SelectedBookPageComponent } from './selected-book-page.component';
@@ -28,16 +29,16 @@ import { SelectedBookPageComponent } from './selected-book-page.component';
   imports: [SelectedBookPageComponent],
   template: ` <bc-selected-book-page></bc-selected-book-page> `,
 })
-export class ViewBookPageComponent implements OnDestroy {
+export class ViewBookPageComponent {
   private readonly store = inject(Store);
 
-  private readonly actionsSubscription = inject(ActivatedRoute)
-    .params.pipe(
-      map((params) => ViewBookPageActions.selectBook({ id: params.id }))
-    )
-    .subscribe((action) => this.store.dispatch(action));
+  readonly id = input.required<string>();
 
-  ngOnDestroy() {
-    this.actionsSubscription.unsubscribe();
-  }
+  readonly selectBookEffect = effect(() => {
+    const id = this.id();
+
+    untracked(() => {
+      this.store.dispatch(ViewBookPageActions.selectBook({ id }));
+    });
+  });
 }

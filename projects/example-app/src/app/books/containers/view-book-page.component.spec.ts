@@ -1,46 +1,54 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { BehaviorSubject } from 'rxjs';
-
 import { ViewBookPageComponent } from '@example-app/books/containers';
 import { ViewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
+import { Store } from '@ngrx/store';
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'bc-selected-book-page',
+  template: '',
+  standalone: true,
+})
+class MockSelectedBookPageComponent {}
 
 describe('View Book Page', () => {
-  let fixture: ComponentFixture<ViewBookPageComponent>;
-  let store: MockStore;
-  let route: ActivatedRoute;
-
-  beforeEach(() => {
+  const setup = () => {
+    const store = {
+      dispatch: jest.fn(),
+      selectSignal: jest.fn(),
+    };
+    TestBed.overrideComponent(ViewBookPageComponent, {
+      set: { imports: [MockSelectedBookPageComponent] },
+    });
     TestBed.configureTestingModule({
       imports: [ViewBookPageComponent],
-      providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: { params: new BehaviorSubject({}) },
-        },
-        provideMockStore(),
-      ],
+      providers: [{ provide: Store, useValue: store }],
     });
 
-    fixture = TestBed.createComponent(ViewBookPageComponent);
-    store = TestBed.inject(MockStore);
-    route = TestBed.inject(ActivatedRoute);
+    const fixture = TestBed.createComponent(ViewBookPageComponent);
 
-    jest.spyOn(store, 'dispatch');
-  });
+    const dispatchSpy = store.dispatch;
+    const selectSpy = store.selectSignal;
+
+    return { store, fixture };
+  };
 
   it('should compile', () => {
+    const { fixture } = setup();
+    fixture.componentRef.setInput('id', '2');
     fixture.detectChanges();
 
     expect(fixture).toMatchSnapshot();
   });
 
-  it('should dispatch a book.Select action on init', () => {
-    const action = ViewBookPageActions.selectBook({ id: '2' });
+  it('should dispatch a book. Select action on init', () => {
+    const { fixture, store } = setup();
 
-    (route.params as BehaviorSubject<any>).next({ id: '2' });
+    const action = ViewBookPageActions.selectBook({ id: '2' });
+    fixture.componentRef.setInput('id', '2');
+    fixture.detectChanges();
 
     expect(store.dispatch).toHaveBeenLastCalledWith(action);
   });

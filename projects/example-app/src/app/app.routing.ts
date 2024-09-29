@@ -6,14 +6,12 @@ import { NotFoundPageComponent } from '@example-app/core/containers';
 export const APP_ROUTES: Routes = [
   {
     path: 'login',
-    loadChildren: () =>
-      import('@example-app/auth/auth.routes').then((m) => m.AUTH_ROUTES),
+    loadChildren: () => import('@example-app/auth/auth.routes'),
   },
   { path: '', redirectTo: '/books', pathMatch: 'full' },
   {
     path: 'books',
-    loadChildren: () =>
-      import('@example-app/books/books.routes').then((m) => m.BOOKS_ROUTES),
+    loadChildren: () => import('@example-app/books/books.routes'),
     canActivate: [authGuard],
   },
   {

@@ -1,4 +1,13 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  input,
+  untracked,
+  effect,
+  output,
+} from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Credentials } from '@example-app/auth/models';
 import { MaterialModule } from '@example-app/material';
@@ -36,9 +45,9 @@ import { MaterialModule } from '@example-app/material';
             </mat-form-field>
           </p>
 
-          @if (errorMessage) {
+          @if (errorMessage()) {
           <p class="login-error">
-            {{ errorMessage }}
+            {{ errorMessage() }}
           </p>
           }
 
@@ -87,18 +96,17 @@ import { MaterialModule } from '@example-app/material';
   ],
 })
 export class LoginFormComponent {
-  @Input()
-  set pending(isPending: boolean) {
-    if (isPending) {
-      this.form.disable();
-    } else {
-      this.form.enable();
-    }
-  }
+  readonly pending = input.required<boolean>();
 
-  @Input() errorMessage: string | null = null;
+  private readonly pendingEffect = effect(() => {
+    const pending = this.pending();
 
-  @Output() submitted = new EventEmitter<Credentials>();
+    untracked(() => (pending ? this.form.disable() : this.form.enable()));
+  });
+
+  readonly errorMessage = input<string | null>(null);
+
+  submitted = output<Credentials>();
 
   protected readonly form: FormGroup = new FormGroup({
     username: new FormControl('ngrx'),
