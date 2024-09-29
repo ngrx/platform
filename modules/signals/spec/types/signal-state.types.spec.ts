@@ -259,7 +259,7 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'state4',
-      'SignalState<{ foo: Record<string, number | { bar: boolean; }>; }>'
+      'SignalState<{ foo: Record<string, { bar: boolean; } | number>; }>'
     );
 
     expectSnippet(snippet).toInfer(

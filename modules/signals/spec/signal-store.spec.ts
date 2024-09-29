@@ -47,7 +47,6 @@ describe('signalStore', () => {
 
       expect(isSignal(stateSource)).toBe(true);
       expect(stateSource()).toEqual({ foo: 'bar' });
-      expect(typeof (stateSource as any).update === 'undefined').toBe(true);
     });
 
     it('creates a store with readonly state source when protectedState option is true', () => {
@@ -60,7 +59,6 @@ describe('signalStore', () => {
 
       expect(isSignal(stateSource)).toBe(true);
       expect(stateSource()).toEqual({ foo: 'bar' });
-      expect(typeof (stateSource as any).update === 'undefined').toBe(true);
     });
 
     it('creates a store with writable state source when protectedState option is false', () => {

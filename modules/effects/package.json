@@ -45,7 +45,6 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@ngrx/operators": "18.0.1",
     "tslib": "^2.0.0"
   }
 }
