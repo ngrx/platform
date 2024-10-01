@@ -320,6 +320,10 @@
               "url": "guide/signals/signal-state"
             },
             {
+              "title": "DeepComputed",
+              "url": "guide/signals/deep-computed"
+            },
+            {
               "title": "RxJS Integration",
               "url": "guide/signals/rxjs-integration"
             },
