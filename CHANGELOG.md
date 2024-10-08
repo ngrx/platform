@@ -1,3 +1,20 @@
+<a name="18.1.0"></a>
+
+# [18.1.0](https://github.com/ngrx/platform/compare/18.0.2...18.1.0) (2024-10-08)
+
+### Bug Fixes
+
+- **component-store:** remove [@ngrx](https://github.com/ngrx)/operators from dependencies ([#4532](https://github.com/ngrx/platform/issues/4532)) ([3b4b9c4](https://github.com/ngrx/platform/commit/3b4b9c4))
+- **effects:** remove [@ngrx](https://github.com/ngrx)/operators from dependencies ([#4531](https://github.com/ngrx/platform/issues/4531)) ([4fb78f1](https://github.com/ngrx/platform/commit/4fb78f1))
+- **signals:** remove usage of SIGNAL from [@angular](https://github.com/angular)/core/primitives/signals package ([#4530](https://github.com/ngrx/platform/issues/4530)) ([cae429a](https://github.com/ngrx/platform/commit/cae429a))
+- **signals:** use `Injector` of `rxMethod` instance caller if available ([#4529](https://github.com/ngrx/platform/issues/4529)) ([ffc1d87](https://github.com/ngrx/platform/commit/ffc1d87)), closes [#4528](https://github.com/ngrx/platform/issues/4528)
+- **store-devtools:** add [@angular](https://github.com/angular)/core as peer dependency ([#4478](https://github.com/ngrx/platform/issues/4478)) ([62cceeb](https://github.com/ngrx/platform/commit/62cceeb)), closes [#4479](https://github.com/ngrx/platform/issues/4479)
+
+### Features
+
+- **eslint-plugin:** add preferProtectedState rule ([#4488](https://github.com/ngrx/platform/issues/4488)) ([32c772d](https://github.com/ngrx/platform/commit/32c772d)), closes [#4474](https://github.com/ngrx/platform/issues/4474)
+- **signals:** add deepComputed function ([#4539](https://github.com/ngrx/platform/issues/4539)) ([269bd32](https://github.com/ngrx/platform/commit/269bd32))
+
 <a name="18.0.2"></a>
 
 ## [18.0.2](https://github.com/ngrx/platform/compare/18.0.1...18.0.2) (2024-07-31)
