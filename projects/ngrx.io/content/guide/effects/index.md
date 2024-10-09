@@ -296,6 +296,8 @@ bootstrapApplication(AppComponent, {
 Effects start running **immediately** after instantiation to ensure they are listening for all relevant actions as soon as possible.
 Services used in root-level effects are **not** recommended to be used with services that are used with the `APP_INITIALIZER` token.
 
+An example of the `@ngrx/router-store` setup in module-based applications is available at the [following link](https://v17.ngrx.io/guide/router-store#setup).
+
 </div>
 
 <div class="alert is-important">
