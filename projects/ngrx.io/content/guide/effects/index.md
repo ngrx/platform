@@ -269,9 +269,10 @@ In that case, the [`inject` function](https://angular.dev/api/core/inject) must 
 
 </div>
 
-## Registering Root Effects
+## Registering Effects
 
-Registering effects can also be done using the standalone APIs if you are bootstrapping an Angular application using standalone features.
+Feature-level effects are registered in the `providers` array of the route config. 
+The same `provideEffects()` function is used in root-level and feature-level effects.
 
 <code-example header="main.ts">
 import { bootstrapApplication } from '@angular/platform-browser';
@@ -296,27 +297,6 @@ Effects start running **immediately** after instantiation to ensure they are lis
 Services used in root-level effects are **not** recommended to be used with services that are used with the `APP_INITIALIZER` token.
 
 </div>
-
-## Registering Feature Effects
-
-Feature-level effects are registered in the `providers` array of the route config. The same `provideEffects()` function is used in root-level and feature-level effects.
-
-<code-example header="movie-routes.ts">
-import { Route } from '@angular/router';
-import { provideEffects } from '@ngrx/effects';
-
-import { MoviesEffects } from './effects/movies.effects';
-import * as actorsEffects from './effects/actors.effects';
-
-export const routes: Route[] = [
-  {
-    path: 'movies',
-    providers: [
-      provideEffects(MoviesEffects, actorsEffects)
-    ]
-  }
-];
-</code-example>
 
 <div class="alert is-important">
 
