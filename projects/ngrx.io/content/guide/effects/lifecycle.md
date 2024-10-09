@@ -129,20 +129,21 @@ export function effectResubscriptionHandler&gt;T extends Action&lt;(
   );
 }
 
-- im not sure what should be done with that one
-@NgModule({
-  imports: [EffectsModule.forRoot([MoviesEffects])],
-  providers: [
-    {
-      provide: EFFECTS_ERROR_HANDLER,
-      useValue: effectResubscriptionHandler,
-    },
-    {
-      provide: ErrorHandler, 
-      useClass: CustomErrorHandler 
+bootstrapApplication(
+  AppComponent,
+  {
+    providers: [
+      {
+        provide: EFFECTS_ERROR_HANDLER,
+        useValue: effectResubscriptionHandler,
+      },
+      {
+        provide: ErrorHandler,
+        useClass: CustomErrorHandler
+      }
+    ],
     }
-  ],
-})
+)
 </code-example>
 
 ## Controlling Effects
