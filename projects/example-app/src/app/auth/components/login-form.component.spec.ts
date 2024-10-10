@@ -1,7 +1,8 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LoginFormComponent } from '@example-app/auth/components';
-import { ReactiveFormsModule } from '@angular/forms';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
 
 describe('Login Page', () => {
   let fixture: ComponentFixture<LoginFormComponent>;
@@ -9,12 +10,13 @@ describe('Login Page', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
-      declarations: [LoginFormComponent],
+      imports: [LoginFormComponent],
+      providers: [provideNoopAnimations()],
       schemas: [NO_ERRORS_SCHEMA],
     });
 
     fixture = TestBed.createComponent(LoginFormComponent);
+    fixture.componentRef.setInput('pending', false);
     instance = fixture.componentInstance;
   });
 
@@ -37,7 +39,7 @@ describe('Login Page', () => {
   });
 
   it('should disable the form if pending', () => {
-    instance.pending = true;
+    fixture.componentRef.setInput('pending', true);
 
     fixture.detectChanges();
 
@@ -45,7 +47,7 @@ describe('Login Page', () => {
   });
 
   it('should display an error message if provided', () => {
-    instance.errorMessage = 'Invalid credentials';
+    fixture.componentRef.setInput('errorMessage', 'Invalid credentials');
 
     fixture.detectChanges();
 
@@ -57,7 +59,19 @@ describe('Login Page', () => {
       username: 'user',
       password: 'pass',
     };
-    instance.form.setValue(credentials);
+
+    const inpUsername: HTMLInputElement = fixture.debugElement.query(
+      By.css('input[data-testid=username]')
+    ).nativeElement;
+    const inpPassword: HTMLInputElement = fixture.debugElement.query(
+      By.css('input[data-testid=password]')
+    ).nativeElement;
+
+    fixture.detectChanges();
+    inpUsername.value = credentials.username;
+    inpUsername.dispatchEvent(new Event('input'));
+    inpPassword.value = credentials.password;
+    inpPassword.dispatchEvent(new Event('input'));
 
     jest.spyOn(instance.submitted, 'emit');
     instance.submit();

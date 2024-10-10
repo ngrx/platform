@@ -1,21 +1,28 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 
 import { CollectionPageActions } from '@example-app/books/actions/collection-page.actions';
-import { Book } from '@example-app/books/models';
 import * as fromBooks from '@example-app/books/reducers';
+import { MaterialModule } from '@example-app/material';
+import { BookPreviewListComponent } from '../components';
 
 @Component({
+  standalone: true,
   selector: 'bc-collection-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MaterialModule, BookPreviewListComponent],
   template: `
     <mat-card>
       <mat-card-title>My Collection</mat-card-title>
     </mat-card>
 
-    <bc-book-preview-list [books]="(books$ | async)!"></bc-book-preview-list>
+    <bc-book-preview-list [books]="books()"></bc-book-preview-list>
   `,
   /**
    * Container components are permitted to have just enough styles
@@ -34,11 +41,11 @@ import * as fromBooks from '@example-app/books/reducers';
   ],
 })
 export class CollectionPageComponent implements OnInit {
-  books$: Observable<Book[]>;
+  private readonly store = inject(Store);
 
-  constructor(private store: Store) {
-    this.books$ = store.select(fromBooks.selectBookCollection);
-  }
+  protected readonly books = this.store.selectSignal(
+    fromBooks.selectBookCollection
+  );
 
   ngOnInit() {
     this.store.dispatch(CollectionPageActions.enter());

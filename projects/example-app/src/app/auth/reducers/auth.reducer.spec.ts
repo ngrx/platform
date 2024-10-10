@@ -1,4 +1,4 @@
-import { reducer } from '@example-app/auth/reducers/auth.reducer';
+import { statusFeature } from '@example-app/auth/reducers/auth.reducer';
 import * as fromAuth from '@example-app/auth/reducers/auth.reducer';
 import { AuthApiActions } from '@example-app/auth/actions/auth-api.actions';
 import { AuthActions } from '@example-app/auth/actions/auth.actions';
@@ -10,7 +10,7 @@ describe('AuthReducer', () => {
     it('should return the default state', () => {
       const action = {} as any;
 
-      const result = reducer(undefined, action);
+      const result = statusFeature.reducer(undefined, action);
 
       /**
        * Snapshot tests are a quick way to validate
@@ -28,7 +28,7 @@ describe('AuthReducer', () => {
       const user = { name: 'test' } as User;
       const createAction = AuthApiActions.loginSuccess({ user });
 
-      const result = reducer(fromAuth.initialState, createAction);
+      const result = statusFeature.reducer(fromAuth.initialState, createAction);
 
       expect(result).toMatchSnapshot();
     });
@@ -41,7 +41,7 @@ describe('AuthReducer', () => {
       } as fromAuth.State;
       const createAction = AuthActions.logout();
 
-      const result = reducer(initialState, createAction);
+      const result = statusFeature.reducer(initialState, createAction);
 
       expect(result).toMatchSnapshot();
     });

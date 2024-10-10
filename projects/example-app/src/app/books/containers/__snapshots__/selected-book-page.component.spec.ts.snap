@@ -2,9 +2,9 @@
 
 exports[`Selected Book Page should compile 1`] = `
 <bc-selected-book-page
-  book$={[Function Store]}
-  isSelectedBookInCollection$={[Function Store]}
-  store={[Function MockStore]}
+  book$={[Function _Store]}
+  isSelectedBookInCollection$={[Function _Store]}
+  store={[Function _MockStore]}
 >
   <bc-book-detail>
   </bc-book-detail>

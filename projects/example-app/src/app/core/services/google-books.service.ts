@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -10,9 +10,9 @@ import { Book } from '@example-app/books/models';
   providedIn: 'root',
 })
 export class GoogleBooksService {
-  private API_PATH = 'https://www.googleapis.com/books/v1/volumes';
+  private readonly API_PATH = 'https://www.googleapis.com/books/v1/volumes';
 
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   searchBooks(queryTitle: string): Observable<Book[]> {
     return this.http

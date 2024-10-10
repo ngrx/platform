@@ -18,7 +18,6 @@ import {
  * notation packages up all of the exports into a single object.
  */
 
-import * as fromLayout from '@example-app/core/reducers/layout.reducer';
 import { isDevMode } from '@angular/core';
 
 /**
@@ -26,7 +25,6 @@ import { isDevMode } from '@angular/core';
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface State {
-  [fromLayout.layoutFeatureKey]: fromLayout.State;
   router: RouterReducerState;
 }
 
@@ -36,7 +34,6 @@ export interface State {
  * and the current or initial state and return a new immutable state.
  */
 export const rootReducers: ActionReducerMap<State> = {
-  [fromLayout.layoutFeatureKey]: fromLayout.reducer,
   router: routerReducer,
 };
 
@@ -60,18 +57,6 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
  * that will be composed to form the root meta-reducer.
  */
 export const metaReducers: MetaReducer<State>[] = isDevMode() ? [logger] : [];
-
-/**
- * Layout Selectors
- */
-export const selectLayoutState = createFeatureSelector<fromLayout.State>(
-  fromLayout.layoutFeatureKey
-);
-
-export const selectShowSidenav = createSelector(
-  selectLayoutState,
-  fromLayout.selectShowSidenav
-);
 
 /**
  * Router Selectors

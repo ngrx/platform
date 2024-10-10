@@ -1,11 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 
 import { Book } from '@example-app/books/models';
+import { BookPreviewComponent } from './book-preview.component';
 
 @Component({
+  standalone: true,
   selector: 'bc-book-preview-list',
+  imports: [BookPreviewComponent],
   template: `
-    <bc-book-preview *ngFor="let book of books" [book]="book"></bc-book-preview>
+    @for (book of books(); track book) {
+    <bc-book-preview [book]="book"></bc-book-preview>
+    }
   `,
   styles: [
     `
@@ -18,5 +23,5 @@ import { Book } from '@example-app/books/models';
   ],
 })
 export class BookPreviewListComponent {
-  @Input() books!: Book[];
+  readonly books = input(new Array<Book>());
 }

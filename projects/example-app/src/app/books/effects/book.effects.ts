@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { asyncScheduler, EMPTY as empty, of } from 'rxjs';
@@ -29,7 +29,10 @@ import { GoogleBooksService } from '@example-app/core/services';
 
 @Injectable()
 export class BookEffects {
-  search$ = createEffect(
+  private readonly actions$ = inject(Actions);
+  private readonly googleBooks = inject(GoogleBooksService);
+
+  readonly search$ = createEffect(
     () =>
       ({ debounce = 300, scheduler = asyncScheduler } = {}) =>
         this.actions$.pipe(
@@ -55,9 +58,4 @@ export class BookEffects {
           })
         )
   );
-
-  constructor(
-    private actions$: Actions,
-    private googleBooks: GoogleBooksService
-  ) {}
 }

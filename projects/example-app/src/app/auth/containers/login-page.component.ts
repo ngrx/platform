@@ -1,26 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Credentials } from '@example-app/auth/models';
 import * as fromAuth from '@example-app/auth/reducers';
 import { LoginPageActions } from '@example-app/auth/actions/login-page.actions';
+import { LoginFormComponent } from '../components';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'bc-login-page',
+  imports: [LoginFormComponent, AsyncPipe],
   template: `
     <bc-login-form
       (submitted)="onSubmit($event)"
-      [pending]="(pending$ | async)!"
-      [errorMessage]="error$ | async"
+      [pending]="pending()"
+      [errorMessage]="error()"
     >
     </bc-login-form>
   `,
-  styles: [],
 })
 export class LoginPageComponent {
-  pending$ = this.store.select(fromAuth.selectLoginPagePending);
-  error$ = this.store.select(fromAuth.selectLoginPageError);
+  private readonly store = inject(Store);
 
-  constructor(private store: Store) {}
+  protected readonly pending = this.store.selectSignal(
+    fromAuth.selectLoginPagePending
+  );
+  protected readonly error = this.store.selectSignal(
+    fromAuth.selectLoginPageError
+  );
 
   onSubmit(credentials: Credentials) {
     this.store.dispatch(LoginPageActions.login({ credentials }));

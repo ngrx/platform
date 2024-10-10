@@ -1,13 +1,20 @@
-import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { inject, Injectable, InjectionToken } from '@angular/core';
 
 import { Observable, of, throwError } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { Book } from '@example-app/books/models';
 
+// returns a dummy store if localStorage is not available
 export function storageFactory() {
   return typeof window === 'undefined' || typeof localStorage === 'undefined'
-    ? null
+    ? {
+        getItem() {
+          return '';
+        },
+        setItem() {},
+        removeItem() {},
+      }
     : localStorage;
 }
 
@@ -18,7 +25,9 @@ export const LOCAL_STORAGE_TOKEN = new InjectionToken(
 
 @Injectable({ providedIn: 'root' })
 export class BookStorageService {
-  private collectionKey = 'books-app';
+  private readonly collectionKey = 'books-app';
+
+  private readonly storage = inject(LOCAL_STORAGE_TOKEN);
 
   supported(): Observable<boolean> {
     return this.storage !== null
@@ -56,6 +65,4 @@ export class BookStorageService {
       tap(() => this.storage.removeItem(this.collectionKey))
     );
   }
-
-  constructor(@Inject(LOCAL_STORAGE_TOKEN) private storage: Storage) {}
 }
