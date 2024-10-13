@@ -75,12 +75,10 @@ features: {
 
 ## Example Object as provided in module imports
 
-<code-example header="app.module.ts">
-@NgModule({
-  ...
-  imports: [
-    ...
-    StoreDevtoolsModule.instrument({
+<code-example header="main.ts">
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideStoreDevtools({
       maxAge: 25,
       logOnly: false,
       autoPause: true,
