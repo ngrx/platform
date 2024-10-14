@@ -194,4 +194,28 @@ describe('signalState', () => {
       expect(stateCounter).toBe(3);
       expect(userCounter).toBe(1);
     }));
+
+  describe('freezeInDevMode', () => {
+    it('throws on a mutable change', () => {
+      const userState = signalState(initialState);
+      expect(() =>
+        patchState(userState, (state) => {
+          state.ngrx = 'mutable change';
+          return state;
+        })
+      ).toThrowError("Cannot assign to read only property 'ngrx' of object");
+    });
+
+    it('throws on a mutable change', () => {
+      const userState = signalState(initialState);
+      expect(() =>
+        patchState(userState, (state) => {
+          state.user.firstName = 'mutable change';
+          return state;
+        })
+      ).toThrowError(
+        "Cannot assign to read only property 'firstName' of object"
+      );
+    });
+  });
 });
