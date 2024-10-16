@@ -59,6 +59,7 @@ export { normalizeRoot } from './dataservices/http-url-generator';
 export {
   EntityCollectionDataService,
   HttpMethods,
+  HttpOptions,
   RequestData,
   QueryParams,
 } from './dataservices/interfaces';
