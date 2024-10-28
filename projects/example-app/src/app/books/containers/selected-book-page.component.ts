@@ -19,6 +19,7 @@ import * as fromBooks from '@example-app/books/reducers';
     >
     </bc-book-detail>
   `,
+  standalone: false,
 })
 export class SelectedBookPageComponent {
   book$: Observable<Book>;

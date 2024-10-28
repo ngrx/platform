@@ -60,6 +60,7 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
       }
     `,
   ],
+  standalone: false,
 })
 export class BookSearchComponent {
   @Input() query = '';

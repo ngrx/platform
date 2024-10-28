@@ -78,6 +78,7 @@ import { Credentials } from '@example-app/auth/models';
       }
     `,
   ],
+  standalone: false,
 })
 export class LoginFormComponent {
   @Input()

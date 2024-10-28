@@ -67,6 +67,7 @@ import { Book } from '@example-app/books/models';
       }
     `,
   ],
+  standalone: false,
 })
 export class BookDetailComponent {
   /**

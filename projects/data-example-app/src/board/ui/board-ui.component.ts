@@ -12,6 +12,7 @@ import {
   selector: 'ngrx-board-ui',
   templateUrl: './board-ui.component.html',
   styleUrls: ['./board-ui.component.scss'],
+  standalone: false,
 })
 export class BoardUiComponent {
   @Input() stories: Stories[] = [];

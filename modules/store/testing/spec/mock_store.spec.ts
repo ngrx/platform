@@ -24,6 +24,7 @@ import { INCREMENT } from '../../spec/fixtures/counter';
 import { Component, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { AsyncPipe, NgForOf } from '@angular/common';
 
 interface TestAppSchema {
   counter1: number;
@@ -461,6 +462,7 @@ describe('Refreshing state', () => {
         </p>
       </ul>
     `,
+    imports: [AsyncPipe, NgForOf],
   })
   class TodosComponent {
     todos: Observable<any[]> = this.store.pipe(select(todos));
@@ -471,7 +473,6 @@ describe('Refreshing state', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TodosComponent],
       providers: [provideMockStore()],
     }).compileComponents();
 

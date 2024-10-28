@@ -12,6 +12,7 @@ import {
   selector: 'ngrx-board-component',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
+  standalone: false,
 })
 export class BoardComponent implements OnInit {
   stories$: Observable<Stories[]> = this.storyDataService.groupedStories$;

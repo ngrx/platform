@@ -133,7 +133,7 @@ exports[`Login Page should compile 1`] = `
                 Login
               </span>
               <span
-                class="mat-mdc-focus-indicator"
+                class="mat-focus-indicator"
               />
               <span
                 class="mat-mdc-button-touch-target"

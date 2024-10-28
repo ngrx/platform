@@ -21,6 +21,7 @@ import * as fromBooks from '@example-app/books/reducers';
     </bc-book-search>
     <bc-book-preview-list [books]="(books$ | async)!"> </bc-book-preview-list>
   `,
+  standalone: false,
 })
 export class FindBookPageComponent {
   searchQuery$: Observable<string>;

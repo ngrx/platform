@@ -171,7 +171,7 @@ describe('rxMethod', () => {
     service.method(sig);
     service.method(1);
     flushEffects();
-    expect(results).toEqual([1, 1, 1]);
+    expect(results).toEqual([1, 1]);
 
     destroy();
     expect(destroyed).toBe(true);
@@ -180,7 +180,7 @@ describe('rxMethod', () => {
     sig.set(2);
     service.method(2);
     flushEffects();
-    expect(results).toEqual([1, 1, 1]);
+    expect(results).toEqual([1, 1]);
   });
 
   it('unsubscribes from method and all instances on provided injector destroy', () => {
@@ -319,17 +319,17 @@ describe('rxMethod', () => {
 
       globalService.incrementSignal();
       TestBed.flushEffects();
-      expect(globalService.globalSignalChangeCounter).toBe(2);
+      expect(globalService.globalSignalChangeCounter).toBe(1);
 
       globalService.incrementSignal();
       TestBed.flushEffects();
-      expect(globalService.globalSignalChangeCounter).toBe(3);
+      expect(globalService.globalSignalChangeCounter).toBe(1);
 
       await harness.navigateByUrl('/without-store');
       globalService.incrementSignal();
       TestBed.flushEffects();
 
-      expect(globalService.globalSignalChangeCounter).toBe(3);
+      expect(globalService.globalSignalChangeCounter).toBe(1);
     });
 
     it('tracks an observable until the component is destroyed', async () => {
@@ -386,13 +386,13 @@ describe('rxMethod', () => {
       globalService.incrementSignal();
       TestBed.flushEffects();
 
-      expect(globalService.globalSignalChangeCounter).toBe(2);
+      expect(globalService.globalSignalChangeCounter).toBe(1);
 
       await harness.navigateByUrl('/without-store');
       globalService.incrementSignal();
       TestBed.flushEffects();
 
-      expect(globalService.globalSignalChangeCounter).toBe(2);
+      expect(globalService.globalSignalChangeCounter).toBe(1);
     });
 
     it('tracks an observable until the provided injector is destroyed', async () => {

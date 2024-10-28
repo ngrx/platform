@@ -24,11 +24,13 @@ import {
 import { PushPipe } from '../../src/push/push.pipe';
 import { MockChangeDetectorRef, MockErrorHandler } from '../fixtures/fixtures';
 import { stripSpaces, wrapWithSpace } from '../helpers';
+import { JsonPipe } from '@angular/common';
 
 let pushPipe: PushPipe;
 
 @Component({
   template: ` {{ (value$ | ngrxPush | json) || 'undefined' }} `,
+  imports: [PushPipe, JsonPipe],
 })
 class PushPipeTestComponent {
   value$: unknown = of(42);
@@ -200,8 +202,6 @@ describe('PushPipe', () => {
   describe('used as a Pipe', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        declarations: [PushPipeTestComponent],
-        imports: [PushPipe],
         providers: [{ provide: ErrorHandler, useClass: MockErrorHandler }],
       });
 
