@@ -1,3 +1,12 @@
+<a name="18.1.1"></a>
+
+## [18.1.1](https://github.com/ngrx/platform/compare/18.1.0...18.1.1) (2024-10-29)
+
+### Bug Fixes
+
+- **data:** export HttpOptions ([#4564](https://github.com/ngrx/platform/issues/4564)) ([4909627](https://github.com/ngrx/platform/commit/4909627))
+- **router-store:** use non-const enum to allow isolatedModules tsconfig option ([#4554](https://github.com/ngrx/platform/issues/4554)) ([f993759](https://github.com/ngrx/platform/commit/f993759))
+
 <a name="18.1.0"></a>
 
 # [18.1.0](https://github.com/ngrx/platform/compare/18.0.2...18.1.0) (2024-10-08)
