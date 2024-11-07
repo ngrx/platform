@@ -6,10 +6,7 @@ import { provideEntityData } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideEntityData(entityConfig)
-]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideEntityData(entityConfig)]
 };
 "
 `;
@@ -19,10 +16,7 @@ exports[`Data ng-add Schematic Migration of ngrx-data Data ng-add Schematic for 
 import { provideEntityData, withEffects } from '@ngrx/data';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideEntityData({}, withEffects())
-]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideEntityData({}, withEffects())]
 };
 "
 `;
@@ -33,10 +27,7 @@ import { provideEntityData, withEffects } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideEntityData(entityConfig, withEffects())
-]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideEntityData(entityConfig, withEffects())]
 };
 "
 `;

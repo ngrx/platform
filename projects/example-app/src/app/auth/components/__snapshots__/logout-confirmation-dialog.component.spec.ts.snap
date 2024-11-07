@@ -4,6 +4,7 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
 <ng-component>
   <h2
     class="mat-mdc-dialog-title mdc-dialog__title"
+    id="mat-mdc-dialog-title-a0"
     mat-dialog-title=""
   >
     Logout

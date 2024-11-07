@@ -6,10 +6,7 @@ import { provideEffects } from '@ngrx/effects';
 import { FooEffects } from './foo/foo.effects';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideEffects(FooEffects)
-]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideEffects(FooEffects)]
 };
 "
 `;
@@ -19,10 +16,7 @@ exports[`Effects ng-add Schematic Effects ng-add Schematic for standalone applic
 import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideEffects()
-]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideEffects()]
 };
 "
 `;

@@ -5,10 +5,7 @@ exports[`Router Store ng-add Schematic Router Store ng-add Schematic for standal
 import { provideRouterStore } from '@ngrx/router-store';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouterStore()
-]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouterStore()]
 };
 "
 `;
