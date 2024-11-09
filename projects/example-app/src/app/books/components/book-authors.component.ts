@@ -1,13 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, computed, input, Input } from '@angular/core';
 
 import { Book } from '@example-app/books/models';
+import { MaterialModule } from '@example-app/material';
+import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 
 @Component({
+  standalone: true,
   selector: 'bc-book-authors',
+  imports: [MaterialModule, AddCommasPipe],
   template: `
     <h5 mat-subheader>Written By:</h5>
     <span>
-      {{ authors | bcAddCommas }}
+      {{ authors() | bcAddCommas }}
     </span>
   `,
   styles: [
@@ -19,9 +23,9 @@ import { Book } from '@example-app/books/models';
   ],
 })
 export class BookAuthorsComponent {
-  @Input() book!: Book;
+  book = input<Book>();
 
-  get authors() {
-    return this.book.volumeInfo.authors;
-  }
+  protected readonly authors = computed(
+    () => this.book()?.volumeInfo.authors || []
+  );
 }

@@ -1,10 +1,10 @@
-import { reducer } from '@example-app/books/reducers/books.reducer';
 import * as fromBooks from '@example-app/books/reducers/books.reducer';
 import { BooksApiActions } from '@example-app/books/actions/books-api.actions';
 import { BookActions } from '@example-app/books/actions/book.actions';
 import { CollectionApiActions } from '@example-app/books/actions/collection-api.actions';
 import { ViewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
 import { Book, generateMockBook } from '@example-app/books/models';
+import { booksFeature } from '@example-app/books/reducers/books.reducer';
 
 describe('BooksReducer', () => {
   const book1 = generateMockBook();
@@ -21,7 +21,7 @@ describe('BooksReducer', () => {
 
   describe('undefined action', () => {
     it('should return the default state', () => {
-      const result = reducer(undefined, {} as any);
+      const result = booksFeature.reducer(undefined, {} as any);
 
       expect(result).toMatchSnapshot();
     });
@@ -38,7 +38,7 @@ describe('BooksReducer', () => {
     ) {
       const createAction = action({ books });
 
-      const result = reducer(booksInitialState, createAction);
+      const result = booksFeature.reducer(booksInitialState, createAction);
 
       expect(result).toMatchSnapshot();
     }
@@ -52,7 +52,7 @@ describe('BooksReducer', () => {
       const differentBook2 = { ...books[0], foo: 'bar' };
       const createAction = action({ books: [books[1], differentBook2] });
 
-      const result = reducer(booksInitialState, createAction);
+      const result = booksFeature.reducer(booksInitialState, createAction);
 
       expect(result).toMatchSnapshot();
     }
@@ -94,7 +94,7 @@ describe('BooksReducer', () => {
     it('should add a single book, if the book does not exist', () => {
       const action = BookActions.loadBook({ book: book1 });
 
-      const result = reducer(fromBooks.initialState, action);
+      const result = booksFeature.reducer(fromBooks.initialState, action);
 
       expect(result).toMatchSnapshot();
     });
@@ -102,7 +102,7 @@ describe('BooksReducer', () => {
     it('should return the existing state if the book exists', () => {
       const action = BookActions.loadBook({ book: book1 });
 
-      const result = reducer(expectedResult, action);
+      const result = booksFeature.reducer(expectedResult, action);
 
       expect(result).toMatchSnapshot();
     });
@@ -112,7 +112,7 @@ describe('BooksReducer', () => {
     it('should set the selected book id on the state', () => {
       const action = ViewBookPageActions.selectBook({ id: book1.id });
 
-      const result = reducer(initialState, action);
+      const result = booksFeature.reducer(initialState, action);
 
       expect(result).toMatchSnapshot();
     });
@@ -121,7 +121,7 @@ describe('BooksReducer', () => {
   describe('Selectors', () => {
     describe('selectId', () => {
       it('should return the selected id', () => {
-        const result = fromBooks.selectId({
+        const result = booksFeature.selectSelectedBookId.projector({
           ...initialState,
           selectedBookId: book1.id,
         });

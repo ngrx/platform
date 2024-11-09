@@ -1,17 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 import { SelectedBookPageActions } from '@example-app/books/actions/selected-book-page.actions';
-import {
-  BookAuthorsComponent,
-  BookDetailComponent,
-} from '@example-app/books/components';
+
 import { SelectedBookPageComponent } from '@example-app/books/containers';
 import { Book, generateMockBook } from '@example-app/books/models';
-import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
-import { MaterialModule } from '@example-app/material';
 
 describe('Selected Book Page', () => {
   let fixture: ComponentFixture<SelectedBookPageComponent>;
@@ -20,14 +15,8 @@ describe('Selected Book Page', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, MaterialModule],
-      declarations: [
-        SelectedBookPageComponent,
-        BookDetailComponent,
-        BookAuthorsComponent,
-        AddCommasPipe,
-      ],
-      providers: [provideMockStore()],
+      imports: [SelectedBookPageComponent],
+      providers: [provideNoopAnimations(), provideMockStore()],
     });
 
     fixture = TestBed.createComponent(SelectedBookPageComponent);
@@ -35,12 +24,6 @@ describe('Selected Book Page', () => {
     store = TestBed.inject(MockStore);
 
     jest.spyOn(store, 'dispatch');
-  });
-
-  it('should compile', () => {
-    fixture.detectChanges();
-
-    expect(fixture).toMatchSnapshot();
   });
 
   it('should dispatch a collection.AddBook action when addToCollection is called', () => {

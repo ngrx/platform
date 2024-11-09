@@ -1,13 +1,11 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 
 import { BooksApiActions } from '@example-app/books/actions/books-api.actions';
 import { BookActions } from '@example-app/books/actions/book.actions';
 import { CollectionApiActions } from '@example-app/books/actions/collection-api.actions';
 import { ViewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
 import { Book } from '@example-app/books/models';
-
-export const booksFeatureKey = 'books';
 
 /**
  * @ngrx/entity provides a predefined interface for handling
@@ -42,41 +40,33 @@ export const initialState: State = adapter.getInitialState({
   selectedBookId: null,
 });
 
-export const reducer = createReducer(
-  initialState,
-  /**
-   * The addMany function provided by the created adapter
-   * adds many records to the entity dictionary
-   * and returns a new state including those records. If
-   * the collection is to be sorted, the adapter will
-   * sort each record upon entry into the sorted array.
-   */
-  on(
-    BooksApiActions.searchSuccess,
-    CollectionApiActions.loadBooksSuccess,
-    (state, { books }) => adapter.addMany(books, state)
+export const booksFeature = createFeature({
+  name: 'books',
+  reducer: createReducer(
+    initialState,
+    /**
+     * The addMany function provided by the created adapter
+     * adds many records to the entity dictionary
+     * and returns a new state including those records. If
+     * the collection is to be sorted, the adapter will
+     * sort each record upon entry into the sorted array.
+     */
+    on(
+      BooksApiActions.searchSuccess,
+      CollectionApiActions.loadBooksSuccess,
+      (state, { books }) => adapter.addMany(books, state)
+    ),
+    /**
+     * The addOne function provided by the created adapter
+     * adds one record to the entity dictionary
+     * and returns a new state including that records if it doesn't
+     * exist already. If the collection is to be sorted, the adapter will
+     * insert the new record into the sorted array.
+     */
+    on(BookActions.loadBook, (state, { book }) => adapter.addOne(book, state)),
+    on(ViewBookPageActions.selectBook, (state, { id }) => ({
+      ...state,
+      selectedBookId: id,
+    }))
   ),
-  /**
-   * The addOne function provided by the created adapter
-   * adds one record to the entity dictionary
-   * and returns a new state including that records if it doesn't
-   * exist already. If the collection is to be sorted, the adapter will
-   * insert the new record into the sorted array.
-   */
-  on(BookActions.loadBook, (state, { book }) => adapter.addOne(book, state)),
-  on(ViewBookPageActions.selectBook, (state, { id }) => ({
-    ...state,
-    selectedBookId: id,
-  }))
-);
-
-/**
- * Because the data structure is defined within the reducer it is optimal to
- * locate our selector functions at this level. If store is to be thought of
- * as a database, and reducers the tables, selectors can be considered the
- * queries into said database. Remember to keep your selectors small and
- * focused so they can be combined and composed to fit each particular
- * use-case.
- */
-
-export const selectId = (state: State) => state.selectedBookId;
+});
