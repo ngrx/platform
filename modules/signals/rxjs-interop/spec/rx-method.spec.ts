@@ -183,41 +183,45 @@ describe('rxMethod', () => {
     expect(results).toEqual([1, 1]);
   });
 
-  it('unsubscribes from method and all instances on provided injector destroy', () => {
-    const injector = createEnvironmentInjector(
-      [],
-      TestBed.inject(EnvironmentInjector)
-    );
-    const results: number[] = [];
+  it('unsubscribes from method and all instances on destroy', () => {
+    const results: string[] = [];
     let destroyed = false;
+    const subject$ = new BehaviorSubject('subject');
+    const sig = signal('signal');
 
-    const method = rxMethod<number>(
-      tap({
-        next: (value) => results.push(value),
-        finalize: () => (destroyed = true),
-      }),
-      { injector }
-    );
+    @Injectable()
+    class TestService {
+      method = rxMethod<string>(
+        pipe(
+          tap({
+            next: (value) => results.push(value),
+            finalize: () => (destroyed = true),
+          })
+        )
+      );
+    }
 
-    const subject$ = new BehaviorSubject(1);
-    const sig = signal(1);
+    const { service, flushEffects, destroy, detectChanges } =
+      createLocalService(TestService);
 
-    method(subject$);
-    method(sig);
-    method(1);
+    service.method(subject$);
+    service.method(sig);
+    detectChanges();
+    service.method('value');
 
-    TestBed.flushEffects();
-    expect(results).toEqual([1, 1, 1]);
+    flushEffects();
+    expect(results).toEqual(['subject', 'signal', 'value']);
 
-    injector.destroy();
+    destroy();
     expect(destroyed).toBe(true);
 
-    subject$.next(2);
-    sig.set(2);
-    method(2);
+    subject$.next('subject 2');
+    sig.set('signal 2');
+    detectChanges();
+    service.method('value 2');
 
-    TestBed.flushEffects();
-    expect(results).toEqual([1, 1, 1]);
+    flushEffects();
+    expect(results).toEqual(['subject', 'signal', 'value']);
   });
 
   it('throws an error when it is called out of injection context', () => {
@@ -318,18 +322,21 @@ describe('rxMethod', () => {
       expect(globalService.globalSignalChangeCounter).toBe(1);
 
       globalService.incrementSignal();
+      harness.detectChanges();
       TestBed.flushEffects();
-      expect(globalService.globalSignalChangeCounter).toBe(1);
+      expect(globalService.globalSignalChangeCounter).toBe(2);
 
       globalService.incrementSignal();
+      harness.detectChanges();
       TestBed.flushEffects();
-      expect(globalService.globalSignalChangeCounter).toBe(1);
+      expect(globalService.globalSignalChangeCounter).toBe(3);
 
       await harness.navigateByUrl('/without-store');
       globalService.incrementSignal();
+      harness.detectChanges();
       TestBed.flushEffects();
 
-      expect(globalService.globalSignalChangeCounter).toBe(1);
+      expect(globalService.globalSignalChangeCounter).toBe(3);
     });
 
     it('tracks an observable until the component is destroyed', async () => {
@@ -384,15 +391,17 @@ describe('rxMethod', () => {
       const harness = await RouterTestingHarness.create('/with-store');
 
       globalService.incrementSignal();
+      harness.detectChanges();
       TestBed.flushEffects();
 
-      expect(globalService.globalSignalChangeCounter).toBe(1);
+      expect(globalService.globalSignalChangeCounter).toBe(2);
 
       await harness.navigateByUrl('/without-store');
       globalService.incrementSignal();
+      harness.detectChanges();
       TestBed.flushEffects();
 
-      expect(globalService.globalSignalChangeCounter).toBe(1);
+      expect(globalService.globalSignalChangeCounter).toBe(2);
     });
 
     it('tracks an observable until the provided injector is destroyed', async () => {

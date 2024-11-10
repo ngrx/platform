@@ -7,6 +7,7 @@ export function createLocalService<Service extends Type<unknown>>(
   service: InstanceType<Service>;
   flushEffects: () => void;
   destroy: () => void;
+  detectChanges: () => void;
 } {
   @Component({
     standalone: true,
@@ -23,6 +24,7 @@ export function createLocalService<Service extends Type<unknown>>(
   fixture.detectChanges();
 
   return {
+    detectChanges: () => fixture.detectChanges(),
     service: fixture.componentInstance.service,
     flushEffects: () => TestBed.flushEffects(),
     destroy: () => fixture.destroy(),
