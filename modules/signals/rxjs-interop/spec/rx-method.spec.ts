@@ -148,42 +148,6 @@ describe('rxMethod', () => {
   });
 
   it('unsubscribes from method and all instances on destroy', () => {
-    const results: number[] = [];
-    let destroyed = false;
-    const subject$ = new BehaviorSubject(1);
-    const sig = signal(1);
-
-    @Injectable()
-    class TestService {
-      method = rxMethod<number>(
-        pipe(
-          tap({
-            next: (value) => results.push(value),
-            finalize: () => (destroyed = true),
-          })
-        )
-      );
-    }
-
-    const { service, flushEffects, destroy } = createLocalService(TestService);
-
-    service.method(subject$);
-    service.method(sig);
-    service.method(1);
-    flushEffects();
-    expect(results).toEqual([1, 1]);
-
-    destroy();
-    expect(destroyed).toBe(true);
-
-    subject$.next(2);
-    sig.set(2);
-    service.method(2);
-    flushEffects();
-    expect(results).toEqual([1, 1]);
-  });
-
-  it('unsubscribes from method and all instances on destroy', () => {
     const results: string[] = [];
     let destroyed = false;
     const subject$ = new BehaviorSubject('subject');
@@ -201,27 +165,24 @@ describe('rxMethod', () => {
       );
     }
 
-    const { service, flushEffects, destroy, detectChanges } =
-      createLocalService(TestService);
+    const { service, flush, destroy } = createLocalService(TestService);
 
     service.method(subject$);
     service.method(sig);
-    detectChanges();
     service.method('value');
 
-    flushEffects();
-    expect(results).toEqual(['subject', 'signal', 'value']);
+    flush();
+    expect(results).toEqual(['subject', 'value', 'signal']);
 
     destroy();
     expect(destroyed).toBe(true);
 
     subject$.next('subject 2');
     sig.set('signal 2');
-    detectChanges();
     service.method('value 2');
 
-    flushEffects();
-    expect(results).toEqual(['subject', 'signal', 'value']);
+    flush();
+    expect(results).toEqual(['subject', 'value', 'signal']);
   });
 
   it('throws an error when it is called out of injection context', () => {
