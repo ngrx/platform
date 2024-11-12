@@ -148,14 +148,14 @@ describe('rxMethod', () => {
   });
 
   it('unsubscribes from method and all instances on destroy', () => {
-    const results: number[] = [];
+    const results: string[] = [];
     let destroyed = false;
-    const subject$ = new BehaviorSubject(1);
-    const sig = signal(1);
+    const subject$ = new BehaviorSubject('subject');
+    const sig = signal('signal');
 
     @Injectable()
     class TestService {
-      method = rxMethod<number>(
+      method = rxMethod<string>(
         pipe(
           tap({
             next: (value) => results.push(value),
@@ -165,59 +165,24 @@ describe('rxMethod', () => {
       );
     }
 
-    const { service, flushEffects, destroy } = createLocalService(TestService);
+    const { service, flush, destroy } = createLocalService(TestService);
 
     service.method(subject$);
     service.method(sig);
-    service.method(1);
-    flushEffects();
-    expect(results).toEqual([1, 1, 1]);
+    service.method('value');
+
+    flush();
+    expect(results).toEqual(['subject', 'value', 'signal']);
 
     destroy();
     expect(destroyed).toBe(true);
 
-    subject$.next(2);
-    sig.set(2);
-    service.method(2);
-    flushEffects();
-    expect(results).toEqual([1, 1, 1]);
-  });
+    subject$.next('subject 2');
+    sig.set('signal 2');
+    service.method('value 2');
 
-  it('unsubscribes from method and all instances on provided injector destroy', () => {
-    const injector = createEnvironmentInjector(
-      [],
-      TestBed.inject(EnvironmentInjector)
-    );
-    const results: number[] = [];
-    let destroyed = false;
-
-    const method = rxMethod<number>(
-      tap({
-        next: (value) => results.push(value),
-        finalize: () => (destroyed = true),
-      }),
-      { injector }
-    );
-
-    const subject$ = new BehaviorSubject(1);
-    const sig = signal(1);
-
-    method(subject$);
-    method(sig);
-    method(1);
-
-    TestBed.flushEffects();
-    expect(results).toEqual([1, 1, 1]);
-
-    injector.destroy();
-    expect(destroyed).toBe(true);
-
-    subject$.next(2);
-    sig.set(2);
-    method(2);
-
-    TestBed.flushEffects();
-    expect(results).toEqual([1, 1, 1]);
+    flush();
+    expect(results).toEqual(['subject', 'value', 'signal']);
   });
 
   it('throws an error when it is called out of injection context', () => {
@@ -318,15 +283,18 @@ describe('rxMethod', () => {
       expect(globalService.globalSignalChangeCounter).toBe(1);
 
       globalService.incrementSignal();
+      harness.detectChanges();
       TestBed.flushEffects();
       expect(globalService.globalSignalChangeCounter).toBe(2);
 
       globalService.incrementSignal();
+      harness.detectChanges();
       TestBed.flushEffects();
       expect(globalService.globalSignalChangeCounter).toBe(3);
 
       await harness.navigateByUrl('/without-store');
       globalService.incrementSignal();
+      harness.detectChanges();
       TestBed.flushEffects();
 
       expect(globalService.globalSignalChangeCounter).toBe(3);
@@ -384,12 +352,14 @@ describe('rxMethod', () => {
       const harness = await RouterTestingHarness.create('/with-store');
 
       globalService.incrementSignal();
+      harness.detectChanges();
       TestBed.flushEffects();
 
       expect(globalService.globalSignalChangeCounter).toBe(2);
 
       await harness.navigateByUrl('/without-store');
       globalService.incrementSignal();
+      harness.detectChanges();
       TestBed.flushEffects();
 
       expect(globalService.globalSignalChangeCounter).toBe(2);

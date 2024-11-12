@@ -22,6 +22,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       }
     `,
   ],
+  standalone: false,
 })
 export class SidenavComponent {
   @Input() open = false;

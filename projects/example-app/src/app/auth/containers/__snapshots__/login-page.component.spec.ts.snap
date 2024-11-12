@@ -43,6 +43,7 @@ exports[`Login Page should compile 1`] = `
                       aria-required="false"
                       class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
                       formcontrolname="username"
+                      id="mat-input-a0"
                       matinput=""
                       placeholder="Username"
                       type="text"
@@ -89,6 +90,7 @@ exports[`Login Page should compile 1`] = `
                       aria-required="false"
                       class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
                       formcontrolname="password"
+                      id="mat-input-a1"
                       matinput=""
                       placeholder="Password"
                       type="password"
@@ -133,7 +135,7 @@ exports[`Login Page should compile 1`] = `
                 Login
               </span>
               <span
-                class="mat-mdc-focus-indicator"
+                class="mat-focus-indicator"
               />
               <span
                 class="mat-mdc-button-touch-target"

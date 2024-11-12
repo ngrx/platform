@@ -200,6 +200,7 @@ describe('ComponentStore integration', () => {
   @Component({
     selector: 'body',
     template: '<child *ngIf="isChildVisible"></child>',
+    standalone: false,
   })
   class ParentComponent implements Parent {
     isChildVisible = true;
@@ -249,6 +250,7 @@ describe('ComponentStore integration', () => {
       selector: 'child',
       template: '<div>{{prop$ | async}}</div>',
       providers: [ComponentStore],
+      standalone: false,
     })
     class ChildComponent implements Child {
       prop$ = this.componentStore.select((state) => state.prop);
@@ -298,6 +300,7 @@ describe('ComponentStore integration', () => {
     @Component({
       selector: 'child',
       template: '<div>{{prop$ | async}}</div>',
+      standalone: false,
     })
     class ChildComponent extends ComponentStore<State> implements Child {
       prop$ = this.select((state) => state.prop);
@@ -398,6 +401,7 @@ describe('ComponentStore integration', () => {
       selector: 'child',
       template: '<div>{{prop$ | async}}</div>',
       providers: [PropsStore],
+      standalone: false,
     })
     class ChildComponent implements Child {
       prop$ = this.propsStore.prop$;
@@ -464,6 +468,7 @@ describe('ComponentStore integration', () => {
     @Component({
       selector: 'child',
       template: '<div>{{prop$ | async}}</div>',
+      standalone: false,
     })
     class ChildComponent extends PropsStore implements Child {
       interval$ = interval(10);

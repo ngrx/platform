@@ -20,6 +20,7 @@ import { ViewBookPageActions } from '@example-app/books/actions/view-book-page.a
   selector: 'bc-view-book-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: ` <bc-selected-book-page></bc-selected-book-page> `,
+  standalone: false,
 })
 export class ViewBookPageComponent implements OnDestroy {
   actionsSubscription: Subscription;

@@ -15,6 +15,7 @@ import { LoginPageActions } from '@example-app/auth/actions/login-page.actions';
     </bc-login-form>
   `,
   styles: [],
+  standalone: false,
 })
 export class LoginPageComponent {
   pending$ = this.store.select(fromAuth.selectLoginPagePending);
