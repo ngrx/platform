@@ -241,7 +241,7 @@ export class NumbersComponent implements OnInit {
 
 <div class="alert is-important">
 
-If the injector is not provided when calling the reactive method outside of current injection context, the cleanup will occur when the injector where reactive method was defined is destroyed.
+If the injector is not provided when calling the reactive method outside of current injection context, the cleanup occurs when reactive method is destroyed.
 
 </div>
 
