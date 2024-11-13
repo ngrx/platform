@@ -89,7 +89,6 @@ export const appConfig: ApplicationConfig = {
       }
     })
   ],
-  ...
 }
 </code-example>
 
