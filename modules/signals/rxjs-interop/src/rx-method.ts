@@ -8,13 +8,17 @@ import {
   Signal,
   untracked,
 } from '@angular/core';
-import { isObservable, noop, Observable, Subject, Unsubscribable } from 'rxjs';
+import { isObservable, noop, Observable, Subject } from 'rxjs';
+
+type RxMethodRef = {
+  destroy: () => void;
+};
 
 type RxMethod<Input> = ((
   input: Input | Signal<Input> | Observable<Input>,
   config?: { injector?: Injector }
-) => Unsubscribable) &
-  Unsubscribable;
+) => RxMethodRef) &
+  RxMethodRef;
 
 export function rxMethod<Input>(
   generator: (source$: Observable<Input>) => Observable<unknown>,
@@ -32,10 +36,10 @@ export function rxMethod<Input>(
   const rxMethodFn = (
     input: Input | Signal<Input> | Observable<Input>,
     config?: { injector?: Injector }
-  ) => {
+  ): RxMethodRef => {
     if (isStatic(input)) {
       source$.next(input);
-      return { unsubscribe: noop };
+      return { destroy: noop };
     }
 
     const instanceInjector =
@@ -49,10 +53,9 @@ export function rxMethod<Input>(
         },
         { injector: instanceInjector }
       );
-      const instanceSub = { unsubscribe: () => watcher.destroy() };
-      sourceSub.add(instanceSub);
+      sourceSub.add({ unsubscribe: () => watcher.destroy() });
 
-      return instanceSub;
+      return watcher;
     }
 
     const instanceSub = input.subscribe((value) => source$.next(value));
@@ -64,9 +67,9 @@ export function rxMethod<Input>(
         .onDestroy(() => instanceSub.unsubscribe());
     }
 
-    return instanceSub;
+    return { destroy: () => instanceSub.unsubscribe() };
   };
-  rxMethodFn.unsubscribe = sourceSub.unsubscribe.bind(sourceSub);
+  rxMethodFn.destroy = sourceSub.unsubscribe.bind(sourceSub);
 
   return rxMethodFn;
 }
