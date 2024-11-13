@@ -48,7 +48,7 @@ export class NumbersComponent implements OnInit {
   ngOnInit(): void {
     this.logDoubledNumber(1);
     // console output: 2
-    
+
     this.logDoubledNumber(2);
     // console output: 4
   }
@@ -75,7 +75,7 @@ export class NumbersComponent implements OnInit {
     const num = signal(10);
     this.logDoubledNumber(num);
     // console output: 20
-    
+
     num.set(20);
     // console output: 40
   }
@@ -102,7 +102,7 @@ export class NumbersComponent implements OnInit {
     const num1$ = of(100, 200, 300);
     this.logDoubledNumber(num1$);
     // console output: 200, 400, 600
-    
+
     const num2$ = interval(2_000);
     this.logDoubledNumber(num2$);
     // console output: 0, 2, 4, 6, 8, 10, ... (every 2 seconds)
@@ -129,7 +129,7 @@ import { BooksService } from './books.service';
 @Component({ /* ... */ })
 export class BooksComponent implements OnInit {
   readonly #booksService = inject(BooksService);
-  
+
   readonly bookMap = signal<Record<string, Book>>({});
   readonly selectedBookId = signal<string | null>(null);
 
@@ -146,12 +146,12 @@ export class BooksComponent implements OnInit {
       })
     )
   );
-  
+
   ngOnInit(): void {
     // 👇 Load book by id whenever the `selectedBookId` value changes.
     this.loadBookById(this.selectedBookId);
   }
-  
+
   addBook(book: Book): void {
     this.bookMap.update((bookMap) => ({ ...bookMap, [book.id]: book }));
   }
@@ -196,12 +196,54 @@ export class BooksComponent implements OnInit {
       );
     })
   );
-  
+
   ngOnInit(): void {
     this.loadAllBooks();
   }
 }
 ```
+
+### Reactive Methods and Injector Hierarchies
+
+The cleanup behavior of reactive methods differs when they're created and called across different injector hierarchies.
+
+If the reactive method is called within the descendant injection context, the call will be automatically cleaned up when the descendant injector is destroyed.
+However, when the call is made outside of the descendant injection context, it's necessary to explicitly provide the descendant injector reference to ensure proper cleanup.
+
+```ts
+import { Component, inject, Injectable, Injector, OnInit } from '@angular/core';
+import { tap } from 'rxjs';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+
+@Injectable({ providedIn: 'root' })
+export class NumbersService {
+  readonly log = rxMethod<number>(tap(console.log));
+}
+
+@Component({ /* ... */ })
+export class NumbersComponent implements OnInit {
+  readonly #injector = inject(Injector);
+  readonly #numbersService = inject(NumbersService);
+
+  constructor() {
+    const num1$ = interval(1_000);
+    // 👇 Automatic cleanup when component is destroyed.
+    this.#numbersService.log(num1$);
+  }
+
+  ngOnInit(): void {
+    const num2$ = interval(2_000);
+    // 👇 Requires injector for cleanup when component is destroyed.
+    this.#numbersService.log(num2$, { injector: this.#injector });
+  }
+}
+```
+
+<div class="alert is-important">
+
+If the injector is not provided when calling the reactive method outside of current injection context, the cleanup occurs when reactive method is destroyed.
+
+</div>
 
 ### Manual Cleanup
 
@@ -219,10 +261,10 @@ export class NumbersComponent implements OnInit {
   ngOnInit(): void {
     const num1$ = interval(500);
     const num2$ = interval(1_000);
-    
+
     this.logNumber(num1$);
     this.logNumber(num2$);
-    
+
     setTimeout(() => {
       // 👇 Clean up all reactive method subscriptions after 3 seconds.
       this.logNumber.unsubscribe();
@@ -246,10 +288,10 @@ export class NumbersComponent implements OnInit {
   ngOnInit(): void {
     const num1$ = interval(500);
     const num2$ = interval(1_000);
-    
+
     const num1Sub = this.logNumber(num1$);
     this.logNumber(num2$);
-    
+
     setTimeout(() => {
       // 👇 Clean up the first reactive method subscription after 2 seconds.
       num1Sub.unsubscribe();
