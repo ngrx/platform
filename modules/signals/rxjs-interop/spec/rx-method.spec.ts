@@ -96,8 +96,8 @@ describe('rxMethod', () => {
       const subject$ = new Subject<number>();
       const sig = signal(0);
 
-      const sub1 = method(subject$);
-      const sub2 = method(sig);
+      const ref1 = method(subject$);
+      const ref2 = method(sig);
       expect(results).toEqual([]);
 
       subject$.next(1);
@@ -105,13 +105,13 @@ describe('rxMethod', () => {
       TestBed.flushEffects();
       expect(results).toEqual([1, 1]);
 
-      sub1.unsubscribe();
+      ref1.destroy();
       subject$.next(2);
       sig.set(2);
       TestBed.flushEffects();
       expect(results).toEqual([1, 1, 2]);
 
-      sub2.unsubscribe();
+      ref2.destroy();
       sig.set(3);
       TestBed.flushEffects();
       expect(results).toEqual([1, 1, 2]);
@@ -138,7 +138,7 @@ describe('rxMethod', () => {
     method(1);
     expect(results).toEqual([1, 1, 1]);
 
-    method.unsubscribe();
+    method.destroy();
     expect(destroyed).toBe(true);
 
     subject1$.next(2);

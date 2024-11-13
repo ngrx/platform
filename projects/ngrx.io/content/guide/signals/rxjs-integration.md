@@ -247,7 +247,7 @@ If the injector is not provided when calling the reactive method outside of curr
 
 ### Manual Cleanup
 
-If a reactive method needs to be cleaned up before the injector is destroyed, manual cleanup can be performed by calling the `unsubscribe` method.
+If a reactive method needs to be cleaned up before the injector is destroyed, manual cleanup can be performed by calling the `destroy` method.
 
 ```ts
 import { Component, OnInit } from '@angular/core';
@@ -266,15 +266,15 @@ export class NumbersComponent implements OnInit {
     this.logNumber(num2$);
 
     setTimeout(() => {
-      // 👇 Clean up all reactive method subscriptions after 3 seconds.
-      this.logNumber.unsubscribe();
+      // 👇 Destroy the reactive method after 3 seconds.
+      this.logNumber.destroy();
     }, 3_000);
   }
 }
 ```
 
-When invoked, the reactive method returns a subscription.
-Using this subscription allows manual unsubscribing from a specific call, preserving the activity of other reactive method calls until the corresponding injector is destroyed.
+When invoked, the reactive method returns the object with the `destroy` method.
+This allows manual cleanup of a specific call, preserving the activity of other reactive method calls until the corresponding injector is destroyed.
 
 ```ts
 import { Component, OnInit } from '@angular/core';
@@ -289,12 +289,12 @@ export class NumbersComponent implements OnInit {
     const num1$ = interval(500);
     const num2$ = interval(1_000);
 
-    const num1Sub = this.logNumber(num1$);
-    this.logNumber(num2$);
+    const num1Ref = this.logNumber(num1$);
+    const num2Ref = this.logNumber(num2$);
 
     setTimeout(() => {
-      // 👇 Clean up the first reactive method subscription after 2 seconds.
-      num1Sub.unsubscribe();
+      // 👇 Destroy the first reactive method call after 2 seconds.
+      num1Ref.destroy();
     }, 2_000);
   }
 }
