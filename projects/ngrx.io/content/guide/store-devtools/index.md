@@ -12,7 +12,7 @@ Instrumentation with the Chrome / Firefox Extension
 
 1.  Download the [Redux Devtools Extension](https://github.com/reduxjs/redux-devtools/)
 
-2.  Provide the `provideStoreDevtools` in your applicationConfig:
+2.  Provide the `provideStoreDevtools` to the application config:
 
 <code-example header="main.ts">
 import { isDevMode } from '@angular/core';
