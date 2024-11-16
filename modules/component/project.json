@@ -31,7 +31,7 @@
       "outputs": ["{workspaceRoot}/dist/modules/component"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "modules/component/*/**/*.ts",

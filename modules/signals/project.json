@@ -31,7 +31,7 @@
       "outputs": ["{workspaceRoot}/dist/modules/signals"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "modules/signals/*/**/*.ts",
