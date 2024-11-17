@@ -1,4 +1,8 @@
-import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
+import type { ESLintUtils } from '@typescript-eslint/utils';
+import type {
+  InvalidTestCase,
+  ValidTestCase,
+} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, {
   noDispatchInEffects,
@@ -8,9 +12,8 @@ import { ruleTester, fromFixture } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
-type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const validConstructor: () => RunTests['valid'] = () => [
+const validConstructor: () => (string | ValidTestCase<Options>)[] = () => [
   `
   import { Store } from '@ngrx/store'
   
@@ -50,7 +53,7 @@ const validConstructor: () => RunTests['valid'] = () => [
   }`,
 ];
 
-const validInject: () => RunTests['valid'] = () => [
+const validInject: () => (string | ValidTestCase<Options>)[] = () => [
   `
 import { Store } from '@ngrx/store'
 import { inject } from '@angular/core'
@@ -102,7 +105,7 @@ class Ok5 {
 }`,
 ];
 
-const invalidConstructor: () => RunTests['invalid'] = () => [
+const invalidConstructor: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(
     `
 import { Store } from '@ngrx/store'
@@ -335,7 +338,7 @@ class NotOk3 {
   ),
 ];
 
-const invalidInject: () => RunTests['invalid'] = () => [
+const invalidInject: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(
     `
 import { Store } from '@ngrx/store'

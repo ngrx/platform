@@ -63,6 +63,7 @@ export function getImportDeclarationSpecifier(
       (importClause): importClause is TSESTree.ImportSpecifier => {
         return (
           isImportSpecifier(importClause) &&
+          isIdentifier(importClause.imported) &&
           importClause.imported.name === importName
         );
       }

@@ -1,4 +1,8 @@
-import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
+import type { ESLintUtils } from '@typescript-eslint/utils';
+import type {
+  InvalidTestCase,
+  ValidTestCase,
+} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, {
   prefixSelectorsWithSelect,
@@ -8,9 +12,8 @@ import { ruleTester, fromFixture } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
-type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const valid: () => RunTests['valid'] = () => [
+const valid: () => (string | ValidTestCase<Options>)[] = () => [
   `export const selectFeature: MemoizedSelector<any, any> = (state: AppState) => state.feature`,
   `export const selectFeature: MemoizedSelectorWithProps<any, any> = ({ feature }) => feature`,
   `export const selectFeature = createSelector((state: AppState) => state.feature)`,
@@ -32,7 +35,7 @@ const valid: () => RunTests['valid'] = () => [
   `,
 ];
 
-const invalid: () => RunTests['invalid'] = () => [
+const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(
     `
 export const getCount: MemoizedSelector<any, any> = (state: AppState) => state.feature
