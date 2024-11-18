@@ -217,7 +217,7 @@ export const BooksStore = signalStore(
 
 <div class="alert is-helpful">
 
-The state of the SignalStore is frozen in development mode, which means any mutable change will throw an error. `patchState` is the function to update the state.
+The state of the SignalStore is updated using the `patchState` function.
 For more details on the `patchState` function, refer to the [Updating State](/guide/signals/signal-state#updating-state) guide.
 
 </div>
