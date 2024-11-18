@@ -1,5 +1,15 @@
 // disabled because we have lowercase generics for `select`
-import { computed, Injectable, Provider, Signal } from '@angular/core';
+import {
+  computed,
+  effect,
+  EffectRef,
+  inject,
+  Injectable,
+  Injector,
+  Provider,
+  Signal,
+  untracked,
+} from '@angular/core';
 import { Observable, Observer, Operator } from 'rxjs';
 import { distinctUntilChanged, map, pluck } from 'rxjs/operators';
 
@@ -7,11 +17,12 @@ import { ActionsSubject } from './actions_subject';
 import {
   Action,
   ActionReducer,
+  CreatorsNotAllowedCheck,
   SelectSignalOptions,
-  FunctionIsNotAllowed,
 } from './models';
 import { ReducerManager } from './reducer_manager';
 import { StateObservable } from './state';
+import { assertDefined } from './helpers';
 
 @Injectable()
 export class Store<T = object>
@@ -26,7 +37,8 @@ export class Store<T = object>
   constructor(
     state$: StateObservable,
     private actionsObserver: ActionsSubject,
-    private reducerManager: ReducerManager
+    private reducerManager: ReducerManager,
+    private injector?: Injector
   ) {
     super();
 
@@ -124,14 +136,21 @@ export class Store<T = object>
     return store;
   }
 
-  dispatch<V extends Action = Action>(
-    action: V &
-      FunctionIsNotAllowed<
-        V,
-        'Functions are not allowed to be dispatched. Did you forget to call the action creator function?'
-      >
-  ) {
-    this.actionsObserver.next(action);
+  dispatch<V extends Action>(action: V & CreatorsNotAllowedCheck<V>): void;
+  dispatch<V extends () => Action>(
+    dispatchFn: V & CreatorsNotAllowedCheck<V>,
+    config?: {
+      injector: Injector;
+    }
+  ): EffectRef;
+  dispatch<V extends Action | (() => Action)>(
+    actionOrDispatchFn: V,
+    config?: { injector?: Injector }
+  ): EffectRef | void {
+    if (typeof actionOrDispatchFn === 'function') {
+      return this.processDispatchFn(actionOrDispatchFn, config);
+    }
+    this.actionsObserver.next(actionOrDispatchFn);
   }
 
   next(action: Action) {
@@ -155,6 +174,23 @@ export class Store<T = object>
 
   removeReducer<Key extends Extract<keyof T, string>>(key: Key) {
     this.reducerManager.removeReducer(key);
+  }
+
+  private processDispatchFn(
+    dispatchFn: () => Action,
+    config?: { injector?: Injector }
+  ) {
+    assertDefined(this.injector, 'Store Injector');
+    const effectInjector =
+      config?.injector ?? getCallerInjector() ?? this.injector;
+
+    return effect(
+      () => {
+        const action = dispatchFn();
+        untracked(() => this.dispatch(action));
+      },
+      { injector: effectInjector }
+    );
   }
 }
 
@@ -271,4 +307,12 @@ export function select<T, Props, K>(
 
     return mapped$.pipe(distinctUntilChanged());
   };
+}
+
+function getCallerInjector() {
+  try {
+    return inject(Injector);
+  } catch (_) {
+    return undefined;
+  }
 }
