@@ -86,7 +86,8 @@ patchState(
 
 <div class="alert is-critical">
 
-The state is frozen during development mode. This means all changes via `patchState` must be immutable. If a mutable change occurs — whether through `patchState`, a component, a service, or any other entity with access to the state — an error will be thrown.
+Updaters passed to the `patchState` function must perform state updates in an immutable manner.
+If a mutable change occurs to the state object, an error will be thrown in development mode.
 
 </div>
 
