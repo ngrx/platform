@@ -21,7 +21,7 @@
       "defaultConfiguration": "production"
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["projects/example-app-e2e/**/*.{js,ts}"]
       },

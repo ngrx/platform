@@ -31,7 +31,7 @@
       "outputs": ["{workspaceRoot}/dist/modules/router-store"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "modules/router-store/*/**/*.ts",

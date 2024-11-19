@@ -158,7 +158,7 @@
           }
         },
         "lint": {
-          "builder": "@nx/linter:eslint",
+          "builder": "@nx/eslint:lint",
           "options": {
             "lintFilePatterns": [
               "src/**/*.ts",
@@ -182,7 +182,7 @@
           }
         },
         "lint": {
-          "builder": "@nx/linter:eslint",
+          "builder": "@nx/eslint:lint",
           "options": {
             "lintFilePatterns": [
               "src/**/*.ts",

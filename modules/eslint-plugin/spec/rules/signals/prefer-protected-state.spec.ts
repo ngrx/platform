@@ -1,4 +1,8 @@
-import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
+import type { ESLintUtils } from '@typescript-eslint/utils';
+import type {
+  InvalidTestCase,
+  ValidTestCase,
+} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, {
   preferProtectedState,
@@ -8,16 +12,15 @@ import { ruleTester, fromFixture } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[];
-type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const valid: () => RunTests['valid'] = () => [
+const valid: () => (string | ValidTestCase<Options>)[] = () => [
   `const mySignalStore = signalStore();`,
   `const mySignalStore = signalStore({ protectedState: true });`,
   `const mySignalStore = signalStore({ providedIn: 'root' });`,
   `const mySignalStore = signalStore({ providedIn: 'root', protectedState: true });`,
 ];
 
-const invalid: () => RunTests['invalid'] = () => [
+const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(
     `
 const mySignalStore = signalStore({ providedIn: 'root', protectedState: false, });
