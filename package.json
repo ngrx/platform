@@ -185,7 +185,7 @@
     "tsickle": "^0.37.0",
     "tsutils": "2.27.2",
     "typescript": "5.6.2",
-    "typescript-eslint": "8.0.0-alpha.20",
+    "typescript-eslint": "8.15.0",
     "uglify-js": "^3.1.9"
   },
   "collective": {
