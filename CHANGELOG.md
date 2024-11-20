@@ -1,3 +1,90 @@
+<a name="19.0.0-beta.0""></a>
+
+# [19.0.0-beta.0"](https://github.com/ngrx/platform/compare/18.1.1...19.0.0-beta.0") (2024-11-20)
+
+### Features
+
+- **schematics:** change standalone default to true for components ([#4569](https://github.com/ngrx/platform/issues/4569)) ([c7d0ce6](https://github.com/ngrx/platform/commit/c7d0ce6))
+- **signals:** rename `rxMethod.unsubscribe` to `destroy` ([#4584](https://github.com/ngrx/platform/issues/4584)) ([57ad5c5](https://github.com/ngrx/platform/commit/57ad5c5))
+- **signals:** throw error in dev mode on state mutation ([#4526](https://github.com/ngrx/platform/issues/4526)) ([7a84209](https://github.com/ngrx/platform/commit/7a84209))
+
+### BREAKING CHANGES
+
+- **signals:** The `signalState`/`signalStore` state object is frozen in development mode.
+  If a mutable change occurs to the state object, an error will be thrown.
+
+BEFORE:
+
+```ts
+const userState = signalState(initialState);
+patchState(userState, (state) => {
+  state.user.firstName = 'mutable change'; // mutable change which went through
+  return state;
+});
+```
+
+AFTER:
+
+```ts
+const userState = signalState(initialState);
+patchState(userState, (state) => {
+  state.user.firstName = 'mutable change'; // throws in dev mode
+  return state;
+});
+```
+
+- **signals:** The `unsubscribe` method from `rxMethod` is renamed to `destroy`.
+
+BEFORE:
+
+```ts
+const logNumber = rxMethod<number>(tap(console.log));
+
+const num1Ref = logNumber(interval(1_000));
+const num2Ref = logNumber(interval(2_000));
+
+// destroy `num1Ref` after 2 seconds
+setTimeout(() => num1Ref.unsubscribe(), 2_000);
+
+// destroy all reactive method refs after 5 seconds
+setTimeout(() => logNumber.unsubscribe(), 5_000);
+```
+
+AFTER:
+
+```ts
+const logNumber = rxMethod<number>(tap(console.log));
+
+const num1Ref = logNumber(interval(1_000));
+const num2Ref = logNumber(interval(2_000));
+
+// destroy `num1Ref` after 2 seconds
+setTimeout(() => num1Ref.destroy(), 2_000);
+
+// destroy all reactive method refs after 5 seconds
+setTimeout(() => logNumber.destroy(), 5_000);
+```
+
+- **schematics:** The default setting for generating components using schematics is updated.
+
+BEFORE:
+
+The default setting for generating components using schematics does not use standalone components.
+
+AFTER:
+
+The default setting for generating components using schematics uses standalone components.
+
+- The minimum required version of Angular has been updated.
+
+BEFORE:
+
+The minimum required version is Angular 18.x
+
+AFTER:
+
+The minimum required version is Angular 19.x
+
 <a name="18.1.1"></a>
 
 ## [18.1.1](https://github.com/ngrx/platform/compare/18.1.0...18.1.1) (2024-10-29)

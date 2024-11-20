@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/platform",
-  "version": "18.1.1",
+  "version": "19.0.0-beta.0",
   "description": "monorepo for ngrx development",
   "scripts": {
     "ng": "ng",
@@ -17,7 +17,7 @@
     "copy:schematics": "ts-node ./build/copy-schematics-core.ts",
     "schematics:check": "git diff --name-only --exit-code ./modules",
     "build:stackblitz": "ts-node ./build/stackblitz.ts && git add ./stackblitz.html",
-    "publish:next": "ts-node ./build/publish",
+    "publish:next": "ts-node ./build/publish-rc.1",
     "publish:latest": "ts-node ./build/publish-latest.ts",
     "nx": "nx",
     "update": "nx migrate latest",
