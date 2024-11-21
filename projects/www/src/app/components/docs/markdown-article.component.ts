@@ -1,9 +1,9 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   OnDestroy,
   Signal,
+  afterNextRender,
   inject,
   signal,
   viewChild,
@@ -117,7 +117,7 @@ type Heading = { level: number; text: string; id: string; url: string };
     `,
   ],
 })
-export class MarkdownArticleComponent implements AfterViewInit, OnDestroy {
+export class MarkdownArticleComponent implements OnDestroy {
   router = inject(Router);
   articleRef: Signal<ElementRef<HTMLElement>> = viewChild.required('article');
   headings = signal<Heading[]>([]);
@@ -125,14 +125,18 @@ export class MarkdownArticleComponent implements AfterViewInit, OnDestroy {
   mutationObserver?: MutationObserver;
   intersectionObserver?: IntersectionObserver;
 
-  ngAfterViewInit(): void {
-    this.mutationObserver = new MutationObserver(() => this.collectHeadings());
-    this.mutationObserver.observe(this.articleRef().nativeElement, {
-      childList: true,
-      subtree: true,
-    });
+  constructor() {
+    afterNextRender(() => {
+      this.mutationObserver = new MutationObserver(() =>
+        this.collectHeadings()
+      );
+      this.mutationObserver.observe(this.articleRef().nativeElement, {
+        childList: true,
+        subtree: true,
+      });
 
-    this.collectHeadings();
+      this.collectHeadings();
+    });
   }
 
   ngOnDestroy(): void {
