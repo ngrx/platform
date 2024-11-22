@@ -160,6 +160,22 @@ describe('signalState', () => {
     );
   });
 
+  it('does not create deep signals for a class instance', () => {
+    const snippet = `
+      class User {
+        id = 0;
+        name = 'Konrad';
+      }
+
+      const state = signalState({ user: new User() });
+      const user = state.user;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer('user', 'Signal<User>');
+  });
+
   it('does not create deep signals for optional state slices', () => {
     const snippet = `
       type State = {
