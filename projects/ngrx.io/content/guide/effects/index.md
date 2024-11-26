@@ -36,7 +36,6 @@ Imagine that your application manages movies. Here is a component that fetches a
 
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   template: `
@@ -48,12 +47,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [CommonModule, MoviesService],
 })
 export class MoviesPageComponent {
-  private moviesService: inject(MoviesService);
+  private moviesService = inject(MoviesService);
   movies: Movie[];
 
   ngOnInit() {
     this.movieService.getAll()
-      .pipe(takeUntilDestroyed())
       .subscribe(movies => this.movies = movies);
   }
 }
@@ -69,7 +67,7 @@ You also have the corresponding service that handles the fetching of movies.
 
 })
 export class MoviesService {
-  private http: inject(HttpClient);
+  private http = inject(HttpClient);
 
   getAll() {
     return this.http.get('/movies');
@@ -106,7 +104,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
 })
 export class MoviesPageComponent implements OnInit{
-  private store = inject(Store<{ movies: Movie[] }>)
+  private store = inject(Store&lt;{ movies: Movie[] }&gt;)
   movies$: Observable&lt;Movie[]&gt; = this.store.select(state => state.movies);
 
   constructor(private store: Store&lt;{ movies: Movie[] }&gt;) {}
@@ -296,16 +294,12 @@ bootstrapApplication(AppComponent, {
 Effects start running **immediately** after instantiation to ensure they are listening for all relevant actions as soon as possible.
 Services used in root-level effects are **not** recommended to be used with services that are used with the `APP_INITIALIZER` token.
 
-An example of the `@ngrx/router-store` setup in module-based applications is available at the [following link](https://v17.ngrx.io/guide/router-store#setup).
 
 </div>
 
 <div class="alert is-important">
 
-**Note:** Registering an effects class multiple times, either by `forRoot()`, `forFeature()`, or `provideEffects()`, 
-(for example in different lazy loaded features) will not cause the effects to run multiple times.
-There is no functional difference between effects loaded by `root` and `feature`; the important difference between the functions 
-is that `root` providers sets up the providers required for effects.
+**Note:** Registering an effects class multiple times (for example in different lazy loaded features) does not cause the effects to run multiple times.
 
 </div>
 
@@ -326,8 +320,8 @@ providers: [
 
 <div class="alert is-critical">
 
-The `EffectsModule.forFeature()` method or `provideEffects()` function must be added to the module imports/route config 
-even if you only provide effects over token, and don't pass them through parameters. (Same goes for `EffectsModule.forRoot()`)
+The `provideEffects()` method must be added to the module imports/route config 
+even if you only provide effects over token, and don't pass them through parameters.
 
 </div>
 
@@ -426,7 +420,7 @@ import * as fromBooks from '../reducers';
 @Injectable()
 export class CollectionEffects {
   private actions$ = inject(Actions);
-  private store = inject(Store<fromBooks.State>)
+  private store = inject(Store&lt;fromBooks.State&gt;)
 
   addBookToCollectionSuccess$ = createEffect(
     () =>
@@ -472,7 +466,7 @@ import { UserActivityService } from '../services/user-activity.service';
 
 @Injectable()
 export class UserActivityEffects {
-  private userActivityService: UserActivityService = inject(UserActivityService);
+  private userActivityService = inject(UserActivityService);
   
   trackUserActivity$ = createEffect(() =>
     fromEvent(document, 'click').pipe(
