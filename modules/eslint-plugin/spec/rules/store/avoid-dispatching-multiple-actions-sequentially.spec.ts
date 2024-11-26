@@ -1,4 +1,8 @@
-import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
+import type { ESLintUtils } from '@typescript-eslint/utils';
+import type {
+  InvalidTestCase,
+  ValidTestCase,
+} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, {
   messageId,
@@ -7,9 +11,8 @@ import { ruleTester, fromFixture } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
-type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const validConstructor: () => RunTests['valid'] = () => [
+const validConstructor: () => (string | ValidTestCase<Options>)[] = () => [
   `
   import { Store } from '@ngrx/store'
   
@@ -91,7 +94,7 @@ const validConstructor: () => RunTests['valid'] = () => [
   }`,
 ];
 
-const validInject: () => RunTests['valid'] = () => [
+const validInject: () => (string | ValidTestCase<Options>)[] = () => [
   `
 import { Store } from '@ngrx/store'
 import { inject } from '@angular/core'
@@ -166,7 +169,7 @@ ngOnInit() {
 }`,
 ];
 
-const invalidConstructor: () => RunTests['invalid'] = () => [
+const invalidConstructor: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(`
   import { Store } from '@ngrx/store'
   
@@ -228,7 +231,7 @@ const invalidConstructor: () => RunTests['invalid'] = () => [
   }`),
 ];
 
-const invalidInject: () => RunTests['invalid'] = () => [
+const invalidInject: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(`
 import { Store } from '@ngrx/store'
 import { inject } from '@angular/core'

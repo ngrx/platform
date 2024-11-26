@@ -14,17 +14,7 @@
       "rules": {
         "@angular-eslint/directive-selector": "off",
         "@angular-eslint/component-selector": "off",
-        "@nx/enforce-module-boundaries": "off",
-        "@typescript-eslint/ban-types": [
-          "error",
-          {
-            "extendDefaults": true,
-            "types": {
-              "{}": false,
-              "Function": false
-            }
-          }
-        ]
+        "@nx/enforce-module-boundaries": "off"
       },
       "plugins": ["@typescript-eslint"]
     },

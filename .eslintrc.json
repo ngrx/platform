@@ -50,7 +50,6 @@
         ],
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/prefer-namespace-keyword": "error",
-        "@typescript-eslint/ban-types": "warn",
         "@typescript-eslint/no-empty-function": "warn",
         "@typescript-eslint/no-empty-object-type": "warn",
         "eqeqeq": ["off", "smart"],
@@ -71,7 +70,9 @@
         "no-redeclare": "off",
         "no-underscore-dangle": "off",
         "no-var": "error",
-        "no-prototype-builtins": "off"
+        "no-prototype-builtins": "off",
+        "@typescript-eslint/no-wrapper-object-types": "off",
+        "@typescript-eslint/no-unsafe-function-type": "off"
       },
       "plugins": ["eslint-plugin-import", "@typescript-eslint"]
     },

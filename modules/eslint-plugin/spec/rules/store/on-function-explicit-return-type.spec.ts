@@ -1,4 +1,8 @@
-import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
+import type { ESLintUtils } from '@typescript-eslint/utils';
+import type {
+  InvalidTestCase,
+  ValidTestCase,
+} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, {
   onFunctionExplicitReturnType,
@@ -8,9 +12,8 @@ import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
-type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const valid: () => RunTests['valid'] = () => [
+const valid: () => (string | ValidTestCase<Options>)[] = () => [
   `
 const reducer = createReducer(
   initialState,
@@ -49,7 +52,7 @@ const reducer = createReducer(
 )`,
 ];
 
-const invalid: () => TSESLint.InvalidTestCase<MessageIds, []>[] = () => [
+const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
   {
     code: `
 const reducer = createReducer(

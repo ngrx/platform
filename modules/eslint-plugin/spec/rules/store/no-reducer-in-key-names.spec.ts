@@ -1,4 +1,8 @@
-import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
+import type { ESLintUtils } from '@typescript-eslint/utils';
+import type {
+  InvalidTestCase,
+  ValidTestCase,
+} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, {
   noReducerInKeyNames,
@@ -8,9 +12,8 @@ import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
-type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const valid: () => RunTests['valid'] = () => [
+const valid: () => (string | ValidTestCase<Options>)[] = () => [
   `
 @NgModule({
   imports: [
@@ -49,7 +52,7 @@ export const reducers: ActionReducerMap<AppState> = {
 };`,
 ];
 
-const invalid: () => RunTests['invalid'] = () => [
+const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
   {
     code: `
 @NgModule({

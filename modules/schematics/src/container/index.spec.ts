@@ -117,7 +117,21 @@ describe('Container Schematic', () => {
   });
 
   describe('standalone', () => {
-    it('should be disabled by default', async () => {
+    it('should be standalone by default', async () => {
+      const options = { ...defaultOptions };
+      const tree = await schematicRunner.runSchematic(
+        'container',
+        options,
+        appTree
+      );
+      const content = tree.readContent(
+        `${projectPath}/src/app/foo/foo.component.ts`
+      );
+      expect(content).not.toMatch(/standalone/);
+      expect(content).toMatchSnapshot();
+    });
+
+    it('should create a non-standalone component if false', async () => {
       const options = { ...defaultOptions, standalone: false };
       const tree = await schematicRunner.runSchematic(
         'container',
@@ -127,20 +141,7 @@ describe('Container Schematic', () => {
       const content = tree.readContent(
         `${projectPath}/src/app/foo/foo.component.ts`
       );
-      expect(content).not.toMatch(/standalone: true/);
-    });
-
-    it('should create a standalone component if true', async () => {
-      const options = { ...defaultOptions, standalone: true };
-      const tree = await schematicRunner.runSchematic(
-        'container',
-        options,
-        appTree
-      );
-      const content = tree.readContent(
-        `${projectPath}/src/app/foo/foo.component.ts`
-      );
-      expect(content).toMatch(/standalone: true/);
+      expect(content).toMatch(/standalone: false/);
       expect(content).toMatchSnapshot();
     });
   });

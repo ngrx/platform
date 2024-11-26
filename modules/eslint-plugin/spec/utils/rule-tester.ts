@@ -1,5 +1,5 @@
 import { clearCache, setNgrxVersion } from '../../src/utils';
-import { RuleTester } from '@angular-eslint/test-utils';
+import { RuleTester } from '@typescript-eslint/rule-tester';
 import { resolve } from 'path';
 
 export function ruleTester(environment?: {
@@ -13,12 +13,11 @@ export function ruleTester(environment?: {
   }
 
   return new RuleTester({
-    parser: '@typescript-eslint/parser',
-    parserOptions: {
-      ecmaVersion: 2020,
-      sourceType: 'module',
-      tsconfigRootDir: resolve('./modules/eslint-plugin/spec/fixtures'),
-      project: './tsconfig.json',
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: resolve('./modules/eslint-plugin/spec/fixtures'),
+        project: './tsconfig.json',
+      },
     },
   });
 }

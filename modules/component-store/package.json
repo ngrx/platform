@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/component-store",
-  "version": "18.0.2",
+  "version": "19.0.0-beta.0",
   "description": "Reactive store for component state",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/core": "^18.0.0",
+    "@angular/core": "^19.0.0",
     "rxjs": "^6.5.3 || ^7.5.0"
   },
   "schematics": "./schematics/collection.json",
@@ -45,7 +45,6 @@
     "migrations": "./migrations/migration.json"
   },
   "dependencies": {
-    "@ngrx/operators": "18.0.1",
     "tslib": "^2.0.0"
   }
 }

@@ -29,7 +29,7 @@ export const ROUTER_CONFIG = new InjectionToken(
  * Minimal = Serializes the router event with MinimalRouterStateSerializer
  * Full = Serializes the router event with FullRouterStateSerializer
  */
-export const enum RouterState {
+export enum RouterState {
   Full,
   Minimal,
 }

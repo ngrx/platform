@@ -21,8 +21,7 @@ This command will automate the following steps:
 
 1. Update `package.json` > `dependencies` with `@ngrx/store-devtools`.
 2. Run `npm install` to install those dependencies. 
-3. Update your `src/app.module.ts` > `imports` array with `StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })`. The maxAge property will be set to the flag `maxAge` if provided. 
-4. If the project is using a `standalone bootstrap`, it adds `provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })` into the application config.
+3. Add the devtools to the application config provider's using `provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })`. The `maxAge` property will be set to the flag `maxAge` if provided.
 
 ## Installing with `npm`
 

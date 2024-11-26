@@ -4,6 +4,7 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
 <ng-component>
   <h2
     class="mat-mdc-dialog-title mdc-dialog__title"
+    id="mat-mdc-dialog-title-a0"
     mat-dialog-title=""
   >
     Logout
@@ -30,7 +31,7 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
         Cancel
       </span>
       <span
-        class="mat-mdc-focus-indicator"
+        class="mat-focus-indicator"
       />
       <span
         class="mat-mdc-button-touch-target"
@@ -52,7 +53,7 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
         OK
       </span>
       <span
-        class="mat-mdc-focus-indicator"
+        class="mat-focus-indicator"
       />
       <span
         class="mat-mdc-button-touch-target"

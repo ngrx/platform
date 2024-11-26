@@ -1,4 +1,8 @@
-import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
+import type { ESLintUtils } from '@typescript-eslint/utils';
+import type {
+  InvalidTestCase,
+  ValidTestCase,
+} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, {
   messageId,
@@ -7,7 +11,6 @@ import { ruleTester, fromFixture } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
-type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
 const setup = `
 import type { OnRunEffects } from '@ngrx/effects'
@@ -29,7 +32,7 @@ const genericFoo = createAction(\`$\{subject} FOO\`)
 const genericBar = createAction(\`$\{subject} BAR\`)
 `;
 
-const validConstructor: () => RunTests['valid'] = () => [
+const validConstructor: () => (string | ValidTestCase<Options>)[] = () => [
   `
 ${setup}
 class Effect {
@@ -151,7 +154,7 @@ class Effect {
 }`,
 ];
 
-const validInject: () => RunTests['valid'] = () => [
+const validInject: () => (string | ValidTestCase<Options>)[] = () => [
   `
   ${setup}
   class Effect {
@@ -268,7 +271,7 @@ class Effect {
 }`,
 ];
 
-const invalidConstructor: () => RunTests['invalid'] = () => [
+const invalidConstructor: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(`
 ${setup}
 class Effect {
@@ -382,7 +385,7 @@ class Effect {
 }`),
 ];
 
-const invalidInject: () => RunTests['invalid'] = () => [
+const invalidInject: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(`
 ${setup}
 class Effect {

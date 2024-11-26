@@ -121,7 +121,7 @@ describe('Data ng-add Schematic', () => {
 
     const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-    expect(content).toMatch(/EntityDataModule\n/);
+    expect(content).toMatch(/EntityDataModule/);
   });
 
   it('should register EntityDataModuleWithoutEffects in the provided module', async () => {
@@ -129,7 +129,7 @@ describe('Data ng-add Schematic', () => {
 
     const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
-    expect(content).toMatch(/EntityDataModuleWithoutEffects\n/);
+    expect(content).toMatch(/EntityDataModuleWithoutEffects/);
   });
 
   describe('Migration of ngrx-data', () => {

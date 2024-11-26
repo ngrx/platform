@@ -7,10 +7,10 @@ import {
   untracked,
   WritableSignal,
 } from '@angular/core';
-import { SIGNAL } from '@angular/core/primitives/signals';
 import { Prettify } from './ts-helpers';
+import { freezeInDevMode } from './deep-freeze';
 
-const STATE_WATCHERS = new WeakMap<object, Array<StateWatcher<any>>>();
+const STATE_WATCHERS = new WeakMap<Signal<object>, Array<StateWatcher<any>>>();
 
 export const STATE_SOURCE = Symbol('STATE_SOURCE');
 
@@ -38,10 +38,11 @@ export function patchState<State extends object>(
 ): void {
   stateSource[STATE_SOURCE].update((currentState) =>
     updaters.reduce(
-      (nextState: State, updater) => ({
-        ...nextState,
-        ...(typeof updater === 'function' ? updater(nextState) : updater),
-      }),
+      (nextState: State, updater) =>
+        freezeInDevMode({
+          ...nextState,
+          ...(typeof updater === 'function' ? updater(nextState) : updater),
+        }),
       currentState
     )
   );
@@ -79,7 +80,7 @@ export function watchState<State extends object>(
 function getWatchers<State extends object>(
   stateSource: StateSource<State>
 ): Array<StateWatcher<State>> {
-  return STATE_WATCHERS.get(stateSource[STATE_SOURCE][SIGNAL] as object) || [];
+  return STATE_WATCHERS.get(stateSource[STATE_SOURCE]) || [];
 }
 
 function notifyWatchers<State extends object>(
@@ -98,10 +99,7 @@ function addWatcher<State extends object>(
   watcher: StateWatcher<State>
 ): void {
   const watchers = getWatchers(stateSource);
-  STATE_WATCHERS.set(stateSource[STATE_SOURCE][SIGNAL] as object, [
-    ...watchers,
-    watcher,
-  ]);
+  STATE_WATCHERS.set(stateSource[STATE_SOURCE], [...watchers, watcher]);
 }
 
 function removeWatcher<State extends object>(
@@ -110,7 +108,7 @@ function removeWatcher<State extends object>(
 ): void {
   const watchers = getWatchers(stateSource);
   STATE_WATCHERS.set(
-    stateSource[STATE_SOURCE][SIGNAL] as object,
+    stateSource[STATE_SOURCE],
     watchers.filter((w) => w !== watcher)
   );
 }

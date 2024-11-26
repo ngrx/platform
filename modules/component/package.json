@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/component",
-  "version": "18.0.2",
+  "version": "19.0.0-beta.0",
   "description": "Reactive Extensions for Angular Components",
   "repository": {
     "type": "git",
@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/common": "^18.0.0",
-    "@angular/core": "^18.0.0",
+    "@angular/common": "^19.0.0",
+    "@angular/core": "^19.0.0",
     "rxjs": "^6.5.3 || ^7.5.0"
   },
   "schematics": "./schematics/collection.json",

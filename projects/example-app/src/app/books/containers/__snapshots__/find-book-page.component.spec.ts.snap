@@ -39,6 +39,7 @@ exports[`Find Book Page should compile 1`] = `
                   aria-invalid="false"
                   aria-required="false"
                   class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input cdk-text-field-autofill-monitored"
+                  id="mat-input-a0"
                   matinput=""
                   placeholder="Search for a book"
                 />

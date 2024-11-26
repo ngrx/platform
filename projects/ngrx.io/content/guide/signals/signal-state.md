@@ -87,6 +87,7 @@ patchState(
 <div class="alert is-critical">
 
 Updaters passed to the `patchState` function must perform state updates in an immutable manner.
+If a mutable change occurs to the state object, an error will be thrown in development mode.
 
 </div>
 

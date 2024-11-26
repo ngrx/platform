@@ -8,12 +8,17 @@ import {
   Signal,
   untracked,
 } from '@angular/core';
-import { isObservable, noop, Observable, Subject, Unsubscribable } from 'rxjs';
+import { isObservable, noop, Observable, Subject } from 'rxjs';
+
+type RxMethodRef = {
+  destroy: () => void;
+};
 
 type RxMethod<Input> = ((
-  input: Input | Signal<Input> | Observable<Input>
-) => Unsubscribable) &
-  Unsubscribable;
+  input: Input | Signal<Input> | Observable<Input>,
+  config?: { injector?: Injector }
+) => RxMethodRef) &
+  RxMethodRef;
 
 export function rxMethod<Input>(
   generator: (source$: Observable<Input>) => Observable<unknown>,
@@ -23,39 +28,60 @@ export function rxMethod<Input>(
     assertInInjectionContext(rxMethod);
   }
 
-  const injector = config?.injector ?? inject(Injector);
-  const destroyRef = injector.get(DestroyRef);
+  const sourceInjector = config?.injector ?? inject(Injector);
   const source$ = new Subject<Input>();
-
   const sourceSub = generator(source$).subscribe();
-  destroyRef.onDestroy(() => sourceSub.unsubscribe());
+  sourceInjector.get(DestroyRef).onDestroy(() => sourceSub.unsubscribe());
 
-  const rxMethodFn = (input: Input | Signal<Input> | Observable<Input>) => {
+  const rxMethodFn = (
+    input: Input | Signal<Input> | Observable<Input>,
+    config?: { injector?: Injector }
+  ): RxMethodRef => {
+    if (isStatic(input)) {
+      source$.next(input);
+      return { destroy: noop };
+    }
+
+    const instanceInjector =
+      config?.injector ?? getCallerInjector() ?? sourceInjector;
+
     if (isSignal(input)) {
       const watcher = effect(
         () => {
           const value = input();
           untracked(() => source$.next(value));
         },
-        { injector }
+        { injector: instanceInjector }
       );
-      const instanceSub = { unsubscribe: () => watcher.destroy() };
-      sourceSub.add(instanceSub);
+      sourceSub.add({ unsubscribe: () => watcher.destroy() });
 
-      return instanceSub;
+      return watcher;
     }
 
-    if (isObservable(input)) {
-      const instanceSub = input.subscribe((value) => source$.next(value));
-      sourceSub.add(instanceSub);
+    const instanceSub = input.subscribe((value) => source$.next(value));
+    sourceSub.add(instanceSub);
 
-      return instanceSub;
+    if (instanceInjector !== sourceInjector) {
+      instanceInjector
+        .get(DestroyRef)
+        .onDestroy(() => instanceSub.unsubscribe());
     }
 
-    source$.next(input);
-    return { unsubscribe: noop };
+    return { destroy: () => instanceSub.unsubscribe() };
   };
-  rxMethodFn.unsubscribe = sourceSub.unsubscribe.bind(sourceSub);
+  rxMethodFn.destroy = sourceSub.unsubscribe.bind(sourceSub);
 
   return rxMethodFn;
+}
+
+function isStatic<T>(value: T | Signal<T> | Observable<T>): value is T {
+  return !isSignal(value) && !isObservable(value);
+}
+
+function getCallerInjector(): Injector | null {
+  try {
+    return inject(Injector);
+  } catch {
+    return null;
+  }
 }

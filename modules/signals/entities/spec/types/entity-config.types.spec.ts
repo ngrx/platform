@@ -85,7 +85,7 @@ describe('entityConfig', () => {
         entity: type<User>(),
         selectId: (user) => user.id,
       });
-    `).toFail(/Property 'id' does not exist on type 'NoInfer<User>'/);
+    `).toFail(/Property 'id' does not exist on type 'User'/);
 
     expectSnippet(`
       const selectId = (entity: { key: number; foo: string }) => entity.key;
@@ -151,7 +151,7 @@ describe('entityConfig', () => {
         collection: 'user',
         selectId: (user) => user.id,
       });
-    `).toFail(/Property 'id' does not exist on type 'NoInfer<User>'/);
+    `).toFail(/Property 'id' does not exist on type 'User'/);
 
     expectSnippet(`
       const selectId = (entity: { key: number; foo: string }) => entity.key;
