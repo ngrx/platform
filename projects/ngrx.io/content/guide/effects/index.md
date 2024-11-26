@@ -1,7 +1,7 @@
 # @ngrx/effects
 
 Effects are an RxJS powered side effect model for [Store](guide/store).
-Effects use streams to provide [new sources](https://martinfowler.com/eaaDev/EventSourcing.html) 
+Effects use streams to provide [new sources](https://martinfowler.com/eaaDev/EventSourcing.html)
 of actions to reduce state based on external interactions
 such as network requests, web socket messages and time-based events.
 
@@ -25,7 +25,7 @@ Detailed installation instructions can be found on the [Installation](guide/effe
 
 ## Comparison with Component-Based Side Effects
 
-In a service-based application, your components interact with data through many 
+In a service-based application, your components interact with data through many
 different services that expose data through properties and methods.
 These services may depend on other services that manage other sets of data.
 Your components consume these services to perform tasks, giving your components many responsibilities.
@@ -33,7 +33,6 @@ Your components consume these services to perform tasks, giving your components 
 Imagine that your application manages movies. Here is a component that fetches and displays a list of movies.
 
 <code-example header="movies-page.component.ts">
-
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -64,7 +63,6 @@ You also have the corresponding service that handles the fetching of movies.
   providedIn: 'root',
   standalone: true,
   imports: [HttpClient],
-
 })
 export class MoviesService {
   private http = inject(HttpClient);
@@ -90,7 +88,6 @@ and only perform tasks related to external interactions.
 Next, refactor the component to put the shared movie data in the `Store`. Effects handle the fetching of movie data.
 
 <code-example header="movies-page.component.ts">
-
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -117,7 +114,7 @@ export class MoviesPageComponent implements OnInit{
 
 The movies are still fetched through the `MoviesService`, but the component is no longer concerned with how the movies are fetched and loaded.
 It's only responsible for declaring its _intent_ to load movies and using selectors to access movie list data.
-Effects are where the asynchronous activity of fetching movies happens. 
+Effects are where the asynchronous activity of fetching movies happens.
 Your component becomes easier to test and less responsible for the data it needs.
 
 ## Writing Effects
@@ -131,12 +128,6 @@ Effects are injectable service classes with distinct parts:
 - Actions are filtered using a pipeable [`ofType` operator](guide/effects/operators#oftype). The `ofType` operator takes one or more action types as arguments to filter on which actions to act upon.
 - Effects are subscribed to the `Store` observable.
 - Services are injected into effects to interact with external APIs and handle streams.
-
-<div class="alert is-helpful">
-
-**Note:** Since NgRx v15.2, classes are not required to create effects. Learn more about functional effects [here](#functional-effects).
-
-</div>
 
 To show how you handle loading movies from the example above, let's look at `MoviesEffects`.
 
@@ -178,10 +169,10 @@ The `loadMovies$` effect is listening for all dispatched actions through the `Ac
 ## Handling Errors
 
 Effects are built on top of observable streams provided by RxJS.
-Effects are listeners of observable streams that continue until an error or completion occurs. 
+Effects are listeners of observable streams that continue until an error or completion occurs.
 In order for effects to continue running in the event of an error in the observable,
-or completion of the observable stream, they must be nested within a "flattening" operator, 
-such as `mergeMap`, `concatMap`, `exhaustMap` and other flattening operators. 
+or completion of the observable stream, they must be nested within a "flattening" operator,
+such as `mergeMap`, `concatMap`, `exhaustMap` and other flattening operators.
 The example below shows the `loadMovies$` effect handling errors when fetching movies.
 
 <code-example header="movies.effects.ts">
@@ -219,7 +210,7 @@ You still use the `catchError` operator to handle error events, but return an ob
 Functional effects are also created by using the `createEffect` function.
 They provide the ability to create effects outside the effect classes.
 
-To create a functional effect, add the `functional: true` flag to the effect config. 
+To create a functional effect, add the `functional: true` flag to the effect config.
 Then, to inject services into the effect, use the [`inject` function](https://angular.dev/api/core/inject).
 
 <code-example header="actors.effects.ts">
@@ -269,7 +260,13 @@ In that case, the [`inject` function](https://angular.dev/api/core/inject) must 
 
 ## Registering Effects
 
-Feature-level effects are registered in the `providers` array of the route config. 
+<div class="alert is-important">
+
+Registering an effects class multiple times (for example in different lazy loaded features) does not cause the effects to run multiple times.
+
+</div>
+
+Feature-level effects are registered in the `providers` array of the route config.
 The same `provideEffects()` function is used in root-level and feature-level effects.
 
 <code-example header="main.ts">
@@ -294,20 +291,13 @@ bootstrapApplication(AppComponent, {
 Effects start running **immediately** after instantiation to ensure they are listening for all relevant actions as soon as possible.
 Services used in root-level effects are **not** recommended to be used with services that are used with the `APP_INITIALIZER` token.
 
-
 </div>
 
-<div class="alert is-important">
-
-**Note:** Registering an effects class multiple times (for example in different lazy loaded features) does not cause the effects to run multiple times.
-
-</div>
-
-## Alternative Way of Registering Effects
+### Alternative Way of Registering Effects
 
 You can provide root-/feature-level effects with the provider `USER_PROVIDED_EFFECTS`.
 
-<code-example header="movies.module.ts">
+<code-example>
 providers: [
   MoviesEffects,
   {
@@ -318,45 +308,9 @@ providers: [
 ]
 </code-example>
 
-<div class="alert is-critical">
-
-The `provideEffects()` method must be added to the module imports/route config 
-even if you only provide effects over token, and don't pass them through parameters.
-
-</div>
-
-## Standalone API in module-based apps
-
-If you have a module-based Angular application, you can still use standalone components. NgRx standalone APIs support this workflow as well.
-
-For module-based apps, you have the `EffectsModule.forRoot([...])` included in the `imports` array of your `AppModule`,
-which registers the root effects for dependency injection. 
-For a standalone component with feature state/effects registered in its route configuration to successfully run effects, 
-you will need to use the `provideEffects([...])` function in the `providers` array of your `AppModule` to register the injection token. 
-For module-based with standalone components, you will simply have both. 
-
-<code-example header="app.module.ts">
-import { NgModule } from '@angular/core';
-import { EffectsModule, provideEffects } from '@ngrx/effects';
-
-import { MoviesEffects } from './effects/movies.effects';
-import * as actorsEffects from './effects/actors.effects';
-
-@NgModule({
-  imports: [
-    EffectsModule.forRoot(MoviesEffects, actorsEffects),
-  ],
-  providers: [
-    provideEffects(MoviesEffects, actorsEffects)
-  ]
-})
-export class AppModule {}
-</code-example>
-
-
 ## Incorporating State
 
-If additional metadata is needed to perform an effect besides the initiating action's `type`, 
+If additional metadata is needed to perform an effect besides the initiating action's `type`,
 we should rely on passed metadata from an action creator's `props` method.
 
 Let's look at an example of an action initiating a login request using an effect with additional passed metadata:
@@ -404,7 +358,7 @@ export class AuthEffects {
 
 The `login` action has additional `credentials` metadata which is passed to a service to log the specific user into the application.
 
-However, there may be cases when the required metadata is only accessible from state. 
+However, there may be cases when the required metadata is only accessible from state.
 When state is needed, the RxJS `withLatestFrom` or the @ngrx/effects `concatLatestFrom` operators can be used to provide it.
 
 The example below shows the `addBookToCollectionSuccess$` effect displaying a different alert depending on the number of books in the collection state.
@@ -442,7 +396,7 @@ export class CollectionEffects {
 
 <div class="alert is-important">
 
-**Note:** For performance reasons, use a flattening operator like `concatLatestFrom` to prevent the selector from firing until the correct action is dispatched.
+For performance reasons, use a flattening operator like `concatLatestFrom` to prevent the selector from firing until the correct action is dispatched.
 
 </div>
 
@@ -451,7 +405,7 @@ To learn about testing effects that incorporate state, see the [Effects that use
 ## Using Other Observable Sources for Effects
 
 Because effects are merely consumers of observables, they can be used without actions and the `ofType` operator.
-This is useful for effects that don't need to listen to some specific actions, but rather to some other observable source. 
+This is useful for effects that don't need to listen to some specific actions, but rather to some other observable source.
 
 For example, imagine we want to track click events and send that data to our monitoring server.
 This can be done by creating an effect that listens to the `document` `click` event and emits the event data to our server.
@@ -475,3 +429,10 @@ export class UserActivityEffects {
   );
 }
 </code-example>
+
+
+<div class="alert is-helpful">
+
+An example of the `@ngrx/effects` in module-based applications is available at the [following link](https://v17.ngrx.io/guide/effects).
+
+</div>
