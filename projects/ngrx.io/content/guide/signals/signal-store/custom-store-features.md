@@ -153,7 +153,7 @@ State changes will be logged to the console whenever the `BooksStore` state is u
 
 ## Creating a Custom Feature with Input
 
-The `signalStoreFeature` function provides the ability to create a custom feature that requires specific state slices, computed signals, and/or methods to be defined in the store where it is used.
+The `signalStoreFeature` function provides the ability to create a custom feature that requires specific state slices, properties, and/or methods to be defined in the store where it is used.
 This enables the utilization of input properties within the custom feature, even if they are not explicitly defined within the feature itself.
 
 The expected input type should be defined as the first argument of the `signalStoreFeature` function, using the `type` helper function from the `@ngrx/signals` package.
@@ -238,9 +238,9 @@ export const BooksStore = signalStore(
 
 </code-example>
 
-### Example 4: Defining Computed Props and Methods as Input
+### Example 4: Defining Properties and Methods as Input
 
-In addition to state, it's also possible to define expected computed signals and methods in the following way:
+In addition to state, it's also possible to define expected properties and methods in the following way:
 
 <code-example header="baz.feature.ts">
 
@@ -250,7 +250,7 @@ import { signalStoreFeature, type, withMethods } from '@ngrx/signals';
 export function withBaz&lt;Foo extends string | number&gt;() {
   return signalStoreFeature(
     {
-      computed: type&lt;{ foo: Signal&lt;Foo&gt; }&gt;(),
+      props: type&lt;{ foo: Signal&lt;Foo&gt; }&gt;(),
       methods: type&lt;{ bar(foo: number): void }&gt;(),
     },
     withMethods((store) => ({
@@ -264,7 +264,7 @@ export function withBaz&lt;Foo extends string | number&gt;() {
 
 </code-example>
 
-The `withBaz` feature can only be used in a store where the computed signal `foo` and the method `bar` are defined. 
+The `withBaz` feature can only be used in a store where the property `foo` and the method `bar` are defined. 
 
 ## Known TypeScript Issues
 

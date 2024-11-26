@@ -15,19 +15,19 @@ export function withState<State extends object>(
   stateFactory: () => State
 ): SignalStoreFeature<
   EmptyFeatureResult,
-  { state: State; computed: {}; methods: {} }
+  { state: State; props: {}; methods: {} }
 >;
 export function withState<State extends object>(
   state: State
 ): SignalStoreFeature<
   EmptyFeatureResult,
-  { state: State; computed: {}; methods: {} }
+  { state: State; props: {}; methods: {} }
 >;
 export function withState<State extends object>(
   stateOrFactory: State | (() => State)
 ): SignalStoreFeature<
   SignalStoreFeatureResult,
-  { state: State; computed: {}; methods: {} }
+  { state: State; props: {}; methods: {} }
 > {
   return (store) => {
     const state =
