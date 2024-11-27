@@ -85,6 +85,59 @@ The returned action has very specific context about where the action came from a
 
 </div>
 
+## Dispatching actions on signal changes
+
+You can also dispatch functions that return actions, with property values derived from signals:
+
+<code-example header="book.component.ts">
+class BookComponent {
+  bookId = input.required&lt;number&gt;();
+
+  constructor(store: Store) {
+    store.dispatch(() => loadBook({ id: this.bookId() })));
+  }
+}
+</code-example>
+
+`dispatch` executes initially and every time the `bookId` changes. If `dispatch` is called within an injection context, the signal is tracked until the context is destroyed. In the example above, that would be when `BookComponent` is destroyed.
+
+When `dispatch` is called outside a component's injection context, the signal is tracked globally throughout the application's lifecycle. To ensure proper cleanup in such a case, provide the component's injector to the `dispatch` method:
+
+<code-example header="book.component.ts">
+class BookComponent {  
+  bookId = input.required&lt;number&gt;();
+  injector = inject(Injector);
+  store = inject(Store);
+
+  ngOnInit() {
+    // runs outside the injection context
+    this.store.dispatch(() => loadBook({ id: this.bookId() }), { injector: this.injector });
+  }
+}
+</code-example>
+
+When passing a function to the `dispatch` method, it returns an `EffectRef`. For manual cleanup, call the `destroy` method on the `EffectRef`:
+
+<code-example header="book.component.ts">
+class BookComponent {
+  bookId = input.required&lt;number&gt;();
+  loadBookEffectRef: EffectRef | undefined;
+  store = inject(Store);
+
+  ngOnInit() {
+    // uses the injection context of Store, i.e. root injector
+    this.loadBookEffectRef = this.store.dispatch(() => loadBook({ id: this.bookId() }));
+  }
+
+  ngOnDestroy() {
+    if (this.loadBookEffectRef) {
+      // destroys the effect
+      this.loadBookEffectRef.destroy();
+    }
+  }
+}
+</code-example>
+
 ## Next Steps
 
 Action's only responsibilities are to express unique events and intents. Learn how they are handled in the guides below.
