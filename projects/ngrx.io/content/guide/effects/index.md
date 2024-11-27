@@ -47,7 +47,7 @@ import { CommonModule } from '@angular/common';
 })
 export class MoviesPageComponent {
   private moviesService = inject(MoviesService);
-  movies: Movie[];
+  protected movies: Movie[];
 
   ngOnInit() {
     this.movieService.getAll()
@@ -100,11 +100,9 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
 })
-export class MoviesPageComponent implements OnInit{
-  private store = inject(Store&lt;{ movies: Movie[] }&gt;)
-  movies$: Observable&lt;Movie[]&gt; = this.store.select(state => state.movies);
-
-  constructor(private store: Store&lt;{ movies: Movie[] }&gt;) {}
+export class MoviesPageComponent implements OnInit {
+  private store = inject(Store&lt;{ movies: Movie[] }&gt;);
+  protected movies$ = this.store.select(state => state.movies);
 
   ngOnInit() {
     this.store.dispatch({ type: '[Movies Page] Load Movies' });
@@ -140,21 +138,19 @@ import { MoviesService } from './movies.service';
 
 @Injectable()
 export class MoviesEffects {
+  private actions$ = inject(Actions);
+  private moviesService = inject(MoviesService);
 
-  loadMovies$ = createEffect(() => this.actions$.pipe(
-    ofType('[Movies Page] Load Movies'),
-    exhaustMap(() => this.moviesService.getAll()
-      .pipe(
-        map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
-        catchError(() => EMPTY)
-      ))
+  loadMovies$ = createEffect(() => {
+    return this.actions$.pipe(
+        ofType('[Movies Page] Load Movies'),
+        exhaustMap(() => this.moviesService.getAll()
+          .pipe(
+            map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
+            catchError(() => EMPTY)
+          ));
     )
-  );
-
-  constructor(
-    private actions$: Actions,
-    private moviesService: MoviesService
-  ) {}
+  });
 }
 </code-example>
 
@@ -185,10 +181,10 @@ import { MoviesService } from './movies.service';
 @Injectable()
 export class MoviesEffects {
   private actions$ = inject(Actions);
-  private moviesService = inject(MoviesService); 
+  private moviesService = inject(MoviesService);
 
-  loadMovies$ = createEffect(() =>
-    this.actions$.pipe(
+  loadMovies$ = createEffect(() => {
+    return this.actions$.pipe(
       ofType('[Movies Page] Load Movies'),
       exhaustMap(() => this.moviesService.getAll()
         .pipe(
@@ -196,8 +192,8 @@ export class MoviesEffects {
           catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
         )
       )
-    )
-  );
+    );
+  });
 }
 </code-example>
 
@@ -342,8 +338,8 @@ export class AuthEffects {
   private actions$ = inject(Actions);
   private authService = inject(AuthService);
 
-  login$ = createEffect(() =>
-    this.actions$.pipe(
+  login$ = createEffect(() => {
+    return this.actions$.pipe(
       ofType(LoginPageActions.login),
       exhaustMap(action =>
         this.authService.login(action.credentials).pipe(
@@ -351,8 +347,8 @@ export class AuthEffects {
           catchError(error => of(AuthApiActions.loginFailure({ error })))
         )
       )
-    )
-  );
+    );  
+  });
 }
 </code-example>
 
@@ -374,11 +370,11 @@ import * as fromBooks from '../reducers';
 @Injectable()
 export class CollectionEffects {
   private actions$ = inject(Actions);
-  private store = inject(Store&lt;fromBooks.State&gt;)
+  private store = inject(Store&lt;fromBooks.State&gt;);
 
   addBookToCollectionSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
+    () => {
+      return this.actions$.pipe(
         ofType(CollectionApiActions.addBookSuccess),
         concatLatestFrom(action => this.store.select(fromBooks.getCollectionBookIds)),
         tap(([action, bookCollection]) => {
@@ -388,9 +384,9 @@ export class CollectionEffects {
             window.alert('You have added book number ' + bookCollection.length);
           }
         })
-      ),
-    { dispatch: false }
-  );
+      );
+    },
+    { dispatch: false });
 }
 </code-example>
 
@@ -422,14 +418,13 @@ import { UserActivityService } from '../services/user-activity.service';
 export class UserActivityEffects {
   private userActivityService = inject(UserActivityService);
   
-  trackUserActivity$ = createEffect(() =>
-    fromEvent(document, 'click').pipe(
+  trackUserActivity$ = createEffect(() => {
+    return fromEvent(document, 'click').pipe(
       concatMap(event => this.userActivityService.trackUserActivity(event)),
-    ), { dispatch: false }
-  );
+    );
+  }, { dispatch: false });
 }
 </code-example>
-
 
 <div class="alert is-helpful">
 
