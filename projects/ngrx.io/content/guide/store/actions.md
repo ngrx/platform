@@ -126,7 +126,7 @@ class BookComponent {
 
   ngOnInit() {
     // uses the injection context of Store, i.e. root injector
-    this.loadBookEffectRef = store.dispatch(() => loadBook({ id: this.bookId() }));
+    this.loadBookEffectRef = this.store.dispatch(() => loadBook({ id: this.bookId() }));
   }
 
   ngOnDestroy() {
