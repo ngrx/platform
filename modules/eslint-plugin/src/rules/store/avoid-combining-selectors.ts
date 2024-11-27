@@ -3,6 +3,7 @@ import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
   asPattern,
+  getNgrxComponentStoreNames,
   getNgRxStores,
   namedExpression,
   selectExpression,
@@ -28,8 +29,7 @@ export default createRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: (context) => {
-    const { identifiers = [] } = getNgRxStores(context);
-    const storeNames = identifiers.length > 0 ? asPattern(identifiers) : null;
+    const storeNames = getNgrxComponentStoreNames(context);
 
     if (!storeNames) {
       return {};

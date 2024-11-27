@@ -2,6 +2,7 @@
 import avoidCombiningComponentStoreSelectors from './component-store/avoid-combining-component-store-selectors';
 import avoidMappingComponentStoreSelectors from './component-store/avoid-mapping-component-store-selectors';
 import updaterExplicitReturnType from './component-store/updater-explicit-return-type';
+import requireSuperOnDestroy from './component-store/require-super-ondestroy';
 // effects
 import avoidCyclicEffects from './effects/avoid-cyclic-effects';
 import noDispatchInEffects from './effects/no-dispatch-in-effects';
@@ -44,6 +45,7 @@ export const rules = {
   'avoid-mapping-component-store-selectors':
     avoidMappingComponentStoreSelectors,
   'updater-explicit-return-type': updaterExplicitReturnType,
+  'require-super-ondestroy': requireSuperOnDestroy,
   //effects
   'avoid-cyclic-effects': avoidCyclicEffects,
   'no-dispatch-in-effects': noDispatchInEffects,

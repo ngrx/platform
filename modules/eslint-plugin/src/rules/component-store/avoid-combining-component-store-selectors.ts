@@ -1,11 +1,7 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
-import {
-  asPattern,
-  getNgRxComponentStores,
-  namedExpression,
-} from '../../utils';
+import { getNgrxComponentStoreNames, namedExpression } from '../../utils';
 export const messageId = 'avoidCombiningComponentStoreSelectors';
 type MessageIds = typeof messageId;
 type Options = readonly [];
@@ -25,8 +21,7 @@ export default createRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: (context) => {
-    const { identifiers = [] } = getNgRxComponentStores(context);
-    const storeNames = identifiers.length > 0 ? asPattern(identifiers) : null;
+    const storeNames = getNgrxComponentStoreNames(context);
 
     const thisSelects = `CallExpression[callee.object.type='ThisExpression'][callee.property.name='select']`;
     const storeSelects = storeNames ? namedExpression(storeNames) : null;
