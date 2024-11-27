@@ -7,10 +7,7 @@ describe('withProps', () => {
   it('adds properties to the store immutably', () => {
     const initialStore = getInitialInnerStore();
 
-    const p1 = 1;
-    const p2 = 2;
-
-    const store = withProps(() => ({ p1, p2 }))(initialStore);
+    const store = withProps(() => ({ p1: 1, p2: 2 }))(initialStore);
 
     expect(Object.keys(store.props)).toEqual(['p1', 'p2']);
     expect(Object.keys(initialStore.props)).toEqual([]);
@@ -25,7 +22,7 @@ describe('withProps', () => {
         s1: 10,
         s2: 's2',
       }),
-      withProps(({ s1 }) => ({
+      withProps(() => ({
         p1: of(100),
         p2: 10,
       })),
@@ -34,7 +31,6 @@ describe('withProps', () => {
         m2() {},
       })),
     ].reduce((acc, feature) => feature(acc), getInitialInnerStore());
-    const p2 = 100;
     jest.spyOn(console, 'warn').mockImplementation();
 
     withProps(() => ({

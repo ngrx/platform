@@ -65,7 +65,7 @@ export const BooksStore = signalStore(
   withHooks({
     onInit({ logger }) {
       logger.debug('BooksStore initialized');
-    }
+    },
   }),
 );
 
