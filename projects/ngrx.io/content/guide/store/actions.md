@@ -111,7 +111,7 @@ class BookComponent {
 
   ngOnInit() {
     // runs outside the injection context
-    store.dispatch(() => loadBook({ id: this.bookId() }), { injector: this.injector });
+    this.store.dispatch(() => loadBook({ id: this.bookId() }), { injector: this.injector });
   }
 }
 </code-example>
