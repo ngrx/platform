@@ -31,7 +31,6 @@ export default createRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: (context) => {
-    const sourceCode = context.getSourceCode();
     const collectedActions = new Map<string, Action[]>();
 
     return {
@@ -60,7 +59,11 @@ export default createRule<Options, MessageIds>({
                 {
                   messageId: avoidDuplicateActionsInReducerSuggest,
                   fix: (fixer) =>
-                    getNodeToCommaRemoveFix(sourceCode, fixer, node.parent),
+                    getNodeToCommaRemoveFix(
+                      context.sourceCode,
+                      fixer,
+                      node.parent
+                    ),
                 },
               ],
             });

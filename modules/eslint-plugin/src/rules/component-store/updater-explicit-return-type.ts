@@ -3,6 +3,7 @@ import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
   asPattern,
+  getNgrxComponentStoreNames,
   getNgRxComponentStores,
   namedExpression,
 } from '../../utils';
@@ -28,8 +29,7 @@ export default createRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: (context) => {
-    const { identifiers = [] } = getNgRxComponentStores(context);
-    const storeNames = identifiers.length > 0 ? asPattern(identifiers) : null;
+    const storeNames = getNgrxComponentStoreNames(context);
     const withoutTypeAnnotation = `ArrowFunctionExpression:not([returnType.typeAnnotation])`;
     const selectors = [
       `ClassDeclaration[superClass.name=/Store/] CallExpression[callee.object.type='ThisExpression'][callee.property.name='updater'] > ${withoutTypeAnnotation}`,
