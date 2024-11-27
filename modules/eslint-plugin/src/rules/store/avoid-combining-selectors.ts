@@ -2,9 +2,7 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
-  asPattern,
   getNgrxComponentStoreNames,
-  getNgRxStores,
   namedExpression,
   selectExpression,
 } from '../../utils';
