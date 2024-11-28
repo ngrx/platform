@@ -7,11 +7,11 @@ import {
   withState,
 } from '@ngrx/signals';
 import {
-  EntityComputed,
+  EntityProps,
   EntityId,
   EntityMap,
   EntityState,
-  NamedEntityComputed,
+  NamedEntityProps,
   NamedEntityState,
 } from './models';
 import { getEntityStateKeys } from './helpers';
@@ -20,7 +20,7 @@ export function withEntities<Entity>(): SignalStoreFeature<
   EmptyFeatureResult,
   {
     state: EntityState<Entity>;
-    computed: EntityComputed<Entity>;
+    props: EntityProps<Entity>;
     methods: {};
   }
 >;
@@ -31,7 +31,7 @@ export function withEntities<Entity, Collection extends string>(config: {
   EmptyFeatureResult,
   {
     state: NamedEntityState<Entity, Collection>;
-    computed: NamedEntityComputed<Entity, Collection>;
+    props: NamedEntityProps<Entity, Collection>;
     methods: {};
   }
 >;
@@ -41,7 +41,7 @@ export function withEntities<Entity>(config: {
   EmptyFeatureResult,
   {
     state: EntityState<Entity>;
-    computed: EntityComputed<Entity>;
+    props: EntityProps<Entity>;
     methods: {};
   }
 >;

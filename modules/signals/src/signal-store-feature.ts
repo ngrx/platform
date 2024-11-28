@@ -7,7 +7,7 @@ import { Prettify } from './ts-helpers';
 
 type PrettifyFeatureResult<Result extends SignalStoreFeatureResult> = Prettify<{
   state: Prettify<Result['state']>;
-  computed: Prettify<Result['computed']>;
+  props: Prettify<Result['props']>;
   methods: Prettify<Result['methods']>;
 }>;
 

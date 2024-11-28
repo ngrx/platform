@@ -33,7 +33,7 @@ describe('signalStoreFeature', () => {
     return signalStoreFeature(
       {
         state: type<{ foo: string }>(),
-        computed: type<{ s: Signal<number> }>(),
+        props: type<{ s: Signal<number> }>(),
       },
       withState({ foo1: 1 }),
       withState({ foo2: 2 })

@@ -15,7 +15,7 @@ type SignalStoreMembers<FeatureResult extends SignalStoreFeatureResult> =
   Prettify<
     OmitPrivate<
       StateSignals<FeatureResult['state']> &
-        FeatureResult['computed'] &
+        FeatureResult['props'] &
         FeatureResult['methods']
     >
   >;
@@ -1354,8 +1354,8 @@ export function signalStore(
         (store, feature) => feature(store),
         getInitialInnerStore()
       );
-      const { stateSignals, computedSignals, methods, hooks } = innerStore;
-      const storeMembers = { ...stateSignals, ...computedSignals, ...methods };
+      const { stateSignals, props, methods, hooks } = innerStore;
+      const storeMembers = { ...stateSignals, ...props, ...methods };
 
       (this as any)[STATE_SOURCE] = innerStore[STATE_SOURCE];
 
@@ -1382,7 +1382,7 @@ export function getInitialInnerStore(): InnerSignalStore {
   return {
     [STATE_SOURCE]: signal({}),
     stateSignals: {},
-    computedSignals: {},
+    props: {},
     methods: {},
     hooks: {},
   };
