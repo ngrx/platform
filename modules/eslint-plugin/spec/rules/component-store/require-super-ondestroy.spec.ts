@@ -91,7 +91,7 @@ class BooksComponent extends ComponentStore<BooksState> implements OnDestroy {
   cleanUp() {}
 
   override ngOnDestroy(): void {
-            ~~~~~~~~~~~ [${messageId}]
+           ~~~~~~~~~~~ [${messageId}]
     super.ngOnDestroy;
   }
 }`),
@@ -102,7 +102,7 @@ class BooksComponent extends ComponentStore<BooksState> implements OnDestroy {
   cleanUp() {}
 
   override ngOnDestroy(): void {
-            ~~~~~~~~~~~ [${messageId}]
+           ~~~~~~~~~~~ [${messageId}]
     super.get();
   }
 }`),
