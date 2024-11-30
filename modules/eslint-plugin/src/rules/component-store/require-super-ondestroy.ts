@@ -26,8 +26,8 @@ export default createRule<Options, MessageIds>({
     const ngOnDestroyMethodSelector = `MethodDefinition[key.name='ngOnDestroy']`;
 
     return {
-      [`ClassDeclaration[superClass.name=ComponentStore] ${ngOnDestroyMethodSelector}:not(:has(CallExpression[callee.object.type='Super'][callee.property.name='ngOnDestroy']))`](
-        node: TSESTree.MethodDefinition
+      [`ClassDeclaration[superClass.name=ComponentStore] ${ngOnDestroyMethodSelector}:not(:has(CallExpression[callee.object.type='Super'][callee.property.name='ngOnDestroy'])) > .key`](
+        node: TSESTree.Identifier
       ) {
         context.report({
           node,
