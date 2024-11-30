@@ -2,7 +2,8 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
-  getNgrxComponentStoreNames,
+  asPattern,
+  getNgRxStores,
   namedExpression,
   selectExpression,
 } from '../../utils';
@@ -27,7 +28,8 @@ export default createRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: (context) => {
-    const storeNames = getNgrxComponentStoreNames(context);
+    const { identifiers = [] } = getNgRxStores(context);
+    const storeNames = identifiers.length > 0 ? asPattern(identifiers) : null;
 
     if (!storeNames) {
       return {};
