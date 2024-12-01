@@ -169,7 +169,7 @@ export class NumbersComponent {
 
 ## Advantages over simple effect
 
-On first sight, `signalMethod`, might be the same as `effect`:
+At first sight, `signalMethod`, might be the same as `effect`:
 
 ```ts
 
