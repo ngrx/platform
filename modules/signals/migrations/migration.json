@@ -10,6 +10,11 @@
       "description": "Replace StateSignal usages with WritableStateSource",
       "version": "18.0.0-rc.3",
       "factory": "./18_0_0-rc_3-writablestatesource/index"
+    },
+    "19_0_0-rc_1-props": {
+      "description": "Replace several properties with a single props object",
+      "version": "19.0.0-rc.1",
+      "factory": "./19_0_0-rc_1-props/index"
     }
   }
 }
