@@ -2,7 +2,7 @@
 
 `signalMethod` is a factory function that executes side effects based on signal changes. It creates one function (processing function) with one typed parameter that can be a static value or a Signal. Upon invocation, the "processing function" has to be provided.
 
-`signalMethod` is `rxMethod` without RxJS. `signalMethod` can also be used outside of `signalStore` or `signalState`:
+`signalMethod` can also be used outside of `signalStore` or `signalState`:
 
 ```ts
 import {Component} from '@angular/core';
@@ -193,9 +193,8 @@ However, `signalMethod` offers three distinctive advantages over `effect`:
 - **No Injection Context Required**: Unlike an `effect`, which requires an injection context or an Injector, `signalMethod`'s "processor function" can be called without an injection context.
 - **Explicit Tracking**: Only the Signal of the parameter is tracked, while Signals within the "processor function" stay untracked.
 
+## `signalMethod` compared to `rxMethod`
 
-<div class="alert is-helpful">
+`signalMethod` is `rxMethod` without RxJS, and is therefore much smaller in terms of bundle size.
 
 Be aware that RxJS is superior to Signals in managing race conditions. Signals have a glitch-free effect, meaning that for multiple synchronous changes, only the last change is propagated. Additionally, they lack powerful operators like `switchMap` or `concatMap`.
-
-</div>
