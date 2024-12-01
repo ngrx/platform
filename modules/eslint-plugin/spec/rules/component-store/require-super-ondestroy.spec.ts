@@ -13,13 +13,13 @@ const valid: () => (string | ValidTestCase<Options>)[] = () => [
   `
 import { ComponentStore } from '@ngrx/component-store';
 
-class BooksComponent extends ComponentStore<BooksState>
+class BooksStore extends ComponentStore<BooksState>
 {
 }`,
   `
 import { ComponentStore } from '@ngrx/component-store';
 
-class BooksComponent extends ComponentStore<BooksState> implements OnDestroy
+class BooksStore extends ComponentStore<BooksState> implements OnDestroy
 {
   override ngOnDestroy(): void {
     super.ngOnDestroy();
@@ -28,7 +28,7 @@ class BooksComponent extends ComponentStore<BooksState> implements OnDestroy
   `
 import { ComponentStore } from '@ngrx/component-store';
 
-class BooksComponent extends ComponentStore<BooksState> implements OnDestroy
+class BooksStore extends ComponentStore<BooksState> implements OnDestroy
 {
   cleanUp() {}
 
@@ -40,7 +40,7 @@ class BooksComponent extends ComponentStore<BooksState> implements OnDestroy
   `
 import { ComponentStore } from '@ngrx/component-store';
 
-class BooksComponent extends ComponentStore<BooksState> implements OnDestroy
+class BooksStore extends ComponentStore<BooksState> implements OnDestroy
 {
   cleanUp() {}
 
@@ -52,7 +52,7 @@ class BooksComponent extends ComponentStore<BooksState> implements OnDestroy
   `
 import { ComponentStore } from '@ngrx/component-store';
 
-class BooksComponent extends ComponentStore<BooksState> implements OnDestroy
+class BooksStore extends ComponentStore<BooksState> implements OnDestroy
 {
   cleanUp() {}
 
@@ -68,7 +68,7 @@ const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(`
 import { ComponentStore } from '@ngrx/component-store';
 
-class BooksComponent extends ComponentStore<BooksState> implements OnDestroy {
+class BooksStore extends ComponentStore<BooksState> implements OnDestroy {
   override ngOnDestroy(): void {
            ~~~~~~~~~~~ [${messageId}]
   }
@@ -76,7 +76,7 @@ class BooksComponent extends ComponentStore<BooksState> implements OnDestroy {
   fromFixture(`
 import { ComponentStore } from '@ngrx/component-store';
 
-class BooksComponent extends ComponentStore<BooksState> implements OnDestroy {
+class BooksStore extends ComponentStore<BooksState> implements OnDestroy {
   cleanUp() {}
 
   override ngOnDestroy(): void {
@@ -87,9 +87,7 @@ class BooksComponent extends ComponentStore<BooksState> implements OnDestroy {
   fromFixture(`
 import { ComponentStore } from '@ngrx/component-store';
 
-class BooksComponent extends ComponentStore<BooksState> implements OnDestroy {
-  cleanUp() {}
-
+class BooksStore extends ComponentStore<BooksState> implements OnDestroy {
   override ngOnDestroy(): void {
            ~~~~~~~~~~~ [${messageId}]
     super.ngOnDestroy;
@@ -98,9 +96,7 @@ class BooksComponent extends ComponentStore<BooksState> implements OnDestroy {
   fromFixture(`
 import { ComponentStore } from '@ngrx/component-store';
 
-class BooksComponent extends ComponentStore<BooksState> implements OnDestroy {
-  cleanUp() {}
-
+class BooksStore extends ComponentStore<BooksState> implements OnDestroy {
   override ngOnDestroy(): void {
            ~~~~~~~~~~~ [${messageId}]
     super.get();
