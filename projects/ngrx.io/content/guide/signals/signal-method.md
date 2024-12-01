@@ -19,7 +19,7 @@ export class NumbersComponent {
 }
 ```
 
-`logDoubledNumber` can be called with a static value of type number or a Signal of type number:
+`logDoubledNumber` can be called with a static value of type `number`, or a Signal of type `number`:
 
 ```ts
 
