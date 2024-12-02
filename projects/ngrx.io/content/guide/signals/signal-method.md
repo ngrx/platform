@@ -159,17 +159,18 @@ export class NumbersComponent implements OnInit {
 At first sight, `signalMethod`, might be the same as `effect`:
 
 ```ts
-
-@Component({ /* ... */})
+@Component({ /* ... */ })
 export class NumbersComponent {
-  readonly value = signal(2);
+  readonly num = signal(2);
   readonly logDoubledNumberEffect = effect(() => {
-    const double = num * 2;
-    console.log(double);
-  })
+    console.log(this.num() * 2);
+  });
+  readonly logDoubledNumber = signalMethod<number>((num) => {
+    console.log(num * 2);
+  });
 
-  constructor(): void {
-    this.logDoubledNumber(value);
+  constructor() {
+    this.logDoubledNumber(this.num);
   }
 }
 ```
