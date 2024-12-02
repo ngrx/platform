@@ -116,7 +116,7 @@ export class NumbersComponent {
 }
 ```
 
-## Providing an Injector
+## Manual Cleanup
 
 If you cannot run the "processor function" in an injection context, you can also provide an injector manually:
 
