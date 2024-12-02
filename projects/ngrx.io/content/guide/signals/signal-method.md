@@ -3,17 +3,17 @@
 `signalMethod` is a standalone factory function used for managing side effects with Angular signals. It accepts a callback and returns a processor function that can handle either a static value or a signal. The input type can be specified using a generic type argument:
 
 ```ts
-import {Component} from '@angular/core';
-import {signalMethod} from '@ngrx/signals';
+import { Component } from '@angular/core';
+import { signalMethod } from '@ngrx/signals';
 
-@Component({ /* ... */})
+@Component({ /* ... */ })
 export class NumbersComponent {
   // 👇 This method will have an input argument
   // of type `number | Signal<number>`.
-  readonly logDoubledNumber = signalMethod<number>(num => {
+  readonly logDoubledNumber = signalMethod<number>((num) => {
     const double = num * 2;
     console.log(double);
-  })
+  });
 }
 ```
 
