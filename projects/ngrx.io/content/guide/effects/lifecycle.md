@@ -109,10 +109,10 @@ import { EffectsModule, EFFECTS_ERROR_HANDLER } from '@ngrx/effects';
 import { MoviesEffects } from './effects/movies.effects';
 import { CustomErrorHandler, isRetryable } from '../custom-error-handler';
 
-export function effectResubscriptionHandler&gt;T extends Action&lt;(
-  observable$: Observable&gt;T&lt;,
+export function effectResubscriptionHandler&lt;T extends Action&gt;(
+  observable$: Observable&lt;T&gt;,
   errorHandler?: CustomErrorHandler
-): Observable&gt;T&lt; {
+): Observable&lt;T&gt; {
   return observable$.pipe(
     retryWhen(errors =>
       errors.pipe(
@@ -142,7 +142,7 @@ bootstrapApplication(
         useClass: CustomErrorHandler
       }
     ],
-    }
+  }
 )
 </code-example>
 

@@ -41,7 +41,7 @@ import { CommonModule } from '@angular/common';
     &lt;li *ngFor="let movie of movies"&gt;
       {{ movie.name }}
     &lt;/li&gt;
-  `
+  `,
   standalone: true,
   imports: [CommonModule, MoviesService],
 })
@@ -148,8 +148,8 @@ export class MoviesEffects {
           .pipe(
             map(movies => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
             catchError(() => EMPTY)
-          ));
-    )
+          ))
+    );
   });
 }
 </code-example>
@@ -376,8 +376,8 @@ export class CollectionEffects {
     () => {
       return this.actions$.pipe(
         ofType(CollectionApiActions.addBookSuccess),
-        concatLatestFrom(action => this.store.select(fromBooks.getCollectionBookIds)),
-        tap(([action, bookCollection]) => {
+        concatLatestFrom(_action => this.store.select(fromBooks.getCollectionBookIds)),
+        tap(([_action, bookCollection]) => {
           if (bookCollection.length === 1) {
             window.alert('Congrats on adding your first book!');
           } else {
