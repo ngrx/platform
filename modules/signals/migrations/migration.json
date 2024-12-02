@@ -11,7 +11,7 @@
       "version": "18.0.0-rc.3",
       "factory": "./18_0_0-rc_3-writablestatesource/index"
     },
-    "19_0_0-rc_1-props": {
+    "19_0_0-rc_0-props": {
       "description": "Replace several properties with a single props object",
       "version": "19.0.0-rc.0",
       "factory": "./19_0_0-rc_0-props/index"

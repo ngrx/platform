@@ -5,7 +5,6 @@ import {
 } from '@angular-devkit/schematics/testing';
 import { createWorkspace } from '@ngrx/schematics-core/testing';
 import { tags } from '@angular-devkit/core';
-import { LogEntry } from '@angular-devkit/core/src/logger';
 
 describe('migrate to props', () => {
   const collectionPath = path.join(__dirname, '../migration.json');
@@ -26,7 +25,7 @@ describe('migrate to props', () => {
     );
 
     const tree = await schematicRunner.runSchematic(
-      `19_0_0-rc_1-props`,
+      `19_0_0-rc_0-props`,
       {},
       appTree
     );
@@ -240,7 +239,7 @@ import { NamedEntityProps } from '@ngrx/signals/entities';
     );
 
     const tree = await schematicRunner.runSchematic(
-      `19_0_0-rc_1-props`,
+      `19_0_0-rc_0-props`,
       {},
       appTree
     );
