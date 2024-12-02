@@ -47,5 +47,25 @@ export function toDeepSignal<T>(signal: Signal<T>): DeepSignal<T> {
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
-  return value?.constructor === Object;
+  if (value === null || typeof value !== 'object') {
+    return false;
+  }
+
+  let proto = Object.getPrototypeOf(value);
+  if (proto === Object.prototype) {
+    return true;
+  }
+
+  while (proto && proto !== Object.prototype) {
+    if (
+      [Array, Set, Map, Date, Error, RegExp, Function].includes(
+        proto.constructor
+      )
+    ) {
+      return false;
+    }
+    proto = Object.getPrototypeOf(proto);
+  }
+
+  return proto === Object.prototype;
 }
