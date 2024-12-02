@@ -189,7 +189,7 @@ export class NumbersComponent {
 
 However, `signalMethod` offers three distinctive advantages over `effect`:
 
-- **Flexible Parameter**: The parameter can also be a simple number, not just a Signal.
+- **Flexible Input**: The input argument can be a static value, not just a signal. Additionally, the processor function can be called multiple times with different inputs.
 - **No Injection Context Required**: Unlike an `effect`, which requires an injection context or an Injector, `signalMethod`'s "processor function" can be called without an injection context.
 - **Explicit Tracking**: Only the Signal of the parameter is tracked, while Signals within the "processor function" stay untracked.
 
