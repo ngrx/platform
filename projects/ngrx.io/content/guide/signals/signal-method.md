@@ -1,4 +1,4 @@
-# signalMethod
+# SignalMethod
 
 `signalMethod` is a factory function that executes side effects based on signal changes. It creates one function (processing function) with one typed parameter that can be a static value or a Signal. Upon invocation, the "processing function" has to be provided.
 
