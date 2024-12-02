@@ -167,7 +167,7 @@ export class NumbersComponent {
 }
 ```
 
-## Advantages over simple effect
+## Advantages over Effect
 
 At first sight, `signalMethod`, might be the same as `effect`:
 
