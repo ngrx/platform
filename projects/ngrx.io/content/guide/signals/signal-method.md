@@ -2,8 +2,6 @@
 
 `signalMethod` is a factory function that executes side effects based on signal changes. It creates one function (processing function) with one typed parameter that can be a static value or a Signal. Upon invocation, the "processing function" has to be provided.
 
-`signalMethod` can also be used outside of `signalStore` or `signalState`:
-
 ```ts
 import {Component} from '@angular/core';
 import {signalMethod} from '@ngrx/signals';
