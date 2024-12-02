@@ -13,8 +13,8 @@
     },
     "19_0_0-rc_1-props": {
       "description": "Replace several properties with a single props object",
-      "version": "19.0.0-rc.1",
-      "factory": "./19_0_0-rc_1-props/index"
+      "version": "19.0.0-rc.0",
+      "factory": "./19_0_0-rc_0-props/index"
     }
   }
 }
