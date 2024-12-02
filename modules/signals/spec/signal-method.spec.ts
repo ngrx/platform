@@ -42,29 +42,29 @@ describe('signalMethod', () => {
     expect(() => signalMethod<void>(() => void true)).toThrowError();
   });
 
-  it('stops signal tracking, when signalMethod gets destroyed', () => {
-    let a = 1;
-    const summand = signal(1);
-    const adder = createAdder((value) => (a += value));
-    adder(summand);
-
-    summand.set(2);
-    TestBed.flushEffects();
-    expect(a).toBe(3);
-
-    adder.destroy();
-
-    summand.set(2);
-    TestBed.flushEffects();
-    expect(a).toBe(3);
-  });
-
-  it('can also destroy a signalMethod that processes non-signal inputs', () => {
-    const adder = createAdder(() => void true);
-    expect(() => adder(1).destroy()).not.toThrowError();
-  });
-
   describe('destroying signalMethod', () => {
+    it('stops signal tracking, when signalMethod gets destroyed', () => {
+      let a = 1;
+      const summand = signal(1);
+      const adder = createAdder((value) => (a += value));
+      adder(summand);
+
+      summand.set(2);
+      TestBed.flushEffects();
+      expect(a).toBe(3);
+
+      adder.destroy();
+
+      summand.set(2);
+      TestBed.flushEffects();
+      expect(a).toBe(3);
+    });
+
+    it('can also destroy a signalMethod that processes non-signal inputs', () => {
+      const adder = createAdder(() => void true);
+      expect(() => adder(1).destroy()).not.toThrowError();
+    });
+
     it('stops tracking all signals on signalMethod destroy', () => {
       let a = 1;
       const summand1 = signal(1);
