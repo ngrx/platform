@@ -137,33 +137,22 @@ export class NumbersComponent {
 }
 ```
 
-Whereas the "processor function" doesn't require an active injection context, the call of `signalMethod` does:
+## Initialization Outside of Injection Context
+
+The `signalMethod` must be initialized within an injection context. To initialize it outside an injection context, it's necessary to provide an injector as the second argument:
 
 ```ts
-
-@Component({ /* ... */})
-export class NumbersComponent {
-// 👇 Would cause a runtime error
-  ngOnInit() {
-    const logDoubledNumber = signalMethod<number>(num => console.log(num * 2));
-  }
-}
-```
-
-In these cases, you also have to provide the injector manually:
-
-```ts
-
-@Component({ /* ... */})
-export class NumbersComponent {
+@Component({ /* ... */ })
+export class NumbersComponent implements OnInit {
   readonly injector = inject(Injector);
 
   ngOnInit() {
-    // 👇 Works now
-    const logDoubledNumber = signalMethod<number>(num => console.log(num * 2), {injector: this.injector});
+    const logDoubledNumber = signalMethod<number>(
+      (num) => console.log(num * 2),
+      { injector: this.injector },
+    );
   }
 }
-```
 
 ## Advantages over Effect
 
