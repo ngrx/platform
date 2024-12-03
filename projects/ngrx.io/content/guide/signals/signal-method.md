@@ -20,23 +20,23 @@ export class NumbersComponent {
 `logDoubledNumber` can be called with a static value of type `number`, or a Signal of type `number`:
 
 ```ts
-
-@Component({ /* ... */})
+@Component({ /* ... */ })
 export class NumbersComponent {
-  // 👇 This method will have an input argument
-  // of type `number | Signal<number>`.
-  readonly logDoubledNumber = signalMethod<number>(num => {
+  readonly logDoubledNumber = signalMethod<number>((num) => {
     const double = num * 2;
     console.log(double);
-  })
+  });
 
-  constructor(): void {
-    // 👇 prints 2 synchronously
+  constructor() {
     this.logDoubledNumber(1);
+    // console output: 2
 
-    const value = signal(2);
-    // 👇 prints 4 asynchronously (triggered by an internal effect())
-    this.logDoubledNumber(value);
+    const num = signal(2);
+    this.logDoubledNumber(num);
+    // console output: 4
+    
+    setTimeout(() => num.set(3), 3_000);
+    // console output after 3 seconds: 6
   }
 }
 ```
