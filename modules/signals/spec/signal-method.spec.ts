@@ -1,4 +1,4 @@
-import { signalMethod } from '../src/signal-method';
+import { signalMethod } from '../src';
 import { TestBed } from '@angular/core/testing';
 import {
   createEnvironmentInjector,
