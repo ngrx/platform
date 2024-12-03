@@ -270,6 +270,33 @@ Services used in root-level effects are **not** recommended to be used with serv
 
 </div>
 
+### Using the Standalone API
+
+Feature-level effects are registered in the `providers` array of the route config. The same `provideEffects()` function is used in root-level and feature-level effects.
+
+<code-example header="movie-routes.ts">
+import { Route } from '@angular/router';
+import { provideEffects } from '@ngrx/effects';
+
+import { MoviesEffects } from './effects/movies.effects';
+import * as actorsEffects from './effects/actors.effects';
+
+export const routes: Route[] = [
+  {
+    path: 'movies',
+    providers: [
+      provideEffects(MoviesEffects, actorsEffects)
+    ]
+  }
+];
+</code-example>
+
+<div class="alert is-important">
+
+**Note:** Registering an effects class multiple times, either by `forRoot()`, `forFeature()`, or `provideEffects()`, (for example in different lazy loaded features) will not cause the effects to run multiple times. There is no functional difference between effects loaded by `root` and `feature`; the important difference between the functions is that `root` providers sets up the providers required for effects.
+
+</div>
+
 ### Alternative Way of Registering Effects
 
 You can provide root-/feature-level effects with the provider `USER_PROVIDED_EFFECTS`.
