@@ -70,25 +70,22 @@ Even though `logDoubledNumber` is called outside an injection context, automatic
 However, when creating a `signalMethod` in an ancestor injection context, the cleanup behavior is different:
 
 ```ts
-
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class NumbersService {
-  readonly logDoubledNumber = signalMethod<number>(num => {
+  readonly logDoubledNumber = signalMethod<number>((num) => {
     const double = num * 2;
     console.log(double);
-  })
+  });
 }
 
-@Component({ /* ... */})
-export class NumbersComponent {
-  readonly logDoubledNumber = inject(NumbersService).logDoubledNumber;
+@Component({ /* ... */ })
+export class NumbersComponent implements OnInit {
+  readonly numbersService = inject(NumbersService);
 
   ngOnInit(): void {
-    this.logDoubledNumber(1);
-
     const value = signal(2);
-    // 👇 uses the injection context of the `NumbersService`, which is root.
-    this.logDoubledNumber(value);
+    // 👇 Uses the injection context of the `NumbersService`, which is root.
+    this.numbersService.logDoubledNumber(value);
   }
 }
 ```
