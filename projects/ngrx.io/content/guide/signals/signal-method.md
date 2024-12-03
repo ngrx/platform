@@ -94,7 +94,7 @@ Here, the `effect` outlives the component, which would produce a memory leak.
 
 ## Manual Cleanup
 
-If you cannot run the "processor function" in an injection context, you can also provide an injector manually:
+When a `signalMethod` is created in an ancestor injection context, it's necessary to explicitly provide the caller injector to ensure proper cleanup:
 
 ```ts
 
