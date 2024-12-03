@@ -92,24 +92,6 @@ export class NumbersComponent implements OnInit {
 
 Here, the `effect` outlives the component, which would produce a memory leak.
 
-As a consequence, try to call the "processor function" always in an injection context:
-
-```ts
-
-@Component({ /* ... */})
-export class NumbersComponent {
-  readonly logDoubledNumber = inject(NumbersService).logDoubledNumber;
-
-  ngOnInit(): void {
-    this.logDoubledNumber(1);
-
-    const value = signal(2);
-    // 👇 uses the injection context of the `NumbersService`, which is root.
-    this.logDoubledNumber(value);
-  }
-}
-```
-
 ## Manual Cleanup
 
 If you cannot run the "processor function" in an injection context, you can also provide an injector manually:
