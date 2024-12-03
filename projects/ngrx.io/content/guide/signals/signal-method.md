@@ -47,7 +47,7 @@ export class NumbersComponent {
 
 By default, the `effect` runs in the injection context of the caller. In the example above, that is `NumbersComponent`. That means, that the `effect` is automatically cleaned up when the component is destroyed.
 
-If the call happens outside of an injection context, then the injector of the `signalMethod` is used. This would be the case, if `logDoubledNumber` runs in `ngOnInit`:
+If the call happens outside an injection context, then the injector of the `signalMethod` is used. This would be the case, if `logDoubledNumber` runs in `ngOnInit`:
 
 ```ts
 @Component({ /* ... */ })
@@ -132,6 +132,7 @@ export class NumbersComponent implements OnInit {
     );
   }
 }
+```
 
 ## Advantages over Effect
 
