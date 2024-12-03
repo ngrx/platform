@@ -50,16 +50,18 @@ export class MoviesPageComponent {
 You also have the corresponding service that handles the fetching of movies.
 
 <code-example header="movies.service.ts">
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
-  standalone: true,
-  imports: [HttpClient],
 })
 export class MoviesService {
   private http = inject(HttpClient);
 
-  getAll() {
-    return this.http.get('/movies');
+  getAll(): Observable<Movie[]> {
+    return this.http.get<Movie[]>('/movies');
   }
 }
 </code-example>
