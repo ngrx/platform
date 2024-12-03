@@ -65,9 +65,9 @@ export class NumbersComponent implements OnInit {
 }
 ```
 
-For the `NumbersComponent`, it doesn't make a difference. Again, the `effect` is automatically cleaned up when the component is destroyed.
+Even though `logDoubledNumber` is called outside an injection context, automatic cleanup occurs when `NumbersComponent` is destroyed, since `logDoubledNumber` was created within the component's injection context.
 
-Careful, when `signalMethod` is used in a service which is provided in `root`:
+However, when creating a `signalMethod` in an ancestor injection context, the cleanup behavior is different:
 
 ```ts
 
