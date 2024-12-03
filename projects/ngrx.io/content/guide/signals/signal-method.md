@@ -97,18 +97,21 @@ Here, the `effect` outlives the component, which would produce a memory leak.
 When a `signalMethod` is created in an ancestor injection context, it's necessary to explicitly provide the caller injector to ensure proper cleanup:
 
 ```ts
-
-@Component({ /* ... */})
-export class NumbersComponent {
-  readonly logDoubledNumber = inject(NumbersService).logDoubledNumber;
+@Component({ /* ... */ })
+export class NumbersComponent implements OnInit {
+  readonly numbersService = inject(NumbersService);
   readonly injector = inject(Injector);
 
   ngOnInit(): void {
-    this.logDoubledNumber(1);
-
-    const value = signal(2);
-    // 👇 uses the injection context of the `NumbersService`, which is root.
-    this.logDoubledNumber(value, {injector: this.injector});
+    const value = signal(1);
+    // 👇 Providing the `NumbersComponent` injector
+    // to ensure cleanup on component destroy.
+    this.numbersService.logDoubledNumber(value, {
+      injector: this.injector,
+    });
+  
+    // 👇 No need to provide an injector for static values.
+    this.logDoubledNumber(2);
   }
 }
 ```
