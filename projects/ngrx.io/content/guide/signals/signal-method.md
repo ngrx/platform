@@ -50,19 +50,16 @@ By default, the `effect` runs in the injection context of the caller. In the exa
 If the call happens outside of an injection context, then the injector of the `signalMethod` is used. This would be the case, if `logDoubledNumber` runs in `ngOnInit`:
 
 ```ts
-
-@Component({ /* ... */})
-export class NumbersComponent {
-  readonly logDoubledNumber = signalMethod<number>(num => {
+@Component({ /* ... */ })
+export class NumbersComponent implements OnInit {
+  readonly logDoubledNumber = signalMethod<number>((num) => {
     const double = num * 2;
     console.log(double);
-  })
+  });
 
   ngOnInit(): void {
-    this.logDoubledNumber(1);
-
     const value = signal(2);
-    // 👇 uses the injection context of the `signalMethod`
+    // 👇 Uses the injection context of the `NumbersComponent`.
     this.logDoubledNumber(value);
   }
 }
