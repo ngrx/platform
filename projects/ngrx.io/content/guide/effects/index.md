@@ -122,7 +122,7 @@ Effects are injectable service classes with distinct parts:
 To show how you handle loading movies from the example above, let's look at `MoviesEffects`.
 
 <code-example header="movies.effects.ts">
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY } from 'rxjs';
 import { map, exhaustMap, catchError } from 'rxjs/operators';
