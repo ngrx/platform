@@ -113,6 +113,12 @@ Effects are injectable service classes with distinct parts:
 - Effects are subscribed to the `Store` observable.
 - Services are injected into effects to interact with external APIs and handle streams.
 
+<div class="alert is-helpful">
+
+**Note:** Since NgRx v15.2, classes are not required to create effects. Learn more about functional effects [here](#functional-effects).
+
+</div>
+
 To show how you handle loading movies from the example above, let's look at `MoviesEffects`.
 
 <code-example header="movies.effects.ts">
