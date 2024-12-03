@@ -41,7 +41,7 @@ export class NumbersComponent {
 }
 ```
 
-## Automatic Signal Tracking
+## Automatic Cleanup
 
 `signalMethod` uses an `effect` internally to track the Signal changes.
 
