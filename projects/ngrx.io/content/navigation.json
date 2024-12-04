@@ -328,6 +328,10 @@
               "url": "guide/signals/deep-computed"
             },
             {
+              "title":  "SignalMethod",
+              "url": "guide/signals/signal-method"
+            },
+            {
               "title": "RxJS Integration",
               "url": "guide/signals/rxjs-integration"
             },
