@@ -111,7 +111,7 @@ export class NumbersComponent implements OnInit {
     });
   
     // 👇 No need to provide an injector for static values.
-    this.logDoubledNumber(2);
+    this.numbersService.logDoubledNumber(2);
   }
 }
 ```
