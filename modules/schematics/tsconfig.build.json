@@ -11,7 +11,7 @@
     },
     "sourceMap": true,
     "inlineSources": true,
-    "lib": ["es2018", "dom"],
+    "lib": ["es2022", "dom"],
     "skipLibCheck": true,
     "strict": true
   },
