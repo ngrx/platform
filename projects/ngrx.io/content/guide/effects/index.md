@@ -237,14 +237,16 @@ It's recommended to inject all dependencies as effect function arguments for eas
 
 ## Registering Effects
 
+Effect classes and functional effects are registered using the `provideEffects` method.
+
+At the root level, effects are registered in the `providers` array of the application configuration.
+
 <div class="alert is-important">
 
-Registering an effects class multiple times (for example in different lazy loaded features) does not cause the effects to run multiple times.
+Effects start running **immediately** after instantiation to ensure they are listening for all relevant actions as soon as possible.
+Services used in root-level effects are **not** recommended to be used with services that are used with the `APP_INITIALIZER` token.
 
 </div>
-
-Feature-level effects are registered in the `providers` array of the route config.
-The same `provideEffects()` function is used in root-level and feature-level effects.
 
 <code-example header="main.ts">
 import { bootstrapApplication } from '@angular/platform-browser';
@@ -263,16 +265,14 @@ bootstrapApplication(AppComponent, {
 });
 </code-example>
 
+Feature-level effects are registered in the `providers` array of the route config.
+The same `provideEffects()` method is used to register effects for a feature.
+
 <div class="alert is-important">
 
-Effects start running **immediately** after instantiation to ensure they are listening for all relevant actions as soon as possible.
-Services used in root-level effects are **not** recommended to be used with services that are used with the `APP_INITIALIZER` token.
+Registering an effects class multiple times (for example in different lazy loaded features) does not cause the effects to run multiple times.
 
 </div>
-
-### Using the Standalone API
-
-Feature-level effects are registered in the `providers` array of the route config. The same `provideEffects()` function is used in root-level and feature-level effects.
 
 <code-example header="movie-routes.ts">
 import { Route } from '@angular/router';
@@ -290,12 +290,6 @@ export const routes: Route[] = [
   }
 ];
 </code-example>
-
-<div class="alert is-important">
-
-**Note:** Registering an effects class multiple times, either by `forRoot()`, `forFeature()`, or `provideEffects()`, (for example in different lazy loaded features) will not cause the effects to run multiple times. There is no functional difference between effects loaded by `root` and `feature`; the important difference between the functions is that `root` providers sets up the providers required for effects.
-
-</div>
 
 ### Alternative Way of Registering Effects
 
