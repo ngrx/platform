@@ -1,13 +1,14 @@
 export type Prettify<T> = { [K in keyof T]: T[K] } & {};
 
 export type IsRecord<T> = T extends object
-  ? T extends unknown[]
-    ? false
-    : T extends Set<unknown>
-    ? false
-    : T extends Map<unknown, unknown>
-    ? false
-    : T extends Function
+  ? T extends
+      | unknown[]
+      | Set<unknown>
+      | Map<unknown, unknown>
+      | Date
+      | Error
+      | RegExp
+      | Function
     ? false
     : true
   : false;

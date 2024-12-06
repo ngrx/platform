@@ -175,6 +175,18 @@ describe('signalStore', () => {
     expectSnippet(snippet).toInfer('storeKeys', 'unique symbol');
   });
 
+  it('does not create deep signals when state type is Set', () => {
+    const snippet = `
+      const Store = signalStore(withState(new Set<{ foo: string }>()));
+      const store = new Store();
+      declare const storeKeys: keyof typeof store;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer('storeKeys', 'unique symbol');
+  });
+
   it('does not create deep signals when state type is Map', () => {
     const snippet = `
       const Store = signalStore(withState(new Map<string, { foo: number }>()));
@@ -187,9 +199,45 @@ describe('signalStore', () => {
     expectSnippet(snippet).toInfer('storeKeys', 'unique symbol');
   });
 
-  it('does not create deep signals when state type is Set', () => {
+  it('does not create deep signals when state type is Date', () => {
     const snippet = `
-      const Store = signalStore(withState(new Set<{ foo: string }>()));
+      const Store = signalStore(withState(new Date()));
+      const store = new Store();
+      declare const storeKeys: keyof typeof store;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer('storeKeys', 'unique symbol');
+  });
+
+  it('does not create deep signals when state type is Error', () => {
+    const snippet = `
+      const Store = signalStore(withState(new Error()));
+      const store = new Store();
+      declare const storeKeys: keyof typeof store;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer('storeKeys', 'unique symbol');
+  });
+
+  it('does not create deep signals when state type is RegExp', () => {
+    const snippet = `
+      const Store = signalStore(withState(new RegExp('')));
+      const store = new Store();
+      declare const storeKeys: keyof typeof store;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer('storeKeys', 'unique symbol');
+  });
+
+  it('does not create deep signals when state type is Function', () => {
+    const snippet = `
+      const Store = signalStore(withState(() => () => {}));
       const store = new Store();
       declare const storeKeys: keyof typeof store;
     `;

@@ -132,6 +132,20 @@ describe('signalState', () => {
     );
   });
 
+  it('does not create deep signals for Set', () => {
+    const snippet = `
+      const state = signalState(new Set<number>());
+      declare const stateKeys: keyof typeof state;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer(
+      'stateKeys',
+      'unique symbol | keyof Signal<Set<number>>'
+    );
+  });
+
   it('does not create deep signals for Map', () => {
     const snippet = `
       const state = signalState(new Map<number, { bar: boolean }>());
@@ -146,9 +160,9 @@ describe('signalState', () => {
     );
   });
 
-  it('does not create deep signals for Set', () => {
+  it('does not create deep signals for Date', () => {
     const snippet = `
-      const state = signalState(new Set<number>());
+      const state = signalState(new Date());
       declare const stateKeys: keyof typeof state;
     `;
 
@@ -156,7 +170,49 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'stateKeys',
-      'unique symbol | keyof Signal<Set<number>>'
+      'unique symbol | keyof Signal<Date>'
+    );
+  });
+
+  it('does not create deep signals for Error', () => {
+    const snippet = `
+      const state = signalState(new Error());
+      declare const stateKeys: keyof typeof state;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer(
+      'stateKeys',
+      'unique symbol | keyof Signal<Error>'
+    );
+  });
+
+  it('does not create deep signals for RegExp', () => {
+    const snippet = `
+      const state = signalState(new RegExp(''));
+      declare const stateKeys: keyof typeof state;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer(
+      'stateKeys',
+      'unique symbol | keyof Signal<RegExp>'
+    );
+  });
+
+  it('does not create deep signals for Function', () => {
+    const snippet = `
+      const state = signalState(() => {});
+      declare const stateKeys: keyof typeof state;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer(
+      'stateKeys',
+      'unique symbol | keyof Signal<() => void>'
     );
   });
 
