@@ -294,6 +294,10 @@
                   "url": "guide/signals/signal-store/lifecycle-hooks"
                 },
                 {
+                  "title": "Custom Store Properties",
+                  "url": "guide/signals/signal-store/custom-store-properties"
+                },
+                {
                   "title": "State Tracking",
                   "url": "guide/signals/signal-store/state-tracking"
                 },
@@ -322,6 +326,10 @@
             {
               "title": "DeepComputed",
               "url": "guide/signals/deep-computed"
+            },
+            {
+              "title":  "SignalMethod",
+              "url": "guide/signals/signal-method"
             },
             {
               "title": "RxJS Integration",

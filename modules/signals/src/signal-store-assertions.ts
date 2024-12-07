@@ -12,7 +12,7 @@ export function assertUniqueStoreMembers(
 
   const storeMembers = {
     ...store.stateSignals,
-    ...store.computedSignals,
+    ...store.props,
     ...store.methods,
   };
   const overriddenKeys = Object.keys(storeMembers).filter((memberKey) =>

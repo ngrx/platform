@@ -11,11 +11,11 @@ describe('withComputed', () => {
 
     const store = withComputed(() => ({ s1, s2 }))(initialStore);
 
-    expect(Object.keys(store.computedSignals)).toEqual(['s1', 's2']);
-    expect(Object.keys(initialStore.computedSignals)).toEqual([]);
+    expect(Object.keys(store.props)).toEqual(['s1', 's2']);
+    expect(Object.keys(initialStore.props)).toEqual([]);
 
-    expect(store.computedSignals.s1).toBe(s1);
-    expect(store.computedSignals.s2).toBe(s2);
+    expect(store.props.s1).toBe(s1);
+    expect(store.props.s2).toBe(s2);
   });
 
   it('logs warning if previously defined signal store members have the same name', () => {

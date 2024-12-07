@@ -6,6 +6,7 @@ import {
   withComputed,
   withHooks,
   withMethods,
+  withProps,
   withState,
 } from '../src';
 import { STATE_SOURCE } from '../src/state-source';
@@ -146,14 +147,54 @@ describe('signalStore', () => {
     });
   });
 
-  describe('withComputed', () => {
-    it('provides previously defined state slices and computed signals as input argument', () => {
+  describe('withProps', () => {
+    it('provides previously defined state slices and properties as input argument', () => {
       const Store = signalStore(
         withState(() => ({ foo: 'foo' })),
         withComputed(() => ({ bar: signal('bar').asReadonly() })),
-        withComputed(({ foo, bar }) => {
+        withProps(() => ({ num: 10 })),
+        withProps(({ foo, bar, num }) => {
           expect(foo()).toBe('foo');
           expect(bar()).toBe('bar');
+          expect(num).toBe(10);
+
+          return { baz: num + 1 };
+        })
+      );
+
+      const store = new Store();
+
+      expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo' });
+      expect(store.foo()).toBe('foo');
+      expect(store.bar()).toBe('bar');
+      expect(store.num).toBe(10);
+      expect(store.baz).toBe(11);
+    });
+
+    it('executes withProps factory in injection context', () => {
+      const TOKEN = new InjectionToken('TOKEN', {
+        providedIn: 'root',
+        factory: () => ({ foo: 'bar' }),
+      });
+      const Store = signalStore(withProps(() => inject(TOKEN)));
+
+      TestBed.configureTestingModule({ providers: [Store] });
+      const store = TestBed.inject(Store);
+
+      expect(store.foo).toBe('bar');
+    });
+  });
+
+  describe('withComputed', () => {
+    it('provides previously defined state slices and properties as input argument', () => {
+      const Store = signalStore(
+        withState(() => ({ foo: 'foo' })),
+        withComputed(() => ({ bar: signal('bar').asReadonly() })),
+        withProps(() => ({ num: 10 })),
+        withComputed(({ foo, bar, num }) => {
+          expect(foo()).toBe('foo');
+          expect(bar()).toBe('bar');
+          expect(num).toBe(10);
 
           return { baz: signal('baz').asReadonly() };
         })
@@ -164,6 +205,7 @@ describe('signalStore', () => {
       expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo' });
       expect(store.foo()).toBe('foo');
       expect(store.bar()).toBe('bar');
+      expect(store.num).toBe(10);
       expect(store.baz()).toBe('baz');
     });
 
@@ -187,11 +229,13 @@ describe('signalStore', () => {
         withState(() => ({ foo: 'foo' })),
         withComputed(() => ({ bar: signal('bar').asReadonly() })),
         withMethods(() => ({ baz: () => 'baz' })),
+        withProps(() => ({ num: 100 })),
         withMethods((store) => {
           expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo' });
           expect(store.foo()).toBe('foo');
           expect(store.bar()).toBe('bar');
           expect(store.baz()).toBe('baz');
+          expect(store.num).toBe(100);
 
           return { m: () => 'm' };
         })
@@ -203,6 +247,7 @@ describe('signalStore', () => {
       expect(store.foo()).toBe('foo');
       expect(store.bar()).toBe('bar');
       expect(store.baz()).toBe('baz');
+      expect(store.num).toBe(100);
       expect(store.m()).toBe('m');
     });
 
@@ -263,12 +308,14 @@ describe('signalStore', () => {
         withState(() => ({ foo: 'foo' })),
         withComputed(() => ({ bar: signal('bar').asReadonly() })),
         withMethods(() => ({ baz: () => 'baz' })),
+        withProps(() => ({ num: 10 })),
         withHooks({
           onInit(store) {
             expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo' });
             expect(store.foo()).toBe('foo');
             expect(store.bar()).toBe('bar');
             expect(store.baz()).toBe('baz');
+            expect(store.num).toBe(10);
             message = 'onInit';
           },
         })
@@ -285,11 +332,13 @@ describe('signalStore', () => {
         withState(() => ({ foo: 'foo' })),
         withComputed(() => ({ bar: signal('bar').asReadonly() })),
         withMethods(() => ({ baz: () => 'baz' })),
+        withProps(() => ({ num: 100 })),
         withHooks({
           onDestroy(store) {
             expect(store.foo()).toBe('foo');
             expect(store.bar()).toBe('bar');
             expect(store.baz()).toBe('baz');
+            expect(store.num).toBe(100);
             message = 'onDestroy';
           },
         })

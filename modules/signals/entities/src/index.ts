@@ -12,11 +12,11 @@ export { updateAllEntities } from './updaters/update-all-entities';
 
 export { entityConfig } from './entity-config';
 export {
-  EntityComputed,
   EntityId,
   EntityMap,
+  EntityProps,
   EntityState,
-  NamedEntityComputed,
+  NamedEntityProps,
   NamedEntityState,
   SelectEntityId,
 } from './models';

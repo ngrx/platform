@@ -7,7 +7,7 @@ The simplicity and flexibility of SignalStore, coupled with its opinionated and 
 ## Creating a Store
 
 A SignalStore is created using the `signalStore` function. This function accepts a sequence of store features.
-Through the combination of store features, the SignalStore gains state, computed signals, and methods, allowing for a flexible and extensible store implementation.
+Through the combination of store features, the SignalStore gains state, properties, and methods, allowing for a flexible and extensible store implementation.
 Based on the utilized features, the `signalStore` function returns an injectable service that can be provided and injected where needed.
 
 The `withState` feature is used to add state slices to the SignalStore.
@@ -141,11 +141,11 @@ export class BooksComponent {
 
 </code-example>
 
-## Defining Computed Signals
+## Defining Store Properties
 
 Computed signals can be added to the store using the `withComputed` feature.
 This feature accepts a factory function as an input argument, which is executed within the injection context.
-The factory should return a dictionary of computed signals, utilizing previously defined state and computed signals that are accessible through its input argument.
+The factory should return a dictionary of computed signals, utilizing previously defined state signals and properties that are accessible through its input argument.
 
 <code-example header="books.store.ts">
 
@@ -159,7 +159,7 @@ const initialState: BooksState = { /* ... */ };
 
 export const BooksStore = signalStore(
   withState(initialState),
-  // 👇 Accessing previously defined state and computed signals.
+  // 👇 Accessing previously defined state signals and properties.
   withComputed(({ books, filter }) => ({
     booksCount: computed(() => books().length),
     sortedBooks: computed(() => {
@@ -174,12 +174,19 @@ export const BooksStore = signalStore(
 
 </code-example>
 
+<div class="alert is-helpful">
+
+The `withProps` feature can be used to add static properties, observables, dependencies, and any other custom properties to a SignalStore.
+For more details, see the [Custom Store Properties](/guide/signals/signal-store/custom-store-properties) guide.
+
+</div>
+
 ## Defining Store Methods
 
 Methods can be added to the store using the `withMethods` feature.
 This feature takes a factory function as an input argument and returns a dictionary of methods.
 Similar to `withComputed`, the `withMethods` factory is also executed within the injection context.
-The store instance, including previously defined state, computed signals, and methods, is accessible through the factory input.
+The store instance, including previously defined state signals, properties, and methods, is accessible through the factory input.
 
 <code-example header="books.store.ts">
 
@@ -200,8 +207,8 @@ const initialState: BooksState = { /* ... */ };
 export const BooksStore = signalStore(
   withState(initialState),
   withComputed(/* ... */),
-  // 👇 Accessing a store instance with previously defined state,
-  // computed signals, and methods.
+  // 👇 Accessing a store instance with previously defined state signals,
+  // properties, and methods.
   withMethods((store) => ({
     updateQuery(query: string): void {
       // 👇 Updating state using the `patchState` function.

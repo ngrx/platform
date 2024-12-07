@@ -13,12 +13,12 @@ export type NamedEntityState<Entity, Collection extends string> = {
   [K in keyof EntityState<Entity> as `${Collection}${Capitalize<K>}`]: EntityState<Entity>[K];
 };
 
-export type EntityComputed<Entity> = {
+export type EntityProps<Entity> = {
   entities: Signal<Entity[]>;
 };
 
-export type NamedEntityComputed<Entity, Collection extends string> = {
-  [K in keyof EntityComputed<Entity> as `${Collection}${Capitalize<K>}`]: EntityComputed<Entity>[K];
+export type NamedEntityProps<Entity, Collection extends string> = {
+  [K in keyof EntityProps<Entity> as `${Collection}${Capitalize<K>}`]: EntityProps<Entity>[K];
 };
 
 export type SelectEntityId<Entity> = (entity: Entity) => EntityId;
