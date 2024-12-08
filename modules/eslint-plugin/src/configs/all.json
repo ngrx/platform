@@ -4,6 +4,7 @@
   "rules": {
     "@ngrx/avoid-combining-component-store-selectors": "error",
     "@ngrx/avoid-mapping-component-store-selectors": "error",
+    "@ngrx/require-super-ondestroy": "error",
     "@ngrx/updater-explicit-return-type": "error",
     "@ngrx/avoid-cyclic-effects": "error",
     "@ngrx/no-dispatch-in-effects": "error",
@@ -13,9 +14,9 @@
     "@ngrx/prefer-effect-callback-in-block-statement": "error",
     "@ngrx/use-effects-lifecycle-interface": "error",
     "@ngrx/prefer-concat-latest-from": "error",
+    "@ngrx/prefer-protected-state": "error",
     "@ngrx/signal-state-no-arrays-at-root-level": "error",
     "@ngrx/signal-store-feature-should-use-generic-type": "error",
-    "@ngrx/prefer-protected-state": "error",
     "@ngrx/with-state-no-arrays-at-root-level": "error",
     "@ngrx/avoid-combining-selectors": "error",
     "@ngrx/avoid-dispatching-multiple-actions-sequentially": "error",

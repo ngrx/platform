@@ -30,9 +30,9 @@ export default (
       },
     },
     rules: {
+      '@ngrx/prefer-protected-state': 'error',
       '@ngrx/signal-state-no-arrays-at-root-level': 'error',
       '@ngrx/signal-store-feature-should-use-generic-type': 'error',
-      '@ngrx/prefer-protected-state': 'error',
       '@ngrx/with-state-no-arrays-at-root-level': 'error',
     },
   },
