@@ -62,6 +62,18 @@ class BooksStore extends ComponentStore<BooksState> implements OnDestroy
     this.cleanUp();
   }
 }`,
+  `
+import { ComponentStore } from '../components/component-store';
+
+class BooksStore extends ComponentStore implements OnDestroy
+{
+  cleanUp() {}
+
+  override ngOnDestroy(): void {
+    this.cleanUp();
+    super.ngOnDestroy();
+  }
+}`,
 ];
 
 const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
@@ -100,6 +112,18 @@ class BooksStore extends ComponentStore<BooksState> implements OnDestroy {
   override ngOnDestroy(): void {
            ~~~~~~~~~~~ [${messageId}]
     super.get();
+  }
+}`),
+  fromFixture(`
+import { ComponentStore } from '../components/component-store';
+
+class BooksStore extends ComponentStore implements OnDestroy
+{
+  cleanUp() {}
+
+  override ngOnDestroy(): void {
+           ~~~~~~~~~~~ [${messageId}]
+    this.cleanUp();
   }
 }`),
 ];
