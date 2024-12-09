@@ -34,7 +34,7 @@ import { CommonModule } from '@angular/common';
     &lt;/li&gt;
   `,
   standalone: true,
-  imports: [CommonModule, MoviesService],
+  imports: [CommonModule],
 })
 export class MoviesPageComponent {
   private moviesService = inject(MoviesService);
