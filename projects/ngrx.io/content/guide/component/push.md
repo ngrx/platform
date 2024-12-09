@@ -15,7 +15,6 @@ import { PushPipe } from '@ngrx/component';
 
 @Component({
   // ... other metadata
-  standalone: true,
   imports: [
     // ... other imports
     PushPipe,
