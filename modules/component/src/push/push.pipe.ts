@@ -36,7 +36,6 @@ type PushPipeResult<PO> = PotentialObservableResult<PO, undefined>;
  * @publicApi
  */
 @Pipe({
-  standalone: true,
   name: 'ngrxPush',
   pure: false,
 })
