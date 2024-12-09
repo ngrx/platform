@@ -119,7 +119,6 @@ import { JsonPipe } from '@angular/common';
 import { BooksStore } from './books.store';
 
 @Component({
-  standalone: true,
   imports: [JsonPipe],
   template: `
     &lt;p&gt;Books: {{ store.books() | json }}&lt;/p&gt;
@@ -445,7 +444,6 @@ import { BookListComponent } from './book-list.component';
 import { BooksStore } from './books.store';
 
 @Component({
-  standalone: true,
   imports: [BooksFilterComponent, BookListComponent],
   template: `
     &lt;h1&gt;Books ({{ store.booksCount() }})&lt;/h1&gt;

@@ -129,7 +129,6 @@ import { signalState, patchState } from '@ngrx/signals';
 
 @Component({
   selector: 'ngrx-counter',
-  standalone: true,
   template: `
     &lt;p&gt;Count: {{ state.count() }}&lt;/p&gt;
 
@@ -211,7 +210,6 @@ import { BooksStore } from './books.store';
 
 @Component({
   selector: 'ngrx-books',
-  standalone: true,
   template: `
     &lth1&gt;Books&lt;/h1&gt;
   
