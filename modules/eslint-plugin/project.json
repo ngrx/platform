@@ -1,29 +1,9 @@
 {
   "name": "eslint-plugin",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "modules/eslint-plugin/src",
   "projectType": "library",
-  "generators": {},
+  "sourceRoot": "modules/eslint-plugin/src",
   "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "modules/eslint-plugin/*/**/*.ts",
-          "modules/eslint-plugin/*/**/*.html"
-        ]
-      },
-      "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "options": {
-        "jestConfig": "modules/eslint-plugin/jest.config.ts",
-        "runInBand": true,
-        "passWithNoTests": false
-      },
-      "outputs": ["{workspaceRoot}/coverage/modules/eslint-plugin"]
-    },
     "build-package": {
       "executor": "@nx/js:tsc",
       "options": {
@@ -31,6 +11,8 @@
         "tsConfig": "modules/eslint-plugin/tsconfig.build.json",
         "packageJson": "modules/eslint-plugin/package.json",
         "main": "modules/eslint-plugin/src/index.ts",
+        "additionalEntryPoints": ["modules/eslint-plugin/v9/index.ts"],
+        "generateExportsField": true,
         "updateBuildableProjectDepsInPackageJson": false,
         "sourceMap": false,
         "assets": [
@@ -73,6 +55,25 @@
         ]
       },
       "outputs": ["{workspaceRoot}/dist/modules/eslint-plugin"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "modules/eslint-plugin/jest.config.ts",
+        "runInBand": true,
+        "passWithNoTests": false
+      },
+      "outputs": ["{workspaceRoot}/coverage/modules/eslint-plugin"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": [
+          "modules/eslint-plugin/*/**/*.ts",
+          "modules/eslint-plugin/*/**/*.html"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
     }
   },
   "tags": []

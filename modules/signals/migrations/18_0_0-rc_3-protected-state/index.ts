@@ -6,6 +6,7 @@ import {
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
 import { commitChanges } from '../../schematics-core';
+import { visitImportDeclaration } from '../../schematics-core/utility/visitors';
 
 export default function migrateWritableStateSource(): Rule {
   return (tree: Tree, ctx: SchematicContext) => {
@@ -86,19 +87,6 @@ function visitCallExpression(
 
   ts.forEachChild(node, (child) => {
     visitCallExpression(child, name, callback);
-  });
-}
-
-function visitImportDeclaration(
-  node: ts.Node,
-  callback: (importDeclaration: ts.ImportDeclaration) => void
-) {
-  if (ts.isImportDeclaration(node)) {
-    callback(node);
-  }
-
-  ts.forEachChild(node, (child) => {
-    visitImportDeclaration(child, callback);
   });
 }
 
