@@ -1,13 +1,19 @@
+type NonRecord =
+  | Iterable<any>
+  | WeakSet<any>
+  | WeakMap<any, any>
+  | Promise<any>
+  | Date
+  | Error
+  | RegExp
+  | ArrayBuffer
+  | DataView
+  | Function;
+
 export type Prettify<T> = { [K in keyof T]: T[K] } & {};
 
 export type IsRecord<T> = T extends object
-  ? T extends unknown[]
-    ? false
-    : T extends Set<unknown>
-    ? false
-    : T extends Map<unknown, unknown>
-    ? false
-    : T extends Function
+  ? T extends NonRecord
     ? false
     : true
   : false;

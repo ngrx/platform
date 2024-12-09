@@ -46,6 +46,38 @@ export function toDeepSignal<T>(signal: Signal<T>): DeepSignal<T> {
   });
 }
 
+const nonRecords = [
+  WeakSet,
+  WeakMap,
+  Promise,
+  Date,
+  Error,
+  RegExp,
+  ArrayBuffer,
+  DataView,
+  Function,
+];
+
 function isRecord(value: unknown): value is Record<string, unknown> {
-  return value?.constructor === Object;
+  if (value === null || typeof value !== 'object' || isIterable(value)) {
+    return false;
+  }
+
+  let proto = Object.getPrototypeOf(value);
+  if (proto === Object.prototype) {
+    return true;
+  }
+
+  while (proto && proto !== Object.prototype) {
+    if (nonRecords.includes(proto.constructor)) {
+      return false;
+    }
+    proto = Object.getPrototypeOf(proto);
+  }
+
+  return proto === Object.prototype;
+}
+
+function isIterable(value: any): value is Iterable<any> {
+  return typeof value?.[Symbol.iterator] === 'function';
 }
