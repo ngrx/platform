@@ -46,8 +46,20 @@ export function toDeepSignal<T>(signal: Signal<T>): DeepSignal<T> {
   });
 }
 
+const nonRecords = [
+  WeakSet,
+  WeakMap,
+  Promise,
+  Date,
+  Error,
+  RegExp,
+  ArrayBuffer,
+  DataView,
+  Function,
+];
+
 function isRecord(value: unknown): value is Record<string, unknown> {
-  if (value === null || typeof value !== 'object') {
+  if (value === null || typeof value !== 'object' || isIterable(value)) {
     return false;
   }
 
@@ -57,15 +69,15 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   }
 
   while (proto && proto !== Object.prototype) {
-    if (
-      [Array, Set, Map, Date, Error, RegExp, Function].includes(
-        proto.constructor
-      )
-    ) {
+    if (nonRecords.includes(proto.constructor)) {
       return false;
     }
     proto = Object.getPrototypeOf(proto);
   }
 
   return proto === Object.prototype;
+}
+
+function isIterable(value: any): value is Iterable<any> {
+  return typeof value?.[Symbol.iterator] === 'function';
 }

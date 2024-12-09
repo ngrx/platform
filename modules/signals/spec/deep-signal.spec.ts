@@ -1,5 +1,5 @@
-import { toDeepSignal } from '../src/deep-signal';
 import { isSignal, signal } from '@angular/core';
+import { toDeepSignal } from '../src/deep-signal';
 
 describe('toDeepSignal', () => {
   it('creates deep signals for plain objects', () => {
@@ -56,27 +56,53 @@ describe('toDeepSignal', () => {
     expect(deepBool).toBe(bool);
   });
 
-  it('does not create deep signals for built-in object types', () => {
+  it('does not create deep signals for iterables', () => {
     const array = signal([]);
     const set = signal(new Set());
     const map = signal(new Map());
-    const date = signal(new Date());
-    const error = signal(new Error());
-    const regExp = signal(new RegExp(''));
+    const uintArray = signal(new Uint32Array());
+    const floatArray = signal(new Float64Array());
 
     const deepArray = toDeepSignal(array);
     const deepSet = toDeepSignal(set);
     const deepMap = toDeepSignal(map);
-    const deepDate = toDeepSignal(date);
-    const deepError = toDeepSignal(error);
-    const deepRegExp = toDeepSignal(regExp);
+    const deepUintArray = toDeepSignal(uintArray);
+    const deepFloatArray = toDeepSignal(floatArray);
 
     expect(deepArray).toBe(array);
     expect(deepSet).toBe(set);
     expect(deepMap).toBe(map);
+    expect(deepUintArray).toBe(uintArray);
+    expect(deepFloatArray).toBe(floatArray);
+  });
+
+  it('does not create deep signals for built-in object types', () => {
+    const weakSet = signal(new WeakSet());
+    const weakMap = signal(new WeakMap());
+    const promise = signal(Promise.resolve(10));
+    const date = signal(new Date());
+    const error = signal(new Error());
+    const regExp = signal(new RegExp(''));
+    const arrayBuffer = signal(new ArrayBuffer(10));
+    const dataView = signal(new DataView(new ArrayBuffer(10)));
+
+    const deepWeakSet = toDeepSignal(weakSet);
+    const deepWeakMap = toDeepSignal(weakMap);
+    const deepPromise = toDeepSignal(promise);
+    const deepDate = toDeepSignal(date);
+    const deepError = toDeepSignal(error);
+    const deepRegExp = toDeepSignal(regExp);
+    const deepArrayBuffer = toDeepSignal(arrayBuffer);
+    const deepDataView = toDeepSignal(dataView);
+
+    expect(deepWeakSet).toBe(weakSet);
+    expect(deepWeakMap).toBe(weakMap);
+    expect(deepPromise).toBe(promise);
     expect(deepDate).toBe(date);
     expect(deepError).toBe(error);
     expect(deepRegExp).toBe(regExp);
+    expect(deepArrayBuffer).toBe(arrayBuffer);
+    expect(deepDataView).toBe(dataView);
   });
 
   it('does not create deep signals for functions', () => {
@@ -93,21 +119,43 @@ describe('toDeepSignal', () => {
     expect(deepFn3).toBe(fn3);
   });
 
-  it('does not create deep signals for custom class instances that extend built-in object types', () => {
+  it('does not create deep signals for custom class instances that are iterables', () => {
     class CustomArray extends Array {}
+
     class CustomSet extends Set {}
-    class CustomError extends Error {}
+
+    class CustomFloatArray extends Float32Array {}
 
     const array = signal(new CustomArray());
+    const floatArray = signal(new CustomFloatArray());
     const set = signal(new CustomSet());
-    const error = signal(new CustomError());
 
     const deepArray = toDeepSignal(array);
+    const deepFloatArray = toDeepSignal(floatArray);
     const deepSet = toDeepSignal(set);
-    const deepError = toDeepSignal(error);
 
     expect(deepArray).toBe(array);
+    expect(deepFloatArray).toBe(floatArray);
     expect(deepSet).toBe(set);
+  });
+
+  it('does not create deep signals for custom class instances that extend built-in object types', () => {
+    class CustomWeakMap extends WeakMap {}
+
+    class CustomError extends Error {}
+
+    class CustomArrayBuffer extends ArrayBuffer {}
+
+    const weakMap = signal(new CustomWeakMap());
+    const error = signal(new CustomError());
+    const arrayBuffer = signal(new CustomArrayBuffer(10));
+
+    const deepWeakMap = toDeepSignal(weakMap);
+    const deepError = toDeepSignal(error);
+    const deepArrayBuffer = toDeepSignal(arrayBuffer);
+
+    expect(deepWeakMap).toBe(weakMap);
     expect(deepError).toBe(error);
+    expect(deepArrayBuffer).toBe(arrayBuffer);
   });
 });

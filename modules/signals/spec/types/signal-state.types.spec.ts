@@ -118,91 +118,83 @@ describe('signalState', () => {
     expectSnippet(snippet).toInfer('set', 'Signal<Set<{ foo: number; }>>');
   });
 
-  it('does not create deep signals for an array', () => {
+  it('does not create deep signals for iterables', () => {
     const snippet = `
-      const state = signalState<string[]>([]);
-      declare const stateKeys: keyof typeof state;
+      const arrayState = signalState<string[]>([]);
+      declare const arrayStateKeys: keyof typeof arrayState;
+
+      const setState = signalState(new Set<number>());
+      declare const setStateKeys: keyof typeof setState;
+
+      const mapState = signalState(new Map<number, { bar: boolean }>());
+      declare const mapStateKeys: keyof typeof mapState;
+
+      const uintArrayState = signalState(new Uint8ClampedArray());
+      declare const uintArrayStateKeys: keyof typeof uintArrayState;
     `;
 
     expectSnippet(snippet).toSucceed();
 
     expectSnippet(snippet).toInfer(
-      'stateKeys',
+      'arrayStateKeys',
       'unique symbol | keyof Signal<string[]>'
     );
-  });
-
-  it('does not create deep signals for Set', () => {
-    const snippet = `
-      const state = signalState(new Set<number>());
-      declare const stateKeys: keyof typeof state;
-    `;
-
-    expectSnippet(snippet).toSucceed();
 
     expectSnippet(snippet).toInfer(
-      'stateKeys',
+      'setStateKeys',
       'unique symbol | keyof Signal<Set<number>>'
     );
-  });
-
-  it('does not create deep signals for Map', () => {
-    const snippet = `
-      const state = signalState(new Map<number, { bar: boolean }>());
-      declare const stateKeys: keyof typeof state;
-    `;
-
-    expectSnippet(snippet).toSucceed();
 
     expectSnippet(snippet).toInfer(
-      'stateKeys',
+      'mapStateKeys',
       'unique symbol | keyof Signal<Map<number, { bar: boolean; }>>'
     );
+
+    expectSnippet(snippet).toInfer(
+      'uintArrayStateKeys',
+      'unique symbol | keyof Signal<Uint8ClampedArray>'
+    );
   });
 
-  it('does not create deep signals for Date', () => {
+  it('does not create deep signals for built-in object types', () => {
     const snippet = `
-      const state = signalState(new Date());
-      declare const stateKeys: keyof typeof state;
+      const weakSetState = signalState(new WeakSet<{ foo: string }>());
+      declare const weakSetStateKeys: keyof typeof weakSetState;
+
+      const dateState = signalState(new Date());
+      declare const dateStateKeys: keyof typeof dateState;
+
+      const errorState = signalState(new Error());
+      declare const errorStateKeys: keyof typeof errorState;
+
+      const regExpState = signalState(new RegExp(''));
+      declare const regExpStateKeys: keyof typeof regExpState;
     `;
 
     expectSnippet(snippet).toSucceed();
 
     expectSnippet(snippet).toInfer(
-      'stateKeys',
+      'weakSetStateKeys',
+      'unique symbol | keyof Signal<WeakSet<{ foo: string; }>>'
+    );
+
+    expectSnippet(snippet).toInfer(
+      'dateStateKeys',
       'unique symbol | keyof Signal<Date>'
     );
-  });
-
-  it('does not create deep signals for Error', () => {
-    const snippet = `
-      const state = signalState(new Error());
-      declare const stateKeys: keyof typeof state;
-    `;
-
-    expectSnippet(snippet).toSucceed();
 
     expectSnippet(snippet).toInfer(
-      'stateKeys',
+      'errorStateKeys',
       'unique symbol | keyof Signal<Error>'
     );
-  });
-
-  it('does not create deep signals for RegExp', () => {
-    const snippet = `
-      const state = signalState(new RegExp(''));
-      declare const stateKeys: keyof typeof state;
-    `;
-
-    expectSnippet(snippet).toSucceed();
 
     expectSnippet(snippet).toInfer(
-      'stateKeys',
+      'regExpStateKeys',
       'unique symbol | keyof Signal<RegExp>'
     );
   });
 
-  it('does not create deep signals for Function', () => {
+  it('does not create deep signals for functions', () => {
     const snippet = `
       const state = signalState(() => {});
       declare const stateKeys: keyof typeof state;
