@@ -27,6 +27,7 @@ export default (
     rules: {
       '@ngrx/avoid-combining-component-store-selectors': 'error',
       '@ngrx/avoid-mapping-component-store-selectors': 'error',
+      '@ngrx/require-super-ondestroy': 'error',
       '@ngrx/updater-explicit-return-type': 'error',
     },
   },
