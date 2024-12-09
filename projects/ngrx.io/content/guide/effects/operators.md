@@ -17,7 +17,7 @@ The `ofType` operator takes up to 5 arguments with proper type inference. It can
 take even more, however the type would be inferred as an `Action` interface.
 
 <code-example header="auth.effects.ts">
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map } from 'rxjs/operators';
@@ -30,8 +30,11 @@ import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthEffects {
-  login$ = createEffect(() =>
-    this.actions$.pipe(
+  private actions$ = inject(Actions);
+  private authService = inject(AuthService);
+
+  login$ = createEffect(() => {
+    return this.actions$.pipe(
       // Filters by Action Creator 'login'
       ofType(LoginPageActions.login),
       exhaustMap(action =>
@@ -40,12 +43,7 @@ export class AuthEffects {
           catchError(error => of(AuthApiActions.loginFailure({ error })))
         )
       )
-    )
-  );
-
-  constructor(
-    private actions$: Actions,
-    private authService: AuthService
-  ) {}
+    );
+  });
 }
 </code-example>
