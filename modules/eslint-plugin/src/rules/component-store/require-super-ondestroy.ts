@@ -24,11 +24,23 @@ export default createRule<Options, MessageIds>({
   defaultOptions: [],
   create: (context) => {
     const ngOnDestroyMethodSelector = `MethodDefinition[key.name='ngOnDestroy']`;
+    const componentStoreClassName = 'ComponentStore';
+
+    let hasNgrxComponentStoreImport = false;
 
     return {
-      [`ClassDeclaration[superClass.name=ComponentStore] ${ngOnDestroyMethodSelector}:not(:has(CallExpression[callee.object.type='Super'][callee.property.name='ngOnDestroy'])) > .key`](
+      [`ImportDeclaration[source.value='@ngrx/component-store'] ImportSpecifier[imported.name='${componentStoreClassName}']`](
+        _: TSESTree.ImportSpecifier
+      ) {
+        hasNgrxComponentStoreImport = true;
+      },
+      [`ClassDeclaration[superClass.name=${componentStoreClassName}] ${ngOnDestroyMethodSelector}:not(:has(CallExpression[callee.object.type='Super'][callee.property.name='ngOnDestroy'])) > .key`](
         node: TSESTree.Identifier
       ) {
+        if (!hasNgrxComponentStoreImport) {
+          return;
+        }
+
         context.report({
           node,
           messageId,

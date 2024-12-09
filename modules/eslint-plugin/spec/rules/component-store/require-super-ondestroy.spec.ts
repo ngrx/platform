@@ -71,7 +71,6 @@ class BooksStore extends ComponentStore implements OnDestroy
 
   override ngOnDestroy(): void {
     this.cleanUp();
-    super.ngOnDestroy();
   }
 }`,
 ];
@@ -112,18 +111,6 @@ class BooksStore extends ComponentStore<BooksState> implements OnDestroy {
   override ngOnDestroy(): void {
            ~~~~~~~~~~~ [${messageId}]
     super.get();
-  }
-}`),
-  fromFixture(`
-import { ComponentStore } from '../components/component-store';
-
-class BooksStore extends ComponentStore implements OnDestroy
-{
-  cleanUp() {}
-
-  override ngOnDestroy(): void {
-           ~~~~~~~~~~~ [${messageId}]
-    this.cleanUp();
   }
 }`),
 ];
