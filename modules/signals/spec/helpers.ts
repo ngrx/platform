@@ -9,7 +9,6 @@ export function createLocalService<Service extends Type<unknown>>(
   destroy: () => void;
 } {
   @Component({
-    standalone: true,
     template: '',
     providers: [serviceToken],
   })
