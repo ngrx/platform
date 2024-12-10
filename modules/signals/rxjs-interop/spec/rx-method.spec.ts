@@ -242,7 +242,6 @@ describe('rxMethod', () => {
     @Component({
       selector: 'app-without-store',
       template: '',
-      standalone: true,
     })
     class WithoutStoreComponent {}
 
@@ -267,7 +266,6 @@ describe('rxMethod', () => {
       @Component({
         selector: 'app-with-store',
         template: '',
-        standalone: true,
       })
       class WithStoreComponent {
         store = inject(GlobalService);
@@ -304,7 +302,6 @@ describe('rxMethod', () => {
       @Component({
         selector: 'app-with-store',
         template: '',
-        standalone: true,
       })
       class WithStoreComponent {
         store = inject(GlobalService);
@@ -335,7 +332,6 @@ describe('rxMethod', () => {
       @Component({
         selector: 'app-with-store',
         template: '',
-        standalone: true,
       })
       class WithStoreComponent implements OnInit {
         store = inject(GlobalService);
@@ -369,7 +365,6 @@ describe('rxMethod', () => {
       @Component({
         selector: 'app-with-store',
         template: '',
-        standalone: true,
       })
       class WithStoreComponent implements OnInit {
         store = inject(GlobalService);
@@ -399,7 +394,6 @@ describe('rxMethod', () => {
       @Component({
         selector: 'app-with-store',
         template: '',
-        standalone: true,
       })
       class WithStoreComponent implements OnInit {
         store = inject(GlobalService);

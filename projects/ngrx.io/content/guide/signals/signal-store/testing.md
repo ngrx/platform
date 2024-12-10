@@ -448,7 +448,6 @@ The `MovieComponent` utilizes the `MoviesStore` to display movies:
       }
     &lt;/ul&gt;
   `,
-  standalone: true,
   imports: [FormsModule],
 })
 export class MoviesComponent {
