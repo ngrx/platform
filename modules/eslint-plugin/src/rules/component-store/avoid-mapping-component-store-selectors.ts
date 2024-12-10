@@ -2,8 +2,7 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import * as path from 'path';
 import { createRule } from '../../rule-creator';
 import {
-  asPattern,
-  getNgRxComponentStores,
+  getNgrxComponentStoreNames,
   namedCallableExpression,
 } from '../../utils';
 
@@ -27,8 +26,7 @@ export default createRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: (context) => {
-    const { identifiers = [] } = getNgRxComponentStores(context);
-    const storeNames = identifiers.length > 0 ? asPattern(identifiers) : null;
+    const storeNames = getNgrxComponentStoreNames(context);
 
     const mapOperatorSelector = `[callee.property.name=pipe] > CallExpression[callee.name=map]`;
     const selectors = [

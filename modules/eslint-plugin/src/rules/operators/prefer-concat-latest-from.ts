@@ -61,7 +61,7 @@ export default createRule<Options, MessageIds>({
           context.report({
             node,
             messageId,
-            fix: (fixer) => getFixes(context.getSourceCode(), fixer, node),
+            fix: (fixer) => getFixes(context.sourceCode, fixer, node),
           });
         },
       };
