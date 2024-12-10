@@ -24,7 +24,7 @@ In a service-based application, your components interact with data through many 
 Imagine that your application manages movies. Here is a component that fetches and displays a list of movies.
 
 <code-example header="movies-page.component.ts">
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -33,12 +33,11 @@ import { CommonModule } from '@angular/common';
       {{ movie.name }}
     &lt;/li&gt;
   `,
-  standalone: true,
   imports: [CommonModule],
 })
-export class MoviesPageComponent {
+export class MoviesPageComponent implements OnInit {
   private moviesService = inject(MoviesService);
-  protected movies: Movie[];
+  protected movies: Movie[] = [];
 
   ngOnInit() {
     this.movieService.getAll()
@@ -77,7 +76,7 @@ The component has multiple responsibilities:
 Effects handle external data and interactions, allowing your services to be less stateful and only perform tasks related to external interactions. Next, refactor the component to put the shared movie data in the `Store`. Effects handle the fetching of movie data.
 
 <code-example header="movies-page.component.ts">
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -86,7 +85,6 @@ import { CommonModule } from '@angular/common';
       {{ movie.name }}
     &lt;/div&gt;
   `,
-  standalone: true,
   imports: [CommonModule],
 })
 export class MoviesPageComponent implements OnInit {
