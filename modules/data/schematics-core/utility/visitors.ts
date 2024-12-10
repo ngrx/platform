@@ -198,6 +198,86 @@ export function visitDecorator(
   });
 }
 
+export function visitImportDeclaration(
+  node: ts.Node,
+  callback: (
+    importDeclaration: ts.ImportDeclaration,
+    moduleName?: string
+  ) => void
+) {
+  if (ts.isImportDeclaration(node)) {
+    const moduleSpecifier = node.moduleSpecifier.getText();
+    const moduleName = moduleSpecifier.replaceAll('"', '').replaceAll("'", '');
+
+    callback(node, moduleName);
+  }
+
+  ts.forEachChild(node, (child) => {
+    visitImportDeclaration(child, callback);
+  });
+}
+
+export function visitImportSpecifier(
+  node: ts.ImportDeclaration,
+  callback: (importSpecifier: ts.ImportSpecifier) => void
+) {
+  const { importClause } = node;
+  if (!importClause) {
+    return;
+  }
+
+  const importClauseChildren = importClause.getChildren();
+  for (const namedImport of importClauseChildren) {
+    if (ts.isNamedImports(namedImport)) {
+      const namedImportChildren = namedImport.elements;
+      for (const importSpecifier of namedImportChildren) {
+        if (ts.isImportSpecifier(importSpecifier)) {
+          callback(importSpecifier);
+        }
+      }
+    }
+  }
+}
+
+export function visitTypeReference(
+  node: ts.Node,
+  callback: (typeReference: ts.TypeReferenceNode) => void
+) {
+  if (ts.isTypeReferenceNode(node)) {
+    callback(node);
+  }
+
+  ts.forEachChild(node, (child) => {
+    visitTypeReference(child, callback);
+  });
+}
+
+export function visitTypeLiteral(
+  node: ts.Node,
+  callback: (typeLiteral: ts.TypeLiteralNode) => void
+) {
+  if (ts.isTypeLiteralNode(node)) {
+    callback(node);
+  }
+
+  ts.forEachChild(node, (child) => {
+    visitTypeLiteral(child, callback);
+  });
+}
+
+export function visitCallExpression(
+  node: ts.Node,
+  callback: (callExpression: ts.CallExpression) => void
+) {
+  if (ts.isCallExpression(node)) {
+    callback(node);
+  }
+
+  ts.forEachChild(node, (child) => {
+    visitCallExpression(child, callback);
+  });
+}
+
 function* visit(directory: DirEntry): IterableIterator<ts.SourceFile> {
   for (const path of directory.subfiles) {
     if (path.endsWith('.ts') && !path.endsWith('.d.ts')) {

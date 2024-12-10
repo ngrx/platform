@@ -163,33 +163,63 @@ describe('signalStore', () => {
     expectSnippet(snippet).toInfer('set', 'Signal<Set<number>>');
   });
 
-  it('does not create deep signals when state type is an array', () => {
+  it('does not create deep signals when state type is an iterable', () => {
     const snippet = `
-      const Store = signalStore(withState<number[]>([]));
-      const store = new Store();
-      declare const storeKeys: keyof typeof store;
+      const ArrayStore = signalStore(withState<number[]>([]));
+      const arrayStore = new ArrayStore();
+      declare const arrayStoreKeys: keyof typeof arrayStore;
+
+      const SetStore = signalStore(withState(new Set<{ foo: string }>()));
+      const setStore = new SetStore();
+      declare const setStoreKeys: keyof typeof setStore;
+
+      const MapStore = signalStore(withState(new Map<string, { foo: number }>()));
+      const mapStore = new MapStore();
+      declare const mapStoreKeys: keyof typeof mapStore;
+
+      const FloatArrayStore = signalStore(withState(new Float32Array()));
+      const floatArrayStore = new FloatArrayStore();
+      declare const floatArrayStoreKeys: keyof typeof floatArrayStore;
     `;
 
     expectSnippet(snippet).toSucceed();
 
-    expectSnippet(snippet).toInfer('storeKeys', 'unique symbol');
+    expectSnippet(snippet).toInfer('arrayStoreKeys', 'unique symbol');
+    expectSnippet(snippet).toInfer('setStoreKeys', 'unique symbol');
+    expectSnippet(snippet).toInfer('mapStoreKeys', 'unique symbol');
+    expectSnippet(snippet).toInfer('floatArrayStoreKeys', 'unique symbol');
   });
 
-  it('does not create deep signals when state type is Map', () => {
+  it('does not create deep signals when state type is a built-in object type', () => {
     const snippet = `
-      const Store = signalStore(withState(new Map<string, { foo: number }>()));
-      const store = new Store();
-      declare const storeKeys: keyof typeof store;
+      const WeakMapStore = signalStore(withState(new WeakMap<{ foo: string }, { bar: number }>()));
+      const weakMapStore = new WeakMapStore();
+      declare const weakMapStoreKeys: keyof typeof weakMapStore;
+
+      const DateStore = signalStore(withState(new Date()));
+      const dateStore = new DateStore();
+      declare const dateStoreKeys: keyof typeof dateStore;
+
+      const ErrorStore = signalStore(withState(new Error()));
+      const errorStore = new ErrorStore();
+      declare const errorStoreKeys: keyof typeof errorStore;
+
+      const RegExpStore = signalStore(withState(new RegExp('')));
+      const regExpStore = new RegExpStore();
+      declare const regExpStoreKeys: keyof typeof regExpStore;
     `;
 
     expectSnippet(snippet).toSucceed();
 
-    expectSnippet(snippet).toInfer('storeKeys', 'unique symbol');
+    expectSnippet(snippet).toInfer('weakMapStoreKeys', 'unique symbol');
+    expectSnippet(snippet).toInfer('dateStoreKeys', 'unique symbol');
+    expectSnippet(snippet).toInfer('errorStoreKeys', 'unique symbol');
+    expectSnippet(snippet).toInfer('regExpStoreKeys', 'unique symbol');
   });
 
-  it('does not create deep signals when state type is Set', () => {
+  it('does not create deep signals when state type is a function', () => {
     const snippet = `
-      const Store = signalStore(withState(new Set<{ foo: string }>()));
+      const Store = signalStore(withState(() => () => {}));
       const store = new Store();
       declare const storeKeys: keyof typeof store;
     `;

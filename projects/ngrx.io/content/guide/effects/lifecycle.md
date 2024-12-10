@@ -6,12 +6,12 @@ After all the root effects have been added, the root effect dispatches a `ROOT_E
 You can see this action as a lifecycle hook, which you can use in order to execute some code after all your root effects have been added.
 
 <code-example header="init.effects.ts">
-init$ = createEffect(() => 
-  this.actions$.pipe(
+init$ = createEffect(() => {
+  return this.actions$.pipe(
     ofType(ROOT_EFFECTS_INIT),
     map(action => ...)
-  )
-);
+  );
+});
 </code-example>
 
 ## Effect Metadata
@@ -23,18 +23,19 @@ Sometimes you don't want effects to dispatch an action, for example when you onl
 Usage:
 
 <code-example header="log.effects.ts">
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class LogEffects {
-  constructor(private actions$: Actions) {}
+  private actions$ = inject(Actions);
   
-  logActions$ = createEffect(() =>
-    this.actions$.pipe(
-      tap(action => console.log(action))
-    ), { dispatch: false });
+  logActions$ = createEffect(() => {
+    return this.actions$.pipe(
+        tap(action => console.log(action))
+    );
+    }, { dispatch: false });
 }
 </code-example>
 
@@ -57,7 +58,7 @@ To disable resubscriptions add `{useEffectsErrorHandler: false}` to the `createE
 metadata (second argument).
 
 <code-example header="disable-resubscribe.effects.ts">
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map } from 'rxjs/operators';
@@ -69,9 +70,12 @@ import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthEffects {
+  private actions$ = inject(Actions);
+  private authService = inject(AuthService);
+
   logins$ = createEffect(
-    () =>
-      this.actions$.pipe(
+    () => {
+      return this.actions$.pipe(
         ofType(LoginPageActions.login),
         exhaustMap(action =>
           this.authService.login(action.credentials).pipe(
@@ -80,14 +84,10 @@ export class AuthEffects {
           )
         )
         // Errors are handled and it is safe to disable resubscription
-      ),
+      );
+    },
     { useEffectsErrorHandler: false }
   );
-
-  constructor(
-    private actions$: Actions,
-    private authService: AuthService
-  ) {}
 }
 </code-example>
 
@@ -109,10 +109,10 @@ import { EffectsModule, EFFECTS_ERROR_HANDLER } from '@ngrx/effects';
 import { MoviesEffects } from './effects/movies.effects';
 import { CustomErrorHandler, isRetryable } from '../custom-error-handler';
 
-export function effectResubscriptionHandler&gt;T extends Action&lt;(
-  observable$: Observable&gt;T&lt;,
+export function effectResubscriptionHandler&lt;T extends Action&gt;(
+  observable$: Observable&lt;T&gt;,
   errorHandler?: CustomErrorHandler
-): Observable&gt;T&lt; {
+): Observable&lt;T&gt; {
   return observable$.pipe(
     retryWhen(errors =>
       errors.pipe(
@@ -129,19 +129,21 @@ export function effectResubscriptionHandler&gt;T extends Action&lt;(
   );
 }
 
-@NgModule({
-  imports: [EffectsModule.forRoot([MoviesEffects])],
-  providers: [
-    {
-      provide: EFFECTS_ERROR_HANDLER,
-      useValue: effectResubscriptionHandler,
-    },
-    {
-      provide: ErrorHandler, 
-      useClass: CustomErrorHandler 
-    }
-  ],
-})
+bootstrapApplication(
+  AppComponent,
+  {
+    providers: [
+      {
+        provide: EFFECTS_ERROR_HANDLER,
+        useValue: effectResubscriptionHandler,
+      },
+      {
+        provide: ErrorHandler,
+        useClass: CustomErrorHandler
+      }
+    ],
+  }
+)
 </code-example>
 
 ## Controlling Effects
@@ -181,16 +183,16 @@ import {
 
 @Injectable()
 export class UserEffects implements OnRunEffects {
-  constructor(private actions$: Actions) {}
+  private actions$ = inject(Actions);
 
-  updateUser$ = createEffect(() =>
-      this.actions$.pipe(
+  updateUser$ = createEffect(() => {
+    return this.actions$.pipe(
         ofType('UPDATE_USER'),
         tap(action => {
           console.log(action);
         })
-      ),
-    { dispatch: false });
+      );
+  }, { dispatch: false });
 
   ngrxOnRunEffects(resolvedEffects$: Observable&lt;EffectNotification&gt;) {
     return this.actions$.pipe(
