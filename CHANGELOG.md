@@ -1,3 +1,60 @@
+<a name="19.0.0-rc.0"></a>
+
+# [19.0.0-rc.0](https://github.com/ngrx/platform/compare/19.0.0-beta.0...19.0.0-rc.0) (2024-12-10)
+
+### Bug Fixes
+
+- **eslint-plugin:** support ESM modudule syntax (.mjs) ([e2f35c8](https://github.com/ngrx/platform/commit/e2f35c8))
+- **signals:** create deep signals for custom class instances ([#4614](https://github.com/ngrx/platform/issues/4614)) ([4d34dc4](https://github.com/ngrx/platform/commit/4d34dc4)), closes [#4604](https://github.com/ngrx/platform/issues/4604)
+
+### Features
+
+- **eslint-plugin:** add new rule require-super-ondestroy ([#4611](https://github.com/ngrx/platform/issues/4611)) ([2ac4372](https://github.com/ngrx/platform/commit/2ac4372)), closes [#4505](https://github.com/ngrx/platform/issues/4505)
+- **signals:** add `signalMethod` ([#4597](https://github.com/ngrx/platform/issues/4597)) ([bdd1d3e](https://github.com/ngrx/platform/commit/bdd1d3e)), closes [#4581](https://github.com/ngrx/platform/issues/4581)
+- **signals:** add `withProps` base feature ([#4607](https://github.com/ngrx/platform/issues/4607)) ([e626082](https://github.com/ngrx/platform/commit/e626082))
+- **signals:** add migration for `withProps` ([#4612](https://github.com/ngrx/platform/issues/4612)) ([5f803d0](https://github.com/ngrx/platform/commit/5f803d0)), closes [#4608](https://github.com/ngrx/platform/issues/4608)
+- **store:** enable dispatching actions on signal changes ([#4600](https://github.com/ngrx/platform/issues/4600)) ([2528d39](https://github.com/ngrx/platform/commit/2528d39)), closes [#4537](https://github.com/ngrx/platform/issues/4537)
+
+### BREAKING CHANGES
+
+- **signals:** - The `computed` property in `SignalStoreFeatureResult` type is renamed to `props`.
+
+* The `EntityComputed` and `NamedEntityComputed` types in the `entities` plugin are renamed to `EntityProps` and `NamedEntityProps`.
+
+BEFORE:
+
+```ts
+import { computed, Signal } from '@angular/core';
+import { signalStoreFeature, SignalStoreFeature, type, withComputed } from '@ngrx/signals';
+import { EntityComputed } from '@ngrx/signals/entities';
+
+export function withTotalEntities<Entity>(): SignalStoreFeature<{ state: {}; computed: EntityComputed<Entity>; methods: {} }, { state: {}; computed: { total: Signal<number> }; methods: {} }> {
+  return signalStoreFeature(
+    { computed: type<EntityComputed<Entity>>() },
+    withComputed(({ entities }) => ({
+      total: computed(() => entities().length),
+    }))
+  );
+}
+```
+
+AFTER:
+
+```ts
+import { computed, Signal } from '@angular/core';
+import { signalStoreFeature, SignalStoreFeature, type, withComputed } from '@ngrx/signals';
+import { EntityProps } from '@ngrx/signals/entities';
+
+export function withTotalEntities<Entity>(): SignalStoreFeature<{ state: {}; props: EntityProps<Entity>; methods: {} }, { state: {}; props: { total: Signal<number> }; methods: {} }> {
+  return signalStoreFeature(
+    { props: type<EntityProps<Entity>>() },
+    withComputed(({ entities }) => ({
+      total: computed(() => entities().length),
+    }))
+  );
+}
+```
+
 <a name="19.0.0-beta.0""></a>
 
 # [19.0.0-beta.0"](https://github.com/ngrx/platform/compare/18.1.1...19.0.0-beta.0") (2024-11-20)
