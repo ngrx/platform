@@ -4,6 +4,8 @@
   "projectType": "library",
   "sourceRoot": "modules/signals/src",
   "prefix": "ngrx",
+  "tags": [],
+  "generators": {},
   "targets": {
     "build-package": {
       "executor": "@angular-devkit/build-angular:ng-packagr",
@@ -45,15 +47,23 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nx test-source signals", "nx test-schematics signals"]
+      }
+    },
+    "test-source": {
+      "executor": "@analogjs/vitest-angular:test"
+    },
+    "test-schematics": {
       "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "modules/signals/jest.config.ts",
         "runInBand": true,
-        "passWithNoTests": false
+        "passWithNoTests": false,
+        "testPathPattern": ["schematics", "migrations"]
       },
       "outputs": ["{workspaceRoot}/coverage/modules/signals"]
     }
-  },
-  "generators": {},
-  "tags": []
+  }
 }

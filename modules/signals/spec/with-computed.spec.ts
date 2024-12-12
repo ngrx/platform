@@ -34,7 +34,7 @@ describe('withComputed', () => {
       })),
     ].reduce((acc, feature) => feature(acc), getInitialInnerStore());
     const s2 = signal(10).asReadonly();
-    jest.spyOn(console, 'warn').mockImplementation();
+    vi.spyOn(console, 'warn').mockImplementation();
 
     withComputed(() => ({
       p: signal(0).asReadonly(),
