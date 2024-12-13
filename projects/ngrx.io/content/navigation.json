@@ -226,52 +226,6 @@
           ]
         },
         {
-          "title": "@ngrx/component-store",
-          "children": [
-            {
-              "title": "Overview",
-              "url": "guide/component-store"
-            },
-            {
-              "title": "Installation",
-              "url": "guide/component-store/install"
-            },
-            {
-              "title": "Architecture",
-              "children": [
-                {
-                  "title": "Initialization",
-                  "url": "guide/component-store/initialization"
-                },
-                {
-                  "title": "Read",
-                  "url": "guide/component-store/read"
-                },
-                {
-                  "title": "Write",
-                  "url": "guide/component-store/write"
-                },
-                {
-                  "title": "Effects",
-                  "url": "guide/component-store/effect"
-                }
-              ]
-            },
-            {
-              "title": "Lifecycle",
-              "url": "guide/component-store/lifecycle"
-            },
-            {
-              "title": "ComponentStore vs Store",
-              "url": "guide/component-store/comparison"
-            },
-            {
-              "title": "Usage",
-              "url": "guide/component-store/usage"
-            }
-          ]
-        },
-        {
           "title": "@ngrx/signals",
           "children": [
             {
@@ -338,6 +292,52 @@
             {
               "title": "FAQ",
               "url": "guide/signals/faq"
+            }
+          ]
+        },
+        {
+          "title": "@ngrx/component-store",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/component-store"
+            },
+            {
+              "title": "Installation",
+              "url": "guide/component-store/install"
+            },
+            {
+              "title": "Architecture",
+              "children": [
+                {
+                  "title": "Initialization",
+                  "url": "guide/component-store/initialization"
+                },
+                {
+                  "title": "Read",
+                  "url": "guide/component-store/read"
+                },
+                {
+                  "title": "Write",
+                  "url": "guide/component-store/write"
+                },
+                {
+                  "title": "Effects",
+                  "url": "guide/component-store/effect"
+                }
+              ]
+            },
+            {
+              "title": "Lifecycle",
+              "url": "guide/component-store/lifecycle"
+            },
+            {
+              "title": "ComponentStore vs Store",
+              "url": "guide/component-store/comparison"
+            },
+            {
+              "title": "Usage",
+              "url": "guide/component-store/usage"
             }
           ]
         },
