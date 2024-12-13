@@ -1,8 +1,10 @@
-import * as angular from '@angular/core';
+import { computed } from '@angular/core';
 import { effect, isSignal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { patchState, signalState } from '../src';
 import { STATE_SOURCE } from '../src/state-source';
+
+vi.mock('@angular/core', { spy: true });
 
 describe('signalState', () => {
   const initialState = {
@@ -14,6 +16,10 @@ describe('signalState', () => {
     numbers: [1, 2, 3],
     ngrx: 'signals',
   };
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
 
   it('has writable state source', () => {
     const state = signalState({});
@@ -45,20 +51,18 @@ describe('signalState', () => {
     expect(isSignal(state.ngrx)).toBe(true);
   });
 
-  it.skip('caches previously created signals', () => {
-    vi.spyOn(angular, 'computed');
-
+  it('caches previously created signals', () => {
     const state = signalState(initialState);
     const user1 = state.user;
     const user2 = state.user;
 
-    expect(angular.computed).toHaveBeenCalledTimes(1);
+    expect(computed).toHaveBeenCalledTimes(1);
 
     const _ = state.user.firstName;
     const __ = user1.firstName;
     const ___ = user2.firstName;
 
-    expect(angular.computed).toHaveBeenCalledTimes(2);
+    expect(computed).toHaveBeenCalledTimes(2);
   });
 
   it('does not modify props that are not state slices', () => {
