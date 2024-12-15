@@ -47,23 +47,8 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["nx test-source signals", "nx test-schematics signals"]
-      }
-    },
-    "test-source": {
-      "executor": "@analogjs/vitest-angular:test"
-    },
-    "test-schematics": {
-      "executor": "@nx/jest:jest",
-      "options": {
-        "jestConfig": "modules/signals/jest.config.ts",
-        "runInBand": true,
-        "passWithNoTests": false,
-        "testPathPattern": ["schematics", "migrations"]
-      },
-      "outputs": ["{workspaceRoot}/coverage/modules/signals"]
+      "executor": "@analogjs/vitest-angular:test",
+      "dependsOn": ["build"]
     }
   }
 }

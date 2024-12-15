@@ -20,7 +20,6 @@ export default defineConfig(({ mode }) => {
       environment: 'jsdom',
       setupFiles: ['test-setup.ts'],
       include: ['**/*.spec.ts'],
-      exclude: ['migrations/**', 'schematics/**'],
       reporters: ['default']
     },
     define: {
