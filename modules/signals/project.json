@@ -48,7 +48,8 @@
     },
     "test": {
       "executor": "@analogjs/vitest-angular:test",
-      "dependsOn": ["build"]
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/coverage/modules/signals"]
     }
   }
 }
