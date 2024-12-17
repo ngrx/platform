@@ -1,3 +1,12 @@
+<div class="alert is-helpful">
+
+**<a href="/guide/signals"><b>NgRx Signals</b></a> is the new default.**
+
+The NgRx team recommends using the `@ngrx/signals` library for local state management in Angular.
+While ComponentStore remains supported, we encourage using `@ngrx/signals` for new projects and considering migration for existing ones.
+
+</div>
+
 # Comparison of ComponentStore and Store
  
 Both ComponentStore and Store are designed to manage the state in an Angular application, however
