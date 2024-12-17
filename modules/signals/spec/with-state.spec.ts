@@ -69,7 +69,7 @@ describe('withState', () => {
         m2() {},
       })),
     ].reduce((acc, feature) => feature(acc), getInitialInnerStore());
-    jest.spyOn(console, 'warn').mockImplementation();
+    vi.spyOn(console, 'warn').mockImplementation();
 
     withState(() => ({
       p2: 100,

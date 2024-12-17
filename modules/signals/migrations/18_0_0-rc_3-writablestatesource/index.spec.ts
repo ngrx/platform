@@ -8,7 +8,10 @@ import * as path from 'path';
 import { LogEntry } from '@angular-devkit/core/src/logger';
 
 describe('18_0_0-rc_3-writablestatesource', () => {
-  const collectionPath = path.join(__dirname, '../migration.json');
+  const collectionPath = path.join(
+    process.cwd(),
+    'dist/modules/signals/migrations/migration.json'
+  );
   const schematicRunner = new SchematicTestRunner('schematics', collectionPath);
 
   let appTree: UnitTestTree;

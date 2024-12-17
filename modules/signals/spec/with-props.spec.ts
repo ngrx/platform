@@ -31,7 +31,7 @@ describe('withProps', () => {
         m2() {},
       })),
     ].reduce((acc, feature) => feature(acc), getInitialInnerStore());
-    jest.spyOn(console, 'warn').mockImplementation();
+    vi.spyOn(console, 'warn').mockImplementation();
 
     withProps(() => ({
       s1: { foo: 'bar' },

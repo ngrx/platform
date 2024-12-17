@@ -88,6 +88,9 @@
     "zone.js": "0.15.0"
   },
   "devDependencies": {
+    "@analogjs/vite-plugin-angular": "^1.9.0",
+    "@analogjs/vitest-angular": "^1.9.0",
+    "@angular/build": "19.0.0",
     "@angular-devkit/build-angular": "19.0.0",
     "@angular-devkit/core": "19.0.0",
     "@angular-devkit/schematics": "19.0.0",
@@ -105,6 +108,7 @@
     "@nx/eslint-plugin": "20.1.2",
     "@nx/jest": "20.1.2",
     "@nx/node": "20.1.2",
+    "@nx/vite": "20.1.2",
     "@nx/workspace": "20.1.2",
     "@octokit/rest": "^15.17.0",
     "@schematics/angular": "19.0.0",
@@ -151,6 +155,7 @@
     "jest-environment-jsdom": "29.7.0",
     "jest-jasmine2": "29.7.0",
     "jest-preset-angular": "14.1.0",
+    "jsdom": "^22.0.0",
     "karma": "6.4.0",
     "karma-chrome-launcher": "3.1.0",
     "karma-cli": "~1.0.1",
@@ -186,7 +191,8 @@
     "tsutils": "2.27.2",
     "typescript": "5.6.2",
     "typescript-eslint": "8.15.0",
-    "uglify-js": "^3.1.9"
+    "uglify-js": "^3.1.9",
+    "vitest": "^2.0.0"
   },
   "collective": {
     "type": "opencollective",
