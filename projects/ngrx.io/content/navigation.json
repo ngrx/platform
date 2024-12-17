@@ -320,7 +320,7 @@
               "url": "guide/signals/deep-computed"
             },
             {
-              "title":  "SignalMethod",
+              "title": "SignalMethod",
               "url": "guide/signals/signal-method"
             },
             {
@@ -725,6 +725,10 @@
     }
   ],
   "docVersions": [
+    {
+      "title": "v18",
+      "url": "https://v18.ngrx.io"
+    },
     {
       "title": "v18",
       "url": "https://v18.ngrx.io"
