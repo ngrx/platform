@@ -11,7 +11,7 @@ Store is RxJS powered global state management for Angular applications, inspired
 
 ## Local state management
 
-NgRx Store is mainly for managing global state across an entire application. In cases where you need to manage temporary or local component state, consider using [NgRx ComponentStore](guide/component-store).
+NgRx Store is mainly for managing global state across an entire application. In cases where you need to manage temporary or local component state, consider using [NgRx Signals](guide/signals).
 
 ## Installation
 
