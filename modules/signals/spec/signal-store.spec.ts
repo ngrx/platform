@@ -435,9 +435,9 @@ describe('signalStore', () => {
         }))
       );
       const warnings: string[][] = [];
-      jest
-        .spyOn(console, 'warn')
-        .mockImplementation((...args: string[]) => warnings.push(args));
+      vi.spyOn(console, 'warn').mockImplementation((...args: string[]) =>
+        warnings.push(args)
+      );
 
       new Store();
 

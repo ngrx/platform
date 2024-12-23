@@ -9,7 +9,7 @@ import { createWorkspace } from '@ngrx/schematics-core/testing';
 describe('Signals ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/signals',
-    path.join(__dirname, '../collection.json')
+    path.join(process.cwd(), 'dist/modules/signals/schematics/collection.json')
   );
   const defaultOptions: SchemaOptions = {
     skipPackageJson: false,
