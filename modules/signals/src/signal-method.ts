@@ -9,11 +9,10 @@ import {
   untracked,
 } from '@angular/core';
 
-type SignalMethod<Input> = ((
+type SignalMethod<Input> = (
   input: Input | Signal<Input>,
   config?: { injector?: Injector }
-) => EffectRef) &
-  EffectRef;
+) => EffectRef & { destroy: () => void };
 
 export function signalMethod<Input>(
   processingFn: (value: Input) => void,
@@ -23,7 +22,7 @@ export function signalMethod<Input>(
     assertInInjectionContext(signalMethod);
   }
 
-  const watchers: EffectRef[] = [];
+  const watchers: Set<EffectRef> = new Set();
   const sourceInjector = config?.injector ?? inject(Injector);
 
   const signalMethodFn = (
@@ -38,21 +37,32 @@ export function signalMethod<Input>(
         (onCleanup) => {
           const value = input();
           untracked(() => processingFn(value));
-          onCleanup(() => watchers.splice(watchers.indexOf(watcher), 1));
+
+          // Register cleanup callback to remove watcher from the Set
+          onCleanup(() => {
+            watchers.delete(watcher);
+          });
         },
         { injector: instanceInjector }
       );
-      watchers.push(watcher);
 
+      watchers.add(watcher);
       return watcher;
     } else {
       processingFn(input);
-      return { destroy: () => void true };
+      return { destroy: () => void 0 };
     }
   };
 
-  signalMethodFn.destroy = () =>
-    watchers.forEach((watcher) => watcher.destroy());
+  // Centralized destroy method
+  signalMethodFn.destroy = () => {
+    watchers.forEach((watcher) => {
+      if (watcher.destroy) {
+        watcher.destroy();
+      }
+    });
+    watchers.clear(); // Clear the Set after destruction
+  };
 
   return signalMethodFn;
 }
