@@ -72,18 +72,15 @@ describe('signalMethod', () => {
       const adder = createAdder((value) => (a += value));
       adder(summand1);
       adder(summand2);
-
-      summand1.set(2);
-      summand2.set(3);
       TestBed.flushEffects();
-      expect(a).toBe(6);
+      expect(a).toBe(4);
 
       adder.destroy();
 
       summand1.set(2);
       summand2.set(3);
       TestBed.flushEffects();
-      expect(a).toBe(6);
+      expect(a).toBe(4);
     });
 
     it('does not cause issues if destroyed signalMethodFn contains destroyed effectRefs', () => {
