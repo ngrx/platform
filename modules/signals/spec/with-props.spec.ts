@@ -1,7 +1,8 @@
 import { signal } from '@angular/core';
 import { of } from 'rxjs';
-import { withMethods, withProps, withState } from '../src';
+import { signalStore, withMethods, withProps, withState } from '../src';
 import { getInitialInnerStore } from '../src/signal-store';
+import { TestBed } from '@angular/core/testing';
 
 describe('withProps', () => {
   it('adds properties to the store immutably', () => {
@@ -46,5 +47,16 @@ describe('withProps', () => {
       'Trying to override:',
       's1, p2, m1'
     );
+  });
+
+  it('allows symbols as props', () => {
+    const SECRET = Symbol('SECRET');
+
+    const Store = signalStore(withProps(() => ({ [SECRET]: 'secret' })));
+    const store = TestBed.configureTestingModule({ providers: [Store] }).inject(
+      Store
+    );
+
+    expect(store[SECRET]).toBe('secret');
   });
 });
