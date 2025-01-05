@@ -59,4 +59,13 @@ describe('withProps', () => {
 
     expect(store[SECRET]).toBe('secret');
   });
+
+  it('allows numbers as props', () => {
+    const Store = signalStore(withProps(() => ({ 1: 'Number One' })));
+    const store = TestBed.configureTestingModule({ providers: [Store] }).inject(
+      Store
+    );
+
+    expect(store[1]).toBe('Number One');
+  });
 });
