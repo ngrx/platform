@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version-file: .nvmrc
+          node-version-file: .node-version
           cache: 'yarn'
           cache-dependency-path: 'yarn.lock'
       - run: yarn --frozen-lockfile --non-interactive
@@ -36,7 +36,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version-file: .nvmrc
+          node-version-file: .node-version
           cache: 'yarn'
           cache-dependency-path: 'yarn.lock'
       - run: yarn --frozen-lockfile --non-interactive
@@ -52,7 +52,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version-file: .nvmrc
+          node-version-file: .node-version
           cache: 'yarn'
           cache-dependency-path: 'yarn.lock'
       - run: yarn --frozen-lockfile --non-interactive
@@ -68,7 +68,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version-file: .nvmrc
+          node-version-file: .node-version
           cache: 'yarn'
           cache-dependency-path: 'yarn.lock'
       - run: yarn --frozen-lockfile --non-interactive
@@ -84,7 +84,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version-file: .nvmrc
+          node-version-file: .node-version
           cache: 'yarn'
           cache-dependency-path: 'yarn.lock'
       - run: yarn --frozen-lockfile --non-interactive
@@ -100,7 +100,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version-file: .nvmrc
+          node-version-file: .node-version
           cache: 'yarn'
           cache-dependency-path: 'yarn.lock'
       - run: yarn --frozen-lockfile --non-interactive
