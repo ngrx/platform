@@ -262,7 +262,7 @@ describe('rxMethod', () => {
       expect(globalService.globalSignalChangeCounter).toBe(3);
     });
 
-    it('tracks an observable until the component is destroyed', () => {
+    it('tracks an observable until the instanceInjector is destroyed', () => {
       const instanceInjector = createEnvironmentInjector(
         [],
         TestBed.inject(EnvironmentInjector)
