@@ -1,5 +1,6 @@
 import {
   assertInInjectionContext,
+  DestroyRef,
   effect,
   EffectRef,
   inject,
@@ -35,14 +36,20 @@ export function signalMethod<Input>(
         config?.injector ?? getCallerInjector() ?? sourceInjector;
 
       const watcher = effect(
-        (onCleanup) => {
+        () => {
           const value = input();
           untracked(() => processingFn(value));
-          onCleanup(() => watchers.splice(watchers.indexOf(watcher), 1));
         },
         { injector: instanceInjector }
       );
       watchers.push(watcher);
+
+      instanceInjector.get(DestroyRef).onDestroy(() => {
+        const ix = watchers.indexOf(watcher);
+        if (ix !== -1) {
+          watchers.splice(ix, 1);
+        }
+      });
 
       return watcher;
     } else {

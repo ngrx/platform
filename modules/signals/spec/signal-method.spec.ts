@@ -72,18 +72,15 @@ describe('signalMethod', () => {
       const adder = createAdder((value) => (a += value));
       adder(summand1);
       adder(summand2);
-
-      summand1.set(2);
-      summand2.set(3);
       TestBed.flushEffects();
-      expect(a).toBe(6);
+      expect(a).toBe(4);
 
       adder.destroy();
 
       summand1.set(2);
       summand2.set(3);
       TestBed.flushEffects();
-      expect(a).toBe(6);
+      expect(a).toBe(4);
     });
 
     it('does not cause issues if destroyed signalMethodFn contains destroyed effectRefs', () => {
@@ -197,5 +194,24 @@ describe('signalMethod', () => {
       TestBed.flushEffects();
       expect(a).toBe(5);
     });
+  });
+
+  it('stops specific tracking when calling destroy manually on an instance', () => {
+    let a = 1;
+    const summand1 = signal(1);
+    const summand2 = signal(2);
+    const adder = createAdder((value) => (a += value));
+    adder(summand1);
+    const s2 = adder(summand2);
+
+    TestBed.flushEffects();
+    s2.destroy();
+    expect(a).toBe(4);
+
+    summand1.set(100);
+    summand2.set(3000);
+
+    TestBed.flushEffects();
+    expect(a).toBe(104);
   });
 });
