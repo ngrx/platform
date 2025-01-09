@@ -133,7 +133,8 @@
             "markers": ["/"]
           }
         ],
-        "no-prototype-builtins": "off"
+        "no-prototype-builtins": "off",
+        "@angular-eslint/prefer-standalone": "off"
       },
       "plugins": [
         "eslint-plugin-import",

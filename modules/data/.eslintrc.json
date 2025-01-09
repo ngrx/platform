@@ -15,7 +15,8 @@
         "@typescript-eslint/no-non-null-assertion": "off",
         "@angular-eslint/directive-selector": "off",
         "@angular-eslint/component-selector": "off",
-        "no-case-declarations": "off"
+        "no-case-declarations": "off",
+        "@angular-eslint/prefer-standalone": "off"
       },
       "plugins": ["@typescript-eslint"]
     },
