@@ -21,7 +21,7 @@
             "command": "nx build-package operators"
           },
           {
-            "command": "yarn tsc -p modules/operators/tsconfig.schematics.json"
+            "command": "pnpm exec tsc -p modules/operators/tsconfig.schematics.json"
           },
           {
             "command": "cpy LICENSE dist/modules/operators"

@@ -13,27 +13,27 @@ A codespace will open in a web-based version of Visual Studio Code. The [dev con
 ## Setup
 
 ```shell
-yarn
+pnpm install
 ```
 
 ## Testing
 
 ```shell
-yarn test
+pnpm exec test
 ```
 
 ### Testing for a specific library
 
 ```shell
-yarn nx test effects --watchAll
-yarn nx test <module-name> --watchAll
+pnpm exec nx test effects --watchAll
+pnpm exec nx test <module-name> --watchAll
 ```
 
 ### Testing for a specific schematic unit test
 
 ```shell
-yarn jest modules/schematics/src/effect/index.spec.ts --watch
-yarn jest <relative path> --watch
+pnpm exec jest modules/schematics/src/effect/index.spec.ts --watch
+pnpm exec jest <relative path> --watch
 ```
 
 ## Submitting Pull Requests

@@ -21,7 +21,7 @@
             "command": "nx build-package router-store"
           },
           {
-            "command": "yarn tsc -p modules/router-store/tsconfig.schematics.json"
+            "command": "pnpm exec tsc -p modules/router-store/tsconfig.schematics.json"
           },
           {
             "command": "cpy LICENSE dist/modules/router-store"

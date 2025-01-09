@@ -21,7 +21,7 @@
             "command": "nx build-package component-store"
           },
           {
-            "command": "yarn tsc -p modules/component-store/tsconfig.schematics.json"
+            "command": "pnpm exec tsc -p modules/component-store/tsconfig.schematics.json"
           },
           {
             "command": "cpy LICENSE dist/modules/component-store"

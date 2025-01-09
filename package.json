@@ -10,7 +10,7 @@
     "clean": "git clean -xdf",
     "coverage:html": "nyc report --reporter=html",
     "copy:dist": "ncp dist/ ./node_modules/@ngrx/",
-    "ci": "yarn run test && nyc report --reporter=text-lcov | coveralls",
+    "ci": "pnpm exec run test && nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --write \"**/*.ts\"",
     "postinstall": "opencollective postinstall",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",

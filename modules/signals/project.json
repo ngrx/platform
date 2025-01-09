@@ -23,7 +23,7 @@
             "command": "nx build-package signals"
           },
           {
-            "command": "yarn tsc -p modules/signals/tsconfig.schematics.json"
+            "command": "pnpm exec tsc -p modules/signals/tsconfig.schematics.json"
           },
           {
             "command": "cpy LICENSE dist/modules/signals"
