@@ -2,7 +2,6 @@ import {
   EnvironmentProviders,
   InjectionToken,
   makeEnvironmentProviders,
-  Provider,
 } from '@angular/core';
 import {
   DevtoolsExtension,
