@@ -21,8 +21,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
       - run: pnpm exec --frozen-lockfile --non-interactive
 
   lint-affected:
@@ -35,8 +35,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
       - run: pnpm exec --frozen-lockfile --non-interactive
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec nx affected -t lint
@@ -51,8 +51,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
       - run: pnpm exec --frozen-lockfile --non-interactive
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec nx affected -t test
@@ -67,8 +67,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
       - run: pnpm exec --frozen-lockfile --non-interactive
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec nx affected -t e2e --exclude=docs-app
@@ -83,8 +83,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
       - run: pnpm exec --frozen-lockfile --non-interactive
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec nx affected -t build
@@ -99,8 +99,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
       - run: pnpm exec --frozen-lockfile --non-interactive
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec copy:schematics
