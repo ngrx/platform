@@ -25,6 +25,7 @@ jobs:
           node-version-file: .node-version
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
+      - run: corepack enable
       - run: pnpm exec --frozen-lockfile --non-interactive
 
   lint:
@@ -39,6 +40,7 @@ jobs:
           node-version-file: .node-version
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
+      - run: corepack enable
       - run: pnpm exec --frozen-lockfile --non-interactive
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec nx run-many -t lint
@@ -55,6 +57,7 @@ jobs:
           node-version-file: .node-version
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
+      - run: corepack enable
       - run: pnpm exec --frozen-lockfile --non-interactive
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec nx run-many -t test
@@ -71,6 +74,7 @@ jobs:
           node-version-file: .node-version
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
+      - run: corepack enable
       - run: pnpm exec --frozen-lockfile --non-interactive
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec nx run-many -t e2e --exclude=docs-app
@@ -87,6 +91,7 @@ jobs:
           node-version-file: .node-version
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
+      - run: corepack enable
       - run: pnpm exec --frozen-lockfile --non-interactive
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec build
@@ -103,6 +108,7 @@ jobs:
           node-version-file: .node-version
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
+      - run: corepack enable
       - run: pnpm exec --frozen-lockfile --non-interactive
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec copy:schematics
