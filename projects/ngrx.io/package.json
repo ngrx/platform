@@ -5,6 +5,7 @@
   "repository": "git@github.com:ngrx/platform.git",
   "author": "Angular",
   "license": "MIT",
+  "packageManager": "yarn@1.22.22",
   "scripts": {
     "postinstall": "node tools/cli-patches/patch.js && uglifyjs node_modules/lunr/lunr.js -c -m -o src/assets/js/lunr.min.js --source-map",
     "aio-use-local": "node tools/ng-packages-installer overwrite . --debug",
