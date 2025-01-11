@@ -30,9 +30,9 @@
   },
   "engines": {
     "node": "^18.19.1 || ^20.11.1 || >=22.0.0",
-    "yarn": "Please use pnpm install dependencies",
-    "pnpm": ">=9"
+    "pnpm": "^9.0.0"
   },
+  "packageManager": "pnpm@9.10.0",
   "lint-staged": {
     "*.{ts,json,md}": [
       "prettier --write",
