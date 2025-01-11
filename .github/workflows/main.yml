@@ -77,7 +77,7 @@ jobs:
           cache-dependency-path: '**/pnpm-lock.yaml'
       - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v4
-      - run: pnpm exec nx run-many -t e2e --exclude=docs-app
+      - run: pnpm exec nx run-many -t e2e --exclude=docs-app --parallel=1
 
   build:
     runs-on: ubuntu-latest
@@ -111,5 +111,5 @@ jobs:
           cache-dependency-path: '**/pnpm-lock.yaml'
       - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v4
-      - run: pnpm exec copy:schematics
-      - run: pnpm exec schematics:check
+      - run: pnpm run copy:schematics
+      - run: pnpm run schematics:check
