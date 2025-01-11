@@ -2,11 +2,11 @@
 
 exports[`Find Book Page should compile 1`] = `
 <bc-find-book-page
-  books$={[Function _Store]}
-  error$={[Function _Store]}
-  loading$={[Function _Store]}
-  searchQuery$={[Function _Store]}
-  store={[Function _MockStore]}
+  books$={[Function Store]}
+  error$={[Function Store]}
+  loading$={[Function Store]}
+  searchQuery$={[Function Store]}
+  store={[Function MockStore]}  
 >
   <bc-book-search>
     <mat-card
