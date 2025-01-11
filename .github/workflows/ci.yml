@@ -23,8 +23,8 @@ jobs:
         with:
           node-version-file: .node-version
           cache: 'pnpm'
-          cache-dependency-path: 'pnpm-lock.yaml'
-      - run: pnpm exec --frozen-lockfile --non-interactive
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - run: pnpm install --frozen-lockfile --prefer-offline
 
   lint-affected:
     runs-on: ubuntu-latest
@@ -38,8 +38,8 @@ jobs:
         with:
           node-version-file: .node-version
           cache: 'pnpm'
-          cache-dependency-path: 'pnpm-lock.yaml'
-      - run: pnpm exec --frozen-lockfile --non-interactive
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec nx affected -t lint
 
@@ -55,8 +55,8 @@ jobs:
         with:
           node-version-file: .node-version
           cache: 'pnpm'
-          cache-dependency-path: 'pnpm-lock.yaml'
-      - run: pnpm exec --frozen-lockfile --non-interactive
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec nx affected -t test
 
@@ -72,8 +72,8 @@ jobs:
         with:
           node-version-file: .node-version
           cache: 'pnpm'
-          cache-dependency-path: 'pnpm-lock.yaml'
-      - run: pnpm exec --frozen-lockfile --non-interactive
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec nx affected -t e2e --exclude=docs-app
 
@@ -89,8 +89,8 @@ jobs:
         with:
           node-version-file: .node-version
           cache: 'pnpm'
-          cache-dependency-path: 'pnpm-lock.yaml'
-      - run: pnpm exec --frozen-lockfile --non-interactive
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec nx affected -t build
 
@@ -106,8 +106,8 @@ jobs:
         with:
           node-version-file: .node-version
           cache: 'pnpm'
-          cache-dependency-path: 'pnpm-lock.yaml'
-      - run: pnpm exec --frozen-lockfile --non-interactive
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec copy:schematics
       - run: pnpm exec schematics:check
