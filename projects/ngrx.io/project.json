@@ -13,19 +13,19 @@
         "parallel": false,
         "commands": [
           {
-            "command": "yarn setup"
+            "command": "pnpm run setup"
           },
           {
             "command": "npm rebuild node-sass"
           },
           {
-            "command": "yarn build-for next --progress false && yarn copy-404-page"
+            "command": "pnpm run build-for next --progress false && pnpm run copy-404-page"
           },
           {
-            "command": "yarn --cwd ../../ cpy projects/ngrx.io/src/extra-files/next/*.* projects/ngrx.io/dist/ngrx.io/"
+            "command": "pnpm exec cpy ../../projects/ngrx.io/src/extra-files/next/*.* ../../projects/ngrx.io/dist/ngrx.io/"
           },
           {
-            "command": "yarn --cwd ../../ cpy projects/ngrx.io/src/extra-files/next/CNAME projects/ngrx.io/dist/ngrx.io/"
+            "command": "pnpm exec cpy ../../projects/ngrx.io/src/extra-files/next/CNAME ../../projects/ngrx.io/dist/ngrx.io/"
           }
         ]
       },
@@ -38,10 +38,10 @@
         "parallel": false,
         "commands": [
           {
-            "command": "yarn --ignore-engines --frozen-lockfile --non-interactive"
+            "command": "pnpm install --no-frozen-lockfile"
           },
           {
-            "command": "yarn test --watch=false"
+            "command": "pnpm run test --watch=false"
           }
         ]
       }

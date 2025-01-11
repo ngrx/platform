@@ -193,6 +193,7 @@
     "typescript": "5.6.2",
     "typescript-eslint": "8.15.0",
     "uglify-js": "^3.1.9",
+    "vite": "^5.0.0",
     "vitest": "^2.0.0"
   },
   "collective": {
