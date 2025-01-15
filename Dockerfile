@@ -8,8 +8,8 @@ COPY . .
 WORKDIR /platform/projects/ngrx.io	
 
 # Install all the dependencies, boilerplate, stackblitz, zips and run dgeni on the docs.
-RUN yarn setup
+RUN pnpm exec setup
 
 EXPOSE 4200
 
-CMD ["yarn", "start:docker"]
+CMD ["pnpm run", "start:docker"]

@@ -18,12 +18,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
-      - run: yarn --frozen-lockfile --non-interactive
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - run: pnpm install --frozen-lockfile --prefer-offline
 
   lint-affected:
     runs-on: ubuntu-latest
@@ -32,14 +33,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
-      - run: yarn --frozen-lockfile --non-interactive
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v4
-      - run: yarn nx affected -t lint
+      - run: pnpm exec nx affected -t lint
 
   test-affected:
     runs-on: ubuntu-latest
@@ -48,14 +50,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
-      - run: yarn --frozen-lockfile --non-interactive
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v4
-      - run: yarn nx affected -t test
+      - run: pnpm exec nx affected -t test --exclude=docs-app
 
   e2e-affected:
     runs-on: ubuntu-latest
@@ -64,14 +67,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
-      - run: yarn --frozen-lockfile --non-interactive
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - run: pnpm install --frozen-lockfile --prefer-offline
+      - run: pnpm exec cypress install
       - uses: nrwl/nx-set-shas@v4
-      - run: yarn nx affected -t e2e --exclude=docs-app
+      - run: pnpm exec nx affected -t e2e --exclude=docs-app --parallel=1
 
   build-affected:
     runs-on: ubuntu-latest
@@ -80,14 +85,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
-      - run: yarn --frozen-lockfile --non-interactive
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v4
-      - run: yarn nx affected -t build
+      - run: pnpm exec nx affected -t build --exclude=docs-app
 
   schematics-core-check:
     runs-on: ubuntu-latest
@@ -96,12 +102,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
-      - run: yarn --frozen-lockfile --non-interactive
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v4
-      - run: yarn copy:schematics
-      - run: yarn schematics:check
+      - run: pnpm run copy:schematics
+      - run: pnpm run schematics:check

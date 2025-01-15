@@ -21,13 +21,13 @@
             "command": "nx build-package entity"
           },
           {
-            "command": "yarn tsc -p modules/entity/tsconfig.schematics.json"
+            "command": "pnpm exec tsc -p modules/entity/tsconfig.schematics.json"
           },
           {
-            "command": "yarn rimraf node_modules/@ngrx/entity"
+            "command": "pnpm exec rimraf node_modules/@ngrx/entity"
           },
           {
-            "command": "yarn mkdirp node_modules/@ngrx/entity"
+            "command": "pnpm exec mkdirp node_modules/@ngrx/entity"
           },
           {
             "command": "ncp dist/modules/entity node_modules/@ngrx/entity"

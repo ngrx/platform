@@ -21,7 +21,7 @@
             "command": "nx build-package store-devtools"
           },
           {
-            "command": "yarn tsc -p modules/store-devtools/tsconfig.schematics.json"
+            "command": "pnpm exec tsc -p modules/store-devtools/tsconfig.schematics.json"
           },
           {
             "command": "cpy LICENSE dist/modules/store-devtools"

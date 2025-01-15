@@ -81,3 +81,6 @@ modules/*/schematics-core/testing
 migrations.json
 .env
 .nx/**
+
+vite.config.*.timestamp*
+vitest.config.*.timestamp*

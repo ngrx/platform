@@ -21,7 +21,7 @@
             "command": "nx build-package data"
           },
           {
-            "command": "yarn tsc -p modules/data/tsconfig.schematics.json"
+            "command": "pnpm exec tsc -p modules/data/tsconfig.schematics.json"
           },
           {
             "command": "cpy LICENSE dist/modules/data"

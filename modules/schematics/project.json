@@ -59,7 +59,7 @@
             "command": "nx build-package schematics"
           },
           {
-            "command": "yarn tsc -p modules/schematics/tsconfig.schematics.json"
+            "command": "pnpm exec tsc -p modules/schematics/tsconfig.schematics.json"
           },
           {
             "command": "cpy modules/schematics/collection.json dist/modules/schematics"

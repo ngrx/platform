@@ -21,13 +21,13 @@
             "command": "nx build-package effects"
           },
           {
-            "command": "yarn tsc -p modules/effects/tsconfig.schematics.json"
+            "command": "pnpm exec tsc -p modules/effects/tsconfig.schematics.json"
           },
           {
-            "command": "yarn rimraf node_modules/@ngrx/effects"
+            "command": "pnpm exec rimraf node_modules/@ngrx/effects"
           },
           {
-            "command": "yarn mkdirp node_modules/@ngrx/effects"
+            "command": "pnpm exec mkdirp node_modules/@ngrx/effects"
           },
           {
             "command": "ncp dist/modules/effects node_modules/@ngrx/effects"

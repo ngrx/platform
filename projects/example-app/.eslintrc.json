@@ -48,7 +48,8 @@
         "no-redeclare": "error",
         "no-underscore-dangle": "error",
         "no-var": "error",
-        "no-case-declarations": "off"
+        "no-case-declarations": "off",
+        "@angular-eslint/prefer-standalone": "off"
       },
       "plugins": ["@typescript-eslint"]
     },
