@@ -67,8 +67,5 @@
   "buildOnSave": false,
   "atom": {
     "rewriteTsconfig": false
-  },
-  "bazelOptions": {
-    "suppressTsconfigOverrideWarnings": true
   }
 }
