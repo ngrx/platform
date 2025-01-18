@@ -2,7 +2,7 @@
 
 Reactive State for Angular
 
-[![CircleCI](https://circleci.com/gh/ngrx/platform/tree/main.svg?style=shield)](https://circleci.com/gh/ngrx/workflows/platform/tree/main)
+![CI](https://github.com/ngrx/platform/actions/workflows/main.yml/badge.svg)
 [![Join the discord server at https://discord.com/invite/ngrx](https://img.shields.io/discord/740557383109050469.svg?color=7389D8&labelColor=6A7EC2&logo=discord&logoColor=ffffff&style=flat-square)](https://discord.com/invite/ngrx)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](https://commitizen.github.io/cz-cli/)
 [![npm version](https://badge.fury.io/js/%40ngrx%2Fstore.svg)](https://www.npmjs.com/@ngrx/store)
