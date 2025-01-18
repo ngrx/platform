@@ -75,4 +75,74 @@ export class CounterComponent {
   constructor(readonly store: CounterStore) {}
 }
 ```
+
+</details>
+
+<details>
+<summary>I get the error "Cannot assign to read only property 'X' of object '[object Object]'"</summary>
+
+The state in the SignalStore must be immutable. If you make mutable changes, there’s a high risk of introducing subtle, hard-to-diagnose bugs. To protect against this, SignalStore introduced an additional check to enforce immutability.
+
+The immutability requirement originates from Angular's Signal itself, which serves as the foundation of the SignalStore. Here’s an example to illustrate this:
+
+```ts
+const person = signal({ name: 'Konrad', age: 25 });
+const personFormat = computed(
+  () => `${person().name} is ${person().age} years old`,
+);
+
+console.log(personFormat()); // shows 25 years
+
+person().age = 30; // 👎 mutable change
+console.log(personFormat()); // 👎 person did not notify personFormat. still 25 years
+
+// another mutable change
+person.update((value) => {
+  value.age++; // 👎 
+  return value;
+});
+
+console.log(personFormat()); // 👎 no notification. 25 years.
+
+// immutable change
+person.update((value) => ({
+  ...value, // 👍 immutable change
+  counter: 40,
+}));
+console.log(personFormat()); // 👍 personFormat has been notified and shows 40 years.
+
+```
+
+As you can see, the problem typically arises in computed, effect or the component's template, not directly at the root (the signal mutation itself). This is why these issues are so hard to debug.
+
+You might look into your components wondering why they’re not updating, while the real error is buried deep within the SignalStore.
+
+Therefore, both `signalState` and `signalStore` throw on those mutable changes. They protect you!
+
+```typescript
+const person = signalState({ name: 'Konrad', age: 25 });
+patchState(person, (value) => {
+  value.age++
+  return value;
+}) // 🔥 throws
+
+
+person().age = 30; // 🔥 throws 
+```
+
+If you require mutable properties in your state, then put them into `withProps`.
+
+```ts
+const PersonStore = signalStore(
+  withProps({ name: 'Konrad', age: 25 }),
+  withMethods(store => ({
+    setAge(age: number) {
+      store.age = age;
+    }
+  })));
+const personStore = new PersonStore();
+
+personStore.setAge(30);
+```
+
 </details>
