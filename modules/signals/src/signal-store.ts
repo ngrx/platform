@@ -1364,9 +1364,7 @@ export function signalStore(
       (this as any)[STATE_SOURCE] = innerStore[STATE_SOURCE];
 
       for (const key of Reflect.ownKeys(storeMembers)) {
-        if (typeof key === 'string' || typeof key === 'symbol') {
-          (this as any)[key] = storeMembers[key];
-        }
+        (this as any)[key] = storeMembers[key];
       }
 
       const { onInit, onDestroy } = hooks;
