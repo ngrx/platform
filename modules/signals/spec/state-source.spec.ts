@@ -18,6 +18,8 @@ import {
 import { STATE_SOURCE } from '../src/state-source';
 import { createLocalService } from './helpers';
 
+const SECRET = Symbol('SECRET');
+
 describe('StateSource', () => {
   const initialState = {
     user: {
@@ -27,6 +29,7 @@ describe('StateSource', () => {
     foo: 'bar',
     numbers: [1, 2, 3],
     ngrx: 'signals',
+    [SECRET]: 'secret',
   };
 
   describe('patchState', () => {
@@ -76,6 +79,13 @@ describe('StateSource', () => {
             numbers: [1, 2, 3, 4],
             ngrx: 'rocks',
           });
+        });
+
+        it('patches property with symbol keys', () => {
+          const state = stateFactory();
+
+          patchState(state, { [SECRET]: 'another secret' });
+          expect(state[SECRET]()).toBe('another secret');
         });
 
         it('patches state via sequence of partial state objects and updater functions', () => {

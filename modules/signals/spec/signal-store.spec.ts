@@ -1,4 +1,10 @@
-import { inject, InjectionToken, isSignal, signal } from '@angular/core';
+import {
+  computed,
+  inject,
+  InjectionToken,
+  isSignal,
+  signal,
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   patchState,
@@ -145,6 +151,14 @@ describe('signalStore', () => {
 
       expect(store.foo()).toBe('foo');
     });
+
+    it('can have symbols as keys as well', () => {
+      const SECRET = Symbol('SECRET');
+      const Store = signalStore(withState({ [SECRET]: 'bar' }));
+      const store = new Store();
+
+      expect(store[SECRET]()).toBe('bar');
+    });
   });
 
   describe('withProps', () => {
@@ -183,6 +197,50 @@ describe('signalStore', () => {
 
       expect(store.foo).toBe('bar');
     });
+
+    it('allows symbols as props', () => {
+      const SECRET = Symbol('SECRET');
+
+      const Store = signalStore(withProps(() => ({ [SECRET]: 'secret' })));
+      const store = TestBed.configureTestingModule({
+        providers: [Store],
+      }).inject(Store);
+
+      expect(store[SECRET]).toBe('secret');
+    });
+
+    it('allows numbers as props', () => {
+      const Store = signalStore(withProps(() => ({ 1: 'Number One' })));
+      const store = TestBed.configureTestingModule({
+        providers: [Store],
+      }).inject(Store);
+
+      expect(store[1]).toBe('Number One');
+    });
+
+    it('passes on a symbol to the features', () => {
+      const SECRET = Symbol('SECRET');
+      const SecretStore = signalStore(
+        { providedIn: 'root' },
+        withProps(() => ({
+          [SECRET]: 'not your business',
+        })),
+        withMethods((store) => ({
+          reveil() {
+            return store[SECRET];
+          },
+        })),
+        withComputed((state) => ({
+          secret: computed(() => state[SECRET]),
+        }))
+      );
+
+      const secretStore = TestBed.inject(SecretStore);
+
+      expect(secretStore.reveil()).toBe('not your business');
+      expect(secretStore.secret()).toBe('not your business');
+      expect(secretStore[SECRET]).toBe('not your business');
+    });
   });
 
   describe('withComputed', () => {
@@ -220,6 +278,26 @@ describe('signalStore', () => {
       const store = TestBed.inject(Store);
 
       expect(store.bar()).toBe('bar');
+    });
+
+    it('can also expose a symbol', () => {
+      const SECRET = Symbol('SECRET');
+      const SecretStore = signalStore(
+        { providedIn: 'root' },
+        withComputed(() => ({
+          [SECRET]: computed(() => 'secret'),
+        })),
+        withMethods((store) => ({
+          reveil() {
+            return store[SECRET];
+          },
+        }))
+      );
+
+      const secretStore = TestBed.inject(SecretStore);
+      const secretSignal = secretStore.reveil();
+
+      expect(secretSignal()).toBe('secret');
     });
   });
 
@@ -262,6 +340,19 @@ describe('signalStore', () => {
       const store = TestBed.inject(Store);
 
       expect(store.baz()).toBe('baz');
+    });
+
+    it('can also expose a symbol', () => {
+      const SECRET = Symbol('SECRET');
+      const SecretStore = signalStore(
+        { providedIn: 'root' },
+        withMethods(() => ({
+          [SECRET]: () => 'my secret',
+        }))
+      );
+      const secretStore = TestBed.inject(SecretStore);
+
+      expect(secretStore[SECRET]()).toBe('my secret');
     });
   });
 

@@ -19,14 +19,18 @@ describe('withMethods', () => {
   });
 
   it('logs warning if previously defined signal store members have the same name', () => {
+    const STATE_SECRET = Symbol('state_secret');
+    const COMPUTED_SECRET = Symbol('computed_secret');
     const initialStore = [
       withState({
         p1: 'p1',
         p2: false,
+        [STATE_SECRET]: 1,
       }),
       withComputed(() => ({
         s1: signal(true).asReadonly(),
         s2: signal({ s: 2 }).asReadonly(),
+        [COMPUTED_SECRET]: signal(1).asReadonly(),
       })),
       withMethods(() => ({
         m1() {},
@@ -43,12 +47,14 @@ describe('withMethods', () => {
       s1: () => 100,
       m2,
       m3: () => 'm3',
+      [STATE_SECRET]() {},
+      [COMPUTED_SECRET]() {},
     }))(initialStore);
 
     expect(console.warn).toHaveBeenCalledWith(
       '@ngrx/signals: SignalStore members cannot be overridden.',
       'Trying to override:',
-      'p2, s1, m2'
+      'p2, s1, m2, Symbol(state_secret), Symbol(computed_secret)'
     );
   });
 });

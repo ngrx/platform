@@ -30,7 +30,7 @@ export function withMethods<
       ...store.props,
       ...store.methods,
     });
-    assertUniqueStoreMembers(store, Object.keys(methods));
+    assertUniqueStoreMembers(store, Reflect.ownKeys(methods));
 
     return {
       ...store,
