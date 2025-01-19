@@ -5,6 +5,9 @@ import { TestBed } from '@angular/core/testing';
 import { withState } from '../src/with-state';
 
 describe('deepFreeze', () => {
+  const DIRECT_SECRET = Symbol('direct secret');
+  const SECRET = Symbol('secret');
+
   const initialState = {
     user: {
       firstName: 'John',
@@ -13,6 +16,14 @@ describe('deepFreeze', () => {
     foo: 'bar',
     numbers: [1, 2, 3],
     ngrx: 'signals',
+    [DIRECT_SECRET]: 'secret',
+    nestedSymbol: {
+      [SECRET]: 'another secret',
+    },
+    [SECRET]: {
+      code: 'secret',
+      value: '123',
+    },
   };
 
   for (const { stateFactory, name } of [
@@ -71,7 +82,7 @@ describe('deepFreeze', () => {
           );
         });
 
-        it('throws when mutable change happens for', () => {
+        it('throws when mutable change happens', () => {
           const state = stateFactory();
           const s = { user: { firstName: 'M', lastName: 'S' } };
           patchState(state, s);
@@ -81,6 +92,30 @@ describe('deepFreeze', () => {
           }).toThrowError(
             "Cannot assign to read only property 'firstName' of object"
           );
+        });
+
+        describe('symbol', () => {
+          it('throws on a mutable change on property of a frozen symbol', () => {
+            const state = stateFactory();
+            const s = getState(state);
+
+            expect(() => {
+              s[SECRET].code = 'mutable change';
+            }).toThrowError(
+              "Cannot assign to read only property 'code' of object"
+            );
+          });
+
+          it('throws on a mutable change on nested symbol', () => {
+            const state = stateFactory();
+            const s = getState(state);
+
+            expect(() => {
+              s.nestedSymbol[SECRET] = 'mutable change';
+            }).toThrowError(
+              "Cannot assign to read only property 'Symbol(secret)' of object"
+            );
+          });
         });
       });
     });

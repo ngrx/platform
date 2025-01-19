@@ -1,13 +1,12 @@
 declare const ngDevMode: boolean;
 
-export function deepFreeze<T>(target: T): T {
+export function deepFreeze<T extends object>(target: T): T {
   Object.freeze(target);
 
   const targetIsFunction = typeof target === 'function';
 
-  Object.getOwnPropertyNames(target).forEach((prop) => {
-    // Ignore Ivy properties, ref: https://github.com/ngrx/platform/issues/2109#issuecomment-582689060
-    if (prop.startsWith('ɵ')) {
+  Reflect.ownKeys(target).forEach((prop) => {
+    if (String(prop).startsWith('ɵ')) {
       return;
     }
 

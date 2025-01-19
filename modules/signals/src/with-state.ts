@@ -32,7 +32,7 @@ export function withState<State extends object>(
   return (store) => {
     const state =
       typeof stateOrFactory === 'function' ? stateOrFactory() : stateOrFactory;
-    const stateKeys = Object.keys(state);
+    const stateKeys = Reflect.ownKeys(state);
 
     assertUniqueStoreMembers(store, stateKeys);
 
