@@ -30,14 +30,14 @@ export function deepFreeze<T extends object>(target: T): T {
   return target;
 }
 
-export function freezeInDevMode<T>(target: T): T {
+export function freezeInDevMode<T extends object>(target: T): T {
   return ngDevMode ? deepFreeze(target) : target;
 }
 
 function hasOwnProperty(
   target: unknown,
-  propertyName: string
-): target is { [propertyName: string]: unknown } {
+  propertyName: string | symbol
+): target is { [propertyName: string | symbol]: unknown } {
   return isObjectLike(target)
     ? Object.prototype.hasOwnProperty.call(target, propertyName)
     : false;

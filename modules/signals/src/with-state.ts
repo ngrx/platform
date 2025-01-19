@@ -45,7 +45,7 @@ export function withState<State extends object>(
 
     const stateSignals = stateKeys.reduce((acc, key) => {
       const sliceSignal = computed(
-        () => (store[STATE_SOURCE]() as Record<string, unknown>)[key]
+        () => (store[STATE_SOURCE]() as Record<string | symbol, unknown>)[key]
       );
       return { ...acc, [key]: toDeepSignal(sliceSignal) };
     }, {} as SignalsDictionary);
