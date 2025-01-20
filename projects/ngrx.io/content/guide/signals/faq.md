@@ -107,7 +107,7 @@ console.log(personFormat()); // 👎 no notification. 25 years.
 // immutable change
 person.update((value) => ({
   ...value, // 👍 immutable change
-  counter: 40,
+  age: 40,
 }));
 console.log(personFormat()); // 👍 personFormat has been notified and shows 40 years.
 
@@ -132,9 +132,21 @@ person().age = 30; // 🔥 throws
 
 If you require mutable properties in your state, then put them into `withProps`.
 
+Common examples are `FormGroup` or instances from the router package:
+
 ```ts
 const PersonStore = signalStore(
-  withProps({ name: 'Konrad', age: 25 }),
+  withProps(() => {
+    const router = inject(Router);
+    
+    return {
+      _currentUrl$: router.events.pipe(
+        filter((event) => event instanceof NavigationEnd),
+        map(() => router.routerState.snapshot.url),
+      )
+    };
+  }),
+  withState({ name: 'Konrad', age: 25 }),
   withMethods(store => ({
     setAge(age: number) {
       store.age = age;
