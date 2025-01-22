@@ -28,7 +28,7 @@ export function withProps<
       ...store.props,
       ...store.methods,
     });
-    assertUniqueStoreMembers(store, Object.keys(props));
+    assertUniqueStoreMembers(store, Reflect.ownKeys(props));
 
     return {
       ...store,

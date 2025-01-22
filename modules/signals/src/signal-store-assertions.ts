@@ -4,7 +4,7 @@ declare const ngDevMode: unknown;
 
 export function assertUniqueStoreMembers(
   store: InnerSignalStore,
-  newMemberKeys: (string | symbol)[]
+  newMemberKeys: Array<string | symbol>
 ): void {
   if (!ngDevMode) {
     return;

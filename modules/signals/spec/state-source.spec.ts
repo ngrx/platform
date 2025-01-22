@@ -81,7 +81,7 @@ describe('StateSource', () => {
           });
         });
 
-        it('patches property with symbol keys', () => {
+        it('patches state slice with symbol key', () => {
           const state = stateFactory();
 
           patchState(state, { [SECRET]: 'another secret' });
