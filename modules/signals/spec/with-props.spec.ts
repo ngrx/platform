@@ -17,10 +17,13 @@ describe('withProps', () => {
   });
 
   it('logs warning if previously defined signal store members have the same name', () => {
+    const STATE_SECRET = Symbol('state_secret');
+    const METHOD_SECRET = Symbol('method_secret');
     const initialStore = [
       withState({
         s1: 10,
         s2: 's2',
+        [STATE_SECRET]: 1,
       }),
       withProps(() => ({
         p1: of(100),
@@ -29,6 +32,7 @@ describe('withProps', () => {
       withMethods(() => ({
         m1() {},
         m2() {},
+        [METHOD_SECRET]() {},
       })),
     ].reduce((acc, feature) => feature(acc), getInitialInnerStore());
     vi.spyOn(console, 'warn').mockImplementation();
@@ -39,12 +43,14 @@ describe('withProps', () => {
       p2: signal(100),
       m1: { ngrx: 'rocks' },
       m3: of('m3'),
+      [STATE_SECRET]: 10,
+      [METHOD_SECRET]: { x: 'y' },
     }))(initialStore);
 
     expect(console.warn).toHaveBeenCalledWith(
       '@ngrx/signals: SignalStore members cannot be overridden.',
       'Trying to override:',
-      's1, p2, m1'
+      's1, p2, m1, Symbol(state_secret), Symbol(method_secret)'
     );
   });
 });

@@ -1,10 +1,15 @@
-import { getState, patchState } from '../src/state-source';
-import { signalState } from '../src/signal-state';
-import { signalStore } from '../src/signal-store';
 import { TestBed } from '@angular/core/testing';
-import { withState } from '../src/with-state';
+import {
+  getState,
+  patchState,
+  signalState,
+  signalStore,
+  withState,
+} from '../src';
 
 describe('deepFreeze', () => {
+  const SECRET = Symbol('secret');
+
   const initialState = {
     user: {
       firstName: 'John',
@@ -13,6 +18,13 @@ describe('deepFreeze', () => {
     foo: 'bar',
     numbers: [1, 2, 3],
     ngrx: 'signals',
+    nestedSymbol: {
+      [SECRET]: 'another secret',
+    },
+    [SECRET]: {
+      code: 'secret',
+      value: '123',
+    },
   };
 
   for (const { stateFactory, name } of [
@@ -52,6 +64,7 @@ describe('deepFreeze', () => {
           "Cannot assign to read only property 'firstName' of object"
         );
       });
+
       describe('mutable changes outside of patchState', () => {
         it('throws on reassigned a property of the exposed state', () => {
           const state = stateFactory();
@@ -71,7 +84,7 @@ describe('deepFreeze', () => {
           );
         });
 
-        it('throws when mutable change happens for', () => {
+        it('throws when mutable change happens', () => {
           const state = stateFactory();
           const s = { user: { firstName: 'M', lastName: 'S' } };
           patchState(state, s);
@@ -80,6 +93,28 @@ describe('deepFreeze', () => {
             s.user.firstName = 'mutable change 3';
           }).toThrowError(
             "Cannot assign to read only property 'firstName' of object"
+          );
+        });
+
+        it('throws when mutable change of root symbol property happens', () => {
+          const state = stateFactory();
+          const s = getState(state);
+
+          expect(() => {
+            s[SECRET].code = 'mutable change';
+          }).toThrowError(
+            "Cannot assign to read only property 'code' of object"
+          );
+        });
+
+        it('throws when mutable change of nested symbol property happens', () => {
+          const state = stateFactory();
+          const s = getState(state);
+
+          expect(() => {
+            s.nestedSymbol[SECRET] = 'mutable change';
+          }).toThrowError(
+            "Cannot assign to read only property 'Symbol(secret)' of object"
           );
         });
       });

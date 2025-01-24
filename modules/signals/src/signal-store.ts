@@ -1355,11 +1355,15 @@ export function signalStore(
         getInitialInnerStore()
       );
       const { stateSignals, props, methods, hooks } = innerStore;
-      const storeMembers = { ...stateSignals, ...props, ...methods };
+      const storeMembers: Record<string | symbol, unknown> = {
+        ...stateSignals,
+        ...props,
+        ...methods,
+      };
 
       (this as any)[STATE_SOURCE] = innerStore[STATE_SOURCE];
 
-      for (const key in storeMembers) {
+      for (const key of Reflect.ownKeys(storeMembers)) {
         (this as any)[key] = storeMembers[key];
       }
 

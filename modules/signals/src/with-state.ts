@@ -32,7 +32,7 @@ export function withState<State extends object>(
   return (store) => {
     const state =
       typeof stateOrFactory === 'function' ? stateOrFactory() : stateOrFactory;
-    const stateKeys = Object.keys(state);
+    const stateKeys = Reflect.ownKeys(state);
 
     assertUniqueStoreMembers(store, stateKeys);
 
@@ -45,7 +45,7 @@ export function withState<State extends object>(
 
     const stateSignals = stateKeys.reduce((acc, key) => {
       const sliceSignal = computed(
-        () => (store[STATE_SOURCE]() as Record<string, unknown>)[key]
+        () => (store[STATE_SOURCE]() as Record<string | symbol, unknown>)[key]
       );
       return { ...acc, [key]: toDeepSignal(sliceSignal) };
     }, {} as SignalsDictionary);
