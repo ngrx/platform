@@ -4,7 +4,7 @@ import { packages } from './config';
 
 const deploy = createBuilder([
   ['Deploy builds', tasks.publishToRepo],
-  ['Deploy docs', tasks.publishDocs],
+  // ['Deploy docs', tasks.publishDocs],
 ]);
 
 deploy({
