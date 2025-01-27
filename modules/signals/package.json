@@ -32,6 +32,7 @@
   "schematics": "./schematics/collection.json",
   "sideEffects": false,
   "ng-update": {
+    "packageGroupName": "@ngrx/signals",
     "packageGroup": [
       "@ngrx/store",
       "@ngrx/effects",

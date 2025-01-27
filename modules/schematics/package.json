@@ -25,6 +25,7 @@
     "save": "devDependencies"
   },
   "ng-update": {
+    "packageGroupName": "@ngrx/store",
     "packageGroup": [
       "@ngrx/store",
       "@ngrx/effects",

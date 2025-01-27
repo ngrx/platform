@@ -29,6 +29,7 @@
   },
   "schematics": "./schematics/collection.json",
   "ng-update": {
+    "packageGroupName": "@ngrx/store",
     "packageGroup": [
       "@ngrx/store",
       "@ngrx/effects",

@@ -28,6 +28,7 @@
   "schematics": "./schematics/collection.json",
   "sideEffects": false,
   "ng-update": {
+    "packageGroupName": "@ngrx/store",
     "packageGroup": [
       "@ngrx/store",
       "@ngrx/effects",
