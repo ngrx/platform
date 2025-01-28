@@ -8,7 +8,6 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { Prettify } from './ts-helpers';
-import { freezeInDevMode } from './deep-freeze';
 
 const STATE_WATCHERS = new WeakMap<Signal<object>, Array<StateWatcher<any>>>();
 
@@ -38,11 +37,10 @@ export function patchState<State extends object>(
 ): void {
   stateSource[STATE_SOURCE].update((currentState) =>
     updaters.reduce(
-      (nextState: State, updater) =>
-        freezeInDevMode({
-          ...nextState,
-          ...(typeof updater === 'function' ? updater(nextState) : updater),
-        }),
+      (nextState: State, updater) => ({
+        ...nextState,
+        ...(typeof updater === 'function' ? updater(nextState) : updater),
+      }),
       currentState
     )
   );

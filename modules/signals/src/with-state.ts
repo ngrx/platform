@@ -9,7 +9,6 @@ import {
   SignalStoreFeature,
   SignalStoreFeatureResult,
 } from './signal-store-models';
-import { freezeInDevMode } from './deep-freeze';
 
 export function withState<State extends object>(
   stateFactory: () => State
@@ -36,12 +35,10 @@ export function withState<State extends object>(
 
     assertUniqueStoreMembers(store, stateKeys);
 
-    store[STATE_SOURCE].update((currentState) =>
-      freezeInDevMode({
-        ...currentState,
-        ...state,
-      })
-    );
+    store[STATE_SOURCE].update((currentState) => ({
+      ...currentState,
+      ...state,
+    }));
 
     const stateSignals = stateKeys.reduce((acc, key) => {
       const sliceSignal = computed(
