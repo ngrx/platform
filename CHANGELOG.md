@@ -1,3 +1,13 @@
+<a name="19.0.1"></a>
+
+## [19.0.1](https://github.com/ngrx/platform/compare/19.0.0...19.0.1) (2025-01-31)
+
+### Bug Fixes
+
+- **signals:** enable `withProps` to handle Symbols ([#4656](https://github.com/ngrx/platform/issues/4656)) ([02320b3](https://github.com/ngrx/platform/commit/02320b3)), closes [#4655](https://github.com/ngrx/platform/issues/4655)
+- **signals:** remove `signalMethod` instance watcher on destroy ([#4648](https://github.com/ngrx/platform/issues/4648)) ([7f42065](https://github.com/ngrx/platform/commit/7f42065)), closes [#4644](https://github.com/ngrx/platform/issues/4644)
+- **signals:** revert the protection for state mutation in dev mode ([#4686](https://github.com/ngrx/platform/issues/4686)) ([ae7922e](https://github.com/ngrx/platform/commit/ae7922e)), closes [#4683](https://github.com/ngrx/platform/issues/4683)
+
 <a name="19.0.0"></a>
 
 # [19.0.0](https://github.com/ngrx/platform/compare/19.0.0-rc.0...19.0.0) (2024-12-17)
