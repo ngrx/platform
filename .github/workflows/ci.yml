@@ -18,6 +18,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - run: npm install --global corepack@0.31.0
       - run: corepack enable
       - uses: actions/setup-node@v4
         with:
@@ -33,6 +34,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - run: npm install --global corepack@0.31.0
       - run: corepack enable
       - uses: actions/setup-node@v4
         with:
@@ -50,6 +52,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - run: npm install --global corepack@0.31.0
       - run: corepack enable
       - uses: actions/setup-node@v4
         with:
@@ -67,6 +70,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - run: npm install --global corepack@0.31.0
       - run: corepack enable
       - uses: actions/setup-node@v4
         with:
@@ -85,6 +89,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - run: npm install --global corepack@0.31.0
       - run: corepack enable
       - uses: actions/setup-node@v4
         with:
@@ -102,6 +107,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - run: npm install --global corepack@0.31.0
       - run: corepack enable
       - uses: actions/setup-node@v4
         with:
