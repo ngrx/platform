@@ -143,7 +143,5 @@ jobs:
         with:
           name: artifact-modules
           path: dist
-      - uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_DEPLOY_KEY }}
-      - run: pnpm run deploy:builds
+      # TODO: Add deployment steps here
+      # - run: pnpm run deploy:builds
