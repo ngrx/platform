@@ -32,7 +32,7 @@ type MapResponseObserver<T, E, R1, R2> = {
  * });
  * ```
  */
-export function mapResponse<T, E, R1, R2>(
+export function mapResponse<T, R1, R2, E = any>(
   observer: MapResponseObserver<T, E, R1, R2>
 ): (source$: Observable<T>) => Observable<R1 | R2> {
   return (source$) =>
