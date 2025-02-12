@@ -201,7 +201,11 @@ export function updateEntitiesMutably(
     didMutate = DidMutate.Both;
   }
 
-  if (ngDevMode && state.ids.length !== Object.keys(state.entityMap).length) {
+  if (
+    typeof ngDevMode !== 'undefined' &&
+    ngDevMode &&
+    state.ids.length !== Object.keys(state.entityMap).length
+  ) {
     console.warn(
       '@ngrx/signals/entities: Entities with IDs:',
       ids,
