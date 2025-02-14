@@ -6,7 +6,7 @@ export function assertUniqueStoreMembers(
   store: InnerSignalStore,
   newMemberKeys: Array<string | symbol>
 ): void {
-  if (!ngDevMode) {
+  if (typeof ngDevMode === 'undefined' || !ngDevMode) {
     return;
   }
 
