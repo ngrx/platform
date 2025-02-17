@@ -41,5 +41,13 @@
       "@ngrx/signals"
     ],
     "migrations": "./migrations/migration.json"
+  },
+  "devDependencies": {
+    "@types/strip-json-comments": "^0.0.30",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@angular-devkit/schematics": "^19.1.7",
+    "strip-json-comments": "^5.0.1"
   }
 }
