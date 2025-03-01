@@ -14,11 +14,11 @@ const STATE_WATCHERS = new WeakMap<Signal<object>, Array<StateWatcher<any>>>();
 export const STATE_SOURCE = Symbol('STATE_SOURCE');
 
 export type WritableStateSource<State extends object> = {
-  [STATE_SOURCE]: WritableSignal<State>;
+  readonly [STATE_SOURCE]: WritableSignal<State>;
 };
 
 export type StateSource<State extends object> = {
-  [STATE_SOURCE]: Signal<State>;
+  readonly [STATE_SOURCE]: Signal<State>;
 };
 
 export type PartialStateUpdater<State extends object> = (

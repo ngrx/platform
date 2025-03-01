@@ -2,11 +2,11 @@ import { Signal } from '@angular/core';
 
 export type EntityId = string | number;
 
-export type EntityMap<Entity> = Record<EntityId, Entity>;
+export type EntityMap<Entity> = Readonly<Record<EntityId, Entity>>;
 
 export type EntityState<Entity> = {
-  entityMap: EntityMap<Entity>;
-  ids: EntityId[];
+  readonly entityMap: EntityMap<Entity>;
+  readonly ids: readonly EntityId[];
 };
 
 export type NamedEntityState<Entity, Collection extends string> = {
@@ -14,7 +14,7 @@ export type NamedEntityState<Entity, Collection extends string> = {
 };
 
 export type EntityProps<Entity> = {
-  entities: Signal<Entity[]>;
+  entities: Signal<readonly Entity[]>;
 };
 
 export type NamedEntityProps<Entity, Collection extends string> = {
