@@ -9,6 +9,8 @@ export { setAllEntities } from './updaters/set-all-entities';
 export { updateEntity } from './updaters/update-entity';
 export { updateEntities } from './updaters/update-entities';
 export { updateAllEntities } from './updaters/update-all-entities';
+export { selectEntity } from './updaters/select-entity';
+export { clearSelectedEntity } from './updaters/clear-selected-entity';
 
 export { entityConfig } from './entity-config';
 export {

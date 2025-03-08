@@ -1,9 +1,10 @@
 import {
-  DidMutate,
+  didMutate,
   EntityChanges,
   EntityId,
   EntityPredicate,
   EntityState,
+  Mutated,
   SelectEntityId,
 } from './models';
 
@@ -17,23 +18,36 @@ export function getEntityIdSelector(config?: {
 }
 
 export function getEntityStateKeys(config?: { collection?: string }): {
+  selectedEntityIdKey: string;
+  selectedEntityKey: string;
   entityMapKey: string;
   idsKey: string;
   entitiesKey: string;
 } {
   const collection = config?.collection;
+  const selectedEntityIdKey =
+    collection === undefined ? 'selectedId' : `${collection}SelectedId`;
+  const selectedEntityKey =
+    collection === undefined ? 'selectedEntity' : `${collection}SelectedEntity`;
   const entityMapKey =
     collection === undefined ? 'entityMap' : `${collection}EntityMap`;
   const idsKey = collection === undefined ? 'ids' : `${collection}Ids`;
   const entitiesKey =
     collection === undefined ? 'entities' : `${collection}Entities`;
 
-  return { entityMapKey, idsKey, entitiesKey };
+  return {
+    selectedEntityIdKey,
+    selectedEntityKey,
+    entityMapKey,
+    idsKey,
+    entitiesKey,
+  };
 }
 
 export function cloneEntityState(
   state: Record<string, any>,
   stateKeys: {
+    selectedEntityIdKey: string;
     entityMapKey: string;
     idsKey: string;
   }
@@ -41,127 +55,126 @@ export function cloneEntityState(
   return {
     entityMap: { ...state[stateKeys.entityMapKey] },
     ids: [...state[stateKeys.idsKey]],
+    selectedId: state[stateKeys.selectedEntityIdKey],
   };
 }
 
 export function getEntityUpdaterResult(
   state: EntityState<any>,
   stateKeys: {
+    selectedEntityIdKey: string;
     entityMapKey: string;
     idsKey: string;
   },
-  didMutate: DidMutate
+  mutated: Mutated
 ): Record<string, any> {
-  switch (didMutate) {
-    case DidMutate.Both: {
-      return {
-        [stateKeys.entityMapKey]: state.entityMap,
-        [stateKeys.idsKey]: state.ids,
-      };
-    }
-    case DidMutate.Entities: {
-      return { [stateKeys.entityMapKey]: state.entityMap };
-    }
-    default: {
-      return {};
-    }
-  }
+  const changes: Record<string, any> = {};
+
+  if (didMutate(mutated, Mutated.Entities))
+    changes[stateKeys.entityMapKey] = state.entityMap;
+
+  if (didMutate(mutated, Mutated.Ids)) changes[stateKeys.idsKey] = state.ids;
+
+  if (didMutate(mutated, Mutated.SelectedEntityId))
+    changes[stateKeys.selectedEntityIdKey] = state.selectedId;
+
+  return changes;
 }
 
 export function addEntityMutably(
   state: EntityState<any>,
   entity: any,
   selectId: SelectEntityId<any>
-): DidMutate {
+): Mutated {
   const id = selectId(entity);
 
   if (state.entityMap[id]) {
-    return DidMutate.None;
+    return Mutated.None;
   }
 
   state.entityMap[id] = entity;
   state.ids.push(id);
 
-  return DidMutate.Both;
+  return Mutated.Entities | Mutated.Ids;
 }
 
 export function addEntitiesMutably(
   state: EntityState<any>,
   entities: any[],
   selectId: SelectEntityId<any>
-): DidMutate {
-  let didMutate = DidMutate.None;
+): Mutated {
+  let mutated = Mutated.None;
 
   for (const entity of entities) {
     const result = addEntityMutably(state, entity, selectId);
 
-    if (result === DidMutate.Both) {
-      didMutate = result;
+    if (didMutate(result, Mutated.Entities | Mutated.Ids)) {
+      mutated = result;
     }
   }
 
-  return didMutate;
+  return mutated;
 }
 
 export function setEntityMutably(
   state: EntityState<any>,
   entity: any,
   selectId: SelectEntityId<any>
-): DidMutate {
+): Mutated {
   const id = selectId(entity);
 
   if (state.entityMap[id]) {
     state.entityMap[id] = entity;
-    return DidMutate.Entities;
+    return Mutated.Entities;
   }
 
   state.entityMap[id] = entity;
   state.ids.push(id);
 
-  return DidMutate.Both;
+  return Mutated.Entities | Mutated.Ids;
 }
 
 export function setEntitiesMutably(
   state: EntityState<any>,
   entities: any[],
   selectId: SelectEntityId<any>
-): DidMutate {
-  let didMutate = DidMutate.None;
+): Mutated {
+  let mutated = Mutated.None;
 
   for (const entity of entities) {
     const result = setEntityMutably(state, entity, selectId);
 
-    if (didMutate === DidMutate.Both) {
+    if (didMutate(mutated, Mutated.Entities | Mutated.Ids)) {
       continue;
     }
 
-    didMutate = result;
+    mutated = result;
   }
 
-  return didMutate;
+  return mutated;
 }
 
 export function removeEntitiesMutably(
   state: EntityState<any>,
   idsOrPredicate: EntityId[] | EntityPredicate<any>
-): DidMutate {
+): Mutated {
   const ids = Array.isArray(idsOrPredicate)
     ? idsOrPredicate
     : state.ids.filter((id) => idsOrPredicate(state.entityMap[id]));
-  let didMutate = DidMutate.None;
+  let mutated = Mutated.None;
 
   for (const id of ids) {
     if (state.entityMap[id]) {
       delete state.entityMap[id];
-      didMutate = DidMutate.Both;
+      mutated = Mutated.Entities | Mutated.Ids;
     }
   }
 
-  if (didMutate === DidMutate.Both) {
+  if (didMutate(mutated, Mutated.Entities | Mutated.Ids)) {
     state.ids = state.ids.filter((id) => id in state.entityMap);
   }
 
-  return didMutate;
+  return mutated;
 }
 
 export function updateEntitiesMutably(
@@ -169,12 +182,12 @@ export function updateEntitiesMutably(
   idsOrPredicate: EntityId[] | EntityPredicate<any>,
   changes: EntityChanges<any>,
   selectId: SelectEntityId<any>
-): DidMutate {
+): Mutated {
   const ids = Array.isArray(idsOrPredicate)
     ? idsOrPredicate
     : state.ids.filter((id) => idsOrPredicate(state.entityMap[id]));
   let newIds: Record<EntityId, EntityId> | undefined = undefined;
-  let didMutate = DidMutate.None;
+  let mutated = Mutated.None;
 
   for (const id of ids) {
     const entity = state.entityMap[id];
@@ -183,7 +196,7 @@ export function updateEntitiesMutably(
       const changesRecord =
         typeof changes === 'function' ? changes(entity) : changes;
       state.entityMap[id] = { ...entity, ...changesRecord };
-      didMutate = DidMutate.Entities;
+      mutated = Mutated.Entities;
 
       const newId = selectId(state.entityMap[id]);
       if (newId !== id) {
@@ -198,7 +211,7 @@ export function updateEntitiesMutably(
 
   if (newIds) {
     state.ids = state.ids.map((id) => newIds[id] ?? id);
-    didMutate = DidMutate.Both;
+    mutated = Mutated.Entities | Mutated.Ids;
   }
 
   if (
@@ -215,5 +228,5 @@ export function updateEntitiesMutably(
     );
   }
 
-  return didMutate;
+  return mutated;
 }

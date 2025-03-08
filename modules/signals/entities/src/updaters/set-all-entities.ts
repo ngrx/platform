@@ -37,7 +37,11 @@ export function setAllEntities(
   const stateKeys = getEntityStateKeys(config);
 
   return () => {
-    const state: EntityState<any> = { entityMap: {}, ids: [] };
+    const state: EntityState<any> = {
+      entityMap: {},
+      ids: [],
+      selectedId: null,
+    };
     setEntitiesMutably(state, entities, selectId);
 
     return {

@@ -49,12 +49,19 @@ export function withEntities<Entity>(config?: {
   entity: Entity;
   collection?: string;
 }): SignalStoreFeature {
-  const { entityMapKey, idsKey, entitiesKey } = getEntityStateKeys(config);
+  const {
+    selectedEntityIdKey,
+    selectedEntityKey,
+    entityMapKey,
+    idsKey,
+    entitiesKey,
+  } = getEntityStateKeys(config);
 
   return signalStoreFeature(
     withState({
       [entityMapKey]: {},
       [idsKey]: [],
+      [selectedEntityIdKey]: null,
     }),
     withComputed((store: Record<string, Signal<unknown>>) => ({
       [entitiesKey]: computed(() => {
@@ -62,6 +69,15 @@ export function withEntities<Entity>(config?: {
         const ids = store[idsKey]() as EntityId[];
 
         return ids.map((id) => entityMap[id]);
+      }),
+      [selectedEntityKey]: computed(() => {
+        const selectedEntityId = store[selectedEntityIdKey]() as EntityId;
+        if (!selectedEntityId) return null;
+        return (
+          (store[entityMapKey]() as Record<EntityId, Entity>)[
+            selectedEntityId
+          ] ?? null
+        );
       }),
     }))
   );

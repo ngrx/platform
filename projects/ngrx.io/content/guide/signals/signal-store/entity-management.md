@@ -110,6 +110,34 @@ Replaces the current entity collection with the provided collection.
 patchState(store, setAllEntities([todo1, todo2, todo3]));
 ```
 
+### `selectEntity`
+
+Selects an entity given its ID.
+
+```ts
+patchState(
+  store,
+  selectEntity("exampleId")
+);
+
+store.selectedId(); // "exampleId"
+store.selectedEntity(); // {id: "exampleId", ...}
+```
+
+### `clearSelectedEntity`
+
+Deselects the currently selected id setting it as null.
+
+```ts
+patchState(
+  store,
+  clearSelectedEntity()
+);
+
+store.selectedId(); // null
+store.selectedEntity(); // null
+```
+
 ### `updateEntity`
 
 Updates an entity in the collection by ID. Supports partial updates. No error is thrown if an entity doesn't exist.
