@@ -1,5 +1,7 @@
 export { addEntity } from './updaters/add-entity';
+export { prependEntity } from './updaters/prepend-entity';
 export { addEntities } from './updaters/add-entities';
+export { prependEntities } from './updaters/prepend-entities';
 export { removeEntity } from './updaters/remove-entity';
 export { removeEntities } from './updaters/remove-entities';
 export { removeAllEntities } from './updaters/remove-all-entities';
