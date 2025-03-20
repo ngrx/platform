@@ -16,7 +16,7 @@ export function unprotected<Source extends StateSource<object>>(
   source: Source
 ): UnprotectedSource<Source> {
   if (isWritableStateSource(source)) {
-    return source as unknown as UnprotectedSource<Source>;
+    return source as UnprotectedSource<Source>;
   }
 
   throw new Error('@ngrx/signals: The provided source is not writable.');
