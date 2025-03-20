@@ -46,6 +46,7 @@
       "@ngrx/signals": ["./modules/signals"],
       "@ngrx/signals/entities": ["./modules/signals/entities"],
       "@ngrx/signals/rxjs-interop": ["./modules/signals/rxjs-interop"],
+      "@ngrx/signals/testing": ["./modules/signals/testing"],
       "@ngrx/signals/schematics-core": ["./modules/signals/schematics-core"],
       "@ngrx/store": ["./modules/store"],
       "@ngrx/store-devtools": ["./modules/store-devtools"],

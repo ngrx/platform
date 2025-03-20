@@ -3,17 +3,21 @@ import {
   effect,
   EnvironmentInjector,
   Injectable,
+  signal,
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   getState,
+  isWritableStateSource,
   patchState,
   signalState,
   signalStore,
+  StateSource,
   watchState,
   withHooks,
   withMethods,
   withState,
+  WritableStateSource,
 } from '../src';
 import { STATE_SOURCE } from '../src/state-source';
 import { createLocalService } from './helpers';
@@ -31,6 +35,24 @@ describe('StateSource', () => {
     ngrx: 'signals',
     [SECRET]: 'secret',
   };
+
+  describe('isWritableStateSource', () => {
+    it('returns true for a writable StateSource', () => {
+      const stateSource: StateSource<typeof initialState> = {
+        [STATE_SOURCE]: signal(initialState),
+      };
+
+      expect(isWritableStateSource(stateSource)).toBe(true);
+    });
+
+    it('returns false for a readonly StateSource', () => {
+      const stateSource: StateSource<typeof initialState> = {
+        [STATE_SOURCE]: signal(initialState).asReadonly(),
+      };
+
+      expect(isWritableStateSource(stateSource)).toBe(false);
+    });
+  });
 
   describe('patchState', () => {
     [
