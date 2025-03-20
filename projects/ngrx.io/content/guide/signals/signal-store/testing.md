@@ -19,7 +19,7 @@ A key concern in testing is maintainability. The more tests are coupled to inter
 
 For example, when testing the store in a loading state, avoid directly setting the loading property. Instead, trigger a loading method and assert against an exposed computed property or slice. This approach reduces dependency on internal implementations, such as properties set during the loading state.
 
-From this perspective, private properties or methods of the SignalStore should not be accessed. Additionally, avoid running `patchState` if the state is protected.
+From this perspective, private properties or methods of the SignalStore should not be accessed.
 
 ---
 
@@ -117,6 +117,35 @@ describe('MoviesStore', () => {
 });
 
 </code-example>
+
+### `unprotected`
+
+The `unprotected` function from the `@ngrx/signals/testing` plugin is used to update the protected state of a SignalStore for testing purposes.
+This utility bypasses state encapsulation, making it possible to test state changes and their impacts.
+
+```ts
+// counter.store.ts
+const CounterStore = signalStore(
+  { providedIn: 'root' },
+  withState({ count: 1 }),
+  withComputed(({ count }) => ({
+    doubleCount: computed(() => count() * 2),
+  })),
+);
+
+// counter.store.spec.ts
+import { TestBed } from '@angular/core/testing';
+import { unprotected } from '@ngrx/signals/testing';
+
+describe('CounterStore', () => {
+  it('recomputes doubleCount on count changes', () => {
+    const counterStore = TestBed.inject(CounterStore);
+
+    patchState(unprotected(counterStore), { count: 10 });
+    expect(counterStore.doubleCount()).toBe(20);
+  });
+});
+```
 
 ### `withComputed`
 
