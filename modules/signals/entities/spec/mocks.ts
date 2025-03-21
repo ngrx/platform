@@ -1,4 +1,9 @@
-export type User = { id: number; firstName: string; lastName: string };
+export type User = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  age?: number;
+};
 export type Todo = { _id: string; text: string; completed: boolean };
 
 export const user1: User = { id: 1, firstName: 'John', lastName: 'Doe' };
