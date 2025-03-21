@@ -136,7 +136,6 @@ import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-foo',
   standalone: false,
-  
   templateUrl: './foo.component.html',
   styleUrl: './foo.component.css'
 })

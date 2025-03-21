@@ -34,7 +34,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet).toInfer(
       'Store',
-      'Type<{ foo: Signal<string>; bar: Signal<number[]>; } & StateSource<{ foo: string; bar: number[]; }>>'
+      'Type$1<{ foo: Signal<string>; bar: Signal<number[]>; } & StateSource<{ foo: string; bar: number[]; }>>'
     );
   });
 
@@ -234,7 +234,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet).toSucceed();
 
-    expectSnippet(snippet).toInfer('Store', 'Type<{} & StateSource<{}>>');
+    expectSnippet(snippet).toInfer('Store', 'Type$1<{} & StateSource<{}>>');
   });
 
   it('succeeds when state slices are union types', () => {
@@ -305,7 +305,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet1).toInfer(
       'Store',
-      'Type<{ name: DeepSignal<{ x: { y: string; }; }>; arguments: Signal<number[]>; call: Signal<boolean>; } & StateSource<{ name: { x: { y: string; }; }; arguments: number[]; call: boolean; }>>'
+      'Type$1<{ name: DeepSignal<{ x: { y: string; }; }>; arguments: Signal<number[]>; call: Signal<boolean>; } & StateSource<{ name: { x: { y: string; }; }; arguments: number[]; call: boolean; }>>'
     );
 
     const snippet2 = `
@@ -322,7 +322,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet2).toInfer(
       'Store',
-      'Type<{ apply: Signal<string>; bind: DeepSignal<{ foo: string; }>; prototype: Signal<string[]>; } & StateSource<{ apply: string; bind: { foo: string; }; prototype: string[]; }>>'
+      'Type$1<{ apply: Signal<string>; bind: DeepSignal<{ foo: string; }>; prototype: Signal<string[]>; } & StateSource<{ apply: string; bind: { foo: string; }; prototype: string[]; }>>'
     );
 
     const snippet3 = `
@@ -338,7 +338,7 @@ describe('signalStore', () => {
 
     expectSnippet(snippet3).toInfer(
       'Store',
-      'Type<{ length: Signal<number>; caller: Signal<undefined>; } & StateSource<{ length: number; caller: undefined; }>>'
+      'Type$1<{ length: Signal<number>; caller: Signal<undefined>; } & StateSource<{ length: number; caller: undefined; }>>'
     );
   });
 
