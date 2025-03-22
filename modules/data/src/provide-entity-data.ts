@@ -1,9 +1,9 @@
 import {
-  ENVIRONMENT_INITIALIZER,
   EnvironmentProviders,
   inject,
   InjectionToken,
   makeEnvironmentProviders,
+  provideEnvironmentInitializer,
   Provider,
 } from '@angular/core';
 import {
@@ -59,7 +59,9 @@ import { EntityEffects } from './effects/entity-effects';
 import { DefaultPluralizer } from './utils/default-pluralizer';
 import { EntityDataModuleConfig } from './entity-data-config';
 
-export const BASE_ENTITY_DATA_PROVIDERS: Provider[] = [
+export const BASE_ENTITY_DATA_PROVIDERS: Array<
+  Provider | EnvironmentProviders
+> = [
   CorrelationIdGenerator,
   EntityDispatcherDefaultOptions,
   EntityActionFactory,
@@ -80,11 +82,7 @@ export const BASE_ENTITY_DATA_PROVIDERS: Provider[] = [
   { provide: ENTITY_CACHE_NAME_TOKEN, useValue: ENTITY_CACHE_NAME },
   { provide: EntityServices, useClass: EntityServicesBase },
   { provide: Logger, useClass: DefaultLogger },
-  {
-    provide: ENVIRONMENT_INITIALIZER,
-    multi: true,
-    useValue: () => initializeBaseEntityData(),
-  },
+  provideEnvironmentInitializer(() => initializeBaseEntityData()),
 ];
 
 function initializeBaseEntityData(): void {
@@ -122,7 +120,9 @@ function initializeBaseEntityData(): void {
   reducerManager.addFeature(entityCacheFeature);
 }
 
-export const ENTITY_DATA_EFFECTS_PROVIDERS: Provider[] = [
+export const ENTITY_DATA_EFFECTS_PROVIDERS: Array<
+  Provider | EnvironmentProviders
+> = [
   DefaultDataServiceFactory,
   EntityCacheDataService,
   EntityDataService,
@@ -134,11 +134,7 @@ export const ENTITY_DATA_EFFECTS_PROVIDERS: Provider[] = [
     useClass: DefaultPersistenceResultHandler,
   },
   { provide: Pluralizer, useClass: DefaultPluralizer },
-  {
-    provide: ENVIRONMENT_INITIALIZER,
-    multi: true,
-    useValue: () => initializeEntityDataEffects(),
-  },
+  provideEnvironmentInitializer(() => initializeEntityDataEffects()),
 ];
 
 function initializeEntityDataEffects(): void {
