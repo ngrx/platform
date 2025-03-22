@@ -34,6 +34,12 @@ The `withEntities` feature adds the following signals to the `TodosStore`:
 
 The `ids` and `entityMap` are state slices, while `entities` is a computed signal.
 
+If you need to use a custom type for `ids` and `entityMap` keys that extends `number` or `string`, you can pass this type as a generic:
+
+```ts
+withEntities<User, UserId>();
+```
+
 ## Entity Updaters
 
 The `entities` plugin provides a set of standalone entity updaters.

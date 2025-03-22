@@ -16,36 +16,43 @@ import {
 } from './models';
 import { getEntityStateKeys } from './helpers';
 
-export function withEntities<Entity>(): SignalStoreFeature<
+export function withEntities<
+  Entity,
+  Id extends EntityId = EntityId
+>(): SignalStoreFeature<
   EmptyFeatureResult,
   {
-    state: EntityState<Entity>;
+    state: EntityState<Entity, Id>;
     props: EntityProps<Entity>;
     methods: {};
   }
 >;
-export function withEntities<Entity, Collection extends string>(config: {
+export function withEntities<
+  Entity,
+  Collection extends string,
+  Id extends EntityId = EntityId
+>(config: {
   entity: Entity;
   collection: Collection;
 }): SignalStoreFeature<
   EmptyFeatureResult,
   {
-    state: NamedEntityState<Entity, Collection>;
+    state: NamedEntityState<Entity, Collection, Id>;
     props: NamedEntityProps<Entity, Collection>;
     methods: {};
   }
 >;
-export function withEntities<Entity>(config: {
+export function withEntities<Entity, Id extends EntityId = EntityId>(config: {
   entity: Entity;
 }): SignalStoreFeature<
   EmptyFeatureResult,
   {
-    state: EntityState<Entity>;
+    state: EntityState<Entity, Id>;
     props: EntityProps<Entity>;
     methods: {};
   }
 >;
-export function withEntities<Entity>(config?: {
+export function withEntities<Entity, Id extends EntityId = EntityId>(config?: {
   entity: Entity;
   collection?: string;
 }): SignalStoreFeature {
@@ -58,8 +65,8 @@ export function withEntities<Entity>(config?: {
     }),
     withComputed((store: Record<string, Signal<unknown>>) => ({
       [entitiesKey]: computed(() => {
-        const entityMap = store[entityMapKey]() as EntityMap<Entity>;
-        const ids = store[idsKey]() as EntityId[];
+        const entityMap = store[entityMapKey]() as EntityMap<Entity, Id>;
+        const ids = store[idsKey]() as Id[];
 
         return ids.map((id) => entityMap[id]);
       }),
