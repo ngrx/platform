@@ -1,10 +1,10 @@
 import {
-  ENVIRONMENT_INITIALIZER,
   EnvironmentProviders,
   Inject,
   inject,
   InjectionToken,
   makeEnvironmentProviders,
+  provideEnvironmentInitializer,
   Provider,
 } from '@angular/core';
 import {
@@ -183,15 +183,9 @@ function rootStoreProviderFactory(): void {
  * Environment Initializer used in the root
  * providers to initialize the Store
  */
-const ENVIRONMENT_STORE_PROVIDER: Provider[] = [
+const ENVIRONMENT_STORE_PROVIDER: Array<Provider | EnvironmentProviders> = [
   { provide: ROOT_STORE_PROVIDER, useFactory: rootStoreProviderFactory },
-  {
-    provide: ENVIRONMENT_INITIALIZER,
-    multi: true,
-    useFactory() {
-      return () => inject(ROOT_STORE_PROVIDER);
-    },
-  },
+  provideEnvironmentInitializer(() => inject(ROOT_STORE_PROVIDER)),
 ];
 
 /**
@@ -245,18 +239,12 @@ function featureStateProviderFactory(): void {
  * Environment Initializer used in the feature
  * providers to register state features
  */
-const ENVIRONMENT_STATE_PROVIDER: Provider[] = [
+const ENVIRONMENT_STATE_PROVIDER: Array<Provider | EnvironmentProviders> = [
   {
     provide: FEATURE_STATE_PROVIDER,
     useFactory: featureStateProviderFactory,
   },
-  {
-    provide: ENVIRONMENT_INITIALIZER,
-    multi: true,
-    useFactory() {
-      return () => inject(FEATURE_STATE_PROVIDER);
-    },
-  },
+  provideEnvironmentInitializer(() => inject(FEATURE_STATE_PROVIDER)),
 ];
 
 export function _provideState<T, V extends Action = Action>(
