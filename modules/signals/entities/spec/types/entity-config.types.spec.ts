@@ -57,7 +57,7 @@ describe('entityConfig', () => {
         selectId: selectId2,
       });
 
-      const selectId3: SelectEntityId<User> = (user) => user.key;
+      const selectId3: SelectEntityId<User, number> = (user) => user.key;
       const userConfig3 = entityConfig({
         entity: type<User>(),
         selectId: selectId3,
@@ -67,15 +67,15 @@ describe('entityConfig', () => {
     expectSnippet(snippet).toSucceed();
     expectSnippet(snippet).toInfer(
       'userConfig1',
-      '{ entity: User; selectId: SelectEntityId<NoInfer<User>>; }'
+      '{ entity: User; selectId: SelectEntityId<NoInfer<User>, number>; }'
     );
     expectSnippet(snippet).toInfer(
       'userConfig2',
-      '{ entity: User; selectId: SelectEntityId<NoInfer<User>>; }'
+      '{ entity: User; selectId: SelectEntityId<NoInfer<User>, number>; }'
     );
     expectSnippet(snippet).toInfer(
       'userConfig3',
-      '{ entity: User; selectId: SelectEntityId<NoInfer<User>>; }'
+      '{ entity: User; selectId: SelectEntityId<NoInfer<User>, number>; }'
     );
   });
 
@@ -97,7 +97,7 @@ describe('entityConfig', () => {
     `).toFail(/No overload matches this call/);
 
     expectSnippet(`
-      const selectId: SelectEntityId<{ key: string }> = (entity) => entity.key;
+      const selectId: SelectEntityId<{ key: string }, string> = (entity) => entity.key;
 
       const userConfig = entityConfig({
         entity: type<User>(),
@@ -121,7 +121,7 @@ describe('entityConfig', () => {
         selectId: selectId2,
       });
 
-      const selectId3: SelectEntityId<User> = (user) => user.key;
+      const selectId3: SelectEntityId<User, number> = (user) => user.key;
       const userConfig3 = entityConfig({
         entity: type<User>(),
         collection: 'user',
@@ -132,15 +132,15 @@ describe('entityConfig', () => {
     expectSnippet(snippet).toSucceed();
     expectSnippet(snippet).toInfer(
       'userConfig1',
-      '{ entity: User; collection: "user"; selectId: SelectEntityId<NoInfer<User>>; }'
+      '{ entity: User; collection: "user"; selectId: SelectEntityId<NoInfer<User>, number>; }'
     );
     expectSnippet(snippet).toInfer(
       'userConfig2',
-      '{ entity: User; collection: "user"; selectId: SelectEntityId<NoInfer<User>>; }'
+      '{ entity: User; collection: "user"; selectId: SelectEntityId<NoInfer<User>, number>; }'
     );
     expectSnippet(snippet).toInfer(
       'userConfig3',
-      '{ entity: User; collection: "user"; selectId: SelectEntityId<NoInfer<User>>; }'
+      '{ entity: User; collection: "user"; selectId: SelectEntityId<NoInfer<User>, number>; }'
     );
   });
 
@@ -164,7 +164,7 @@ describe('entityConfig', () => {
     `).toFail(/No overload matches this call/);
 
     expectSnippet(`
-      const selectId: SelectEntityId<{ key: string }> = (entity) => entity.key;
+      const selectId: SelectEntityId<{ key: string }, string> = (entity) => entity.key;
 
       const userConfig = entityConfig({
         entity: type<User>(),
