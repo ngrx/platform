@@ -222,7 +222,7 @@ describe('EntityCollectionReducerRegistry', () => {
           EntityDefinitionService,
           { provide: ENTITY_METADATA_TOKEN, multi: true, useValue: metadata },
           { provide: ENTITY_COLLECTION_META_REDUCERS, useValue: metaReducers },
-          { provide: Logger, useValue: logger },
+          { provide: Logger, useValue: logger! },
         ],
       });
 
