@@ -1,8 +1,8 @@
 import {
-  ENVIRONMENT_INITIALIZER,
   EnvironmentProviders,
   inject,
   makeEnvironmentProviders,
+  provideEnvironmentInitializer,
 } from '@angular/core';
 import {
   _createRouterConfig,
@@ -54,13 +54,7 @@ export function provideRouterStore<
         ? FullRouterStateSerializer
         : MinimalRouterStateSerializer,
     },
-    {
-      provide: ENVIRONMENT_INITIALIZER,
-      multi: true,
-      useFactory() {
-        return () => inject(StoreRouterConnectingService);
-      },
-    },
+    provideEnvironmentInitializer(() => inject(StoreRouterConnectingService)),
     StoreRouterConnectingService,
   ]);
 }

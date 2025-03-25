@@ -1,8 +1,8 @@
 import {
-  ENVIRONMENT_INITIALIZER,
   EnvironmentProviders,
   inject,
   makeEnvironmentProviders,
+  provideEnvironmentInitializer,
   Type,
 } from '@angular/core';
 import {
@@ -66,33 +66,29 @@ export function provideEffects(
 
   return makeEnvironmentProviders([
     effectsClasses,
-    {
-      provide: ENVIRONMENT_INITIALIZER,
-      multi: true,
-      useValue: () => {
-        inject(ROOT_STORE_PROVIDER);
-        inject(FEATURE_STATE_PROVIDER, { optional: true });
+    provideEnvironmentInitializer(() => {
+      inject(ROOT_STORE_PROVIDER);
+      inject(FEATURE_STATE_PROVIDER, { optional: true });
 
-        const effectsRunner = inject(EffectsRunner);
-        const effectSources = inject(EffectSources);
-        const shouldInitEffects = !effectsRunner.isStarted;
+      const effectsRunner = inject(EffectsRunner);
+      const effectSources = inject(EffectSources);
+      const shouldInitEffects = !effectsRunner.isStarted;
 
-        if (shouldInitEffects) {
-          effectsRunner.start();
-        }
+      if (shouldInitEffects) {
+        effectsRunner.start();
+      }
 
-        for (const effectsClassOrRecord of effectsClassesAndRecords) {
-          const effectsInstance = isClass(effectsClassOrRecord)
-            ? inject(effectsClassOrRecord)
-            : effectsClassOrRecord;
-          effectSources.addEffects(effectsInstance);
-        }
+      for (const effectsClassOrRecord of effectsClassesAndRecords) {
+        const effectsInstance = isClass(effectsClassOrRecord)
+          ? inject(effectsClassOrRecord)
+          : effectsClassOrRecord;
+        effectSources.addEffects(effectsInstance);
+      }
 
-        if (shouldInitEffects) {
-          const store = inject(Store);
-          store.dispatch(effectsInit());
-        }
-      },
-    },
+      if (shouldInitEffects) {
+        const store = inject(Store);
+        store.dispatch(effectsInit());
+      }
+    }),
   ]);
 }

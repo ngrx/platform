@@ -3,6 +3,7 @@ import {
   DestroyRef,
   inject,
   Injector,
+  isSignal,
   Signal,
   untracked,
   WritableSignal,
@@ -28,6 +29,17 @@ export type PartialStateUpdater<State extends object> = (
 export type StateWatcher<State extends object> = (
   state: NoInfer<State>
 ) => void;
+
+export function isWritableStateSource<State extends object>(
+  stateSource: StateSource<State>
+): stateSource is WritableStateSource<State> {
+  return (
+    'set' in stateSource[STATE_SOURCE] &&
+    'update' in stateSource[STATE_SOURCE] &&
+    typeof stateSource[STATE_SOURCE].set === 'function' &&
+    typeof stateSource[STATE_SOURCE].update === 'function'
+  );
+}
 
 export function patchState<State extends object>(
   stateSource: WritableStateSource<State>,
