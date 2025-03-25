@@ -318,3 +318,36 @@ const Store = signalStore(
   withW()
 ); // ✅ works as expected
 ```
+
+As an alternative, you can also consider using `withFeature`.
+
+## Connecting a Custom Feature with the Store
+
+The `withFeature` function allows you to pass properties, methods, or signals from a SignalStore to a custom feature.
+
+This is an alternative to the input approach above and allows more flexibility:
+
+<code-example header="loader.store.ts">
+
+import { Signal } from '@angular/core';
+import { signalStore, signalStoreFeature, withFeature, withMethods } from '@ngrx/signals';
+import { firstValueFrom, Observable } from 'rxjs';
+
+type Entity = { id: number };
+
+function withLoader(load: (id: number) => Promise<Entity>) {
+  return signalStoreFeature(
+    // some code...
+  );
+}
+
+const LoaderStore = signalStore(
+  withMethods((store) => ({
+    load(id: number): Observable<Entity> {
+      // some code...
+    },
+  })),
+  withFeature((store) => withLoader((id) => firstValueFrom(store.load(id))))
+);
+
+</code-example>
