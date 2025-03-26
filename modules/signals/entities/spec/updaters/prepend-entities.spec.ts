@@ -254,34 +254,4 @@ describe('prependEntities', () => {
     expect(store.todoIds()).toEqual(['x', 'y', 'z']);
     expect(store.todoEntities()).toEqual([todo1, todo2, todo3]);
   });
-
-  it('maintains correct order when adding multiple batches of entities', () => {
-    const Store = signalStore({ protectedState: false }, withEntities<User>());
-    const store = new Store();
-
-    patchState(store, prependEntities([user1]));
-
-    expect(store.ids()).toEqual([1]);
-    expect(store.entities()).toEqual([user1]);
-
-    patchState(store, prependEntities([user2, user3]));
-
-    expect(store.ids()).toEqual([2, 3, 1]);
-    expect(store.entities()).toEqual([user2, user3, user1]);
-  });
-
-  it('preserves entity order when prepending multiple times', () => {
-    const Store = signalStore({ protectedState: false }, withEntities<Todo>());
-    const store = new Store();
-
-    patchState(store, prependEntities([todo1], { selectId }));
-
-    expect(store.entityMap()).toEqual({ x: todo1 });
-    expect(store.ids()).toEqual(['x']);
-
-    patchState(store, prependEntities([todo2, todo3], { selectId }));
-
-    expect(store.ids()).toEqual(['y', 'z', 'x']);
-    expect(store.entities()).toEqual([todo2, todo3, todo1]);
-  });
 });

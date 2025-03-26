@@ -47,16 +47,15 @@ export function prependEntities(
     for (const entity of entities) {
       const id = selectId(entity);
 
-      if (!seenIds.has(id) && !clonedState.entityMap[id]) {
-        uniqueEntities.push(entity);
+      if (!seenIds.has(id)) {
+        uniqueEntities.unshift(entity);
         seenIds.add(id);
       }
     }
 
-    const reversedEntities = [...uniqueEntities].reverse();
     const didMutate = addEntitiesMutably(
       clonedState,
-      reversedEntities,
+      uniqueEntities,
       selectId,
       true
     );

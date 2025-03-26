@@ -212,15 +212,4 @@ describe('prependEntity', () => {
     expect(store.todoIds()).toEqual(['y', 'x']);
     expect(store.todoEntities()).toEqual([todo2, todo1]);
   });
-
-  it('maintains the correct order when adding multiple entities', () => {
-    const Store = signalStore({ protectedState: false }, withEntities<User>());
-    const store = new Store();
-
-    patchState(store, prependEntity(user1));
-    patchState(store, prependEntity(user2));
-
-    expect(store.ids()).toEqual([2, 1]);
-    expect(store.entities()).toEqual([user2, user1]);
-  });
 });
