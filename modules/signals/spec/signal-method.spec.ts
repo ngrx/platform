@@ -3,9 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import {
   createEnvironmentInjector,
   EnvironmentInjector,
+  Injector,
   runInInjectionContext,
   signal,
 } from '@angular/core';
+import { vitest, expect } from 'vitest';
 
 describe('signalMethod', () => {
   const createAdder = (processingFn: (value: number) => void) =>
@@ -213,5 +215,50 @@ describe('signalMethod', () => {
 
     TestBed.flushEffects();
     expect(a).toBe(104);
+  });
+
+  describe('warns on source injector', () => {
+    const warnSpy = vitest.spyOn(console, 'warn');
+    const n = signal(1);
+
+    beforeEach(() => {
+      warnSpy.mockReset();
+    });
+
+    it('warns when source injector is used for a signal', () => {
+      let a = 1;
+      const adder = createAdder((value) => (a += value));
+      adder(n);
+
+      expect(warnSpy).toHaveBeenCalled();
+      expect(warnSpy.mock.lastCall?.[0]).toMatch(
+        /outside the injection context/
+      );
+    });
+
+    it('does not warn on non-reactive value and source injector', () => {
+      let a = 1;
+      const adder = createAdder((value) => (a += value));
+      adder(1);
+
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
+
+    it('does not warn on manual injector', () => {
+      let a = 1;
+      const adder = createAdder((value) => (a += value));
+      const injector = TestBed.inject(Injector);
+      adder(n, { injector });
+
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
+
+    it('does not warn if called within injection context', () => {
+      let a = 1;
+      const adder = createAdder((value) => (a += value));
+      TestBed.runInInjectionContext(() => adder(n));
+
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
   });
 });

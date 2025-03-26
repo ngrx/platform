@@ -42,8 +42,20 @@ export function rxMethod<Input>(
       return { destroy: noop };
     }
 
+    const callerInjector = getCallerInjector();
+    if (config?.injector === undefined && callerInjector === undefined) {
+      console.warn(`
+  A function returned by rxMethod was called outside the injection context.
+  This may lead to memory leaks. Make sure to call it within an injection context
+  (e.g., in a constructor or field initializer), or pass an injector explicitly
+  via the config parameter.
+
+  For more information, see https://ngrx.io/api/signals/rxjs-interop/rxmethod.
+`);
+    }
+
     const instanceInjector =
-      config?.injector ?? getCallerInjector() ?? sourceInjector;
+      config?.injector ?? callerInjector ?? sourceInjector;
 
     if (isSignal(input)) {
       const watcher = effect(
@@ -78,10 +90,10 @@ function isStatic<T>(value: T | Signal<T> | Observable<T>): value is T {
   return !isSignal(value) && !isObservable(value);
 }
 
-function getCallerInjector(): Injector | null {
+function getCallerInjector(): Injector | undefined {
   try {
     return inject(Injector);
   } catch {
-    return null;
+    return undefined;
   }
 }
