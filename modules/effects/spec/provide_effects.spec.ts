@@ -1,6 +1,10 @@
-import { ENVIRONMENT_INITIALIZER, inject, Injectable } from '@angular/core';
+import {
+  inject,
+  Injectable,
+  provideEnvironmentInitializer,
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { filter, forkJoin, map, Observable, of, switchMap, take } from 'rxjs';
+import { forkJoin, map, Observable, of, switchMap, take } from 'rxjs';
 import {
   createAction,
   createFeatureSelector,
@@ -24,11 +28,9 @@ describe('provideEffects', () => {
   it('starts effects runner when called first time', () => {
     TestBed.configureTestingModule({
       providers: [
-        {
-          provide: ENVIRONMENT_INITIALIZER,
-          multi: true,
-          useValue: () => jest.spyOn(inject(EffectsRunner), 'start'),
-        },
+        provideEnvironmentInitializer(() =>
+          jest.spyOn(inject(EffectsRunner), 'start')
+        ),
         provideStore(),
         // provide effects twice
         provideEffects(),
@@ -43,11 +45,9 @@ describe('provideEffects', () => {
   it('dispatches effects init action when called first time', () => {
     TestBed.configureTestingModule({
       providers: [
-        {
-          provide: ENVIRONMENT_INITIALIZER,
-          multi: true,
-          useValue: () => jest.spyOn(inject(Store), 'dispatch'),
-        },
+        provideEnvironmentInitializer(() =>
+          jest.spyOn(inject(Store), 'dispatch')
+        ),
         provideStore(),
         // provide effects twice
         provideEffects(),

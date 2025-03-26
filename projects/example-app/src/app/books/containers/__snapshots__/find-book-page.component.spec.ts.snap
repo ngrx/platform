@@ -21,7 +21,7 @@ exports[`Find Book Page should compile 1`] = `
         class="mat-mdc-card-content"
       >
         <mat-form-field
-          class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-no-animations mat-form-field-appearance-fill mat-primary"
+          class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-primary"
         >
           <div
             class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled mdc-text-field--no-label"
@@ -54,8 +54,7 @@ exports[`Find Book Page should compile 1`] = `
             class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"
           >
             <div
-              class="mat-mdc-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
-              style="opacity: 1; transform: translateY(0%);"
+              class="mat-mdc-form-field-hint-wrapper"
             >
               <div
                 class="mat-mdc-form-field-hint-spacer"

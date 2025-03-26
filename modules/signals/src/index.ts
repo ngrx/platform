@@ -12,6 +12,7 @@ export {
 } from './signal-store-models';
 export {
   getState,
+  isWritableStateSource,
   PartialStateUpdater,
   patchState,
   StateSource,
