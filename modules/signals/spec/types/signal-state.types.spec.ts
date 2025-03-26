@@ -152,7 +152,7 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'uintArrayStateKeys',
-      'unique symbol | keyof Signal<Uint8ClampedArray>'
+      'unique symbol | keyof Signal<Uint8ClampedArray<ArrayBuffer>>'
     );
   });
 
@@ -307,7 +307,7 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'state4',
-      'SignalState<{ foo: Record<string, { bar: boolean; } | number>; }>'
+      'SignalState<{ foo: Record<string, number | { bar: boolean; }>; }>'
     );
 
     expectSnippet(snippet).toInfer(
