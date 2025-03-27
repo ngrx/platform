@@ -319,35 +319,40 @@ const Store = signalStore(
 ); // ✅ works as expected
 ```
 
-As an alternative, you can also consider using `withFeature`.
+For more complicated use cases, `withFeature` offers an alternative approach. 
 
 ## Connecting a Custom Feature with the Store
 
-The `withFeature` function allows you to pass properties, methods, or signals from a SignalStore to a custom feature.
+The `withFeature` function allows passing properties, methods, or signals from a SignalStore to a custom feature.
 
 This is an alternative to the input approach above and allows more flexibility:
 
 <code-example header="loader.store.ts">
 
-import { Signal } from '@angular/core';
-import { signalStore, signalStoreFeature, withFeature, withMethods } from '@ngrx/signals';
-import { firstValueFrom, Observable } from 'rxjs';
+import { computed, Signal } from '@angular/core';
+import { patchState, signalStore, signalStoreFeature, withComputed, withFeature, withMethods, withState } from '@ngrx/signals';
+import { withEntities } from '@ngrx/signals/entities';
 
-type Entity = { id: number };
-
-function withLoader(load: (id: number) => Promise<Entity>) {
+export function withBooksFilter(books: Signal<Book[]>) {
   return signalStoreFeature(
-    // some code...
-  );
-}
+    withState({ query: '' }),
+    withComputed(({ query }) => ({
+      filteredBooks: computed(() =>
+        books().filter((b) => b.name.includes(query()))
+      ),
+    })),
+    withMethods((store) => ({
+      setQuery(query: string): void {
+        patchState(store, { query });
+      },
+    })),
+)};
 
-const LoaderStore = signalStore(
-  withMethods((store) => ({
-    load(id: number): Observable<Entity> {
-      // some code...
-    },
-  })),
-  withFeature((store) => withLoader((id) => firstValueFrom(store.load(id))))
+export const BooksStore = signalStore(
+  withEntities<Book>(),
+  withFeature(({ entities }) =>
+    withBooksFilter(entities)
+  ),
 );
 
 </code-example>
