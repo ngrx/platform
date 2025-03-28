@@ -16,52 +16,68 @@ import {
 
 export function updateEntity<
   Collection extends string,
-  State extends NamedEntityState<any, Collection>,
-  Entity = State extends NamedEntityState<infer E, Collection> ? E : never
+  State extends NamedEntityState<any, Collection, Id>,
+  Id extends EntityId,
+  Entity = State extends NamedEntityState<infer E, Collection, Id> ? E : never
 >(
   update: {
-    id: EntityId;
+    id: Id;
     changes: EntityChanges<NoInfer<Entity>>;
   },
   config: {
     collection: Collection;
-    selectId: SelectEntityId<NoInfer<Entity>>;
+    selectId: SelectEntityId<NoInfer<Entity>, Id>;
   }
 ): PartialStateUpdater<State>;
 export function updateEntity<
   Collection extends string,
-  State extends NamedEntityState<any, Collection>,
+  State extends NamedEntityState<any, Collection, Id>,
   Entity = State extends NamedEntityState<
     infer E extends { id: EntityId },
-    Collection
+    Collection,
+    EntityId
   >
     ? E
+    : never,
+  Id extends EntityId = State extends NamedEntityState<
+    infer E extends { id: EntityId },
+    Collection,
+    EntityId
+  >
+    ? E extends { id: infer T }
+      ? T
+      : never
     : never
 >(
   update: {
-    id: EntityId;
+    id: Id;
     changes: EntityChanges<NoInfer<Entity>>;
   },
   config: { collection: Collection }
 ): PartialStateUpdater<State>;
-export function updateEntity<Entity>(
+export function updateEntity<Entity, Id extends EntityId>(
   update: {
-    id: EntityId;
+    id: Id;
     changes: EntityChanges<NoInfer<Entity>>;
   },
-  config: { selectId: SelectEntityId<NoInfer<Entity>> }
-): PartialStateUpdater<EntityState<Entity>>;
-export function updateEntity<Entity extends { id: EntityId }>(update: {
-  id: EntityId;
+  config: { selectId: SelectEntityId<NoInfer<Entity>, Id> }
+): PartialStateUpdater<EntityState<Entity, Id>>;
+export function updateEntity<
+  Entity extends { id: EntityId },
+  Id extends EntityId = Entity extends { id: infer E } ? E : never
+>(update: {
+  id: Id;
   changes: EntityChanges<NoInfer<Entity>>;
-}): PartialStateUpdater<EntityState<Entity>>;
+}): PartialStateUpdater<EntityState<Entity, Id>>;
 export function updateEntity(
   update: {
     id: EntityId;
     changes: EntityChanges<any>;
   },
-  config?: { collection?: string; selectId?: SelectEntityId<any> }
-): PartialStateUpdater<EntityState<any> | NamedEntityState<any, string>> {
+  config?: { collection?: string; selectId?: SelectEntityId<any, EntityId> }
+): PartialStateUpdater<
+  EntityState<any, EntityId> | NamedEntityState<any, string, EntityId>
+> {
   const selectId = getEntityIdSelector(config);
   const stateKeys = getEntityStateKeys(config);
 
