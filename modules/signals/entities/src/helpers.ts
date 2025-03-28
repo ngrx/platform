@@ -71,7 +71,8 @@ export function getEntityUpdaterResult(
 export function addEntityMutably(
   state: EntityState<any>,
   entity: any,
-  selectId: SelectEntityId<any>
+  selectId: SelectEntityId<any>,
+  prepend = false
 ): DidMutate {
   const id = selectId(entity);
 
@@ -80,7 +81,12 @@ export function addEntityMutably(
   }
 
   state.entityMap[id] = entity;
-  state.ids.push(id);
+
+  if (prepend) {
+    state.ids.unshift(id);
+  } else {
+    state.ids.push(id);
+  }
 
   return DidMutate.Both;
 }
@@ -88,12 +94,13 @@ export function addEntityMutably(
 export function addEntitiesMutably(
   state: EntityState<any>,
   entities: any[],
-  selectId: SelectEntityId<any>
+  selectId: SelectEntityId<any>,
+  prepend = false
 ): DidMutate {
   let didMutate = DidMutate.None;
 
   for (const entity of entities) {
-    const result = addEntityMutably(state, entity, selectId);
+    const result = addEntityMutably(state, entity, selectId, prepend);
 
     if (result === DidMutate.Both) {
       didMutate = result;
