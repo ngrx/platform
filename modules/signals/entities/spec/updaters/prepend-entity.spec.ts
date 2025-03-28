@@ -3,9 +3,8 @@ import {
   prependEntity,
   entityConfig,
   withEntities,
-  addEntity,
 } from '../../src';
-import { Todo, todo1, todo2, todo3, User, user1, user2 } from '../mocks';
+import { Todo, todo1, todo2, User, user1, user2 } from '../mocks';
 import { selectTodoId as selectId } from '../helpers';
 
 describe('prependEntity', () => {
