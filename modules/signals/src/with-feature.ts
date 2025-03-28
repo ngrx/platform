@@ -5,11 +5,11 @@ import {
 } from './signal-store-models';
 
 /**
+ * @description
  * Allows passing properties, methods, or signals from a SignalStore
  * to a feature.
  *
- * **Example:**
- *
+ * @usageNotes
  * ```typescript
  * signalStore(
  *   withMethods((store) => ({
