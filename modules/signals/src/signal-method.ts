@@ -35,7 +35,7 @@ export function signalMethod<Input>(
       const callerInjector = getCallerInjector();
       if (config?.injector === undefined && callerInjector === undefined) {
         console.warn(`
-    A function returned by signalMethod was called outside the injection context.
+    @ngrx/signals: A function returned by signalMethod was called outside the injection context.
     This may lead to memory leaks. Make sure to call it within an injection context
     (e.g., in a constructor or field initializer), or pass an injector explicitly
     via the config parameter.
