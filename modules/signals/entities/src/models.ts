@@ -2,15 +2,25 @@ import { Signal } from '@angular/core';
 
 export type EntityId = string | number;
 
-export type EntityMap<Entity> = Record<EntityId, Entity>;
+export type EntityMap<Entity, Id extends EntityId = EntityId> = Record<
+  Id,
+  Entity
+>;
 
-export type EntityState<Entity> = {
-  entityMap: EntityMap<Entity>;
-  ids: EntityId[];
+export type EntityState<Entity, Id extends EntityId = EntityId> = {
+  entityMap: EntityMap<Entity, Id>;
+  ids: Id[];
 };
 
-export type NamedEntityState<Entity, Collection extends string> = {
-  [K in keyof EntityState<Entity> as `${Collection}${Capitalize<K>}`]: EntityState<Entity>[K];
+export type NamedEntityState<
+  Entity,
+  Collection extends string,
+  Id extends EntityId = EntityId
+> = {
+  [K in keyof EntityState<
+    Entity,
+    Id
+  > as `${Collection}${Capitalize<K>}`]: EntityState<Entity, Id>[K];
 };
 
 export type EntityProps<Entity> = {
