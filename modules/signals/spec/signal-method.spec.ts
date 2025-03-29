@@ -7,7 +7,6 @@ import {
   runInInjectionContext,
   signal,
 } from '@angular/core';
-import { vitest, expect } from 'vitest';
 
 describe('signalMethod', () => {
   const createAdder = (processingFn: (value: number) => void) =>
