@@ -183,6 +183,8 @@ patchState(store, setAllEntities([todo1, todo2, todo3]));
 
 Adds or updates an entity in the collection.
 When updating, it does not replace the existing entity but merges it with the provided one.
+Only the properties provided in the updated entity are merged with the existing entity.
+Properties not present in the updated entity remain unchanged.
 
 ```ts
 patchState(store, upsertEntity(todo));
@@ -192,6 +194,8 @@ patchState(store, upsertEntity(todo));
 
 Adds or updates multiple entities in the collection.
 When updating, it does not replace existing entities but merges them with the provided ones.
+Only the properties provided in updated entities are merged with existing entities.
+Properties not present in updated entities remain unchanged.
 
 ```ts
 patchState(store, upsertEntities([todo1, todo2]));
