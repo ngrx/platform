@@ -10,7 +10,7 @@ import {
   untracked,
 } from '@angular/core';
 
-type SignalMethod<Input> = ((
+export type SignalMethod<Input> = ((
   input: Input | Signal<Input>,
   config?: { injector?: Injector }
 ) => EffectRef) &
