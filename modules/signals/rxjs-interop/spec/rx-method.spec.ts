@@ -10,7 +10,6 @@ import { TestBed } from '@angular/core/testing';
 import { BehaviorSubject, of, pipe, Subject, tap } from 'rxjs';
 import { rxMethod } from '../src';
 import { createLocalService } from '../../spec/helpers';
-import { expect, vitest } from 'vitest';
 
 describe('rxMethod', () => {
   it('runs with a value', () => {
