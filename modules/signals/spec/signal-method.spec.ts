@@ -230,8 +230,9 @@ describe('signalMethod', () => {
       adder(n);
 
       expect(warnSpy).toHaveBeenCalled();
-      expect(warnSpy.mock.lastCall?.[0]).toMatch(
-        /outside the injection context/
+      const warning = (warnSpy.mock.lastCall || []).join(' ');
+      expect(warning).toMatch(
+        /function returned by signalMethod was called outside the injection context with a signal/
       );
     });
 

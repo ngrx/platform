@@ -378,8 +378,9 @@ describe('rxMethod', () => {
           adder(reactiveValue);
 
           expect(warnSpy).toHaveBeenCalled();
-          expect(warnSpy.mock.lastCall?.[0]).toMatch(
-            /outside the injection context/
+          const warning = (warnSpy.mock.lastCall || []).join(' ');
+          expect(warning).toMatch(
+            /reactive method was called outside the injection context with a signal or observable/
           );
         });
 
