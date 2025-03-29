@@ -86,6 +86,24 @@ If the entity collection has entities with the same IDs, they are not overridden
 patchState(store, addEntities([todo1, todo2]));
 ```
 
+### `prependEntity`
+
+Adds an entity to the beginning of the collection.
+If the entity collection has an entity with the same ID, it is not added and no error is thrown.
+
+```ts
+patchState(store, prependEntity(todo));
+```
+
+### `prependEntities`
+
+Adds multiple entities to the beginning of the collection, maintaining their relative order.
+If the entity collection has entities with the same IDs, they are not added and no error is thrown.
+
+```ts
+patchState(store, prependEntities([todo1, todo2]));
+```
+
 ### `updateEntity`
 
 Updates an entity in the collection by ID. Supports partial updates. No error is thrown if an entity doesn't exist.
