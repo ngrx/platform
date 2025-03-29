@@ -10,6 +10,8 @@ import {
 } from '@angular/core';
 import { isObservable, noop, Observable, Subject } from 'rxjs';
 
+declare const ngDevMode: unknown;
+
 type RxMethodRef = {
   destroy: () => void;
 };
@@ -43,7 +45,12 @@ export function rxMethod<Input>(
     }
 
     const callerInjector = getCallerInjector();
-    if (config?.injector === undefined && callerInjector === undefined) {
+    if (
+      typeof ngDevMode !== 'undefined' &&
+      ngDevMode &&
+      config?.injector === undefined &&
+      callerInjector === undefined
+    ) {
       console.warn(`
 @ngrx/signals/rxjs-interop: The reactive method was called outside the injection context with a signal or observable. This may lead to a memory leak. Make sure to call it within the injection context (e.g. in a constructor or field initializer) or pass an injector explicitly via the config parameter.
 
