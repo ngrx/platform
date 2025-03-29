@@ -51,11 +51,14 @@ export function rxMethod<Input>(
       config?.injector === undefined &&
       callerInjector === undefined
     ) {
-      console.warn(`
-@ngrx/signals/rxjs-interop: The reactive method was called outside the injection context with a signal or observable. This may lead to a memory leak. Make sure to call it within the injection context (e.g. in a constructor or field initializer) or pass an injector explicitly via the config parameter.
-
-For more information, see: https://ngrx.io/guide/signals/rxjs-integration#reactive-methods-and-injector-hierarchies
-`);
+      console.warn(
+        '@ngrx/signals/rxjs-interop: The reactive method was called outside',
+        'the injection context with a signal or observable. This may lead to',
+        'a memory leak. Make sure to call it within the injection context',
+        '(e.g. in a constructor or field initializer) or pass an injector',
+        'explicitly via the config parameter.\n\nFor more information, see:',
+        'https://ngrx.io/guide/signals/rxjs-integration#reactive-methods-and-injector-hierarchies'
+      );
     }
 
     const instanceInjector =
