@@ -1,7 +1,7 @@
 {
-  "name": "@ngrx/eslint-plugin",
+  "name": "@ngrx/schematics",
   "version": "19.0.1",
-  "description": "NgRx ESLint Plugin",
+  "description": "NgRx Schematics for Angular",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ngrx/platform.git"
@@ -10,15 +10,20 @@
     "RxJS",
     "Angular",
     "Redux",
-    "NgRx"
+    "NgRx",
+    "Schematics",
+    "Angular CLI"
   ],
-  "author": "NgRx",
+  "author": "Brandon Roberts <robertsbt@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ngrx/platform/issues"
   },
   "homepage": "https://github.com/ngrx/platform#readme",
-  "schematics": "./schematics/collection.json",
+  "schematics": "./collection.json",
+  "ng-add": {
+    "save": "devDependencies"
+  },
   "ng-update": {
     "packageGroupName": "@ngrx/store",
     "packageGroup": [
@@ -36,19 +41,5 @@
       "@ngrx/signals"
     ],
     "migrations": "./migrations/migration.json"
-  },
-  "ng-add": {
-    "save": "devDependencies"
-  },
-  "sideEffects": false,
-  "dependencies": {
-    "semver": "^7.3.5",
-    "strip-json-comments": "3.1.1"
-  },
-  "peerDependencies": {
-    "eslint": "^8.57.0 || ^9.0.0",
-    "typescript": "*",
-    "typescript-eslint": "^8.0.0",
-    "@typescript-eslint/utils": "^8.0.0"
   }
 }
