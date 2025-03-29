@@ -11,6 +11,8 @@ export { setAllEntities } from './updaters/set-all-entities';
 export { updateEntity } from './updaters/update-entity';
 export { updateEntities } from './updaters/update-entities';
 export { updateAllEntities } from './updaters/update-all-entities';
+export { upsertEntity } from './updaters/upsert-entity';
+export { upsertEntities } from './updaters/upsert-entities';
 
 export { entityConfig } from './entity-config';
 export {
