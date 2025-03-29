@@ -241,7 +241,7 @@ export class NumbersComponent implements OnInit {
 
 <div class="alert is-important">
 
-If the injector is not provided when calling the reactive method outside of the current injection context, a warning message is shown and the cleanup occurs when the reactive method is destroyed.
+If the injector is not provided when calling the reactive method with a signal or observable outside the injection context, a warning message about a potential memory leak is displayed in development mode.
 
 </div>
 
