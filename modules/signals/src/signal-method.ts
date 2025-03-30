@@ -12,7 +12,7 @@ import {
 
 declare const ngDevMode: unknown;
 
-type SignalMethod<Input> = ((
+export type SignalMethod<Input> = ((
   input: Input | Signal<Input>,
   config?: { injector?: Injector }
 ) => EffectRef) &

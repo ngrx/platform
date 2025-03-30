@@ -16,7 +16,7 @@ type RxMethodRef = {
   destroy: () => void;
 };
 
-type RxMethod<Input> = ((
+export type RxMethod<Input> = ((
   input: Input | Signal<Input> | Observable<Input>,
   config?: { injector?: Injector }
 ) => RxMethodRef) &
