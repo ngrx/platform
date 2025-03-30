@@ -208,7 +208,7 @@ export class BooksComponent implements OnInit {
 The cleanup behavior of reactive methods differs when they're created and called across different injector hierarchies.
 
 If the reactive method is called within the descendant injection context, the call will be automatically cleaned up when the descendant injector is destroyed.
-However, when the call is made outside of the descendant injection context, it's necessary to explicitly provide the descendant injector reference to ensure proper cleanup.
+However, when the call is made outside of the descendant injection context, it's necessary to explicitly provide the descendant injector reference to ensure proper cleanup. Otherwise, the cleanup occurs when the ascendant injector where the reactive method is initialized gets destroyed.
 
 ```ts
 import { Component, inject, Injectable, Injector, OnInit } from '@angular/core';
@@ -241,7 +241,7 @@ export class NumbersComponent implements OnInit {
 
 <div class="alert is-important">
 
-If the injector is not provided when calling the reactive method outside of current injection context, the cleanup occurs when reactive method is destroyed.
+If the injector is not provided when calling the reactive method with a signal or observable outside the injection context, a warning message about a potential memory leak is displayed in development mode.
 
 </div>
 

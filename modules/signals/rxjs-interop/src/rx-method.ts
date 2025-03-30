@@ -10,11 +10,13 @@ import {
 } from '@angular/core';
 import { isObservable, noop, Observable, Subject } from 'rxjs';
 
+declare const ngDevMode: unknown;
+
 type RxMethodRef = {
   destroy: () => void;
 };
 
-type RxMethod<Input> = ((
+export type RxMethod<Input> = ((
   input: Input | Signal<Input> | Observable<Input>,
   config?: { injector?: Injector }
 ) => RxMethodRef) &
@@ -42,8 +44,25 @@ export function rxMethod<Input>(
       return { destroy: noop };
     }
 
+    const callerInjector = getCallerInjector();
+    if (
+      typeof ngDevMode !== 'undefined' &&
+      ngDevMode &&
+      config?.injector === undefined &&
+      callerInjector === undefined
+    ) {
+      console.warn(
+        '@ngrx/signals/rxjs-interop: The reactive method was called outside',
+        'the injection context with a signal or observable. This may lead to',
+        'a memory leak. Make sure to call it within the injection context',
+        '(e.g. in a constructor or field initializer) or pass an injector',
+        'explicitly via the config parameter.\n\nFor more information, see:',
+        'https://ngrx.io/guide/signals/rxjs-integration#reactive-methods-and-injector-hierarchies'
+      );
+    }
+
     const instanceInjector =
-      config?.injector ?? getCallerInjector() ?? sourceInjector;
+      config?.injector ?? callerInjector ?? sourceInjector;
 
     if (isSignal(input)) {
       const watcher = effect(
@@ -78,10 +97,10 @@ function isStatic<T>(value: T | Signal<T> | Observable<T>): value is T {
   return !isSignal(value) && !isObservable(value);
 }
 
-function getCallerInjector(): Injector | null {
+function getCallerInjector(): Injector | undefined {
   try {
     return inject(Injector);
   } catch {
-    return null;
+    return undefined;
   }
 }

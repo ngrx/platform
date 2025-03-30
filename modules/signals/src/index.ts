@@ -1,6 +1,6 @@
 export { deepComputed } from './deep-computed';
 export { DeepSignal } from './deep-signal';
-export { signalMethod } from './signal-method';
+export { signalMethod, SignalMethod } from './signal-method';
 export { signalState, SignalState } from './signal-state';
 export { signalStore } from './signal-store';
 export { signalStoreFeature, type } from './signal-store-feature';
