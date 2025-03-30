@@ -333,7 +333,7 @@ import { computed, Signal } from '@angular/core';
 import { patchState, signalStore, signalStoreFeature, withComputed, withFeature, withMethods, withState } from '@ngrx/signals';
 import { withEntities } from '@ngrx/signals/entities';
 
-export function withBooksFilter(books: Signal<Book[]>) {
+export function withBooksFilter(books: Signal&lt;Book[]&gt;) {
   return signalStoreFeature(
     withState({ query: '' }),
     withComputed(({ query }) => ({
