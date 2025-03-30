@@ -113,12 +113,16 @@ export function addEntitiesMutably(
 export function setEntityMutably(
   state: EntityState<any>,
   entity: any,
-  selectId: SelectEntityId<any>
+  selectId: SelectEntityId<any>,
+  replace = true
 ): DidMutate {
   const id = selectId(entity);
 
   if (state.entityMap[id]) {
-    state.entityMap[id] = entity;
+    state.entityMap[id] = replace
+      ? entity
+      : { ...state.entityMap[id], ...entity };
+
     return DidMutate.Entities;
   }
 
@@ -131,12 +135,13 @@ export function setEntityMutably(
 export function setEntitiesMutably(
   state: EntityState<any>,
   entities: any[],
-  selectId: SelectEntityId<any>
+  selectId: SelectEntityId<any>,
+  replace = true
 ): DidMutate {
   let didMutate = DidMutate.None;
 
   for (const entity of entities) {
-    const result = setEntityMutably(state, entity, selectId);
+    const result = setEntityMutably(state, entity, selectId, replace);
 
     if (didMutate === DidMutate.Both) {
       continue;

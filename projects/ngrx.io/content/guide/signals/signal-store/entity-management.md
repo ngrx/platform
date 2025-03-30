@@ -104,30 +104,6 @@ If the entity collection has entities with the same IDs, they are not added and 
 patchState(store, prependEntities([todo1, todo2]));
 ```
 
-### `setEntity`
-
-Adds or replaces an entity in the collection.
-
-```ts
-patchState(store, setEntity(todo));
-```
-
-### `setEntities`
-
-Adds or replaces multiple entities in the collection.
-
-```ts
-patchState(store, setEntities([todo1, todo2]));
-```
-
-### `setAllEntities`
-
-Replaces the current entity collection with the provided collection.
-
-```ts
-patchState(store, setAllEntities([todo1, todo2, todo3]));
-```
-
 ### `updateEntity`
 
 Updates an entity in the collection by ID. Supports partial updates. No error is thrown if an entity doesn't exist.
@@ -195,6 +171,52 @@ patchState(
   store,
   updateAllEntities((todo) => ({ text: `${todo.text} ${todo.id}` }))
 );
+```
+
+### `setEntity`
+
+Adds or replaces an entity in the collection.
+
+```ts
+patchState(store, setEntity(todo));
+```
+
+### `setEntities`
+
+Adds or replaces multiple entities in the collection.
+
+```ts
+patchState(store, setEntities([todo1, todo2]));
+```
+
+### `setAllEntities`
+
+Replaces the current entity collection with the provided collection.
+
+```ts
+patchState(store, setAllEntities([todo1, todo2, todo3]));
+```
+
+### `upsertEntity`
+
+Adds or updates an entity in the collection.
+When updating, it does not replace the existing entity but merges it with the provided one.
+Only the properties provided in the updated entity are merged with the existing entity.
+Properties not present in the updated entity remain unchanged.
+
+```ts
+patchState(store, upsertEntity(todo));
+```
+
+### `upsertEntities`
+
+Adds or updates multiple entities in the collection.
+When updating, it does not replace existing entities but merges them with the provided ones.
+Only the properties provided in updated entities are merged with existing entities.
+Properties not present in updated entities remain unchanged.
+
+```ts
+patchState(store, upsertEntities([todo1, todo2]));
 ```
 
 ### `removeEntity`

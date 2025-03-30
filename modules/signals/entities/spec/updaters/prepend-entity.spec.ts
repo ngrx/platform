@@ -1,9 +1,5 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
-import {
-  prependEntity,
-  entityConfig,
-  withEntities,
-} from '../../src';
+import { prependEntity, entityConfig, withEntities } from '../../src';
 import { Todo, todo1, todo2, User, user1, user2 } from '../mocks';
 import { selectTodoId as selectId } from '../helpers';
 
