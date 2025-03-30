@@ -349,7 +349,7 @@ export function withBooksFilter(books: Signal<Book[]>) {
 )};
 
 export const BooksStore = signalStore(
-  withEntities<Book>(),
+  withEntities&lt;Book&gt;(),
   withFeature(({ entities }) =>
     withBooksFilter(entities)
   ),
