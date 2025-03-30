@@ -10,6 +10,8 @@ import {
   untracked,
 } from '@angular/core';
 
+declare const ngDevMode: unknown;
+
 export type SignalMethod<Input> = ((
   input: Input | Signal<Input>,
   config?: { injector?: Injector }
@@ -32,8 +34,25 @@ export function signalMethod<Input>(
     config?: { injector?: Injector }
   ): EffectRef => {
     if (isSignal(input)) {
+      const callerInjector = getCallerInjector();
+      if (
+        typeof ngDevMode !== 'undefined' &&
+        ngDevMode &&
+        config?.injector === undefined &&
+        callerInjector === undefined
+      ) {
+        console.warn(
+          '@ngrx/signals: The function returned by signalMethod was called',
+          'outside the injection context with a signal. This may lead to',
+          'a memory leak. Make sure to call it within the injection context',
+          '(e.g. in a constructor or field initializer) or pass an injector',
+          'explicitly via the config parameter.\n\nFor more information, see:',
+          'https://ngrx.io/guide/signals/signal-method#automatic-cleanup'
+        );
+      }
+
       const instanceInjector =
-        config?.injector ?? getCallerInjector() ?? sourceInjector;
+        config?.injector ?? callerInjector ?? sourceInjector;
 
       const watcher = effect(
         () => {
@@ -64,10 +83,10 @@ export function signalMethod<Input>(
   return signalMethodFn;
 }
 
-function getCallerInjector(): Injector | null {
+function getCallerInjector(): Injector | undefined {
   try {
     return inject(Injector);
   } catch {
-    return null;
+    return undefined;
   }
 }

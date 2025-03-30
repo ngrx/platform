@@ -2,11 +2,12 @@ import {
   createEnvironmentInjector,
   EnvironmentInjector,
   Injectable,
+  Injector,
   runInInjectionContext,
   signal,
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { BehaviorSubject, pipe, Subject, tap } from 'rxjs';
+import { BehaviorSubject, of, pipe, Subject, tap } from 'rxjs';
 import { rxMethod } from '../src';
 import { createLocalService } from '../../spec/helpers';
 
@@ -346,5 +347,60 @@ describe('rxMethod', () => {
       expect(globalService.globalSignalChangeCounter).toBe(2);
       expect(globalService.globalObservableChangeCounter).toBe(2);
     });
+  });
+
+  describe('warning on source injector', () => {
+    const warnSpy = vitest.spyOn(console, 'warn');
+
+    beforeEach(() => {
+      warnSpy.mockReset();
+    });
+
+    const createAdder = (callback: (value: number) => void) =>
+      TestBed.runInInjectionContext(() => rxMethod<number>(tap(callback)));
+
+    it('does not warn on non-reactive value and source injector', () => {
+      let a = 1;
+      const adder = createAdder((value) => (a += value));
+      adder(1);
+
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
+
+    for (const [reactiveValue, name] of [
+      [signal(1), 'Signal'],
+      [of(1), 'Observable'],
+    ] as const) {
+      describe(`${name}`, () => {
+        it('warns when source injector is used', () => {
+          let a = 1;
+          const adder = createAdder((value) => (a += value));
+          adder(reactiveValue);
+
+          expect(warnSpy).toHaveBeenCalled();
+          const warning = (warnSpy.mock.lastCall || []).join(' ');
+          expect(warning).toMatch(
+            /reactive method was called outside the injection context with a signal or observable/
+          );
+        });
+
+        it('does not warn on manual injector', () => {
+          let a = 1;
+          const adder = createAdder((value) => (a += value));
+          const injector = TestBed.inject(Injector);
+          adder(reactiveValue, { injector });
+
+          expect(warnSpy).not.toHaveBeenCalled();
+        });
+
+        it('does not warn if called within injection context', () => {
+          let a = 1;
+          const adder = createAdder((value) => (a += value));
+          TestBed.runInInjectionContext(() => adder(reactiveValue));
+
+          expect(warnSpy).not.toHaveBeenCalled();
+        });
+      });
+    }
   });
 });
