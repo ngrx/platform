@@ -3,6 +3,7 @@ import {
   SignalStoreFeatureResult,
   StateSignals,
 } from './signal-store-models';
+import { Prettify } from './ts-helpers';
 
 /**
  * @description
@@ -31,7 +32,9 @@ export function withFeature<
   Output extends SignalStoreFeatureResult
 >(
   featureFactory: (
-    store: Prettify<StateSignals<Input['state']> & Input['props'] & Input['methods']>
+    store: Prettify<
+      StateSignals<Input['state']> & Input['props'] & Input['methods']
+    >
   ) => SignalStoreFeature<Input, Output>
 ): SignalStoreFeature<Input, Output> {
   return (store) => {
