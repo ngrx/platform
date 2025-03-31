@@ -318,3 +318,41 @@ const Store = signalStore(
   withW()
 ); // ✅ works as expected
 ```
+
+For more complicated use cases, `withFeature` offers an alternative approach. 
+
+## Connecting a Custom Feature with the Store
+
+The `withFeature` function allows passing properties, methods, or signals from a SignalStore to a custom feature.
+
+This is an alternative to the input approach above and allows more flexibility:
+
+<code-example header="loader.store.ts">
+
+import { computed, Signal } from '@angular/core';
+import { patchState, signalStore, signalStoreFeature, withComputed, withFeature, withMethods, withState } from '@ngrx/signals';
+import { withEntities } from '@ngrx/signals/entities';
+
+export function withBooksFilter(books: Signal&lt;Book[]&gt;) {
+  return signalStoreFeature(
+    withState({ query: '' }),
+    withComputed(({ query }) => ({
+      filteredBooks: computed(() =>
+        books().filter((b) => b.name.includes(query()))
+      ),
+    })),
+    withMethods((store) => ({
+      setQuery(query: string): void {
+        patchState(store, { query });
+      },
+    })),
+)};
+
+export const BooksStore = signalStore(
+  withEntities&lt;Book&gt;(),
+  withFeature(({ entities }) =>
+    withBooksFilter(entities)
+  ),
+);
+
+</code-example>
