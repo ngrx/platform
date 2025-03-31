@@ -31,7 +31,7 @@ export function withFeature<
   Output extends SignalStoreFeatureResult
 >(
   featureFactory: (
-    store: StateSignals<Input['state']> & Input['props'] & Input['methods']
+    store: Prettify<StateSignals<Input['state']> & Input['props'] & Input['methods']>
   ) => SignalStoreFeature<Input, Output>
 ): SignalStoreFeature<Input, Output> {
   return (store) => {
