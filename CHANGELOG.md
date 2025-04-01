@@ -1,3 +1,20 @@
+<a name="19.1.0"></a>
+
+# [19.1.0](https://github.com/ngrx/platform/compare/19.0.1...19.1.0) (2025-04-01)
+
+### Bug Fixes
+
+- **signals:** skip assertions when ngDevMode is not defined ([#4703](https://github.com/ngrx/platform/issues/4703)) ([0b43014](https://github.com/ngrx/platform/commit/0b43014)), closes [#4699](https://github.com/ngrx/platform/issues/4699)
+
+### Features
+
+- **signals:** add `withFeature` ([#4739](https://github.com/ngrx/platform/issues/4739)) ([345ab4f](https://github.com/ngrx/platform/commit/345ab4f)), closes [#4678](https://github.com/ngrx/platform/issues/4678)
+- **signals:** add prepend entity updaters ([#4721](https://github.com/ngrx/platform/issues/4721)) ([dac8665](https://github.com/ngrx/platform/commit/dac8665)), closes [#4723](https://github.com/ngrx/platform/issues/4723)
+- **signals:** add RxMethod and SignalMethod types to public API ([#4744](https://github.com/ngrx/platform/issues/4744)) ([40e78d9](https://github.com/ngrx/platform/commit/40e78d9))
+- **signals:** add unprotected testing helper ([#4725](https://github.com/ngrx/platform/issues/4725)) ([01c2327](https://github.com/ngrx/platform/commit/01c2327))
+- **signals:** add upsert entity updaters ([#4727](https://github.com/ngrx/platform/issues/4727)) ([92fd7c3](https://github.com/ngrx/platform/commit/92fd7c3))
+- **signals:** warn when reactive method runs with source injector ([#4742](https://github.com/ngrx/platform/issues/4742)) ([84a537c](https://github.com/ngrx/platform/commit/84a537c)), closes [#4726](https://github.com/ngrx/platform/issues/4726)
+
 <a name="19.0.1"></a>
 
 ## [19.0.1](https://github.com/ngrx/platform/compare/19.0.0...19.0.1) (2025-01-31)
