@@ -56,7 +56,7 @@ function updateFlatConfig(
 
   if (content.includes(ngrxPlugin)) {
     context.logger.info(
-      `Skipping the installing, the NgRx ESLint Plugin is already installed in your flat config.`
+      `Skipping installation, the NgRx ESLint Plugin is already installed in your flat config.`
     );
     return;
   }
