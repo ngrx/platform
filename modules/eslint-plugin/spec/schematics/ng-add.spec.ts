@@ -184,8 +184,7 @@ module.exports = tseslint.config(
       "
       // @ts-check
       const tseslint = require('typescript-eslint');
-      const ngrx = require('@ngrx/eslint-plugin');
-
+      const ngrx = require('@ngrx/eslint-plugin/v9');
       module.exports = tseslint.config(
         {
           files: ['**/*.ts'],
@@ -230,7 +229,7 @@ export default tseslint.config(
       "
       // @ts-check
       import tseslint from 'typescript-eslint';
-      import ngrx from '@ngrx/eslint-plugin';
+      import ngrx from '@ngrx/eslint-plugin/v9';
       export default tseslint.config(
         {
           files: ['**/*.ts'],
@@ -257,18 +256,17 @@ export default tseslint.config(
     const content = host.readText('eslint.config.cjs');
     expect(content).toContain(`@ngrx/eslint-plugin`);
     expect(content).toMatchInlineSnapshot(`
-        "
-        const ngrx = require('@ngrx/eslint-plugin');
-        module.exports = tseslint.config(
-          {
-            files: ['**/*.ts'],
-            extends: [
-              ...ngrx.configs.all,
-            ],
-            rules: {},
-          }
-        );"
-      `);
+      "
+      const ngrx = require('@ngrx/eslint-plugin/v9');module.exports = tseslint.config(
+        {
+          files: ['**/*.ts'],
+          extends: [
+            ...ngrx.configs.all,
+          ],
+          rules: {},
+        }
+      );"
+    `);
   });
 
   it('does not register the plugin if tseslint is missing', async () => {

@@ -45,6 +45,7 @@ function updateFlatConfig(
   schema: Schema,
   docs: string
 ): void {
+  const ngrxPlugin = '@ngrx/eslint-plugin/v9';
   const content = host.read(flatConfigPath)?.toString('utf-8');
   if (!content) {
     context.logger.error(
@@ -53,7 +54,7 @@ function updateFlatConfig(
     return;
   }
 
-  if (content.includes('@ngrx/eslint-plugin')) {
+  if (content.includes(ngrxPlugin)) {
     context.logger.info(
       `Skipping the installing, the NgRx ESLint Plugin is already installed in your flat config.`
     );
@@ -92,7 +93,7 @@ See ${docs} for more details.
         .reverse()[0];
       recorder.insertRight(
         lastImport?.end ?? 0,
-        `\nimport ngrx from '@ngrx/eslint-plugin';`
+        `\nimport ngrx from '${ngrxPlugin}';`
       );
     } else {
       const lastRequireVariableDeclaration = source.statements
@@ -109,7 +110,7 @@ See ${docs} for more details.
 
       recorder.insertRight(
         lastRequireVariableDeclaration?.end ?? 0,
-        `\nconst ngrx = require('@ngrx/eslint-plugin');\n`
+        `\nconst ngrx = require('${ngrxPlugin}');`
       );
     }
   }
