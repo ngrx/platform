@@ -60,7 +60,7 @@ export class ContactFormComponent {
         email: string;
         body: string;
     }) {
-        const toEmails = ['info@ts.dev', 'brandon@ngrx.io', 'marko@ngrx.io', 'alex@ngrx.io'];
+        const toEmails = ['info@ts.dev', 'marko@ngrx.io', 'alex@ngrx.io'];
         addDoc(collection(this.firestore, 'mail'), {
             to: toEmails,
             from: contact.email,
