@@ -2,7 +2,7 @@ import type { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import stripJsonComments from 'strip-json-comments';
 import type { Schema } from './schema';
 
-export default function addNgRxESLintPlugin(schema: Schema): Rule {
+export default function (schema: Schema): Rule {
   return (host: Tree, context: SchematicContext) => {
     const eslintConfigPath = '.eslintrc.json';
     const docs = 'https://ngrx.io/guide/eslint-plugin';

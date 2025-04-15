@@ -57,12 +57,8 @@
       "outputs": ["{workspaceRoot}/dist/modules/eslint-plugin"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "options": {
-        "jestConfig": "modules/eslint-plugin/jest.config.ts",
-        "runInBand": true,
-        "passWithNoTests": false
-      },
+      "executor": "@analogjs/vitest-angular:test",
+      "dependsOn": ["build"],
       "outputs": ["{workspaceRoot}/coverage/modules/eslint-plugin"]
     },
     "lint": {

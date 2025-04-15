@@ -1,5 +1,4 @@
-import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
+import * as vitest from 'vitest';
+import { RuleTester } from '@typescript-eslint/rule-tester';
 
-setupZoneTestEnv();
-Object.assign(global, { TextDecoder, TextEncoder });
-global.structuredClone = (v) => JSON.parse(JSON.stringify(v));
+RuleTester.afterAll = vitest.afterAll;
