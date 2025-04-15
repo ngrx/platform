@@ -7,7 +7,10 @@ import * as path from 'path';
 
 const schematicRunner = new SchematicTestRunner(
   '@ngrx/eslint-plugin',
-  path.join(__dirname, '../../schematics/collection.json')
+  path.join(
+    process.cwd(),
+    'dist/modules/eslint-plugin/schematics/collection.json'
+  )
 );
 
 test('registers the plugin with the all config', async () => {
