@@ -4,7 +4,7 @@ import rule, {
   messageId,
 } from '../../../src/rules/component-store/require-super-ondestroy';
 import { fromFixture, ruleTester } from '../../utils';
-import path = require('path');
+import * as path from 'path';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;

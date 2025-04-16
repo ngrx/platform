@@ -2,13 +2,12 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
-    "moduleResolution": "nodenext",
+    "module": "es2022",
+    "types": ["node", "vitest", "vitest/globals"],
+    "target": "es2016",
     "esModuleInterop": true,
-    "types": ["jest", "node"],
-    "target": "ES2022",
     "resolveJsonModule": true
   },
   "files": ["test-setup.ts"],
-  "include": ["jest.config.ts", "**/*.spec.ts", "**/*.test.ts", "**/*.d.ts"]
+  "include": ["**/*.spec.ts", "**/*.test.ts", "**/*.d.ts"]
 }
