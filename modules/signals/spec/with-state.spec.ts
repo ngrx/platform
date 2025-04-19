@@ -1,18 +1,25 @@
-import { isSignal, signal } from '@angular/core';
+import {
+  computed,
+  isSignal,
+  linkedSignal,
+  resource,
+  signal,
+} from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { withComputed, withMethods, withState } from '../src';
-import { STATE_SOURCE } from '../src/state-source';
-import { getInitialInnerStore } from '../src/signal-store';
+import { getInitialInnerStore, signalStore } from '../src/signal-store';
+import { getState, patchState } from '../src/state-source';
 
 describe('withState', () => {
   it('patches state source and updates slices immutably', () => {
     const initialStore = getInitialInnerStore();
-    const initialState = initialStore[STATE_SOURCE]();
+    const initialState = getState(initialStore);
 
     const store = withState({
       foo: 'bar',
       x: { y: 'z' },
     })(initialStore);
-    const state = store[STATE_SOURCE]();
+    const state = getState(store);
 
     expect(state).toEqual({ foo: 'bar', x: { y: 'z' } });
     expect(initialState).toEqual({});
@@ -46,7 +53,7 @@ describe('withState', () => {
       foo: 'bar',
       x: { y: 'z' },
     }))(initialStore);
-    const state = store[STATE_SOURCE]();
+    const state = getState(store);
 
     expect(state).toEqual({ foo: 'bar', x: { y: 'z' } });
     expect(store.stateSignals.foo()).toBe('bar');
@@ -91,5 +98,145 @@ describe('withState', () => {
       'Trying to override:',
       'p2, s2, m2, Symbol(computed_secret), Symbol(method_secret)'
     );
+  });
+
+  describe('integrates writable Signals natively', () => {
+    it('integrates writable Signals as-is', () => {
+      const user = {
+        id: 1,
+        name: 'John Doe',
+      };
+      const userSignal = signal(user);
+      const Store = signalStore(
+        { providedIn: 'root', protectedState: false },
+        withState({
+          user: userSignal,
+        }),
+        withComputed(({ user: { id, name } }) => ({
+          prettyName: computed(() => `${name()} ${id()}`),
+        }))
+      );
+      const store = TestBed.inject(Store);
+
+      expect(store.user()).toBe(user);
+      expect(store.prettyName()).toBe('John Doe 1');
+
+      userSignal.set({ id: 2, name: 'Jane Doe' });
+      expect(store.user()).toEqual({ id: 2, name: 'Jane Doe' });
+
+      patchState(store, { user: { id: 3, name: 'Jack Doe' } });
+      expect(store.user()).toEqual({ id: 3, name: 'Jack Doe' });
+    });
+
+    it('integrates a linkedSignal and its upate mechanism', () => {
+      const triggerSignal = signal(1);
+      const userLinkedSignal = linkedSignal({
+        source: triggerSignal,
+        computation: () => ({ id: 1, name: 'John Doe' }),
+      });
+
+      const Store = signalStore(
+        { providedIn: 'root' },
+        withState({
+          user: userLinkedSignal,
+        }),
+        withComputed(({ user: { id, name } }) => ({
+          prettyName: computed(() => `${name()} ${id()}`),
+        }))
+      );
+      const store = TestBed.inject(Store);
+
+      expect(store.user()).toEqual({ id: 1, name: 'John Doe' });
+      expect(store.prettyName()).toBe('John Doe 1');
+
+      patchState(store, { user: { id: 2, name: 'Jane Doe' } });
+      expect(store.prettyName()).toBe('Jane Doe 2');
+
+      triggerSignal.set(2);
+      expect(store.prettyName()).toBe('John Doe 1');
+    });
+
+    it('supports a resource', async () => {
+      const resourceTrigger = signal(1);
+      const userResource = TestBed.runInInjectionContext(() =>
+        resource({
+          request: resourceTrigger,
+          loader: (params) =>
+            Promise.resolve({ id: params.request, name: 'John Doe' }),
+          defaultValue: { id: 0, name: 'Loading...' },
+        })
+      );
+      const Store = signalStore(
+        { providedIn: 'root', protectedState: false },
+        withState({
+          user: userResource.value,
+        }),
+        withComputed(({ user: { id, name } }) => ({
+          prettyName: computed(() => `${name()} ${id()}`),
+        }))
+      );
+      const store = TestBed.inject(Store);
+
+      expect(store.user()).toEqual({ id: 0, name: 'Loading...' });
+
+      await new Promise((resolve) => setTimeout(resolve));
+      expect(store.user()).toEqual({ id: 1, name: 'John Doe' });
+
+      resourceTrigger.set(2);
+      await new Promise((resolve) => setTimeout(resolve));
+      expect(store.user()).toEqual({ id: 2, name: 'John Doe' });
+    });
+
+    it('allows mixed writable Signal Types', () => {
+      const user = {
+        id: 1,
+        name: 'John Doe',
+      };
+      const userSignal = signal(user);
+      const product = { id: 1, name: 'Product A' };
+      const Store = signalStore(
+        { providedIn: 'root', protectedState: false },
+        withState({
+          user: userSignal,
+          product,
+        })
+      );
+      const store = TestBed.inject(Store);
+
+      expect(store.user()).toBe(user);
+      expect(store.product()).toBe(product);
+    });
+
+    it('does not strip a readonly Signal', () => {
+      const Store = signalStore(
+        { providedIn: 'root' },
+        withState({
+          number: signal(1).asReadonly(),
+        })
+      );
+      const store = TestBed.inject(Store);
+
+      expect(isSignal(store.number())).toBe(true);
+      expect(store.number()()).toBe(1);
+    });
+
+    it('does not strip a nested writable Signal', () => {
+      const user = {
+        id: 1,
+        name: 'John Doe',
+      };
+      const userSignal = signal(user);
+      const Store = signalStore(
+        { providedIn: 'root' },
+        withState({
+          data: {
+            user: userSignal,
+          },
+        })
+      );
+      const store = TestBed.inject(Store);
+
+      expect(isSignal(store.data.user())).toBe(true);
+    });
   });
 });
