@@ -162,6 +162,7 @@ export class CounterComponent {
 <code-tabs linenums="true">
 <code-pane header="books.store.ts">
 
+```ts
 import { inject, Injectable } from '@angular/core';
 import { exhaustMap, pipe, tap } from 'rxjs';
 import { signalState, patchState } from '@ngrx/signals';
@@ -173,67 +174,75 @@ import { Book } from './book.model';
 type BooksState = { books: Book[]; isLoading: boolean };
 
 const initialState: BooksState = {
-books: [],
-isLoading: false,
+  books: [],
+  isLoading: false,
 };
 
 @Injectable()
 export class BooksStore {
-readonly #booksService = inject(BooksService);
-readonly #state = signalState(initialState);
+  readonly #booksService = inject(BooksService);
+  readonly #state = signalState(initialState);
 
-readonly books = this.#state.books;
-readonly isLoading = this.#state.isLoading;
+  readonly books = this.#state.books;
+  readonly isLoading = this.#state.isLoading;
 
-readonly loadBooks = rxMethod<void>(
-pipe(
-tap(() => patchState(this.#state, { isLoading: true })),
-exhaustMap(() => {
-return this.#booksService.getAll().pipe(
-tapResponse({
-next: (books) => patchState(this.#state, { books }),
-error: console.error,
-finalize: () => patchState(this.#state, { isLoading: false }),
-})
-);
-})
-)
-);
+  readonly loadBooks = rxMethod<void>(
+    pipe(
+      tap(() => patchState(this.#state, { isLoading: true })),
+      exhaustMap(() => {
+        return this.#booksService.getAll().pipe(
+          tapResponse({
+            next: (books) => patchState(this.#state, { books }),
+            error: console.error,
+            finalize: () =>
+              patchState(this.#state, { isLoading: false }),
+          })
+        );
+      })
+    )
+  );
 }
+```
 
 </code-pane>
 
 <code-pane header="books.component.ts">
 
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+```ts
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { BooksStore } from './books.store';
 
 @Component({
-selector: 'ngrx-books',
-template: `
-&lth1>Books</h1>
+  selector: 'ngrx-books',
+  template: `
+    <h1>Books</h1>
 
     @if (store.isLoading()) {
-      <p>Loading...</p>
+    <p>Loading...</p>
     } @else {
-      <ul>
-        @for (book of store.books(); track book.id) {
-          <li>{{ book.title }}</li>
-        }
-      </ul>
+    <ul>
+      @for (book of store.books(); track book.id) {
+      <li>{{ book.title }}</li>
+      }
+    </ul>
     }
-
-`,
-providers: [BooksStore],
-changeDetection: ChangeDetectionStrategy.OnPush,
+  `,
+  providers: [BooksStore],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooksComponent implements OnInit {
-readonly store = inject(BooksStore);
+  readonly store = inject(BooksStore);
 
-ngOnInit(): void {
-this.store.loadBooks();
+  ngOnInit(): void {
+    this.store.loadBooks();
+  }
 }
-}
+```
 
 </code-pane>
 </code-tabs>

@@ -1,3 +1,5 @@
+# FAQ
+
 <details>
   <summary>How to connect my SignalStore(s) with Redux DevTools?</summary>
 
