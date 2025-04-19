@@ -25,18 +25,18 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [
-      {
-        enforce: 'pre',
-        resolveId(source, importer, options) {
-          if (importer?.includes('scss')) {
-            console.log(source, importer);
-          }
-        },
-      },
       analog({
         ssr: false,
         vite: {
           inlineStylesExtension: 'scss',
+        },
+        content: {
+          highlighter: 'shiki',
+          shikiOptions: {
+            highlighter: {
+              additionalLangs: ['sh'],
+            },
+          },
         },
         // apiPrefix: 'noop',
         nitro: {

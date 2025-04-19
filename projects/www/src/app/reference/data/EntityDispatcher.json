@@ -1,1 +1,469 @@
-{"name":"EntityDispatcher","canonicalReference":"@ngrx/data!EntityDispatcher:interface","kind":"Interface","fileUrlPath":"../../dist/modules/data/src/dispatchers/entity-dispatcher.d.ts","isDeprecated":false,"members":[{"kind":"Interface","canonicalReference":"@ngrx/data!EntityDispatcher:interface","docComment":"/**\n * Dispatches EntityCollection actions to their reducers and effects. The substance of the interface is in EntityCommands.\n */\n","excerptTokens":[{"kind":"Content","text":"export interface EntityDispatcher<T> extends "},{"kind":"Reference","text":"EntityCommands","canonicalReference":"@ngrx/data!EntityCommands:interface"},{"kind":"Content","text":"<T>"},{"kind":"Content","text":" "}],"fileUrlPath":"../../dist/modules/data/src/dispatchers/entity-dispatcher.d.ts","releaseTag":"Public","typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"EntityDispatcher","preserveMemberOrder":false,"members":[{"kind":"MethodSignature","canonicalReference":"@ngrx/data!EntityDispatcher#createAndDispatch:member(1)","docComment":"/**\n * Create an {EntityAction} for this entity type and dispatch it immediately to the store.\n *\n * @param op - the entity operation\n *\n * @param data - the action data\n *\n * @param options - additional options\n *\n * @returns the dispatched EntityAction\n */\n","excerptTokens":[{"kind":"Content","text":"createAndDispatch<P = "},{"kind":"Content","text":"any"},{"kind":"Content","text":">(op: "},{"kind":"Reference","text":"EntityOp","canonicalReference":"@ngrx/data!EntityOp:enum"},{"kind":"Content","text":", data?: "},{"kind":"Content","text":"P"},{"kind":"Content","text":", options?: "},{"kind":"Reference","text":"EntityActionOptions","canonicalReference":"@ngrx/data!EntityActionOptions:interface"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"EntityAction","canonicalReference":"@ngrx/data!EntityAction:interface"},{"kind":"Content","text":"<P>"},{"kind":"Content","text":";"}],"isOptional":false,"returnTypeTokenRange":{"startIndex":9,"endIndex":11},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"op","parameterTypeTokenRange":{"startIndex":3,"endIndex":4},"isOptional":false},{"parameterName":"data","parameterTypeTokenRange":{"startIndex":5,"endIndex":6},"isOptional":true},{"parameterName":"options","parameterTypeTokenRange":{"startIndex":7,"endIndex":8},"isOptional":true}],"typeParameters":[{"typeParameterName":"P","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":1,"endIndex":2}}],"name":"createAndDispatch","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Create an {EntityAction} for this entity type and dispatch it immediately to the store.\n\n","usageNotes":"","remarks":"","deprecated":"","returns":" the dispatched EntityAction\n","see":[],"params":[{"name":"op","description":"the entity operation\n\n"},{"name":"data","description":"the action data\n\n"},{"name":"options","description":"additional options\n\n"}]}},{"kind":"MethodSignature","canonicalReference":"@ngrx/data!EntityDispatcher#createEntityAction:member(1)","docComment":"/**\n * Create an {EntityAction} for this entity type.\n *\n * @param op - the entity operation\n *\n * @param data - the action data\n *\n * @param options - additional options\n *\n * @returns the EntityAction\n */\n","excerptTokens":[{"kind":"Content","text":"createEntityAction<P = "},{"kind":"Content","text":"any"},{"kind":"Content","text":">(op: "},{"kind":"Reference","text":"EntityOp","canonicalReference":"@ngrx/data!EntityOp:enum"},{"kind":"Content","text":", data?: "},{"kind":"Content","text":"P"},{"kind":"Content","text":", options?: "},{"kind":"Reference","text":"EntityActionOptions","canonicalReference":"@ngrx/data!EntityActionOptions:interface"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"EntityAction","canonicalReference":"@ngrx/data!EntityAction:interface"},{"kind":"Content","text":"<P>"},{"kind":"Content","text":";"}],"isOptional":false,"returnTypeTokenRange":{"startIndex":9,"endIndex":11},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"op","parameterTypeTokenRange":{"startIndex":3,"endIndex":4},"isOptional":false},{"parameterName":"data","parameterTypeTokenRange":{"startIndex":5,"endIndex":6},"isOptional":true},{"parameterName":"options","parameterTypeTokenRange":{"startIndex":7,"endIndex":8},"isOptional":true}],"typeParameters":[{"typeParameterName":"P","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":1,"endIndex":2}}],"name":"createEntityAction","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Create an {EntityAction} for this entity type.\n\n","usageNotes":"","remarks":"","deprecated":"","returns":" the EntityAction\n","see":[],"params":[{"name":"op","description":"the entity operation\n\n"},{"name":"data","description":"the action data\n\n"},{"name":"options","description":"additional options\n\n"}]}},{"kind":"MethodSignature","canonicalReference":"@ngrx/data!EntityDispatcher#dispatch:member(1)","docComment":"/**\n * Dispatch an Action to the store.\n *\n * @param action - the Action\n *\n * @returns the dispatched Action\n */\n","excerptTokens":[{"kind":"Content","text":"dispatch(action: "},{"kind":"Reference","text":"Action","canonicalReference":"!unknown"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"Action","canonicalReference":"!unknown"},{"kind":"Content","text":";"}],"isOptional":false,"returnTypeTokenRange":{"startIndex":3,"endIndex":4},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"action","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false}],"name":"dispatch","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Dispatch an Action to the store.\n\n","usageNotes":"","remarks":"","deprecated":"","returns":" the dispatched Action\n","see":[],"params":[{"name":"action","description":"the Action\n\n"}]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntityDispatcher#entityName:member","docComment":"/**\n * Name of the entity type\n */\n","excerptTokens":[{"kind":"Content","text":"readonly entityName: "},{"kind":"Content","text":"string"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"entityName","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Name of the entity type\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntityDispatcher#guard:member","docComment":"/**\n * Utility class with methods to validate EntityAction payloads.\n */\n","excerptTokens":[{"kind":"Content","text":"readonly guard: "},{"kind":"Reference","text":"EntityActionGuard","canonicalReference":"@ngrx/data!EntityActionGuard:class"},{"kind":"Content","text":"<T>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"guard","propertyTypeTokenRange":{"startIndex":1,"endIndex":3},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Utility class with methods to validate EntityAction payloads.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntityDispatcher#selectId:member","docComment":"/**\n * Returns the primary key (id) of this entity\n */\n","excerptTokens":[{"kind":"Content","text":"readonly selectId: "},{"kind":"Reference","text":"IdSelector","canonicalReference":"!unknown"},{"kind":"Content","text":"<T>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"selectId","propertyTypeTokenRange":{"startIndex":1,"endIndex":3},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Returns the primary key (id) of this entity\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntityDispatcher#store:member","docComment":"/**\n * Returns the store, scoped to the EntityCache\n */\n","excerptTokens":[{"kind":"Content","text":"readonly store: "},{"kind":"Reference","text":"Store","canonicalReference":"!unknown"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"EntityCache","canonicalReference":"@ngrx/data!EntityCache:interface"},{"kind":"Content","text":">"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"store","propertyTypeTokenRange":{"startIndex":1,"endIndex":5},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Returns the store, scoped to the EntityCache\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"MethodSignature","canonicalReference":"@ngrx/data!EntityDispatcher#toUpdate:member(1)","docComment":"/**\n * Convert an entity (or partial entity) into the `Update<T>` object `update...` and `upsert...` methods take `Update<T>` args\n */\n","excerptTokens":[{"kind":"Content","text":"toUpdate(entity: "},{"kind":"Reference","text":"Partial","canonicalReference":"!Partial:type"},{"kind":"Content","text":"<T>"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"Update","canonicalReference":"!unknown"},{"kind":"Content","text":"<T>"},{"kind":"Content","text":";"}],"isOptional":false,"returnTypeTokenRange":{"startIndex":4,"endIndex":6},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"entity","parameterTypeTokenRange":{"startIndex":1,"endIndex":3},"isOptional":false}],"name":"toUpdate","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Convert an entity (or partial entity) into the `Update<T>` object `update...` and `upsert...` methods take `Update<T>` args\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"extendsTokenRanges":[{"startIndex":1,"endIndex":3}],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Dispatches EntityCollection actions to their reducers and effects. The substance of the interface is in EntityCommands.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "EntityDispatcher",
+  "canonicalReference": "@ngrx/data!EntityDispatcher:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/data/src/dispatchers/entity-dispatcher.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/data!EntityDispatcher:interface",
+      "docComment": "/**\n * Dispatches EntityCollection actions to their reducers and effects. The substance of the interface is in EntityCommands.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export interface EntityDispatcher<T> extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityCommands",
+          "canonicalReference": "@ngrx/data!EntityCommands:interface"
+        },
+        { "kind": "Content", "text": "<T>" },
+        { "kind": "Content", "text": " " }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/dispatchers/entity-dispatcher.d.ts",
+      "releaseTag": "Public",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "EntityDispatcher",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "MethodSignature",
+          "canonicalReference": "@ngrx/data!EntityDispatcher#createAndDispatch:member(1)",
+          "docComment": "/**\n * Create an {EntityAction} for this entity type and dispatch it immediately to the store.\n *\n * @param op - the entity operation\n *\n * @param data - the action data\n *\n * @param options - additional options\n *\n * @returns the dispatched EntityAction\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "createAndDispatch<P = " },
+            { "kind": "Content", "text": "any" },
+            { "kind": "Content", "text": ">(op: " },
+            {
+              "kind": "Reference",
+              "text": "EntityOp",
+              "canonicalReference": "@ngrx/data!EntityOp:enum"
+            },
+            { "kind": "Content", "text": ", data?: " },
+            { "kind": "Content", "text": "P" },
+            { "kind": "Content", "text": ", options?: " },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": "<P>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isOptional": false,
+          "returnTypeTokenRange": { "startIndex": 9, "endIndex": 11 },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "op",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "data",
+              "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+              "isOptional": true
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+              "isOptional": true
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "P",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 1, "endIndex": 2 }
+            }
+          ],
+          "name": "createAndDispatch",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Create an {EntityAction} for this entity type and dispatch it immediately to the store.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " the dispatched EntityAction\n",
+            "see": [],
+            "params": [
+              { "name": "op", "description": "the entity operation\n\n" },
+              { "name": "data", "description": "the action data\n\n" },
+              { "name": "options", "description": "additional options\n\n" }
+            ]
+          }
+        },
+        {
+          "kind": "MethodSignature",
+          "canonicalReference": "@ngrx/data!EntityDispatcher#createEntityAction:member(1)",
+          "docComment": "/**\n * Create an {EntityAction} for this entity type.\n *\n * @param op - the entity operation\n *\n * @param data - the action data\n *\n * @param options - additional options\n *\n * @returns the EntityAction\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "createEntityAction<P = " },
+            { "kind": "Content", "text": "any" },
+            { "kind": "Content", "text": ">(op: " },
+            {
+              "kind": "Reference",
+              "text": "EntityOp",
+              "canonicalReference": "@ngrx/data!EntityOp:enum"
+            },
+            { "kind": "Content", "text": ", data?: " },
+            { "kind": "Content", "text": "P" },
+            { "kind": "Content", "text": ", options?: " },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": "<P>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isOptional": false,
+          "returnTypeTokenRange": { "startIndex": 9, "endIndex": 11 },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "op",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "data",
+              "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+              "isOptional": true
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+              "isOptional": true
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "P",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 1, "endIndex": 2 }
+            }
+          ],
+          "name": "createEntityAction",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Create an {EntityAction} for this entity type.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " the EntityAction\n",
+            "see": [],
+            "params": [
+              { "name": "op", "description": "the entity operation\n\n" },
+              { "name": "data", "description": "the action data\n\n" },
+              { "name": "options", "description": "additional options\n\n" }
+            ]
+          }
+        },
+        {
+          "kind": "MethodSignature",
+          "canonicalReference": "@ngrx/data!EntityDispatcher#dispatch:member(1)",
+          "docComment": "/**\n * Dispatch an Action to the store.\n *\n * @param action - the Action\n *\n * @returns the dispatched Action\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "dispatch(action: " },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isOptional": false,
+          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "action",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            }
+          ],
+          "name": "dispatch",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch an Action to the store.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " the dispatched Action\n",
+            "see": [],
+            "params": [{ "name": "action", "description": "the Action\n\n" }]
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntityDispatcher#entityName:member",
+          "docComment": "/**\n * Name of the entity type\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly entityName: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "entityName",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Name of the entity type\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntityDispatcher#guard:member",
+          "docComment": "/**\n * Utility class with methods to validate EntityAction payloads.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly guard: " },
+            {
+              "kind": "Reference",
+              "text": "EntityActionGuard",
+              "canonicalReference": "@ngrx/data!EntityActionGuard:class"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "guard",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Utility class with methods to validate EntityAction payloads.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntityDispatcher#selectId:member",
+          "docComment": "/**\n * Returns the primary key (id) of this entity\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly selectId: " },
+            {
+              "kind": "Reference",
+              "text": "IdSelector",
+              "canonicalReference": "@ngrx/entity!IdSelector:type"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "selectId",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Returns the primary key (id) of this entity\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntityDispatcher#store:member",
+          "docComment": "/**\n * Returns the store, scoped to the EntityCache\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly store: " },
+            {
+              "kind": "Reference",
+              "text": "Store",
+              "canonicalReference": "@ngrx/store!Store:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EntityCache",
+              "canonicalReference": "@ngrx/data!EntityCache:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "store",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Returns the store, scoped to the EntityCache\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "MethodSignature",
+          "canonicalReference": "@ngrx/data!EntityDispatcher#toUpdate:member(1)",
+          "docComment": "/**\n * Convert an entity (or partial entity) into the `Update<T>` object `update...` and `upsert...` methods take `Update<T>` args\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "toUpdate(entity: " },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Update",
+              "canonicalReference": "@ngrx/entity!Update:type"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isOptional": false,
+          "returnTypeTokenRange": { "startIndex": 4, "endIndex": 6 },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entity",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "isOptional": false
+            }
+          ],
+          "name": "toUpdate",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Convert an entity (or partial entity) into the `Update<T>` object `update...` and `upsert...` methods take `Update<T>` args\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [{ "startIndex": 1, "endIndex": 3 }],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Dispatches EntityCollection actions to their reducers and effects. The substance of the interface is in EntityCommands.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

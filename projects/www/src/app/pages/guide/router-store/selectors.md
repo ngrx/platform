@@ -57,7 +57,7 @@ Using `selectRouteParam{s}` will get the `matched` param but not the `urlPath` p
 
 If all params in the URL Tree need to be extracted (both `urlPath` and `matched`), the following custom selector can be used. It accumulates params of all the segments in the matched route:
 
-<ngrx-code-example>
+<ngrx-code-example >
 
 ```ts
 import { Params } from '@angular/router';

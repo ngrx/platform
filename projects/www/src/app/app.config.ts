@@ -28,13 +28,13 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideAnimations(),
     provideContent(withMarkdownRenderer()),
-    {
-      provide: ContentRenderer,
-      useClass: MarkdownContentRendererService,
-    },
-    {
-      provide: MarkedSetupService,
-      useClass: NgRxMarkedSetupService,
-    },
+    // {
+    //   provide: ContentRenderer,
+    //   useClass: MarkdownContentRendererService,
+    // },
+    // {
+    //   provide: MarkedSetupService,
+    //   useClass: NgRxMarkedSetupService,
+    // },
   ],
 };

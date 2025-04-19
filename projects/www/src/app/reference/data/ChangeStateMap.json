@@ -1,1 +1,58 @@
-{"name":"ChangeStateMap","canonicalReference":"@ngrx/data!ChangeStateMap:type","kind":"TypeAlias","fileUrlPath":"../../dist/modules/data/src/reducers/entity-collection.d.ts","isDeprecated":false,"members":[{"kind":"TypeAlias","canonicalReference":"@ngrx/data!ChangeStateMap:type","docComment":"/**\n * Map of entity primary keys to entity ChangeStates. Each entry represents an entity with unsaved changes.\n */\n","excerptTokens":[{"kind":"Content","text":"export type ChangeStateMap<T> = "},{"kind":"Reference","text":"Dictionary","canonicalReference":"!unknown"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"ChangeState","canonicalReference":"@ngrx/data!ChangeState:interface"},{"kind":"Content","text":"<T>>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/data/src/reducers/entity-collection.d.ts","releaseTag":"Public","name":"ChangeStateMap","typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"typeTokenRange":{"startIndex":1,"endIndex":5},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Map of entity primary keys to entity ChangeStates. Each entry represents an entity with unsaved changes.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "ChangeStateMap",
+  "canonicalReference": "@ngrx/data!ChangeStateMap:type",
+  "kind": "TypeAlias",
+  "fileUrlPath": "../../dist/modules/data/src/reducers/entity-collection.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "TypeAlias",
+      "canonicalReference": "@ngrx/data!ChangeStateMap:type",
+      "docComment": "/**\n * Map of entity primary keys to entity ChangeStates. Each entry represents an entity with unsaved changes.\n */\n",
+      "excerptTokens": [
+        { "kind": "Content", "text": "export type ChangeStateMap<T> = " },
+        {
+          "kind": "Reference",
+          "text": "Dictionary",
+          "canonicalReference": "@ngrx/entity!Dictionary:class"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "ChangeState",
+          "canonicalReference": "@ngrx/data!ChangeState:interface"
+        },
+        { "kind": "Content", "text": "<T>>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/reducers/entity-collection.d.ts",
+      "releaseTag": "Public",
+      "name": "ChangeStateMap",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "typeTokenRange": { "startIndex": 1, "endIndex": 5 },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Map of entity primary keys to entity ChangeStates. Each entry represents an entity with unsaved changes.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

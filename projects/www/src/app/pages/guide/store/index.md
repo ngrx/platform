@@ -22,7 +22,7 @@ Detailed installation instructions can be found on the [Installation](guide/stor
 The following diagram represents the overall general flow of application state in NgRx.
 
 <figure>
-  <img src="generated/images/guide/store/state-management-lifecycle.png" alt="NgRx State Management Lifecycle Diagram" width="100%" height="100%" />
+  <img src="images/guide/store/state-management-lifecycle.png" alt="NgRx State Management Lifecycle Diagram" width="100%" height="100%" />
 </figure>
 
 <ngrx-docs-alert type="inform">

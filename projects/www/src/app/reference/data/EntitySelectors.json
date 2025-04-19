@@ -1,1 +1,628 @@
-{"name":"EntitySelectors","canonicalReference":"@ngrx/data!EntitySelectors:interface","kind":"Interface","fileUrlPath":"../../dist/modules/data/src/selectors/entity-selectors.d.ts","isDeprecated":false,"members":[{"kind":"Interface","canonicalReference":"@ngrx/data!EntitySelectors:interface","docComment":"/**\n * The selector functions for entity collection members, Selects from store root, through EntityCache, to the entity collection member Contrast with {CollectionSelectors}.\n */\n","excerptTokens":[{"kind":"Content","text":"export interface EntitySelectors<T> "}],"fileUrlPath":"../../dist/modules/data/src/selectors/entity-selectors.d.ts","releaseTag":"Public","typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"EntitySelectors","preserveMemberOrder":false,"members":[{"kind":"IndexSignature","canonicalReference":"@ngrx/data!EntitySelectors:index(1)","docComment":"","excerptTokens":[{"kind":"Content","text":"readonly [name: "},{"kind":"Content","text":"string"},{"kind":"Content","text":"]: "},{"kind":"Reference","text":"MemoizedSelector","canonicalReference":"!unknown"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"EntityCollection","canonicalReference":"@ngrx/data!EntityCollection:interface"},{"kind":"Content","text":"<T>, any> | string"},{"kind":"Content","text":";"}],"isReadonly":true,"returnTypeTokenRange":{"startIndex":3,"endIndex":7},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"name","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false}],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntitySelectors#entityName:member","docComment":"/**\n * Name of the entity collection for these selectors\n */\n","excerptTokens":[{"kind":"Content","text":"readonly entityName: "},{"kind":"Content","text":"string"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"entityName","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Name of the entity collection for these selectors\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntitySelectors#selectChangeState:member","docComment":"/**\n * ChangeState (including original values) of entities with unsaved changes\n */\n","excerptTokens":[{"kind":"Content","text":"readonly selectChangeState: "},{"kind":"Reference","text":"MemoizedSelector","canonicalReference":"!unknown"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"Object","canonicalReference":"!Object:interface"},{"kind":"Content","text":", "},{"kind":"Reference","text":"ChangeStateMap","canonicalReference":"@ngrx/data!ChangeStateMap:type"},{"kind":"Content","text":"<T>>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"selectChangeState","propertyTypeTokenRange":{"startIndex":1,"endIndex":7},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"ChangeState (including original values) of entities with unsaved changes\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntitySelectors#selectCollection:member","docComment":"/**\n * The cached EntityCollection itself\n */\n","excerptTokens":[{"kind":"Content","text":"readonly selectCollection: "},{"kind":"Reference","text":"MemoizedSelector","canonicalReference":"!unknown"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"Object","canonicalReference":"!Object:interface"},{"kind":"Content","text":", "},{"kind":"Reference","text":"EntityCollection","canonicalReference":"@ngrx/data!EntityCollection:interface"},{"kind":"Content","text":"<T>>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"selectCollection","propertyTypeTokenRange":{"startIndex":1,"endIndex":7},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"The cached EntityCollection itself\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntitySelectors#selectCount:member","docComment":"/**\n * Count of entities in the cached collection.\n */\n","excerptTokens":[{"kind":"Content","text":"readonly selectCount: "},{"kind":"Reference","text":"MemoizedSelector","canonicalReference":"!unknown"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"Object","canonicalReference":"!Object:interface"},{"kind":"Content","text":", number>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"selectCount","propertyTypeTokenRange":{"startIndex":1,"endIndex":5},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Count of entities in the cached collection.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntitySelectors#selectEntities:member","docComment":"/**\n * All entities in the cached collection.\n */\n","excerptTokens":[{"kind":"Content","text":"readonly selectEntities: "},{"kind":"Reference","text":"MemoizedSelector","canonicalReference":"!unknown"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"Object","canonicalReference":"!Object:interface"},{"kind":"Content","text":", T[]>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"selectEntities","propertyTypeTokenRange":{"startIndex":1,"endIndex":5},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"All entities in the cached collection.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntitySelectors#selectEntityCache:member","docComment":"/**\n * The EntityCache\n */\n","excerptTokens":[{"kind":"Content","text":"readonly selectEntityCache: "},{"kind":"Reference","text":"MemoizedSelector","canonicalReference":"!unknown"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"Object","canonicalReference":"!Object:interface"},{"kind":"Content","text":", "},{"kind":"Reference","text":"EntityCache","canonicalReference":"@ngrx/data!EntityCache:interface"},{"kind":"Content","text":">"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"selectEntityCache","propertyTypeTokenRange":{"startIndex":1,"endIndex":7},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"The EntityCache\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntitySelectors#selectEntityMap:member","docComment":"/**\n * Map of entity keys to entities\n */\n","excerptTokens":[{"kind":"Content","text":"readonly selectEntityMap: "},{"kind":"Reference","text":"MemoizedSelector","canonicalReference":"!unknown"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"Object","canonicalReference":"!Object:interface"},{"kind":"Content","text":", "},{"kind":"Reference","text":"Dictionary","canonicalReference":"!unknown"},{"kind":"Content","text":"<T>>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"selectEntityMap","propertyTypeTokenRange":{"startIndex":1,"endIndex":7},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Map of entity keys to entities\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntitySelectors#selectFilter:member","docComment":"/**\n * Filter pattern applied by the entity collection's filter function\n */\n","excerptTokens":[{"kind":"Content","text":"readonly selectFilter: "},{"kind":"Reference","text":"MemoizedSelector","canonicalReference":"!unknown"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"Object","canonicalReference":"!Object:interface"},{"kind":"Content","text":", string>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"selectFilter","propertyTypeTokenRange":{"startIndex":1,"endIndex":5},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Filter pattern applied by the entity collection's filter function\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntitySelectors#selectFilteredEntities:member","docComment":"/**\n * Entities in the cached collection that pass the filter function\n */\n","excerptTokens":[{"kind":"Content","text":"readonly selectFilteredEntities: "},{"kind":"Reference","text":"MemoizedSelector","canonicalReference":"!unknown"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"Object","canonicalReference":"!Object:interface"},{"kind":"Content","text":", T[]>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"selectFilteredEntities","propertyTypeTokenRange":{"startIndex":1,"endIndex":5},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Entities in the cached collection that pass the filter function\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntitySelectors#selectKeys:member","docComment":"/**\n * Keys of the cached collection, in the collection's native sort order\n */\n","excerptTokens":[{"kind":"Content","text":"readonly selectKeys: "},{"kind":"Reference","text":"MemoizedSelector","canonicalReference":"!unknown"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"Object","canonicalReference":"!Object:interface"},{"kind":"Content","text":", string[] | number[]>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"selectKeys","propertyTypeTokenRange":{"startIndex":1,"endIndex":5},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Keys of the cached collection, in the collection's native sort order\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntitySelectors#selectLoaded:member","docComment":"/**\n * True when the collection has been fully loaded.\n */\n","excerptTokens":[{"kind":"Content","text":"readonly selectLoaded: "},{"kind":"Reference","text":"MemoizedSelector","canonicalReference":"!unknown"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"Object","canonicalReference":"!Object:interface"},{"kind":"Content","text":", boolean>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"selectLoaded","propertyTypeTokenRange":{"startIndex":1,"endIndex":5},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"True when the collection has been fully loaded.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!EntitySelectors#selectLoading:member","docComment":"/**\n * True when a multi-entity query command is in progress.\n */\n","excerptTokens":[{"kind":"Content","text":"readonly selectLoading: "},{"kind":"Reference","text":"MemoizedSelector","canonicalReference":"!unknown"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"Object","canonicalReference":"!Object:interface"},{"kind":"Content","text":", boolean>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"selectLoading","propertyTypeTokenRange":{"startIndex":1,"endIndex":5},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"True when a multi-entity query command is in progress.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"extendsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"The selector functions for entity collection members, Selects from store root, through EntityCache, to the entity collection member Contrast with {CollectionSelectors}.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "EntitySelectors",
+  "canonicalReference": "@ngrx/data!EntitySelectors:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/data/src/selectors/entity-selectors.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/data!EntitySelectors:interface",
+      "docComment": "/**\n * The selector functions for entity collection members, Selects from store root, through EntityCache, to the entity collection member Contrast with {CollectionSelectors}.\n */\n",
+      "excerptTokens": [
+        { "kind": "Content", "text": "export interface EntitySelectors<T> " }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/selectors/entity-selectors.d.ts",
+      "releaseTag": "Public",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "EntitySelectors",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "IndexSignature",
+          "canonicalReference": "@ngrx/data!EntitySelectors:index(1)",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly [name: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": "]: " },
+            {
+              "kind": "Reference",
+              "text": "MemoizedSelector",
+              "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            { "kind": "Content", "text": "<T>, any> | string" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 7 },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "name",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntitySelectors#entityName:member",
+          "docComment": "/**\n * Name of the entity collection for these selectors\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly entityName: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "entityName",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Name of the entity collection for these selectors\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntitySelectors#selectChangeState:member",
+          "docComment": "/**\n * ChangeState (including original values) of entities with unsaved changes\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly selectChangeState: " },
+            {
+              "kind": "Reference",
+              "text": "MemoizedSelector",
+              "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Object",
+              "canonicalReference": "!Object:interface"
+            },
+            { "kind": "Content", "text": ", " },
+            {
+              "kind": "Reference",
+              "text": "ChangeStateMap",
+              "canonicalReference": "@ngrx/data!ChangeStateMap:type"
+            },
+            { "kind": "Content", "text": "<T>>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "selectChangeState",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 7 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "ChangeState (including original values) of entities with unsaved changes\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntitySelectors#selectCollection:member",
+          "docComment": "/**\n * The cached EntityCollection itself\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly selectCollection: " },
+            {
+              "kind": "Reference",
+              "text": "MemoizedSelector",
+              "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Object",
+              "canonicalReference": "!Object:interface"
+            },
+            { "kind": "Content", "text": ", " },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            { "kind": "Content", "text": "<T>>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "selectCollection",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 7 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "The cached EntityCollection itself\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntitySelectors#selectCount:member",
+          "docComment": "/**\n * Count of entities in the cached collection.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly selectCount: " },
+            {
+              "kind": "Reference",
+              "text": "MemoizedSelector",
+              "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Object",
+              "canonicalReference": "!Object:interface"
+            },
+            { "kind": "Content", "text": ", number>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "selectCount",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Count of entities in the cached collection.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntitySelectors#selectEntities:member",
+          "docComment": "/**\n * All entities in the cached collection.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly selectEntities: " },
+            {
+              "kind": "Reference",
+              "text": "MemoizedSelector",
+              "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Object",
+              "canonicalReference": "!Object:interface"
+            },
+            { "kind": "Content", "text": ", T[]>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "selectEntities",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "All entities in the cached collection.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntitySelectors#selectEntityCache:member",
+          "docComment": "/**\n * The EntityCache\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly selectEntityCache: " },
+            {
+              "kind": "Reference",
+              "text": "MemoizedSelector",
+              "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Object",
+              "canonicalReference": "!Object:interface"
+            },
+            { "kind": "Content", "text": ", " },
+            {
+              "kind": "Reference",
+              "text": "EntityCache",
+              "canonicalReference": "@ngrx/data!EntityCache:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "selectEntityCache",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 7 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "The EntityCache\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntitySelectors#selectEntityMap:member",
+          "docComment": "/**\n * Map of entity keys to entities\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly selectEntityMap: " },
+            {
+              "kind": "Reference",
+              "text": "MemoizedSelector",
+              "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Object",
+              "canonicalReference": "!Object:interface"
+            },
+            { "kind": "Content", "text": ", " },
+            {
+              "kind": "Reference",
+              "text": "Dictionary",
+              "canonicalReference": "@ngrx/entity!Dictionary:class"
+            },
+            { "kind": "Content", "text": "<T>>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "selectEntityMap",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 7 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Map of entity keys to entities\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntitySelectors#selectFilter:member",
+          "docComment": "/**\n * Filter pattern applied by the entity collection's filter function\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly selectFilter: " },
+            {
+              "kind": "Reference",
+              "text": "MemoizedSelector",
+              "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Object",
+              "canonicalReference": "!Object:interface"
+            },
+            { "kind": "Content", "text": ", string>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "selectFilter",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Filter pattern applied by the entity collection's filter function\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntitySelectors#selectFilteredEntities:member",
+          "docComment": "/**\n * Entities in the cached collection that pass the filter function\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly selectFilteredEntities: " },
+            {
+              "kind": "Reference",
+              "text": "MemoizedSelector",
+              "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Object",
+              "canonicalReference": "!Object:interface"
+            },
+            { "kind": "Content", "text": ", T[]>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "selectFilteredEntities",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Entities in the cached collection that pass the filter function\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntitySelectors#selectKeys:member",
+          "docComment": "/**\n * Keys of the cached collection, in the collection's native sort order\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly selectKeys: " },
+            {
+              "kind": "Reference",
+              "text": "MemoizedSelector",
+              "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Object",
+              "canonicalReference": "!Object:interface"
+            },
+            { "kind": "Content", "text": ", string[] | number[]>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "selectKeys",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Keys of the cached collection, in the collection's native sort order\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntitySelectors#selectLoaded:member",
+          "docComment": "/**\n * True when the collection has been fully loaded.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly selectLoaded: " },
+            {
+              "kind": "Reference",
+              "text": "MemoizedSelector",
+              "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Object",
+              "canonicalReference": "!Object:interface"
+            },
+            { "kind": "Content", "text": ", boolean>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "selectLoaded",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "True when the collection has been fully loaded.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!EntitySelectors#selectLoading:member",
+          "docComment": "/**\n * True when a multi-entity query command is in progress.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly selectLoading: " },
+            {
+              "kind": "Reference",
+              "text": "MemoizedSelector",
+              "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Object",
+              "canonicalReference": "!Object:interface"
+            },
+            { "kind": "Content", "text": ", boolean>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "selectLoading",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "True when a multi-entity query command is in progress.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "The selector functions for entity collection members, Selects from store root, through EntityCache, to the entity collection member Contrast with {CollectionSelectors}.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

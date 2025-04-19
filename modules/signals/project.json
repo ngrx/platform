@@ -26,10 +26,10 @@
             "command": "pnpm exec tsc -p modules/signals/tsconfig.schematics.json"
           },
           {
-            "command": "yarn rimraf node_modules/@ngrx/signals"
+            "command": "pnpm exec rimraf node_modules/@ngrx/signals"
           },
           {
-            "command": "yarn mkdirp node_modules/@ngrx/signals"
+            "command": "pnpm exec mkdirp node_modules/@ngrx/signals"
           },
           {
             "command": "ncp dist/modules/signals node_modules/@ngrx/signals"

@@ -342,7 +342,7 @@ export const routes: Route[] = [
 
 You can provide root-/feature-level effects with the provider `USER_PROVIDED_EFFECTS`.
 
-<ngrx-code-example>
+<ngrx-code-example >
 
 ```ts
 providers: [

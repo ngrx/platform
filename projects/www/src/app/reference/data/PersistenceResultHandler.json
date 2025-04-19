@@ -1,1 +1,176 @@
-{"name":"PersistenceResultHandler","canonicalReference":"@ngrx/data!PersistenceResultHandler:class","kind":"Class","fileUrlPath":"../../dist/modules/data/src/dataservices/persistence-result-handler.service.d.ts","isDeprecated":false,"members":[{"kind":"Class","canonicalReference":"@ngrx/data!PersistenceResultHandler:class","docComment":"/**\n * Handling of responses from persistence operation\n */\n","excerptTokens":[{"kind":"Content","text":"export declare abstract class PersistenceResultHandler "}],"fileUrlPath":"../../dist/modules/data/src/dataservices/persistence-result-handler.service.d.ts","releaseTag":"Public","isAbstract":true,"name":"PersistenceResultHandler","preserveMemberOrder":false,"members":[{"kind":"Method","canonicalReference":"@ngrx/data!PersistenceResultHandler#handleError:member(1)","docComment":"/**\n * Handle error result of persistence operation for an action\n */\n","excerptTokens":[{"kind":"Content","text":"abstract handleError(originalAction: "},{"kind":"Reference","text":"EntityAction","canonicalReference":"@ngrx/data!EntityAction:interface"},{"kind":"Content","text":"): "},{"kind":"Content","text":"(error: "},{"kind":"Reference","text":"DataServiceError","canonicalReference":"@ngrx/data!DataServiceError:class"},{"kind":"Content","text":" | "},{"kind":"Reference","text":"Error","canonicalReference":"!Error:interface"},{"kind":"Content","text":") => "},{"kind":"Reference","text":"EntityAction","canonicalReference":"@ngrx/data!EntityAction:interface"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"EntityActionDataServiceError","canonicalReference":"@ngrx/data!EntityActionDataServiceError:interface"},{"kind":"Content","text":">"},{"kind":"Content","text":";"}],"isStatic":false,"returnTypeTokenRange":{"startIndex":3,"endIndex":12},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"originalAction","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false}],"isOptional":false,"isAbstract":true,"name":"handleError","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Handle error result of persistence operation for an action\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/data!PersistenceResultHandler#handleSuccess:member(1)","docComment":"/**\n * Handle successful result of persistence operation for an action\n */\n","excerptTokens":[{"kind":"Content","text":"abstract handleSuccess(originalAction: "},{"kind":"Reference","text":"EntityAction","canonicalReference":"@ngrx/data!EntityAction:interface"},{"kind":"Content","text":"): "},{"kind":"Content","text":"(data: any) => "},{"kind":"Reference","text":"Action","canonicalReference":"!unknown"},{"kind":"Content","text":";"}],"isStatic":false,"returnTypeTokenRange":{"startIndex":3,"endIndex":5},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"originalAction","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false}],"isOptional":false,"isAbstract":true,"name":"handleSuccess","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Handle successful result of persistence operation for an action\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"implementsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Handling of responses from persistence operation\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "PersistenceResultHandler",
+  "canonicalReference": "@ngrx/data!PersistenceResultHandler:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/dataservices/persistence-result-handler.service.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!PersistenceResultHandler:class",
+      "docComment": "/**\n * Handling of responses from persistence operation\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare abstract class PersistenceResultHandler "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/dataservices/persistence-result-handler.service.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": true,
+      "name": "PersistenceResultHandler",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!PersistenceResultHandler#handleError:member(1)",
+          "docComment": "/**\n * Handle error result of persistence operation for an action\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "abstract handleError(originalAction: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "(error: " },
+            {
+              "kind": "Reference",
+              "text": "DataServiceError",
+              "canonicalReference": "@ngrx/data!DataServiceError:class"
+            },
+            { "kind": "Content", "text": " | " },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            { "kind": "Content", "text": ") => " },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EntityActionDataServiceError",
+              "canonicalReference": "@ngrx/data!EntityActionDataServiceError:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 12 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "originalAction",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": true,
+          "name": "handleError",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Handle error result of persistence operation for an action\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!PersistenceResultHandler#handleSuccess:member(1)",
+          "docComment": "/**\n * Handle successful result of persistence operation for an action\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "abstract handleSuccess(originalAction: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "(data: any) => " },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "originalAction",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": true,
+          "name": "handleSuccess",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Handle successful result of persistence operation for an action\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Handling of responses from persistence operation\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

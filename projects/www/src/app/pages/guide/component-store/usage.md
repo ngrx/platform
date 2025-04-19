@@ -22,7 +22,7 @@ The types of state that developers typically deal with in applications are:
 - **Local UI State**. The state within a component itself. E.g. `isEnabled` toggle state of Toggle Component.
 
 <figure>
-  <img src="generated/images/guide/component-store/types-of-state.png" alt="Types of state in a typical SPA" width="100%" height="100%" />
+  <img src="images/guide/component-store/types-of-state.png" alt="Types of state in a typical SPA" width="100%" height="100%" />
 </figure>
 
 There are more types of states, but these are the most important ones in the context of state management.

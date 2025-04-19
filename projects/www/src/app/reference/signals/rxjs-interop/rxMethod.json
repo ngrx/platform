@@ -1,1 +1,76 @@
-{"name":"rxMethod","canonicalReference":"@ngrx/signals/rxjs-interop!rxMethod:function","kind":"Function","fileUrlPath":"../../dist/modules/signals/rxjs-interop/src/rx-method.d.ts","isDeprecated":false,"members":[{"kind":"Function","canonicalReference":"@ngrx/signals/rxjs-interop!rxMethod:function(1)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function rxMethod<Input>(generator: "},{"kind":"Content","text":"(source$: "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<Input>) => "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<unknown>"},{"kind":"Content","text":", config?: "},{"kind":"Content","text":"{\n    injector?: "},{"kind":"Reference","text":"Injector","canonicalReference":"@angular/core!Injector:class"},{"kind":"Content","text":";\n}"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"RxMethod","canonicalReference":"@ngrx/signals/rxjs-interop!~RxMethod:type"},{"kind":"Content","text":"<Input>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/signals/rxjs-interop/src/rx-method.d.ts","returnTypeTokenRange":{"startIndex":11,"endIndex":13},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"generator","parameterTypeTokenRange":{"startIndex":1,"endIndex":6},"isOptional":false},{"parameterName":"config","parameterTypeTokenRange":{"startIndex":7,"endIndex":10},"isOptional":true}],"typeParameters":[{"typeParameterName":"Input","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"rxMethod","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "RxMethod",
+  "canonicalReference": "@ngrx/signals/rxjs-interop!RxMethod:type",
+  "kind": "TypeAlias",
+  "fileUrlPath": "../../dist/modules/signals/rxjs-interop/src/rx-method.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "TypeAlias",
+      "canonicalReference": "@ngrx/signals/rxjs-interop!RxMethod:type",
+      "docComment": "",
+      "excerptTokens": [
+        { "kind": "Content", "text": "export type RxMethod<Input> = " },
+        { "kind": "Content", "text": "((input: Input | " },
+        {
+          "kind": "Reference",
+          "text": "Signal",
+          "canonicalReference": "@angular/core!Signal:type"
+        },
+        { "kind": "Content", "text": "<Input> | " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<Input>, config?: {\n    injector?: " },
+        {
+          "kind": "Reference",
+          "text": "Injector",
+          "canonicalReference": "@angular/core!Injector:class"
+        },
+        { "kind": "Content", "text": ";\n}) => " },
+        {
+          "kind": "Reference",
+          "text": "RxMethodRef",
+          "canonicalReference": "@ngrx/signals/rxjs-interop!~RxMethodRef:type"
+        },
+        { "kind": "Content", "text": ") & " },
+        {
+          "kind": "Reference",
+          "text": "RxMethodRef",
+          "canonicalReference": "@ngrx/signals/rxjs-interop!~RxMethodRef:type"
+        },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/rxjs-interop/src/rx-method.d.ts",
+      "releaseTag": "Public",
+      "name": "RxMethod",
+      "typeParameters": [
+        {
+          "typeParameterName": "Input",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "typeTokenRange": { "startIndex": 1, "endIndex": 11 },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

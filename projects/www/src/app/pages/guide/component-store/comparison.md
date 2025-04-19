@@ -95,7 +95,7 @@ Each ComponentStore is fully responsible for its own state. There could be **man
 ComponentStores, but each one should store its own distinct state.
 
 <figure>
-  <img src="generated/images/guide/component-store/state-structure.png" alt="Comparison of NgRx Store and Component Store state ownership or placement" width="100%" height="100%" />
+  <img src="images/guide/component-store/state-structure.png" alt="Comparison of NgRx Store and Component Store state ownership or placement" width="100%" height="100%" />
 </figure>
 
 ## File structure
@@ -113,5 +113,5 @@ In such cases, it's acceptable to create `ComponentStore<object>` that won't be 
 and would contain a number of selectors.
 
 <figure>
-  <img src="generated/images/guide/component-store/file-structure.png" alt="Comparison of NgRx Store and Component Store file structures" width="100%" height="100%" />
+  <img src="images/guide/component-store/file-structure.png" alt="Comparison of NgRx Store and Component Store file structures" width="100%" height="100%" />
 </figure>

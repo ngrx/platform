@@ -1,1 +1,100 @@
-{"name":"withComputed","canonicalReference":"@ngrx/signals!withComputed:function","kind":"Function","fileUrlPath":"../../dist/modules/signals/src/with-computed.d.ts","isDeprecated":false,"members":[{"kind":"Function","canonicalReference":"@ngrx/signals!withComputed:function(1)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function withComputed<Input extends "},{"kind":"Reference","text":"SignalStoreFeatureResult","canonicalReference":"@ngrx/signals!SignalStoreFeatureResult:type"},{"kind":"Content","text":", ComputedSignals extends "},{"kind":"Reference","text":"SignalsDictionary","canonicalReference":"@ngrx/signals!~SignalsDictionary:type"},{"kind":"Content","text":">(signalsFactory: "},{"kind":"Content","text":"(store: "},{"kind":"Reference","text":"Prettify","canonicalReference":"@ngrx/signals!Prettify:type"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"StateSignals","canonicalReference":"@ngrx/signals!StateSignals:type"},{"kind":"Content","text":"<Input['state']> & Input['computed']>) => ComputedSignals"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"SignalStoreFeature","canonicalReference":"@ngrx/signals!SignalStoreFeature:type"},{"kind":"Content","text":"<Input, {\n    state: {};\n    computed: ComputedSignals;\n    methods: {};\n}>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/signals/src/with-computed.d.ts","returnTypeTokenRange":{"startIndex":11,"endIndex":13},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"signalsFactory","parameterTypeTokenRange":{"startIndex":5,"endIndex":10},"isOptional":false}],"typeParameters":[{"typeParameterName":"Input","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"ComputedSignals","constraintTokenRange":{"startIndex":3,"endIndex":4},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"withComputed","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "withComputed",
+  "canonicalReference": "@ngrx/signals!withComputed:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/signals/src/with-computed.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/signals!withComputed:function(1)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function withComputed<Input extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "SignalStoreFeatureResult",
+          "canonicalReference": "@ngrx/signals!SignalStoreFeatureResult:type"
+        },
+        { "kind": "Content", "text": ", ComputedSignals extends " },
+        {
+          "kind": "Reference",
+          "text": "SignalsDictionary",
+          "canonicalReference": "@ngrx/signals!~SignalsDictionary:type"
+        },
+        { "kind": "Content", "text": ">(signalsFactory: " },
+        { "kind": "Content", "text": "(store: " },
+        {
+          "kind": "Reference",
+          "text": "Prettify",
+          "canonicalReference": "@ngrx/signals!Prettify:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "StateSignals",
+          "canonicalReference": "@ngrx/signals!StateSignals:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<Input['state']> & Input['props']>) => ComputedSignals"
+        },
+        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Reference",
+          "text": "SignalStoreFeature",
+          "canonicalReference": "@ngrx/signals!SignalStoreFeature:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<Input, {\n    state: {};\n    props: ComputedSignals;\n    methods: {};\n}>"
+        },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/src/with-computed.d.ts",
+      "returnTypeTokenRange": { "startIndex": 11, "endIndex": 13 },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "signalsFactory",
+          "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 10 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "Input",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "ComputedSignals",
+          "constraintTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "withComputed",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}
