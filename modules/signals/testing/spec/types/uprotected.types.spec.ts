@@ -29,7 +29,7 @@ describe('unprotected', () => {
     expectSnippet(snippet).toSucceed();
     expectSnippet(snippet).toInfer(
       'unprotectedStore',
-      '{ count: Signal<number>; doubleCount: Signal<number>; [STATE_SOURCE]: WritableSignal<{ count: number; }>; }'
+      '{ count: Signal<number>; doubleCount: Signal<number>; [STATE_SOURCE]: { count: WritableSignal<number>; }; }'
     );
   });
 
@@ -47,7 +47,7 @@ describe('unprotected', () => {
     expectSnippet(snippet).toSucceed();
     expectSnippet(snippet).toInfer(
       'unprotectedStore',
-      '{ count: Signal<number>; [STATE_SOURCE]: WritableSignal<{ count: number; }>; }'
+      '{ count: Signal<number>; [STATE_SOURCE]: { count: WritableSignal<number>; }; }'
     );
   });
 });

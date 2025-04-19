@@ -17,10 +17,9 @@ import {
   withHooks,
   withMethods,
   withState,
-  WritableStateSource,
 } from '../src';
 import { STATE_SOURCE } from '../src/state-source';
-import { createLocalService } from './helpers';
+import { assertStateSource, createLocalService } from './helpers';
 
 const SECRET = Symbol('SECRET');
 
@@ -38,16 +37,16 @@ describe('StateSource', () => {
 
   describe('isWritableStateSource', () => {
     it('returns true for a writable StateSource', () => {
-      const stateSource: StateSource<typeof initialState> = {
-        [STATE_SOURCE]: signal(initialState),
+      const stateSource: StateSource<{ value: typeof initialState }> = {
+        [STATE_SOURCE]: { value: signal(initialState) },
       };
 
       expect(isWritableStateSource(stateSource)).toBe(true);
     });
 
     it('returns false for a readonly StateSource', () => {
-      const stateSource: StateSource<typeof initialState> = {
-        [STATE_SOURCE]: signal(initialState).asReadonly(),
+      const stateSource: StateSource<{ vaulue: typeof initialState }> = {
+        [STATE_SOURCE]: { value: signal(initialState).asReadonly() },
       };
 
       expect(isWritableStateSource(stateSource)).toBe(false);
@@ -81,10 +80,12 @@ describe('StateSource', () => {
             foo: 'baz',
           });
 
-          expect(state[STATE_SOURCE]()).toEqual({
-            ...initialState,
-            user: { firstName: 'Johannes', lastName: 'Schmidt' },
-            foo: 'baz',
+          assertStateSource(state[STATE_SOURCE], {
+            user: signal({ firstName: 'Johannes', lastName: 'Schmidt' }),
+            foo: signal('baz'),
+            numbers: signal([1, 2, 3]),
+            ngrx: signal('signals'),
+            [SECRET]: signal('secret'),
           });
         });
 
@@ -96,10 +97,12 @@ describe('StateSource', () => {
             ngrx: 'rocks',
           }));
 
-          expect(state[STATE_SOURCE]()).toEqual({
-            ...initialState,
-            numbers: [1, 2, 3, 4],
-            ngrx: 'rocks',
+          assertStateSource(state[STATE_SOURCE], {
+            user: signal({ firstName: 'John', lastName: 'Smith' }),
+            foo: signal('bar'),
+            numbers: signal([1, 2, 3, 4]),
+            ngrx: signal('rocks'),
+            [SECRET]: signal('secret'),
           });
         });
 
@@ -121,11 +124,12 @@ describe('StateSource', () => {
             { foo: 'foo' }
           );
 
-          expect(state[STATE_SOURCE]()).toEqual({
-            ...initialState,
-            user: { firstName: 'Jovan', lastName: 'Schmidt' },
-            foo: 'foo',
-            numbers: [1, 2, 3, 4],
+          assertStateSource(state[STATE_SOURCE], {
+            user: signal({ firstName: 'Jovan', lastName: 'Schmidt' }),
+            foo: signal('foo'),
+            numbers: signal([1, 2, 3, 4]),
+            ngrx: signal('signals'),
+            [SECRET]: signal('secret'),
           });
         });
 
