@@ -1,3 +1,12 @@
+<ngrx-docs-alert type="help">
+
+**<a href="/guide/signals"><b>NgRx Signals</b></a> is the new default.**
+
+The NgRx team recommends using the `@ngrx/signals` library for local state management in Angular.
+While ComponentStore remains supported, we encourage using `@ngrx/signals` for new projects and considering migration for existing ones.
+
+</ngrx-docs-alert>
+
 # Usage
 
 ## Types of State
@@ -13,7 +22,7 @@ The types of state that developers typically deal with in applications are:
 - **Local UI State**. The state within a component itself. E.g. `isEnabled` toggle state of Toggle Component.
 
 <figure>
-  <img src="images/guide/component-store/types-of-state.png" alt="Types of state in a typical SPA" width="100%" height="100%" />
+  <img src="generated/images/guide/component-store/types-of-state.png" alt="Types of state in a typical SPA" width="100%" height="100%" />
 </figure>
 
 There are more types of states, but these are the most important ones in the context of state management.
@@ -46,14 +55,13 @@ Understanding these types of state helps us define our usage of ComponentStore.
 
 The simplest example usage of `ComponentStore` is **reactive _Local UI State_**.
 
-<ngrx-docs-alert type="help">
-
-### A note about component reactivity
+<div class="callout is-helpful">
+<header>A note about component reactivity</header>
 
 One of the ways to improve the performance of the application is to use the `OnPush` change detection strategy. However, contrary to the popular belief, we do not always need to tell Angular's change detection to `markForCheck()` or `detectChanges()` (or the Angular Ivy alternatives). As pointed out in [this article on change detection](https://indepth.dev/the-last-guide-for-angular-change-detection-youll-ever-need/), if the event originates from the component itself, the component will be dirty checked.
 This means that common presentational (aka dumb) components that interact with the rest of the application with Input(s)/Output(s) do not have to be overcomplicated with reactive state, even though we did it to the Toggle Component mentioned above.
 
-</ngrx-docs-alert>
+</div>
 
 Having said that, in most cases making _Local UI State_ **reactive** is beneficial:
 
@@ -91,10 +99,13 @@ Below are the steps of integrating `ComponentStore` into a component.
 
 First, the state for the component needs to be identified. In `SlideToggleComponent` only the state of whether the toggle is turned ON or OFF is stored.
 
-<ngrx-code-example
-  header="src/app/slide-toggle.component.ts"
+<ngrx-code-example header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
-  region="state"></ngrx-code-example>
+  region="state">
+
+`ts`
+
+</ngrx-code-example>
 
 Then we need to provide `ComponentStore` in the component's providers, so that each new instance of `SlideToggleComponent` has its own `ComponentStore`. It also has to be injected into the constructor.
 
@@ -107,7 +118,11 @@ In this example `ComponentStore` is provided directly in the component. This wor
 <ngrx-code-example linenums="false"
   header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
-  region="providers"></ngrx-code-example>
+  region="providers">
+
+`ts`
+
+</ngrx-code-example>
 
 Next, the default state for the component needs to be set. It could be done lazily, however it needs to be done before any of `updater`s are executed, because they rely on the state to be present and would throw an error if the state is not initialized by the time they are invoked.
 
@@ -123,10 +138,13 @@ When it is called with a callback, the state is updated.
 
 </ngrx-docs-alert>
 
-<ngrx-code-example
-  header="src/app/slide-toggle.component.ts"
+<ngrx-code-example header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
-  region="init"></ngrx-code-example>
+  region="init">
+
+`ts`
+
+</ngrx-code-example>
 
 #### Step 2. Updating state
 
@@ -139,7 +157,11 @@ When a user clicks the toggle (triggering a 'change' event), instead of calling 
 <ngrx-code-example linenums="false"
   header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
-  region="updater"></ngrx-code-example>
+  region="updater">
+
+`ts`
+
+</ngrx-code-example>
 
 #### Step 3. Reading the state
 
@@ -148,10 +170,13 @@ Finally, the state is aggregated with selectors into two properties:
 - `vm$` property collects all the data needed for the template - this is the _ViewModel_ of `SlideToggleComponent`.
 - `change` is the `@Output` of `SlideToggleComponent`. Instead of creating an `EventEmitter`, here the output is connected to the Observable source directly.
 
-<ngrx-code-example
-  header="src/app/slide-toggle.component.ts"
+<ngrx-code-example header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
-  region="selector"></ngrx-code-example>
+  region="selector">
+
+`ts`
+
+</ngrx-code-example>
 
 This example does not have a lot of business logic, however it is still fully reactive.
 
@@ -203,19 +228,25 @@ You can see the examples at StackBlitz:
 
 With `ComponentStore` extracted into `PaginatorStore`, the developer is now using updaters and effects to update the state. `@Input` values are passed directly into `updater`s as their arguments.
 
-<ngrx-code-example
-  header="src/app/paginator.store.ts"
+<ngrx-code-example header="src/app/paginator.store.ts"
   path="component-store-paginator-service/src/app/paginator.component.ts"
-  region="inputs"></ngrx-code-example>
+  region="inputs">
+
+`ts`
+
+</ngrx-code-example>
 
 Not all `updater`s have to be called in the `@Input`. For example, `changePageSize` is called from the template.
 
 Effects are used to perform additional validation and get extra information from sources with derived data (i.e. selectors).
 
-<ngrx-code-example
-  header="src/app/paginator.store.ts"
+<ngrx-code-example header="src/app/paginator.store.ts"
   path="component-store-paginator-service/src/app/paginator.component.ts"
-  region="updating-state"></ngrx-code-example>
+  region="updating-state">
+
+`ts`
+
+</ngrx-code-example>
 
 #### Reading the state
 

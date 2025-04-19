@@ -2,7 +2,7 @@
 
 ## Installing with `ng add`
 
-You can install the Store to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
+You can install the Store to your project with the following `ng add` command <a href="https://angular.dev/cli/add" target="_blank">(details here)</a>:
 
 ```sh
 ng add @ngrx/store@latest
@@ -10,14 +10,14 @@ ng add @ngrx/store@latest
 
 ### Optional `ng add` flags
 
-| <div style="width:160px">flag </div> | description                                                                                                                                                                         | <div style="width:120px">value type</div> | <div style="width:120px">default value</div> |
-| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | -------------------------------------------- |
-| `--path`                             | Path to the module that you wish to add the import for the StoreModule to.                                                                                                          | `string`                                  |
-| `--project`                          | Name of the project defined in your `angular.json` to help locating the module to add the `StoreModule` to.                                                                         | `string`                                  |
-| `--module`                           | Name of file containing the module that you wish to add the import for the `StoreModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`.  | `string`                                  | `app`                                        |
-| `--minimal`                          | Flag to only provide minimal setup for the root state management. Only registers `StoreModule.forRoot()` in the provided `module` with an empty object, and default runtime checks. | `boolean`                                 | `true`                                       |
-| `--statePath`                        | The file path to create the state in.                                                                                                                                               | `string`                                  | `reducers`                                   |
-| `--stateInterface`                   | The type literal of the defined interface for the state.                                                                                                                            | `string`                                  | `State`                                      |
+| flag               | description                                                                                                                                                                         | value type | default value |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------- |
+| `--path`           | Path to the module that you wish to add the import for the StoreModule to.                                                                                                          | `string`   |
+| `--project`        | Name of the project defined in your `angular.json` to help locating the module to add the `StoreModule` to.                                                                         | `string`   |
+| `--module`         | Name of file containing the module that you wish to add the import for the `StoreModule` to. Can also include the relative path to the file. For example, `src/app/app.module.ts`.  | `string`   | `app`         |
+| `--minimal`        | Flag to only provide minimal setup for the root state management. Only registers `StoreModule.forRoot()` in the provided `module` with an empty object, and default runtime checks. | `boolean`  | `true`        |
+| `--statePath`      | The file path to create the state in.                                                                                                                                               | `string`   | `reducers`    |
+| `--stateInterface` | The type literal of the defined interface for the state.                                                                                                                            | `string`   | `State`       |
 
 This command will automate the following steps:
 

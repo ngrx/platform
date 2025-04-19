@@ -3,7 +3,6 @@
 `Effect` should not be listed as a provider if it is added to the `EffectsModule`.
 
 - **Type**: problem
-- **Recommended**: Yes
 - **Fixable**: Yes
 - **Suggestion**: No
 - **Requires type checking**: No

@@ -276,25 +276,23 @@ selectTotal({
 });
 
 /**
-
-- Memoized Values before calling selectTotal.release()
-- selectSumEvenNums 6
-- selectSumOddNums 4
-- selectTotal 10
-  */
+ * Memoized Values before calling selectTotal.release()
+ *   selectSumEvenNums  6
+ *   selectSumOddNums   4
+ *   selectTotal        10
+ */
 
 selectTotal.release();
 
 /**
-
-- Memoized Values after calling selectTotal.release()
-- selectSumEvenNums null
-- selectSumOddNums null
-- selectTotal null
-  */
+ * Memoized Values after calling selectTotal.release()
+ *   selectSumEvenNums  null
+ *   selectSumOddNums   null
+ *   selectTotal        null
+ */
 ```
 
-  </ngrx-code-example>
+</ngrx-code-example>
 
 ## Using Store Without Type Generic
 
@@ -303,9 +301,7 @@ The most common way to select information from the store is to use a selector fu
 So, when injecting `Store` into components and other injectables, the generic type can be omitted. If injected without the generic, the default generic applied is `Store<T = object>`.
 
 <ngrx-docs-alert type="inform">
-
 It is important to continue to provide a Store type generic if you are using the string version of selectors as types cannot be inferred automatically in those instances.
-
 </ngrx-docs-alert>
 
 The follow example demonstrates the use of `Store` without providing a generic:
@@ -356,7 +352,7 @@ The `selectSignal` method expects a selector as an input argument and returns a 
 
 ### Example Usage in Components
 
-```ts
+```typescript
 import { Component, inject } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { Store } from '@ngrx/store';
@@ -413,7 +409,7 @@ store
     map((state) => selectValues(state)),
     filter((val) => val !== undefined)
   )
-  .subscribe(/* ... */);
+  .subscribe(/* .. */);
 ```
 
 </ngrx-code-example>
@@ -431,7 +427,7 @@ store
     select(selectValues),
     filter((val) => val !== undefined)
   )
-  .subscribe(/* ... */);
+  .subscribe(/* .. */);
 ```
 
 </ngrx-code-example>
@@ -452,7 +448,7 @@ export const selectFilteredValues = pipe(
   filter((val) => val !== undefined)
 );
 
-store.pipe(selectFilteredValues).subscribe(/* ... */);
+store.pipe(selectFilteredValues).subscribe(/* .. */);
 ```
 
 </ngrx-code-example>

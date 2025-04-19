@@ -3,7 +3,6 @@
 Using `action creator` is preferred over `Action class`.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: No
 - **Requires type checking**: No

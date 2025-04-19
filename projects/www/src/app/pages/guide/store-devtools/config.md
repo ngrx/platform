@@ -75,26 +75,29 @@ features: {
 
 ## Example Object as provided in module imports
 
-<ngrx-code-example header="app.module.ts">
+<ngrx-code-example header="app.config.ts">
 
 ```ts
-@NgModule({
-  /* ... */
-  imports: [
-    /* ... */
-    StoreDevtoolsModule.instrument({
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideStoreDevtools({
       maxAge: 25,
       logOnly: false,
       autoPause: true,
       features: {
         pause: false,
         lock: true,
-        persist: true
-      }
-    })
+        persist: true,
+      },
+    }),
   ],
-  /* ... */
-})
+};
 ```
 
 </ngrx-code-example>
+
+<ngrx-docs-alert type="help">
+
+An example of the `@ngrx/store-devtools` setup in module-based applications is available at the [following link](https://v17.ngrx.io/guide/store-devtools).
+
+</ngrx-docs-alert>

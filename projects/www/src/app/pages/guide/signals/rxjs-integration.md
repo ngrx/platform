@@ -4,10 +4,10 @@ RxJS is still a major part of NgRx and the Angular ecosystem, and the `@ngrx/sig
 
 ## RxMethod
 
-The @ngrx/signals/rxjs-interop!rxMethod:function is a standalone factory function designed for managing side effects by utilizing RxJS APIs.
+The `rxMethod` is a standalone factory function designed for managing side effects by utilizing RxJS APIs.
 It takes a chain of RxJS operators as input and returns a reactive method.
 The reactive method can accept a static value, signal, or observable as an input argument.
-Input can be typed by providing a generic argument to the @ngrx/signals/rxjs-interop!rxMethod:function function.
+Input can be typed by providing a generic argument to the `rxMethod` function.
 
 ```ts
 import { Component } from '@angular/core';
@@ -118,13 +118,13 @@ export class NumbersComponent implements OnInit {
 }
 ```
 
-By default, the @ngrx/signals/rxjs-interop!rxMethod:function needs to be executed within an injection context.
+By default, the `rxMethod` needs to be executed within an injection context.
 It's tied to its lifecycle and is automatically cleaned up when the injector is destroyed.
 
 ### Handling API Calls
 
-The @ngrx/signals/rxjs-interop!rxMethod:function is a great choice for handling API calls in a reactive manner.
-The subsequent example demonstrates how to use @ngrx/signals/rxjs-interop!rxMethod:function to fetch the book by id whenever the `selectedBookId` signal value changes.
+The `rxMethod` is a great choice for handling API calls in a reactive manner.
+The subsequent example demonstrates how to use `rxMethod` to fetch the book by id whenever the `selectedBookId` signal value changes.
 
 ```ts
 import { Component, inject, OnInit, signal } from '@angular/core';
@@ -178,12 +178,12 @@ Learn more about it in the [tapResponse](guide/operators/operators#tapresponse) 
 
 </ngrx-docs-alert>
 
-The @ngrx/signals/rxjs-interop!rxMethod:function function can also be utilized to define reactive methods for SignalStore.
+The `rxMethod` function can also be utilized to define reactive methods for SignalStore.
 Further details can be found in the [Reactive Store Methods](guide/signals/signal-store#reactive-store-methods) guide.
 
 ### Reactive Methods without Arguments
 
-To create a reactive method without arguments, the `void` type should be specified as a generic argument to the @ngrx/signals/rxjs-interop!rxMethod:function function.
+To create a reactive method without arguments, the `void` type should be specified as a generic argument to the `rxMethod` function.
 
 ```ts
 import { Component, inject, OnInit, signal } from '@angular/core';
@@ -218,9 +218,59 @@ export class BooksComponent implements OnInit {
 }
 ```
 
+### Reactive Methods and Injector Hierarchies
+
+The cleanup behavior of reactive methods differs when they're created and called across different injector hierarchies.
+
+If the reactive method is called within the descendant injection context, the call will be automatically cleaned up when the descendant injector is destroyed.
+However, when the call is made outside of the descendant injection context, it's necessary to explicitly provide the descendant injector reference to ensure proper cleanup. Otherwise, the cleanup occurs when the ascendant injector where the reactive method is initialized gets destroyed.
+
+```ts
+import {
+  Component,
+  inject,
+  Injectable,
+  Injector,
+  OnInit,
+} from '@angular/core';
+import { tap } from 'rxjs';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+
+@Injectable({ providedIn: 'root' })
+export class NumbersService {
+  readonly log = rxMethod<number>(tap(console.log));
+}
+
+@Component({
+  /* ... */
+})
+export class NumbersComponent implements OnInit {
+  readonly #injector = inject(Injector);
+  readonly #numbersService = inject(NumbersService);
+
+  constructor() {
+    const num1$ = interval(1_000);
+    // 👇 Automatic cleanup when component is destroyed.
+    this.#numbersService.log(num1$);
+  }
+
+  ngOnInit(): void {
+    const num2$ = interval(2_000);
+    // 👇 Requires injector for cleanup when component is destroyed.
+    this.#numbersService.log(num2$, { injector: this.#injector });
+  }
+}
+```
+
+<ngrx-docs-alert type="inform">
+
+If the injector is not provided when calling the reactive method with a signal or observable outside the injection context, a warning message about a potential memory leak is displayed in development mode.
+
+</ngrx-docs-alert>
+
 ### Manual Cleanup
 
-If a reactive method needs to be cleaned up before the injector is destroyed, manual cleanup can be performed by calling the `unsubscribe` method.
+If a reactive method needs to be cleaned up before the injector is destroyed, manual cleanup can be performed by calling the `destroy` method.
 
 ```ts
 import { Component, OnInit } from '@angular/core';
@@ -241,15 +291,15 @@ export class NumbersComponent implements OnInit {
     this.logNumber(num2$);
 
     setTimeout(() => {
-      // 👇 Clean up all reactive method subscriptions after 3 seconds.
-      this.logNumber.unsubscribe();
+      // 👇 Destroy the reactive method after 3 seconds.
+      this.logNumber.destroy();
     }, 3_000);
   }
 }
 ```
 
-When invoked, the reactive method returns a subscription.
-Using this subscription allows manual unsubscribing from a specific call, preserving the activity of other reactive method calls until the corresponding injector is destroyed.
+When invoked, the reactive method returns the object with the `destroy` method.
+This allows manual cleanup of a specific call, preserving the activity of other reactive method calls until the corresponding injector is destroyed.
 
 ```ts
 import { Component, OnInit } from '@angular/core';
@@ -266,12 +316,12 @@ export class NumbersComponent implements OnInit {
     const num1$ = interval(500);
     const num2$ = interval(1_000);
 
-    const num1Sub = this.logNumber(num1$);
-    this.logNumber(num2$);
+    const num1Ref = this.logNumber(num1$);
+    const num2Ref = this.logNumber(num2$);
 
     setTimeout(() => {
-      // 👇 Clean up the first reactive method subscription after 2 seconds.
-      num1Sub.unsubscribe();
+      // 👇 Destroy the first reactive method call after 2 seconds.
+      num1Ref.destroy();
     }, 2_000);
   }
 }
@@ -279,7 +329,7 @@ export class NumbersComponent implements OnInit {
 
 ### Initialization Outside of Injection Context
 
-Initialization of the reactive method outside an injection context is possible by providing an injector as the second argument to the @ngrx/signals/rxjs-interop!rxMethod:function function.
+Initialization of the reactive method outside an injection context is possible by providing an injector as the second argument to the `rxMethod` function.
 
 ```ts
 import { Component, inject, Injector, OnInit } from '@angular/core';

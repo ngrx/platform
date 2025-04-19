@@ -53,18 +53,18 @@ First create the changes (each a `ChangeSetItem`) for the `ChangeSet`.
 
 ```ts
 import { ChangeSetOperation } from '@ngrx/data';
-
+...
 const changes: ChangeSetItem[] = [
   {
     op: ChangeSetOperation.Add,
     entityName: 'Hero',
-    entities: [hero],
+    entities: [hero]
   },
   {
     op: ChangeSetOperation.Delete,
     entityName: 'Villain',
-    entities: [2, 3], // delete by their ids
-  },
+    entities: [2, 3] // delete by their ids
+  }
 ];
 ```
 
@@ -138,16 +138,16 @@ The `ChangeSet` interface is a simple structure with only one critical property,
 
 ```ts
 export interface ChangeSet<T = any> {
-  /* An array of ChangeSetItems to be processed in the array order */
+  /** An array of ChangeSetItems to be processed in the array order */
   changes: ChangeSetItem[];
 
   /**
-    - An arbitrary, serializable object that should travel with the ChangeSet.
-    - Meaningful to the ChangeSet producer and consumer. Ignored by NgRx Data.
-  */
+   * An arbitrary, serializable object that should travel with the ChangeSet.
+   * Meaningful to the ChangeSet producer and consumer. Ignored by NgRx Data.
+   */
   extras?: T;
 
-  /* An arbitrary string, identifying the ChangeSet and perhaps its purpose */
+  /** An arbitrary string, identifying the ChangeSet and perhaps its purpose */
   tag?: string;
 }
 ```

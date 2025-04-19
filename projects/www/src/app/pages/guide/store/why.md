@@ -1,6 +1,6 @@
 # Why use NgRx Store for State Management?
 
-NgRx Store provides state management for creating maintainable, explicit applications through the use of single state and actions in order to express state changes. In cases where you don't need a global, application-wide solution to manage state, consider using [NgRx ComponentStore](guide/component-store) which provides a solution for local state management.
+NgRx Store provides state management for creating maintainable, explicit applications through the use of single state and actions in order to express state changes. In cases where you don't need a global, application-wide solution to manage state, consider using [NgRx Signals](guide/signals) which provides a solution for local state management.
 
 ## When Should I Use NgRx Store for State Management?
 
@@ -31,7 +31,7 @@ Type safety is promoted throughout the architecture with reliance on the TypeScr
 
 ### Immutability and Performance
 
-[Store](guide/store) is built on a single, immutable data structure which makes change detection a relatively straightforward task using the [`OnPush`](https://angular.io/api/core/ChangeDetectionStrategy#OnPush) strategy. NgRx Store also provides APIs for creating memoized selector functions that optimize retrieving data from your state.
+[Store](guide/store) is built on a single, immutable data structure which makes change detection a relatively straightforward task using the [`OnPush`](https://angular.dev/api/core/ChangeDetectionStrategy#OnPush) strategy. NgRx Store also provides APIs for creating memoized selector functions that optimize retrieving data from your state.
 
 ### Encapsulation
 

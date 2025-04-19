@@ -3,7 +3,6 @@
 Avoid mapping logic outside the selector level.
 
 - **Type**: problem
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: No
 - **Requires type checking**: No

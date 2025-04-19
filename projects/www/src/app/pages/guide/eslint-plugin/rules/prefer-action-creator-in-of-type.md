@@ -3,7 +3,6 @@
 Using `action creator` in `ofType` is preferred over `string`.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: No
 - **Requires type checking**: No

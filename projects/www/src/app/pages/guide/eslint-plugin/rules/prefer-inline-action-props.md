@@ -3,7 +3,6 @@
 Prefer using inline types instead of interfaces, types or classes.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: Yes
 - **Requires type checking**: No

@@ -3,7 +3,6 @@
 Using a selector in the `select` is preferred over `string` or `props drilling`.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: No
 - **Requires type checking**: No

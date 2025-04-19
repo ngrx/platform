@@ -2,7 +2,7 @@
 
 ## Installing with `ng add`
 
-You can install the Router Store to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
+You can install the Router Store to your project with the following `ng add` command <a href="https://angular.dev/cli/add" target="_blank">(details here)</a>:
 
 ```sh
 ng add @ngrx/router-store@latest
@@ -20,8 +20,7 @@ This command will automate the following steps:
 
 1. Update `package.json` > `dependencies` with `@ngrx/router-store`.
 2. Run `npm install` to install those dependencies.
-3. By default, will update `src/app/app.module.ts` > `imports` array with `StoreRouterConnectingModule.forRoot()`. If you provided flags then the command will attempt to locate and update module found by the flags.
-4. If the project is using a `standalone bootstrap`, it adds `provideRouterStore()` into the application config.
+3. By default it adds `provideRouterStore()` to the `ApplicationConfig` in the `app.config.ts` file. If you provided flags then the command will attempt to locate and update the corresponding config found by the flags.
 
 ## Installing with `npm`
 

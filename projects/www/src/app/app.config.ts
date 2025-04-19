@@ -12,6 +12,8 @@ import {
   provideContent,
   withMarkdownRenderer,
   MarkedSetupService,
+  ContentRenderer,
+  MarkdownContentRendererService,
 } from '@analogjs/content';
 import { NgRxMarkedSetupService } from './services/markdown.service';
 
@@ -26,6 +28,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideAnimations(),
     provideContent(withMarkdownRenderer()),
+    {
+      provide: ContentRenderer,
+      useClass: MarkdownContentRendererService,
+    },
     {
       provide: MarkedSetupService,
       useClass: NgRxMarkedSetupService,

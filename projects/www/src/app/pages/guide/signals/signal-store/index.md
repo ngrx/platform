@@ -6,11 +6,11 @@ The simplicity and flexibility of SignalStore, coupled with its opinionated and 
 
 ## Creating a Store
 
-A SignalStore is created using the @ngrx/signals!signalStore:function function. This function accepts a sequence of store features.
-Through the combination of store features, the SignalStore gains state, computed signals, and methods, allowing for a flexible and extensible store implementation.
-Based on the utilized features, the @ngrx/signals!signalStore:function function returns an injectable service that can be provided and injected where needed.
+A SignalStore is created using the `signalStore` function. This function accepts a sequence of store features.
+Through the combination of store features, the SignalStore gains state, properties, and methods, allowing for a flexible and extensible store implementation.
+Based on the utilized features, the `signalStore` function returns an injectable service that can be provided and injected where needed.
 
-The `withState` feature is used to add state properties to the SignalStore.
+The `withState` feature is used to add state slices to the SignalStore.
 This feature accepts initial state as an input argument. As with `signalState`, the state's type must be a record/object literal.
 
 <ngrx-code-example header="books.store.ts">
@@ -36,7 +36,7 @@ export const BooksStore = signalStore(withState(initialState));
 
 </ngrx-code-example>
 
-For each state property, a corresponding signal is automatically created.
+For each state slice, a corresponding signal is automatically created.
 The same applies to nested state properties, with all deeply nested signals being generated lazily on demand.
 
 The `BooksStore` instance will contain the following properties:
@@ -114,19 +114,19 @@ export const BooksStore = signalStore(
 When provided globally, the store is registered with the root injector and becomes accessible anywhere in the application.
 This is beneficial for managing global state, as it ensures a single shared instance of the store across the entire application.
 
-## Consuming State
+## Reading State
 
-Signals generated for state properties can be utilized to access state values, as demonstrated below.
+Signals generated for state slices can be utilized to access state values, as demonstrated below.
 
 <ngrx-code-example header="books.component.ts">
 
 ```ts
+
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { BooksStore } from './books.store';
 
 @Component({
-  standalone: true,
   imports: [JsonPipe],
   template: `
     <p>Books: {{ store.books() | json }}</p>
@@ -145,43 +145,16 @@ import { BooksStore } from './books.store';
 export class BooksComponent {
   readonly store = inject(BooksStore);
 }
+
 ```
 
 </ngrx-code-example>
 
-The `@ngrx/signals` package also offers the `getState` function to get the current state value of the SignalStore.
-When used within the reactive context, state changes are automatically tracked.
-
-<ngrx-code-example header="books.component.ts">
-
-```ts
-import { Component, effect, inject } from '@angular/core';
-import { getState } from '@ngrx/signals';
-import { BooksStore } from './books.store';
-
-@Component({
-  /* ... */
-})
-export class BooksComponent {
-  readonly store = inject(BooksStore);
-
-  constructor() {
-    effect(() => {
-      // 👇 The effect will be re-executed whenever the state changes.
-      const state = getState(this.store);
-      console.log('books state changed', state);
-    });
-  }
-}
-```
-
-</ngrx-code-example>
-
-## Defining Computed Signals
+## Defining Store Properties
 
 Computed signals can be added to the store using the `withComputed` feature.
 This feature accepts a factory function as an input argument, which is executed within the injection context.
-The factory should return a dictionary of computed signals, utilizing previously defined state and computed signals that are accessible through its input argument.
+The factory should return a dictionary of computed signals, utilizing previously defined state signals and properties that are accessible through its input argument.
 
 <ngrx-code-example header="books.store.ts">
 
@@ -200,7 +173,7 @@ const initialState: BooksState = {
 
 export const BooksStore = signalStore(
   withState(initialState),
-  // 👇 Accessing previously defined state and computed signals.
+  // 👇 Accessing previously defined state signals and properties.
   withComputed(({ books, filter }) => ({
     booksCount: computed(() => books().length),
     sortedBooks: computed(() => {
@@ -216,12 +189,19 @@ export const BooksStore = signalStore(
 
 </ngrx-code-example>
 
+<ngrx-docs-alert type="help">
+
+The `withProps` feature can be used to add static properties, observables, dependencies, and any other custom properties to a SignalStore.
+For more details, see the [Custom Store Properties](/guide/signals/signal-store/custom-store-properties) guide.
+
+</ngrx-docs-alert>
+
 ## Defining Store Methods
 
 Methods can be added to the store using the `withMethods` feature.
 This feature takes a factory function as an input argument and returns a dictionary of methods.
 Similar to `withComputed`, the `withMethods` factory is also executed within the injection context.
-The store instance, including previously defined state, computed signals, and methods, is accessible through the factory input.
+The store instance, including previously defined state signals, properties, and methods, is accessible through the factory input.
 
 <ngrx-code-example header="books.store.ts">
 
@@ -247,8 +227,8 @@ const initialState: BooksState = {
 export const BooksStore = signalStore(
   withState(initialState),
   withComputed(/* ... */),
-  // 👇 Accessing a store instance with previously defined state,
-  // computed signals, and methods.
+  // 👇 Accessing a store instance with previously defined state signals,
+  // properties, and methods.
   withMethods((store) => ({
     updateQuery(query: string): void {
       // 👇 Updating state using the `patchState` function.
@@ -267,10 +247,39 @@ export const BooksStore = signalStore(
 
 </ngrx-code-example>
 
-<ngrx-docs-alert type="inform">
+<ngrx-docs-alert type="help">
 
 The state of the SignalStore is updated using the `patchState` function.
 For more details on the `patchState` function, refer to the [Updating State](/guide/signals/signal-state#updating-state) guide.
+
+</ngrx-docs-alert>
+
+<ngrx-docs-alert type="inform">
+
+By default, SignalStore's state is protected from external modifications, ensuring a consistent and predictable data flow.
+This is the recommended approach.
+However, external updates to the state can be enabled by setting the `protectedState` option to `false` when creating a SignalStore.
+
+```ts
+export const BooksStore = signalStore(
+  { protectedState: false }, // 👈
+  withState(initialState)
+);
+
+@Component({
+  /* ... */
+})
+export class BooksComponent {
+  readonly store = inject(BooksStore);
+
+  addBook(book: Book): void {
+    // ⚠️ The state of the `BooksStore` is unprotected from external modifications.
+    patchState(this.store, ({ books }) => ({
+      books: [...books, book],
+    }));
+  }
+}
+```
 
 </ngrx-docs-alert>
 
@@ -465,13 +474,13 @@ export const BooksStore = signalStore(
 
 The `BooksStore` instance will contain the following properties and methods:
 
-- State properties:
+- State signals:
   - `books: Signal<Book[]>`
   - `isLoading: Signal<boolean>`
   - `filter: DeepSignal<{ query: string; order: 'asc' | 'desc' }>`
   - `filter.query: Signal<string>`
   - `filter.order: Signal<'asc' | 'desc'>`
-- Computed properties:
+- Computed signals:
   - `booksCount: Signal<number>`
   - `sortedBooks: Signal<Book[]>`
 - Methods:
@@ -502,7 +511,6 @@ import { BookListComponent } from './book-list.component';
 import { BooksStore } from './books.store';
 
 @Component({
-  standalone: true,
   imports: [BooksFilterComponent, BookListComponent],
   template: `
     <h1>Books ({{ store.booksCount() }})</h1>

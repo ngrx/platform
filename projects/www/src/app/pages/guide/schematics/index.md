@@ -2,7 +2,7 @@
 
 Scaffolding library for Angular applications using NgRx libraries.
 
-Schematics provides Angular CLI commands for generating files when building new NgRx feature areas and expanding existing ones. Built on top of [`Schematics`](https://blog.angular.io/schematics-an-introduction-dc1dfbc2a2b2), this tool integrates with the [`Angular CLI`](https://cli.angular.io/).
+Schematics provides Angular CLI commands for generating files when building new NgRx feature areas and expanding existing ones. Built on top of [`Schematics`](https://angular.dev/tools/cli/schematics), this tool integrates with the [`Angular CLI`](https://angular.dev/tools/cli).
 
 ## Installation
 

@@ -18,7 +18,7 @@ take even more, however the type would be inferred as an `Action` interface.
 <ngrx-code-example header="auth.effects.ts">
 
 ```ts
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map } from 'rxjs/operators';
@@ -28,8 +28,11 @@ import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthEffects {
-  login$ = createEffect(() =>
-    this.actions$.pipe(
+  private actions$ = inject(Actions);
+  private authService = inject(AuthService);
+
+  login$ = createEffect(() => {
+    return this.actions$.pipe(
       // Filters by Action Creator 'login'
       ofType(LoginPageActions.login),
       exhaustMap((action) =>
@@ -40,73 +43,8 @@ export class AuthEffects {
           )
         )
       )
-    )
-  );
-
-  constructor(
-    private actions$: Actions,
-    private authService: AuthService
-  ) {}
-}
-```
-
-</ngrx-code-example>
-
-## `concatLatestFrom`
-
-The `concatLatestFrom` operator functions similarly to `withLatestFrom` with one important difference-
-it lazily evaluates the provided Observable factory.
-
-This allows you to utilize the source value when selecting additional sources to concat.
-
-Additionally, because the factory is not executed until it is needed, it also mitigates the performance impact of creating some kinds of Observables.
-
-For example, when selecting data from the store with `store.select`, `concatLatestFrom` will prevent the
-selector from being evaluated until the source emits a value.
-
-The `concatLatestFrom` operator takes an Observable factory function that returns an array of Observables, or a single Observable.
-
-<ngrx-code-example header="router.effects.ts">
-
-```ts
-import { Injectable } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-
-import { map, tap } from 'rxjs/operators';
-
-import {
-  Actions,
-  concatLatestFrom,
-  createEffect,
-  ofType,
-} from '@ngrx/effects';
-import { Store } from '@ngrx/store';
-import { routerNavigatedAction } from '@ngrx/router-store';
-
-import * as fromRoot from '@example-app/reducers';
-
-@Injectable()
-export class RouterEffects {
-  updateTitle$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(routerNavigatedAction),
-        concatLatestFrom(() =>
-          this.store.select(fromRoot.selectRouteData)
-        ),
-        map(([, data]) => `Book Collection - ${data['title']}`),
-        tap((title) => this.titleService.setTitle(title))
-      ),
-    {
-      dispatch: false,
-    }
-  );
-
-  constructor(
-    private actions$: Actions,
-    private store: Store<fromRoot.State>,
-    private titleService: Title
-  ) {}
+    );
+  });
 }
 ```
 

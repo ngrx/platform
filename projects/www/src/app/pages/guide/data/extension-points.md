@@ -287,4 +287,4 @@ There are no facilities for this within `NgRx Data` itself although
 that is a [limitation](guide/data/limitations#serialization) we might address in a future version.
 
 One option in the interim is to write such serialization functions and
-inject them into the `HttpClient` pipeline with [`HttpClient` interceptors](https://angular.io/guide/http#intercepting-requests-and-responses).
+inject them into the `HttpClient` pipeline with [`HttpClient` interceptors](https://angular.dev/guide/http/interceptors).

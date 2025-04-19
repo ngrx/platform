@@ -24,17 +24,17 @@ The interface has a single property, the `type`, represented as a string. The `t
 
 Listed below are examples of actions written as plain old JavaScript objects (POJOs):
 
-```ts
+```json
 {
-  type: '[Auth API] Login Success';
+  "type": "[Auth API] Login Success"
 }
 ```
 
 This action describes an event triggered by a successful authentication after interacting with a backend API.
 
-```ts
+```json
 {
-  type: "[Login Page] Login",
+  type: '[Login Page] Login',
   username: string;
   password: string;
 }
@@ -93,6 +93,82 @@ The returned action has very specific context about where the action came from a
 
 <ngrx-docs-alert type="inform">
 
-You can also write actions using class-based action creators, which was the previously defined way before action creators were introduced in NgRx. If you are looking for examples of class-based action creators, visit the documentation for [versions 7.x and prior](https://v7.ngrx.io/guide/store/actions).
+**Note:** You can also write actions using class-based action creators, which was the previously defined way before action creators were introduced in NgRx. If you are looking for examples of class-based action creators, visit the documentation for [versions 7.x and prior](https://v7.ngrx.io/guide/store/actions).
 
 </ngrx-docs-alert>
+
+## Dispatching actions on signal changes
+
+You can also dispatch functions that return actions, with property values derived from signals:
+
+<ngrx-code-example header="book.component.ts">
+
+```ts
+class BookComponent {
+  bookId = input.required<number>();
+
+  constructor(store: Store) {
+    store.dispatch(() => loadBook({ id: this.bookId() })));
+  }
+}
+```
+
+</ngrx-code-example>
+
+`dispatch` executes initially and every time the `bookId` changes. If `dispatch` is called within an injection context, the signal is tracked until the context is destroyed. In the example above, that would be when `BookComponent` is destroyed.
+
+When `dispatch` is called outside a component's injection context, the signal is tracked globally throughout the application's lifecycle. To ensure proper cleanup in such a case, provide the component's injector to the `dispatch` method:
+
+<ngrx-code-example header="book.component.ts">
+
+```ts
+class BookComponent {
+  bookId = input.required<number>();
+  injector = inject(Injector);
+  store = inject(Store);
+
+  ngOnInit() {
+    // runs outside the injection context
+    this.store.dispatch(() => loadBook({ id: this.bookId() }), {
+      injector: this.injector,
+    });
+  }
+}
+```
+
+</ngrx-code-example>
+
+When passing a function to the `dispatch` method, it returns an `EffectRef`. For manual cleanup, call the `destroy` method on the `EffectRef`:
+
+<ngrx-code-example header="book.component.ts">
+
+```ts
+class BookComponent {
+  bookId = input.required<number>();
+  loadBookEffectRef: EffectRef | undefined;
+  store = inject(Store);
+
+  ngOnInit() {
+    // uses the injection context of Store, i.e. root injector
+    this.loadBookEffectRef = this.store.dispatch(() =>
+      loadBook({ id: this.bookId() })
+    );
+  }
+
+  ngOnDestroy() {
+    if (this.loadBookEffectRef) {
+      // destroys the effect
+      this.loadBookEffectRef.destroy();
+    }
+  }
+}
+```
+
+</ngrx-code-example>
+
+## Next Steps
+
+Action's only responsibilities are to express unique events and intents. Learn how they are handled in the guides below.
+
+- [Reducers](guide/store/reducers)
+- [Effects](guide/effects)

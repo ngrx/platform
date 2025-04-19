@@ -1,3 +1,12 @@
+<ngrx-docs-alert type="help">
+
+**<a href="/guide/signals"><b>NgRx Signals</b></a> is the new default.**
+
+The NgRx team recommends using the `@ngrx/signals` library for local state management in Angular.
+While ComponentStore remains supported, we encourage using `@ngrx/signals` for new projects and considering migration for existing ones.
+
+</ngrx-docs-alert>
+
 # Lifecycle
 
 NgRx ComponentStore comes with lifecycle hooks and observables for performing tasks after the ComponentStore is initially instantiated, after the initial state is first set, and when the ComponentStore is destroyed. You can use these lifecycle hooks to set up long-running effects, wire up additional logic, and other tasks outside the constructor of the ComponentStore.
@@ -10,7 +19,7 @@ Currently, Angular provides initializer tokens in a few areas. The `APP_INITIALI
 
 <ngrx-docs-alert type="inform">
 
-If you implement the lifecycle hooks in the ComponentStore, and register it with `providers` without using `provideComponentStore()`, in development mode, a warning is logged to the browser console.
+**Note:** If you implement the lifecycle hooks in the ComponentStore, and register it with `providers` without using `provideComponentStore()`, in development mode, a warning is logged to the browser console.
 
 </ngrx-docs-alert>
 
@@ -166,7 +175,7 @@ It also exposes a `destroy$` property on the ComponentStore class that can be us
 
 <ngrx-docs-alert type="inform">
 
-If you override the `ngOnDestroy` method in your component store, you need to call `super.ngOnDestroy()`. Otherwise a memory leak may occur.
+**Note:** If you override the `ngOnDestroy` method in your component store, you need to call `super.ngOnDestroy()`. Otherwise a memory leak may occur.
 
 </ngrx-docs-alert>
 

@@ -8,12 +8,12 @@ You can see this action as a lifecycle hook, which you can use in order to execu
 <ngrx-code-example header="init.effects.ts">
 
 ```ts
-init$ = createEffect(() =>
-  this.actions$.pipe(
+init$ = createEffect(() => {
+  return this.actions$.pipe(
     ofType(ROOT_EFFECTS_INIT),
     map(action => ...)
-  )
-);
+  );
+});
 ```
 
 </ngrx-code-example>
@@ -29,16 +29,18 @@ Usage:
 <ngrx-code-example header="log.effects.ts">
 
 ```ts
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class LogEffects {
-  constructor(private actions$: Actions) {}
+  private actions$ = inject(Actions);
 
   logActions$ = createEffect(
-    () => this.actions$.pipe(tap((action) => console.log(action))),
+    () => {
+      return this.actions$.pipe(tap((action) => console.log(action)));
+    },
     { dispatch: false }
   );
 }
@@ -67,7 +69,7 @@ metadata (second argument).
 <ngrx-code-example header="disable-resubscribe.effects.ts">
 
 ```ts
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map } from 'rxjs/operators';
@@ -76,9 +78,12 @@ import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthEffects {
+  private actions$ = inject(Actions);
+  private authService = inject(AuthService);
+
   logins$ = createEffect(
-    () =>
-      this.actions$.pipe(
+    () => {
+      return this.actions$.pipe(
         ofType(LoginPageActions.login),
         exhaustMap((action) =>
           this.authService.login(action.credentials).pipe(
@@ -89,14 +94,10 @@ export class AuthEffects {
           )
         )
         // Errors are handled and it is safe to disable resubscription
-      ),
+      );
+    },
     { useEffectsErrorHandler: false }
   );
-
-  constructor(
-    private actions$: Actions,
-    private authService: AuthService
-  ) {}
 }
 ```
 
@@ -145,8 +146,7 @@ export function effectResubscriptionHandler<T extends Action>(
   );
 }
 
-@NgModule({
-  imports: [EffectsModule.forRoot([MoviesEffects])],
+bootstrapApplication(AppComponent, {
   providers: [
     {
       provide: EFFECTS_ERROR_HANDLER,
@@ -157,8 +157,7 @@ export function effectResubscriptionHandler<T extends Action>(
       useClass: CustomErrorHandler,
     },
   ],
-})
-export class MyModule {}
+});
 ```
 
 </ngrx-code-example>
@@ -206,16 +205,17 @@ import {
 
 @Injectable()
 export class UserEffects implements OnRunEffects {
-  constructor(private actions$: Actions) {}
+  private actions$ = inject(Actions);
 
   updateUser$ = createEffect(
-    () =>
-      this.actions$.pipe(
+    () => {
+      return this.actions$.pipe(
         ofType('UPDATE_USER'),
         tap((action) => {
           console.log(action);
         })
-      ),
+      );
+    },
     { dispatch: false }
   );
 

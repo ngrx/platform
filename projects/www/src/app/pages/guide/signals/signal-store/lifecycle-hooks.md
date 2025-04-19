@@ -1,9 +1,9 @@
 # Lifecycle Hooks
 
-The `@ngrx/signals` package provides the @ngrx/signals!withHooks:function feature for incorporating lifecycle hooks into a SignalStore.
+The `@ngrx/signals` package provides the `withHooks` feature for incorporating lifecycle hooks into a SignalStore.
 This feature enables performing additional logic when the store is initialized or destroyed.
 
-The @ngrx/signals!withHooks:function feature has two signatures.
+The `withHooks` feature has two signatures.
 The first signature expects an object with `onInit` and/or `onDestroy` methods.
 Both methods receive the store instance as input arguments.
 
@@ -48,14 +48,14 @@ export const CounterStore = signalStore(
 The `onInit` hook is executed within the injection context, enabling the injection of dependencies or the utilization of functions that must be invoked within the injection context, such as `takeUntilDestroyed`.
 
 If there is a need to share code between lifecycle hooks or use injected dependencies within the `onDestroy` hook, the second signature can be utilized.
-Similar to the @ngrx/signals!withMethods:function and @ngrx/signals!withComputed:function features, the second signature of the @ngrx/signals!withHooks:function feature expects a factory function.
+Similar to the `withMethods` and `withComputed` features, the second signature of the `withHooks` feature expects a factory function.
 This function receives a store instance as an input argument, returns an object with `onInit` and/or `onDestroy` methods, and is executed within the injection context.
 
 <ngrx-code-example header="counter.store.ts">
 
 ```ts
 export const CounterStore = signalStore(
-  //* ... */
+  /* ... */
   withHooks((store) => {
     const logger = inject(Logger);
     let interval = 0;

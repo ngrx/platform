@@ -1,3 +1,12 @@
+<ngrx-docs-alert type="help">
+
+**<a href="/guide/signals"><b>NgRx Signals</b></a> is the new default.**
+
+The NgRx team recommends using the `@ngrx/signals` library for local state management in Angular.
+While ComponentStore remains supported, we encourage using `@ngrx/signals` for new projects and considering migration for existing ones.
+
+</ngrx-docs-alert>
+
 # Updating state
 
 ComponentStore can be updated in 3 ways:
@@ -85,7 +94,7 @@ export class MoviesPageComponent implements OnInit {
   }
 
   resetMovies() {
-    // resets the State to empty array 👇
+    //    resets the State to empty array 👇
     this.componentStore.setState({ movies: [] });
   }
 
@@ -112,7 +121,7 @@ When the partial updater is provided it patches the state with the value returne
 
 <ngrx-docs-alert type="inform">
 
-The state has to be initialized before any of `patchState` calls, otherwise "not initialized" error will be thrown.
+**Note:** The state has to be initialized before any of `patchState` calls, otherwise "not initialized" error will be thrown.
 
 </ngrx-docs-alert>
 

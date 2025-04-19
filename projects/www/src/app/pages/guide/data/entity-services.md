@@ -24,15 +24,12 @@ Here's a component doing that.
 import { EntityCollectionService, EntityServices } from '@ngrx/data';
 import { Hero } from '../../model';
 
-@Component({
-  /* ... */
-})
+@Component({...})
 export class HeroesComponent implements OnInit {
   heroesService: EntityCollectionService<Hero>;
 
   constructor(entityServices: EntityServices) {
-    this.heroesService =
-      entityServices.getEntityCollectionService('Hero');
+    this.heroesService = entityServices.getEntityCollectionService('Hero');
   }
 }
 ```
@@ -80,16 +77,13 @@ Of course you must provide the custom service before you use it, typically in an
 <ngrx-code-example header="heroes.module.ts">
 
 ```ts
+...
 import { HeroesService } from './heroes.service';
 
 @NgModule({
-  imports: [
-    /* ... */
-  ],
-  declarations: [
-    /* ... */
-  ],
-  providers: [HeroesService],
+  imports: [...],
+  declarations: [...],
+  providers: [HeroesService]
 })
 export class HeroesModule {}
 ```
@@ -99,10 +93,10 @@ export class HeroesModule {}
 The following alternative example uses the **preferred "tree-shakable" `Injectable()`**
 to provide the service in the root module.
 
-```ts
+```javascript
 @Injectable({ providedIn: 'root' })
 export class HeroesService extends EntityCollectionServiceBase<Hero> {
-  /* ... */
+  ...
 }
 ```
 
@@ -111,9 +105,7 @@ You can inject that custom service directly into the component.
 <ngrx-code-example header="heroes.component.ts (v2)">
 
 ```ts
-@Component({
-  /* ... */
-})
+@Component({...})
 export class HeroesComponent {
   heroes$: Observable<Hero[]>;
   loading$: Observable<boolean>;
@@ -122,6 +114,7 @@ export class HeroesComponent {
     this.heroes$ = this.heroesService.entities$;
     this.loading$ = this.heroesService.loading$;
   }
+  ...
 }
 ```
 
@@ -148,9 +141,7 @@ The following example demonstrates.
 <ngrx-code-example header="app.module.ts">
 
 ```ts
-@NgModule({
-  /* ... */
-})
+@NgModule({ ... })
 export class AppModule {
   // Inject the service to ensure it registers with EntityServices
   constructor(
@@ -158,7 +149,7 @@ export class AppModule {
     // custom collection services
     hs: HeroesService,
     vs: VillainsService
-  ) {
+    ){
     entityServices.registerEntityCollectionServices([hs, vs]);
   }
 }
@@ -202,7 +193,7 @@ export class AppEntityServices extends EntityServicesBase {
     ]);
   }
 
-  /* get the (default) SideKicks service */
+  /** get the (default) SideKicks service */
   get sideKicksService() {
     return this.getEntityCollectionService<SideKick>('SideKick');
   }
@@ -238,15 +229,14 @@ See it here in the sample app.
 
 ```ts
 @NgModule({
-  imports: [
-    /* ... */
-  ],
+  imports: [ ... ],
   providers: [
     AppEntityServices,
     { provide: EntityServices, useExisting: AppEntityServices },
-  ],
+    ...
+  ]
 })
-export class EntityStoreModule {}
+export class EntityStoreModule { ... }
 ```
 
 </ngrx-code-example>
@@ -266,26 +256,23 @@ import { EntityCollectionService, EntityServices } from '@ngrx/data';
 import { SideKick } from '../../model';
 import { HeroService, VillainService } from '../../services';
 
-@Component({
-  /* ... */
-})
+@Component({...})
 export class CharacterContainerComponent implements OnInit {
   heroesService: HeroService;
   sideKicksService: EntityCollectionService<SideKick>;
   villainService: VillainService;
 
   heroes$: Observable<Hero>;
-
+  ...
   constructor(entityServices: EntityServices) {
-    this.heroesService =
-      entityServices.getEntityCollectionService('Hero');
-    this.sidekicksService =
-      entityServices.getEntityCollectionService('SideKick');
-    this.villainService =
-      entityServices.getEntityCollectionService('Villain');
+    this.heroesService = entityServices.getEntityCollectionService('Hero');
+    this.sidekicksService = entityServices.getEntityCollectionService('SideKick');
+    this.villainService = entityServices.getEntityCollectionService('Villain');
 
     this.heroes$ = this.heroesService.entities$;
+    ...
   }
+  ...
 }
 ```
 
@@ -299,15 +286,16 @@ makes this a little nicer.
 ```ts
 import { AppEntityServices } from '../../services';
 
-@Component({
-  /* ... */
-})
+@Component({...})
 export class CharacterContainerComponent implements OnInit {
-  heroes$: Observable<Hero>;
 
+  heroes$: Observable<Hero>;
+  ...
   constructor(private appEntityServices: AppEntityServices) {
     this.heroes$ = appEntityServices.heroesService.entities$;
+    ...
   }
+  ...
 }
 ```
 

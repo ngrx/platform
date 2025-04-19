@@ -1,3 +1,12 @@
+<ngrx-docs-alert type="help">
+
+**<a href="/guide/signals"><b>NgRx Signals</b></a> is the new default.**
+
+The NgRx team recommends using the `@ngrx/signals` library for local state management in Angular.
+While ComponentStore remains supported, we encourage using `@ngrx/signals` for new projects and considering migration for existing ones.
+
+</ngrx-docs-alert>
+
 # Initialization
 
 ComponentStore can be initialized in 2 ways:
@@ -33,7 +42,7 @@ would be to initialize the state lazily by calling [`setState`](guide/component-
 
 <ngrx-docs-alert type="inform">
 
-Initialization has to be done before updating the state, otherwise an error would be thrown.
+**Note:** Initialization has to be done before updating the state, otherwise an error would be thrown.
 
 </ngrx-docs-alert>
 

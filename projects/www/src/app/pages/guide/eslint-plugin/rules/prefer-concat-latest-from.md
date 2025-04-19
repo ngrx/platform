@@ -1,11 +1,8 @@
 # prefer-concat-latest-from
 
-> Required NgRx Version Range: ${meta.version}
-
 Use `concatLatestFrom` instead of `withLatestFrom` to prevent the selector from firing until the correct `Action` is dispatched.
 
 - **Type**: problem
-- **Recommended**: Yes
 - **Fixable**: Yes
 - **Suggestion**: No
 - **Requires type checking**: No

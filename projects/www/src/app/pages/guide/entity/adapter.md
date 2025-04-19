@@ -301,7 +301,7 @@ There are a few caveats to be aware of when updating entities using the entity a
 
 The first is that `updateOne` and `updateMany` make use of the `Update<T>` interface shown below. This supports partial updates.
 
-```ts
+```typescript
 interface UpdateStr<T> {
   id: string;
   changes: Partial<T>;

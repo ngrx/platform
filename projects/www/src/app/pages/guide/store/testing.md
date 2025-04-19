@@ -71,15 +71,27 @@ describe('Auth Guard', () => {
 
 Usage:
 
-<ngrx-code-example header="src/app/state/books.selectors.ts" path="testing-store/src/app/state/books.selectors.ts"></ngrx-code-example>
+<ngrx-code-example header="src/app/state/books.selectors.ts" path="testing-store/src/app/state/books.selectors.ts">
 
-<ngrx-code-example header="src/app/app.component.spec.ts (Using Mock Selectors) " path="store-walkthrough/src/app/tests/app.component.1.spec.ts" region="mockSelector"></ngrx-code-example>
+`ts`
+
+</ngrx-code-example>
+
+<ngrx-code-example header="src/app/app.component.spec.ts (Using Mock Selectors) " path="store-walkthrough/src/app/tests/app.component.1.spec.ts" region="mockSelector">
+
+`ts`
+
+</ngrx-code-example>
 
 In this example based on the [walkthrough](guide/store/walkthrough), we mock the `selectBooks` selector by using `overrideSelector`, passing in the `selectBooks` selector with a default mocked return value of an array of books. Similarly, we mock the `selectBookCollection` selector and pass the selector together with another array. In the test, we use `setResult()` to update the mock selectors to return new array values, then we use `MockStore.refreshState()` to trigger an emission from the `selectBooks` and `selectBookCollection` selectors.
 
 You can reset selectors by calling the `MockStore.resetSelectors()` method in the `afterEach()` hook.
 
-<ngrx-code-example header="src/app/app.component.spec.ts (Reset Mock Selector) " path="store-walkthrough/src/app/tests/app.component.1.spec.ts" region="resetMockSelector"></ngrx-code-example>
+<ngrx-code-example header="src/app/app.component.spec.ts (Reset Mock Selector) " path="store-walkthrough/src/app/tests/app.component.1.spec.ts" region="resetMockSelector">
+
+`ts`
+
+</ngrx-code-example>
 
 Try the <live-example name="testing-store"></live-example>.
 
@@ -106,7 +118,11 @@ You can use the projector function used by the selector by accessing the `.proje
 
 The following example tests the `booksReducer` from the [walkthrough](guide/store/walkthrough). In the first test we check that the state returns the same reference when the reducer is not supposed to handle the action (unknown action). The second test checks that `retrievedBookList` action updates the state and returns the new instance of it.
 
-<ngrx-code-example header="src/app/state/books.reducer.spec.ts" path="testing-store/src/app/state/books.reducer.spec.ts"></ngrx-code-example>
+<ngrx-code-example header="src/app/state/books.reducer.spec.ts" path="testing-store/src/app/state/books.reducer.spec.ts">
+
+`ts`
+
+</ngrx-code-example>
 
 ### Testing without `TestBed`
 

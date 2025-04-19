@@ -1,9 +1,11 @@
 # Testing
 
+## Test helpers
+
 ### `provideMockActions`
 
-An Effect subscribes to the @ngrx/effects!Actions:class Observable to perform side effects.
-@ngrx/effects/testing!provideMockActions:function provides a mock provider of the @ngrx/effects!Actions:class Observable to subscribe to, for each test individually.
+An Effect subscribes to the `Actions` Observable to perform side effects.
+`provideMockActions` provides a mock provider of the `Actions` Observable to subscribe to, for each test individually.
 
 <ngrx-code-example header="my.effects.spec.ts">
 
@@ -92,15 +94,11 @@ The `hot`, `cold`, and `toBeObservable` methods are imported from [`jasmine-marb
 actions$ = hot('-a-b-', {
   a: { type: '[Customers Page] Search Customers', name: 'J' },
   b: { type: '[Customers Page] Search Customers', name: 'Jes' },
-});
+})
 
 // mock the service to prevent an HTTP request to return an array of customers
 customersServiceSpy.searchCustomers.and.returnValue(
-  cold('--a|', {
-    a: [
-      /*...*/
-    ],
-  })
+  cold('--a|', { a: [...] })
 );
 
 // expect the first action to debounce and not to dispatch
@@ -108,9 +106,7 @@ customersServiceSpy.searchCustomers.and.returnValue(
 const expected = hot('-------a', {
   a: {
     type: '[Customers API] Search Customers Success',
-    customers: [
-      /*...*/
-    ],
+    customers: [...],
   },
 });
 
@@ -156,25 +152,15 @@ The callback method provides helper methods to mock Observable streams, and also
 // more info about the API can be found at https://rxjs.dev/guide/testing/marble-testing#api
 testScheduler.run(({ cold, hot, expectObservable }) => {
   // use the `hot` and `cold` helper methods to create the action and service streams
-  actions$ = hot('-a', {
-    a: { type: '[Customers Page] Get Customers' },
-  });
-  customersServiceSpy.getAllCustomers.and.returnValue(
-    cold('--a|', {
-      a: [
-        /*...*/
-      ],
-    })
-  );
+  actions$ = hot('-a', { a : { type: '[Customers Page] Get Customers' }});
+  customersServiceSpy.getAllCustomers.and.returnValue(cold('--a|', { a: [...] }));
 
   // use the `expectObservable` helper method to assert if the output matches the expected output
   expectObservable(effects.getAll$).toBe('---c', {
     c: {
       type: '[Customers API] Get Customers Success',
-      customers: [
-        /*...*/
-      ],
-    },
+      customers: [...],
+    }
   });
 });
 ```
@@ -192,15 +178,11 @@ testScheduler.run(({ cold, hot, expectObservable }) => {
   actions$ = hot('-a-b-', {
     a: { type: '[Customers Page] Search Customers', name: 'J' },
     b: { type: '[Customers Page] Search Customers', name: 'Jes' },
-  });
+  })
 
   // mock the service to prevent an HTTP request to return an array of customers
   customersServiceSpy.searchCustomers.and.returnValue(
-    cold('--a|', {
-      a: [
-        /*...*/
-      ],
-    })
+    cold('--a|', { a: [...] })
   );
 
   // the `300ms` is the set debounce time
@@ -208,9 +190,7 @@ testScheduler.run(({ cold, hot, expectObservable }) => {
   expectObservable(effects.searchCustomers).toBe('300ms 5ms c', {
     c: {
       type: '[Customers API] Search Customers Success',
-      customers: [
-        /*...*/
-      ],
+      customers: [...],
     },
   });
 });
@@ -229,19 +209,13 @@ To test simple Effects, it might be easier to create an Observable instead of us
 actions$ = of({ type: '[Customers Page] Get Customers' });
 
 // mock the service to prevent an HTTP request
-customersServiceSpy.getAllCustomers.and.returnValue(
-  of([
-    /*...*/
-  ])
-);
+customersServiceSpy.getAllCustomers.and.returnValue(of([...]));
 
 // subscribe to the Effect stream and verify it dispatches a SUCCESS action
-effects.getAll$.subscribe((action) => {
+effects.getAll$.subscribe(action => {
   expect(action).toEqual({
     type: '[Customers API] Get Customers Success',
-    customers: [
-      /*...*/
-    ],
+    customers: [...],
   });
   done();
 });
@@ -260,24 +234,16 @@ As an alternative, it's also possible to use `ReplaySubject`.
 actions$ = new ReplaySubject(1);
 
 // mock the service to prevent an HTTP request
-customersServiceSpy.getAllCustomers.and.returnValue(
-  of([
-    /*...*/
-  ])
-);
+customersServiceSpy.getAllCustomers.and.returnValue(of([...]));
 
 // dispatch the GET action
-(actions$ as ReplaySubject).next({
-  type: '[Customers Page] Get Customers',
-});
+(actions$ as ReplaySubject).next({ type: '[Customers Page] Get Customers' })
 
 // subscribe to the Effect stream and verify it dispatches a SUCCESS action
-effects.getAll$.subscribe((action) => {
+effects.getAll$.subscribe(action => {
   expect(action).toEqual({
     type: '[Customers API] Get Customers Success',
-    customers: [
-      /*...*/
-    ],
+    customers: [...],
   });
   done();
 });
@@ -370,8 +336,8 @@ Instead of using the Angular `TestBed`, we can instantiate the Effect class.
 
 ```ts
 it('should get customers', () => {
-  // instead of using provideMockActions,
-  // define the actions stream by creating a new Actions instance
+  // instead of using `provideMockActions`,
+  // define the actions stream by creating a new `Actions` instance
   const actions = new Actions(
     hot('-a--', {
       a: { type: '[Customers Page] Get Customers' },
@@ -384,15 +350,13 @@ it('should get customers', () => {
   const expected = hot('-a--', {
     a: {
       type: '[Customers API] Get Customers Success',
-      customers: [
-        /*...*/
-      ],
-    },
+      customers: [...],
+    }
   });
 
   // expect remains the same
   expect(effects.getAll$).toBeObservable(expected);
-});
+})
 ```
 
 </ngrx-code-example>
@@ -411,7 +375,7 @@ it('should get customers', () => {
   });
 
   // instead of using `provideMockActions`,
-  // define the actions stream by creating a new Actions instance
+  // define the actions stream by creating a new `Actions` instance
   const actions = new Actions(
     hot('-a--', {
       a: {

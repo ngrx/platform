@@ -247,15 +247,13 @@ import { EntityDataService } from '@ngrx/data'; // <-- import the NgRx Data data
 import { HeroDataService } from './hero-data-service';
 
 @NgModule({
-  imports: [
-    /* ... */
-  ],
-  providers: [HeroDataService], // <-- provide the data service
+  imports: [ ... ],
+  providers: [ HeroDataService ] // <-- provide the data service
 })
 export class EntityStoreModule {
   constructor(
     entityDataService: EntityDataService,
-    heroDataService: HeroDataService
+    heroDataService: HeroDataService,
   ) {
     entityDataService.registerService('Hero', heroDataService); // <-- register it
   }

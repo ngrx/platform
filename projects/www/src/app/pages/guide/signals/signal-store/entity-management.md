@@ -1,410 +1,493 @@
 # Entity Management
 
-`withEntities` is an extension to facilitate CRUD operations for managing entities. It shares similarities with @ngrx/entity but is part of the SignalStore.
+The `@ngrx/signals/entities` plugin offers a simple and efficient way to manage entity collections with NgRx SignalStore.
+This plugin provides the `withEntities` feature and a set of entity updaters.
 
-It doesn't include methods for backend communication. You have to implement them separately.
+## `withEntities` Feature
 
-## Creating the Store
+The `withEntities` feature integrates entity state into the store.
+By default, `withEntities` requires an entity to have an `id` property, which serves as a unique identifier and must be of type `EntityId` (either a `string` or a `number`).
 
-A store implementing a `Todo` entity can have the following implementation:
+<ngrx-code-example header="todos.store.ts">
 
-```typescript
-interface Todo {
+```ts
+import { computed } from '@angular/core';
+import { signalStore } from '@ngrx/signals';
+import { withEntities } from '@ngrx/signals/entities';
+
+type Todo = {
   id: number;
-  name: string;
-  finished: boolean;
-}
+  text: string;
+  completed: boolean;
+};
 
-const TodoStore = signalStore(withEntities<Todo>());
+export const TodosStore = signalStore(withEntities<Todo>());
 ```
 
-`withEntities` adds three properties of type `Signal` to the `TodoStore`.
+</ngrx-code-example>
 
-- `ids: Signal<EntityId[]>`: ids of all entities
-- `entities: Signal<Todo[]>`: array of all entities
-- `entityMap: Signal<EntityMap<Todo>>`: map of entities where the key is the id (`EntityId`)
+The `withEntities` feature adds the following signals to the `TodosStore`:
 
-`entities` is a computed Signal that derives from the non-computed Signals `ids` and `entityMap`.
+- `ids: Signal<EntityId[]>`: An array of all entity IDs.
+- `entityMap: Signal<EntityMap<Todo>>`: A map of entities where each key is an ID.
+- `entities: Signal<Todo[]>`: An array of all entities.
 
-By default, `withEntities` requires your entity to have a property of name `id`, which serves as a unique identifier. `id` has to be of type `EntityId`, which is a `number` or a `string`.
+The `ids` and `entityMap` are state slices, while `entities` is a computed signal.
 
-## Adding & Setting
+## Entity Updaters
 
-`addEntity` and `addEntities` add entries to the store. They act as updater functions for `patchState`.
+The `entities` plugin provides a set of standalone entity updaters.
+These functions can be used with `patchState` to facilitate entity collection updates.
 
-Here is an example on how to use them inside a component.
+<ngrx-code-example header="todos.store.ts">
 
-```typescript
-@Component({
-  selector: 'ngrx-todos',
-  template: `
-    <ul>
-      @for (todo of todoStore.entities(); track todo.id) {
-      <li>{{ todo.name }}</li>
-      }
-    </ul>
-  `,
-  standalone: true,
-  providers: [TodoStore],
-})
-export class TodosComponent implements OnInit {
-  todoStore = inject(TodoStore);
+```ts
+import { patchState, signalStore, withMethods } from '@ngrx/signals';
+import {
+  addEntity,
+  removeEntities,
+  updateAllEntities,
+  withEntities,
+} from '@ngrx/signals/entities';
 
-  ngOnInit() {
-    // add a single entity
-    patchState(
-      this.todoStore,
-      addEntity({ id: 1, name: 'Car Washing', finished: false })
-    );
+type Todo = {
+  /* ... */
+};
 
-    // add multiple entities
-    patchState(
-      this.todoStore,
-      addEntities([
-        { id: 2, name: 'Car Washing', finished: false },
-        { id: 3, name: 'Room Cleaning', finished: false },
-      ])
-    );
-  }
-}
-```
-
-If you add an entity with an existing id, the original entity is not overwritten, and no error is thrown.
-
-In this example, the todo remains as "Cat Feeding".
-
-```typescript
-patchState(
-  this.todoStore,
-  addEntity({ id: 1, name: 'Cat Feeding', finished: false })
-);
-
-patchState(
-  this.todoStore,
-  addEntity({ id: 1, name: 'Dog Feeding', finished: false })
+export const TodosStore = signalStore(
+  withEntities<Todo>(),
+  withMethods((store) => ({
+    addTodo(todo: Todo): void {
+      patchState(store, addEntity(todo));
+    },
+    removeEmptyTodos(): void {
+      patchState(
+        store,
+        removeEntities(({ text }) => !text)
+      );
+    },
+    completeAllTodos(): void {
+      patchState(store, updateAllEntities({ completed: true }));
+    },
+  }))
 );
 ```
 
----
+</ngrx-code-example>
 
-Updaters `setEntity` and `setEntities` are used to add new or replace existing entities from a collection.
+### `addEntity`
 
-In this example, we add a new `Todo` entity with "Cat Feeding" and replace it with "Dog Feeding".
+Adds an entity to the collection.
+If the entity collection has an entity with the same ID, it is not overridden and no error is thrown.
 
-```typescript
+```ts
+patchState(store, addEntity(todo));
+```
+
+### `addEntities`
+
+Adds multiple entities to the collection.
+If the entity collection has entities with the same IDs, they are not overridden and no error is thrown.
+
+```ts
+patchState(store, addEntities([todo1, todo2]));
+```
+
+### `prependEntity`
+
+Adds an entity to the beginning of the collection.
+If the entity collection has an entity with the same ID, it is not added and no error is thrown.
+
+```ts
+patchState(store, prependEntity(todo));
+```
+
+### `prependEntities`
+
+Adds multiple entities to the beginning of the collection, maintaining their relative order.
+If the entity collection has entities with the same IDs, they are not added and no error is thrown.
+
+```ts
+patchState(store, prependEntities([todo1, todo2]));
+```
+
+### `updateEntity`
+
+Updates an entity in the collection by ID. Supports partial updates. No error is thrown if an entity doesn't exist.
+
+```ts
 patchState(
-  this.todoStore,
-  setEntity({ id: 1, name: 'Cat Feeding', finished: false })
+  store,
+  updateEntity({ id: 1, changes: { completed: true } })
 );
 
 patchState(
-  this.todoStore,
-  setEntity({ id: 1, name: 'Dog Feeding', finished: false })
-);
-
-// version with setEntities and two different entities
-
-patchState(
-  this.todoStore,
-  setEntities([
-    { id: 1, name: 'Cat Feeding', finished: false },
-    { id: 2, name: 'Dog Feeding', finished: false },
-  ])
+  store,
+  updateEntity({
+    id: 1,
+    changes: (todo) => ({ completed: !todo.completed }),
+  })
 );
 ```
 
-In addition to the `setEntity` and `setEntities` updaters, the entities plugin also provides the `setAllEntities` updater which replaces the current collection with the provided one.
+### `updateEntities`
 
-```typescript
+Updates multiple entities in the collection by IDs or predicate. Supports partial updates. No error is thrown if entities don't exist.
+
+```ts
+// update entities by IDs
 patchState(
-  this.todoStore,
-  setAllEntities([
-    { id: 1, name: 'Room Cleaning', finished: false },
-    { id: 3, name: 'Car Washing', finished: false },
-  ])
-);
-```
-
-## Updating & Removing
-
-Updating and removing entities follow the same patterns as adding or setting them. The following functions are available:
-
-- Updating: `updateEntity`, `updateEntities`
-- Removing: `removeEntity`, `removeEntities`
-
-No error is thrown If an entity does not exist. This rule applies to all update and remove functions.
-
-The following example shows how to add, update, and remove an entity.
-
-```typescript
-patchState(
-  this.todoStore,
-  addEntities([
-    { id: 2, name: 'Car Washing', finished: false },
-    { id: 3, name: 'Cat Feeding', finished: false },
-  ])
+  store,
+  updateEntities({ ids: [1, 2], changes: { completed: true } })
 );
 
 patchState(
-  this.todoStore,
-  updateEntity({ id: 2, changes: { finished: true } })
-);
-
-patchState(this.todoStore, removeEntity(3));
-```
-
-`updateEntity` requires both parameters the `id` to update and its `changes` (`Partial<Todo>`). `removeEntity` only requires the `id`.
-
----
-
-Here is the version for updating or removing all entities.
-
-```typescript
-patchState(
-  this.todoStore,
-  addEntities([
-    { id: 2, name: 'Car Washing', finished: false },
-    { id: 3, name: 'Cat Feeding', finished: false },
-  ])
-);
-
-patchState(
-  this.todoStore,
-  updateAllEntities((todo) => ({ finished: !todo.finished }))
-);
-
-patchState(this.todoStore, updateAllEntities({ finished: true }));
-
-patchState(this.todoStore, removeAllEntities());
-```
-
-For obvious reasons, no id is necessary for operations on all entities.
-
----
-
-There is also an option to update or remove entities conditionally. We can provide an array of ids or a predicate. The predicate gets the entity as a parameter and needs to return a `boolean`.
-
-```typescript
-patchState(
-  this.todoStore,
-  addEntities([
-    { id: 2, name: 'Car Washing', finished: false },
-    { id: 3, name: 'Cat Feeding', finished: false },
-  ])
-);
-
-patchState(
-  this.todoStore,
+  store,
   updateEntities({
-    predicate: (todo) => Boolean(todo.name.match(/cat/i)),
-    changes: { finished: true },
+    ids: [1, 2],
+    changes: (todo) => ({ completed: !todo.completed }),
+  })
+);
+
+// update entities by predicate
+patchState(
+  store,
+  updateEntities({
+    predicate: ({ text }) => text.endsWith('✅'),
+    changes: { text: '' },
   })
 );
 
 patchState(
-  this.todoStore,
-  removeEntities((todo) => todo.finished)
-);
-```
-
-For the predicate version, `updateEntities` requires an object literal with `predicate` and `changes`. `removeEntities` works with the simple predicate function.
-
-Note that the predicate function needs to **explicitly** return `true` or `false`. A truthy or falsy value is incorrect.
-
-The alternative version with an array of ids goes like this:
-
-```typescript
-patchState(
-  this.todoStore,
-  addEntities([
-    { id: 2, name: 'Car Washing', finished: false },
-    { id: 3, name: 'Cat Feeding', finished: false },
-    { id: 4, name: 'Dog Feeding', finished: false },
-  ])
-);
-
-patchState(
-  this.todoStore,
+  store,
   updateEntities({
-    ids: [2, 3],
-    changes: { finished: true },
+    predicate: ({ text }) => text.endsWith('❓'),
+    changes: (todo) => ({ text: todo.text.slice(0, -1) }),
   })
 );
-
-patchState(this.todoStore, removeEntities([2, 4]));
 ```
 
-## Customized Id property
+### `updateAllEntities`
 
-The default property name for an identifier is `id` and is of type `string` or `number`.
+Updates all entities in the collection. Supports partial updates. No error is thrown if entities don't exist.
 
-It is possible to specify a different name, but the type must still be `string` or `number`. You can specify the id only when adding or setting an entity. It is not possible to define it via `withEntities`.
+```ts
+patchState(store, updateAllEntities({ text: '' }));
 
-Therefore, all variations of the `add*` and `set*` functions have an optional (last) parameter, which is an object literal and allows to define the id property via `idKey`.
+patchState(
+  store,
+  updateAllEntities((todo) => ({ text: `${todo.text} ${todo.id}` }))
+);
+```
 
-For example:
+### `setEntity`
 
-```typescript
-interface Todo {
+Adds or replaces an entity in the collection.
+
+```ts
+patchState(store, setEntity(todo));
+```
+
+### `setEntities`
+
+Adds or replaces multiple entities in the collection.
+
+```ts
+patchState(store, setEntities([todo1, todo2]));
+```
+
+### `setAllEntities`
+
+Replaces the current entity collection with the provided collection.
+
+```ts
+patchState(store, setAllEntities([todo1, todo2, todo3]));
+```
+
+### `upsertEntity`
+
+Adds or updates an entity in the collection.
+When updating, it does not replace the existing entity but merges it with the provided one.
+Only the properties provided in the updated entity are merged with the existing entity.
+Properties not present in the updated entity remain unchanged.
+
+```ts
+patchState(store, upsertEntity(todo));
+```
+
+### `upsertEntities`
+
+Adds or updates multiple entities in the collection.
+When updating, it does not replace existing entities but merges them with the provided ones.
+Only the properties provided in updated entities are merged with existing entities.
+Properties not present in updated entities remain unchanged.
+
+```ts
+patchState(store, upsertEntities([todo1, todo2]));
+```
+
+### `removeEntity`
+
+Removes an entity from the collection by ID. No error is thrown if an entity doesn't exist.
+
+```ts
+patchState(store, removeEntity(1));
+```
+
+### `removeEntities`
+
+Removes multiple entities from the collection by IDs or predicate. No error is thrown if entities don't exist.
+
+```ts
+// remove entities by IDs
+patchState(store, removeEntities([1, 2]));
+
+// remove entities by predicate
+patchState(
+  store,
+  removeEntities((todo) => todo.completed)
+);
+```
+
+### `removeAllEntities`
+
+Removes all entities from the collection. No error is thrown if entities don't exist.
+
+```ts
+patchState(store, removeAllEntities());
+```
+
+## Custom Entity Identifier
+
+If an entity doesn't have an identifier named `id`, a custom ID selector should be used.
+The selector's return type should be either `string` or `number`.
+
+Custom ID selectors should be provided when adding, setting, or updating entities.
+Therefore, all variations of the `add*`, `set*`, and `update*` functions include an optional second argument, which is a config object that allows specifying the `selectId` function.
+
+<ngrx-code-example header="todos.store.ts">
+
+```ts
+
+import { patchState, signalStore, withMethods } from '@ngrx/signals';
+import {
+  addEntities,
+  removeEntity,
+  SelectEntityId,
+  setEntity,
+  updateAllEntities,
+  withEntities,
+} from '@ngrx/signals/entities';
+
+type Todo = {
   key: number;
-  name: string;
-  finished: boolean;
-}
+  text: string;
+  completed: boolean;
+};
 
-patchState(
-  this.todoStore,
-  addEntities(
-    [
-      { key: 2, name: 'Car Washing', finished: false },
-      { key: 3, name: 'Cat Feeding', finished: false },
-    ],
-    { idKey: 'key' }
-  )
+const selectId: SelectEntityId<Todo&gt = (todo) => todo.key;
+
+export const TodosStore = signalStore(
+  withEntities<Todo>(),
+  withMethods((store) => ({
+    addTodos(todos: Todo[]): void {
+      patchState(store, addEntities(todos, { selectId }));
+    },
+    setTodo(todo: Todo): void {
+      patchState(store, setEntity(todo, { selectId }));
+    },
+    completeAllTodos(): void {
+      patchState(
+        store,
+        updateAllEntities({ completed: true }, { selectId })
+      );
+    },
+    removeTodo(key: number): void {
+      patchState(store, removeEntity(key));
+    },
+  }))
 );
 
-patchState(
-  this.todoStore,
-  setEntity(
-    { key: 4, name: 'Dog Feeding', finished: false },
-    { idKey: 'key' }
-  )
-);
 ```
 
-The `update*` and `remove*` methods, which expect an id value, automatically pick the right one. That is possible because every entity belongs to a map with its id as the key.
+</ngrx-code-example>
 
-Theoretically, adding the same entity twice with different id names would be possible. For obvious reasons, we discourage you from doing that.
+The `remove*` updaters automatically select the correct identifier, so it is not necessary to provide a custom ID selector.
 
-## Multiple Entity Types / Named Entities
+## Named Entity Collections
 
-If you don't want to have the property names `ids`, `entities` and `entityMap` in the state, you can define others by providing a collection name.
+The `withEntities` feature allows specifying a custom prefix for entity properties by providing a collection name as an input argument.
 
-Another use case is to have multiple entity types in one store. For example, `Todo` and `User`. In that case, you also have to come up with collections.
+<ngrx-code-example header="todos.store.ts">
 
-The following example shows a store that already has an `ids` property in its state before applying `withEntities`. Therefore, we provide the collection name `todo`.
+```ts
+import { signalStore, type } from '@ngrx/signals';
+import { withEntities } from '@ngrx/signals/entities';
 
-```typescript
-interface Todo {
+type Todo = {
   id: number;
-  name: string;
-  finished: boolean;
-}
+  text: string;
+  completed: boolean;
+};
 
-const TodoStore = signalStore(
-  withState({ ids: [] }), // ids property already exists
+export const TodosStore = signalStore(
+  // 💡 Entity type is specified using the `type` function.
   withEntities({ entity: type<Todo>(), collection: 'todo' })
 );
+```
+
+</ngrx-code-example>
+
+The names of the `TodosStore` properties are changed from `ids`, `entityMap`, and `entities` to `todoIds`, `todoEntityMap`, and `todoEntities`.
+
+All updaters that operate on named entity collections require a collection name.
+
+<ngrx-code-example header="todos.store.ts">
+
+```ts
+import {
+  patchState,
+  signalStore,
+  type,
+  withMethods,
+} from '@ngrx/signals';
+import {
+  addEntity,
+  removeEntity,
+  withEntities,
+} from '@ngrx/signals/entities';
+
+type Todo = {
+  /* ... */
+};
+
+export const TodosStore = signalStore(
+  withEntities({ entity: type<Todo>(), collection: 'todo' }),
+  withMethods((store) => ({
+    addTodo(todo: Todo): void {
+      patchState(store, addEntity(todo, { collection: 'todo' }));
+    },
+    removeTodo(id: number): void {
+      patchState(store, removeEntity(id, { collection: 'todo' }));
+    },
+  }))
+);
+```
+
+</ngrx-code-example>
+
+<ngrx-docs-alert type="help">
+
+Named entity collections allow managing multiple collections in a single store by using the `withEntities` feature multiple times.
+
+```ts
+export const LibraryStore = signalStore(
+  withEntities({ entity: type<Book>(), collection: 'book' }),
+  withEntities({ entity: type<Author>(), collection: 'author' }),
+  withEntities({ entity: type<Category>(), collection: 'category' }),
+  withMethods((store) => ({
+    addBook(book: Book): void {
+      patchState(store, addEntity(book, { collection: 'book' }));
+    },
+    addAuthor(author: Author): void {
+      patchState(store, addEntity(author, { collection: 'author' }));
+    },
+    addCategory(category: Category): void {
+      patchState(
+        store,
+        addEntity(category, { collection: 'category' })
+      );
+    },
+  }))
+);
+```
+
+Although it is possible to manage multiple collections in one store, in most cases, it is recommended to have dedicated stores for each entity type.
+
+</ngrx-docs-alert>
+
+## `entityConfig`
+
+The `entityConfig` function reduces repetitive code when defining a custom entity configuration and ensures strong typing.
+It accepts a config object where the entity type is required, and the collection name and custom ID selector are optional.
+
+<ngrx-code-example header="todos.store.ts">
+
+```ts
+import {
+  patchState,
+  signalStore,
+  type,
+  withMethods,
+} from '@ngrx/signals';
+import {
+  addEntity,
+  entityConfig,
+  removeEntity,
+  withEntities,
+} from '@ngrx/signals/entities';
+
+type Todo = {
+  key: number;
+  text: string;
+  completed: boolean;
+};
+
+const todoConfig = entityConfig({
+  entity: type<Todo>(),
+  collection: 'todo',
+  selectId: (todo) => todo.key,
+});
+
+export const TodosStore = signalStore(
+  withEntities(todoConfig),
+  withMethods((store) => ({
+    addTodo(todo: Todo): void {
+      patchState(store, addEntity(todo, todoConfig));
+    },
+    removeTodo(todo: Todo): void {
+      patchState(store, removeEntity(todo, todoConfig));
+    },
+  }))
+);
+```
+
+</ngrx-code-example>
+
+## Private Entity Collections
+
+Private entity collections are defined by using the `_` prefix for the collection name.
+
+```ts
+const todoConfig = entityConfig({
+  entity: type<Todo>(),
+  // 👇 private collection
+  collection: '_todo',
+});
+
+const TodosStore = signalStore(
+  withEntities(todoConfig),
+  withComputed(({ _todoEntities }) => ({
+    // 👇 exposing entity array publicly
+    todos: _todoEntities,
+  }))
+);
 
 @Component({
-  selector: 'ngrx-todos',
+  /* ... */
   template: `
-    <ul>
-      @for (todo of todoStore.todoEntities(); track todo.id) {
-      <li>{{ todo.name }}</li>
-      }
-    </ul>
+    <h1>Todos</h1>
+    <ngrx-todo-list [todos]="store.todos()" />
   `,
-  standalone: true,
-  providers: [TodoStore],
+  providers: [TodosStore],
 })
-export class TodosComponent implements OnInit {
-  todoStore = inject(TodoStore);
-
-  ngOnInit() {
-    patchState(
-      this.todoStore,
-      addEntities(
-        [
-          { id: 2, name: 'Car Washing', finished: false },
-          { id: 3, name: 'Cat Feeding', finished: false },
-        ],
-        { collection: 'todo' }
-      )
-    );
-  }
+class TodosComponent {
+  readonly store = inject(TodosStore);
 }
 ```
 
-The names of the state properties changed from:
+<ngrx-docs-alert type="help">
 
-- `ids` -> `todoIds`
-- `entities` -> `todoEntities`
-- `entityMap` -> `todoEntityMap`
+Learn more about private store members in the [Private Store Members](/guide/signals/signal-store/private-store-members) guide.
 
-All functions that operate on entities require a collection parameter. Those are `add*`, `set*`, `update*`, and `remove*`. They are type-safe because you need to provide the collection to avoid getting a compilation error.
-
-If you have a customized id property, you need to include the `idKey` parameter in the object literal, too:
-
-```typescript
-patchState(
-  this.todoStore,
-  addEntities(
-    [
-      { key: 2, name: 'Car Washing', finished: false },
-      { key: 3, name: 'Cat Feeding', finished: false },
-    ],
-    { idKey: 'key', collection: 'todo' }
-  )
-);
-```
-
-To add multiple entity collections to a store, execute `withEntities` multiple times:
-
-```typescript
-const Store = signalStore(
-  withEntities({ entity: type<Todo>(), collection: 'todo' }),
-  withEntities({
-    entity: type<User>(),
-    collection: 'user',
-  }),
-  withEntities({ entity: type<Category>(), collection: 'category' })
-);
-```
-
-Try to avoid multiple entity types in one store. It is better to have multiple stores, each with a single entity type.
-
-## Extending and Integrating
-
-You will usually want to persist your entities to a backend. Therefore, you must additionally implement `withMethods` and add the necessary methods.
-
-```typescript
-const TodoStore = signalStore(
-  withEntities<Todo>(),
-  withMethods((store) => {
-    const todoService = inject(TodoService);
-
-    return {
-      async load() {
-        const todos = await todoService.findAll();
-        patchState(store, setAllEntities(todos));
-      },
-
-      async add(name: string) {
-        const todo = await todoService.add(name);
-        patchState(store, addEntity(todo));
-      },
-
-      async remove(id: number) {
-        await todoService.remove(id);
-        patchState(store, removeEntity(id));
-      },
-
-      async setFinished(id: number) {
-        await todoService.setFinished(id);
-        patchState(
-          store,
-          updateEntity({ id, changes: { finished: true } })
-        );
-      },
-      async setUnfinished(id: number) {
-        await todoService.setUnfinished(id);
-        patchState(
-          store,
-          updateEntity({ id, changes: { finished: false } })
-        );
-      },
-    };
-  }),
-  withHooks({ onInit: (store) => store.load() })
-);
-```
+</ngrx-docs-alert>

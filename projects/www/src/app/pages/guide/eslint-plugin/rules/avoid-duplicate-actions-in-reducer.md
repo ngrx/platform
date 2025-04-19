@@ -3,7 +3,6 @@
 A `Reducer` should handle an `Action` once.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: Yes
 - **Requires type checking**: No

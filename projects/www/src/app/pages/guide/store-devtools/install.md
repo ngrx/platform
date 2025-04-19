@@ -2,7 +2,7 @@
 
 ## Installing with `ng add`
 
-You can install the Store Devtools to your project with the following `ng add` command <a href="https://angular.io/cli/add" target="_blank">(details here)</a>:
+You can install the Store Devtools to your project with the following `ng add` command <a href="https://angular.dev/cli/add" target="_blank">(details here)</a>:
 
 ```sh
 ng add @ngrx/store-devtools@latest
@@ -21,8 +21,7 @@ This command will automate the following steps:
 
 1. Update `package.json` > `dependencies` with `@ngrx/store-devtools`.
 2. Run `npm install` to install those dependencies.
-3. Update your `src/app.module.ts` > `imports` array with `StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })`. The maxAge property will be set to the flag `maxAge` if provided.
-4. If the project is using a `standalone bootstrap`, it adds `provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })` into the application config.
+3. Add the devtools to the application config provider's using `provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })`. The `maxAge` property will be set to the flag `maxAge` if provided.
 
 ## Installing with `npm`
 

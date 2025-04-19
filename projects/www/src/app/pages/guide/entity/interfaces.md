@@ -2,7 +2,7 @@
 
 ## EntityState<T>
 
-The @ngrx/entity!EntityState:interface interface is a predefined generic interface for a given entity collection with the following interface:
+The Entity State is a predefined generic interface for a given entity collection with the following interface:
 
 <ngrx-code-example header="EntityState Interface">
 

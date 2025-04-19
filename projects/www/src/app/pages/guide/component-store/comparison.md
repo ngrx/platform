@@ -1,3 +1,12 @@
+<ngrx-docs-alert type="help">
+
+**<a href="/guide/signals"><b>NgRx Signals</b></a> is the new default.**
+
+The NgRx team recommends using the `@ngrx/signals` library for local state management in Angular.
+While ComponentStore remains supported, we encourage using `@ngrx/signals` for new projects and considering migration for existing ones.
+
+</ngrx-docs-alert>
+
 # Comparison of ComponentStore and Store
 
 Both ComponentStore and Store are designed to manage the state in an Angular application, however
@@ -38,7 +47,7 @@ performant, but they are also introducing code complexity with **indirections**.
 
 <ngrx-docs-alert type="inform">
 
-It's important to understand what the cost is and why we are adding it.
+**Note:** It's important to understand what the cost is and why we are adding it.
 
 </ngrx-docs-alert>
 
@@ -86,7 +95,7 @@ Each ComponentStore is fully responsible for its own state. There could be **man
 ComponentStores, but each one should store its own distinct state.
 
 <figure>
-  <img src="images/guide/component-store/state-structure.png" alt="Comparison of NgRx Store and Component Store state ownership or placement" width="100%" height="100%" />
+  <img src="generated/images/guide/component-store/state-structure.png" alt="Comparison of NgRx Store and Component Store state ownership or placement" width="100%" height="100%" />
 </figure>
 
 ## File structure
@@ -104,5 +113,5 @@ In such cases, it's acceptable to create `ComponentStore<object>` that won't be 
 and would contain a number of selectors.
 
 <figure>
-  <img src="images/guide/component-store/file-structure.png" alt="Comparison of NgRx Store and Component Store file structures" width="100%" height="100%" />
+  <img src="generated/images/guide/component-store/file-structure.png" alt="Comparison of NgRx Store and Component Store file structures" width="100%" height="100%" />
 </figure>

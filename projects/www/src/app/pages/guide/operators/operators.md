@@ -16,6 +16,12 @@ selector from being evaluated until the source emits a value.
 
 The `concatLatestFrom` operator takes an Observable factory function that returns an array of Observables, or a single Observable.
 
+<ngrx-docs-alert type="help">
+
+The `concatLatestFrom` operator has been moved from `@ngrx/effects` to `@ngrx/operators`. If you're looking for the older documentation (prior to v18), see the [v17 documentation](https://v17.ngrx.io/guide/effects/operators#concatlatestfrom).
+
+</ngrx-docs-alert>
+
 <ngrx-code-example header="router.effects.ts">
 
 ```ts
@@ -67,6 +73,12 @@ An easy way to handle the response with an Observable in a safe way, without add
 - `tap` that handles success and error cases.
 - `catchError(() => EMPTY)` that ensures that the effect continues to run after the error.
 
+<ngrx-docs-alert type="help">
+
+The `tapResponse` operator has been moved from `@ngrx/component-store` to `@ngrx/operators`. If you're looking for the older documentation (prior to v18), see the [v17 documentation](https://v17.ngrx.io/guide/component-store/effect#tapresponse).
+
+</ngrx-docs-alert>
+
 <ngrx-code-example header="movies.store.ts">
 
 ```ts
@@ -108,12 +120,6 @@ There is also another signature of the `tapResponse` operator that accepts the o
 ```
 
 </ngrx-code-example>
-
-<ngrx-docs-alert type="help">
-
-The `tapResponse` operator has been moved from `@ngrx/component-store` to `@ngrx/operators`. If you're looking for the older documentation (prior to v18), see the [v17 documentation](https://v17.ngrx.io/guide/component-store/effect#tapresponse).
-
-</ngrx-docs-alert>
 
 ## mapResponse
 

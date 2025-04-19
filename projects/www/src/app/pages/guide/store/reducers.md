@@ -110,17 +110,11 @@ export const scoreboardReducer = createReducer(
 
 </ngrx-code-example>
 
-<ngrx-docs-alert type="inform">
-
-The exported `reducer` function is no longer required if you use the default Ivy AOT compiler (or JIT). It is only necessary with the View Engine AOT compiler as [function calls are not supported](https://angular.io/guide/aot-compiler#function-calls-are-not-supported) there.
-
-</ngrx-docs-alert>
-
 In the example above, the reducer is handling 4 actions: `[Scoreboard Page] Home Score`, `[Scoreboard Page] Away Score`, `[Scoreboard Page] Score Reset` and `[Scoreboard Page] Set Scores`. Each action is strongly-typed. Each action handles the state transition immutably. This means that the state transitions are not modifying the original state, but are returning a new state object using the spread operator. The spread syntax copies the properties from the current state into the object, creating a new reference. This ensures that a new state is produced with each change, preserving the purity of the change. This also promotes referential integrity, guaranteeing that the old reference was discarded when a state change occurred.
 
 <ngrx-docs-alert type="inform">
 
-The [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) only does shallow copying and does not handle deeply nested objects. You need to copy each level in the object to ensure immutability. There are libraries that handle deep copying including [lodash](https://lodash.com) and [immer](https://github.com/mweststrate/immer).
+**Note:** The [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) only does shallow copying and does not handle deeply nested objects. You need to copy each level in the object to ensure immutability. There are libraries that handle deep copying including [lodash](https://lodash.com) and [immer](https://github.com/mweststrate/immer).
 
 </ngrx-docs-alert>
 
@@ -128,7 +122,7 @@ When an action is dispatched, _all registered reducers_ receive the action. Whet
 
 <ngrx-docs-alert type="inform">
 
-You can also write reducers using switch statements, which was the previously defined way before reducer creators were introduced in NgRx. If you are looking for examples of reducers using switch statements, visit the documentation for [versions 7.x and prior](https://v7.ngrx.io/guide/store/reducers).
+**Note:** You can also write reducers using switch statements, which was the previously defined way before reducer creators were introduced in NgRx. If you are looking for examples of reducers using switch statements, visit the documentation for [versions 7.x and prior](https://v7.ngrx.io/guide/store/reducers).
 
 </ngrx-docs-alert>
 
@@ -178,7 +172,7 @@ bootstrapApplication(AppComponent, {
 
 <ngrx-docs-alert type="inform">
 
-Although you can register reducers in the `provideStore()` function, we recommend keeping `provideStore()` empty and using the `provideState()` function to register feature states in the root `providers` array.
+**Note:** Although you can register reducers in the `provideStore()` function, we recommend keeping `provideStore()` empty and using the `provideState()` function to register feature states in the root `providers` array.
 
 </ngrx-docs-alert>
 
@@ -287,7 +281,7 @@ export const routes: Route[] = [
 
 <ngrx-docs-alert type="inform">
 
-It is recommended to abstract a feature key string to prevent hardcoding strings when registering feature state and calling `createFeatureSelector`. Alternatively, you can use a [Feature Creator](guide/store/feature-creators) which automatically generates selectors for your feature state.
+**Note:** It is recommended to abstract a feature key string to prevent hardcoding strings when registering feature state and calling `createFeatureSelector`. Alternatively, you can use a [Feature Creator](guide/store/feature-creators) which automatically generates selectors for your feature state.
 
 </ngrx-docs-alert>
 
@@ -362,5 +356,11 @@ export class AppModule {}
 ```
 
 </ngrx-code-example>
-
+  
 Note: Similarly, if you are using effects, you will need to register both `EffectsModule.forRoot([...])` and `provideEffects([...])`. For more info, see [Effects](guide/effects).
+
+## Next Steps
+
+Reducers are only responsible for deciding which state transitions need to occur for a given action.
+
+In an application there is also a need to handle impure actions, such as AJAX requests, in NgRx we call them [Effects](guide/effects).

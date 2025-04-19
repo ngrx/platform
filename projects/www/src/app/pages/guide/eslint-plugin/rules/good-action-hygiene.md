@@ -3,7 +3,6 @@
 Ensures the use of good action hygiene.
 
 - **Type**: suggestion
-- **Recommended**: Yes
 - **Fixable**: No
 - **Suggestion**: No
 - **Requires type checking**: No

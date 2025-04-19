@@ -63,27 +63,21 @@ If all params in the URL Tree need to be extracted (both `urlPath` and `matched`
 import { Params } from '@angular/router';
 import { createSelector } from '@ngrx/store';
 
-export const selectRouteNestedParams = createSelector(
-  selectRouter,
-  (router) => {
-    let currentRoute = router?.state?.root;
-    let params: Params = {};
-    while (currentRoute?.firstChild) {
-      currentRoute = currentRoute.firstChild;
-      params = {
-        ...params,
-        ...currentRoute.params,
-      };
-    }
-    return params;
+export const selectRouteNestedParams = createSelector(selectRouter, (router) => {
+  let currentRoute = router?.state?.root;
+  let params: Params = {};
+  while (currentRoute?.firstChild) {
+    currentRoute = currentRoute.firstChild;
+    params = {
+      ...params,
+      ...currentRoute.params,
+    };
   }
-);
+  return params;
+});
 
 export const selectRouteNestedParam = (param: string) =>
-  createSelector(
-    selectRouteNestedParams,
-    (params) => params && params[param]
-  );
+  createSelector(selectRouteNestedParams, (params) => params &amp;&amp; params[param]);
 ```
 
 </ngrx-code-example>

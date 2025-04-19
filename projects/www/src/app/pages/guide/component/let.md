@@ -14,7 +14,6 @@ import { LetDirective } from '@ngrx/component';
 
 @Component({
   // ... other metadata
-  standalone: true,
   imports: [
     // ... other imports
     LetDirective,
