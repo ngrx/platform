@@ -81,7 +81,7 @@
     "@angular/common": "17.2.2",
     "@angular/core": "17.2.2",
     "@angular/elements": "17.2.2",
-    "@angular/fire": "^7.6.1",
+    "@angular/fire": "^16.0.0",
     "@angular/forms": "17.2.2",
     "@angular/material": "17.2.0",
     "@angular/platform-browser": "17.2.2",
