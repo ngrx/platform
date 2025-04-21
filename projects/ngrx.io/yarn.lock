@@ -2234,17 +2234,17 @@
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-1.0.1.tgz#0b62c9f47f557a5b4adc073bb0a47542ce6af4c4"
   integrity sha512-jmEnr/pk0yVkA7mIlHNnxCi+wWzOFUg0WyIotgkKAb2u1J7fAeDBcVNSTjTihbAYNusCLQdW5s9IJ5qwnEufcQ==
 
-"@getpolaris.ai/sdk-angular@0.0.17":
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/@getpolaris.ai/sdk-angular/-/sdk-angular-0.0.17.tgz#d28c1d338c4aaeb8415966b64f362fd8e192472c"
-  integrity sha512-SZAdZb+R52kCTLERuChHO9/mv+it1i6J1vB0tEk/Vlqd+yK8oy8e6LHxZx6Wtuz2EbA8vPIQBqplFq1nDUo7rA==
+"@getpolaris.ai/sdk-angular@0.0.42":
+  version "0.0.42"
+  resolved "https://registry.yarnpkg.com/@getpolaris.ai/sdk-angular/-/sdk-angular-0.0.42.tgz#948f461dc7cf362b99abac60269704fc244173d5"
+  integrity sha512-wwF3WEF57Qre44duXkPqob4DC05kfNp3g2vzRqSGmb89g/m0SAGpP2AeO4Gp8aAuGDgjpHQz3koaHXqDvnkltw==
   dependencies:
     tslib "^2.3.0"
 
-"@getpolaris.ai/sdk@0.0.17":
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/@getpolaris.ai/sdk/-/sdk-0.0.17.tgz#8f9e53724eae173c350e9d5b36091133fb3f4aaf"
-  integrity sha512-nEUnWdVSRBXn8t5IYTQgw7Tp6aPnGu4QYyzcYwmP6sZPa5hN24xiB6ZC2b5B2G62w5GRdWu5yNLCjrtxiiWrQA==
+"@getpolaris.ai/sdk@0.0.42":
+  version "0.0.42"
+  resolved "https://registry.yarnpkg.com/@getpolaris.ai/sdk/-/sdk-0.0.42.tgz#345165cb36daadadfe6891447f4e5e1b501b1946"
+  integrity sha512-sLZip15qkeWeoOwZ7z2vOLZIBYtnG1Ejx3hmQE7sJWMvYeSm+I5yM3qeAsnLewKTNR3CVhJuEplAtbWShYEAiA==
 
 "@google-cloud/paginator@^4.0.0":
   version "4.0.1"
