@@ -33,7 +33,8 @@ import { CONTENT_URL_PREFIX } from 'app/documents/document.service';
             <p class="contributor-bio">{{person.bio}}</p>
         </div>
     </div>
-  `
+  `,
+    standalone: false
 })
 export class ContributorComponent {
     @HostBinding('class.clickable')

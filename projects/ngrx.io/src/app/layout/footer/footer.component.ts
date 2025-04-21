@@ -4,7 +4,8 @@ import { NavigationNode, VersionInfo } from 'app/navigation/navigation.service';
 
 @Component({
     selector: 'aio-footer',
-    templateUrl: 'footer.component.html'
+    templateUrl: 'footer.component.html',
+    standalone: false
 })
 export class FooterComponent {
     @Input() nodes: NavigationNode[];

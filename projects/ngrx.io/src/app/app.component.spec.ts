@@ -577,6 +577,7 @@ class MockScrollService {
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'mat-icon',
     template: '',
+    standalone: false
 })
 class MockMatIconComponent {
     @Input() svgIcon;
@@ -585,6 +586,7 @@ class MockMatIconComponent {
 @Component({
     selector: 'aio-notification',
     template: '',
+    standalone: false
 })
 class MockAioNotificationComponent {
     @Input() dismissOnContentClick;
@@ -594,6 +596,7 @@ class MockAioNotificationComponent {
 @Component({
     selector: 'aio-top-menu',
     template: '',
+    standalone: false
 })
 class MockAioTopMenuComponent {
     @Input() nodes;
@@ -602,6 +605,7 @@ class MockAioTopMenuComponent {
 @Component({
     selector: 'aio-nav-menu',
     template: '',
+    standalone: false
 })
 class MockAioNavMenuComponent {
     @Input() nodes;
@@ -612,6 +616,7 @@ class MockAioNavMenuComponent {
 @Component({
     selector: 'aio-select',
     template: '',
+    standalone: false
 })
 class MockAioSelectComponent {
     @Input() options;
@@ -621,6 +626,7 @@ class MockAioSelectComponent {
 @Component({
     selector: 'aio-mode-banner',
     template: '',
+    standalone: false
 })
 class MockAioModeBannerComponent {
     @Input() mode;
@@ -630,6 +636,7 @@ class MockAioModeBannerComponent {
 @Component({
     selector: 'aio-doc-viewer',
     template: '',
+    standalone: false
 })
 class MockAioDocViewerComponent {
     @Input() doc;
@@ -638,6 +645,7 @@ class MockAioDocViewerComponent {
 @Component({
     selector: 'aio-dt',
     template: '',
+    standalone: false
 })
 class MockAioDtComponent {
     @Input() on;
@@ -647,12 +655,14 @@ class MockAioDtComponent {
 @Component({
     selector: 'aio-lazy-ce',
     template: '',
+    standalone: false
 })
 class MockAioLazyCeComponent {}
 
 @Component({
     selector: 'aio-footer',
     template: '',
+    standalone: false
 })
 class MockAioFooterComponent {
     @Input() nodes;
@@ -662,11 +672,13 @@ class MockAioFooterComponent {
 @Component({
     selector: 'aio-search-box',
     template: '',
+    standalone: false
 })
 class MockAioSearchBoxComponent {}
 
 @Component({
     selector: 'aio-theme-toggle',
     template: '',
+    standalone: false
 })
 class MockAioThemeToggleComponent {}

@@ -14,6 +14,7 @@ import { SearchResult, SearchResults, SearchArea } from 'app/search/interfaces';
 @Component({
     selector: 'aio-search-results',
     templateUrl: './search-results.component.html',
+    standalone: false
 })
 export class SearchResultsComponent implements OnChanges {
     /**

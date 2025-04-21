@@ -25,6 +25,7 @@ class SearchCriteria {
 @Component({
     selector: 'aio-api-list',
     templateUrl: './api-list.component.html',
+    standalone: false
 })
 export class ApiListComponent implements OnInit {
     filteredSections: Observable<ApiSection[]>;

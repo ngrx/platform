@@ -304,6 +304,7 @@ describe('CodeComponent', () => {
       [header]="header"
     ></aio-code>
   `,
+    standalone: false
 })
 class HostComponent implements AfterViewInit {
     hideCopy: boolean;

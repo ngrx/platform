@@ -30,6 +30,7 @@ $ ng g store State --root --module app.module.ts
       <pre class="prettyprint" #codeContainer></pre>
     </div>
   `,
+    standalone: false
 })
 export class CodeBlockComponent implements AfterContentInit {
     @Input() code = '';

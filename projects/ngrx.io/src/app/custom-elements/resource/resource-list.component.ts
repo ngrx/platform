@@ -6,7 +6,8 @@ import { ResourceService } from './resource.service';
 
 @Component({
     selector: 'aio-resource-list',
-    templateUrl: 'resource-list.component.html'
+    templateUrl: 'resource-list.component.html',
+    standalone: false
 })
 export class ResourceListComponent implements OnInit {
 

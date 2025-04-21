@@ -52,6 +52,7 @@ export interface TabInfo {
       </mat-tab-group>
     </mat-card>
   `,
+    standalone: false
 })
 export class CodeTabsComponent implements OnInit, AfterViewInit {
     tabs: TabInfo[];

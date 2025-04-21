@@ -129,7 +129,8 @@ describe('NotificationComponent', () => {
       <span class="action-button">Learn More</span>
     </a>
     </span>
-  </aio-notification>`
+  </aio-notification>`,
+    standalone: false
 })
 class TestComponent {
 }

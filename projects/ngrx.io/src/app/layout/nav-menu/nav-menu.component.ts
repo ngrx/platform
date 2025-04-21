@@ -5,7 +5,8 @@ import { CurrentNode, NavigationNode } from 'app/navigation/navigation.service';
     selector: 'aio-nav-menu',
     template: `
   <aio-nav-item *ngFor="let node of filteredNodes" [node]="node" [selectedNodes]="currentNode?.nodes" [isWide]="isWide">
-  </aio-nav-item>`
+  </aio-nav-item>`,
+    standalone: false
 })
 export class NavMenuComponent {
     @Input() currentNode: CurrentNode;

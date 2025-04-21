@@ -90,6 +90,7 @@ describe('CodeExampleComponent', () => {
       {{code}}
     </code-example>
   `,
+    standalone: false
 })
 class HostComponent {
     code = 'const foo = "bar";';

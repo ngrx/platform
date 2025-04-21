@@ -13,17 +13,20 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/ngrx.io",
+            "outputPath": {
+              "base": "dist/ngrx.io"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "outputHashing": "all",
             "sourceMap": true,
             "statsJson": true,
             "namedChunks": true,
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "assets": [
               "src/assets",
               "src/generated",
@@ -55,7 +58,8 @@
                 "bundleName": "light-theme"
               }
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "src/main.ts"
           },
           "configurations": {
             "fast": {

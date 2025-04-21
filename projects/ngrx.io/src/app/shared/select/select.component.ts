@@ -16,6 +16,7 @@ export interface Option {
 @Component({
     selector: 'aio-select',
     templateUrl: 'select.component.html',
+    standalone: false
 })
 export class SelectComponent implements OnInit {
     @Input() selected: Option;

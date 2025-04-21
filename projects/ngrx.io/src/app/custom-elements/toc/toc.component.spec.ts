@@ -478,12 +478,14 @@ describe('TocComponent', () => {
 @Component({
     selector: 'aio-embedded-host',
     template: '<aio-toc class="embedded"></aio-toc>',
+    standalone: false
 })
 class HostEmbeddedTocComponent { }
 
 @Component({
     selector: 'aio-not-embedded-host',
     template: '<aio-toc></aio-toc>',
+    standalone: false
 })
 class HostNotEmbeddedTocComponent { }
 

@@ -37,6 +37,7 @@ const sideNavView = 'SideNav';
 @Component({
     selector: 'aio-shell',
     templateUrl: './app.component.html',
+    standalone: false
 })
 export class AppComponent implements OnInit {
     currentDocument: DocumentContents;

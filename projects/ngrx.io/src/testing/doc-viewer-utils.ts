@@ -37,8 +37,8 @@ export class TestDocViewerComponent extends DocViewerComponent {
 // Test parent component.
 @Component({
     selector: 'aio-test',
-    template:
-    '<aio-doc-viewer [doc]="currentDoc">Test Component</aio-doc-viewer>',
+    template: '<aio-doc-viewer [doc]="currentDoc">Test Component</aio-doc-viewer>',
+    standalone: false
 })
 export class TestParentComponent {
     currentDoc?: DocumentContents | null;

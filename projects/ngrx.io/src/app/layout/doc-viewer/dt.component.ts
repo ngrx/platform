@@ -10,7 +10,8 @@ import { DocumentContents } from 'app/documents/document.service';
     <br/>
     <button (click)="dtextSet()">Show change</button>
   </div>
-  `
+  `,
+    standalone: false
 })
 export class DtComponent {
 

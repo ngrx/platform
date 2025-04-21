@@ -16,9 +16,10 @@ describe('LiveExampleComponent', () => {
     /// ///// test helpers ////////
 
     @Component({
-        selector: 'aio-host-comp',
-        template: '<live-example></live-example>'
-    })
+    selector: 'aio-host-comp',
+    template: '<live-example></live-example>',
+    standalone: false
+})
     class HostComponent { }
 
     class TestLocation {

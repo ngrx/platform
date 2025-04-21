@@ -8,7 +8,8 @@ import { VersionInfo } from 'app/navigation/navigation.service';
     This is the <strong>archived documentation for NgRx v{{version?.major}}.</strong>
     Please visit <a href="https://ngrx.io/">ngrx.io</a> to see documentation for the current version of NgRx.
   </div>
-  `
+  `,
+    standalone: false
 })
 export class ModeBannerComponent {
     @Input() mode: string;

@@ -40,7 +40,8 @@ import { Observable } from 'rxjs';
         </tr>
       </tbody>
     </table>
-`
+`,
+    standalone: false
 })
 export class EventListComponent {
     upcomingEvents$: Observable<Event[]> = this.eventService.upcomingEvents$;

@@ -10,6 +10,7 @@ import { Component } from '@angular/core';
       </g>
     </svg>
   `,
+    standalone: false
 })
 export class CirclesComponent {
     circleGroups = new Array(9).fill(0);

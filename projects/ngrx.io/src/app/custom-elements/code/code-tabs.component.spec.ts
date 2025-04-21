@@ -92,6 +92,7 @@ describe('CodeTabsComponent', () => {
       </code-pane>
     </code-tabs>
   `,
+    standalone: false
 })
 class HostComponent {
     @ViewChild(CodeTabsComponent, { static: true }) codeTabsComponent: CodeTabsComponent;

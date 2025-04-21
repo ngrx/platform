@@ -27,7 +27,6 @@ export class ThemeStorage {
 
 @Component({
     selector: 'aio-theme-toggle',
-    standalone: true,
     imports: [MatButtonModule, MatIconModule],
     template: `
     <button
@@ -39,7 +38,7 @@ export class ThemeStorage {
     >
       <mat-icon> {{ isDark ? 'light' : 'dark' }}_mode </mat-icon>
     </button>
-  `,
+  `
 })
 export class ThemeToggleComponent {
     isDark = false;
