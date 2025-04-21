@@ -72,7 +72,7 @@
                   "with": "src/environments/environment.next.ts"
                 }
               ],
-              "serviceWorker": true
+              "serviceWorker": "ngsw-config.json"
             },
             "stable": {
               "fileReplacements": [
@@ -81,7 +81,7 @@
                   "with": "src/environments/environment.stable.ts"
                 }
               ],
-              "serviceWorker": true
+              "serviceWorker": "ngsw-config.json"
             },
             "archive": {
               "fileReplacements": [
@@ -90,7 +90,7 @@
                   "with": "src/environments/environment.archive.ts"
                 }
               ],
-              "serviceWorker": true
+              "serviceWorker": "ngsw-config.json"
             }
           },
           "defaultConfiguration": ""
