@@ -45,9 +45,9 @@ import { WindowToken, windowProvider } from 'app/shared/window';
 import { CustomElementsModule } from 'app/custom-elements/custom-elements.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { SwUpdatesModule } from 'app/sw-updates/sw-updates.module';
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideFirebaseApp, initializeApp, getApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore/lite';
-
+import { provideAppCheck, initializeAppCheck, ReCaptchaV3Provider } from '@angular/fire/app-check';
 import { environment } from '../environments/environment';
 import { ThemeToggleComponent } from './shared/theme-picker/theme-picker.component';
 
@@ -59,10 +59,10 @@ export const svgIconProviders = [
         useValue: {
             name: 'close',
             svgSource:
-        '<svg fill="#ffffff" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
-        '<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />' +
-        '<path d="M0 0h24v24H0z" fill="none" />' +
-        '</svg>',
+                '<svg fill="#ffffff" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
+                '<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />' +
+                '<path d="M0 0h24v24H0z" fill="none" />' +
+                '</svg>',
         },
         multi: true,
     },
@@ -71,10 +71,10 @@ export const svgIconProviders = [
         useValue: {
             name: 'error_outline',
             svgSource:
-        '<svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
-        '<path d="M0 0h24v24H0V0z" fill="none" />' +
-        '<path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />' +
-        '</svg>',
+                '<svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
+                '<path d="M0 0h24v24H0V0z" fill="none" />' +
+                '<path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />' +
+                '</svg>',
         },
         multi: true,
     },
@@ -83,10 +83,10 @@ export const svgIconProviders = [
         useValue: {
             name: 'insert_comment',
             svgSource:
-        '<svg fill="#ffffff" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
-        '<path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" />' +
-        '<path d="M0 0h24v24H0z" fill="none" />' +
-        '</svg>',
+                '<svg fill="#ffffff" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
+                '<path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" />' +
+                '<path d="M0 0h24v24H0z" fill="none" />' +
+                '</svg>',
         },
         multi: true,
     },
@@ -95,9 +95,9 @@ export const svgIconProviders = [
         useValue: {
             name: 'keyboard_arrow_right',
             svgSource:
-        '<svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
-        '<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z" />' +
-        '</svg>',
+                '<svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
+                '<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z" />' +
+                '</svg>',
         },
         multi: true,
     },
@@ -133,6 +133,10 @@ export const svgIconProviders = [
             })
         ),
         provideFirestore(() => getFirestore()),
+        provideAppCheck(() => {
+            const provider = new ReCaptchaV3Provider('6Ldtrx8rAAAAANhSluizp60l0nPHCS3vP7YxNZDH');
+            return initializeAppCheck(getApp(), { provider, isTokenAutoRefreshEnabled: true });
+        }),
         ThemeToggleComponent,
         PolarisModule.forRoot({
             apiKey: 'api:2YGmNa2ATCiq4CWviBVgTHxXJ6F'
@@ -171,4 +175,4 @@ export const svgIconProviders = [
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
