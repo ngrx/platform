@@ -27,9 +27,6 @@ export default defineConfig(({ mode }) => {
     plugins: [
       analog({
         ssr: false,
-        vite: {
-          inlineStylesExtension: 'scss',
-        },
         content: {
           highlighter: 'shiki',
           shikiOptions: {
@@ -38,7 +35,6 @@ export default defineConfig(({ mode }) => {
             },
           },
         },
-        // apiPrefix: 'noop',
         nitro: {
           preset: 'firebase',
           firebase: {
