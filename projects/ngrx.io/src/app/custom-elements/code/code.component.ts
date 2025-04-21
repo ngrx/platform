@@ -53,6 +53,7 @@ const DEFAULT_LINE_NUMS_COUNT = 1_000;
       <code class="animated fadeIn" #codeContainer></code>
     </pre>
     `,
+    standalone: false
 })
 export class CodeComponent implements OnChanges {
     ariaLabel = '';

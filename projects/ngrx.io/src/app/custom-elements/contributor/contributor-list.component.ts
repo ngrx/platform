@@ -28,7 +28,8 @@ import { map, takeUntil } from 'rxjs/operators';
     <div class="contributor-group">
       <aio-contributor *ngFor="let person of selectedGroup.contributors" [person]="person"></aio-contributor>
     </div>
-  </section>`
+  </section>`,
+    standalone: false
 })
 export class ContributorListComponent implements OnInit, OnDestroy {
     private groups: ContributorGroup[];

@@ -5,6 +5,7 @@ import { ElementsLoader } from './elements-loader';
 @Component({
     selector: 'aio-lazy-ce',
     template: '',
+    standalone: false
 })
 export class LazyCustomElementComponent implements OnInit {
     @Input() selector = '';

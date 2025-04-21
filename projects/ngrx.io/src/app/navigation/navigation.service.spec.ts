@@ -1,7 +1,4 @@
-import {
-    HttpClientTestingModule,
-    HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
@@ -15,6 +12,7 @@ import {
 } from 'app/navigation/navigation.service';
 import { LocationService } from 'app/shared/location.service';
 import { MockLocationService } from 'testing/location.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('NavigationService', () => {
     let injector: Injector;
@@ -23,15 +21,17 @@ describe('NavigationService', () => {
 
     beforeEach(() => {
         injector = TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [
-                NavigationService,
-                {
-                    provide: LocationService,
-                    useFactory: () => new MockLocationService('a'),
-                },
-            ],
-        });
+    imports: [],
+    providers: [
+        NavigationService,
+        {
+            provide: LocationService,
+            useFactory: () => new MockLocationService('a'),
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+});
 
         navService = injector.get(NavigationService);
         httpMock = injector.get(HttpTestingController);

@@ -6,7 +6,7 @@
   $is-dark-theme: map-get($theme, is-dark);
 
   body{
-    background: if($is-dark-theme,  mat.get-color-from-palette($background, background), constants.$offwhite);
+    background: if($is-dark-theme,  mat.m2-get-color-from-palette($background, background), constants.$offwhite);
   }
 
   @if $is-dark-theme {

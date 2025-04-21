@@ -1,11 +1,9 @@
-import {
-    HttpClientTestingModule,
-    HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { EventService } from './event.service';
 import { Event, EventResponse } from './event.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('Event Service', () => {
     let injector: Injector;
@@ -14,9 +12,9 @@ describe('Event Service', () => {
 
     beforeEach(() => {
         injector = TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [EventService],
-        });
+    imports: [],
+    providers: [EventService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
         eventService = injector.get<EventService>(EventService);
         eventService.currentDate = new Date('2019-01-02');

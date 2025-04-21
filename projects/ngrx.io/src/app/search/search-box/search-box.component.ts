@@ -22,7 +22,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
     (input)="doSearch()"
     (keyup)="doSearch()"
     (focus)="doFocus()"
-    (click)="doSearch()">`
+    (click)="doSearch()">`,
+    standalone: false
 })
 export class SearchBoxComponent implements OnInit {
 

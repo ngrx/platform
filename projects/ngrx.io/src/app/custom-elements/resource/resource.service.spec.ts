@@ -1,12 +1,10 @@
-import {
-    HttpClientTestingModule,
-    HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { ResourceService } from './resource.service';
 import { Category } from './resource.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ResourceService', () => {
     let injector: Injector;
@@ -15,9 +13,9 @@ describe('ResourceService', () => {
 
     beforeEach(() => {
         injector = TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [ResourceService],
-        });
+    imports: [],
+    providers: [ResourceService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
         resourceService = injector.get(ResourceService);
         httpMock = injector.get(HttpTestingController);

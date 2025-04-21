@@ -1,7 +1,4 @@
-import {
-    HttpClientTestingModule,
-    HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { Subscription } from 'rxjs';
@@ -16,6 +13,7 @@ import {
     FETCHING_ERROR_ID,
     FILE_NOT_FOUND_ID,
 } from './document.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const CONTENT_URL_PREFIX = 'generated/docs/';
 
@@ -24,16 +22,18 @@ describe('DocumentService', () => {
 
     function createInjector(initialUrl: string) {
         return TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [
-                DocumentService,
-                {
-                    provide: LocationService,
-                    useFactory: () => new MockLocationService(initialUrl),
-                },
-                { provide: Logger, useClass: MockLogger },
-            ],
-        });
+    imports: [],
+    providers: [
+        DocumentService,
+        {
+            provide: LocationService,
+            useFactory: () => new MockLocationService(initialUrl),
+        },
+        { provide: Logger, useClass: MockLogger },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+});
     }
 
     function getServices(initialUrl = '') {

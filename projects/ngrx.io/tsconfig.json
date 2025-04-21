@@ -3,6 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "noImplicitAny": false,
+    "esModuleInterop": true,
     // disabled because this is on by default in tsc 2.7 breaking our codebase - we need to refactor
     "strictPropertyInitialization": false,
     // disabled because of https://github.com/angular/angular/issues/22877

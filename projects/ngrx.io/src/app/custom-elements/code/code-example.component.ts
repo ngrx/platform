@@ -39,6 +39,7 @@ import { CodeComponent } from './code.component';
     >
     </aio-code>
   `,
+    standalone: false
 })
 export class CodeExampleComponent implements AfterViewInit {
     classes: {};

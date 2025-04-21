@@ -50,7 +50,8 @@ export interface Announcement {
       <p [innerHTML]="announcement.message"></p>
       <a class="button" [href]="announcement.linkUrl">Learn More</a>
     </div>
-  </div>`
+  </div>`,
+    standalone: false
 })
 export class AnnouncementBarComponent implements OnInit {
     announcement: Announcement;

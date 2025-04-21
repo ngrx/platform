@@ -10,14 +10,15 @@ const LOCAL_STORAGE_NAMESPACE = 'aio-notification/';
     templateUrl: 'notification.component.html',
     animations: [
         trigger('hideAnimation', [
-            state('show', style({height: '*'})),
-            state('hide', style({height: 0})),
+            state('show', style({ height: '*' })),
+            state('hide', style({ height: 0 })),
             // this should be kept in sync with the animation durations in:
             // - aio/src/styles/2-modules/_notification.scss
             // - aio/src/app/app.component.ts : notificationDismissed()
             transition('show => hide', animate(250))
         ])
-    ]
+    ],
+    standalone: false
 })
 export class NotificationComponent implements OnInit {
     private get localStorage() {

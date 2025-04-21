@@ -7,7 +7,10 @@ type EventOrderBy = 'ascending' | 'descending';
  * Transforms the events to sorted ascending or descending order by date.
  * If an event has a startDate, order based on it.  If not, use it's endDate.
  */
-@Pipe({name: 'eventOrderBy'})
+@Pipe({
+    name: 'eventOrderBy',
+    standalone: false
+})
 export class EventOrderByPipe implements PipeTransform {
     transform(events: Event[] | null, orderBy: EventOrderBy): Event[] {
         if (events === null) {

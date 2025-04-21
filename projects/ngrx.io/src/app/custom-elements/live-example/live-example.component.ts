@@ -64,6 +64,7 @@ const ZIP_BASE = CONTENT_URL_PREFIX + 'zips/';
 @Component({
     selector: 'live-example',
     templateUrl: 'live-example.component.html',
+    standalone: false
 })
 export class LiveExampleComponent implements AfterContentInit {
     readonly mode: 'default' | 'embedded' | 'downloadOnly';
@@ -162,6 +163,7 @@ export class LiveExampleComponent implements AfterContentInit {
     height="100%"
   ></iframe>`,
     styles: ['iframe { min-height: 400px; }'],
+    standalone: false
 })
 export class EmbeddedStackblitzComponent implements AfterViewInit {
     @Input() src: string;

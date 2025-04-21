@@ -6,7 +6,8 @@ import { LocationService } from 'app/shared/location.service';
 import { MockLocationService } from 'testing/location.service';
 
 @Component({
-    template: '<aio-search-box (onSearch)="searchHandler($event)" (onFocus)="focusHandler($event)"></aio-search-box>'
+    template: '<aio-search-box (onSearch)="searchHandler($event)" (onFocus)="focusHandler($event)"></aio-search-box>',
+    standalone: false
 })
 class HostComponent {
     searchHandler = jasmine.createSpy('searchHandler');

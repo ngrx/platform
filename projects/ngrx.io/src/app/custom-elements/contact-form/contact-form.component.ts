@@ -46,7 +46,8 @@ import {addDoc, collection, Firestore} from '@angular/fire/firestore/lite';
           <p>Our team would respond promptly.</p>
         </div>
       </ng-template>
-    `
+    `,
+    standalone: false
 })
 
 export class ContactFormComponent {

@@ -7,7 +7,7 @@
 
   footer {
     // Because the footer background is always the same color in both light and dark mode, there is no need to specify a foreground color
-    background-color: mat.get-color-from-palette($primary, if($is-dark-theme, 900, 700));
+    background-color: mat.m2-get-color-from-palette($primary, if($is-dark-theme, 900, 700));
 
     aio-footer {
       & > * {

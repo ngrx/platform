@@ -22,6 +22,8 @@ const initialDocViewerContent = initialDocViewerElement ? initialDocViewerElemen
     template: ''
     // TODO(robwormald): shadow DOM and emulated don't work here (?!)
     // encapsulation: ViewEncapsulation.Native
+    ,
+    standalone: false
 })
 export class DocViewerComponent implements OnDestroy {
     // Enable/Disable view transition animations.

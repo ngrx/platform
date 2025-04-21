@@ -9,7 +9,10 @@ import { Event } from './event.model';
  * '01-28-2019' until '02-01-2019' -> 'January 28 - February 1, 2019'
  * '12-31-2018' until '01-01-2019' -> 'December 31, 2018 - January 1, 2019'
  */
-@Pipe({name: 'eventDateRange'})
+@Pipe({
+    name: 'eventDateRange',
+    standalone: false
+})
 export class EventDateRangePipe implements PipeTransform {
     transform(event: Event): string {
         const startDate = event.startDate;

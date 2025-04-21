@@ -22,7 +22,7 @@
   }
 
   .form-select-dropdown {
-    background: mat.get-color-from-palette($background, background);
+    background: mat.m2-get-color-from-palette($background, background);
     box-shadow: 0 16px 16px rgba(constants.$black, 0.24), 0 0 16px rgba(constants.$black, 0.12);
 
     li {

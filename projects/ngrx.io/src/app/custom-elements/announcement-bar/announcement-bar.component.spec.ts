@@ -1,8 +1,9 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Logger } from 'app/shared/logger.service';
 import { MockLogger } from 'testing/logger.service';
 import { AnnouncementBarComponent } from './announcement-bar.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const today = new Date();
 const lastWeek = changeDays(today, -7);
@@ -20,10 +21,10 @@ describe('AnnouncementBarComponent', () => {
 
     beforeEach(() => {
         const injector = TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            declarations: [AnnouncementBarComponent],
-            providers: [{ provide: Logger, useClass: MockLogger }]
-        });
+    declarations: [AnnouncementBarComponent],
+    imports: [],
+    providers: [{ provide: Logger, useClass: MockLogger }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
         httpMock = injector.get(HttpTestingController);
         mockLogger = injector.get(Logger);

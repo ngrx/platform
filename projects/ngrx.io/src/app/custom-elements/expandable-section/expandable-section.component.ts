@@ -5,6 +5,7 @@ import { Component, Input } from '@angular/core';
 @Component({
     selector: 'aio-expandable-section',
     templateUrl: 'expandable-section.component.html',
+    standalone: false
 })
 export class ExpandableSectionComponent {
     @Input() title;

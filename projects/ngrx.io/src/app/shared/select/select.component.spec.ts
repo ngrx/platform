@@ -189,6 +189,7 @@ describe('SelectComponent', () => {
               [showSymbol]="showSymbol"
               [disabled]="disabled">
     </aio-select>`,
+    standalone: false
 })
 class HostComponent {
     onChange = jasmine.createSpy('onChange');
