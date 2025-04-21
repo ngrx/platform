@@ -12,6 +12,7 @@ $ngrx-io-theme: mat.m2-define-light-theme((
 ));
 
 // Apply the light theme by default
-@include mat.core-theme($ngrx-io-theme);
+@include mat.elevation-classes();
+@include mat.app-background();
 @include mat.all-component-themes($ngrx-io-theme);
 @include app-theme.theme($ngrx-io-theme);

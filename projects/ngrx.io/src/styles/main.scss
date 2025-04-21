@@ -8,5 +8,6 @@
 // Include the base styles for Angular Material core. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 @include mat.all-component-typographies();
-@include mat.core()
+@include mat.elevation-classes();
+@include mat.app-background();
 
