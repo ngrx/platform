@@ -11,3 +11,16 @@
 @include mat.elevation-classes();
 @include mat.app-background();
 
+@import './_constants';
+@import './_mixins';
+
+// Import base styles, layouts, and modules
+@import './0-base';
+@import './1-layouts';
+@import './2-modules';
+
+
+// Import NgRx-specific styles and print styles (assuming they don't rely on the @use namespaces)
+@import './_ngrx';
+@import './_print';
+

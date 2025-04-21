@@ -15,7 +15,7 @@ import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { PolarisModule } from '@getpolaris.ai/sdk-angular';
+// import { PolarisModule } from '@getpolaris.ai/sdk-angular';
 
 import { AppComponent } from 'app/app.component';
 import { CustomIconRegistry, SVG_ICONS } from 'app/shared/custom-icon-registry';
@@ -130,20 +130,11 @@ export const svgIconProviders = [
         ServiceWorkerModule.register('/ngsw-worker.js', {
             enabled: environment.production,
         }),
-        provideFirebaseApp(() => initializeApp({
-            apiKey: 'AIzaSyBmTz0vGq-QIadpp1piHs7nA_ID8uRAxGI',
-            authDomain: 'ngrx-io-dev.firebaseapp.com',
-            databaseURL: 'https://ngrx-io-dev.firebaseio.com',
-            projectId: 'ngrx-io-dev',
-            storageBucket: 'ngrx-io-dev.appspot.com',
-            messagingSenderId: '670550641358',
-            appId: '1:670550641358:web:cd7543509875b279a71e9f',
-        })),
-        provideFirestore(() => getFirestore()),
         ThemeToggleComponent,
-        PolarisModule.forRoot({
-            apiKey: 'api:2YGmNa2ATCiq4CWviBVgTHxXJ6F'
-        })], providers: [
+        // PolarisModule.forRoot({
+        //     apiKey: 'api:2YGmNa2ATCiq4CWviBVgTHxXJ6F'
+        // })
+    ], providers: [
         Deployment,
         DocumentService,
         { provide: ErrorHandler, useClass: ReportingErrorHandler },
@@ -162,5 +153,15 @@ export const svgIconProviders = [
         { provide: CurrentDateToken, useFactory: currentDateProvider },
         { provide: WindowToken, useFactory: windowProvider },
         provideHttpClient(withInterceptorsFromDi()),
+        provideFirebaseApp(() => initializeApp({
+            apiKey: 'AIzaSyBmTz0vGq-QIadpp1piHs7nA_ID8uRAxGI',
+            authDomain: 'ngrx-io-dev.firebaseapp.com',
+            databaseURL: 'https://ngrx-io-dev.firebaseio.com',
+            projectId: 'ngrx-io-dev',
+            storageBucket: 'ngrx-io-dev.appspot.com',
+            messagingSenderId: '670550641358',
+            appId: '1:670550641358:web:cd7543509875b279a71e9f',
+        })),
+        provideFirestore(() => getFirestore()),
     ] })
 export class AppModule {}
