@@ -82,7 +82,7 @@
       .toc-inner {
         .toc-heading {
           &.secondary {
-            color:  mat.get-color-from-palette($foreground, text);
+            color:  mat.m2-get-color-from-palette($foreground, text);
           }
         }
       }

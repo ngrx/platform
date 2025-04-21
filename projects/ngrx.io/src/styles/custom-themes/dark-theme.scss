@@ -2,13 +2,13 @@
 @use '../app-theme';
 @use '../ngrx';
 
-$ngrx-io-theme: mat.define-dark-theme((
+$ngrx-io-theme: mat.m2-define-dark-theme((
   color: (
-    primary: mat.define-palette(ngrx.$dull-magenta, 700, 600, 800),
-    accent: mat.define-palette(ngrx.$gold, 700, 600, 800),
-    warn: mat.define-palette(mat.$red-palette)
+    primary: mat.m2-define-palette(ngrx.$dull-magenta, 700, 600, 800),
+    accent: mat.m2-define-palette(ngrx.$gold, 700, 600, 800),
+    warn: mat.m2-define-palette(mat.$m2-red-palette)
   ),
-  typography: mat.define-typography-config(),
+  typography: mat.m2-define-typography-config(),
 ));
 
 // Apply the dark theme by default

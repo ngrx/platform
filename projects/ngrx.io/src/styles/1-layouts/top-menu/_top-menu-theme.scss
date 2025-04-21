@@ -16,7 +16,7 @@
 
   // HOME PAGE OVERRIDE: TOPNAV TOOLBAR
   aio-shell.page-home mat-toolbar.mat-toolbar {
-    background: if($is-dark-theme,  mat.get-color-from-palette($primary, darker), constants.$purple);
+    background: if($is-dark-theme,  mat.m2-get-color-from-palette($primary, darker), constants.$purple);
   }
 
   // HAMBURGER BUTTON

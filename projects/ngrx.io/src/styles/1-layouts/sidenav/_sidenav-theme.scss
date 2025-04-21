@@ -6,7 +6,7 @@
   $is-dark-theme: map-get($theme, is-dark);
 
   mat-sidenav-container.sidenav-container {
-    background-color: if($is-dark-theme, mat.get-color-from-palette($background, background), constants.$offwhite);
+    background-color: if($is-dark-theme, mat.m2-get-color-from-palette($background, background), constants.$offwhite);
 
     mat-sidenav.sidenav {
       background-color: if($is-dark-theme, constants.$deepgray, constants.$white);

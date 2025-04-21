@@ -104,7 +104,7 @@ aio-shell.page-home {
     color: #000;
   }
   pre .str {
-    color: mat.get-color-from-palette($dull-magenta, 100);
+    color: mat.m2-get-color-from-palette($dull-magenta, 100);
   }
   /* string  - pink */
   pre .kwd {
@@ -116,11 +116,11 @@ aio-shell.page-home {
   }
   /* comment - skyblue */
   pre .typ {
-    color: mat.get-color-from-palette($gold, 300);
+    color: mat.m2-get-color-from-palette($gold, 300);
   }
   /* type    - lightgreen */
   pre .lit {
-    color: mat.get-color-from-palette($dull-magenta, 300);
+    color: mat.m2-get-color-from-palette($dull-magenta, 300);
   }
   /* literal - darkred */
   pre .pun {
@@ -142,11 +142,11 @@ aio-shell.page-home {
   }
   /* attribute name  - khaki */
   pre .atv {
-    color: mat.get-color-from-palette($dull-magenta, 100);
+    color: mat.m2-get-color-from-palette($dull-magenta, 100);
   }
   /* attribute value - pink */
   pre .dec {
-    color: mat.get-color-from-palette($gold, 300);
+    color: mat.m2-get-color-from-palette($gold, 300);
   }
   /* decimal         - lightgreen */
   /* Specify class=linenums on a pre to get line numbering */
@@ -178,10 +178,10 @@ ngrx-circles circle {
   fill: white;
 }
 ngrx-circles[color='primary'] circle {
-  fill: mat.get-color-from-palette($dull-magenta, 500);
+  fill: mat.m2-get-color-from-palette($dull-magenta, 500);
 }
 ngrx-circles[color='accent'] circle {
-  fill: mat.get-color-from-palette($gold, 500);
+  fill: mat.m2-get-color-from-palette($gold, 500);
 }
 ngrx-circles {
   @for $i from 1 to 10 {
