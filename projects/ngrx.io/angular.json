@@ -13,20 +13,17 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": {
-              "base": "dist/ngrx.io"
-            },
+            "outputPath": "dist/ngrx.io",
             "index": "src/index.html",
+            "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "outputHashing": "all",
             "sourceMap": true,
             "statsJson": true,
             "namedChunks": true,
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
+            "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
               "src/generated",
@@ -58,8 +55,7 @@
                 "bundleName": "light-theme"
               }
             ],
-            "scripts": [],
-            "browser": "src/main.ts"
+            "scripts": []
           },
           "configurations": {
             "fast": {
@@ -72,7 +68,7 @@
                   "with": "src/environments/environment.next.ts"
                 }
               ],
-              "serviceWorker": "ngsw-config.json"
+              "serviceWorker": true
             },
             "stable": {
               "fileReplacements": [
@@ -81,7 +77,7 @@
                   "with": "src/environments/environment.stable.ts"
                 }
               ],
-              "serviceWorker": "ngsw-config.json"
+              "serviceWorker": true
             },
             "archive": {
               "fileReplacements": [
@@ -90,7 +86,7 @@
                   "with": "src/environments/environment.archive.ts"
                 }
               ],
-              "serviceWorker": "ngsw-config.json"
+              "serviceWorker": true
             }
           },
           "defaultConfiguration": ""

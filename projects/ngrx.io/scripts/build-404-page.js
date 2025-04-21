@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 // Imports
-const {readFileSync, writeFileSync} = require('fs');
-const {join, resolve} = require('path');
+const { readFileSync, writeFileSync } = require('fs');
+const { join, resolve } = require('path');
 
 // Constants
 const CI_PREVIEW = process.env.CI_PREVIEW;
@@ -26,8 +26,8 @@ function _main() {
 
   if (dst404PageContent === srcIndexContent) {
     throw new Error(
-        'Failed to generate \'404.html\'. ' +
-        'The content of \'index.html\' does not match the expected pattern.');
+      'Failed to generate \'404.html\'. ' +
+      'The content of \'index.html\' does not match the expected pattern.');
   }
 
   writeFileSync(dst404PagePath, dst404PageContent);
