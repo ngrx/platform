@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -105,40 +105,7 @@ export const svgIconProviders = [
 
 /* eslint-enable max-len */
 
-@NgModule({
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        CustomElementsModule,
-        HttpClientModule,
-        MatButtonModule,
-        MatIconModule,
-        MatProgressBarModule,
-        MatSidenavModule,
-        MatToolbarModule,
-        SwUpdatesModule,
-        SharedModule,
-        ServiceWorkerModule.register('/ngsw-worker.js', {
-            enabled: environment.production,
-        }),
-        provideFirebaseApp(() =>
-            initializeApp({
-                apiKey: 'AIzaSyBmTz0vGq-QIadpp1piHs7nA_ID8uRAxGI',
-                authDomain: 'ngrx-io-dev.firebaseapp.com',
-                databaseURL: 'https://ngrx-io-dev.firebaseio.com',
-                projectId: 'ngrx-io-dev',
-                storageBucket: 'ngrx-io-dev.appspot.com',
-                messagingSenderId: '670550641358',
-                appId: '1:670550641358:web:cd7543509875b279a71e9f',
-            })
-        ),
-        provideFirestore(() => getFirestore()),
-        ThemeToggleComponent,
-        PolarisModule.forRoot({
-            apiKey: 'api:2YGmNa2ATCiq4CWviBVgTHxXJ6F'
-        }),
-    ],
-    declarations: [
+@NgModule({ declarations: [
         AppComponent,
         DocViewerComponent,
         DtComponent,
@@ -150,7 +117,33 @@ export const svgIconProviders = [
         NotificationComponent,
         TopMenuComponent,
     ],
-    providers: [
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        CustomElementsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatProgressBarModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        SwUpdatesModule,
+        SharedModule,
+        ServiceWorkerModule.register('/ngsw-worker.js', {
+            enabled: environment.production,
+        }),
+        provideFirebaseApp(() => initializeApp({
+            apiKey: 'AIzaSyBmTz0vGq-QIadpp1piHs7nA_ID8uRAxGI',
+            authDomain: 'ngrx-io-dev.firebaseapp.com',
+            databaseURL: 'https://ngrx-io-dev.firebaseio.com',
+            projectId: 'ngrx-io-dev',
+            storageBucket: 'ngrx-io-dev.appspot.com',
+            messagingSenderId: '670550641358',
+            appId: '1:670550641358:web:cd7543509875b279a71e9f',
+        })),
+        provideFirestore(() => getFirestore()),
+        ThemeToggleComponent,
+        PolarisModule.forRoot({
+            apiKey: 'api:2YGmNa2ATCiq4CWviBVgTHxXJ6F'
+        })], providers: [
         Deployment,
         DocumentService,
         { provide: ErrorHandler, useClass: ReportingErrorHandler },
@@ -168,7 +161,6 @@ export const svgIconProviders = [
         TocService,
         { provide: CurrentDateToken, useFactory: currentDateProvider },
         { provide: WindowToken, useFactory: windowProvider },
-    ],
-    bootstrap: [AppComponent],
-})
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {}

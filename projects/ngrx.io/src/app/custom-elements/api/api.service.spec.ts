@@ -1,13 +1,11 @@
-import {
-    HttpClientTestingModule,
-    HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { Logger } from 'app/shared/logger.service';
 
 import { ApiService } from './api.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ApiService', () => {
     let injector: Injector;
@@ -16,9 +14,9 @@ describe('ApiService', () => {
 
     beforeEach(() => {
         injector = TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [ApiService, { provide: Logger, useClass: TestLogger }],
-        });
+    imports: [],
+    providers: [ApiService, { provide: Logger, useClass: TestLogger }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
         service = injector.get<ApiService>(ApiService);
         httpMock = injector.get(HttpTestingController);

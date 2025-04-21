@@ -1,16 +1,12 @@
 import { NgModule, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { SharedModule } from '../../shared/shared.module';
 import { ApiListComponent } from './api-list.component';
 import { ApiService } from './api.service';
 import { WithCustomElementComponent } from '../element-registry';
 
-@NgModule({
-    imports: [CommonModule, SharedModule, HttpClientModule],
-    declarations: [ApiListComponent],
-    providers: [ApiService],
-})
+@NgModule({ declarations: [ApiListComponent], imports: [CommonModule, SharedModule], providers: [ApiService, provideHttpClient(withInterceptorsFromDi())] })
 export class ApiListModule implements WithCustomElementComponent {
     customElementComponent: Type<any> = ApiListComponent;
 }

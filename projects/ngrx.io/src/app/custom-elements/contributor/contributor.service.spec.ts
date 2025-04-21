@@ -1,12 +1,10 @@
-import {
-    HttpClientTestingModule,
-    HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { ContributorService } from './contributor.service';
 import { ContributorGroup } from './contributors.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ContributorService', () => {
     let injector: Injector;
@@ -15,9 +13,9 @@ describe('ContributorService', () => {
 
     beforeEach(() => {
         injector = TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [ContributorService],
-        });
+    imports: [],
+    providers: [ContributorService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
         contribService = injector.get<ContributorService>(ContributorService);
         httpMock = injector.get(HttpTestingController);
