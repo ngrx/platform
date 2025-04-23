@@ -3,9 +3,10 @@
 SignalStore allows defining private members that cannot be accessed from outside the store by using the `_` prefix.
 This includes root-level state slices, properties, and methods.
 
-<code-tabs linenums="false">
-<code-pane header="counter.store.ts">
+<!-- <code-tabs linenums="false">
+<code-pane header="counter.store.ts"> -->
 
+```ts
 import { computed } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import {
@@ -43,11 +44,13 @@ patchState(store, { \_count2: store.\_count2() + 1 });
 },
 })),
 );
+```
 
-</code-pane>
+<!-- </code-pane>
 
-<code-pane header="counter.component.ts">
+<code-pane header="counter.component.ts"> -->
 
+````ts
 import { Component, inject, OnInit } from '@angular/core';
 import { CounterStore } from './counter.store';
 
@@ -73,6 +76,7 @@ console.log(this.store.\_count2()); // ❌
 
 }
 }
-
+<!-- ```
 </code-pane>
-</code-tabs>
+</code-tabs> -->
+````

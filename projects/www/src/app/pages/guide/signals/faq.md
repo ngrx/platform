@@ -1,6 +1,6 @@
 # FAQ
 
-<details>
+<!-- <details>
   <summary>How to connect my SignalStore(s) with Redux DevTools?</summary>
 
     There's no official connection between `@ngrx/signals` and the Redux Devtools.
@@ -85,4 +85,4 @@ export class CounterComponent {
 }
 ```
 
-</details>
+</details> -->
