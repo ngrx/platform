@@ -86,9 +86,9 @@ export function withTotalEntities<Entity>(): SignalStoreFeature<{ state: {}; pro
 }
 ```
 
-<a name="19.0.0-beta.0""></a>
+<a name="19.0.0-beta.0"></a>
 
-# [19.0.0-beta.0"](https://github.com/ngrx/platform/compare/18.1.1...19.0.0-beta.0") (2024-11-20)
+# [19.0.0-beta.0](https://github.com/ngrx/platform/compare/18.1.1...19.0.0-beta.0") (2024-11-20)
 
 ### Features
 
