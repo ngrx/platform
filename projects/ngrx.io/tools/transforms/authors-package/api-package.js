@@ -19,7 +19,13 @@ const packageMap = {
   schematics: ['schematics/index.ts'],
   'component-store': ['component-store/index.ts'],
   component: ['component/index.ts'],
-  signals: ['signals/index.ts', 'signals/entities/index.ts', 'signals/rxjs-interop/index.ts'],
+  signals: [
+    'signals/index.ts',
+    'signals/entities/index.ts',
+    'signals/events/index.ts',
+    'signals/rxjs-interop/index.ts',
+    'signals/testing/index.ts',
+  ],
   operators: ['operators/index.ts'],
 };
 
