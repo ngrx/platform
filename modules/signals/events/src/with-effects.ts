@@ -12,8 +12,8 @@ import {
   withHooks,
 } from '@ngrx/signals';
 import { Dispatcher } from './dispatcher';
-import { isEvent } from './event';
-import { SOURCE_TYPE } from './events';
+import { isEventInstance } from './event-instance';
+import { SOURCE_TYPE } from './events-service';
 
 /**
  * @experimental
@@ -24,10 +24,11 @@ import { SOURCE_TYPE } from './events';
  * @usageNotes
  *
  * ```ts
- * import { eventCreator, Events, withEffects } from '@ngrx/signals/events';
+ * import { signalStore, withState } from '@ngrx/signals';
+ * import { event, Events, withEffects } from '@ngrx/signals/events';
  *
- * const increment = eventCreator('[Counter Page] Increment');
- * const decrement = eventCreator('[Counter Page] Decrement');
+ * const increment = event('[Counter Page] Increment');
+ * const decrement = event('[Counter Page] Decrement');
  *
  * const CounterStore = signalStore(
  *   withState({ count: 0 }),
@@ -52,7 +53,7 @@ export function withEffects<Input extends SignalStoreFeatureResult>(
         const effects = Object.values(effectSources).map((effectSource$) =>
           effectSource$.pipe(
             tap((value) => {
-              if (isEvent(value) && !(SOURCE_TYPE in value)) {
+              if (isEventInstance(value) && !(SOURCE_TYPE in value)) {
                 dispatcher.dispatch(value);
               }
             })

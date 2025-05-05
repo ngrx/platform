@@ -1,63 +1,54 @@
 import { type } from '@ngrx/signals';
-import {
-  emptyProps,
-  EventCreator,
-  eventCreatorGroup,
-  EventCreatorWithProps,
-  props,
-} from '../src';
+import { EventCreator, eventGroup } from '../src';
 
-describe('eventCreatorGroup', () => {
-  it('creates an event creator group', () => {
-    const counterPageEvents = eventCreatorGroup({
+describe('eventGroup', () => {
+  it('creates a group of event creators', () => {
+    const counterPageEvents = eventGroup({
       source: 'Counter Page',
       events: {
-        increment: emptyProps(),
-        decrement: emptyProps(),
-        set: props<{ count: number }>(),
+        increment: type<void>(),
+        decrement: type<void>(),
+        set: type<number>(),
       },
     });
 
     const incrementEvent = counterPageEvents.increment();
     const decrementEvent = counterPageEvents.decrement();
-    const setEvent = counterPageEvents.set({ count: 10 });
+    const setEvent = counterPageEvents.set(10);
 
     expect(incrementEvent).toEqual({ type: '[Counter Page] increment' });
     expect(decrementEvent).toEqual({ type: '[Counter Page] decrement' });
-    expect(setEvent).toEqual({ type: '[Counter Page] set', count: 10 });
+    expect(setEvent).toEqual({ type: '[Counter Page] set', payload: 10 });
   });
 
-  it('allows creating custom event creator group factories', () => {
-    function apiEventCreatorGroup<Source extends string, Entity>(
+  it('allows creating custom event group factories', () => {
+    function apiEventGroup<Source extends string, Entity>(
       source: Source,
       _entity: Entity
     ): {
-      loadedSuccess: EventCreatorWithProps<
-        `[${Source} API] loadedSuccess`,
-        { entities: Entity[] }
-      >;
-      loadedFailure: EventCreator<`[${Source} API] loadedFailure`>;
+      loadedSuccess: EventCreator<`[${Source} API] loadedSuccess`, Entity[]>;
+      loadedFailure: EventCreator<`[${Source} API] loadedFailure`, void>;
     } {
-      return eventCreatorGroup({
+      return eventGroup({
         source: `${source} API`,
         events: {
-          loadedSuccess: props<{ entities: Entity[] }>(),
-          loadedFailure: emptyProps(),
+          loadedSuccess: type<Entity[]>(),
+          loadedFailure: type<void>(),
         },
       });
     }
 
     type User = { id: number; name: string };
-    const usersApiEvents = apiEventCreatorGroup('Users', type<User>());
+    const usersApiEvents = apiEventGroup('Users', type<User>());
 
-    const loadedSuccessEvent = usersApiEvents.loadedSuccess({
-      entities: [{ id: 1, name: 'John Doe' }],
-    });
+    const loadedSuccessEvent = usersApiEvents.loadedSuccess([
+      { id: 1, name: 'John Doe' },
+    ]);
     const loadedFailureEvent = usersApiEvents.loadedFailure();
 
     expect(loadedSuccessEvent).toEqual({
       type: '[Users API] loadedSuccess',
-      entities: [{ id: 1, name: 'John Doe' }],
+      payload: [{ id: 1, name: 'John Doe' }],
     });
     expect(loadedFailureEvent).toEqual({ type: '[Users API] loadedFailure' });
   });

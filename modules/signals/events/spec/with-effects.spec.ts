@@ -1,22 +1,21 @@
 import { computed, inject } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { map, tap } from 'rxjs';
-import { signalStore, withComputed, withProps, withState } from '@ngrx/signals';
 import {
-  Dispatcher,
-  Event,
-  eventCreator,
-  Events,
-  props,
-  withEffects,
-} from '../src';
+  signalStore,
+  type,
+  withComputed,
+  withProps,
+  withState,
+} from '@ngrx/signals';
+import { Dispatcher, event, EventInstance, Events, withEffects } from '../src';
 import { createLocalService } from '../../spec/helpers';
 
 describe('withEffects', () => {
-  const event1 = eventCreator('event1');
-  const event2 = eventCreator('event2');
-  const event3 = eventCreator('event3', props<{ value: string }>());
-  const event4 = eventCreator('event4', props<{ value: string }>());
+  const event1 = event('event1');
+  const event2 = event('event2');
+  const event3 = event('event3', type<string>());
+  const event4 = event('event4', type<{ value: string }>());
 
   it('has access to SignalStore state slices and props', () => {
     const values: string[] = [];
@@ -43,16 +42,16 @@ describe('withEffects', () => {
     const Store = signalStore(
       { providedIn: 'root' },
       withEffects((_, events = inject(Events)) => ({
-        $: events
-          .on(event1, event2)
-          .pipe(map(({ type }) => event3({ value: type }))),
-        $$: events.on(event3).pipe(map(({ value }) => event4({ value }))),
+        $: events.on(event1, event2).pipe(map(({ type }) => event3(type))),
+        $$: events
+          .on(event3)
+          .pipe(map(({ payload }) => event4({ value: payload }))),
       }))
     );
 
     const dispatcher = TestBed.inject(Dispatcher);
     const events = TestBed.inject(Events);
-    const emittedEvents: Event[] = [];
+    const emittedEvents: EventInstance<string, unknown>[] = [];
 
     events.on().subscribe((event) => emittedEvents.push(event));
     TestBed.inject(Store);
@@ -62,15 +61,15 @@ describe('withEffects', () => {
 
     expect(emittedEvents).toEqual([
       { type: 'event1' },
-      { type: 'event3', value: 'event1' },
-      { type: 'event4', value: 'event1' },
+      { type: 'event3', payload: 'event1' },
+      { type: 'event4', payload: { value: 'event1' } },
       { type: 'event2' },
-      { type: 'event3', value: 'event2' },
-      { type: 'event4', value: 'event2' },
+      { type: 'event3', payload: 'event2' },
+      { type: 'event4', payload: { value: 'event2' } },
     ]);
   });
 
-  it('does not dispatch the source event when an effect does not return a new event', () => {
+  it('does not re-dispatch the same event when an effect does not return a new event', () => {
     const Store = signalStore(
       { providedIn: 'root' },
       withEffects((_, events = inject(Events)) => ({
@@ -81,7 +80,7 @@ describe('withEffects', () => {
 
     const dispatcher = TestBed.inject(Dispatcher);
     const events = TestBed.inject(Events);
-    const emittedEvents: Event[] = [];
+    const emittedEvents: EventInstance<string, unknown>[] = [];
 
     events.on().subscribe((event) => emittedEvents.push(event));
     TestBed.inject(Store);
@@ -90,6 +89,35 @@ describe('withEffects', () => {
     dispatcher.dispatch(event2());
 
     expect(emittedEvents).toEqual([{ type: 'event1' }, { type: 'event2' }]);
+  });
+
+  it('re-dispatches the same event when it is explicitly returned from an effect', () => {
+    let executionCount = 0;
+
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withEffects((_, events = inject(Events)) => ({
+        $: events.on(event1).pipe(
+          map(() => (executionCount < 2 ? event1() : null)),
+          tap(() => executionCount++)
+        ),
+      }))
+    );
+
+    const dispatcher = TestBed.inject(Dispatcher);
+    const events = TestBed.inject(Events);
+    const emittedEvents: EventInstance<string, unknown>[] = [];
+
+    events.on().subscribe((event) => emittedEvents.push(event));
+    TestBed.inject(Store);
+
+    dispatcher.dispatch(event1());
+
+    expect(emittedEvents).toEqual([
+      { type: 'event1' },
+      { type: 'event1' },
+      { type: 'event1' },
+    ]);
   });
 
   it('unsubscribes from effects when the store is destroyed', () => {

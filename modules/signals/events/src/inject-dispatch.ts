@@ -6,15 +6,15 @@ import {
 } from '@angular/core';
 import { Prettify } from '@ngrx/signals';
 import { Dispatcher } from './dispatcher';
-import { EventCreator, EventCreatorWithProps } from './event-creator';
+import { EventCreator } from './event-creator';
 
 type InjectDispatchResult<
-  EventGroup extends Record<string, EventCreator | EventCreatorWithProps>
+  EventGroup extends Record<string, EventCreator<string, any>>
 > = {
   [EventName in keyof EventGroup]: Parameters<EventGroup[EventName]> extends [
-    infer Props
+    infer Payload
   ]
-    ? (props: Props) => void
+    ? (payload: Payload) => void
     : () => void;
 };
 
@@ -27,13 +27,14 @@ type InjectDispatchResult<
  * @usageNotes
  *
  * ```ts
+ * import { type } from '@ngrx/signals';
  * import { eventGroup, injectDispatch } from '@ngrx/signals/events';
  *
  * const counterPageEvents = eventGroup({
  *   source: 'Counter Page',
  *   events: {
- *     increment: emptyProps(),
- *     decrement: emptyProps(),
+ *     increment: type<void>(),
+ *     decrement: type<void>(),
  *   },
  * });
  *
@@ -52,7 +53,7 @@ type InjectDispatchResult<
  * ```
  */
 export function injectDispatch<
-  EventGroup extends Record<string, EventCreator | EventCreatorWithProps>
+  EventGroup extends Record<string, EventCreator<string, any>>
 >(
   events: EventGroup,
   config?: { injector?: Injector }
@@ -67,8 +68,8 @@ export function injectDispatch<
   return Object.entries(events).reduce(
     (acc, [eventName, eventCreator]) => ({
       ...acc,
-      [eventName]: (props?: object) =>
-        untracked(() => dispatcher.dispatch(eventCreator(props))),
+      [eventName]: (payload?: unknown) =>
+        untracked(() => dispatcher.dispatch(eventCreator(payload))),
     }),
     {} as InjectDispatchResult<EventGroup>
   );

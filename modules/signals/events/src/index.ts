@@ -1,14 +1,9 @@
 export { on } from './case-reducer';
 export { Dispatcher } from './dispatcher';
-export { Event, EventWithProps } from './event';
-export {
-  eventCreator,
-  EventCreator,
-  EventCreatorWithProps,
-} from './event-creator';
-export { eventCreatorGroup } from './event-creator-group';
-export { Events } from './events';
+export { event, EventCreator } from './event-creator';
+export { eventGroup } from './event-creator-group';
+export { EventInstance } from './event-instance';
+export { Events } from './events-service';
 export { injectDispatch } from './inject-dispatch';
-export { emptyProps, props } from './props';
 export { withEffects } from './with-effects';
 export { withReducer } from './with-reducer';

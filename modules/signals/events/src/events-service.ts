@@ -6,8 +6,8 @@ import {
   Observable,
   Subject,
 } from 'rxjs';
-import { Event } from './event';
-import { EventCreator, EventCreatorWithProps } from './event-creator';
+import { EventInstance } from './event-instance';
+import { EventCreator } from './event-creator';
 
 export const EVENTS = Symbol();
 export const SOURCE_TYPE = Symbol();
@@ -16,17 +16,17 @@ abstract class BaseEvents {
   /**
    * @internal
    */
-  readonly [EVENTS] = new Subject<Event>();
+  readonly [EVENTS] = new Subject<EventInstance<string, unknown>>();
 
-  on(): Observable<Event>;
-  on<EventCreators extends Array<EventCreator | EventCreatorWithProps>>(
+  on(): Observable<EventInstance<string, unknown>>;
+  on<EventCreators extends EventCreator<string, any>[]>(
     ...events: [...EventCreators]
   ): Observable<
     { [K in keyof EventCreators]: ReturnType<EventCreators[K]> }[number]
   >;
   on(
-    ...events: Array<EventCreator | EventCreatorWithProps>
-  ): Observable<Event> {
+    ...events: EventCreator<string, unknown>[]
+  ): Observable<EventInstance<string, unknown>> {
     return this[EVENTS].pipe(filterByType(events), withSourceType());
   }
 }
@@ -40,9 +40,9 @@ abstract class BaseEvents {
  * @usageNotes
  *
  * ```ts
- * import { eventCreator, Events } from '@ngrx/signals/events';
+ * import { event, Events } from '@ngrx/signals/events';
  *
- * const increment = eventCreator('[Counter Page] Increment');
+ * const increment = event('[Counter Page] Increment');
  *
  * \@Component({ \/* ... *\/ })
  * class Counter {
@@ -63,8 +63,8 @@ export class Events extends BaseEvents {}
 @Injectable({ providedIn: 'root' })
 export class ReducerEvents extends BaseEvents {}
 
-function filterByType<T extends Event>(
-  events: Array<EventCreator | EventCreatorWithProps>
+function filterByType<T extends EventInstance<string, unknown>>(
+  events: EventCreator<string, unknown>[]
 ): MonoTypeOperatorFunction<T> {
   if (events.length === 0) {
     return (source$) => source$;
@@ -75,12 +75,14 @@ function filterByType<T extends Event>(
 }
 
 function toEventCreatorMap(
-  events: Array<EventCreator | EventCreatorWithProps>
-): Record<string, EventCreator | EventCreatorWithProps> {
+  events: EventCreator<string, unknown>[]
+): Record<string, EventCreator<string, unknown>> {
   return events.reduce((acc, event) => ({ ...acc, [event.type]: event }), {});
 }
 
-function withSourceType<T extends Event>(): MonoTypeOperatorFunction<T> {
+function withSourceType<
+  T extends EventInstance<string, unknown>
+>(): MonoTypeOperatorFunction<T> {
   return map(({ ...event }) => {
     Object.defineProperty(event, SOURCE_TYPE, { value: event.type });
     return event;

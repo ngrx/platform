@@ -1,28 +1,19 @@
-import { Event, EventWithProps } from './event';
-
-declare const ngDevMode: unknown;
+import { EventInstance } from './event-instance';
 
 /**
  * @experimental
  */
-export type EventCreator<Type extends string = string> = (() => Event<Type>) &
-  Event<Type>;
+export type EventCreator<Type extends string, Payload> = ((
+  payload: Payload
+) => EventInstance<Type, Payload>) & { type: Type };
 
-/**
- * @experimental
- */
-export type EventCreatorWithProps<
-  Type extends string = string,
-  Props extends object = any
-> = ((props: Props) => EventWithProps<Type, Props>) & Event<Type>;
-
-export function eventCreator<Type extends string>(
+export function event<Type extends string>(
   type: Type
-): EventCreator<Type>;
-export function eventCreator<Type extends string, Props extends object>(
+): EventCreator<Type, void>;
+export function event<Type extends string, Payload>(
   type: Type,
-  props: Props
-): EventCreatorWithProps<Type, Props>;
+  payload: Payload
+): EventCreator<Type, Payload>;
 /**
  * @experimental
  * @description
@@ -31,45 +22,26 @@ export function eventCreator<Type extends string, Props extends object>(
  *
  * @usageNotes
  *
- * ### Creating an event creator without props
+ * ### Creating an event creator without payload
  *
  * ```ts
- * import { eventCreator } from '@ngrx/signals/events';
+ * import { event } from '@ngrx/signals/events';
  *
- * const increment = eventCreator('[Counter Page] Increment');
+ * const increment = event('[Counter Page] Increment');
  * ```
  *
- * ### Creating an event creator with props
+ * ### Creating an event creator with payload
  *
  * ```ts
- * import { eventCreator, props } from '@ngrx/signals/events';
+ * import { type } from '@ngrx/signals';
+ * import { event } from '@ngrx/signals/events';
  *
- * const set = eventCreator('[Counter Page] Set', props<{ count: number }>());
+ * const set = event('[Counter Page] Set', type<number>());
  * ```
  */
-export function eventCreator(
-  type: string
-): EventCreator | EventCreatorWithProps {
-  const creator = (props?: object) => {
-    if (typeof ngDevMode !== 'undefined' && ngDevMode) {
-      if (Array.isArray(props)) {
-        console.warn('@ngrx/signals/events: Event props cannot be an array.');
-      }
-
-      if (props && typeof props === 'object' && 'type' in props) {
-        console.warn(
-          '@ngrx/signals/events: Event props cannot contain a type property.'
-        );
-      }
-    }
-
-    return { type, ...props };
-  };
+export function event(type: string): EventCreator<string, any> {
+  const creator = (payload?: unknown) => ({ type, payload });
   (creator as any).type = type;
 
-  return creator as EventCreator | EventCreatorWithProps;
-}
-
-export function isEventCreator(value: unknown): value is EventCreator {
-  return typeof value === 'function' && 'type' in value;
+  return creator as EventCreator<string, unknown>;
 }

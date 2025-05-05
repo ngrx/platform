@@ -25,12 +25,10 @@ import {
   withEntities,
 } from '@ngrx/signals/entities';
 import {
-  emptyProps,
-  eventCreatorGroup,
+  eventGroup,
   Events,
   injectDispatch,
   on,
-  props,
   withEffects,
   withReducer,
 } from '../src';
@@ -53,11 +51,11 @@ describe('Integration Tests', () => {
     }
   }
 
-  const booksApiEvents = eventCreatorGroup({
+  const booksApiEvents = eventGroup({
     source: 'Books API',
     events: {
-      loadedSuccess: props<{ books: Book[] }>(),
-      loadedFailure: props<{ error: string }>(),
+      loadedSuccess: type<Book[]>(),
+      loadedFailure: type<string>(),
     },
   });
 
@@ -92,11 +90,11 @@ describe('Integration Tests', () => {
   }
 
   describe('withReducer and withEffects', () => {
-    const booksPageEvents = eventCreatorGroup({
+    const booksPageEvents = eventGroup({
       source: 'Books Page',
       events: {
-        opened: emptyProps(),
-        refreshed: emptyProps(),
+        opened: type<void>(),
+        refreshed: type<void>(),
       },
     });
 
@@ -106,11 +104,11 @@ describe('Integration Tests', () => {
       withRequestStatus(),
       withReducer(
         on(booksPageEvents.opened, booksPageEvents.refreshed, setPending),
-        on(booksApiEvents.loadedSuccess, ({ books }) => [
-          setAllEntities(books),
+        on(booksApiEvents.loadedSuccess, ({ payload }) => [
+          setAllEntities(payload),
           setFulfilled(),
         ]),
-        on(booksApiEvents.loadedFailure, ({ error }) => setError(error))
+        on(booksApiEvents.loadedFailure, ({ payload }) => setError(payload))
       ),
       withEffects(
         (_, events = inject(Events), booksService = inject(BooksService)) => ({
@@ -120,16 +118,16 @@ describe('Integration Tests', () => {
               exhaustMap(() =>
                 booksService.getAll().pipe(
                   mapResponse({
-                    next: (books) => booksApiEvents.loadedSuccess({ books }),
+                    next: (books) => booksApiEvents.loadedSuccess(books),
                     error: (error: { message: string }) =>
-                      booksApiEvents.loadedFailure({ error: error.message }),
+                      booksApiEvents.loadedFailure(error.message),
                   })
                 )
               )
             ),
           logError$: events
             .on(booksApiEvents.loadedFailure)
-            .pipe(tap(({ error }) => console.error(error))),
+            .pipe(tap(({ payload }) => console.error(payload))),
         })
       )
     );
@@ -235,11 +233,11 @@ describe('Integration Tests', () => {
   });
 
   describe('custom withReducer and withEffects', () => {
-    const booksPageEvents = eventCreatorGroup({
+    const booksPageEvents = eventGroup({
       source: 'Books Page',
       events: {
-        queryChanged: props<{ query: string }>(),
-        refreshed: emptyProps(),
+        queryChanged: type<string>(),
+        refreshed: type<void>(),
       },
     });
 
@@ -249,17 +247,17 @@ describe('Integration Tests', () => {
       return signalStoreFeature(
         { state: type<QueryState & EntityState<Book> & RequestStatusState>() },
         withReducer(
-          on(booksPageEvents.queryChanged, ({ query }) => ({ query })),
+          on(booksPageEvents.queryChanged, ({ payload: query }) => ({ query })),
           on(
             booksPageEvents.queryChanged,
             booksPageEvents.refreshed,
             setPending
           ),
-          on(booksApiEvents.loadedSuccess, ({ books }) => [
-            setAllEntities(books),
+          on(booksApiEvents.loadedSuccess, ({ payload }) => [
+            setAllEntities(payload),
             setFulfilled(),
           ]),
-          on(booksApiEvents.loadedFailure, ({ error }) => setError(error))
+          on(booksApiEvents.loadedFailure, ({ payload }) => setError(payload))
         )
       );
     }
@@ -279,16 +277,16 @@ describe('Integration Tests', () => {
                 exhaustMap(() =>
                   booksService.getByQuery(query()).pipe(
                     mapResponse({
-                      next: (books) => booksApiEvents.loadedSuccess({ books }),
+                      next: (books) => booksApiEvents.loadedSuccess(books),
                       error: (error: { message: string }) =>
-                        booksApiEvents.loadedFailure({ error: error.message }),
+                        booksApiEvents.loadedFailure(error.message),
                     })
                   )
                 )
               ),
             logError$: events
               .on(booksApiEvents.loadedFailure)
-              .pipe(tap(({ error }) => console.error(error))),
+              .pipe(tap(({ payload }) => console.error(payload))),
           })
         )
       );
@@ -320,7 +318,7 @@ describe('Integration Tests', () => {
       vitest
         .spyOn(booksService, 'getByQuery')
         .mockImplementation(() => of([book1]).pipe(delay(500)));
-      dispatch.queryChanged({ query: 'book' });
+      dispatch.queryChanged('book');
 
       expect(getState(booksStore)).toEqual({
         query: 'book',
@@ -382,7 +380,7 @@ describe('Integration Tests', () => {
         .mockImplementation(() =>
           timer(500).pipe(mergeMap(() => throwError(() => new Error('Error!'))))
         );
-      dispatch.queryChanged({ query: 'search' });
+      dispatch.queryChanged('search');
 
       expect(getState(booksStore)).toEqual({
         query: 'search',

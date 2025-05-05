@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { Dispatcher, Event, eventCreator, Events, props } from '../src';
-import { SOURCE_TYPE } from '../src/events';
+import { type } from '@ngrx/signals';
+import { Dispatcher, event, EventInstance, Events } from '../src';
+import { SOURCE_TYPE } from '../src/events-service';
 
 describe('Events', () => {
   it('is provided at the root level', () => {
@@ -9,14 +10,14 @@ describe('Events', () => {
   });
 
   describe('on', () => {
-    const foo = eventCreator('foo');
-    const bar = eventCreator('bar', props<{ value: number }>());
-    const baz = eventCreator('baz');
+    const foo = event('foo');
+    const bar = event('bar', type<{ value: number }>());
+    const baz = event('baz');
 
     it('emits events matching the provided event creators', () => {
       const events = TestBed.inject(Events);
       const dispatcher = TestBed.inject(Dispatcher);
-      const emittedEvents: Event[] = [];
+      const emittedEvents: EventInstance<string, unknown>[] = [];
 
       events.on(foo, bar).subscribe((event) => emittedEvents.push(event));
 
@@ -26,16 +27,16 @@ describe('Events', () => {
       dispatcher.dispatch(bar({ value: 100 }));
 
       expect(emittedEvents).toEqual([
-        { type: 'bar', value: 10 },
+        { type: 'bar', payload: { value: 10 } },
         { type: 'foo' },
-        { type: 'bar', value: 100 },
+        { type: 'bar', payload: { value: 100 } },
       ]);
     });
 
     it('emits all events when called without arguments', () => {
       const events = TestBed.inject(Events);
       const dispatcher = TestBed.inject(Dispatcher);
-      const emittedEvents: Event[] = [];
+      const emittedEvents: EventInstance<string, unknown>[] = [];
 
       events.on().subscribe((event) => emittedEvents.push(event));
 
@@ -46,7 +47,7 @@ describe('Events', () => {
 
       expect(emittedEvents).toEqual([
         { type: 'foo' },
-        { type: 'bar', value: 10 },
+        { type: 'bar', payload: { value: 10 } },
         { type: 'baz' },
         { type: 'foo' },
       ]);

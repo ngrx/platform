@@ -1,9 +1,5 @@
 import { Prettify } from '@ngrx/signals';
-import {
-  eventCreator,
-  EventCreator,
-  EventCreatorWithProps,
-} from './event-creator';
+import { event, EventCreator } from './event-creator';
 
 type EventType<
   Source extends string,
@@ -12,14 +8,10 @@ type EventType<
 
 type EventCreatorGroup<
   Source extends string,
-  Events extends Record<string, object | undefined>
+  Events extends Record<string, any>
 > = {
   [EventName in keyof Events]: EventName extends string
-    ? undefined extends Events[EventName]
-      ? EventCreator<EventType<Source, EventName>>
-      : Events[EventName] extends object
-      ? EventCreatorWithProps<EventType<Source, EventName>, Events[EventName]>
-      : never
+    ? EventCreator<EventType<Source, EventName>, Events[EventName]>
     : never;
 };
 
@@ -32,32 +24,28 @@ type EventCreatorGroup<
  * @usageNotes
  *
  * ```ts
- * import { emptyProps, eventCreatorGroup, props } from '@ngrx/signals/events';
+ * import { type } from '@ngrx/signals';
+ * import { eventGroup } from '@ngrx/signals/events';
  *
- * const counterPageEvents = eventCreatorGroup({
+ * const counterPageEvents = eventGroup({
  *   source: 'Counter Page',
  *   events: {
- *     increment: emptyProps(),
- *     decrement: emptyProps(),
- *     set: props<{ count: number }>(),
+ *     increment: type<void>(),
+ *     decrement: type<void>(),
+ *     set: type<number>(),
  *   },
  * });
  * ```
  */
-export function eventCreatorGroup<
+export function eventGroup<
   Source extends string,
-  Events extends Record<string, object | undefined>
+  Events extends Record<string, unknown>
 >(config: {
   source: Source;
   events: Events;
 }): Prettify<EventCreatorGroup<Source, Events>> {
-  return Object.entries(config.events).reduce((acc, [eventName, props]) => {
+  return Object.entries(config.events).reduce((acc, [eventName]) => {
     const eventType = `[${config.source}] ${eventName}`;
-    return {
-      ...acc,
-      [eventName]: props
-        ? eventCreator(eventType, props)
-        : eventCreator(eventType),
-    };
+    return { ...acc, [eventName]: event(eventType) };
   }, {} as EventCreatorGroup<Source, Events>);
 }

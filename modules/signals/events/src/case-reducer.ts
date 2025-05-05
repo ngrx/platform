@@ -1,9 +1,9 @@
 import { PartialStateUpdater } from '@ngrx/signals';
-import { EventCreator, EventCreatorWithProps } from './event-creator';
+import { EventCreator } from './event-creator';
 
 export type CaseReducerResult<
   State extends object,
-  EventCreators extends Array<EventCreator | EventCreatorWithProps>
+  EventCreators extends EventCreator<string, any>[]
 > = {
   reducer: CaseReducer<State, EventCreators>;
   events: EventCreators;
@@ -11,10 +11,9 @@ export type CaseReducerResult<
 
 type CaseReducer<
   State extends object,
-  EventCreators extends Array<EventCreator | EventCreatorWithProps>
+  EventCreators extends EventCreator<string, any>[]
 > = (
-  event: { [K in keyof EventCreators]: ReturnType<EventCreators[K]> }[number],
-  state: State
+  event: { [K in keyof EventCreators]: ReturnType<EventCreators[K]> }[number]
 ) =>
   | Partial<State>
   | PartialStateUpdater<State>
@@ -28,7 +27,7 @@ type CaseReducer<
  */
 export function on<
   State extends object,
-  EventCreators extends Array<EventCreator | EventCreatorWithProps>
+  EventCreators extends EventCreator<string, any>[]
 >(
   ...args: [
     ...events: [...EventCreators],

@@ -3,7 +3,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { merge, tap } from 'rxjs';
 import {
   EmptyFeatureResult,
-  getState,
   patchState,
   SignalStoreFeature,
   signalStoreFeature,
@@ -11,9 +10,8 @@ import {
   withHooks,
 } from '@ngrx/signals';
 import { CaseReducerResult } from './case-reducer';
-import { Event } from './event';
-import { EventCreator, EventCreatorWithProps } from './event-creator';
-import { ReducerEvents } from './events';
+import { EventCreator } from './event-creator';
+import { ReducerEvents } from './events-service';
 
 /**
  * @experimental
@@ -24,23 +22,21 @@ import { ReducerEvents } from './events';
  * @usageNotes
  *
  * ```ts
- * import { eventCreator, on, props, withReducer } from '@ngrx/signals/events';
+ * import { signalStore, type, withState } from '@ngrx/signals';
+ * import { event, on, withReducer } from '@ngrx/signals/events';
  *
- * const set = eventCreator('[Counter Page] Set', props<{ count: number }>());
+ * const set = event('[Counter Page] Set', type<number>());
  *
  * const CounterStore = signalStore(
  *   withState({ count: 0 }),
  *   withReducer(
- *     on(set, ({ count }) => ({ count })),
+ *     on(set, ({ payload }) => ({ count: payload })),
  *   ),
  * );
  * ```
  */
 export function withReducer<State extends object>(
-  ...caseReducers: CaseReducerResult<
-    State,
-    Array<EventCreator | EventCreatorWithProps>
-  >[]
+  ...caseReducers: CaseReducerResult<State, EventCreator<string, any>[]>[]
 ): SignalStoreFeature<
   { state: State; props: {}; methods: {} },
   EmptyFeatureResult
@@ -51,9 +47,8 @@ export function withReducer<State extends object>(
       onInit(store, events = inject(ReducerEvents)) {
         const updates = caseReducers.map((caseReducer) =>
           events.on(...caseReducer.events).pipe(
-            tap((event: Event) => {
-              const state = getState(store);
-              const result = caseReducer.reducer(event, state);
+            tap((event) => {
+              const result = caseReducer.reducer(event);
               const updaters = Array.isArray(result) ? result : [result];
 
               patchState(store, ...updaters);
