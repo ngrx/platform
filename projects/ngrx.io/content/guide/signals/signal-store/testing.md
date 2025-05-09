@@ -596,6 +596,10 @@ it('should show movies (spy)', () => {
 
 This version requires the `MoviesStore` state to be unprotected.
 
+### Getting the type of the Store to be mocked.
+
+Some mocking tools and libraries like ts-mockito or ng-mockito need that you provide the type of the object to be mocked. In that case, you can provide `InstanceType<typeof YourStore>>` as the type.
+
 ## Integration Tests
 
 Services attached to a component are often simple, and writing unit tests for them may not always be necessary, particularly when considering the returned value and maintenance costs. In such cases, it is more effective to test the services together with the component as a whole. This type of testing is commonly referred to as integration testing.
