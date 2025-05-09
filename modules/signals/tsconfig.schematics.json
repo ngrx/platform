@@ -8,7 +8,8 @@
     "downlevelIteration": true,
     "outDir": "../../dist/modules/signals",
     "paths": {
-      "@ngrx/signals/schematics-core": ["./schematics-core"]
+      "@ngrx/signals/schematics-core": ["./schematics-core"],
+      "@ngrx/signals": ["./src"]
     },
     "sourceMap": true,
     "inlineSources": true,
