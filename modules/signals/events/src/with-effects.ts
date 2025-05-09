@@ -10,6 +10,7 @@ import {
   StateSignals,
   type,
   withHooks,
+  WritableStateSource,
 } from '@ngrx/signals';
 import { Dispatcher } from './dispatcher';
 import { isEventInstance } from './event-instance';
@@ -42,7 +43,12 @@ import { SOURCE_TYPE } from './events-service';
  */
 export function withEffects<Input extends SignalStoreFeatureResult>(
   effectsFactory: (
-    store: Prettify<StateSignals<Input['state']> & Input['props']>
+    store: Prettify<
+      StateSignals<Input['state']> &
+        Input['props'] &
+        Input['methods'] &
+        WritableStateSource<Prettify<Input['state']>>
+    >
   ) => Record<string, Observable<unknown>>
 ): SignalStoreFeature<Input, EmptyFeatureResult> {
   return signalStoreFeature(

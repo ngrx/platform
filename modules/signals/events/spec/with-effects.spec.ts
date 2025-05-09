@@ -2,9 +2,11 @@ import { computed, inject } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { map, tap } from 'rxjs';
 import {
+  getState,
   signalStore,
   type,
   withComputed,
+  withMethods,
   withProps,
   withState,
 } from '@ngrx/signals';
@@ -17,25 +19,30 @@ describe('withEffects', () => {
   const event3 = event('event3', type<string>());
   const event4 = event('event4', type<{ value: string }>());
 
-  it('has access to SignalStore state slices and props', () => {
+  it('has access to SignalStore state slices, props, methods, and state source', () => {
     const values: string[] = [];
 
     const Store = signalStore(
       { providedIn: 'root' },
-      withState({ foo: 'foo' }),
-      withComputed(({ foo }) => ({
-        bar: computed(() => `${foo()} bar`),
+      withState({ k: 'k' }),
+      withComputed(({ k }) => ({
+        l: computed(() => `${k()} l`),
       })),
-      withProps(() => ({ baz: 'baz' })),
-      withEffects(({ foo, bar, baz }) => {
-        values.push(foo(), bar(), baz);
+      withProps(() => ({ m: 'm' })),
+      withMethods(() => ({
+        n(): string {
+          return 'n';
+        },
+      })),
+      withEffects(({ k, l, m, n, ...store }) => {
+        values.push(k(), l(), m, n(), getState(store).k);
         return {};
       })
     );
 
     TestBed.inject(Store);
 
-    expect(values).toEqual(['foo', 'foo bar', 'baz']);
+    expect(values).toEqual(['k', 'k l', 'm', 'n', 'k']);
   });
 
   it('dispatches events returned by effects', () => {
