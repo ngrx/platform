@@ -55,7 +55,8 @@
         "./modules/store-devtools/schematics-core"
       ],
       "@ngrx/store/schematics-core": ["./modules/store/schematics-core"],
-      "@ngrx/store/testing": ["./modules/store/testing"]
+      "@ngrx/store/testing": ["./modules/store/testing"],
+      "@ngrx-io/*": ["./projects/www/src/*"]
     },
     "typeRoots": ["node_modules/@types"]
   },

@@ -25,6 +25,37 @@ import { StateObservable } from './state';
 import { assertDefined } from './helpers';
 
 @Injectable()
+/**
+ * @description
+ * Store is an injectable service that provides reactive state management and a public API for dispatching actions.
+ *
+ * @usageNotes
+ *
+ * In a component:
+ *
+ * ```ts
+ * import { Component, inject } from '@angular/core';
+ * import { Store } from '@ngrx/store';
+ *
+ * @Component({
+ *  selector: 'app-my-component',
+ *  template: `
+ *    <div>{{ count() }}</div>
+ *    <button (click)="increment()">Increment</button>
+ *  `
+ * })
+ * export class MyComponent {
+ *   private store = inject(Store);
+ *
+ *   count = this.store.selectSignal(state => state.count);
+ *
+ *   increment() {
+ *     this.store.dispatch({ type: 'INCREMENT' });
+ *   }
+ * }
+ * ```
+ *
+ */
 export class Store<T = object>
   extends Observable<T>
   implements Observer<Action>
@@ -54,22 +85,37 @@ export class Store<T = object>
     mapFn: (state: T, props: Props) => K,
     props: Props
   ): Observable<K>;
+  /**
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   */
   select<a extends keyof T>(key: a): Observable<T[a]>;
+  /**
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   */
   select<a extends keyof T, b extends keyof T[a]>(
     key1: a,
     key2: b
   ): Observable<T[a][b]>;
+  /**
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   */
   select<a extends keyof T, b extends keyof T[a], c extends keyof T[a][b]>(
     key1: a,
     key2: b,
     key3: c
   ): Observable<T[a][b][c]>;
+  /**
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   */
   select<
     a extends keyof T,
     b extends keyof T[a],
     c extends keyof T[a][b],
     d extends keyof T[a][b][c]
   >(key1: a, key2: b, key3: c, key4: d): Observable<T[a][b][c][d]>;
+  /**
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   */
   select<
     a extends keyof T,
     b extends keyof T[a],
@@ -77,6 +123,9 @@ export class Store<T = object>
     d extends keyof T[a][b][c],
     e extends keyof T[a][b][c][d]
   >(key1: a, key2: b, key3: c, key4: d, key5: e): Observable<T[a][b][c][d][e]>;
+  /**
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   */
   select<
     a extends keyof T,
     b extends keyof T[a],
@@ -92,6 +141,9 @@ export class Store<T = object>
     key5: e,
     key6: f
   ): Observable<T[a][b][c][d][e][f]>;
+  /**
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   */
   select<
     a extends keyof T,
     b extends keyof T[a],
@@ -109,6 +161,9 @@ export class Store<T = object>
     key6: f,
     ...paths: string[]
   ): Observable<K>;
+  /**
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   */
   select<Props = any, K = any>(
     pathOrMapFn: ((state: T, props?: Props) => K) | string,
     ...paths: string[]
@@ -121,6 +176,22 @@ export class Store<T = object>
    *
    * @param selector selector function
    * @param options select signal options
+   * @returns Signal of the state selected by the provided selector
+   * @usageNotes
+   *
+   * ```ts
+   * const count = this.store.selectSignal(state => state.count);
+   * ```
+   *
+   * Or with a selector created by @ngrx/store!createSelector:function
+   *
+   * ```ts
+   * const selectCount = createSelector(
+   *  (state: State) => state.count,
+   * );
+   *
+   * const count = this.store.selectSignal(selectCount);
+   * ```
    */
   selectSignal<K>(
     selector: (state: T) => K,

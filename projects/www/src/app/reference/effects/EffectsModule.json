@@ -1,0 +1,357 @@
+{
+  "name": "EffectsModule",
+  "canonicalReference": "@ngrx/effects!EffectsModule:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/effects/src/effects_module.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/effects!EffectsModule:class",
+      "docComment": "",
+      "excerptTokens": [
+        { "kind": "Content", "text": "export declare class EffectsModule " }
+      ],
+      "fileUrlPath": "../../dist/modules/effects/src/effects_module.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "EffectsModule",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/effects!EffectsModule.forFeature:member(1)",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "static forFeature(featureEffects: " },
+            {
+              "kind": "Reference",
+              "text": "Array",
+              "canonicalReference": "!Array:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Type",
+              "canonicalReference": "@angular/core!Type$1:interface"
+            },
+            { "kind": "Content", "text": "<unknown> | " },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            { "kind": "Content", "text": "<string, " },
+            {
+              "kind": "Reference",
+              "text": "FunctionalEffect",
+              "canonicalReference": "@ngrx/effects!FunctionalEffect:type"
+            },
+            { "kind": "Content", "text": ">>" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "ModuleWithProviders",
+              "canonicalReference": "@angular/core!ModuleWithProviders:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EffectsFeatureModule",
+              "canonicalReference": "@ngrx/effects!EffectsFeatureModule:class"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": true,
+          "returnTypeTokenRange": { "startIndex": 10, "endIndex": 14 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "featureEffects",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 9 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "forFeature",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/effects!EffectsModule.forFeature:member(2)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "static forFeature(...featureEffects: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Array",
+              "canonicalReference": "!Array:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Type",
+              "canonicalReference": "@angular/core!Type$1:interface"
+            },
+            { "kind": "Content", "text": "<unknown> | " },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            { "kind": "Content", "text": "<string, " },
+            {
+              "kind": "Reference",
+              "text": "FunctionalEffect",
+              "canonicalReference": "@ngrx/effects!FunctionalEffect:type"
+            },
+            { "kind": "Content", "text": ">>" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "ModuleWithProviders",
+              "canonicalReference": "@angular/core!ModuleWithProviders:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EffectsFeatureModule",
+              "canonicalReference": "@ngrx/effects!EffectsFeatureModule:class"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": true,
+          "returnTypeTokenRange": { "startIndex": 10, "endIndex": 14 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 2,
+          "parameters": [
+            {
+              "parameterName": "featureEffects",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 9 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "forFeature",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/effects!EffectsModule.forRoot:member(1)",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "static forRoot(rootEffects: " },
+            {
+              "kind": "Reference",
+              "text": "Array",
+              "canonicalReference": "!Array:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Type",
+              "canonicalReference": "@angular/core!Type$1:interface"
+            },
+            { "kind": "Content", "text": "<unknown> | " },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            { "kind": "Content", "text": "<string, " },
+            {
+              "kind": "Reference",
+              "text": "FunctionalEffect",
+              "canonicalReference": "@ngrx/effects!FunctionalEffect:type"
+            },
+            { "kind": "Content", "text": ">>" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "ModuleWithProviders",
+              "canonicalReference": "@angular/core!ModuleWithProviders:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EffectsRootModule",
+              "canonicalReference": "@ngrx/effects!EffectsRootModule:class"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": true,
+          "returnTypeTokenRange": { "startIndex": 10, "endIndex": 14 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "rootEffects",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 9 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "forRoot",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/effects!EffectsModule.forRoot:member(2)",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "static forRoot(...rootEffects: " },
+            {
+              "kind": "Reference",
+              "text": "Array",
+              "canonicalReference": "!Array:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Type",
+              "canonicalReference": "@angular/core!Type$1:interface"
+            },
+            { "kind": "Content", "text": "<unknown> | " },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            { "kind": "Content", "text": "<string, " },
+            {
+              "kind": "Reference",
+              "text": "FunctionalEffect",
+              "canonicalReference": "@ngrx/effects!FunctionalEffect:type"
+            },
+            { "kind": "Content", "text": ">>" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "ModuleWithProviders",
+              "canonicalReference": "@angular/core!ModuleWithProviders:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EffectsRootModule",
+              "canonicalReference": "@ngrx/effects!EffectsRootModule:class"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": true,
+          "returnTypeTokenRange": { "startIndex": 10, "endIndex": 14 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 2,
+          "parameters": [
+            {
+              "parameterName": "rootEffects",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 9 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "forRoot",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

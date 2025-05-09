@@ -1,0 +1,857 @@
+{
+  "name": "updateEntities",
+  "canonicalReference": "@ngrx/signals/entities!updateEntities:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/update-entities.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/signals/entities!updateEntities:function(1)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function updateEntities<Collection extends "
+        },
+        { "kind": "Content", "text": "string" },
+        { "kind": "Content", "text": ", State extends " },
+        {
+          "kind": "Reference",
+          "text": "NamedEntityState",
+          "canonicalReference": "@ngrx/signals/entities!NamedEntityState:type"
+        },
+        { "kind": "Content", "text": "<any, Collection>" },
+        { "kind": "Content", "text": ", Entity = " },
+        { "kind": "Content", "text": "State extends " },
+        {
+          "kind": "Reference",
+          "text": "NamedEntityState",
+          "canonicalReference": "@ngrx/signals/entities!NamedEntityState:type"
+        },
+        { "kind": "Content", "text": "<infer E, Collection> ? E : never" },
+        { "kind": "Content", "text": ">(update: " },
+        { "kind": "Content", "text": "{\n    ids: " },
+        {
+          "kind": "Reference",
+          "text": "EntityId",
+          "canonicalReference": "@ngrx/signals/entities!EntityId:type"
+        },
+        { "kind": "Content", "text": "[];\n    changes: " },
+        {
+          "kind": "Reference",
+          "text": "EntityChanges",
+          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "NoInfer",
+          "canonicalReference": "!NoInfer:type"
+        },
+        { "kind": "Content", "text": "<Entity>>;\n}" },
+        { "kind": "Content", "text": ", config: " },
+        {
+          "kind": "Content",
+          "text": "{\n    collection: Collection;\n    selectId: "
+        },
+        {
+          "kind": "Reference",
+          "text": "SelectEntityId",
+          "canonicalReference": "@ngrx/signals/entities!SelectEntityId:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "NoInfer",
+          "canonicalReference": "!NoInfer:type"
+        },
+        { "kind": "Content", "text": "<Entity>>;\n}" },
+        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Reference",
+          "text": "PartialStateUpdater",
+          "canonicalReference": "@ngrx/signals!PartialStateUpdater:type"
+        },
+        { "kind": "Content", "text": "<State>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/update-entities.d.ts",
+      "returnTypeTokenRange": { "startIndex": 24, "endIndex": 26 },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "update",
+          "parameterTypeTokenRange": { "startIndex": 10, "endIndex": 17 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "config",
+          "parameterTypeTokenRange": { "startIndex": 18, "endIndex": 23 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "Collection",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "State",
+          "constraintTokenRange": { "startIndex": 3, "endIndex": 5 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "Entity",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 6, "endIndex": 9 }
+        }
+      ],
+      "name": "updateEntities",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/signals/entities!updateEntities:function(2)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function updateEntities<Collection extends "
+        },
+        { "kind": "Content", "text": "string" },
+        { "kind": "Content", "text": ", State extends " },
+        {
+          "kind": "Reference",
+          "text": "NamedEntityState",
+          "canonicalReference": "@ngrx/signals/entities!NamedEntityState:type"
+        },
+        { "kind": "Content", "text": "<any, Collection>" },
+        { "kind": "Content", "text": ", Entity = " },
+        { "kind": "Content", "text": "State extends " },
+        {
+          "kind": "Reference",
+          "text": "NamedEntityState",
+          "canonicalReference": "@ngrx/signals/entities!NamedEntityState:type"
+        },
+        { "kind": "Content", "text": "<infer E, Collection> ? E : never" },
+        { "kind": "Content", "text": ">(update: " },
+        { "kind": "Content", "text": "{\n    predicate: " },
+        {
+          "kind": "Reference",
+          "text": "EntityPredicate",
+          "canonicalReference": "@ngrx/signals/entities!~EntityPredicate:type"
+        },
+        { "kind": "Content", "text": "<Entity>;\n    changes: " },
+        {
+          "kind": "Reference",
+          "text": "EntityChanges",
+          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "NoInfer",
+          "canonicalReference": "!NoInfer:type"
+        },
+        { "kind": "Content", "text": "<Entity>>;\n}" },
+        { "kind": "Content", "text": ", config: " },
+        {
+          "kind": "Content",
+          "text": "{\n    collection: Collection;\n    selectId: "
+        },
+        {
+          "kind": "Reference",
+          "text": "SelectEntityId",
+          "canonicalReference": "@ngrx/signals/entities!SelectEntityId:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "NoInfer",
+          "canonicalReference": "!NoInfer:type"
+        },
+        { "kind": "Content", "text": "<Entity>>;\n}" },
+        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Reference",
+          "text": "PartialStateUpdater",
+          "canonicalReference": "@ngrx/signals!PartialStateUpdater:type"
+        },
+        { "kind": "Content", "text": "<State>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/update-entities.d.ts",
+      "returnTypeTokenRange": { "startIndex": 24, "endIndex": 26 },
+      "releaseTag": "Public",
+      "overloadIndex": 2,
+      "parameters": [
+        {
+          "parameterName": "update",
+          "parameterTypeTokenRange": { "startIndex": 10, "endIndex": 17 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "config",
+          "parameterTypeTokenRange": { "startIndex": 18, "endIndex": 23 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "Collection",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "State",
+          "constraintTokenRange": { "startIndex": 3, "endIndex": 5 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "Entity",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 6, "endIndex": 9 }
+        }
+      ],
+      "name": "updateEntities",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/signals/entities!updateEntities:function(3)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function updateEntities<Collection extends "
+        },
+        { "kind": "Content", "text": "string" },
+        { "kind": "Content", "text": ", State extends " },
+        {
+          "kind": "Reference",
+          "text": "NamedEntityState",
+          "canonicalReference": "@ngrx/signals/entities!NamedEntityState:type"
+        },
+        { "kind": "Content", "text": "<any, Collection>" },
+        { "kind": "Content", "text": ", Entity = " },
+        { "kind": "Content", "text": "State extends " },
+        {
+          "kind": "Reference",
+          "text": "NamedEntityState",
+          "canonicalReference": "@ngrx/signals/entities!NamedEntityState:type"
+        },
+        { "kind": "Content", "text": "<infer E extends {\n    id: " },
+        {
+          "kind": "Reference",
+          "text": "EntityId",
+          "canonicalReference": "@ngrx/signals/entities!EntityId:type"
+        },
+        { "kind": "Content", "text": ";\n}, Collection> ? E : never" },
+        { "kind": "Content", "text": ">(update: " },
+        { "kind": "Content", "text": "{\n    ids: " },
+        {
+          "kind": "Reference",
+          "text": "EntityId",
+          "canonicalReference": "@ngrx/signals/entities!EntityId:type"
+        },
+        { "kind": "Content", "text": "[];\n    changes: " },
+        {
+          "kind": "Reference",
+          "text": "EntityChanges",
+          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "NoInfer",
+          "canonicalReference": "!NoInfer:type"
+        },
+        { "kind": "Content", "text": "<Entity>>;\n}" },
+        { "kind": "Content", "text": ", config: " },
+        { "kind": "Content", "text": "{\n    collection: Collection;\n}" },
+        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Reference",
+          "text": "PartialStateUpdater",
+          "canonicalReference": "@ngrx/signals!PartialStateUpdater:type"
+        },
+        { "kind": "Content", "text": "<State>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/update-entities.d.ts",
+      "returnTypeTokenRange": { "startIndex": 22, "endIndex": 24 },
+      "releaseTag": "Public",
+      "overloadIndex": 3,
+      "parameters": [
+        {
+          "parameterName": "update",
+          "parameterTypeTokenRange": { "startIndex": 12, "endIndex": 19 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "config",
+          "parameterTypeTokenRange": { "startIndex": 20, "endIndex": 21 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "Collection",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "State",
+          "constraintTokenRange": { "startIndex": 3, "endIndex": 5 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "Entity",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 6, "endIndex": 11 }
+        }
+      ],
+      "name": "updateEntities",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/signals/entities!updateEntities:function(4)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function updateEntities<Collection extends "
+        },
+        { "kind": "Content", "text": "string" },
+        { "kind": "Content", "text": ", State extends " },
+        {
+          "kind": "Reference",
+          "text": "NamedEntityState",
+          "canonicalReference": "@ngrx/signals/entities!NamedEntityState:type"
+        },
+        { "kind": "Content", "text": "<any, Collection>" },
+        { "kind": "Content", "text": ", Entity = " },
+        { "kind": "Content", "text": "State extends " },
+        {
+          "kind": "Reference",
+          "text": "NamedEntityState",
+          "canonicalReference": "@ngrx/signals/entities!NamedEntityState:type"
+        },
+        { "kind": "Content", "text": "<infer E extends {\n    id: " },
+        {
+          "kind": "Reference",
+          "text": "EntityId",
+          "canonicalReference": "@ngrx/signals/entities!EntityId:type"
+        },
+        { "kind": "Content", "text": ";\n}, Collection> ? E : never" },
+        { "kind": "Content", "text": ">(update: " },
+        { "kind": "Content", "text": "{\n    predicate: " },
+        {
+          "kind": "Reference",
+          "text": "EntityPredicate",
+          "canonicalReference": "@ngrx/signals/entities!~EntityPredicate:type"
+        },
+        { "kind": "Content", "text": "<Entity>;\n    changes: " },
+        {
+          "kind": "Reference",
+          "text": "EntityChanges",
+          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "NoInfer",
+          "canonicalReference": "!NoInfer:type"
+        },
+        { "kind": "Content", "text": "<Entity>>;\n}" },
+        { "kind": "Content", "text": ", config: " },
+        { "kind": "Content", "text": "{\n    collection: Collection;\n}" },
+        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Reference",
+          "text": "PartialStateUpdater",
+          "canonicalReference": "@ngrx/signals!PartialStateUpdater:type"
+        },
+        { "kind": "Content", "text": "<State>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/update-entities.d.ts",
+      "returnTypeTokenRange": { "startIndex": 22, "endIndex": 24 },
+      "releaseTag": "Public",
+      "overloadIndex": 4,
+      "parameters": [
+        {
+          "parameterName": "update",
+          "parameterTypeTokenRange": { "startIndex": 12, "endIndex": 19 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "config",
+          "parameterTypeTokenRange": { "startIndex": 20, "endIndex": 21 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "Collection",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "State",
+          "constraintTokenRange": { "startIndex": 3, "endIndex": 5 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "Entity",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 6, "endIndex": 11 }
+        }
+      ],
+      "name": "updateEntities",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/signals/entities!updateEntities:function(5)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function updateEntities<Entity>(update: "
+        },
+        { "kind": "Content", "text": "{\n    ids: " },
+        {
+          "kind": "Reference",
+          "text": "EntityId",
+          "canonicalReference": "@ngrx/signals/entities!EntityId:type"
+        },
+        { "kind": "Content", "text": "[];\n    changes: " },
+        {
+          "kind": "Reference",
+          "text": "EntityChanges",
+          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "NoInfer",
+          "canonicalReference": "!NoInfer:type"
+        },
+        { "kind": "Content", "text": "<Entity>>;\n}" },
+        { "kind": "Content", "text": ", config: " },
+        { "kind": "Content", "text": "{\n    selectId: " },
+        {
+          "kind": "Reference",
+          "text": "SelectEntityId",
+          "canonicalReference": "@ngrx/signals/entities!SelectEntityId:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "NoInfer",
+          "canonicalReference": "!NoInfer:type"
+        },
+        { "kind": "Content", "text": "<Entity>>;\n}" },
+        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Reference",
+          "text": "PartialStateUpdater",
+          "canonicalReference": "@ngrx/signals!PartialStateUpdater:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "EntityState",
+          "canonicalReference": "@ngrx/signals/entities!EntityState:type"
+        },
+        { "kind": "Content", "text": "<Entity>>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/update-entities.d.ts",
+      "returnTypeTokenRange": { "startIndex": 15, "endIndex": 19 },
+      "releaseTag": "Public",
+      "overloadIndex": 5,
+      "parameters": [
+        {
+          "parameterName": "update",
+          "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 8 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "config",
+          "parameterTypeTokenRange": { "startIndex": 9, "endIndex": 14 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "Entity",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "updateEntities",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/signals/entities!updateEntities:function(6)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function updateEntities<Entity>(update: "
+        },
+        { "kind": "Content", "text": "{\n    predicate: " },
+        {
+          "kind": "Reference",
+          "text": "EntityPredicate",
+          "canonicalReference": "@ngrx/signals/entities!~EntityPredicate:type"
+        },
+        { "kind": "Content", "text": "<Entity>;\n    changes: " },
+        {
+          "kind": "Reference",
+          "text": "EntityChanges",
+          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "NoInfer",
+          "canonicalReference": "!NoInfer:type"
+        },
+        { "kind": "Content", "text": "<Entity>>;\n}" },
+        { "kind": "Content", "text": ", config: " },
+        { "kind": "Content", "text": "{\n    selectId: " },
+        {
+          "kind": "Reference",
+          "text": "SelectEntityId",
+          "canonicalReference": "@ngrx/signals/entities!SelectEntityId:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "NoInfer",
+          "canonicalReference": "!NoInfer:type"
+        },
+        { "kind": "Content", "text": "<Entity>>;\n}" },
+        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Reference",
+          "text": "PartialStateUpdater",
+          "canonicalReference": "@ngrx/signals!PartialStateUpdater:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "EntityState",
+          "canonicalReference": "@ngrx/signals/entities!EntityState:type"
+        },
+        { "kind": "Content", "text": "<Entity>>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/update-entities.d.ts",
+      "returnTypeTokenRange": { "startIndex": 15, "endIndex": 19 },
+      "releaseTag": "Public",
+      "overloadIndex": 6,
+      "parameters": [
+        {
+          "parameterName": "update",
+          "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 8 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "config",
+          "parameterTypeTokenRange": { "startIndex": 9, "endIndex": 14 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "Entity",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "updateEntities",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/signals/entities!updateEntities:function(7)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function updateEntities<Entity extends "
+        },
+        { "kind": "Content", "text": "{\n    id: " },
+        {
+          "kind": "Reference",
+          "text": "EntityId",
+          "canonicalReference": "@ngrx/signals/entities!EntityId:type"
+        },
+        { "kind": "Content", "text": ";\n}" },
+        { "kind": "Content", "text": ">(update: " },
+        { "kind": "Content", "text": "{\n    ids: " },
+        {
+          "kind": "Reference",
+          "text": "EntityId",
+          "canonicalReference": "@ngrx/signals/entities!EntityId:type"
+        },
+        { "kind": "Content", "text": "[];\n    changes: " },
+        {
+          "kind": "Reference",
+          "text": "EntityChanges",
+          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "NoInfer",
+          "canonicalReference": "!NoInfer:type"
+        },
+        { "kind": "Content", "text": "<Entity>>;\n}" },
+        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Reference",
+          "text": "PartialStateUpdater",
+          "canonicalReference": "@ngrx/signals!PartialStateUpdater:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "EntityState",
+          "canonicalReference": "@ngrx/signals/entities!EntityState:type"
+        },
+        { "kind": "Content", "text": "<Entity>>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/update-entities.d.ts",
+      "returnTypeTokenRange": { "startIndex": 13, "endIndex": 17 },
+      "releaseTag": "Public",
+      "overloadIndex": 7,
+      "parameters": [
+        {
+          "parameterName": "update",
+          "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 12 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "Entity",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 4 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "updateEntities",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/signals/entities!updateEntities:function(8)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function updateEntities<Entity extends "
+        },
+        { "kind": "Content", "text": "{\n    id: " },
+        {
+          "kind": "Reference",
+          "text": "EntityId",
+          "canonicalReference": "@ngrx/signals/entities!EntityId:type"
+        },
+        { "kind": "Content", "text": ";\n}" },
+        { "kind": "Content", "text": ">(update: " },
+        { "kind": "Content", "text": "{\n    predicate: " },
+        {
+          "kind": "Reference",
+          "text": "EntityPredicate",
+          "canonicalReference": "@ngrx/signals/entities!~EntityPredicate:type"
+        },
+        { "kind": "Content", "text": "<Entity>;\n    changes: " },
+        {
+          "kind": "Reference",
+          "text": "EntityChanges",
+          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "NoInfer",
+          "canonicalReference": "!NoInfer:type"
+        },
+        { "kind": "Content", "text": "<Entity>>;\n}" },
+        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Reference",
+          "text": "PartialStateUpdater",
+          "canonicalReference": "@ngrx/signals!PartialStateUpdater:type"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "EntityState",
+          "canonicalReference": "@ngrx/signals/entities!EntityState:type"
+        },
+        { "kind": "Content", "text": "<Entity>>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/update-entities.d.ts",
+      "returnTypeTokenRange": { "startIndex": 13, "endIndex": 17 },
+      "releaseTag": "Public",
+      "overloadIndex": 8,
+      "parameters": [
+        {
+          "parameterName": "update",
+          "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 12 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "Entity",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 4 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "updateEntities",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

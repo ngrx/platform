@@ -1,0 +1,537 @@
+{
+  "name": "EntityActionGuard",
+  "canonicalReference": "@ngrx/data!EntityActionGuard:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/actions/entity-action-guard.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!EntityActionGuard:class",
+      "docComment": "/**\n * Guard methods that ensure EntityAction payload is as expected. Each method returns that payload if it passes the guard or throws an error.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class EntityActionGuard<T> "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/actions/entity-action-guard.d.ts",
+      "releaseTag": "Public",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "isAbstract": false,
+      "name": "EntityActionGuard",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Constructor",
+          "canonicalReference": "@ngrx/data!EntityActionGuard:constructor(1)",
+          "docComment": "/**\n * Constructs a new instance of the `EntityActionGuard` class\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "constructor(entityName: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ", selectId: " },
+            {
+              "kind": "Reference",
+              "text": "IdSelector",
+              "canonicalReference": "@ngrx/entity!IdSelector:type"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": ");" }
+          ],
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityName",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "selectId",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Constructs a new instance of the `EntityActionGuard` class\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeEntities:member(1)",
+          "docComment": "/**\n * Throw if the action payload is not an array of entities with valid keys\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "mustBeEntities(action: " },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": "<T[]>" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "T[]" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 4, "endIndex": 5 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "action",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "mustBeEntities",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Throw if the action payload is not an array of entities with valid keys\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeEntity:member(1)",
+          "docComment": "/**\n * Throw if the action payload is not an entity with a valid key\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "mustBeEntity(action: " },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "T" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 4, "endIndex": 5 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "action",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "mustBeEntity",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Throw if the action payload is not an entity with a valid key\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeKey:member(1)",
+          "docComment": "/**\n * Throw if the action payload is not a single, valid key\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "mustBeKey(action: " },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": "<string | number>" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "string | number | never" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 4, "endIndex": 5 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "action",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "mustBeKey",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Throw if the action payload is not a single, valid key\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeKeys:member(1)",
+          "docComment": "/**\n * Throw if the action payload is not an array of valid keys\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "mustBeKeys(action: " },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": "<(string | number)[]>" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "(string | number)[]" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 4, "endIndex": 5 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "action",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "mustBeKeys",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Throw if the action payload is not an array of valid keys\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeUpdate:member(1)",
+          "docComment": "/**\n * Throw if the action payload is not an update with a valid key (id)\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "mustBeUpdate(action: " },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Update",
+              "canonicalReference": "@ngrx/entity!Update:type"
+            },
+            { "kind": "Content", "text": "<T>>" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Update",
+              "canonicalReference": "@ngrx/entity!Update:type"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "action",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "mustBeUpdate",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Throw if the action payload is not an update with a valid key (id)\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeUpdateResponse:member(1)",
+          "docComment": "/**\n * Throw if the action payload is not an update response with a valid key (id)\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "mustBeUpdateResponse(action: " },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "UpdateResponseData",
+              "canonicalReference": "@ngrx/data!UpdateResponseData:interface"
+            },
+            { "kind": "Content", "text": "<T>>" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "UpdateResponseData",
+              "canonicalReference": "@ngrx/data!UpdateResponseData:interface"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "action",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "mustBeUpdateResponse",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Throw if the action payload is not an update response with a valid key (id)\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeUpdateResponses:member(1)",
+          "docComment": "/**\n * Throw if the action payload is not an array of update responses with valid keys (ids)\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "mustBeUpdateResponses(action: " },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "UpdateResponseData",
+              "canonicalReference": "@ngrx/data!UpdateResponseData:interface"
+            },
+            { "kind": "Content", "text": "<T>[]>" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "UpdateResponseData",
+              "canonicalReference": "@ngrx/data!UpdateResponseData:interface"
+            },
+            { "kind": "Content", "text": "<T>[]" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "action",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "mustBeUpdateResponses",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Throw if the action payload is not an array of update responses with valid keys (ids)\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeUpdates:member(1)",
+          "docComment": "/**\n * Throw if the action payload is not an array of updates with valid keys (ids)\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "mustBeUpdates(action: " },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Update",
+              "canonicalReference": "@ngrx/entity!Update:type"
+            },
+            { "kind": "Content", "text": "<T>[]>" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Update",
+              "canonicalReference": "@ngrx/entity!Update:type"
+            },
+            { "kind": "Content", "text": "<T>[]" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "action",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "mustBeUpdates",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Throw if the action payload is not an array of updates with valid keys (ids)\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Guard methods that ensure EntityAction payload is as expected. Each method returns that payload if it passes the guard or throws an error.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}
