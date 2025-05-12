@@ -1,0 +1,679 @@
+{
+  "name": "EntityCacheDispatcher",
+  "canonicalReference": "@ngrx/data!EntityCacheDispatcher:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/dispatchers/entity-cache-dispatcher.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!EntityCacheDispatcher:class",
+      "docComment": "/**\n * Dispatches Entity Cache actions to the EntityCache reducer\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class EntityCacheDispatcher "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/dispatchers/entity-cache-dispatcher.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "EntityCacheDispatcher",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Constructor",
+          "canonicalReference": "@ngrx/data!EntityCacheDispatcher:constructor(1)",
+          "docComment": "/**\n * Constructs a new instance of the `EntityCacheDispatcher` class\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "constructor(\n    correlationIdGenerator: "
+            },
+            {
+              "kind": "Reference",
+              "text": "CorrelationIdGenerator",
+              "canonicalReference": "@ngrx/data!CorrelationIdGenerator:class"
+            },
+            { "kind": "Content", "text": ", \n    defaultDispatcherOptions: " },
+            {
+              "kind": "Reference",
+              "text": "EntityDispatcherDefaultOptions",
+              "canonicalReference": "@ngrx/data!EntityDispatcherDefaultOptions:class"
+            },
+            { "kind": "Content", "text": ", \n    scannedActions$: " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ", \n    store: " },
+            {
+              "kind": "Reference",
+              "text": "Store",
+              "canonicalReference": "@ngrx/store!Store:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EntityCache",
+              "canonicalReference": "@ngrx/data!EntityCache:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ");" }
+          ],
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "correlationIdGenerator",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "defaultDispatcherOptions",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "scannedActions$",
+              "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 9 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "store",
+              "parameterTypeTokenRange": { "startIndex": 10, "endIndex": 14 },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Constructs a new instance of the `EntityCacheDispatcher` class\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityCacheDispatcher#cancelSaveEntities:member(1)",
+          "docComment": "/**\n * Dispatch action to cancel the saveEntities request with matching correlation id.\n *\n * @param correlationId - The correlation id for the corresponding action\n *\n * @param reason - explains why canceled and by whom.\n *\n * @param entityNames - array of entity names so can turn off loading flag for their collections.\n *\n * @param tag - tag to identify the operation from the app perspective.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "cancelSaveEntities(correlationId: " },
+            { "kind": "Content", "text": "any" },
+            { "kind": "Content", "text": ", reason?: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ", entityNames?: " },
+            { "kind": "Content", "text": "string[]" },
+            { "kind": "Content", "text": ", tag?: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "void" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 9, "endIndex": 10 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "correlationId",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "reason",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": true
+            },
+            {
+              "parameterName": "entityNames",
+              "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+              "isOptional": true
+            },
+            {
+              "parameterName": "tag",
+              "parameterTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "cancelSaveEntities",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch action to cancel the saveEntities request with matching correlation id.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "correlationId",
+                "description": "The correlation id for the corresponding action\n\n"
+              },
+              {
+                "name": "reason",
+                "description": "explains why canceled and by whom.\n\n"
+              },
+              {
+                "name": "entityNames",
+                "description": "array of entity names so can turn off loading flag for their collections.\n\n"
+              },
+              {
+                "name": "tag",
+                "description": "tag to identify the operation from the app perspective.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityCacheDispatcher#clearCollections:member(1)",
+          "docComment": "/**\n * Clear the named entity collections in cache\n *\n * @param collections - Array of names of the collections to clear. If empty array, does nothing. If null/undefined/no array, clear all collections.\n *\n * @param tag - tag to identify the operation from the app perspective.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "clearCollections(collections?: " },
+            { "kind": "Content", "text": "string[]" },
+            { "kind": "Content", "text": ", tag?: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "void" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "collections",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": true
+            },
+            {
+              "parameterName": "tag",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "clearCollections",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Clear the named entity collections in cache\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "collections",
+                "description": "Array of names of the collections to clear. If empty array, does nothing. If null/undefined/no array, clear all collections.\n\n"
+              },
+              {
+                "name": "tag",
+                "description": "tag to identify the operation from the app perspective.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityCacheDispatcher#dispatch:member(1)",
+          "docComment": "/**\n * Dispatch an Action to the store.\n *\n * @param action - the Action\n *\n * @returns the dispatched Action\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "dispatch(action: " },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "action",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "dispatch",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch an Action to the store.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " the dispatched Action\n",
+            "see": [],
+            "params": [{ "name": "action", "description": "the Action\n\n" }]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityCacheDispatcher#loadCollections:member(1)",
+          "docComment": "/**\n * Load multiple entity collections at the same time. before any selectors$ observables emit.\n *\n * @param collections - The collections to load, typically the result of a query.\n *\n * @param tag - tag to identify the operation from the app perspective. in the form of a map of entity collections.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "loadCollections(collections: " },
+            {
+              "kind": "Reference",
+              "text": "EntityCacheQuerySet",
+              "canonicalReference": "@ngrx/data!EntityCacheQuerySet:interface"
+            },
+            { "kind": "Content", "text": ", tag?: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "void" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "collections",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "tag",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "loadCollections",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Load multiple entity collections at the same time. before any selectors$ observables emit.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "collections",
+                "description": "The collections to load, typically the result of a query.\n\n"
+              },
+              {
+                "name": "tag",
+                "description": "tag to identify the operation from the app perspective. in the form of a map of entity collections.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityCacheDispatcher#mergeQuerySet:member(1)",
+          "docComment": "/**\n * Merges entities from a query result that returned entities from multiple collections. Corresponding entity cache reducer should add and update all collections at the same time, before any selectors$ observables emit.\n *\n * @param querySet - The result of the query in the form of a map of entity collections. These are the entity data to merge into the respective collections.\n *\n * @param mergeStrategy - How to merge a queried entity when it is already in the collection. The default is MergeStrategy.PreserveChanges\n *\n * @param tag - tag to identify the operation from the app perspective.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "mergeQuerySet(querySet: " },
+            {
+              "kind": "Reference",
+              "text": "EntityCacheQuerySet",
+              "canonicalReference": "@ngrx/data!EntityCacheQuerySet:interface"
+            },
+            { "kind": "Content", "text": ", mergeStrategy?: " },
+            {
+              "kind": "Reference",
+              "text": "MergeStrategy",
+              "canonicalReference": "@ngrx/data!MergeStrategy:enum"
+            },
+            { "kind": "Content", "text": ", tag?: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "void" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "querySet",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mergeStrategy",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": true
+            },
+            {
+              "parameterName": "tag",
+              "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "mergeQuerySet",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Merges entities from a query result that returned entities from multiple collections. Corresponding entity cache reducer should add and update all collections at the same time, before any selectors$ observables emit.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "querySet",
+                "description": "The result of the query in the form of a map of entity collections. These are the entity data to merge into the respective collections.\n\n"
+              },
+              {
+                "name": "mergeStrategy",
+                "description": "How to merge a queried entity when it is already in the collection. The default is MergeStrategy.PreserveChanges\n\n"
+              },
+              {
+                "name": "tag",
+                "description": "tag to identify the operation from the app perspective.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityCacheDispatcher#reducedActions$:member",
+          "docComment": "/**\n * Actions scanned by the store after it processed them with reducers. A replay observable of the most recent action reduced by the store.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "reducedActions$: " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "reducedActions$",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Actions scanned by the store after it processed them with reducers. A replay observable of the most recent action reduced by the store.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityCacheDispatcher#saveEntities:member(1)",
+          "docComment": "/**\n * Dispatch action to save multiple entity changes to remote storage. Relies on an Ngrx Effect such as EntityEffects.saveEntities$. Important: only call if your server supports the SaveEntities protocol through your EntityDataService.saveEntities method.\n *\n * @param changes - Either the entities to save, as an array of {ChangeSetItem}, or a ChangeSet that holds such changes.\n *\n * @param url - The server url which receives the save request\n *\n * @param options - options such as tag, correlationId, isOptimistic, and mergeStrategy. These values are defaulted if not supplied.\n *\n * @returns A terminating Observable<ChangeSet> with data returned from the server after server reports successful save OR the save error. TODO: should return the matching entities from cache rather than the raw server data.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "saveEntities(changes: " },
+            {
+              "kind": "Reference",
+              "text": "ChangeSetItem",
+              "canonicalReference": "@ngrx/data!ChangeSetItem:type"
+            },
+            { "kind": "Content", "text": "[] | " },
+            {
+              "kind": "Reference",
+              "text": "ChangeSet",
+              "canonicalReference": "@ngrx/data!ChangeSet:interface"
+            },
+            { "kind": "Content", "text": ", url: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ", options?: " },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "ChangeSet",
+              "canonicalReference": "@ngrx/data!ChangeSet:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 9, "endIndex": 13 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "changes",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 4 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "url",
+              "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "saveEntities",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch action to save multiple entity changes to remote storage. Relies on an Ngrx Effect such as EntityEffects.saveEntities$. Important: only call if your server supports the SaveEntities protocol through your EntityDataService.saveEntities method.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " A terminating Observable<ChangeSet> with data returned from the server after server reports successful save OR the save error. TODO: should return the matching entities from cache rather than the raw server data.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "changes",
+                "description": "Either the entities to save, as an array of {ChangeSetItem}, or a ChangeSet that holds such changes.\n\n"
+              },
+              {
+                "name": "url",
+                "description": "The server url which receives the save request\n\n"
+              },
+              {
+                "name": "options",
+                "description": "options such as tag, correlationId, isOptimistic, and mergeStrategy. These values are defaulted if not supplied.\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityCacheDispatcher#setEntityCache:member(1)",
+          "docComment": "/**\n * Create entity cache action for replacing the entire entity cache. Dangerous because brute force but useful as when re-hydrating an EntityCache from local browser storage when the application launches.\n *\n * @param cache - New state of the entity cache\n *\n * @param tag - tag to identify the operation from the app perspective.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "setEntityCache(cache: " },
+            {
+              "kind": "Reference",
+              "text": "EntityCache",
+              "canonicalReference": "@ngrx/data!EntityCache:interface"
+            },
+            { "kind": "Content", "text": ", tag?: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "void" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "cache",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "tag",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "setEntityCache",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Create entity cache action for replacing the entire entity cache. Dangerous because brute force but useful as when re-hydrating an EntityCache from local browser storage when the application launches.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "cache",
+                "description": "New state of the entity cache\n\n"
+              },
+              {
+                "name": "tag",
+                "description": "tag to identify the operation from the app perspective.\n"
+              }
+            ]
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Dispatches Entity Cache actions to the EntityCache reducer\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

@@ -26,11 +26,23 @@
             "command": "pnpm exec tsc -p modules/signals/tsconfig.schematics.json"
           },
           {
+            "command": "pnpm exec rimraf node_modules/@ngrx/signals"
+          },
+          {
+            "command": "pnpm exec mkdirp node_modules/@ngrx/signals"
+          },
+          {
+            "command": "ncp dist/modules/signals node_modules/@ngrx/signals"
+          },
+          {
             "command": "cpy LICENSE dist/modules/signals"
           }
         ]
       },
-      "outputs": ["{workspaceRoot}/dist/modules/signals"]
+      "outputs": [
+        "{workspaceRoot}/dist/modules/signals",
+        "{workspaceRoot}/node_modules/@ngrx/signals"
+      ]
     },
     "lint": {
       "executor": "@nx/eslint:lint",

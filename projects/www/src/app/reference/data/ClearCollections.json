@@ -1,0 +1,182 @@
+{
+  "name": "ClearCollections",
+  "canonicalReference": "@ngrx/data!ClearCollections:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-action.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!ClearCollections:class",
+      "docComment": "/**\n * Clear the collections identified in the collectionSet.\n *\n * @param collections - Array of names of the collections to clear. If empty array, does nothing. If no array, clear all collections.\n *\n * @param tag - Optional tag to identify the operation from the app perspective.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class ClearCollections implements "
+        },
+        {
+          "kind": "Reference",
+          "text": "Action",
+          "canonicalReference": "@ngrx/store!Action:interface"
+        },
+        { "kind": "Content", "text": " " }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-action.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "ClearCollections",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Constructor",
+          "canonicalReference": "@ngrx/data!ClearCollections:constructor(1)",
+          "docComment": "/**\n * Constructs a new instance of the `ClearCollections` class\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "constructor(collections?: " },
+            { "kind": "Content", "text": "string[]" },
+            { "kind": "Content", "text": ", tag?: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ");" }
+          ],
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "collections",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": true
+            },
+            {
+              "parameterName": "tag",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": true
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Constructs a new instance of the `ClearCollections` class\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!ClearCollections#payload:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly payload: " },
+            {
+              "kind": "Content",
+              "text": "{\n        collections?: string[];\n        tag?: string;\n    }"
+            },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "payload",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!ClearCollections#type:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly type = " },
+            {
+              "kind": "Reference",
+              "text": "EntityCacheAction.CLEAR_COLLECTIONS",
+              "canonicalReference": "@ngrx/data!EntityCacheAction.CLEAR_COLLECTIONS:member"
+            },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "type",
+          "propertyTypeTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [{ "startIndex": 1, "endIndex": 2 }],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Clear the collections identified in the collectionSet.\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": [
+          {
+            "name": "collections",
+            "description": "Array of names of the collections to clear. If empty array, does nothing. If no array, clear all collections.\n\n"
+          },
+          {
+            "name": "tag",
+            "description": "Optional tag to identify the operation from the app perspective.\n"
+          }
+        ]
+      }
+    }
+  ]
+}

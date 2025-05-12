@@ -1,0 +1,367 @@
+{
+  "name": "EntityServicesElements",
+  "canonicalReference": "@ngrx/data!EntityServicesElements:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/entity-services/entity-services-elements.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!EntityServicesElements:class",
+      "docComment": "/**\n * Core ingredients of an EntityServices class\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class EntityServicesElements "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/entity-services/entity-services-elements.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "EntityServicesElements",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Constructor",
+          "canonicalReference": "@ngrx/data!EntityServicesElements:constructor(1)",
+          "docComment": "/**\n * Constructs a new instance of the `EntityServicesElements` class\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "constructor(\n    entityCollectionServiceFactory: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollectionServiceFactory",
+              "canonicalReference": "@ngrx/data!EntityCollectionServiceFactory:class"
+            },
+            { "kind": "Content", "text": ", \n    entityDispatcherFactory: " },
+            {
+              "kind": "Reference",
+              "text": "EntityDispatcherFactory",
+              "canonicalReference": "@ngrx/data!EntityDispatcherFactory:class"
+            },
+            { "kind": "Content", "text": ", \n    entitySelectors$Factory: " },
+            {
+              "kind": "Reference",
+              "text": "EntitySelectors$Factory",
+              "canonicalReference": "@ngrx/data!EntitySelectors$Factory:class"
+            },
+            { "kind": "Content", "text": ", \n    store: " },
+            {
+              "kind": "Reference",
+              "text": "Store",
+              "canonicalReference": "@ngrx/store!Store:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EntityCache",
+              "canonicalReference": "@ngrx/data!EntityCache:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ");" }
+          ],
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityCollectionServiceFactory",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "entityDispatcherFactory",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "entitySelectors$Factory",
+              "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "store",
+              "parameterTypeTokenRange": { "startIndex": 7, "endIndex": 11 },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Constructs a new instance of the `EntityServicesElements` class\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityServicesElements#entityActionErrors$:member",
+          "docComment": "/**\n * Observable of error EntityActions (e.g. QUERY_ALL_ERROR) for all entity types\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly entityActionErrors$: " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "entityActionErrors$",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Observable of error EntityActions (e.g. QUERY_ALL_ERROR) for all entity types\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityServicesElements#entityCache$:member",
+          "docComment": "/**\n * Observable of the entire entity cache\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly entityCache$: " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EntityCache",
+              "canonicalReference": "@ngrx/data!EntityCache:interface"
+            },
+            { "kind": "Content", "text": "> | " },
+            {
+              "kind": "Reference",
+              "text": "Store",
+              "canonicalReference": "@ngrx/store!Store:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EntityCache",
+              "canonicalReference": "@ngrx/data!EntityCache:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "entityCache$",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 9 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Observable of the entire entity cache\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityServicesElements#entityCollectionServiceFactory:member",
+          "docComment": "/**\n * Creates EntityCollectionService instances for a cached collection of T entities in the ngrx store.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "readonly entityCollectionServiceFactory: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollectionServiceFactory",
+              "canonicalReference": "@ngrx/data!EntityCollectionServiceFactory:class"
+            },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "entityCollectionServiceFactory",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Creates EntityCollectionService instances for a cached collection of T entities in the ngrx store.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityServicesElements#reducedActions$:member",
+          "docComment": "/**\n * Actions scanned by the store after it processed them with reducers. A replay observable of the most recent action reduced by the store.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly reducedActions$: " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "reducedActions$",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Actions scanned by the store after it processed them with reducers. A replay observable of the most recent action reduced by the store.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityServicesElements#store:member",
+          "docComment": "/**\n * The ngrx store, scoped to the EntityCache\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly store: " },
+            {
+              "kind": "Reference",
+              "text": "Store",
+              "canonicalReference": "@ngrx/store!Store:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EntityCache",
+              "canonicalReference": "@ngrx/data!EntityCache:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "store",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "The ngrx store, scoped to the EntityCache\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Core ingredients of an EntityServices class\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "functions": {
+    "source": "../../dist/projects/www/analog/server"
+  },
+  "hosting": [
+    {
+      "site": "<your_project_id>",
+      "public": "../../dist/projects/www/analog/public",
+      "cleanUrls": true,
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "server"
+        }
+      ]
+    }
+  ]
+}

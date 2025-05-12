@@ -1,0 +1,40 @@
+{
+  "name": "ngrx-examples",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "vite"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@angular/animations": "<angular-version>",
+    "@angular/cdk": "<angular-version>",
+    "@angular/common": "<angular-version>",
+    "@angular/compiler": "<angular-version>",
+    "@angular/core": "<angular-version>",
+    "@angular/elements": "<angular-version>",
+    "@angular/forms": "<angular-version>",
+    "@angular/material": "<angular-version>",
+    "@angular/platform-browser": "<angular-version>",
+    "@angular/platform-browser-dynamic": "<angular-version>",
+    "@angular/platform-server": "<angular-version>",
+    "@angular/router": "<angular-version>",
+    "@ngrx/store": "<ngrx-version>",
+    "@ngrx/store-devtools": "<ngrx-version>",
+    "@ngrx/effects": "<ngrx-version>",
+    "@ngrx/entity": "<ngrx-version>",
+    "@ngrx/router-store": "<ngrx-version>",
+    "@ngrx/signals": "<ngrx-version>",
+    "@ngrx/component-store": "<ngrx-version>",
+    "rxjs": "<rxjs-version>",
+    "zone.js": "<zone-js-version>"
+  },
+  "devDependencies": {
+    "@angular/language-service": "<angular-version>",
+    "typescript": "<typescript-version>",
+    "sass": "1.77.5",
+    "vite": "^5.0.0",
+    "vitest": "^1.3.1"
+  }
+}

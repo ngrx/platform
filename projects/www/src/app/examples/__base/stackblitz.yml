@@ -1,0 +1,13 @@
+name: Base
+description: Base template for NgRx examples
+open: src/app.component.ts
+files:
+  src/_theme.scss: './src/_theme.scss'
+  src/styles.scss: './src/styles.scss'
+  src/app.component.ts: './src/app.component.ts'
+  src/app.config.ts: './src/app.config.ts'
+  src/main.ts: './src/main.ts'
+  index.html: './index.html'
+  package.json: './package.json'
+  tsconfig.json: './tsconfig.json'
+  vite.config.js: './vite.config.js'
