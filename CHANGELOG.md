@@ -1,3 +1,12 @@
+<a name="19.2.0"></a>
+
+# [19.2.0](https://github.com/ngrx/platform/compare/19.1.0...19.2.0) (2025-05-12)
+
+### Features
+
+- **eslint-plugin:** add schematic support for flat configs ([#4747](https://github.com/ngrx/platform/issues/4747)) ([f966d0a](https://github.com/ngrx/platform/commit/f966d0a))
+- **signals:** add Events plugin ([#4769](https://github.com/ngrx/platform/issues/4769)) ([980cf6f](https://github.com/ngrx/platform/commit/980cf6f)), closes [#4580](https://github.com/ngrx/platform/issues/4580)
+
 <a name="19.1.0"></a>
 
 # [19.1.0](https://github.com/ngrx/platform/compare/19.0.1...19.1.0) (2025-04-01)
