@@ -55,13 +55,13 @@ describe('rxMethod', () => {
       method(sig);
       expect(results.length).toBe(0);
 
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(results[0]).toBe(1);
 
       sig.set(10);
       expect(results.length).toBe(1);
 
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(results[1]).toBe(10);
     }));
 
@@ -97,18 +97,18 @@ describe('rxMethod', () => {
 
       subject$.next(1);
       sig.set(1);
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(results).toEqual([1, 1]);
 
       ref1.destroy();
       subject$.next(2);
       sig.set(2);
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(results).toEqual([1, 1, 2]);
 
       ref2.destroy();
       sig.set(3);
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(results).toEqual([1, 1, 2]);
     }));
 
@@ -195,7 +195,7 @@ describe('rxMethod', () => {
     const num = signal(3);
     increment(num);
 
-    TestBed.flushEffects();
+    TestBed.tick();
     expect(counter()).toBe(4);
   });
 
@@ -245,20 +245,20 @@ describe('rxMethod', () => {
         globalService.trackSignal(globalService.globalSignal);
       });
 
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(globalService.globalSignalChangeCounter).toBe(1);
 
       globalService.incrementSignal();
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(globalService.globalSignalChangeCounter).toBe(2);
 
       globalService.incrementSignal();
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(globalService.globalSignalChangeCounter).toBe(3);
 
       instanceInjector.destroy();
       globalService.incrementSignal();
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(globalService.globalSignalChangeCounter).toBe(3);
     });
@@ -273,7 +273,7 @@ describe('rxMethod', () => {
         globalService.trackObservable(globalService.globalObservable)
       );
 
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(globalService.globalObservableChangeCounter).toBe(1);
 
       globalService.incrementObservable();
@@ -298,15 +298,15 @@ describe('rxMethod', () => {
         injector: instanceInjector,
       });
 
-      TestBed.flushEffects();
+      TestBed.tick();
       globalService.incrementSignal();
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(globalService.globalSignalChangeCounter).toBe(2);
 
       instanceInjector.destroy();
       globalService.incrementSignal();
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(globalService.globalSignalChangeCounter).toBe(2);
     });
@@ -336,13 +336,13 @@ describe('rxMethod', () => {
       globalService.trackSignal(globalService.globalSignal);
       globalService.trackObservable(globalService.globalObservable);
 
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(globalService.globalSignalChangeCounter).toBe(1);
       expect(globalService.globalObservableChangeCounter).toBe(1);
 
       globalService.incrementSignal();
       globalService.incrementObservable();
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(globalService.globalSignalChangeCounter).toBe(2);
       expect(globalService.globalObservableChangeCounter).toBe(2);
