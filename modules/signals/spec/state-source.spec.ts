@@ -183,12 +183,12 @@ describe('StateSource', () => {
           });
         });
 
-        TestBed.flushEffects();
+        TestBed.tick();
         expect(executionCount).toBe(1);
 
         store.setFoo('baz');
 
-        TestBed.flushEffects();
+        TestBed.tick();
         expect(executionCount).toBe(2);
       });
     });

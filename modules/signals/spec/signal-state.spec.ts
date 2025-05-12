@@ -134,14 +134,14 @@ describe('signalState', () => {
       expect(userEmitted).toBe(0);
       expect(firstNameEmitted).toBe(0);
 
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(numbersEmitted).toBe(1);
       expect(userEmitted).toBe(1);
       expect(firstNameEmitted).toBe(1);
 
       patchState(state, { numbers: [1, 2, 3] });
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(numbersEmitted).toBe(2);
       expect(userEmitted).toBe(1);
@@ -150,7 +150,7 @@ describe('signalState', () => {
       patchState(state, (state) => ({
         user: { ...state.user, lastName: 'Schmidt' },
       }));
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(numbersEmitted).toBe(2);
       expect(userEmitted).toBe(2);
@@ -159,7 +159,7 @@ describe('signalState', () => {
       patchState(state, (state) => ({
         user: { ...state.user, firstName: 'Johannes' },
       }));
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(numbersEmitted).toBe(2);
       expect(userEmitted).toBe(3);
@@ -184,17 +184,17 @@ describe('signalState', () => {
         userCounter++;
       });
 
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(stateCounter).toBe(1);
       expect(userCounter).toBe(1);
 
       patchState(state, {});
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(stateCounter).toBe(2);
       expect(userCounter).toBe(1);
 
       patchState(state, (state) => state);
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(stateCounter).toBe(3);
       expect(userCounter).toBe(1);
     }));

@@ -16,7 +16,7 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
     class="mat-mdc-dialog-actions mdc-dialog__actions"
   >
     <button
-      class="mdc-button mat-mdc-button mat-unthemed mat-mdc-button-base"
+      class="mdc-button mat-mdc-button-base mat-mdc-button mat-unthemed"
       mat-button=""
       mat-ripple-loader-class-name="mat-mdc-button-ripple"
       mat-ripple-loader-uninitialized=""
@@ -38,7 +38,7 @@ exports[`Logout Confirmation Dialog should compile 1`] = `
       />
     </button>
     <button
-      class="mdc-button mat-mdc-button mat-unthemed mat-mdc-button-base"
+      class="mdc-button mat-mdc-button-base mat-mdc-button mat-unthemed"
       mat-button=""
       mat-ripple-loader-class-name="mat-mdc-button-ripple"
       mat-ripple-loader-uninitialized=""

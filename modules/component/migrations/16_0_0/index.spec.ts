@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { waitForAsync } from '@angular/core/testing';
+import {} from '@angular/core/testing';
 import { Tree } from '@angular-devkit/schematics';
 import {
   SchematicTestRunner,
@@ -33,7 +33,7 @@ describe('Component Migration 16_0_0', () => {
     },
   ].forEach(({ module, declarable }) => {
     describe(`${module} => ${declarable}`, () => {
-      it(`should replace the ${module} in NgModule with ${declarable}`, waitForAsync(async () => {
+      it(`should replace the ${module} in NgModule with ${declarable}`, async () => {
         const input = `
           import { ${module} } from '@ngrx/component';
 
@@ -76,9 +76,9 @@ describe('Component Migration 16_0_0', () => {
         const file = newTree.readContent('app.module.ts');
 
         expect(file).toBe(expected);
-      }));
+      });
 
-      it(`should replace the ${module} in standalone component with ${declarable}`, waitForAsync(async () => {
+      it(`should replace the ${module} in standalone component with ${declarable}`, async () => {
         const input = `
           import { ${module} } from '@ngrx/component';
 
@@ -113,9 +113,9 @@ describe('Component Migration 16_0_0', () => {
         const file = newTree.readContent('app.module.ts');
 
         expect(file).toBe(expected);
-      }));
+      });
 
-      it(`should not remove the ${module} JS import when used as a type`, waitForAsync(async () => {
+      it(`should not remove the ${module} JS import when used as a type`, async () => {
         const input = `
           import { ${module} } from '@ngrx/component';
 
@@ -160,7 +160,7 @@ describe('Component Migration 16_0_0', () => {
         const file = newTree.readContent('app.module.ts');
 
         expect(file).toBe(expected);
-      }));
+      });
     });
   });
 });
