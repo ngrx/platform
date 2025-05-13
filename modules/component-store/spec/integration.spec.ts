@@ -431,7 +431,7 @@ describe('ComponentStore integration', () => {
       'ngOnDestroy'
     );
 
-    const serviceCallSpy = jest.spyOn(TestBed.get(Service), 'call');
+    const serviceCallSpy = jest.spyOn(TestBed.inject(Service), 'call');
     return {
       ...setup,
       destroy: () => setup.child.propsStore.ngOnDestroy(),

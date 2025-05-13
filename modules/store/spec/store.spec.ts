@@ -722,7 +722,7 @@ describe('ngRx Store', () => {
 
       const changeInputIdAndFlush = () => {
         inputId.update((value) => value + 1);
-        TestBed.flushEffects();
+        TestBed.tick();
       };
 
       const stateSignal = store.selectSignal((state) => state.counter1);
@@ -737,7 +737,7 @@ describe('ngRx Store', () => {
       expect(stateSignal()).toBe(0);
 
       store.dispatch(() => increment({ id: inputId() }));
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(stateSignal()).toBe(1);
 
       changeInputIdAndFlush();
@@ -746,10 +746,10 @@ describe('ngRx Store', () => {
       inputId.update((value) => value + 1);
       expect(stateSignal()).toBe(2);
 
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(stateSignal()).toBe(3);
 
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(stateSignal()).toBe(3);
     });
 
@@ -758,7 +758,7 @@ describe('ngRx Store', () => {
         setupForSignalDispatcher();
 
       const ref = store.dispatch(() => increment({ id: inputId() }));
-      TestBed.flushEffects();
+      TestBed.tick();
 
       ref.destroy();
       changeInputIdAndFlush();
@@ -777,7 +777,7 @@ describe('ngRx Store', () => {
         store.dispatch(() => increment({ id: inputId() }))
       );
 
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(stateSignal()).toBe(1);
 
       callerContext.destroy();
@@ -797,7 +797,7 @@ describe('ngRx Store', () => {
         })
       );
 
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(stateSignal()).toBe(1);
 
       callerContext.destroy();
