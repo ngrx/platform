@@ -256,6 +256,10 @@
                   "url": "guide/signals/signal-store/custom-store-features"
                 },
                 {
+                  "title": "Custom Store Updaters",
+                  "url": "guide/signals/signal-store/custom-store-updaters"
+                },
+                {
                   "title": "Entity Management",
                   "url": "guide/signals/signal-store/entity-management"
                 },
