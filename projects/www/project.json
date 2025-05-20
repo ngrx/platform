@@ -47,7 +47,7 @@
       }
     },
     "test": {
-      "executor": "@analogjs/platform:vitest",
+      "executor": "@analogjs/vitest-angular:test",
       "outputs": ["{projectRoot}/coverage"]
     },
     "collect-docs": {

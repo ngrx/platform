@@ -229,7 +229,7 @@
     "uglify-js": "^3.1.9",
     "vite": "^6.3.0",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^2.0.0",
+    "vitest": "^3.0.0",
     "yaml": "^2.4.5"
   },
   "collective": {
