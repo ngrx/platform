@@ -410,9 +410,9 @@ describe('MoviesStore', () => {
 
 </code-example>
 
-It is important to account for the glitch-free effect when using Signals. The `rxMethod` relies on `effect`, which may need to be triggered manually through `TestBed.flushEffects()`.
+It is important to account for the glitch-free effect when using Signals. The `rxMethod` relies on `effect`, which may need to be triggered manually through `TestBed.tick()`.
 
-If the mocked `MovieService` operates synchronously, the following test fails unless `TestBed.flushEffects()` is called.
+If the mocked `MovieService` operates synchronously, the following test fails unless `TestBed.tick()` is called.
 
 <code-example header="movies.store.spec.ts">
 
@@ -442,11 +442,11 @@ describe('MoviesStore', () => {
     const store = TestBed.inject(MoviesStore);
     const studio = signal('Warner Bros');
     store.load(studio);
-    TestBed.flushEffects(); // required
+    TestBed.tick(); // required
     expect(store.movies()).toEqual([{ id: 1, name: 'Harry Potter' }]);
 
     studio.set('Universal');
-    TestBed.flushEffects(); // required
+    TestBed.tick(); // required
     expect(store.movies()).toEqual([{ id: 2, name: 'Jurassic Park' }]);
   });
 });
