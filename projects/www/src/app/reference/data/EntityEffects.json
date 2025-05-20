@@ -1,0 +1,284 @@
+{
+  "name": "EntityEffects",
+  "canonicalReference": "@ngrx/data!EntityEffects:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/effects/entity-effects.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!EntityEffects:class",
+      "docComment": "",
+      "excerptTokens": [
+        { "kind": "Content", "text": "export declare class EntityEffects " }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/effects/entity-effects.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "EntityEffects",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Constructor",
+          "canonicalReference": "@ngrx/data!EntityEffects:constructor(1)",
+          "docComment": "/**\n * Constructs a new instance of the `EntityEffects` class\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "constructor(actions: " },
+            {
+              "kind": "Reference",
+              "text": "Actions",
+              "canonicalReference": "@ngrx/effects!Actions:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ", dataService: " },
+            {
+              "kind": "Reference",
+              "text": "EntityDataService",
+              "canonicalReference": "@ngrx/data!EntityDataService:class"
+            },
+            { "kind": "Content", "text": ", entityActionFactory: " },
+            {
+              "kind": "Reference",
+              "text": "EntityActionFactory",
+              "canonicalReference": "@ngrx/data!EntityActionFactory:class"
+            },
+            { "kind": "Content", "text": ", resultHandler: " },
+            {
+              "kind": "Reference",
+              "text": "PersistenceResultHandler",
+              "canonicalReference": "@ngrx/data!PersistenceResultHandler:class"
+            },
+            { "kind": "Content", "text": ", \n    scheduler: " },
+            {
+              "kind": "Reference",
+              "text": "SchedulerLike",
+              "canonicalReference": "rxjs!SchedulerLike:interface"
+            },
+            { "kind": "Content", "text": ");" }
+          ],
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "actions",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "dataService",
+              "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "entityActionFactory",
+              "parameterTypeTokenRange": { "startIndex": 8, "endIndex": 9 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "resultHandler",
+              "parameterTypeTokenRange": { "startIndex": 10, "endIndex": 11 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "scheduler",
+              "parameterTypeTokenRange": { "startIndex": 12, "endIndex": 13 },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Constructs a new instance of the `EntityEffects` class\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityEffects#cancel$:member",
+          "docComment": "/**\n * Observable of non-null cancellation correlation ids from CANCEL_PERSIST actions\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "cancel$: " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<any>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "cancel$",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Observable of non-null cancellation correlation ids from CANCEL_PERSIST actions\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityEffects#persist:member(1)",
+          "docComment": "/**\n * Perform the requested persistence operation and return a scalar Observable<Action> that the effect should dispatch to the store after the server responds.\n *\n * @param action - A persistence operation EntityAction\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "persist(action: " },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 7 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "action",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "persist",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Perform the requested persistence operation and return a scalar Observable<Action> that the effect should dispatch to the store after the server responds.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "action",
+                "description": "A persistence operation EntityAction\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityEffects#persist$:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "persist$: " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "persist$",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

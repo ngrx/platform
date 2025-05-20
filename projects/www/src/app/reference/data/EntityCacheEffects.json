@@ -1,0 +1,283 @@
+{
+  "name": "EntityCacheEffects",
+  "canonicalReference": "@ngrx/data!EntityCacheEffects:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/effects/entity-cache-effects.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!EntityCacheEffects:class",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class EntityCacheEffects "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/effects/entity-cache-effects.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "EntityCacheEffects",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Constructor",
+          "canonicalReference": "@ngrx/data!EntityCacheEffects:constructor(1)",
+          "docComment": "/**\n * Constructs a new instance of the `EntityCacheEffects` class\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "constructor(actions: " },
+            {
+              "kind": "Reference",
+              "text": "Actions",
+              "canonicalReference": "@ngrx/effects!Actions:class"
+            },
+            { "kind": "Content", "text": ", dataService: " },
+            {
+              "kind": "Reference",
+              "text": "EntityCacheDataService",
+              "canonicalReference": "@ngrx/data!EntityCacheDataService:class"
+            },
+            { "kind": "Content", "text": ", entityActionFactory: " },
+            {
+              "kind": "Reference",
+              "text": "EntityActionFactory",
+              "canonicalReference": "@ngrx/data!EntityActionFactory:class"
+            },
+            { "kind": "Content", "text": ", logger: " },
+            {
+              "kind": "Reference",
+              "text": "Logger",
+              "canonicalReference": "@ngrx/data!Logger:class"
+            },
+            { "kind": "Content", "text": ", \n    scheduler: " },
+            {
+              "kind": "Reference",
+              "text": "SchedulerLike",
+              "canonicalReference": "rxjs!SchedulerLike:interface"
+            },
+            { "kind": "Content", "text": ");" }
+          ],
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "actions",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "dataService",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "entityActionFactory",
+              "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "logger",
+              "parameterTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "scheduler",
+              "parameterTypeTokenRange": { "startIndex": 9, "endIndex": 10 },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Constructs a new instance of the `EntityCacheEffects` class\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityCacheEffects#saveEntities:member(1)",
+          "docComment": "/**\n * Perform the requested SaveEntities actions and return a scalar Observable<Action> that the effect should dispatch to the store after the server responds.\n *\n * @param action - The SaveEntities action\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "saveEntities(action: " },
+            {
+              "kind": "Reference",
+              "text": "SaveEntities",
+              "canonicalReference": "@ngrx/data!SaveEntities:class"
+            },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 7 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "action",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "saveEntities",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Perform the requested SaveEntities actions and return a scalar Observable<Action> that the effect should dispatch to the store after the server responds.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              { "name": "action", "description": "The SaveEntities action\n" }
+            ]
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityCacheEffects#saveEntities$:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "saveEntities$: " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "saveEntities$",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityCacheEffects#saveEntitiesCancel$:member",
+          "docComment": "/**\n * Observable of SAVE_ENTITIES_CANCEL actions with non-null correlation ids\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "saveEntitiesCancel$: " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "SaveEntitiesCancel",
+              "canonicalReference": "@ngrx/data!SaveEntitiesCancel:class"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "saveEntitiesCancel$",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Observable of SAVE_ENTITIES_CANCEL actions with non-null correlation ids\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

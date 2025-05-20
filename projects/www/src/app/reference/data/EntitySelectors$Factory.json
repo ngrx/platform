@@ -1,0 +1,299 @@
+{
+  "name": "EntitySelectors$Factory",
+  "canonicalReference": "@ngrx/data!EntitySelectors$Factory:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/selectors/entity-selectors$.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!EntitySelectors$Factory:class",
+      "docComment": "/**\n * Creates observable EntitySelectors$ for entity collections.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class EntitySelectors$Factory "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/selectors/entity-selectors$.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "EntitySelectors$Factory",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Constructor",
+          "canonicalReference": "@ngrx/data!EntitySelectors$Factory:constructor(1)",
+          "docComment": "/**\n * Constructs a new instance of the `EntitySelectors$Factory` class\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "constructor(store: " },
+            {
+              "kind": "Reference",
+              "text": "Store",
+              "canonicalReference": "@ngrx/store!Store:class"
+            },
+            { "kind": "Content", "text": "<any>" },
+            { "kind": "Content", "text": ", actions: " },
+            {
+              "kind": "Reference",
+              "text": "Actions",
+              "canonicalReference": "@ngrx/effects!Actions:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ", selectEntityCache: " },
+            {
+              "kind": "Reference",
+              "text": "EntityCacheSelector",
+              "canonicalReference": "@ngrx/data!EntityCacheSelector:type"
+            },
+            { "kind": "Content", "text": ");" }
+          ],
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "store",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "actions",
+              "parameterTypeTokenRange": { "startIndex": 4, "endIndex": 8 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "selectEntityCache",
+              "parameterTypeTokenRange": { "startIndex": 9, "endIndex": 10 },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Constructs a new instance of the `EntitySelectors$Factory` class\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntitySelectors$Factory#create:member(1)",
+          "docComment": "/**\n * Creates an entity collection's selectors$ observables for this factory's store. `selectors$` are observable selectors of the cached entity collection.\n *\n * @param entityName - is also the name of the collection.\n *\n * @param selectors - selector functions for this collection.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "create<T, S$ extends " },
+            {
+              "kind": "Reference",
+              "text": "EntitySelectors$",
+              "canonicalReference": "@ngrx/data!EntitySelectors$:interface"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": " = " },
+            {
+              "kind": "Reference",
+              "text": "EntitySelectors$",
+              "canonicalReference": "@ngrx/data!EntitySelectors$:interface"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": ">(entityName: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ", selectors: " },
+            {
+              "kind": "Reference",
+              "text": "EntitySelectors",
+              "canonicalReference": "@ngrx/data!EntitySelectors:interface"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "S$" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+            },
+            {
+              "typeParameterName": "S$",
+              "constraintTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "defaultTypeTokenRange": { "startIndex": 4, "endIndex": 6 }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 12, "endIndex": 13 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityName",
+              "parameterTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "selectors",
+              "parameterTypeTokenRange": { "startIndex": 9, "endIndex": 11 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "create",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Creates an entity collection's selectors$ observables for this factory's store. `selectors$` are observable selectors of the cached entity collection.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entityName",
+                "description": "is also the name of the collection.\n\n"
+              },
+              {
+                "name": "selectors",
+                "description": "selector functions for this collection.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntitySelectors$Factory#entityActionErrors$:member",
+          "docComment": "/**\n * Observable of error EntityActions (e.g. QUERY_ALL_ERROR) for all entity types\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "entityActionErrors$: " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "entityActionErrors$",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Observable of error EntityActions (e.g. QUERY_ALL_ERROR) for all entity types\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntitySelectors$Factory#entityCache$:member",
+          "docComment": "/**\n * Observable of the EntityCache\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "entityCache$: " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "EntityCache",
+              "canonicalReference": "@ngrx/data!EntityCache:interface"
+            },
+            { "kind": "Content", "text": ">" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "entityCache$",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Observable of the EntityCache\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Creates observable EntitySelectors$ for entity collections.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

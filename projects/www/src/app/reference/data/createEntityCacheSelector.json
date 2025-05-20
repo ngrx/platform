@@ -1,0 +1,70 @@
+{
+  "name": "createEntityCacheSelector",
+  "canonicalReference": "@ngrx/data!createEntityCacheSelector:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/data/src/selectors/entity-cache-selector.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/data!createEntityCacheSelector:function(1)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function createEntityCacheSelector(entityCacheName?: "
+        },
+        { "kind": "Content", "text": "string" },
+        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Reference",
+          "text": "MemoizedSelector",
+          "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "Object",
+          "canonicalReference": "!Object:interface"
+        },
+        { "kind": "Content", "text": ", " },
+        {
+          "kind": "Reference",
+          "text": "EntityCache",
+          "canonicalReference": "@ngrx/data!EntityCache:interface"
+        },
+        { "kind": "Content", "text": ">" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/selectors/entity-cache-selector.d.ts",
+      "returnTypeTokenRange": { "startIndex": 3, "endIndex": 9 },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "entityCacheName",
+          "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isOptional": true
+        }
+      ],
+      "name": "createEntityCacheSelector",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}
