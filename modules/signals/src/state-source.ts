@@ -3,7 +3,6 @@ import {
   DestroyRef,
   inject,
   Injector,
-  isSignal,
   Signal,
   untracked,
   WritableSignal,
@@ -58,6 +57,21 @@ export function patchState<State extends object>(
   );
 
   notifyWatchers(stateSource);
+}
+
+export function mergeUpdaters<State extends object>(
+  ...updaters: Array<
+    Partial<Prettify<State>> | PartialStateUpdater<Prettify<State>>
+  >
+): PartialStateUpdater<State> {
+  return (state: State) =>
+    updaters.reduce(
+      (nextState: State, updater) => ({
+        ...nextState,
+        ...(typeof updater === 'function' ? updater(nextState) : updater),
+      }),
+      state
+    );
 }
 
 export function getState<State extends object>(

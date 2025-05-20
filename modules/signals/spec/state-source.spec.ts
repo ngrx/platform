@@ -17,9 +17,8 @@ import {
   withHooks,
   withMethods,
   withState,
-  WritableStateSource,
 } from '../src';
-import { STATE_SOURCE } from '../src/state-source';
+import { mergeUpdaters, STATE_SOURCE } from '../src/state-source';
 import { createLocalService } from './helpers';
 
 const SECRET = Symbol('SECRET');
@@ -145,6 +144,22 @@ describe('StateSource', () => {
         });
       });
     });
+  });
+
+  it('mergeUpdaters', () => {
+    const updater = mergeUpdaters<{
+      test: string;
+      i: number;
+    }>(
+      { test: 'test' },
+      ({ i }) => ({ i: i++ }),
+      ({ i }) => ({ i: i++ })
+    );
+    const state = signalState({ test: '', i: 0 });
+
+    patchState(state, updater);
+
+    expect(state()).toEqual({ test: 'test', i: 2 });
   });
 
   describe('getState', () => {
