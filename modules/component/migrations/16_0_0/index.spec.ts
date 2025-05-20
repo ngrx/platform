@@ -1,5 +1,4 @@
 import * as path from 'path';
-import {} from '@angular/core/testing';
 import { Tree } from '@angular-devkit/schematics';
 import {
   SchematicTestRunner,
