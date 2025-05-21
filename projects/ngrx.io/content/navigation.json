@@ -260,6 +260,10 @@
                   "url": "guide/signals/signal-store/entity-management"
                 },
                 {
+                  "title": "Events",
+                  "url": "guide/signals/signal-store/events"
+                },
+                {
                   "title": "Testing",
                   "url": "guide/signals/signal-store/testing"
                 }
