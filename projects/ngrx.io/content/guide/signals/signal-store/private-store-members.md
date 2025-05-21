@@ -4,7 +4,7 @@ SignalStore allows defining private members that cannot be accessed from outside
 This includes root-level state slices, properties, and methods.
 
 <code-tabs linenums="false">
-<code-pane header="counter.store.ts">
+<code-pane header="counter-store.ts">
 
 import { computed } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
@@ -46,16 +46,16 @@ export const CounterStore = signalStore(
 
 </code-pane>
 
-<code-pane header="counter.component.ts">
+<code-pane header="counter.ts">
 
 import { Component, inject, OnInit } from '@angular/core';
-import { CounterStore } from './counter.store';
+import { CounterStore } from './counter-store';
 
 @Component({
   /* ... */
   providers: [CounterStore],
 })
-export class CounterComponent implements OnInit {
+export class Counter implements OnInit {
   readonly store = inject(CounterStore);
 
   ngOnInit(): void {
