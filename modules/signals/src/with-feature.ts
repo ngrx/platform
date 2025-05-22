@@ -3,6 +3,7 @@ import {
   SignalStoreFeatureResult,
   StateSignals,
 } from './signal-store-models';
+import { STATE_SOURCE, WritableStateSource } from './state-source';
 import { Prettify } from './ts-helpers';
 
 /**
@@ -33,12 +34,16 @@ export function withFeature<
 >(
   featureFactory: (
     store: Prettify<
-      StateSignals<Input['state']> & Input['props'] & Input['methods']
+      StateSignals<Input['state']> &
+        Input['props'] &
+        Input['methods'] &
+        WritableStateSource<Prettify<Input['state']>>
     >
   ) => SignalStoreFeature<Input, Output>
 ): SignalStoreFeature<Input, Output> {
   return (store) => {
     const storeForFactory = {
+      [STATE_SOURCE]: store[STATE_SOURCE],
       ...store['stateSignals'],
       ...store['props'],
       ...store['methods'],
