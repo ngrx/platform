@@ -182,4 +182,23 @@ describe('withFeature', () => {
     TestBed.flushEffects();
     expect(store.entities()).toEqual([]);
   });
+
+  it('allows patchState on the provided store', () => {
+    const withCallback = (cb: () => void) => signalStoreFeature(
+      withMethods(() => ({
+        executeCallBack: () => cb(),
+      }))
+    );
+
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withState({ counter: 1 }),
+      withFeature((store) => withCallback(() => patchState(store, { counter: 2 })))
+    );
+
+    const store = TestBed.inject(Store);
+    expect(getState(store)).toEqual({ counter: 1 });
+    store.executeCallBack();
+    expect(getState(store)).toEqual({ counter: 2 });
+  });
 });
