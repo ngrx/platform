@@ -23,6 +23,12 @@ The application architecture with the Events plugin is composed of the following
 
 By dispatching events and reacting to them, the _what_ (the event that occurred) is decoupled from the _how_ (the state changes or side effects that result), leading to predictable data flow and more maintainable code.
 
+<div class="alert is-helpful">
+
+While the default SignalStore approach is sufficient for most use cases, the Events plugin excels in more advanced scenarios that involve inter-store coordination or benefit from a decoupled architecture.
+
+</div>
+
 ## Defining Event Creators
 
 Event creators are defined using utilities provided by the Events plugin.
