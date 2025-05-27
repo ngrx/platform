@@ -193,7 +193,7 @@ Side effects are handled using the `withEffects` feature.
 This feature accepts a function that receives the store instance as an argument and returns a dictionary of effects.
 Each effect is defined as an observable that reacts to specific events using the `Events` service.
 This service provides the `on` method that returns an observable of dispatched events filtered by the specified event types.
-If an effect returns a new event, that event will be automatically dispatched.
+If an effect returns a new event, that event is automatically dispatched.
 
 <code-example header="book-search-store.ts">
 
