@@ -79,7 +79,7 @@ This function takes an object with two properties:
 - `source`: Identifies the origin of the event group (e.g., 'Book Search Page', 'Books API').
 - `events`: A dictionary of named event creators, where each key defines the event name and each value defines the payload type.
 
-The type of all event creators in the group will be prefixed with the provided `source`.
+The type of all event creators in the group are prefixed with the provided `source`.
 
 <code-example header="book-search-events.ts">
 
