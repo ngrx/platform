@@ -73,7 +73,7 @@ The `type` property serves as a unique identifier for the event, and the optiona
 ### Using `eventGroup` Function
 
 Defining many events with the same source can become repetitive.
-The `eventGroup` API is used for creating a set of events with the common source.
+The `eventGroup` API is used to create a set of events with the common source.
 This function takes an object with two properties:
 
 - `source`: Identifies the origin of the event group (e.g., 'Book Search Page', 'Books API').
