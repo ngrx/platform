@@ -30,8 +30,8 @@ The `event` function is used for declaring individual event creators, while the 
 
 ### Using `event` Function
 
-The simplest way to define an event creator is with the `event` function.
-This function takes an event type and an optional payload schema.
+The simplest way to define an event creator is with the `event` function, 
+which takes an event type and an optional payload schema.
 Calling the event creator produces an event object with a `type` property and, if a payload is defined, a `payload` property.
 
 <code-example header="book-search-events.ts">
