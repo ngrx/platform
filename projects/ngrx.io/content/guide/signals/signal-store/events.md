@@ -151,7 +151,7 @@ export const BookSearchStore = signalStore(
 
 </code-example>
 
-When an event is dispatched, the corresponding case reducer logic runs and the SignalStore state is updated.
+When an event is dispatched, the corresponding case reducer logic runs and the SignalStore's state is updated.
 
 <div class="alert is-helpful">
 
