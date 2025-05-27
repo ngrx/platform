@@ -26,7 +26,7 @@ By dispatching events and reacting to them, the _what_ (the event that occurred)
 ## Defining Event Creators
 
 Event creators are defined using utilities provided by the Events plugin.
-The `event` function is used for declaring individual event creators, while the `eventGroup` functions enables grouping multiple event creators under a common source.
+The `event` function is used for declaring individual event creators, while the `eventGroup` function enables grouping multiple event creators under a common source.
 
 ### Using `event` Function
 
