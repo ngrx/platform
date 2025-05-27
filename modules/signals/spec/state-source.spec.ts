@@ -17,7 +17,6 @@ import {
   withHooks,
   withMethods,
   withState,
-  WritableStateSource,
 } from '../src';
 import { STATE_SOURCE } from '../src/state-source';
 import { createLocalService } from './helpers';
@@ -95,6 +94,25 @@ describe('StateSource', () => {
             numbers: [...state.numbers, 4],
             ngrx: 'rocks',
           }));
+
+          expect(state[STATE_SOURCE]()).toEqual({
+            ...initialState,
+            numbers: [1, 2, 3, 4],
+            ngrx: 'rocks',
+          });
+        });
+
+        it('patches state via multiple updater functions', () => {
+          const state = stateFactory();
+
+          patchState(state, [
+            (state) => ({
+              numbers: [...state.numbers, 4],
+            }),
+            () => ({
+              ngrx: 'rocks',
+            }),
+          ]);
 
           expect(state[STATE_SOURCE]()).toEqual({
             ...initialState,

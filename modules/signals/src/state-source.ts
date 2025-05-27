@@ -44,9 +44,15 @@ export function isWritableStateSource<State extends object>(
 export function patchState<State extends object>(
   stateSource: WritableStateSource<State>,
   ...updaters: Array<
-    Partial<Prettify<State>> | PartialStateUpdater<Prettify<State>>
+    | Partial<Prettify<State>>
+    | PartialStateUpdater<Prettify<State>>
+    | PartialStateUpdater<Prettify<State>>[]
   >
 ): void {
+  updaters = updaters.flat() as Array<
+    Partial<Prettify<State>> | PartialStateUpdater<Prettify<State>>
+  >;
+
   stateSource[STATE_SOURCE].update((currentState) =>
     updaters.reduce(
       (nextState: State, updater) => ({
