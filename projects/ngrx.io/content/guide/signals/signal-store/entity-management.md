@@ -8,7 +8,7 @@ This plugin provides the `withEntities` feature and a set of entity updaters.
 The `withEntities` feature integrates entity state into the store.
 By default, `withEntities` requires an entity to have an `id` property, which serves as a unique identifier and must be of type `EntityId` (either a `string` or a `number`).
 
-<code-example header="todos.store.ts">
+<code-example header="todos-store.ts">
 
 import { computed } from '@angular/core';
 import { signalStore } from '@ngrx/signals';
@@ -39,7 +39,7 @@ The `ids` and `entityMap` are state slices, while `entities` is a computed signa
 The `entities` plugin provides a set of standalone entity updaters.
 These functions can be used with `patchState` to facilitate entity collection updates.
 
-<code-example header="todos.store.ts">
+<code-example header="todos-store.ts">
 
 import { patchState, signalStore, withMethods } from '@ngrx/signals';
 import {
@@ -255,7 +255,7 @@ The selector's return type should be either `string` or `number`.
 Custom ID selectors should be provided when adding, setting, or updating entities.
 Therefore, all variations of the `add*`, `set*`, and `update*` functions include an optional second argument, which is a config object that allows specifying the `selectId` function.
 
-<code-example header="todos.store.ts">
+<code-example header="todos-store.ts">
 
 import { patchState, signalStore, withMethods } from '@ngrx/signals';
 import {
@@ -304,7 +304,7 @@ The `remove*` updaters automatically select the correct identifier, so it is not
 
 The `withEntities` feature allows specifying a custom prefix for entity properties by providing a collection name as an input argument.
 
-<code-example header="todos.store.ts">
+<code-example header="todos-store.ts">
 
 import { signalStore, type } from '@ngrx/signals';
 import { withEntities } from '@ngrx/signals/entities';
@@ -326,7 +326,7 @@ The names of the `TodosStore` properties are changed from `ids`, `entityMap`, an
 
 All updaters that operate on named entity collections require a collection name.
 
-<code-example header="todos.store.ts">
+<code-example header="todos-store.ts">
 
 import {
   patchState,
@@ -384,7 +384,7 @@ Although it is possible to manage multiple collections in one store, in most cas
 The `entityConfig` function reduces repetitive code when defining a custom entity configuration and ensures strong typing.
 It accepts a config object where the entity type is required, and the collection name and custom ID selector are optional.
 
-<code-example header="todos.store.ts">
+<code-example header="todos-store.ts">
 
 import {
   patchState,
@@ -452,7 +452,7 @@ const TodosStore = signalStore(
   `,
   providers: [TodosStore],
 })
-class TodosComponent {
+class Todos {
   readonly store = inject(TodosStore);
 }
 ```
