@@ -35,7 +35,7 @@ describe('withProps', () => {
         [METHOD_SECRET]() {},
       })),
     ].reduce((acc, feature) => feature(acc), getInitialInnerStore());
-    vi.spyOn(console, 'warn').mockImplementation();
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     withProps(() => ({
       s1: { foo: 'bar' },
