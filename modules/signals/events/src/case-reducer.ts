@@ -13,7 +13,8 @@ type CaseReducer<
   State extends object,
   EventCreators extends EventCreator<string, any>[]
 > = (
-  event: { [K in keyof EventCreators]: ReturnType<EventCreators[K]> }[number]
+  event: { [K in keyof EventCreators]: ReturnType<EventCreators[K]> }[number],
+  state: State
 ) =>
   | Partial<State>
   | PartialStateUpdater<State>
