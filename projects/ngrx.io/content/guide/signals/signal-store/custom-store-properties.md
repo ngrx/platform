@@ -8,11 +8,11 @@ The factory function receives an object containing state signals, previously def
 
 `withProps` can be useful for exposing observables from a SignalStore, which can serve as integration points with RxJS-based APIs:
 
-<code-example header="books.store.ts">
+<code-example header="books-store.ts">
 
 import { toObservable } from '@angular/core/rxjs-interop';
 import { signalStore, withProps, withState } from '@ngrx/signals';
-import { Book } from './book.model';
+import { Book } from './book';
 
 type BooksState = {
   books: Book[];
@@ -32,13 +32,13 @@ export const BooksStore = signalStore(
 
 Dependencies required across multiple store features can be grouped using `withProps`:
 
-<code-example header="books.store.ts">
+<code-example header="books-store.ts">
 
 import { inject } from '@angular/core';
 import { signalStore, withProps, withState } from '@ngrx/signals';
 import { Logger } from './logger';
-import { Book } from './book.model';
-import { BooksService } from './books.service';
+import { BooksService } from './books-service';
+import { Book } from './book';
 
 type BooksState = {
   books: Book[];
