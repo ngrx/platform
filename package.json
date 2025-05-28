@@ -66,8 +66,8 @@
     ]
   },
   "dependencies": {
-    "@analogjs/content": "^1.15.1",
-    "@analogjs/router": "^1.15.1",
+    "@analogjs/content": "1.15.1",
+    "@analogjs/router": "1.15.1",
     "@angular/animations": "19.2.3",
     "@angular/cdk": "19.2.6",
     "@angular/common": "19.2.3",
@@ -229,7 +229,7 @@
     "uglify-js": "^3.1.9",
     "vite": "^6.3.0",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^3.0.0",
+    "vitest": "2.1.9",
     "yaml": "^2.4.5"
   },
   "collective": {
