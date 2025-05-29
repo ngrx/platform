@@ -78,6 +78,27 @@ describe('withReducer', () => {
     expect(getState(store)).toEqual({ count: 2, count2: 11 });
   });
 
+  it('has access to the current state', () => {
+    const incrementBy = event('incrementBy', type<number>());
+
+    const CounterStore = signalStore(
+      { providedIn: 'root' },
+      withState({ count: 10, count2: 0 }),
+      withReducer(
+        on(incrementBy, ({ payload }, state) => ({
+          count: state.count + payload,
+        }))
+      )
+    );
+
+    const store = TestBed.inject(CounterStore);
+    const dispatcher = TestBed.inject(Dispatcher);
+
+    dispatcher.dispatch(incrementBy(20));
+
+    expect(getState(store)).toEqual({ count: 30, count2: 0 });
+  });
+
   it('allows listening to multiple events', () => {
     const set = event('set', type<number>());
     const set_ = event('set_', type<number>());

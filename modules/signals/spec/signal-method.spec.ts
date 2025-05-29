@@ -103,11 +103,11 @@ describe('signalMethod', () => {
       childInjector.destroy();
 
       summand1.set(2);
-      summand2.set(2);
+      summand2.set(3);
       TestBed.flushEffects();
 
       adder.destroy();
-      expect(a).toBe(4);
+      expect(a).toBe(7);
     });
 
     it('uses the provided injector (source injector) on creation', () => {
@@ -123,6 +123,7 @@ describe('signalMethod', () => {
 
       adder(value);
       TestBed.flushEffects();
+      expect(a).toBe(2);
 
       sourceInjector.destroy();
       value.set(2);

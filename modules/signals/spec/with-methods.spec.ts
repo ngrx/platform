@@ -38,7 +38,7 @@ describe('withMethods', () => {
       })),
     ].reduce((acc, feature) => feature(acc), getInitialInnerStore());
     const m2 = () => 10;
-    vi.spyOn(console, 'warn').mockImplementation();
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     withMethods(() => ({
       p() {},
