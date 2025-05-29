@@ -4,6 +4,7 @@
   "sourceRoot": "projects/example-app/src",
   "projectType": "application",
   "prefix": "bc",
+  "tags": [],
   "generators": {},
   "targets": {
     "build": {
@@ -53,7 +54,8 @@
           "buildTarget": "example-app:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -80,6 +82,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/projects/example-app"]
     }
-  },
-  "tags": []
+  }
 }
