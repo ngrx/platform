@@ -117,7 +117,29 @@ describe('withFeature', () => {
     expect(store.createUrl('docs')).toBe('https://www.ngrx.io/docs');
   });
 
-  it('can be cominbed with inputs', () => {
+  it('provides writable state source', () => {
+    const withCallback = (cb: () => void) =>
+      signalStoreFeature(
+        withMethods(() => ({
+          executeCallBack: () => cb(),
+        }))
+      );
+
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withState({ counter: 1 }),
+      withFeature((store) =>
+        withCallback(() => patchState(store, { counter: 2 }))
+      )
+    );
+
+    const store = TestBed.inject(Store);
+    expect(getState(store)).toEqual({ counter: 1 });
+    store.executeCallBack();
+    expect(getState(store)).toEqual({ counter: 2 });
+  });
+
+  it('can be combined with inputs', () => {
     function withLoadEntities<Entity extends { id: number }, Filter>(config: {
       filter: Signal<Filter>;
       loader: (filter: Filter) => Observable<Entity[]>;
