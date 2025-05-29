@@ -11,7 +11,7 @@ export type StateSignals<State> = IsKnownRecord<Prettify<State>> extends true
     }
   : {};
 
-export type SignalsDictionary = Record<string, Signal<unknown>>;
+export type SignalsDictionary = Record<string | symbol, Signal<unknown>>;
 
 export type MethodsDictionary = Record<string, Function>;
 
