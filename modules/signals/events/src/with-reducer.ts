@@ -1,8 +1,9 @@
-import { inject } from '@angular/core';
+import { inject, untracked } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { merge, tap } from 'rxjs';
 import {
   EmptyFeatureResult,
+  getState,
   patchState,
   SignalStoreFeature,
   signalStoreFeature,
@@ -48,7 +49,8 @@ export function withReducer<State extends object>(
         const updates = caseReducers.map((caseReducer) =>
           events.on(...caseReducer.events).pipe(
             tap((event) => {
-              const result = caseReducer.reducer(event);
+              const state = untracked(() => getState(store));
+              const result = caseReducer.reducer(event, state);
               const updaters = Array.isArray(result) ? result : [result];
 
               patchState(store, ...updaters);
