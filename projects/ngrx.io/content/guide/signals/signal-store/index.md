@@ -286,6 +286,38 @@ export const BookSearchStore = signalStore(
 
 </code-example>
 
+<div class="alert is-helpful">
+
+It may be necessary for a computed in a `withComputed` feature to need to reference another computed value, 
+or a method in a `withMethods` feature to refer to another method. To do so, either: 
+
+(A) Create another `withComputed` feature  or `withMethods` feature, or 
+
+(B) Break out the common piece with a helper `const`.
+
+```ts
+export const BooksStore = signalStore(
+  withState(initialState),
+  // 👇 Accessing previously defined state signals and properties.
+  withComputed(({ books, filter }) => ({
+    booksCount: computed(() => books().length),
+    sortDirection: computed(() => filter.order() === 'asc' ? 1 : -1),
+  })),
+  // 👇 (A) Also access previously defined computed properties (or functions).
+  withComputed(({ books, sortDirection }) => {
+    // 👇 (B) Define helper functions (or computeds).
+    const sortBooks = (direction: number) =>
+      books().toSorted((a, b) => direction * a.title.localeCompare(b.title));
+
+    return {
+      sortedBooks: computed(() => sortBooks(sortDirection())),
+      reversedBooks: computed(() => sortBooks(-1 * sortDirection())),
+    };
+  }),
+);
+```
+</div>
+
 ### Reactive Store Methods
 
 In more complex scenarios, opting for RxJS to handle asynchronous side effects is advisable.
