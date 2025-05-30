@@ -42,9 +42,7 @@ describe('Container Schematic', () => {
       options,
       appTree
     );
-    const content = tree.readContent(
-      `${projectPath}/src/app/foo/foo.component.ts`
-    );
+    const content = tree.readContent(`${projectPath}/src/app/foo/foo.ts`);
     expect(content).not.toMatch(/fromStore/);
     expect(content).toMatchSnapshot();
   });
@@ -57,9 +55,7 @@ describe('Container Schematic', () => {
       options,
       appTree
     );
-    expect(
-      tree.exists(`${projectPath}/src/app/foo/foo.component.ts`)
-    ).toBeTruthy();
+    expect(tree.exists(`${projectPath}/src/app/foo/foo.ts`)).toBeTruthy();
   });
 
   it('should remove index.ts from the state path if provided', async () => {
@@ -70,9 +66,7 @@ describe('Container Schematic', () => {
       options,
       appTree
     );
-    expect(
-      tree.exists(`${projectPath}/src/app/foo/foo.component.ts`)
-    ).toBeTruthy();
+    expect(tree.exists(`${projectPath}/src/app/foo/foo.ts`)).toBeTruthy();
   });
 
   it('should import Store into the component', async () => {
@@ -83,9 +77,7 @@ describe('Container Schematic', () => {
       options,
       appTree
     );
-    const content = tree.readContent(
-      `${projectPath}/src/app/foo/foo.component.ts`
-    );
+    const content = tree.readContent(`${projectPath}/src/app/foo/foo.ts`);
     expect(content).toMatch(/Store/);
     expect(content).toMatchSnapshot();
   });
@@ -98,7 +90,7 @@ describe('Container Schematic', () => {
       appTree
     );
     const content = tree.readContent(
-      `${projectPath}/src/app/foo/foo.component.spec.ts`
+      `${projectPath}/src/app/foo/foo-component.spec.ts`
     );
     expect(content).toMatchSnapshot();
   });
@@ -111,7 +103,7 @@ describe('Container Schematic', () => {
       appTree
     );
     const content = tree.readContent(
-      `${projectPath}/src/app/foo/foo.component.spec.ts`
+      `${projectPath}/src/app/foo/foo-component.spec.ts`
     );
     expect(content).toMatchSnapshot();
   });
@@ -124,9 +116,7 @@ describe('Container Schematic', () => {
         options,
         appTree
       );
-      const content = tree.readContent(
-        `${projectPath}/src/app/foo/foo.component.ts`
-      );
+      const content = tree.readContent(`${projectPath}/src/app/foo/foo.ts`);
       expect(content).not.toMatch(/standalone/);
       expect(content).toMatchSnapshot();
     });
@@ -138,9 +128,7 @@ describe('Container Schematic', () => {
         options,
         appTree
       );
-      const content = tree.readContent(
-        `${projectPath}/src/app/foo/foo.component.ts`
-      );
+      const content = tree.readContent(`${projectPath}/src/app/foo/foo.ts`);
       expect(content).toMatch(/standalone: false/);
       expect(content).toMatchSnapshot();
     });
@@ -154,9 +142,7 @@ describe('Container Schematic', () => {
         options,
         appTree
       );
-      const content = tree.readContent(
-        `${projectPath}/src/app/foo/foo.component.css`
-      );
+      const content = tree.readContent(`${projectPath}/src/app/foo/foo.css`);
       expect(content).not.toMatch(/display: block/);
       expect(content).toMatchSnapshot();
     });
@@ -168,9 +154,7 @@ describe('Container Schematic', () => {
         options,
         appTree
       );
-      const content = tree.readContent(
-        `${projectPath}/src/app/foo/foo.component.css`
-      );
+      const content = tree.readContent(`${projectPath}/src/app/foo/foo.css`);
       expect(content).toMatch(/display: block/);
       expect(content).toMatchSnapshot();
     });

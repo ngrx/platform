@@ -1,11 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Store-Devtools ng-add Schematic Store Devtools ng-add Schematic for standalone application provides initial setup 1`] = `
-"import { ApplicationConfig, provideZoneChangeDetection, isDevMode } from '@angular/core';
+"import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection, isDevMode } from '@angular/core';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })]
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
+]
 };
 "
 `;

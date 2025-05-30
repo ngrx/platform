@@ -18,7 +18,7 @@ describe('Store ng-add Schematic', () => {
     skipPackageJson: false,
     skipESLintPlugin: false,
     project: 'bar',
-    module: 'app',
+    module: 'app-module',
     minimal: false,
   };
 
@@ -62,7 +62,7 @@ describe('Store ng-add Schematic', () => {
     const options = { ...defaultOptions, minimal: true };
 
     const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
     const files = tree.files;
 
     expect(content).not.toMatch(
@@ -77,14 +77,14 @@ describe('Store ng-add Schematic', () => {
     const options = { ...defaultOptions };
 
     const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
     expect(content).toMatch(
       /import { reducers, metaReducers } from '\.\/reducers';/
     );
   });
 
   it('should import isDevMode correctly', async () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
+    const options = { ...defaultOptions, module: 'app-module.ts' };
 
     const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const content = tree.readContent(
@@ -94,7 +94,7 @@ describe('Store ng-add Schematic', () => {
   });
 
   it('should fail if specified module does not exist', async () => {
-    const options = { ...defaultOptions, module: '/src/app/app.moduleXXX.ts' };
+    const options = { ...defaultOptions, module: '/src/app/app-moduleXXX.ts' };
     let thrownError: Error | null = null;
     try {
       await schematicRunner.runSchematic('ng-add', options, appTree);

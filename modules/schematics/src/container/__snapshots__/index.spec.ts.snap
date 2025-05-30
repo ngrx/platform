@@ -17,10 +17,10 @@ import * as fromStore from '../reducers';
 @Component({
   selector: 'app-foo',
   imports: [],
-  templateUrl: './foo.component.html',
-  styleUrl: './foo.component.css'
+  templateUrl: './foo.html',
+  styleUrl: './foo.css'
 })
-export class FooComponent {
+export class Foo {
   constructor(private store: Store) {}
 }
 "
@@ -33,10 +33,10 @@ import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-foo',
   imports: [],
-  templateUrl: './foo.component.html',
-  styleUrl: './foo.component.css'
+  templateUrl: './foo.html',
+  styleUrl: './foo.css'
 })
-export class FooComponent {
+export class Foo {
   constructor(private store: Store) {}
 }
 "
@@ -120,10 +120,10 @@ import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-foo',
   imports: [],
-  templateUrl: './foo.component.html',
-  styleUrl: './foo.component.css'
+  templateUrl: './foo.html',
+  styleUrl: './foo.css'
 })
-export class FooComponent {
+export class Foo {
   constructor(private store: Store) {}
 }
 "
@@ -136,10 +136,10 @@ import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-foo',
   standalone: false,
-  templateUrl: './foo.component.html',
-  styleUrl: './foo.component.css'
+  templateUrl: './foo.html',
+  styleUrl: './foo.css'
 })
-export class FooComponent {
+export class Foo {
   constructor(private store: Store) {}
 }
 "
