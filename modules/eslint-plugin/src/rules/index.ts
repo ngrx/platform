@@ -37,6 +37,7 @@ import signalStateNoArraysAtRootLevel from './signals/signal-state-no-arrays-at-
 import signalStoreFeatureShouldUseGenericType from './signals/signal-store-feature-should-use-generic-type';
 import withStateNoArraysAtRootLevel from './signals/with-state-no-arrays-at-root-level';
 import preferProtectedState from './signals/prefer-protected-state';
+import enforceTypeCall from './signals/enforce-type-call';
 
 export const rules = {
   // component-store
@@ -84,4 +85,5 @@ export const rules = {
     signalStoreFeatureShouldUseGenericType,
   'prefer-protected-state': preferProtectedState,
   'with-state-no-arrays-at-root-level': withStateNoArraysAtRootLevel,
+  'enforce-type-call': enforceTypeCall,
 };
