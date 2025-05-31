@@ -291,26 +291,22 @@ export class FooEffects {
 `;
 
 exports[`Feature Schematic should respect the path provided for the feature name 1`] = `
-"import { NgModule } from '@angular/core';
+"import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { StoreModule } from '@ngrx/store';
-import * as fromFoo from './foo/reducers/foo.reducer';
-import { EffectsModule } from '@ngrx/effects';
-import { FooEffects } from './foo/effects/foo.effects';
+import { App } from './app';
 
 @NgModule({
   declarations: [
-    AppComponent
+    App
   ],
   imports: [
-    BrowserModule,
-    StoreModule.forFeature(fromFoo.fooFeatureKey, fromFoo.reducer),
-    EffectsModule.forFeature([FooEffects])
+    BrowserModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    provideBrowserGlobalErrorListeners()
+  ],
+  bootstrap: [App]
 })
 export class AppModule { }
 "

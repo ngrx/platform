@@ -78,20 +78,20 @@ describe('component-store', () => {
       options,
       appTree
     );
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
     expect(content).not.toMatch(/FooStore/i);
     expect(content).toMatchSnapshot();
   });
 
   it('should import into a specified module when the module provided', async () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
+    const options = { ...defaultOptions, module: 'app-module.ts' };
 
     const tree = await schematicRunner.runSchematic(
       'component-store',
       options,
       appTree
     );
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
 
     expect(content).toMatch(/FooStore/i);
     expect(content).toMatchSnapshot();
@@ -100,7 +100,7 @@ describe('component-store', () => {
   it('should fail if specified module does not exist', async () => {
     const options = {
       ...defaultOptions,
-      module: `${projectPath}/src/app/app.moduleXXX.ts`,
+      module: `${projectPath}/src/app/app-moduleXXX.ts`,
     };
     let thrownError: Error | null = null;
     try {
@@ -129,14 +129,14 @@ describe('component-store', () => {
   });
 
   it('should register the component store in the provided component', async () => {
-    const options = { ...defaultOptions, component: 'app.component.ts' };
+    const options = { ...defaultOptions, component: 'app.ts' };
 
     const tree = await schematicRunner.runSchematic(
       'component-store',
       options,
       appTree
     );
-    const content = tree.readContent(`${projectPath}/src/app/app.component.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app.ts`);
 
     expect(content).toMatch(/FooStore/i);
     expect(content).toMatchSnapshot();
@@ -145,7 +145,7 @@ describe('component-store', () => {
   it('should fail if specified component does not exist', async () => {
     const options = {
       ...defaultOptions,
-      component: `${projectPath}/src/app/app.componentXXX.ts`,
+      component: `${projectPath}/src/app/appnotexist.ts`,
     };
 
     await expect(

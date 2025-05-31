@@ -17,7 +17,7 @@ describe('Store-Devtools ng-add Schematic', () => {
   const defaultOptions: StoreDevtoolsOptions = {
     skipPackageJson: false,
     project: 'bar',
-    module: 'app',
+    module: 'app-module',
   };
 
   const projectPath = getTestProjectPath();
@@ -50,7 +50,7 @@ describe('Store-Devtools ng-add Schematic', () => {
     const options = { ...defaultOptions };
 
     const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
     expect(content).toMatch(
       /import { StoreDevtoolsModule } from '@ngrx\/store-devtools';/
     );
@@ -63,24 +63,24 @@ describe('Store-Devtools ng-add Schematic', () => {
     const options = { ...defaultOptions };
 
     const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
     expect(content).toMatch(
       /import { StoreDevtoolsModule } from '@ngrx\/store-devtools';/
     );
   });
 
   it('should import isDevMode correctly', async () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
+    const options = { ...defaultOptions, module: 'app-module.ts' };
 
     const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
     expect(content).toMatch(
-      /import { NgModule, isDevMode } from '@angular\/core';/
+      /import { NgModule, provideBrowserGlobalErrorListeners, isDevMode } from '@angular\/core';/
     );
   });
 
   it('should fail if specified module does not exist', async () => {
-    const options = { ...defaultOptions, module: '/src/app/app.moduleXXX.ts' };
+    const options = { ...defaultOptions, module: '/src/app/app-moduleXXX.ts' };
     let thrownError: Error | null = null;
     try {
       await schematicRunner.runSchematic('ng-add', options, appTree);
@@ -122,7 +122,7 @@ describe('Store-Devtools ng-add Schematic', () => {
     };
 
     const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
     expect(content).toMatch(/maxAge: 5/);
   });
 

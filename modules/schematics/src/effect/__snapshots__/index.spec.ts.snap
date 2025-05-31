@@ -75,23 +75,25 @@ import { FooEffects } from './foo/foo.effects';
 `;
 
 exports[`Effect Schematic feature effects should still register the feature effect module with an effect with the minimal flag 1`] = `
-"import { NgModule } from '@angular/core';
+"import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { App } from './app';
 import { EffectsModule } from '@ngrx/effects';
 import { FooEffects } from './foo/foo.effects';
 
 @NgModule({
   declarations: [
-    AppComponent
+    App
   ],
   imports: [
     BrowserModule,
     EffectsModule.forFeature([FooEffects])
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    provideBrowserGlobalErrorListeners()
+  ],
+  bootstrap: [App]
 })
 export class AppModule { }
 "
@@ -159,45 +161,49 @@ export class FooEffects {
 `;
 
 exports[`Effect Schematic root effects should register the root effect in the provided module 1`] = `
-"import { NgModule } from '@angular/core';
+"import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { App } from './app';
 import { EffectsModule } from '@ngrx/effects';
 import { FooEffects } from './foo/foo.effects';
 
 @NgModule({
   declarations: [
-    AppComponent
+    App
   ],
   imports: [
     BrowserModule,
     EffectsModule.forRoot([FooEffects])
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    provideBrowserGlobalErrorListeners()
+  ],
+  bootstrap: [App]
 })
 export class AppModule { }
 "
 `;
 
 exports[`Effect Schematic root effects should register the root effect module without effect with the minimal flag 1`] = `
-"import { NgModule } from '@angular/core';
+"import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { App } from './app';
 import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
-    AppComponent
+    App
   ],
   imports: [
     BrowserModule,
     EffectsModule.forRoot([])
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    provideBrowserGlobalErrorListeners()
+  ],
+  bootstrap: [App]
 })
 export class AppModule { }
 "
@@ -290,23 +296,25 @@ export class FooEffects {
 `;
 
 exports[`Effect Schematic should import into a specified module when provided 1`] = `
-"import { NgModule } from '@angular/core';
+"import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { App } from './app';
 import { EffectsModule } from '@ngrx/effects';
 import { FooEffects } from './foo/foo.effects';
 
 @NgModule({
   declarations: [
-    AppComponent
+    App
   ],
   imports: [
     BrowserModule,
     EffectsModule.forFeature([FooEffects])
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    provideBrowserGlobalErrorListeners()
+  ],
+  bootstrap: [App]
 })
 export class AppModule { }
 "
@@ -342,20 +350,22 @@ describe('FooEffects', () => {
 `;
 
 exports[`Effect Schematic should not be provided by default 1`] = `
-"import { NgModule } from '@angular/core';
+"import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { App } from './app';
 
 @NgModule({
   declarations: [
-    AppComponent
+    App
   ],
   imports: [
     BrowserModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    provideBrowserGlobalErrorListeners()
+  ],
+  bootstrap: [App]
 })
 export class AppModule { }
 "

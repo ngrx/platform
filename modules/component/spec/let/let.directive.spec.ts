@@ -3,8 +3,6 @@ import {
   Component,
   Directive,
   ErrorHandler,
-  TemplateRef,
-  ViewContainerRef,
 } from '@angular/core';
 import {
   ComponentFixture,
@@ -125,8 +123,6 @@ const setupLetDirectiveTestComponent = (): void => {
   TestBed.configureTestingModule({
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-      TemplateRef,
-      ViewContainerRef,
     ],
   });
   fixtureLetDirectiveTestComponent = TestBed.createComponent(
@@ -142,8 +138,6 @@ const setupLetDirectiveTestComponentError = (): void => {
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       { provide: ErrorHandler, useClass: MockErrorHandler },
-      TemplateRef,
-      ViewContainerRef,
     ],
   });
 
@@ -159,8 +153,6 @@ const setupLetDirectiveTestComponentComplete = (): void => {
   TestBed.configureTestingModule({
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-      TemplateRef,
-      ViewContainerRef,
     ],
   });
 
@@ -177,8 +169,6 @@ const setupLetDirectiveTestComponentSuspense = (): void => {
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       { provide: ErrorHandler, useClass: MockErrorHandler },
-      TemplateRef,
-      ViewContainerRef,
     ],
   });
 
@@ -195,8 +185,6 @@ const setupLetDirectiveTestComponentSuspenseTpl = (): void => {
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       { provide: ErrorHandler, useClass: MockErrorHandler },
-      TemplateRef,
-      ViewContainerRef,
     ],
   });
 
@@ -213,8 +201,6 @@ const setupLetDirectiveTestRecursionComponent = (): void => {
   TestBed.configureTestingModule({
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-      TemplateRef,
-      ViewContainerRef,
       { provide: BehaviorSubject, useValue: subject },
     ],
   });
@@ -541,8 +527,6 @@ describe('LetDirective', () => {
         providers: [
           { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
           { provide: ErrorHandler, useClass: MockErrorHandler },
-          TemplateRef,
-          ViewContainerRef,
         ],
       });
 

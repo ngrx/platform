@@ -36,7 +36,7 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const modulePath = `${projectPath}/src/app/app-module.ts`;
     const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
     expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
@@ -49,12 +49,12 @@ describe('Store Schematic', () => {
   it('should skip the initial store setup files if the minimal flag is provided', async () => {
     const options = {
       ...defaultOptions,
-      module: 'app.module.ts',
+      module: 'app-module.ts',
       minimal: true,
     };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const modulePath = `${projectPath}/src/app/app-module.ts`;
     const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
     expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
@@ -67,12 +67,12 @@ describe('Store Schematic', () => {
     const options = {
       ...defaultOptions,
       root: false,
-      module: 'app.module.ts',
+      module: 'app-module.ts',
       minimal: true,
     };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const modulePath = `${projectPath}/src/app/app-module.ts`;
     const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
     expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
@@ -122,10 +122,10 @@ describe('Store Schematic', () => {
   });
 
   it('should import into a specified module', async () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
+    const options = { ...defaultOptions, module: 'app-module.ts' };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const modulePath = `${projectPath}/src/app/app-module.ts`;
     const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
     expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
@@ -143,10 +143,10 @@ describe('Store Schematic', () => {
   });
 
   it('should import a feature a specified module', async () => {
-    const options = { ...defaultOptions, root: false, module: 'app.module.ts' };
+    const options = { ...defaultOptions, root: false, module: 'app-module.ts' };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const modulePath = `${projectPath}/src/app/app-module.ts`;
     const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
     expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
@@ -160,7 +160,7 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions, name: 'State' };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const modulePath = `${projectPath}/src/app/app-module.ts`;
     const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
     expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
@@ -178,7 +178,7 @@ describe('Store Schematic', () => {
     };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const modulePath = `${projectPath}/src/app/app-module.ts`;
     const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
     expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
@@ -192,7 +192,7 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions, root: false, name: 'Feature' };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const modulePath = `${projectPath}/src/app/app-module.ts`;
     const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
     expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
@@ -211,7 +211,7 @@ describe('Store Schematic', () => {
     };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const modulePath = `${projectPath}/src/app/app-module.ts`;
     const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
     expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
@@ -248,7 +248,7 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions, root: false };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const modulePath = `${projectPath}/src/app/app-module.ts`;
     const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
     expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);
@@ -262,7 +262,7 @@ describe('Store Schematic', () => {
     const options = { ...defaultOptions };
 
     const tree = await schematicRunner.runSchematic('store', options, appTree);
-    const modulePath = `${projectPath}/src/app/app.module.ts`;
+    const modulePath = `${projectPath}/src/app/app-module.ts`;
     const reducersPath = `${projectPath}/src/app/reducers/index.ts`;
 
     expect(tree.files.indexOf(modulePath)).toBeGreaterThanOrEqual(0);

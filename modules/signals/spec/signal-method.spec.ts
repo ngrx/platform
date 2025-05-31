@@ -27,15 +27,15 @@ describe('signalMethod', () => {
     adder(summand);
     expect(a).toBe(1);
 
-    TestBed.flushEffects();
+    TestBed.tick();
     expect(a).toBe(2);
 
     summand.set(2);
     summand.set(2);
-    TestBed.flushEffects();
+    TestBed.tick();
     expect(a).toBe(4);
 
-    TestBed.flushEffects();
+    TestBed.tick();
     expect(a).toBe(4);
   });
 
@@ -51,13 +51,13 @@ describe('signalMethod', () => {
       adder(summand);
 
       summand.set(2);
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(a).toBe(3);
 
       adder.destroy();
 
       summand.set(2);
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(a).toBe(3);
     });
 
@@ -73,14 +73,14 @@ describe('signalMethod', () => {
       const adder = createAdder((value) => (a += value));
       adder(summand1);
       adder(summand2);
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(a).toBe(4);
 
       adder.destroy();
 
       summand1.set(2);
       summand2.set(3);
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(a).toBe(4);
     });
 
@@ -98,13 +98,13 @@ describe('signalMethod', () => {
       adder(summand1, { injector: childInjector });
       adder(summand2);
 
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(a).toBe(4);
       childInjector.destroy();
 
       summand1.set(2);
       summand2.set(3);
-      TestBed.flushEffects();
+      TestBed.tick();
 
       adder.destroy();
       expect(a).toBe(7);
@@ -122,12 +122,12 @@ describe('signalMethod', () => {
       const value = signal(1);
 
       adder(value);
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(a).toBe(2);
 
       sourceInjector.destroy();
       value.set(2);
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(a).toBe(2);
     });
@@ -150,12 +150,12 @@ describe('signalMethod', () => {
       TestBed.runInInjectionContext(() => {
         adder(value, { injector: callerInjector });
       });
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(a).toBe(2);
 
       sourceInjector.destroy();
       value.set(2);
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(a).toBe(4);
     });
@@ -183,17 +183,17 @@ describe('signalMethod', () => {
       runInInjectionContext(callerInjector, () =>
         adder(value, { injector: providedInjector })
       );
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(a).toBe(2);
 
       sourceInjector.destroy();
       value.set(2);
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(a).toBe(4);
 
       callerInjector.destroy();
       value.set(1);
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(a).toBe(5);
     });
   });
@@ -206,14 +206,14 @@ describe('signalMethod', () => {
     adder(summand1);
     const s2 = adder(summand2);
 
-    TestBed.flushEffects();
+    TestBed.tick();
     s2.destroy();
     expect(a).toBe(4);
 
     summand1.set(100);
     summand2.set(3000);
 
-    TestBed.flushEffects();
+    TestBed.tick();
     expect(a).toBe(104);
   });
 

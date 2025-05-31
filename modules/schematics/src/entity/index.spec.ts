@@ -132,10 +132,10 @@ describe('Entity Schematic', () => {
   });
 
   it('should import into a specified module', async () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
+    const options = { ...defaultOptions, module: 'app-module.ts' };
 
     const tree = await schematicRunner.runSchematic('entity', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
 
     expect(content).toMatchSnapshot();
   });

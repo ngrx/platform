@@ -41,16 +41,28 @@ function addStateToComponent(options: Partial<ContainerOptions>) {
       }
     }
 
-    const componentPath =
+    let componentPath =
       `/${options.path}/` +
       (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
       stringUtils.dasherize(options.name) +
       '.component.ts';
 
-    const text = host.read(componentPath);
+    if (!host.exists(componentPath)) {
+      componentPath =
+        `/${options.path}/` +
+        (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
+        stringUtils.dasherize(options.name) +
+        '.ts';
+      if (!host.exists(componentPath)) {
+        throw new SchematicsException(`File ${componentPath} does not exist.`);
+      }
+    }
 
+    const text = host.read(componentPath);
     if (text === null) {
-      throw new SchematicsException(`File ${componentPath} does not exist.`);
+      throw new SchematicsException(
+        `File content ${componentPath} does not exist.`
+      );
     }
 
     const sourceText = text.toString('utf-8');

@@ -75,16 +75,16 @@ describe('Effect Schematic', () => {
     const options = { ...defaultOptions };
 
     const tree = await schematicRunner.runSchematic('effect', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
     expect(content).not.toMatch(/FooEffects/);
     expect(content).toMatchSnapshot();
   });
 
   it('should import into a specified module when provided', async () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
+    const options = { ...defaultOptions, module: 'app-module.ts' };
 
     const tree = await schematicRunner.runSchematic('effect', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
     expect(content).toMatch(/FooEffects/);
     expect(content).toMatchSnapshot();
   });
@@ -165,7 +165,7 @@ describe('Effect Schematic', () => {
       const options = {
         ...defaultOptions,
         root: true,
-        module: 'app.module.ts',
+        module: 'app-module.ts',
       };
 
       const tree = await schematicRunner.runSchematic(
@@ -173,7 +173,7 @@ describe('Effect Schematic', () => {
         options,
         appTree
       );
-      const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+      const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
 
       expect(content).toMatch(/EffectsModule\.forRoot\(\[FooEffects\]\)/);
       expect(content).toMatchSnapshot();
@@ -184,7 +184,7 @@ describe('Effect Schematic', () => {
         ...defaultOptions,
         root: true,
         name: undefined,
-        module: 'app.module.ts',
+        module: 'app-module.ts',
         minimal: true,
       };
 
@@ -193,7 +193,7 @@ describe('Effect Schematic', () => {
         options,
         appTree
       );
-      const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+      const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
 
       expect(content).toMatch(/EffectsModule\.forRoot\(\[\]\)/);
       expect(content).not.toMatch(/FooEffects/);
@@ -270,7 +270,7 @@ describe('Effect Schematic', () => {
       const options = {
         ...defaultOptions,
         root: false,
-        module: 'app.module.ts',
+        module: 'app-module.ts',
         minimal: true,
       };
 
@@ -279,7 +279,7 @@ describe('Effect Schematic', () => {
         options,
         appTree
       );
-      const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+      const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
 
       expect(content).toMatch(/EffectsModule\.forFeature\(\[FooEffects\]\)/);
       expect(

@@ -20,7 +20,7 @@ describe('Effects ng-add Schematic', () => {
     name: 'foo',
     skipPackageJson: false,
     project: 'bar',
-    module: 'app',
+    module: 'app-module',
     flat: false,
     group: false,
     minimal: false,
@@ -70,7 +70,7 @@ describe('Effects ng-add Schematic', () => {
 
     const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
     const files = tree.files;
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
 
     expect(content).toMatch(/EffectsModule\.forRoot\(\[\]\)/);
     expect(
@@ -83,11 +83,11 @@ describe('Effects ng-add Schematic', () => {
     const options = {
       ...defaultOptions,
       minimal: true,
-      module: 'app.module.ts',
+      module: 'app-module.ts',
     };
 
     const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
     expect(content).not.toMatch(
       /import { FooEffects } from '.\/foo\/foo.effects'/
     );
@@ -97,22 +97,22 @@ describe('Effects ng-add Schematic', () => {
     const options = { ...defaultOptions };
 
     const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
     expect(content).toMatch(/import { FooEffects } from '.\/foo\/foo.effects'/);
   });
 
   it('should import into a specified module', async () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
+    const options = { ...defaultOptions, module: 'app-module.ts' };
 
     const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
     expect(content).toMatch(/import { FooEffects } from '.\/foo\/foo.effects'/);
   });
 
   it('should fail if specified module does not exist', async () => {
     const options = {
       ...defaultOptions,
-      module: `${projectPath}/src/app/app.moduleXXX.ts`,
+      module: `${projectPath}/src/app/app-moduleXXX.ts`,
     };
     let thrownError: Error | null = null;
     try {
@@ -140,7 +140,7 @@ describe('Effects ng-add Schematic', () => {
     const options = { ...defaultOptions };
 
     const tree = await schematicRunner.runSchematic('ng-add', options, appTree);
-    const content = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const content = tree.readContent(`${projectPath}/src/app/app-module.ts`);
 
     expect(content).toMatch(/EffectsModule\.forRoot\(\[FooEffects\]\)/);
   });

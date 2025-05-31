@@ -54,6 +54,10 @@ export function findModuleFromOptions(
       return normalize(modulePath + '.module.ts');
     } else if (host.exists(modulePath + '/' + moduleBaseName + '.module.ts')) {
       return normalize(modulePath + '/' + moduleBaseName + '.module.ts');
+    } else if (host.exists(modulePath + '-module.ts')) {
+      return normalize(modulePath + '-module.ts');
+    } else if (host.exists(modulePath + '/' + moduleBaseName + '-module.ts')) {
+      return normalize(modulePath + '/' + moduleBaseName + '-module.ts');
     } else {
       throw new Error(`Specified module path ${modulePath} does not exist`);
     }
@@ -66,8 +70,8 @@ export function findModuleFromOptions(
 export function findModule(host: Tree, generateDir: string): Path {
   let dir: DirEntry | null = host.getDir('/' + generateDir);
 
-  const moduleRe = /\.module\.ts$/;
-  const routingModuleRe = /-routing\.module\.ts/;
+  const moduleRe = /(\.|-)module\.ts$/;
+  const routingModuleRe = /-routing(\.|-)module\.ts/;
 
   while (dir) {
     const matches = dir.subfiles.filter(

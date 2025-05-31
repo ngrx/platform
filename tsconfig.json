@@ -18,6 +18,7 @@
     "strict": true,
     "paths": {
       "@example-app/*": ["./projects/example-app/src/app/*"],
+      "@ngrx-io/*": ["./projects/www/src/*"],
       "@ngrx/component": ["./modules/component"],
       "@ngrx/component-store": ["./modules/component-store"],
       "@ngrx/component-store/schematics-core": [
@@ -47,16 +48,15 @@
       "@ngrx/signals/entities": ["./modules/signals/entities"],
       "@ngrx/signals/events": ["./modules/signals/events"],
       "@ngrx/signals/rxjs-interop": ["./modules/signals/rxjs-interop"],
-      "@ngrx/signals/testing": ["./modules/signals/testing"],
       "@ngrx/signals/schematics-core": ["./modules/signals/schematics-core"],
+      "@ngrx/signals/testing": ["./modules/signals/testing"],
       "@ngrx/store": ["./modules/store"],
       "@ngrx/store-devtools": ["./modules/store-devtools"],
       "@ngrx/store-devtools/schematics-core": [
         "./modules/store-devtools/schematics-core"
       ],
       "@ngrx/store/schematics-core": ["./modules/store/schematics-core"],
-      "@ngrx/store/testing": ["./modules/store/testing"],
-      "@ngrx-io/*": ["./projects/www/src/*"]
+      "@ngrx/store/testing": ["./modules/store/testing"]
     },
     "typeRoots": ["node_modules/@types"]
   },
