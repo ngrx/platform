@@ -30,7 +30,7 @@ import { FooterComponent } from './components/footer.component';
       :host {
         display: block;
         position: relative;
-        width: calc(100lvw - 270px);
+        width: calc(100% - 270px);
         left: 270px;
       }
 
