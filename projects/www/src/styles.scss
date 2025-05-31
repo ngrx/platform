@@ -26,17 +26,6 @@ html {
   text-size-adjust: none;
 }
 
-/* Hide scrollbars */
-::-webkit-scrollbar { 
-  display: none;
-}
-
-/* Hide scrollbars on Firefox and IE/Edge */
-html {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
 /* Remove default margin in favour of better control in authored CSS */
 body,
 h1,
