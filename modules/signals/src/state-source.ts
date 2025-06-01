@@ -75,7 +75,7 @@ export function patchState<State extends object>(
   const stateKeys = Reflect.ownKeys(stateSource[STATE_SOURCE]);
   for (const key of Reflect.ownKeys(newState)) {
     if (!stateKeys.includes(key)) {
-      if (ngDevMode !== undefined && ngDevMode) {
+      if (typeof ngDevMode !== 'undefined' && ngDevMode) {
         console.warn(
           '@ngrx/signals: Skipping update for unknown property in state source.',
           `Property: ${String(key)}`
