@@ -10,12 +10,11 @@ export function signalState<State extends object>(
   initialState: State
 ): SignalState<State> {
   const stateKeys = Reflect.ownKeys(initialState);
-  const stateAsRecord = initialState as Record<string | symbol, unknown>;
 
   const stateSource = stateKeys.reduce(
     (signalsDict, key) => ({
       ...signalsDict,
-      [key]: signal(stateAsRecord[key]),
+      [key]: signal((initialState as Record<string | symbol, unknown>)[key]),
     }),
     {} as SignalsDictionary
   );
