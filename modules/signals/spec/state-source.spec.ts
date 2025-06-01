@@ -205,6 +205,44 @@ describe('StateSource', () => {
         expect(consoleWarnSpy).not.toHaveBeenCalled();
       });
     });
+
+    it('should only patch affected root properties', () => {
+      let updateCounter = 0;
+      const userSignal = signal(
+        {
+          firstName: 'John',
+          lastName: 'Smith',
+        },
+        {
+          equal: (a, b) => {
+            updateCounter++;
+            return a === b;
+          },
+        }
+      );
+
+      const UserStore = signalStore(
+        { providedIn: 'root', protectedState: false },
+        withState({ user: userSignal, city: 'Changan' })
+      );
+      const store = TestBed.inject(UserStore);
+
+      expect(updateCounter).toBe(0);
+
+      patchState(store, { city: 'Xian' });
+      expect(updateCounter).toBe(0);
+
+      patchState(store, (state) => state);
+      expect(updateCounter).toBe(0);
+
+      patchState(store, ({ user }) => ({ user }));
+      expect(updateCounter).toBe(0);
+
+      patchState(store, ({ user }) => ({
+        user: { ...user, firstName: 'Jane' },
+      }));
+      expect(updateCounter).toBe(1);
+    });
   });
 
   describe('getState', () => {

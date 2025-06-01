@@ -84,6 +84,11 @@ export function patchState<State extends object>(
       continue;
     }
     const signalKey = key as keyof State;
+
+    if (currentState[signalKey] === newState[signalKey]) {
+      continue;
+    }
+
     signals[signalKey].set(newState[signalKey]);
   }
 
