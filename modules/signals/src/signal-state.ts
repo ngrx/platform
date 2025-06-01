@@ -12,7 +12,6 @@ export function signalState<State extends object>(
   const stateKeys = Reflect.ownKeys(initialState);
   const stateAsRecord = initialState as Record<string | symbol, unknown>;
 
-  // define STATE_SOURCE property
   const stateSource = stateKeys.reduce(
     (signalsDict, key) => ({
       ...signalsDict,
@@ -21,7 +20,6 @@ export function signalState<State extends object>(
     {} as SignalsDictionary
   );
 
-  // define signalState as a computed signal of all STATE_SOURCE properties
   const signalState = computed(() =>
     stateKeys.reduce(
       (state, key) => ({
@@ -32,12 +30,10 @@ export function signalState<State extends object>(
     )
   );
 
-  // append STATE_SOURCE property to the signalState
   Object.defineProperty(signalState, STATE_SOURCE, {
     value: stateSource,
   });
 
-  // generate deep signals
   for (const key of stateKeys) {
     Object.defineProperty(signalState, key, {
       value: toDeepSignal(stateSource[key]),
