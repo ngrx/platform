@@ -10,28 +10,29 @@ import {
 } from './signal-store-models';
 import { isWritableSignal, STATE_SOURCE } from './state-source';
 
-type StripWritableSignals<State extends object> = {
-  [Property in keyof State]: State[Property] extends WritableSignal<infer Type>
-    ? Type
-    : State[Property];
+type StateResult<StateInput extends object> = {
+  [K in keyof StateInput]: StateInput[K] extends WritableSignal<infer V>
+    ? V
+    : StateInput[K];
 };
+
 export function withState<State extends object>(
   stateFactory: () => State
 ): SignalStoreFeature<
   EmptyFeatureResult,
-  { state: StripWritableSignals<State>; props: {}; methods: {} }
+  { state: StateResult<State>; props: {}; methods: {} }
 >;
 export function withState<State extends object>(
   state: State
 ): SignalStoreFeature<
   EmptyFeatureResult,
-  { state: StripWritableSignals<State>; props: {}; methods: {} }
+  { state: StateResult<State>; props: {}; methods: {} }
 >;
 export function withState<State extends object>(
   stateOrFactory: State | (() => State)
 ): SignalStoreFeature<
   SignalStoreFeatureResult,
-  { state: StripWritableSignals<State>; props: {}; methods: {} }
+  { state: StateResult<State>; props: {}; methods: {} }
 > {
   return (store) => {
     const state =
@@ -40,23 +41,22 @@ export function withState<State extends object>(
 
     assertUniqueStoreMembers(store, stateKeys);
 
-    const stateAsRecord = state as Record<string | symbol, unknown>;
     const stateSource = store[STATE_SOURCE] as Record<
       string | symbol,
       Signal<unknown>
     >;
     const stateSignals = {} as SignalsDictionary;
     for (const key of stateKeys) {
-      const signalValue = stateAsRecord[key];
-      stateSource[key] = isWritableSignal(signalValue)
-        ? signalValue
-        : signal(signalValue);
+      const signalOrValue = (state as Record<string | symbol, unknown>)[key];
+      stateSource[key] = isWritableSignal(signalOrValue)
+        ? signalOrValue
+        : signal(signalOrValue);
       stateSignals[key] = toDeepSignal(stateSource[key]);
     }
 
     return {
       ...store,
       stateSignals: { ...store.stateSignals, ...stateSignals },
-    } as InnerSignalStore<StripWritableSignals<State>>;
+    } as InnerSignalStore<StateResult<State>>;
   };
 }
