@@ -211,13 +211,13 @@ describe('withState', () => {
       const Store = signalStore(
         { providedIn: 'root' },
         withState({
-          number: signal(1).asReadonly(),
+          n: signal(1).asReadonly(),
         })
       );
       const store = TestBed.inject(Store);
 
-      expect(isSignal(store.number())).toBe(true);
-      expect(store.number()()).toBe(1);
+      expect(isSignal(store.n())).toBe(true);
+      expect(store.n()()).toBe(1);
     });
 
     it('does not strip a nested writable Signal', () => {
