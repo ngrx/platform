@@ -21,7 +21,7 @@ describe('signalState', () => {
     vi.clearAllMocks();
   });
 
-  it('creates its properites as Signals', () => {
+  it('creates its properties as Signals', () => {
     const state = signalState({ foo: 'bar' });
     const stateSource: SignalsDictionary = state[STATE_SOURCE];
 

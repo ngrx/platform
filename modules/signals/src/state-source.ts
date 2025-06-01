@@ -10,6 +10,8 @@ import {
 } from '@angular/core';
 import { Prettify } from './ts-helpers';
 
+declare const ngDevMode: unknown;
+
 const STATE_WATCHERS = new WeakMap<object, Array<StateWatcher<any>>>();
 
 export const STATE_SOURCE = Symbol('STATE_SOURCE');
@@ -73,7 +75,12 @@ export function patchState<State extends object>(
   const stateKeys = Reflect.ownKeys(stateSource[STATE_SOURCE]);
   for (const key of Reflect.ownKeys(newState)) {
     if (!stateKeys.includes(key)) {
-      // TODO: Optional properties which don't exist in the initial state will not be added
+      if (ngDevMode !== undefined && ngDevMode) {
+        console.warn(
+          '@ngrx/signals: Skipping update for unknown property in state source.',
+          `Property: ${String(key)}`
+        );
+      }
       continue;
     }
     const signalKey = key as keyof State;

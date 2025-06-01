@@ -35,6 +35,12 @@ describe('StateSource', () => {
     [SECRET]: 'secret',
   };
 
+  const consoleWarnSpy = vi.spyOn(console, 'warn');
+
+  beforeEach(() => {
+    consoleWarnSpy.mockClear();
+  });
+
   describe('isWritableStateSource', () => {
     it('returns true for a writable StateSource', () => {
       const stateSource: StateSource<{ value: typeof initialState }> = {
@@ -147,6 +153,56 @@ describe('StateSource', () => {
           expect(state.numbers()).not.toBe(initialState.numbers);
           expect(state.ngrx()).not.toBe(initialState.ngrx);
         });
+      });
+    });
+
+    describe('undefined root properties', () => {
+      it('skips and warns on optional root properties, when they are missing in the init state', () => {
+        type UserState = {
+          id: number;
+          middleName?: string;
+        };
+        const initialState: UserState = { id: 1 };
+        const userState = signalState(initialState);
+
+        patchState(userState, { middleName: 'Michael' });
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith(
+          '@ngrx/signals: Skipping update for unknown property in state source.',
+          'Property: middleName'
+        );
+        expect(userState()).toEqual({ id: 1 });
+      });
+
+      it('updates optional properties with an initialized value', () => {
+        type UserState = {
+          id: number;
+          middleName?: string;
+        };
+        const initialState: UserState = { id: 1, middleName: 'Michael' };
+        const userState = signalState(initialState);
+
+        patchState(userState, { middleName: undefined });
+        expect(userState()).toEqual({ id: 1, middleName: undefined });
+
+        patchState(userState, { middleName: 'Martin' });
+        expect(userState()).toEqual({ id: 1, middleName: 'Martin' });
+
+        expect(consoleWarnSpy).not.toHaveBeenCalled();
+      });
+
+      it('supports root properties with union type of undefined and does not warn', () => {
+        type UserState = {
+          id: number;
+          middleName: string | undefined;
+        };
+        const initialState: UserState = { id: 1, middleName: undefined };
+        const userState = signalState(initialState);
+
+        patchState(userState, { middleName: 'Michael' });
+
+        expect(userState()).toEqual({ id: 1, middleName: 'Michael' });
+        expect(consoleWarnSpy).not.toHaveBeenCalled();
       });
     });
   });
