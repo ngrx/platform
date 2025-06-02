@@ -27,9 +27,8 @@ import { Component, Input } from '@angular/core';
       }
 
       .body {
-        padding: 16px 20px;
+        padding: 0 0px;
         overflow-x: wrap;
-        background-color: rgb(36, 41, 46);
       }
     `,
   ],
