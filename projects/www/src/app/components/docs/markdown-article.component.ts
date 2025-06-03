@@ -114,6 +114,10 @@ type Heading = { level: number; text: string; id: string; url: string };
       article ::ng-deep table td code {
         white-space: nowrap;
       }
+
+      article ::ng-deep pre:has(code) {
+        padding: 16px 20px;
+      }
     `,
   ],
 })
