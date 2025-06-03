@@ -56,6 +56,9 @@ import { MatIconModule } from '@angular/material/icon';
       :host {
         display: block;
         position: relative;
+        @media only screen and (max-width: 1280px) {
+          z-index: 1;
+        }
       }
 
       .banner {
@@ -105,6 +108,9 @@ import { MatIconModule } from '@angular/material/icon';
         grid-template-columns: repeat(3, minmax(300px, 1fr));
         gap: 24px;
         padding: 32px 32px;
+        @media only screen and (max-width: 1280px) {
+          grid-template-columns: 1fr;
+        }
       }
 
       ngrx-styled-box {
@@ -135,4 +141,4 @@ import { MatIconModule } from '@angular/material/icon';
     `,
   ],
 })
-export default class HomeComponent { }
+export default class HomeComponent {}

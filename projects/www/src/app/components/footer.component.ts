@@ -45,6 +45,9 @@ import { RouterLink } from '@angular/router';
         gap: 32px;
         padding: 32px;
         border-top: 1px solid rgba(255, 255, 255, 0.12);
+        @media only screen and (max-width: 1280px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
 
       img {
