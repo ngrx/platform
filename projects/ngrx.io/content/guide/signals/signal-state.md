@@ -65,8 +65,8 @@ console.log(firstName()); // logs: 'Eric'
 console.log(lastName()); // logs: 'Clapton'
 ```
 
-If the root properties of a state are already of type `WritableSignal`, they will be reused, instead of creating new signals.
-This allows an integration of external `WritableSignal`s — such as `linkedSignal` or `resource.value`.
+If the root properties of a state are already a `WritableSignal`, then they are reused instead of creating new signals.
+This allows the integration of external `WritableSignal`s, such as `linkedSignal` or `resource.value`.
 
 <div class="alert is-helpful">
 
