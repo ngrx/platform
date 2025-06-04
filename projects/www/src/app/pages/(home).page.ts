@@ -81,6 +81,7 @@ import { MatIconModule } from '@angular/material/icon';
         font-size: 32px;
         font-family: 'Oxanium', sans-serif;
         margin-bottom: 24px;
+        text-align: center;
       }
 
       .cta {
