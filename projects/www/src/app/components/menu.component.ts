@@ -106,7 +106,7 @@ import { DOCUMENT } from '@angular/common';
           background-color: #17111a;
           position: fixed;
           top: 0;
-          left: -290px;
+          left: -270px;
           transition: left 0.3s ease-in-out;
           height: 100lvh;
           overflow-y: scroll;
@@ -121,7 +121,8 @@ import { DOCUMENT } from '@angular/common';
           display: none;
           background-color: transparent;
           border: none;
-          width: 35px;
+          width: 25px;
+          padding: 0;
           @media only screen and (max-width: 1280px) {
             display: block;
           }
@@ -154,7 +155,7 @@ import { DOCUMENT } from '@angular/common';
         border-right: 1px solid rgba(255, 255, 255, 0.12);
         @media only screen and (max-width: 1280px) {
           border-right: none;
-          width: auto;
+          width: 0px;
           padding: 0px;
         }
       }
