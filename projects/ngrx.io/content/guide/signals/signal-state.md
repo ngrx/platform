@@ -54,6 +54,20 @@ console.log(firstName()); // logs: 'Eric'
 console.log(lastName()); // logs: 'Clapton'
 ```
 
+When a state property holds an object as its value, the `signalState` function generates a `DeepSignal`.
+It can be used as a regular read-only signal, but it also contains signals for each property of the object it refers to.
+
+```ts
+const firstName = user.firstName; // type: Signal<string>
+const lastName = user.lastName; // type: Signal<string>
+
+console.log(firstName()); // logs: 'Eric'
+console.log(lastName()); // logs: 'Clapton'
+```
+
+If the root properties of a state are already of type `WritableSignal`, they will be reused, instead of creating new signals.
+This allows an integration of external `WritableSignal`s — such as `linkedSignal` or `resource.value`.
+
 <div class="alert is-helpful">
 
 For enhanced performance, deeply nested signals are generated lazily and initialized only upon first access.
