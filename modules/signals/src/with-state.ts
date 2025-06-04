@@ -1,4 +1,4 @@
-import { Signal, signal, WritableSignal } from '@angular/core';
+import { Signal, signal } from '@angular/core';
 import { toDeepSignal } from './deep-signal';
 import { assertUniqueStoreMembers } from './signal-store-assertions';
 import {
@@ -8,13 +8,7 @@ import {
   SignalStoreFeature,
   SignalStoreFeatureResult,
 } from './signal-store-models';
-import { isWritableSignal, STATE_SOURCE } from './state-source';
-
-type StateResult<StateInput extends object> = {
-  [K in keyof StateInput]: StateInput[K] extends WritableSignal<infer V>
-    ? V
-    : StateInput[K];
-};
+import { isWritableSignal, STATE_SOURCE, StateResult } from './state-source';
 
 export function withState<State extends object>(
   stateFactory: () => State

@@ -1,8 +1,12 @@
 import {
+  computed,
   createEnvironmentInjector,
   effect,
   EnvironmentInjector,
   Injectable,
+  isSignal,
+  linkedSignal,
+  resource,
   signal,
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -439,6 +443,127 @@ describe('StateSource', () => {
         store.increment();
 
         expect(stateHistory).toEqual([0, 1, 2, 3]);
+      });
+    });
+  });
+
+  describe('integration of Signals natively', () => {
+    [
+      {
+        name: 'signalStore',
+        setup<State extends object>(state: State) {
+          const Store = signalStore(
+            { providedIn: 'root', protectedState: false },
+            withState(state)
+          );
+          return TestBed.inject(Store);
+        },
+      },
+      {
+        name: 'signalState',
+        setup<State extends object>(state: State) {
+          return signalState(state);
+        },
+      },
+    ].forEach(({ name, setup }) => {
+      describe(name, () => {
+        it('integrates writable Signals as-is', () => {
+          const user = {
+            id: 1,
+            name: 'John Doe',
+          };
+          const userSignal = signal(user);
+
+          const store = setup({ user: userSignal });
+          const prettyName = computed(
+            () => `${store.user().name} ${store.user().id}`
+          );
+
+          expect(store.user()).toBe(user);
+          expect(prettyName()).toBe('John Doe 1');
+
+          userSignal.set({ id: 2, name: 'Jane Doe' });
+          expect(store.user()).toEqual({ id: 2, name: 'Jane Doe' });
+
+          patchState(store, { user: { id: 3, name: 'Jack Doe' } });
+          expect(store.user()).toEqual({ id: 3, name: 'Jack Doe' });
+        });
+
+        it('integrates a linkedSignal and its update mechanism', () => {
+          const triggerSignal = signal(1);
+          const userLinkedSignal = linkedSignal({
+            source: triggerSignal,
+            computation: () => ({ id: 1, name: 'John Doe' }),
+          });
+
+          const store = setup({ user: userLinkedSignal });
+          const prettyName = computed(
+            () => `${store.user().name} ${store.user().id}`
+          );
+
+          expect(store.user()).toEqual({ id: 1, name: 'John Doe' });
+          expect(prettyName()).toBe('John Doe 1');
+
+          patchState(store, { user: { id: 2, name: 'Jane Doe' } });
+          expect(prettyName()).toBe('Jane Doe 2');
+
+          triggerSignal.set(2);
+          expect(prettyName()).toBe('John Doe 1');
+        });
+
+        it('supports a resource', async () => {
+          const resourceTrigger = signal(1);
+          const userResource = TestBed.runInInjectionContext(() =>
+            resource({
+              request: resourceTrigger,
+              loader: (params) =>
+                Promise.resolve({ id: params.request, name: 'John Doe' }),
+              defaultValue: { id: 0, name: 'Loading...' },
+            })
+          );
+
+          const store = setup({ user: userResource.value });
+          expect(store.user()).toEqual({ id: 0, name: 'Loading...' });
+
+          await new Promise((resolve) => setTimeout(resolve));
+          expect(store.user()).toEqual({ id: 1, name: 'John Doe' });
+
+          resourceTrigger.set(2);
+          await new Promise((resolve) => setTimeout(resolve));
+          expect(store.user()).toEqual({ id: 2, name: 'John Doe' });
+        });
+
+        it('allows mixed writable Signal Types', () => {
+          const user = {
+            id: 1,
+            name: 'John Doe',
+          };
+          const userSignal = signal(user);
+          const product = { id: 1, name: 'Product A' };
+
+          const store = setup({ user: userSignal, product });
+
+          expect(store.user()).toBe(user);
+          expect(store.product()).toBe(product);
+        });
+
+        it('does not strip a readonly Signal', () => {
+          const store = setup({ n: signal(1).asReadonly() });
+
+          expect(isSignal(store.n())).toBe(true);
+          expect(store.n()()).toBe(1);
+        });
+
+        it('does not strip a nested writable Signal', () => {
+          const user = {
+            id: 1,
+            name: 'John Doe',
+          };
+          const userSignal = signal(user);
+          const store = setup({ data: { user: userSignal } });
+
+          expect(isSignal(store.data.user())).toBe(true);
+        });
       });
     });
   });

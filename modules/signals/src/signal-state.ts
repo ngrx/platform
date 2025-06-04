@@ -1,23 +1,32 @@
 import { computed, signal } from '@angular/core';
 import { DeepSignal, toDeepSignal } from './deep-signal';
 import { SignalsDictionary } from './signal-store-models';
-import { STATE_SOURCE, WritableStateSource } from './state-source';
+import {
+  isWritableSignal,
+  STATE_SOURCE,
+  StateResult,
+  WritableStateSource,
+} from './state-source';
 
-export type SignalState<State extends object> = DeepSignal<State> &
-  WritableStateSource<State>;
+export type SignalState<State extends object> = DeepSignal<StateResult<State>> &
+  WritableStateSource<StateResult<State>>;
 
 export function signalState<State extends object>(
   initialState: State
 ): SignalState<State> {
   const stateKeys = Reflect.ownKeys(initialState);
 
-  const stateSource = stateKeys.reduce(
-    (signalsDict, key) => ({
+  const stateSource = stateKeys.reduce((signalsDict, key) => {
+    const signalOrValue = (initialState as Record<string | symbol, unknown>)[
+      key
+    ];
+    return {
       ...signalsDict,
-      [key]: signal((initialState as Record<string | symbol, unknown>)[key]),
-    }),
-    {} as SignalsDictionary
-  );
+      [key]: isWritableSignal(signalOrValue)
+        ? signalOrValue
+        : signal(signalOrValue),
+    };
+  }, {} as SignalsDictionary);
 
   const signalState = computed(() =>
     stateKeys.reduce(

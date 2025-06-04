@@ -26,6 +26,12 @@ export type StateSource<State extends object> = {
   [STATE_SOURCE]: { [Property in keyof State]: Signal<State[Property]> };
 };
 
+export type StateResult<StateInput extends object> = {
+  [K in keyof StateInput]: StateInput[K] extends WritableSignal<infer V>
+    ? V
+    : StateInput[K];
+};
+
 export type PartialStateUpdater<State extends object> = (
   state: State
 ) => Partial<State>;
