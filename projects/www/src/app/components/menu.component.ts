@@ -1,15 +1,17 @@
 import {
   Component,
+  effect,
   ElementRef,
   HostListener,
   inject,
   signal,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { GuideSectionComponent } from './guide-section.component';
 import { GuideMenuService } from '../services/guide-menu.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'ngrx-menu',
@@ -17,15 +19,15 @@ import { GuideMenuService } from '../services/guide-menu.service';
   imports: [MatIconModule, RouterLink, RouterLinkActive, GuideSectionComponent],
   template: `
     <div class="mobile-nav-bar">
-      <div class="menu-toggle" #toggleBtnRef (click)="toggleMenu()">
+      <button class="menu-toggle" #toggleBtnRef (click)="toggleMenu()">
         <img src="/ngrx-logo-pink.svg" alt="ngrx logo" />
         <mat-icon>menu</mat-icon>
-      </div>
+      </button>
     </div>
-    <div class="sidebar" #sidebarRef [class.open]="isMenuOpen()">
-      <div class="close-menu">
-        <mat-icon class="close-menu-icon" (click)="closeMenu()">close</mat-icon>
-      </div>
+    <nav class="sidebar" #sidebarRef [class.open]="isMenuOpen()">
+      <button class="close-menu" (click)="closeMenu()">
+        <mat-icon class="close-menu-icon">close</mat-icon>
+      </button>
       <a routerLink="" class="logoLink" (click)="closeMenu()">
         <img src="/ngrx-logo-pink.svg" alt="ngrx logo" />
         NgRx
@@ -67,7 +69,7 @@ import { GuideMenuService } from '../services/guide-menu.service';
         [section]="guideMenu.getMenu()"
         [collapsible]="false"
       ></ngrx-guide-section>
-    </div>
+    </nav>
   `,
   styles: [
     `
@@ -81,6 +83,8 @@ import { GuideMenuService } from '../services/guide-menu.service';
         .menu-toggle {
           display: flex;
           align-items: center;
+          background-color: transparent;
+          border: none;
           cursor: pointer;
           img {
             width: 30px;
@@ -102,7 +106,7 @@ import { GuideMenuService } from '../services/guide-menu.service';
           background-color: #17111a;
           position: fixed;
           top: 0;
-          left: -270px;
+          left: -290px;
           transition: left 0.3s ease-in-out;
           height: 100lvh;
           overflow-y: scroll;
@@ -115,6 +119,9 @@ import { GuideMenuService } from '../services/guide-menu.service';
         }
         .close-menu {
           display: none;
+          background-color: transparent;
+          border: none;
+          width: 35px;
           @media only screen and (max-width: 1280px) {
             display: block;
           }
@@ -201,35 +208,37 @@ export class MenuComponent {
   guideMenu = inject(GuideMenuService);
   isMenuOpen = signal(false);
 
-  @ViewChild('sidebarRef') sidebarRef!: ElementRef;
-  @ViewChild('toggleBtnRef') toggleBtnRef!: ElementRef;
+  sidebarRef = viewChild.required<ElementRef>('sidebarRef');
+  toggleBtnRef = viewChild.required<ElementRef>('toggleBtnRef');
+
+  document = inject(DOCUMENT);
+
+  constructor() {
+    effect(() => {
+      if (this.isMenuOpen()) {
+        this.document.body.classList.add('no-scroll');
+      } else {
+        this.document.body.classList.remove('no-scroll');
+      }
+    });
+  }
 
   toggleMenu() {
     this.isMenuOpen.set(!this.isMenuOpen());
-    this.toggleBodyScroll(this.isMenuOpen());
   }
 
   closeMenu() {
     this.isMenuOpen.set(false);
-    this.toggleBodyScroll(false);
-  }
-
-  private toggleBodyScroll(block: boolean) {
-    if (block) {
-      document.body.classList.add('no-scroll');
-    } else {
-      document.body.classList.remove('no-scroll');
-    }
   }
 
   @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
+  closeSidebarWhenClickedOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;
-    const clickedInsideSidebar =
-      this.sidebarRef?.nativeElement.contains(target);
-    const clickedHamburger = this.toggleBtnRef?.nativeElement.contains(target);
+    const isSidebarClicked = this.sidebarRef().nativeElement.contains(target);
+    const isToggleBtnClicked =
+      this.toggleBtnRef().nativeElement.contains(target);
 
-    if (!clickedInsideSidebar && !clickedHamburger && this.isMenuOpen()) {
+    if (!isSidebarClicked && !isToggleBtnClicked && this.isMenuOpen()) {
       this.closeMenu();
     }
   }
