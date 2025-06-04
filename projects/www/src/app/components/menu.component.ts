@@ -99,7 +99,6 @@ import { DOCUMENT } from '@angular/common';
         display: flex;
         flex-direction: column;
         gap: 16px;
-        width: 270px;
         padding: 32px 24px;
         border-right: 1px solid rgba(255, 255, 255, 0.12);
         @media only screen and (max-width: 1280px) {
@@ -108,6 +107,7 @@ import { DOCUMENT } from '@angular/common';
           top: 0;
           left: -270px;
           transition: left 0.3s ease-in-out;
+          width: 270px;
           height: 100lvh;
           overflow-y: scroll;
         }
