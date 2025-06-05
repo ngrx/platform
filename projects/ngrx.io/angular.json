@@ -13,7 +13,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular/build:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/ngrx.io",
             "index": "src/index.html",
@@ -92,7 +92,7 @@
           "defaultConfiguration": ""
         },
         "serve": {
-          "builder": "@angular/build:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "buildTarget": "site:build"
           },
@@ -112,13 +112,13 @@
           }
         },
         "extract-i18n": {
-          "builder": "@angular/build:extract-i18n",
+          "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "buildTarget": "site:build"
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
             "karmaConfig": "src/karma.conf.js",
@@ -175,7 +175,7 @@
       "schematics": {},
       "architect": {
         "e2e": {
-          "builder": "@angular/build:protractor",
+          "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "tests/e2e/protractor.conf.js",
             "devServerTarget": "site:serve"
