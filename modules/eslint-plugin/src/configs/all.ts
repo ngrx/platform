@@ -64,6 +64,7 @@ export default (
       '@ngrx/prefix-selectors-with-select': 'error',
       '@ngrx/select-style': 'error',
       '@ngrx/use-consistent-global-store-name': 'error',
+      '@ngrx/enforce-type-call': 'error',
     },
   },
 ];

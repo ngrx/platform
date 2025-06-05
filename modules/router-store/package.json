@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/router-store",
-  "version": "19.2.0",
+  "version": "19.2.1",
   "description": "Bindings to connect @angular/router to @ngrx/store",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "@angular/common": "^19.0.0",
     "@angular/core": "^19.0.0",
     "@angular/router": "^19.0.0",
-    "@ngrx/store": "19.2.0",
+    "@ngrx/store": "19.2.1",
     "rxjs": "^6.5.3 || ^7.5.0"
   },
   "schematics": "./schematics/collection.json",

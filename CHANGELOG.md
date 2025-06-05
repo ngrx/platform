@@ -1,3 +1,12 @@
+<a name="19.2.1"></a>
+
+## [19.2.1](https://github.com/ngrx/platform/compare/19.2.0...19.2.1) (2025-05-29)
+
+### Bug Fixes
+
+- **signals:** add current state as second argument of case reducer ([#4800](https://github.com/ngrx/platform/issues/4800)) ([95dbbfa](https://github.com/ngrx/platform/commit/95dbbfa))
+- **signals:** expose WritableStateSource to withFeature callback ([#4792](https://github.com/ngrx/platform/issues/4792)) ([afb6528](https://github.com/ngrx/platform/commit/afb6528)), closes [#4766](https://github.com/ngrx/platform/issues/4766)
+
 <a name="19.2.0"></a>
 
 # [19.2.0](https://github.com/ngrx/platform/compare/19.1.0...19.2.0) (2025-05-12)
@@ -65,10 +74,18 @@ BEFORE:
 
 ```ts
 import { computed, Signal } from '@angular/core';
-import { signalStoreFeature, SignalStoreFeature, type, withComputed } from '@ngrx/signals';
+import {
+  signalStoreFeature,
+  SignalStoreFeature,
+  type,
+  withComputed,
+} from '@ngrx/signals';
 import { EntityComputed } from '@ngrx/signals/entities';
 
-export function withTotalEntities<Entity>(): SignalStoreFeature<{ state: {}; computed: EntityComputed<Entity>; methods: {} }, { state: {}; computed: { total: Signal<number> }; methods: {} }> {
+export function withTotalEntities<Entity>(): SignalStoreFeature<
+  { state: {}; computed: EntityComputed<Entity>; methods: {} },
+  { state: {}; computed: { total: Signal<number> }; methods: {} }
+> {
   return signalStoreFeature(
     { computed: type<EntityComputed<Entity>>() },
     withComputed(({ entities }) => ({
@@ -82,10 +99,18 @@ AFTER:
 
 ```ts
 import { computed, Signal } from '@angular/core';
-import { signalStoreFeature, SignalStoreFeature, type, withComputed } from '@ngrx/signals';
+import {
+  signalStoreFeature,
+  SignalStoreFeature,
+  type,
+  withComputed,
+} from '@ngrx/signals';
 import { EntityProps } from '@ngrx/signals/entities';
 
-export function withTotalEntities<Entity>(): SignalStoreFeature<{ state: {}; props: EntityProps<Entity>; methods: {} }, { state: {}; props: { total: Signal<number> }; methods: {} }> {
+export function withTotalEntities<Entity>(): SignalStoreFeature<
+  { state: {}; props: EntityProps<Entity>; methods: {} },
+  { state: {}; props: { total: Signal<number> }; methods: {} }
+> {
   return signalStoreFeature(
     { props: type<EntityProps<Entity>>() },
     withComputed(({ entities }) => ({
@@ -685,7 +710,8 @@ const authApiActions = createActionGroup({
 });
 
 // generated actions:
-const { loginSuccess, loginFailure, logoutSuccess, logoutfailure } = authApiActions;
+const { loginSuccess, loginFailure, logoutSuccess, logoutfailure } =
+  authApiActions;
 ```
 
 AFTER:
@@ -693,7 +719,8 @@ AFTER:
 The initial letter of the first word of the event name will be lowercase, and the initial letters of the other words will be uppercase. The case of other letters in the event name will remain the same.
 
 ```ts
-const { logInSuccess, loginFailure, logoutSuccess, logoutFailure } = authApiActions;
+const { logInSuccess, loginFailure, logoutSuccess, logoutFailure } =
+  authApiActions;
 ```
 
 - **store:** The `createFeature` signature with root state is removed in favor of a signature without root state.
@@ -920,13 +947,17 @@ export class TestComponent {
 BEFORE:
 
 ```html
-<ng-container *ngrxLet="obs$; $error as e; $complete as c"> ... </ng-container>
+<ng-container *ngrxLet="obs$; $error as e; $complete as c">
+  ...
+</ng-container>
 ```
 
 AFTER:
 
 ```html
-<ng-container *ngrxLet="obs$; error as e; complete as c"> ... </ng-container>
+<ng-container *ngrxLet="obs$; error as e; complete as c">
+  ...
+</ng-container>
 ```
 
 <a name="15.0.0-beta.1"></a>
@@ -2454,7 +2485,10 @@ login$ = createEffect(() =>
     ofType(LoginPageActions.login),
     mapToAction(
       // Happy path callback
-      (action) => this.authService.login(action.credentials).pipe(map((user) => AuthApiActions.loginSuccess({ user }))),
+      (action) =>
+        this.authService
+          .login(action.credentials)
+          .pipe(map((user) => AuthApiActions.loginSuccess({ user }))),
       // error callback
       (error) => AuthApiActions.loginFailure({ error })
     )
@@ -2471,7 +2505,12 @@ login$ = createEffect(
       ofType(LoginPageActions.login),
       mapToAction(
         // Happy path callback
-        (action) => this.authService.login(action.credentials).pipe(map((user) => AuthApiActions.loginSuccess({ user }))),
+        (action) =>
+          this.authService
+            .login(action.credentials)
+            .pipe(
+              map((user) => AuthApiActions.loginSuccess({ user }))
+            ),
         // error callback
         (error) => AuthApiActions.loginFailure({ error })
       )
@@ -2579,7 +2618,10 @@ export class AppModule {}
 BEFORE:
 
 ```ts
-const getTodosById = createSelector((state: TodoAppSchema, id: number) => state.todos.find((p) => p.id === id));
+const getTodosById = createSelector(
+  (state: TodoAppSchema, id: number) =>
+    state.todos.find((p) => p.id === id)
+);
 ```
 
 AFTER:
@@ -3129,7 +3171,9 @@ Router state snapshot is returned as a SerializedRouterStateSnapshot with cyclic
   After:
 
   ```ts
-  actions$.ofType('SOME_ACTION').map((action: SomeActionWithPayload) => action.payload);
+  actions$
+    .ofType('SOME_ACTION')
+    .map((action: SomeActionWithPayload) => action.payload);
   ```
 
 - **ErrorHandler:** The ErrorReporter has been replaced with ErrorHandler
@@ -3334,7 +3378,13 @@ AFTER:
 export class AppModule {}
 
 @NgModule({
-  imports: [EffectsModule.forFeature([FeatureSourceA, FeatureSourceB, FeatureSourceC])],
+  imports: [
+    EffectsModule.forFeature([
+      FeatureSourceA,
+      FeatureSourceB,
+      FeatureSourceC,
+    ]),
+  ],
 })
 export class SomeFeatureModule {}
 ```

@@ -73,7 +73,7 @@ describe('withState', () => {
         [METHOD_SECRET]() {},
       })),
     ].reduce((acc, feature) => feature(acc), getInitialInnerStore());
-    vi.spyOn(console, 'warn').mockImplementation();
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     withState(() => ({
       p2: 100,
