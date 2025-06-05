@@ -1384,7 +1384,7 @@ export function signalStore(
 
 export function getInitialInnerStore(): InnerSignalStore {
   return {
-    [STATE_SOURCE]: signal({}),
+    [STATE_SOURCE]: {},
     stateSignals: {},
     props: {},
     methods: {},

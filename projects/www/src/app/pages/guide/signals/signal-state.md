@@ -54,6 +54,35 @@ console.log(firstName()); // logs: 'Eric'
 console.log(lastName()); // logs: 'Clapton'
 ```
 
+If the root properties of a state are already of type `WritableSignal`, they will be reused, instead of creating new signals.
+This allows an integration of external `WritableSignal`s — such as `linkedSignal` or `resource.value`.
+
+```ts
+import { linkedSignal } from '@angular/core';
+import { signalState } from '@ngrx/signals';
+import { User } from './user.model';
+
+const referenceId = signal(1);
+
+const userState = signalState<UserState>({
+  user: linkedSignal<User>(() => ({
+    id: referenceId(),
+    firstName: '',
+    lastName: '',
+  })),
+  isAdmin: false,
+});
+
+console.log(userState.user()); // logs: { id: 1, firstName: '', lastName: '' }
+patchState(userState, {
+  user: { id: 2, firstName: 'Brian', lastName: 'May' },
+});
+console.log(userState.user()); // logs: { id: 2, firstName: 'Brian', lastName: 'May' }
+
+referenceId.set(3);
+console.log(userState.user()); // logs: { id: 3, firstName: '', lastName: '' }
+```
+
 <ngrx-docs-alert type="help">
 
 For enhanced performance, deeply nested signals are generated lazily and initialized only upon first access.
