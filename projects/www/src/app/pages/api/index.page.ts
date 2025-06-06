@@ -48,6 +48,9 @@ import { MinimizedApiMemberSummary } from '@ngrx-io/shared';
       :host {
         display: block;
         padding: 0 24px 24px;
+        @media only screen and (max-width: 1280px) {
+          padding-top: 62px;
+        }
       }
 
       .controls {
@@ -60,8 +63,11 @@ import { MinimizedApiMemberSummary } from '@ngrx-io/shared';
         border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         position: sticky;
         top: 0;
-        z-index: 10;
+        z-index: 1;
         background-color: #17111a;
+        @media only screen and (max-width: 1280px) {
+          top: 62px;
+        }
       }
 
       h3 {
@@ -100,6 +106,12 @@ import { MinimizedApiMemberSummary } from '@ngrx-io/shared';
         grid-template-columns: repeat(3, 1fr);
         gap: 16px;
         border-left: 1px solid rgba(255, 255, 255, 0.12);
+        @media only screen and (max-width: 1280px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        @media only screen and (max-width: 700px) {
+          grid-template-columns: 1fr;
+        }
       }
     `,
   ],
