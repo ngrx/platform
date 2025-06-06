@@ -32,6 +32,10 @@ import { FooterComponent } from './components/footer.component';
         position: relative;
         width: calc(100% - 270px);
         left: 270px;
+        @media only screen and (max-width: 1280px) {
+          width: 100%;
+          left: 0;
+        }
       }
 
       ngrx-menu {

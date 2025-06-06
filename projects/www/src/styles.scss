@@ -166,3 +166,8 @@ h6 {
 analog-markdown-route > div {
   view-transition-name: markdown-article;
 }
+
+.no-scroll {
+  overflow: hidden;
+  width: 100%;
+}
