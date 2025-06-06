@@ -12,6 +12,9 @@ import { Component } from '@angular/core';
         padding: 8px;
         gap: 2px;
         overflow-x: scroll;
+        @media only screen and (max-width: 1280px) {
+          overflow-x: hidden;
+        }
       }
     `,
   ],
