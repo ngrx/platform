@@ -4,15 +4,16 @@
   "projectType": "application",
   "sourceRoot": "projects/standalone-app/src",
   "prefix": "ngrx",
+  "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/projects/standalone-app",
         "index": "projects/standalone-app/src/index.html",
-        "main": "projects/standalone-app/src/main.ts",
-        "polyfills": "projects/standalone-app/src/polyfills.ts",
+        "browser": "projects/standalone-app/src/main.ts",
+        "polyfills": ["projects/standalone-app/src/polyfills.ts"],
         "tsConfig": "projects/standalone-app/tsconfig.app.json",
         "assets": [
           "projects/standalone-app/src/favicon.ico",
@@ -38,9 +39,7 @@
           "outputHashing": "all"
         },
         "development": {
-          "buildOptimizer": false,
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true
@@ -58,7 +57,8 @@
           "buildTarget": "standalone-app:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -82,6 +82,5 @@
         "jestConfig": "projects/standalone-app/jest.config.ts"
       }
     }
-  },
-  "tags": []
+  }
 }

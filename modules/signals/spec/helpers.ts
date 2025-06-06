@@ -24,7 +24,7 @@ export function createLocalService<Service extends Type<unknown>>(
   return {
     service: fixture.componentInstance.service,
     flush: () => {
-      TestBed.flushEffects();
+      TestBed.tick();
       fixture.detectChanges();
     },
     destroy: () => fixture.destroy(),

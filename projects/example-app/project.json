@@ -4,15 +4,16 @@
   "sourceRoot": "projects/example-app/src",
   "projectType": "application",
   "prefix": "bc",
+  "tags": [],
   "generators": {},
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:application",
       "options": {
         "outputPath": "dist/projects/example-app",
         "index": "projects/example-app/src/index.html",
-        "main": "projects/example-app/src/main.ts",
-        "polyfills": "projects/example-app/src/polyfills.ts",
+        "browser": "projects/example-app/src/main.ts",
+        "polyfills": ["projects/example-app/src/polyfills.ts"],
         "tsConfig": "projects/example-app/tsconfig.app.json",
         "assets": [
           "projects/example-app/src/favicon.ico",
@@ -32,9 +33,7 @@
           "outputHashing": "all"
         },
         "development": {
-          "buildOptimizer": false,
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true
@@ -53,7 +52,8 @@
           "buildTarget": "example-app:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -80,6 +80,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/projects/example-app"]
     }
-  },
-  "tags": []
+  }
 }

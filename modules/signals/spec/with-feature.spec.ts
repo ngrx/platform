@@ -149,18 +149,17 @@ describe('withFeature', () => {
         withMethods((store) => ({
           _loadEntities: rxMethod<Filter>(
             pipe(
-              tap(() => patchState(store, { status: ResourceStatus.Loading })),
+              tap(() => patchState(store, { status: 'loading' })),
               switchMap((filter) =>
                 config.loader(filter).pipe(
                   tapResponse({
                     next: (entities) =>
                       patchState(
                         store,
-                        { status: ResourceStatus.Resolved },
+                        { status: 'resolved' },
                         setAllEntities(entities)
                       ),
-                    error: () =>
-                      patchState(store, { status: ResourceStatus.Error }),
+                    error: () => patchState(store, { status: 'error' }),
                   })
                 )
               )
@@ -176,7 +175,7 @@ describe('withFeature', () => {
     const Store = signalStore(
       { providedIn: 'root' },
       withEntities<User>(),
-      withState({ filter: { name: '' }, status: ResourceStatus.Idle }),
+      withState({ filter: { name: '' }, status: 'idle' as ResourceStatus }),
       withMethods((store) => ({
         setFilter(name: string) {
           patchState(store, { filter: { name } });
@@ -198,10 +197,10 @@ describe('withFeature', () => {
 
     expect(store.entities()).toEqual([]);
     store.setFilter('K');
-    TestBed.flushEffects();
+    TestBed.tick();
     expect(store.entities()).toEqual([{ id: 1, name: 'Konrad' }]);
     store.setFilter('Sabine');
-    TestBed.flushEffects();
+    TestBed.tick();
     expect(store.entities()).toEqual([]);
   });
 });

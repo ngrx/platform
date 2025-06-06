@@ -1,12 +1,12 @@
 import {
   mergeApplicationConfig,
   ApplicationConfig,
-  provideExperimentalZonelessChangeDetection,
+  provideZonelessChangeDetection,
 } from '@angular/core';
 import { appConfig } from './app.config';
 
 const serverConfig: ApplicationConfig = {
-  providers: [provideExperimentalZonelessChangeDetection()],
+  providers: [provideZonelessChangeDetection()],
 };
 
 export const config = mergeApplicationConfig(appConfig, serverConfig);
