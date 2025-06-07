@@ -1,5 +1,10 @@
-import { signal } from '@angular/core';
-import { withComputed, withMethods, withState } from '../src';
+import { computed, signal } from '@angular/core';
+import {
+  signalStoreFeature,
+  withComputed,
+  withMethods,
+  withState,
+} from '../src';
 import { getInitialInnerStore } from '../src/signal-store';
 
 describe('withComputed', () => {
@@ -53,5 +58,35 @@ describe('withComputed', () => {
       'Trying to override:',
       'p1, s2, m1, Symbol(computed_secret)'
     );
+  });
+
+  it('adds computed automatically if the value is function', () => {
+    const initialStore = getInitialInnerStore();
+
+    const store = signalStoreFeature(
+      withState({ a: 2, b: 3 }),
+      withComputed(({ a, b }) => ({
+        sum: () => a() + b(),
+        product: () => a() * b(),
+      }))
+    )(initialStore);
+
+    expect(store.props.sum()).toBe(5);
+    expect(store.props.product()).toBe(6);
+  });
+
+  it('allows to mix user-provided computeds and automatically computed ones', () => {
+    const initialStore = getInitialInnerStore();
+
+    const store = signalStoreFeature(
+      withState({ a: 2, b: 3 }),
+      withComputed(({ a, b }) => ({
+        sum: () => a() + b(),
+        product: computed(() => a() * b()),
+      }))
+    )(initialStore);
+
+    expect(store.props.sum()).toBe(5);
+    expect(store.props.product()).toBe(6);
   });
 });

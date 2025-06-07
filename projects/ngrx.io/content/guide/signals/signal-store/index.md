@@ -145,7 +145,7 @@ export class BookSearch {
 
 Computed signals can be added to the store using the `withComputed` feature.
 This feature accepts a factory function as an input argument, which is executed within the injection context.
-The factory should return a dictionary of computed signals, utilizing previously defined state signals and properties that are accessible through its input argument.
+The factory should return a dictionary containing either computed signals or functions that return values (which will automatically be wrapped in computed signals), utilizing previously defined state signals and properties that are accessible through its input argument.
 
 <code-example header="book-search-store.ts">
 
@@ -162,13 +162,14 @@ export const BookSearchStore = signalStore(
   // 👇 Accessing previously defined state signals and properties.
   withComputed(({ books, filter }) => ({
     booksCount: computed(() => books().length),
-    sortedBooks: computed(() => {
+    // 👇 Adds computed automatically
+    sortedBooks: () => {
       const direction = filter.order() === 'asc' ? 1 : -1;
 
       return books().toSorted((a, b) =>
         direction * a.title.localeCompare(b.title)
       );
-    }),
+    },
   }))
 );
 
