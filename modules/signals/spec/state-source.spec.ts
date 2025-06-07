@@ -294,6 +294,27 @@ describe('StateSource', () => {
         expect(executionCount).toBe(2);
       });
     });
+
+    it('does not support a dynamic type as state', () => {
+      const Store = signalStore(
+        { providedIn: 'root' },
+        withState<Record<number, number>>({}),
+        withMethods((store) => ({
+          addNumber(num: number): void {
+            patchState(store, {
+              [num]: num,
+            });
+          },
+        }))
+      );
+      const store = TestBed.inject(Store);
+
+      store.addNumber(1);
+      store.addNumber(2);
+      store.addNumber(3);
+
+      expect(getState(store)).toEqual({});
+    });
   });
 
   describe('watchState', () => {
