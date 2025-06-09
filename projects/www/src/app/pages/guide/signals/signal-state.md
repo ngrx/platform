@@ -58,8 +58,8 @@ If the root properties of a state are already of type `WritableSignal`, they wil
 This allows an integration of external `WritableSignal`s — such as `linkedSignal` or `resource.value`.
 
 ```ts
-import { linkedSignal } from '@angular/core';
-import { signalState } from '@ngrx/signals';
+import { linkedSignal, signal } from '@angular/core';
+import { patchState, signalState } from '@ngrx/signals';
 import { User } from './user.model';
 
 const referenceId = signal(1);
