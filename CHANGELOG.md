@@ -1,3 +1,33 @@
+<a name="20.0.0"></a>
+
+# [20.0.0](https://github.com/ngrx/platform/compare/19.2.1...20.0.0) (2025-06-09)
+
+### Bug Fixes
+
+- **www:** Add padding to code snippets ([#4812](https://github.com/ngrx/platform/issues/4812)) ([9e942db](https://github.com/ngrx/platform/commit/9e942db)), closes [#4811](https://github.com/ngrx/platform/issues/4811)
+- **www:** remove horizontal scrollbar ([#4808](https://github.com/ngrx/platform/issues/4808)) ([2639f67](https://github.com/ngrx/platform/commit/2639f67))
+
+### build
+
+- update to Angular 20 ([#4778](https://github.com/ngrx/platform/issues/4778)) ([8a4ecd9](https://github.com/ngrx/platform/commit/8a4ecd9))
+
+### Features
+
+- **eslint-plugin:** add new rule enforce type call ([#4809](https://github.com/ngrx/platform/issues/4809)) ([9b82e67](https://github.com/ngrx/platform/commit/9b82e67)), closes [#4797](https://github.com/ngrx/platform/issues/4797)
+- **www:** add sidebar for mobile view and make home page responsive ([#4813](https://github.com/ngrx/platform/issues/4813)) ([4397bfb](https://github.com/ngrx/platform/commit/4397bfb)), closes [#4807](https://github.com/ngrx/platform/issues/4807)
+
+### BREAKING CHANGES
+
+- The minimum required version of Angular has been updated.
+
+BEFORE:
+
+The minimum required version is Angular 19.x
+
+AFTER:
+
+The minimum required version is Angular 20.x
+
 <a name="19.2.1"></a>
 
 ## [19.2.1](https://github.com/ngrx/platform/compare/19.2.0...19.2.1) (2025-05-29)

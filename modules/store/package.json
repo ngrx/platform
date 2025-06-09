@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/store",
-  "version": "19.2.1",
+  "version": "20.0.0",
   "description": "RxJS powered Redux for Angular apps",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/core": "^19.0.0",
+    "@angular/core": "^20.0.0",
     "rxjs": "^6.5.3 || ^7.5.0"
   },
   "schematics": "./schematics/collection.json",
