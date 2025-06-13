@@ -1,7 +1,6 @@
-import { computed } from '@angular/core';
-import { assertUniqueStoreMembers } from './signal-store-assertions';
+import { Signal, signal } from '@angular/core';
 import { toDeepSignal } from './deep-signal';
-import { STATE_SOURCE } from './state-source';
+import { assertUniqueStoreMembers } from './signal-store-assertions';
 import {
   EmptyFeatureResult,
   InnerSignalStore,
@@ -9,24 +8,25 @@ import {
   SignalStoreFeature,
   SignalStoreFeatureResult,
 } from './signal-store-models';
+import { isWritableSignal, STATE_SOURCE, StateResult } from './state-source';
 
 export function withState<State extends object>(
   stateFactory: () => State
 ): SignalStoreFeature<
   EmptyFeatureResult,
-  { state: State; props: {}; methods: {} }
+  { state: StateResult<State>; props: {}; methods: {} }
 >;
 export function withState<State extends object>(
   state: State
 ): SignalStoreFeature<
   EmptyFeatureResult,
-  { state: State; props: {}; methods: {} }
+  { state: StateResult<State>; props: {}; methods: {} }
 >;
 export function withState<State extends object>(
   stateOrFactory: State | (() => State)
 ): SignalStoreFeature<
   SignalStoreFeatureResult,
-  { state: State; props: {}; methods: {} }
+  { state: StateResult<State>; props: {}; methods: {} }
 > {
   return (store) => {
     const state =
@@ -35,21 +35,22 @@ export function withState<State extends object>(
 
     assertUniqueStoreMembers(store, stateKeys);
 
-    store[STATE_SOURCE].update((currentState) => ({
-      ...currentState,
-      ...state,
-    }));
-
-    const stateSignals = stateKeys.reduce((acc, key) => {
-      const sliceSignal = computed(
-        () => (store[STATE_SOURCE]() as Record<string | symbol, unknown>)[key]
-      );
-      return { ...acc, [key]: toDeepSignal(sliceSignal) };
-    }, {} as SignalsDictionary);
+    const stateSource = store[STATE_SOURCE] as Record<
+      string | symbol,
+      Signal<unknown>
+    >;
+    const stateSignals = {} as SignalsDictionary;
+    for (const key of stateKeys) {
+      const signalOrValue = (state as Record<string | symbol, unknown>)[key];
+      stateSource[key] = isWritableSignal(signalOrValue)
+        ? signalOrValue
+        : signal(signalOrValue);
+      stateSignals[key] = toDeepSignal(stateSource[key]);
+    }
 
     return {
       ...store,
       stateSignals: { ...store.stateSignals, ...stateSignals },
-    } as InnerSignalStore<State>;
+    } as InnerSignalStore<StateResult<State>>;
   };
 }

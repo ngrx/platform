@@ -1,8 +1,12 @@
 import {
+  computed,
   createEnvironmentInjector,
   effect,
   EnvironmentInjector,
   Injectable,
+  isSignal,
+  linkedSignal,
+  resource,
   signal,
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -17,10 +21,9 @@ import {
   withHooks,
   withMethods,
   withState,
-  WritableStateSource,
 } from '../src';
 import { STATE_SOURCE } from '../src/state-source';
-import { createLocalService } from './helpers';
+import { assertStateSource, createLocalService } from './helpers';
 
 const SECRET = Symbol('SECRET');
 
@@ -36,18 +39,24 @@ describe('StateSource', () => {
     [SECRET]: 'secret',
   };
 
+  const consoleWarnSpy = vi.spyOn(console, 'warn');
+
+  beforeEach(() => {
+    consoleWarnSpy.mockClear();
+  });
+
   describe('isWritableStateSource', () => {
     it('returns true for a writable StateSource', () => {
-      const stateSource: StateSource<typeof initialState> = {
-        [STATE_SOURCE]: signal(initialState),
+      const stateSource: StateSource<{ value: typeof initialState }> = {
+        [STATE_SOURCE]: { value: signal(initialState) },
       };
 
       expect(isWritableStateSource(stateSource)).toBe(true);
     });
 
     it('returns false for a readonly StateSource', () => {
-      const stateSource: StateSource<typeof initialState> = {
-        [STATE_SOURCE]: signal(initialState).asReadonly(),
+      const stateSource: StateSource<{ vaulue: typeof initialState }> = {
+        [STATE_SOURCE]: { value: signal(initialState).asReadonly() },
       };
 
       expect(isWritableStateSource(stateSource)).toBe(false);
@@ -81,10 +90,12 @@ describe('StateSource', () => {
             foo: 'baz',
           });
 
-          expect(state[STATE_SOURCE]()).toEqual({
-            ...initialState,
-            user: { firstName: 'Johannes', lastName: 'Schmidt' },
-            foo: 'baz',
+          assertStateSource(state[STATE_SOURCE], {
+            user: signal({ firstName: 'Johannes', lastName: 'Schmidt' }),
+            foo: signal('baz'),
+            numbers: signal([1, 2, 3]),
+            ngrx: signal('signals'),
+            [SECRET]: signal('secret'),
           });
         });
 
@@ -96,10 +107,12 @@ describe('StateSource', () => {
             ngrx: 'rocks',
           }));
 
-          expect(state[STATE_SOURCE]()).toEqual({
-            ...initialState,
-            numbers: [1, 2, 3, 4],
-            ngrx: 'rocks',
+          assertStateSource(state[STATE_SOURCE], {
+            user: signal({ firstName: 'John', lastName: 'Smith' }),
+            foo: signal('bar'),
+            numbers: signal([1, 2, 3, 4]),
+            ngrx: signal('rocks'),
+            [SECRET]: signal('secret'),
           });
         });
 
@@ -121,11 +134,12 @@ describe('StateSource', () => {
             { foo: 'foo' }
           );
 
-          expect(state[STATE_SOURCE]()).toEqual({
-            ...initialState,
-            user: { firstName: 'Jovan', lastName: 'Schmidt' },
-            foo: 'foo',
-            numbers: [1, 2, 3, 4],
+          assertStateSource(state[STATE_SOURCE], {
+            user: signal({ firstName: 'Jovan', lastName: 'Schmidt' }),
+            foo: signal('foo'),
+            numbers: signal([1, 2, 3, 4]),
+            ngrx: signal('signals'),
+            [SECRET]: signal('secret'),
           });
         });
 
@@ -144,6 +158,94 @@ describe('StateSource', () => {
           expect(state.ngrx()).not.toBe(initialState.ngrx);
         });
       });
+    });
+
+    describe('undefined root properties', () => {
+      it('skips and warns on optional root properties, when they are missing in the init state', () => {
+        type UserState = {
+          id: number;
+          middleName?: string;
+        };
+        const initialState: UserState = { id: 1 };
+        const userState = signalState(initialState);
+
+        patchState(userState, { middleName: 'Michael' });
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith(
+          '@ngrx/signals: Skipping update for unknown property in state source.',
+          'Property: middleName'
+        );
+        expect(userState()).toEqual({ id: 1 });
+      });
+
+      it('updates optional properties with an initialized value', () => {
+        type UserState = {
+          id: number;
+          middleName?: string;
+        };
+        const initialState: UserState = { id: 1, middleName: 'Michael' };
+        const userState = signalState(initialState);
+
+        patchState(userState, { middleName: undefined });
+        expect(userState()).toEqual({ id: 1, middleName: undefined });
+
+        patchState(userState, { middleName: 'Martin' });
+        expect(userState()).toEqual({ id: 1, middleName: 'Martin' });
+
+        expect(consoleWarnSpy).not.toHaveBeenCalled();
+      });
+
+      it('supports root properties with union type of undefined and does not warn', () => {
+        type UserState = {
+          id: number;
+          middleName: string | undefined;
+        };
+        const initialState: UserState = { id: 1, middleName: undefined };
+        const userState = signalState(initialState);
+
+        patchState(userState, { middleName: 'Michael' });
+
+        expect(userState()).toEqual({ id: 1, middleName: 'Michael' });
+        expect(consoleWarnSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    it('should only patch affected root properties', () => {
+      let updateCounter = 0;
+      const userSignal = signal(
+        {
+          firstName: 'John',
+          lastName: 'Smith',
+        },
+        {
+          equal: (a, b) => {
+            updateCounter++;
+            return a === b;
+          },
+        }
+      );
+
+      const UserStore = signalStore(
+        { providedIn: 'root', protectedState: false },
+        withState({ user: userSignal, city: 'Changan' })
+      );
+      const store = TestBed.inject(UserStore);
+
+      expect(updateCounter).toBe(0);
+
+      patchState(store, { city: 'Xian' });
+      expect(updateCounter).toBe(0);
+
+      patchState(store, (state) => state);
+      expect(updateCounter).toBe(0);
+
+      patchState(store, ({ user }) => ({ user }));
+      expect(updateCounter).toBe(0);
+
+      patchState(store, ({ user }) => ({
+        user: { ...user, firstName: 'Jane' },
+      }));
+      expect(updateCounter).toBe(1);
     });
   });
 
@@ -191,6 +293,27 @@ describe('StateSource', () => {
         TestBed.tick();
         expect(executionCount).toBe(2);
       });
+    });
+
+    it('does not support a dynamic type as state', () => {
+      const Store = signalStore(
+        { providedIn: 'root' },
+        withState<Record<number, number>>({}),
+        withMethods((store) => ({
+          addNumber(num: number): void {
+            patchState(store, {
+              [num]: num,
+            });
+          },
+        }))
+      );
+      const store = TestBed.inject(Store);
+
+      store.addNumber(1);
+      store.addNumber(2);
+      store.addNumber(3);
+
+      expect(getState(store)).toEqual({});
     });
   });
 
@@ -341,6 +464,127 @@ describe('StateSource', () => {
         store.increment();
 
         expect(stateHistory).toEqual([0, 1, 2, 3]);
+      });
+    });
+  });
+
+  describe('integration of Signals natively', () => {
+    [
+      {
+        name: 'signalStore',
+        setup<State extends object>(state: State) {
+          const Store = signalStore(
+            { providedIn: 'root', protectedState: false },
+            withState(state)
+          );
+          return TestBed.inject(Store);
+        },
+      },
+      {
+        name: 'signalState',
+        setup<State extends object>(state: State) {
+          return signalState(state);
+        },
+      },
+    ].forEach(({ name, setup }) => {
+      describe(name, () => {
+        it('integrates writable Signals as-is', () => {
+          const user = {
+            id: 1,
+            name: 'John Doe',
+          };
+          const userSignal = signal(user);
+
+          const store = setup({ user: userSignal });
+          const prettyName = computed(
+            () => `${store.user().name} ${store.user().id}`
+          );
+
+          expect(store.user()).toBe(user);
+          expect(prettyName()).toBe('John Doe 1');
+
+          userSignal.set({ id: 2, name: 'Jane Doe' });
+          expect(store.user()).toEqual({ id: 2, name: 'Jane Doe' });
+
+          patchState(store, { user: { id: 3, name: 'Jack Doe' } });
+          expect(store.user()).toEqual({ id: 3, name: 'Jack Doe' });
+        });
+
+        it('integrates a linkedSignal and its update mechanism', () => {
+          const triggerSignal = signal(1);
+          const userLinkedSignal = linkedSignal({
+            source: triggerSignal,
+            computation: () => ({ id: 1, name: 'John Doe' }),
+          });
+
+          const store = setup({ user: userLinkedSignal });
+          const prettyName = computed(
+            () => `${store.user().name} ${store.user().id}`
+          );
+
+          expect(store.user()).toEqual({ id: 1, name: 'John Doe' });
+          expect(prettyName()).toBe('John Doe 1');
+
+          patchState(store, { user: { id: 2, name: 'Jane Doe' } });
+          expect(prettyName()).toBe('Jane Doe 2');
+
+          triggerSignal.set(2);
+          expect(prettyName()).toBe('John Doe 1');
+        });
+
+        it('supports a resource', async () => {
+          const resourceTrigger = signal(1);
+          const userResource = TestBed.runInInjectionContext(() =>
+            resource({
+              request: resourceTrigger,
+              loader: (params) =>
+                Promise.resolve({ id: params.request, name: 'John Doe' }),
+              defaultValue: { id: 0, name: 'Loading...' },
+            })
+          );
+
+          const store = setup({ user: userResource.value });
+          expect(store.user()).toEqual({ id: 0, name: 'Loading...' });
+
+          await new Promise((resolve) => setTimeout(resolve));
+          expect(store.user()).toEqual({ id: 1, name: 'John Doe' });
+
+          resourceTrigger.set(2);
+          await new Promise((resolve) => setTimeout(resolve));
+          expect(store.user()).toEqual({ id: 2, name: 'John Doe' });
+        });
+
+        it('allows mixed writable Signal Types', () => {
+          const user = {
+            id: 1,
+            name: 'John Doe',
+          };
+          const userSignal = signal(user);
+          const product = { id: 1, name: 'Product A' };
+
+          const store = setup({ user: userSignal, product });
+
+          expect(store.user()).toBe(user);
+          expect(store.product()).toBe(product);
+        });
+
+        it('does not strip a readonly Signal', () => {
+          const store = setup({ n: signal(1).asReadonly() });
+
+          expect(isSignal(store.n())).toBe(true);
+          expect(store.n()()).toBe(1);
+        });
+
+        it('does not strip a nested writable Signal', () => {
+          const user = {
+            id: 1,
+            name: 'John Doe',
+          };
+          const userSignal = signal(user);
+          const store = setup({ data: { user: userSignal } });
+
+          expect(isSignal(store.data.user())).toBe(true);
+        });
       });
     });
   });
