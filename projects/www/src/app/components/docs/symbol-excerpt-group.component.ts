@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
         flex-direction: column;
         padding: 8px;
         gap: 2px;
-        overflow-x: scroll;
+        overflow-x: auto;
       }
     `,
   ],
