@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/data",
-  "version": "19.2.1",
+  "version": "20.0.0-beta.0",
   "description": "API management for NgRx",
   "repository": {
     "type": "git",
@@ -20,11 +20,11 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/common": "^19.0.0",
-    "@angular/core": "^19.0.0",
-    "@ngrx/store": "19.2.1",
-    "@ngrx/effects": "19.2.1",
-    "@ngrx/entity": "19.2.1",
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@ngrx/store": "20.0.0-beta.0",
+    "@ngrx/effects": "20.0.0-beta.0",
+    "@ngrx/entity": "20.0.0-beta.0",
     "rxjs": "^6.5.3 || ^7.5.0"
   },
   "schematics": "./schematics/collection.json",
