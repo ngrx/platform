@@ -11,6 +11,10 @@ type TapResponseObserver<T, E> = {
 export function tapResponse<T, E = unknown>(
   observer: TapResponseObserver<T, E>
 ): (source$: Observable<T>) => Observable<T>;
+/**
+ * @deprecated Instead of passing a sequence of callbacks, use an observer
+ * object. For more info see: https://github.com/ngrx/platform/issues/4840
+ */
 export function tapResponse<T, E = unknown>(
   next: (value: T) => void,
   error: (error: E) => void,
@@ -26,33 +30,20 @@ export function tapResponse<T, E = unknown>(
  * @usageNotes
  *
  * ```ts
- * readonly dismissAlert = this.effect<Alert>((alert$) => {
- *   return alert$.pipe(
- *     concatMap(
- *       (alert) => this.alertsService.dismissAlert(alert).pipe(
- *         tapResponse(
- *           (dismissedAlert) => this.alertDismissed(dismissedAlert),
- *           (error: { message: string }) => this.logError(error.message)
- *         )
- *       )
- *     )
- *   );
- * });
- *
- * readonly loadUsers = this.effect<void>((trigger$) => {
- *   return trigger$.pipe(
- *     tap(() => this.patchState({ loading: true })),
+ * readonly loadUsers = rxMethod<void>(
+ *   pipe(
+ *     tap(() => this.isLoading.set(true)),
  *     exhaustMap(() =>
  *       this.usersService.getAll().pipe(
  *         tapResponse({
- *           next: (users) => this.patchState({ users }),
+ *           next: (users) => this.users.set(users),
  *           error: (error: HttpErrorResponse) => this.logError(error.message),
- *           finalize: () => this.patchState({ loading: false }),
+ *           finalize: () => this.isLoading.set(false),
  *         })
  *       )
  *     )
- *   );
- * });
+ *   )
+ * );
  * ```
  */
 export function tapResponse<T, E>(
