@@ -25,7 +25,7 @@ export function withComputed<
     Signal<unknown> | (() => unknown)
   >
 >(
-  signalsFactory: (
+  computedFactory: (
     store: Prettify<StateSignals<Input['state']> & Input['props']>
   ) => ComputedSignals
 ): SignalStoreFeature<
