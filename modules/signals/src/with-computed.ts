@@ -20,7 +20,7 @@ type ComputedResult<
 
 export function withComputed<
   Input extends SignalStoreFeatureResult,
-  ComputedSignals extends Record<
+  ComputedDictionary extends Record<
     string | symbol,
     Signal<unknown> | (() => unknown)
   >
