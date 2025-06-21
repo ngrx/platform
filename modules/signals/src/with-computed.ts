@@ -33,7 +33,7 @@ export function withComputed<
   { state: {}; props: ComputedResult<ComputedSignals>; methods: {} }
 > {
   return withProps((store) => {
-    const signals = signalsFactory(store);
+    const computedResult = computedFactory(store);
     const stateKeys = Reflect.ownKeys(signals);
 
     return stateKeys.reduce((prev, key) => {
