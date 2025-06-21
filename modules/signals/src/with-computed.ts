@@ -36,14 +36,14 @@ export function withComputed<
     const computedResult = computedFactory(store);
     const stateKeys = Reflect.ownKeys(signals);
 
-    return stateKeys.reduce((prev, key) => {
-      const signalOrFunction = signals[key];
+    return computedResultKeys.reduce((prev, key) => {
+      const signalOrComputation = computationResult[key];
       return {
         ...prev,
-        [key]: isSignal(signalOrFunction)
-          ? signalOrFunction
-          : computed(signalOrFunction),
+        [key]: isSignal(signalOrComputation)
+          ? signalOrComputation
+          : computed(signalOrComputation),
       };
-    }, {} as ComputedResult<ComputedSignals>);
+    }, {} as ComputedResult<ComputedDictionary>);
   });
 }
