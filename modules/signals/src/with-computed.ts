@@ -8,7 +8,7 @@ import { Prettify } from './ts-helpers';
 import { withProps } from './with-props';
 
 type ComputedResult<
-  ComputedSignals extends Record<
+  ComputedInput extends Record<
     string | symbol,
     Signal<unknown> | (() => unknown)
   >
