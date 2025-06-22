@@ -1,11 +1,13 @@
 import { computed, signal } from '@angular/core';
 import {
+  deepComputed,
   signalStoreFeature,
   withComputed,
   withMethods,
   withState,
 } from '../src';
-import { getInitialInnerStore } from '../src/signal-store';
+import { getInitialInnerStore, signalStore } from '../src/signal-store';
+import { TestBed } from '@angular/core/testing';
 
 describe('withComputed', () => {
   it('adds computed signals to the store immutably', () => {
@@ -88,5 +90,58 @@ describe('withComputed', () => {
 
     expect(store.props.sum()).toBe(5);
     expect(store.props.product()).toBe(6);
+  });
+
+  it('does not change a WritableSignal', () => {
+    const user = signal({ firstName: 'John', lastName: 'Doe' });
+
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withComputed(() => ({
+        user,
+      }))
+    );
+
+    const store = TestBed.inject(Store);
+
+    expect(store.user).toBe(user);
+  });
+
+  it('does not change a DeepSignal', () => {
+    const user = deepComputed(
+      signal({
+        name: 'John Doe',
+        address: {
+          street: '123 Main St',
+          city: 'Anytown',
+        },
+      })
+    );
+
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withComputed(() => ({
+        user,
+      }))
+    );
+
+    const store = TestBed.inject(Store);
+
+    expect(store.user).toBe(user);
+  });
+
+  it('does not change a Signal', () => {
+    const user = computed(() => ({ firstName: 'John', lastName: 'Doe' }));
+
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withComputed(() => ({
+        user,
+      }))
+    );
+
+    const store = TestBed.inject(Store);
+
+    expect(store.user).toBe(user);
   });
 });

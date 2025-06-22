@@ -8,14 +8,16 @@ import { Prettify } from './ts-helpers';
 import { withProps } from './with-props';
 
 type ComputedResult<
-  ComputedInput extends Record<
+  ComputedDictionary extends Record<
     string | symbol,
     Signal<unknown> | (() => unknown)
   >
 > = {
-  [P in keyof ComputedSignals]: ComputedSignals[P] extends () => infer V
+  [P in keyof ComputedDictionary]: ComputedDictionary[P] extends Signal<unknown>
+    ? ComputedDictionary[P]
+    : ComputedDictionary[P] extends () => infer V
     ? Signal<V>
-    : ComputedSignals[P];
+    : never;
 };
 
 export function withComputed<
@@ -27,17 +29,17 @@ export function withComputed<
 >(
   computedFactory: (
     store: Prettify<StateSignals<Input['state']> & Input['props']>
-  ) => ComputedSignals
+  ) => ComputedDictionary
 ): SignalStoreFeature<
   Input,
-  { state: {}; props: ComputedResult<ComputedSignals>; methods: {} }
+  { state: {}; props: ComputedResult<ComputedDictionary>; methods: {} }
 > {
   return withProps((store) => {
     const computedResult = computedFactory(store);
-    const stateKeys = Reflect.ownKeys(signals);
+    const computedResultKeys = Reflect.ownKeys(computedResult);
 
     return computedResultKeys.reduce((prev, key) => {
-      const signalOrComputation = computationResult[key];
+      const signalOrComputation = computedResult[key];
       return {
         ...prev,
         [key]: isSignal(signalOrComputation)
