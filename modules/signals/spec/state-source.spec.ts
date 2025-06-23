@@ -554,7 +554,7 @@ describe('StateSource', () => {
           expect(store.user()).toEqual({ id: 2, name: 'John Doe' });
         });
 
-        it('allows mixed writable Signal Types', () => {
+        it('allows mixing signals and plain values', () => {
           const user = {
             id: 1,
             name: 'John Doe',
