@@ -210,7 +210,7 @@ describe('StateSource', () => {
       });
     });
 
-    it('should only patch affected root properties', () => {
+    it('patches only affected root properties', () => {
       let updateCounter = 0;
       const userSignal = signal(
         {
