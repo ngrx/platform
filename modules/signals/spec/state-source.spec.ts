@@ -468,7 +468,7 @@ describe('StateSource', () => {
     });
   });
 
-  describe('integration of Signals natively', () => {
+  describe('user-defined signals as state slices', () => {
     [
       {
         name: 'signalStore',
