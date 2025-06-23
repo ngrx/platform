@@ -295,7 +295,7 @@ describe('StateSource', () => {
       });
     });
 
-    it('does not support a dynamic type as state', () => {
+    it('does not support a dynamic dictionary as state', () => {
       const Store = signalStore(
         { providedIn: 'root' },
         withState<Record<number, number>>({}),
