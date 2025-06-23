@@ -83,8 +83,9 @@ export function patchState<State extends object>(
     if (!stateKeys.includes(key)) {
       if (typeof ngDevMode !== 'undefined' && ngDevMode) {
         console.warn(
-          '@ngrx/signals: Skipping update for unknown property in state source.',
-          `Property: ${String(key)}`
+          `@ngrx/signals: patchState was called with an unknown state slice '${String(key)}'.`,
+          'Ensure that all state properties are explicitly defined in the initial state.',
+          'Updates to properties not present in the initial state will be ignored.',
         );
       }
       continue;
