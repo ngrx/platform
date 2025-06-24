@@ -41,8 +41,8 @@ export type StateWatcher<State extends object> = (
 ) => void;
 
 export function isWritableSignal(
-  signal: unknown
-): signal is WritableSignal<unknown> {
+  value: unknown
+): value is WritableSignal<unknown> {
   return (
     isSignal(signal) &&
     'set' in signal &&
