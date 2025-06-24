@@ -1,14 +1,7 @@
-import {
-  computed,
-  isSignal,
-  linkedSignal,
-  resource,
-  signal,
-} from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { isSignal, signal } from '@angular/core';
 import { withComputed, withMethods, withState } from '../src';
-import { getInitialInnerStore, signalStore } from '../src/signal-store';
-import { getState, patchState } from '../src/state-source';
+import { getInitialInnerStore } from '../src/signal-store';
+import { getState } from '../src/state-source';
 
 describe('withState', () => {
   it('patches state source and updates slices immutably', () => {
