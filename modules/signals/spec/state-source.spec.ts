@@ -172,8 +172,9 @@ describe('StateSource', () => {
         patchState(userState, { middleName: 'Michael' });
 
         expect(consoleWarnSpy).toHaveBeenCalledWith(
-          '@ngrx/signals: Skipping update for unknown property in state source.',
-          'Property: middleName'
+          "@ngrx/signals: patchState was called with an unknown state slice 'middleName'.",
+          'Ensure that all state properties are explicitly defined in the initial state.',
+          'Updates to properties not present in the initial state will be ignored.'
         );
         expect(userState()).toEqual({ id: 1 });
       });
@@ -210,7 +211,7 @@ describe('StateSource', () => {
       });
     });
 
-    it('patches only affected root properties', () => {
+    it("sets all root proprerites and relies on the Signal's equals function", () => {
       let updateCounter = 0;
       const userSignal = signal(
         {
@@ -234,18 +235,18 @@ describe('StateSource', () => {
       expect(updateCounter).toBe(0);
 
       patchState(store, { city: 'Xian' });
-      expect(updateCounter).toBe(0);
+      expect(updateCounter).toBe(1);
 
       patchState(store, (state) => state);
-      expect(updateCounter).toBe(0);
+      expect(updateCounter).toBe(2);
 
       patchState(store, ({ user }) => ({ user }));
-      expect(updateCounter).toBe(0);
+      expect(updateCounter).toBe(3);
 
       patchState(store, ({ user }) => ({
         user: { ...user, firstName: 'Jane' },
       }));
-      expect(updateCounter).toBe(1);
+      expect(updateCounter).toBe(4);
     });
   });
 

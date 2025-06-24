@@ -44,11 +44,11 @@ export function isWritableSignal(
   value: unknown
 ): value is WritableSignal<unknown> {
   return (
-    isSignal(signal) &&
-    'set' in signal &&
-    'update' in signal &&
-    typeof signal.set === 'function' &&
-    typeof signal.update === 'function'
+    isSignal(value) &&
+    'set' in value &&
+    'update' in value &&
+    typeof value.set === 'function' &&
+    typeof value.update === 'function'
   );
 }
 
@@ -83,9 +83,11 @@ export function patchState<State extends object>(
     if (!stateKeys.includes(key)) {
       if (typeof ngDevMode !== 'undefined' && ngDevMode) {
         console.warn(
-          `@ngrx/signals: patchState was called with an unknown state slice '${String(key)}'.`,
+          `@ngrx/signals: patchState was called with an unknown state slice '${String(
+            key
+          )}'.`,
           'Ensure that all state properties are explicitly defined in the initial state.',
-          'Updates to properties not present in the initial state will be ignored.',
+          'Updates to properties not present in the initial state will be ignored.'
         );
       }
       continue;
@@ -93,7 +95,7 @@ export function patchState<State extends object>(
     const signalKey = key as keyof State;
 
     if (currentState[signalKey] === newState[signalKey]) {
-      continue;
+      // continue;
     }
 
     signals[signalKey].set(newState[signalKey]);
