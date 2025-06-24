@@ -54,20 +54,6 @@ console.log(firstName()); // logs: 'Eric'
 console.log(lastName()); // logs: 'Clapton'
 ```
 
-When a state property holds an object as its value, the `signalState` function generates a `DeepSignal`.
-It can be used as a regular read-only signal, but it also contains signals for each property of the object it refers to.
-
-```ts
-const firstName = user.firstName; // type: Signal<string>
-const lastName = user.lastName; // type: Signal<string>
-
-console.log(firstName()); // logs: 'Eric'
-console.log(lastName()); // logs: 'Clapton'
-```
-
-If the root properties of a state are already a `WritableSignal`, then they are reused instead of creating new signals.
-This allows the integration of external `WritableSignal`s, such as `linkedSignal` or `resource.value`.
-
 <div class="alert is-helpful">
 
 For enhanced performance, deeply nested signals are generated lazily and initialized only upon first access.
@@ -129,6 +115,34 @@ patchState(userState, (state) => ({
 
 // After:
 patchState(userState, setFirstName('Stevie'), setAdmin());
+```
+
+## Using User-Defined Signals
+
+The `signalState` function supports integrating user-defined `WritableSignal` instances as part of the state.
+
+If a root state property is a `WritableSignal`, its value becomes an integral part of the state.
+The SignalState instance and the original signal remain synchronized - updating one will immediately reflect in the other.
+
+```ts
+const name = signal('Jimi Hendrix');
+const userState = signalState({
+  // 👇 Providing an external signal as part of the initial state.
+  name,
+  isAdmin: false,
+});
+
+console.log(userState.name()); // logs: Jimi Hendrix
+
+// Updating the external signal
+name.set('Brian May');
+// reflects the value in the SignalState instance.
+console.log(userState.name()); // logs: Brian May
+
+// Updating the SignalState instance
+patchState(userState, { name: 'Eric Clapton' });
+// reflects the value in the external signal.
+console.log(name()); // logs: Eric Clapton
 ```
 
 ## Usage

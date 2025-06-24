@@ -49,6 +49,27 @@ The `BookSearchStore` instance will contain the following properties:
 
 <div class="alert is-helpful">
 
+Similar to `signalState`, `withState` accepts user-defined `WritableSignal` 
+instances as part of the state.
+
+```ts
+import { signalStore, withState } from '@ngrx/signals';
+import { Book } from './book';
+
+const booksSignal = signal<Book[]>([]);
+
+export const BookSearchStore = signalStore(
+  withState({
+    books: booksSignal,
+    isLoading: false
+  })
+);
+```
+
+</div>
+
+<div class="alert is-helpful">
+
 The `withState` feature also has a signature that takes the initial state factory as an input argument.
 The factory is executed within the injection context, allowing initial state to be obtained from a service or injection token.
 
