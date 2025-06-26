@@ -62,7 +62,7 @@ describe('withComputed', () => {
     );
   });
 
-  it('adds computed automatically if the value is function', () => {
+  it('adds computed automatically if the value is a function', () => {
     const initialStore = getInitialInnerStore();
 
     const store = signalStoreFeature(
