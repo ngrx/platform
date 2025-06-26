@@ -19,7 +19,9 @@ export const appConfig: ApplicationConfig = {
     provideFileRouter(
       withComponentInputBinding(),
       withViewTransitions(),
-      withInMemoryScrolling()
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'enabled',
+      })
     ),
     provideClientHydration(),
     provideHttpClient(withFetch()),
