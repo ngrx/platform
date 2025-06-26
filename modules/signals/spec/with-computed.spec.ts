@@ -1,6 +1,13 @@
-import { signal } from '@angular/core';
-import { withComputed, withMethods, withState } from '../src';
-import { getInitialInnerStore } from '../src/signal-store';
+import { computed, signal } from '@angular/core';
+import {
+  deepComputed,
+  signalStoreFeature,
+  withComputed,
+  withMethods,
+  withState,
+} from '../src';
+import { getInitialInnerStore, signalStore } from '../src/signal-store';
+import { TestBed } from '@angular/core/testing';
 
 describe('withComputed', () => {
   it('adds computed signals to the store immutably', () => {
@@ -53,5 +60,88 @@ describe('withComputed', () => {
       'Trying to override:',
       'p1, s2, m1, Symbol(computed_secret)'
     );
+  });
+
+  it('adds computed automatically if the value is a function', () => {
+    const initialStore = getInitialInnerStore();
+
+    const store = signalStoreFeature(
+      withState({ a: 2, b: 3 }),
+      withComputed(({ a, b }) => ({
+        sum: () => a() + b(),
+        product: () => a() * b(),
+      }))
+    )(initialStore);
+
+    expect(store.props.sum()).toBe(5);
+    expect(store.props.product()).toBe(6);
+  });
+
+  it('allows to mix user-provided computeds and automatically computed ones', () => {
+    const initialStore = getInitialInnerStore();
+
+    const store = signalStoreFeature(
+      withState({ a: 2, b: 3 }),
+      withComputed(({ a, b }) => ({
+        sum: () => a() + b(),
+        product: computed(() => a() * b()),
+      }))
+    )(initialStore);
+
+    expect(store.props.sum()).toBe(5);
+    expect(store.props.product()).toBe(6);
+  });
+
+  it('does not change a WritableSignal', () => {
+    const user = signal({ firstName: 'John', lastName: 'Doe' });
+
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withComputed(() => ({
+        user,
+      }))
+    );
+
+    const store = TestBed.inject(Store);
+
+    expect(store.user).toBe(user);
+  });
+
+  it('does not change a DeepSignal', () => {
+    const user = deepComputed(
+      signal({
+        name: 'John Doe',
+        address: {
+          street: '123 Main St',
+          city: 'Anytown',
+        },
+      })
+    );
+
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withComputed(() => ({
+        user,
+      }))
+    );
+
+    const store = TestBed.inject(Store);
+
+    expect(store.user).toBe(user);
+  });
+
+  it('does not change a Signal', () => {
+    const user = computed(() => ({ firstName: 'John', lastName: 'Doe' }));
+
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withComputed(() => ({
+        user,
+      }))
+    );
+
+    const store = TestBed.inject(Store);
+
+    expect(store.user).toBe(user);
   });
 });
