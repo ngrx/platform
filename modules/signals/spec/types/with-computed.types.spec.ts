@@ -19,7 +19,7 @@ describe('withComputed', () => {
     compilerOptions()
   );
 
-  it('creates a Signal automtically', () => {
+  it('creates a Signal automatically', () => {
     const snippet = `
       const Store = signalStore(
         withComputed(() => ({
