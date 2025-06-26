@@ -3,7 +3,7 @@ import { compilerOptions } from './helpers';
 import { signalStore, withComputed } from 'modules/signals/src';
 import { TestBed } from '@angular/core/testing';
 
-describe('patchState', () => {
+describe('withComputed', () => {
   const expectSnippet = expecter(
     (code) => `
         import {
