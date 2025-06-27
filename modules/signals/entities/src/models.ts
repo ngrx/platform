@@ -1,4 +1,5 @@
 import { Signal } from '@angular/core';
+import { Prettify } from '@ngrx/signals';
 
 export type EntityId = string | number;
 
@@ -9,9 +10,13 @@ export type EntityState<Entity> = {
   ids: EntityId[];
 };
 
-export type NamedEntityState<Entity, Collection extends string> = {
-  [K in keyof EntityState<Entity> as `${Collection}${Capitalize<K>}`]: EntityState<Entity>[K];
-};
+export type NamedEntityState<Entity, Collection extends string> = Prettify<
+  {
+    [K in `${Collection}EntityMap`]: EntityMap<Entity>;
+  } & {
+    [K in `${Collection}Ids`]: EntityId[];
+  }
+>;
 
 export type EntityProps<Entity> = {
   entities: Signal<Entity[]>;
