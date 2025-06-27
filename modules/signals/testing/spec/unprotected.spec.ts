@@ -19,7 +19,7 @@ describe('unprotected', () => {
 
   it('throws error when provided state source is not writable', () => {
     const readonlySource: StateSource<{ count: number }> = {
-      [STATE_SOURCE]: signal({ count: 0 }).asReadonly(),
+      [STATE_SOURCE]: { count: signal(0).asReadonly() },
     };
 
     expect(() => unprotected(readonlySource)).toThrowError(

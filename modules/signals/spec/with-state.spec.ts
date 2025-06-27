@@ -1,18 +1,25 @@
-import { isSignal, signal } from '@angular/core';
+import {
+  computed,
+  isSignal,
+  linkedSignal,
+  resource,
+  signal,
+} from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { withComputed, withMethods, withState } from '../src';
-import { STATE_SOURCE } from '../src/state-source';
-import { getInitialInnerStore } from '../src/signal-store';
+import { getInitialInnerStore, signalStore } from '../src/signal-store';
+import { getState, patchState } from '../src/state-source';
 
 describe('withState', () => {
   it('patches state source and updates slices immutably', () => {
     const initialStore = getInitialInnerStore();
-    const initialState = initialStore[STATE_SOURCE]();
+    const initialState = getState(initialStore);
 
     const store = withState({
       foo: 'bar',
       x: { y: 'z' },
     })(initialStore);
-    const state = store[STATE_SOURCE]();
+    const state = getState(store);
 
     expect(state).toEqual({ foo: 'bar', x: { y: 'z' } });
     expect(initialState).toEqual({});
@@ -46,7 +53,7 @@ describe('withState', () => {
       foo: 'bar',
       x: { y: 'z' },
     }))(initialStore);
-    const state = store[STATE_SOURCE]();
+    const state = getState(store);
 
     expect(state).toEqual({ foo: 'bar', x: { y: 'z' } });
     expect(store.stateSignals.foo()).toBe('bar');
