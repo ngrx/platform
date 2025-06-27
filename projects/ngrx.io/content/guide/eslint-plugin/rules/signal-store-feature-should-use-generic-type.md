@@ -18,54 +18,38 @@ This rule ensure that a Signal Store feature uses a generic type to define the f
 Examples of **incorrect** code for this rule:
 
 ```ts
-const withY = () => signalStoreFeature(
-    { state: type<{ y: number }>() },
-    withState({})
-  );
+const withY = () =>
+  signalStoreFeature({ state: type<{ y: number }>() }, withState({}));
 ```
 
 ```ts
 const withY = () => {
-  return signalStoreFeature(
-    type<{ state: { y: number } }>(),
-    withState({})
-  );
-}
+  return signalStoreFeature(type<{ state: { y: number } }>(), withState({}));
+};
 ```
 
 ```ts
 function withY() {
-  return signalStoreFeature(
-    type<{ state: { y: number } }>(),
-    withState({})
-  );
+  return signalStoreFeature(type<{ state: { y: number } }>(), withState({}));
 }
 ```
 
 Examples of **correct** code for this rule:
 
 ```ts
-const withY = <Y>() => signalStoreFeature(
-  { state: type<{ y: Y }>() },
-  withState({})
-);
+const withY = <Y>() =>
+  signalStoreFeature({ state: type<{ y: Y }>() }, withState({}));
 ```
 
 ```ts
 const withY = <_>() => {
-  return signalStoreFeature(
-    type<{ state: { y: number } }>(),
-    withState({})
-  );
+  return signalStoreFeature(type<{ state: { y: number } }>(), withState({}));
 };
 ```
 
 ```ts
 function withY<_>() {
-  return signalStoreFeature(
-    { state: type<{ y: Y }>() },
-    withState({})
-  );
+  return signalStoreFeature({ state: type<{ y: Y }>() }, withState({}));
 }
 ```
 
