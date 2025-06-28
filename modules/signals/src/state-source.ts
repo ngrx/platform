@@ -3,7 +3,6 @@ import {
   DestroyRef,
   inject,
   Injector,
-  isSignal,
   Signal,
   untracked,
   WritableSignal,
