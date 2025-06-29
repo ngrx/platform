@@ -42,6 +42,7 @@ export default (
       '@ngrx/prefer-effect-callback-in-block-statement': 'error',
       '@ngrx/use-effects-lifecycle-interface': 'error',
       '@ngrx/prefer-concat-latest-from': 'error',
+      '@ngrx/enforce-type-call': 'error',
       '@ngrx/prefer-protected-state': 'error',
       '@ngrx/signal-state-no-arrays-at-root-level': 'error',
       '@ngrx/signal-store-feature-should-use-generic-type': 'error',
@@ -64,7 +65,6 @@ export default (
       '@ngrx/prefix-selectors-with-select': 'error',
       '@ngrx/select-style': 'error',
       '@ngrx/use-consistent-global-store-name': 'error',
-      '@ngrx/enforce-type-call': 'error',
     },
   },
 ];

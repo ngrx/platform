@@ -1,6 +1,6 @@
 # prefer-protected-state
 
-A Signal Store prefers protected state.
+A Signal Store prefers protected state
 
 - **Type**: suggestion
 - **Fixable**: No
@@ -18,23 +18,15 @@ This rule ensures that state changes are only managed by the Signal Store to pre
 Examples of **incorrect** code for this rule:
 
 ```ts
-const Store = signalStore(
-  { protectedState: false },
-  withState({}),
-);
+const Store = signalStore({ protectedState: false }, withState({}));
 ```
 
 Examples of **correct** code for this rule:
 
 ```ts
-const Store = signalStore(
-  withState({}),
-);
+const Store = signalStore(withState({}));
 ```
 
 ```ts
-const Store = signalStore(
-  { protectedState: true },
-  withState({}),
-);
+const Store = signalStore({ protectedState: true }, withState({}));
 ```

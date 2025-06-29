@@ -20,7 +20,7 @@ Examples of **correct** code for this rule:
 ```ts
 const store = withState({ foo: 'bar' });
 
-const store = withState({ arrayAsProperty: ['foo', 'bar'] })
+const store = withState({ arrayAsProperty: ['foo', 'bar'] });
 
 const initialState = {};
 const store = signalStore(withState(initialState));
