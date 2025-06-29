@@ -369,13 +369,13 @@ export function signalStoreFeature<
 >;
 
 export function signalStoreFeature(
-  featureOrInput: SignalStoreFeature | Partial<SignalStoreFeatureResult>,
-  ...restFeatures: SignalStoreFeature[]
-): SignalStoreFeature {
-  const features =
-    typeof featureOrInput === 'function'
-      ? [featureOrInput, ...restFeatures]
-      : restFeatures;
+  ...args:
+    | [Partial<SignalStoreFeatureResult>, ...SignalStoreFeature[]]
+    | SignalStoreFeature[]
+): SignalStoreFeature<EmptyFeatureResult, EmptyFeatureResult> {
+  const features = (
+    typeof args[0] === 'function' ? args : args.slice(1)
+  ) as SignalStoreFeature[];
 
   return (inputStore) =>
     features.reduce((store, feature) => feature(store), inputStore);
