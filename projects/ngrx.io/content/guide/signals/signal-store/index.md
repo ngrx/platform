@@ -49,8 +49,8 @@ The `BookSearchStore` instance will contain the following properties:
 
 <div class="alert is-helpful">
 
-Similar to `signalState`, `withState` accepts user-defined `WritableSignal` 
-instances as part of the state.
+In addition to plain values, the `withState` feature also accepts user-defined `WritableSignal` instances as part of the state.
+In this case, the SignalStore's state and the original signal remain synchronized - updating one will immediately reflect in the other.
 
 ```ts
 import { signalStore, withState } from '@ngrx/signals';
