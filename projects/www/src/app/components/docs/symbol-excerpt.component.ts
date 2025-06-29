@@ -59,6 +59,7 @@ import { CodeHighlightPipe } from './code-highlight.pipe';
 
       pre {
         margin: 0;
+        overflow-x: initial;
       }
 
       .deprecated {
