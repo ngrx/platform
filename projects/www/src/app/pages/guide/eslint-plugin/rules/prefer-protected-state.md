@@ -1,6 +1,6 @@
 # prefer-protected-state
 
-A Signal Store prefers protected state.
+A Signal Store prefers protected state
 
 - **Type**: suggestion
 - **Fixable**: No

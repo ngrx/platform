@@ -49,6 +49,28 @@ The `BookSearchStore` instance will contain the following properties:
 
 <div class="alert is-helpful">
 
+In addition to plain values, the `withState` feature also accepts user-defined `WritableSignal` instances as part of the state.
+In this case, the SignalStore's state and the original signal remain synchronized - updating one will immediately reflect in the other.
+
+```ts
+import { signalStore, withState } from '@ngrx/signals';
+import { Book } from './book';
+
+const books = signal<Book[]>([]);
+
+const BookSearchStore = signalStore(
+  withState({
+    // 👇 Providing an external signal as part of the initial state.
+    books,
+    isLoading: false,
+  })
+);
+```
+
+</div>
+
+<div class="alert is-helpful">
+
 The `withState` feature also has a signature that takes the initial state factory as an input argument.
 The factory is executed within the injection context, allowing initial state to be obtained from a service or injection token.
 
@@ -145,7 +167,7 @@ export class BookSearch {
 
 Computed signals can be added to the store using the `withComputed` feature.
 This feature accepts a factory function as an input argument, which is executed within the injection context.
-The factory should return a dictionary of computed signals, utilizing previously defined state signals and properties that are accessible through its input argument.
+The factory should return a dictionary containing either computed signals or functions that return values (which are automatically wrapped in computed signals), utilizing previously defined state signals and properties that are accessible through its input argument.
 
 <code-example header="book-search-store.ts">
 
@@ -162,13 +184,14 @@ export const BookSearchStore = signalStore(
   // 👇 Accessing previously defined state signals and properties.
   withComputed(({ books, filter }) => ({
     booksCount: computed(() => books().length),
-    sortedBooks: computed(() => {
+    // 👇 Adds computed automatically
+    sortedBooks: () => {
       const direction = filter.order() === 'asc' ? 1 : -1;
 
       return books().toSorted((a, b) =>
         direction * a.title.localeCompare(b.title)
       );
-    }),
+    },
   }))
 );
 

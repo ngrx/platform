@@ -142,17 +142,17 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'setStateKeys',
-      'unique symbol | keyof Signal<Set<number>>'
+      'unique symbol | keyof Signal<StateResult<Set<number>>>'
     );
 
     expectSnippet(snippet).toInfer(
       'mapStateKeys',
-      'unique symbol | keyof Signal<Map<number, { bar: boolean; }>>'
+      'unique symbol | keyof Signal<StateResult<Map<number, { bar: boolean; }>>>'
     );
 
     expectSnippet(snippet).toInfer(
       'uintArrayStateKeys',
-      'unique symbol | keyof Signal<Uint8ClampedArray<ArrayBuffer>>'
+      'unique symbol | keyof Signal<StateResult<Uint8ClampedArray<ArrayBuffer>>>'
     );
   });
 
@@ -175,22 +175,22 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'weakSetStateKeys',
-      'unique symbol | keyof Signal<WeakSet<{ foo: string; }>>'
+      'unique symbol | keyof Signal<StateResult<WeakSet<{ foo: string; }>>>'
     );
 
     expectSnippet(snippet).toInfer(
       'dateStateKeys',
-      'unique symbol | keyof Signal<Date>'
+      'unique symbol | keyof Signal<StateResult<Date>>'
     );
 
     expectSnippet(snippet).toInfer(
       'errorStateKeys',
-      'unique symbol | keyof Signal<Error>'
+      'unique symbol | keyof Signal<StateResult<Error>>'
     );
 
     expectSnippet(snippet).toInfer(
       'regExpStateKeys',
-      'unique symbol | keyof Signal<RegExp>'
+      'unique symbol | keyof Signal<StateResult<RegExp>>'
     );
   });
 
@@ -204,7 +204,7 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'stateKeys',
-      'unique symbol | keyof Signal<() => void>'
+      'unique symbol | keyof Signal<StateResult<() => void>>'
     );
   });
 
@@ -282,7 +282,7 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'state1Keys',
-      'unique symbol | keyof Signal<{ [key: string]: number; }>'
+      'unique symbol | keyof Signal<StateResult<{ [key: string]: number; }>>'
     );
 
     expectSnippet(snippet).toInfer(
@@ -292,7 +292,7 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'state2Keys',
-      'unique symbol | keyof Signal<{ [key: number]: { foo: string; }; }>'
+      'unique symbol | keyof Signal<StateResult<{ [key: number]: { foo: string; }; }>>'
     );
 
     expectSnippet(snippet).toInfer(
@@ -302,7 +302,7 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'state3Keys',
-      'unique symbol | keyof Signal<Record<string, { bar: number; }>>'
+      'unique symbol | keyof Signal<StateResult<Record<string, { bar: number; }>>>'
     );
 
     expectSnippet(snippet).toInfer(
