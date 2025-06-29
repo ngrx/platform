@@ -211,7 +211,7 @@ describe('StateSource', () => {
       });
     });
 
-    it("sets all root proprerites and relies on the Signal's equals function", () => {
+    it("sets all root properties and relies on the Signal's equals function", () => {
       let updateCounter = 0;
       const userSignal = signal(
         {
