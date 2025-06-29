@@ -1,10 +1,10 @@
 # enforce-type-call
 
-The `type` function from `@ngrx/signals` must be called.
+The `type` function must be called.
 
 - **Type**: problem
 - **Fixable**: Yes
-- **Suggestion**: Yes
+- **Suggestion**: No
 - **Requires type checking**: No
 - **Configurable**: No
 

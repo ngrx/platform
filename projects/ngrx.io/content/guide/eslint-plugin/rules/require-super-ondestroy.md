@@ -19,7 +19,9 @@ Example of **incorrect** code for this rule:
 
 ```ts
 @Injectable()
-export class BooksStore extends ComponentStore<BooksState> implements OnDestroy
+export class BooksStore
+  extends ComponentStore<BooksState>
+  implements OnDestroy
 {
   // ... other BooksStore class members
 
@@ -33,7 +35,9 @@ Example of **correct** code for this rule:
 
 ```ts
 @Injectable()
-export class BooksStore extends ComponentStore<BooksState> implements OnDestroy
+export class BooksStore
+  extends ComponentStore<BooksState>
+  implements OnDestroy
 {
   // ... other BooksStore class members
 
