@@ -5,25 +5,22 @@
 @use './code_theme.scss';
 
 html {
-  color-scheme: light dark;
+  color-scheme: dark;
   @include mat.theme((
     color: mat.$violet-palette,
     typography: Roboto,
     density: 0
   ));
+  /* Prevent font size inflation */
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-/* Prevent font size inflation */
-html {
-  -moz-text-size-adjust: none;
-  -webkit-text-size-adjust: none;
-  text-size-adjust: none;
 }
 
 /* Remove default margin in favour of better control in authored CSS */
