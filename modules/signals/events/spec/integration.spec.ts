@@ -3,6 +3,7 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import {
   delay,
   exhaustMap,
+  map,
   mergeMap,
   Observable,
   of,
@@ -25,6 +26,8 @@ import {
   withEntities,
 } from '@ngrx/signals/entities';
 import {
+  Dispatcher,
+  event,
   eventGroup,
   Events,
   injectDispatch,
@@ -230,6 +233,31 @@ describe('Integration Tests', () => {
       });
       expect(console.error).toHaveBeenCalledWith('Error!');
     }));
+
+    it('handles events in the order they are dispatched', () => {
+      const first = event('first');
+      const second = event('second');
+      const save = event('save', type<string>());
+      const Store = signalStore(
+        { providedIn: 'root' },
+        withState({ savedEvents: [] as string[] }),
+        withReducer(
+          on(save, ({ payload }, state) => ({
+            savedEvents: [...state.savedEvents, payload],
+          }))
+        ),
+        withEffects((_, events = inject(Events)) => ({
+          emitSecond$: events.on(first).pipe(map(() => second())),
+          save$: events.on(first, second).pipe(map(({ type }) => save(type))),
+        }))
+      );
+
+      const dispatcher = TestBed.inject(Dispatcher);
+      const store = TestBed.inject(Store);
+
+      dispatcher.dispatch(first());
+      expect(store.savedEvents()).toEqual(['first', 'second']);
+    });
   });
 
   describe('custom withReducer and withEffects', () => {
