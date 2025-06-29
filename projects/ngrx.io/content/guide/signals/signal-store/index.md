@@ -56,12 +56,13 @@ In this case, the SignalStore's state and the original signal remain synchronize
 import { signalStore, withState } from '@ngrx/signals';
 import { Book } from './book';
 
-const booksSignal = signal<Book[]>([]);
+const books = signal<Book[]>([]);
 
-export const BookSearchStore = signalStore(
+const BookSearchStore = signalStore(
   withState({
-    books: booksSignal,
-    isLoading: false
+    // 👇 Providing an external signal as part of the initial state.
+    books,
+    isLoading: false,
   })
 );
 ```
