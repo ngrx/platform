@@ -1,18 +1,18 @@
-import { isSignal, signal } from '@angular/core';
+import { computed, isSignal, linkedSignal, signal } from '@angular/core';
 import { withComputed, withMethods, withState } from '../src';
-import { STATE_SOURCE } from '../src/state-source';
 import { getInitialInnerStore } from '../src/signal-store';
+import { getState, STATE_SOURCE } from '../src/state-source';
 
 describe('withState', () => {
   it('patches state source and updates slices immutably', () => {
     const initialStore = getInitialInnerStore();
-    const initialState = initialStore[STATE_SOURCE]();
+    const initialState = getState(initialStore);
 
     const store = withState({
       foo: 'bar',
       x: { y: 'z' },
     })(initialStore);
-    const state = store[STATE_SOURCE]();
+    const state = getState(store);
 
     expect(state).toEqual({ foo: 'bar', x: { y: 'z' } });
     expect(initialState).toEqual({});
@@ -46,7 +46,7 @@ describe('withState', () => {
       foo: 'bar',
       x: { y: 'z' },
     }))(initialStore);
-    const state = store[STATE_SOURCE]();
+    const state = getState(store);
 
     expect(state).toEqual({ foo: 'bar', x: { y: 'z' } });
     expect(store.stateSignals.foo()).toBe('bar');
@@ -91,5 +91,39 @@ describe('withState', () => {
       'Trying to override:',
       'p2, s2, m2, Symbol(computed_secret), Symbol(method_secret)'
     );
+  });
+
+  it('allows to pass user-defined WritableSignals', () => {
+    const user = signal({ firstName: 'John', lastName: 'Doe' });
+    const initialStore = getInitialInnerStore();
+
+    const store = withState(() => ({
+      user,
+    }))(initialStore);
+
+    expect(store[STATE_SOURCE]['user']).toBe(user);
+  });
+
+  it('allows to pass mixed signals and plain values', () => {
+    const user = signal({ firstName: 'John', lastName: 'Doe' });
+    const address = computed(() => ({
+      street: '123 Main St',
+      city: 'Anytown',
+    }));
+    const age = linkedSignal(() => 30);
+
+    const initialStore = getInitialInnerStore();
+
+    const store = withState(() => ({
+      user,
+      address,
+      age,
+      isAdmin: false,
+    }))(initialStore);
+
+    expect(store[STATE_SOURCE]['user']).toBe(user);
+    expect(store[STATE_SOURCE]['address']).not.toBe(address);
+    expect(store[STATE_SOURCE]['age']).toBe(age);
+    expect(store[STATE_SOURCE]['isAdmin']()).toBe(false);
   });
 });

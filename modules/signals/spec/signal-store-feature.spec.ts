@@ -8,6 +8,7 @@ import {
   withState,
 } from '../src';
 import { STATE_SOURCE } from '../src/state-source';
+import { assertStateSource } from './helpers';
 
 describe('signalStoreFeature', () => {
   function withCustomFeature1() {
@@ -50,7 +51,7 @@ describe('signalStoreFeature', () => {
 
     const store = new Store();
 
-    expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo' });
+    assertStateSource(store[STATE_SOURCE], { foo: signal('foo') });
     expect(store.foo()).toBe('foo');
     expect(store.bar()).toBe('foo1');
     expect(store.baz()).toBe('foofoo12');
@@ -65,7 +66,7 @@ describe('signalStoreFeature', () => {
 
     const store = new Store();
 
-    expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo' });
+    assertStateSource(store[STATE_SOURCE], { foo: signal('foo') });
     expect(store.foo()).toBe('foo');
     expect(store.bar()).toBe('foo1');
     expect(store.m()).toBe('foofoofoo123');
@@ -81,7 +82,11 @@ describe('signalStoreFeature', () => {
 
     const store = new Store();
 
-    expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo', foo1: 1, foo2: 2 });
+    assertStateSource(store[STATE_SOURCE], {
+      foo: signal('foo'),
+      foo1: signal(1),
+      foo2: signal(2),
+    });
     expect(store.foo()).toBe('foo');
     expect(store.bar()).toBe('foo1');
     expect(store.baz()).toBe('foofoo12');

@@ -67,8 +67,8 @@ export class Effects {
       ofType(loadDataSuccess),
       filter((response) => response.condition),
       exhaustMap(() =>
-        this.dataService.getOtherData().pipe( 
-          map((data) => anotherAction(data)), 
+        this.dataService.getOtherData().pipe(
+          map((data) => anotherAction(data)),
           catchError((error) => of(handleConditionError(error)))
         )
       )

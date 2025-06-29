@@ -5,25 +5,22 @@
 @use './code_theme.scss';
 
 html {
-  color-scheme: light dark;
+  color-scheme: dark;
   @include mat.theme((
     color: mat.$violet-palette,
     typography: Roboto,
     density: 0
   ));
+  /* Prevent font size inflation */
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-/* Prevent font size inflation */
-html {
-  -moz-text-size-adjust: none;
-  -webkit-text-size-adjust: none;
-  text-size-adjust: none;
 }
 
 /* Remove default margin in favour of better control in authored CSS */
@@ -170,4 +167,25 @@ analog-markdown-route > div {
 .no-scroll {
   overflow: hidden;
   width: 100%;
+}
+
+.video-container {
+  width: 100%;
+  max-width: 750px;
+  justify-content: center;
+  margin: 1rem auto;
+}
+
+.video-responsive-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+
+  > iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
