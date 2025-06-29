@@ -10,16 +10,26 @@ import {
 } from '@angular/core';
 import { Prettify } from './ts-helpers';
 
-const STATE_WATCHERS = new WeakMap<Signal<object>, Array<StateWatcher<any>>>();
+declare const ngDevMode: unknown;
+
+const STATE_WATCHERS = new WeakMap<object, Array<StateWatcher<any>>>();
 
 export const STATE_SOURCE = Symbol('STATE_SOURCE');
 
 export type WritableStateSource<State extends object> = {
-  [STATE_SOURCE]: WritableSignal<State>;
+  [STATE_SOURCE]: {
+    [Property in keyof State]: WritableSignal<State[Property]>;
+  };
 };
 
 export type StateSource<State extends object> = {
-  [STATE_SOURCE]: Signal<State>;
+  [STATE_SOURCE]: { [Property in keyof State]: Signal<State[Property]> };
+};
+
+export type StateResult<StateInput extends object> = {
+  [K in keyof StateInput]: StateInput[K] extends WritableSignal<infer V>
+    ? V
+    : StateInput[K];
 };
 
 export type PartialStateUpdater<State extends object> = (
@@ -30,32 +40,62 @@ export type StateWatcher<State extends object> = (
   state: NoInfer<State>
 ) => void;
 
+export function isWritableSignal(
+  value: unknown
+): value is WritableSignal<unknown> {
+  return (
+    isSignal(value) &&
+    'set' in value &&
+    'update' in value &&
+    typeof value.set === 'function' &&
+    typeof value.update === 'function'
+  );
+}
+
 export function isWritableStateSource<State extends object>(
   stateSource: StateSource<State>
 ): stateSource is WritableStateSource<State> {
-  return (
-    'set' in stateSource[STATE_SOURCE] &&
-    'update' in stateSource[STATE_SOURCE] &&
-    typeof stateSource[STATE_SOURCE].set === 'function' &&
-    typeof stateSource[STATE_SOURCE].update === 'function'
-  );
+  const signals: Record<string | symbol, unknown> = stateSource[STATE_SOURCE];
+  return Reflect.ownKeys(stateSource[STATE_SOURCE]).every((key) => {
+    return isWritableSignal(signals[key]);
+  });
 }
 
 export function patchState<State extends object>(
   stateSource: WritableStateSource<State>,
   ...updaters: Array<
-    Partial<Prettify<State>> | PartialStateUpdater<Prettify<State>>
+    | Partial<Prettify<NoInfer<State>>>
+    | PartialStateUpdater<Prettify<NoInfer<State>>>
   >
 ): void {
-  stateSource[STATE_SOURCE].update((currentState) =>
-    updaters.reduce(
-      (nextState: State, updater) => ({
-        ...nextState,
-        ...(typeof updater === 'function' ? updater(nextState) : updater),
-      }),
-      currentState
-    )
+  const currentState = untracked(() => getState(stateSource));
+  const newState = updaters.reduce(
+    (nextState: State, updater) => ({
+      ...nextState,
+      ...(typeof updater === 'function' ? updater(nextState) : updater),
+    }),
+    currentState
   );
+
+  const signals = stateSource[STATE_SOURCE];
+  const stateKeys = Reflect.ownKeys(stateSource[STATE_SOURCE]);
+  for (const key of Reflect.ownKeys(newState)) {
+    if (!stateKeys.includes(key)) {
+      if (typeof ngDevMode !== 'undefined' && ngDevMode) {
+        console.warn(
+          `@ngrx/signals: patchState was called with an unknown state slice '${String(
+            key
+          )}'.`,
+          'Ensure that all state properties are explicitly defined in the initial state.',
+          'Updates to properties not present in the initial state will be ignored.'
+        );
+      }
+      continue;
+    }
+    const signalKey = key as keyof State;
+
+    signals[signalKey].set(newState[signalKey]);
+  }
 
   notifyWatchers(stateSource);
 }
@@ -63,7 +103,16 @@ export function patchState<State extends object>(
 export function getState<State extends object>(
   stateSource: StateSource<State>
 ): State {
-  return stateSource[STATE_SOURCE]();
+  const signals: Record<string | symbol, Signal<unknown>> = stateSource[
+    STATE_SOURCE
+  ];
+  return Reflect.ownKeys(stateSource[STATE_SOURCE]).reduce((state, key) => {
+    const value = signals[key]();
+    return {
+      ...state,
+      [key]: value,
+    };
+  }, {} as State);
 }
 
 export function watchState<State extends object>(
