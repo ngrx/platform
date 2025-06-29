@@ -32,9 +32,7 @@ export class Dispatcher {
   protected readonly events = inject(Events);
 
   dispatch(event: EventInstance<string, unknown>): void {
-    queueScheduler.schedule(() => {
-      this.reducerEvents[EVENTS].next(event);
-      this.events[EVENTS].next(event);
-    });
+    this.reducerEvents[EVENTS].next(event);
+    queueScheduler.schedule(() => this.events[EVENTS].next(event));
   }
 }
