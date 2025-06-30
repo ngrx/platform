@@ -2,8 +2,6 @@ import { Selector, SelectorWithProps } from './models';
 import { isDevMode } from '@angular/core';
 import { isNgrxMockEnvironment } from './flags';
 
-// test change
-
 export type AnyFn = (...args: any[]) => any;
 
 export type MemoizedProjection = {
