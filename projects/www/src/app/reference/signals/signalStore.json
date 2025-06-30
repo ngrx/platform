@@ -36,7 +36,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -267,7 +267,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -609,7 +609,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -977,7 +977,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -1371,7 +1371,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -1791,7 +1791,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -2237,7 +2237,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -2484,7 +2484,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -2612,7 +2612,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -2768,7 +2768,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -2947,7 +2947,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -3105,7 +3105,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -3282,7 +3282,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -3507,7 +3507,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -3755,7 +3755,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -4026,7 +4026,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -4326,7 +4326,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -4652,7 +4652,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -5004,7 +5004,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -5382,7 +5382,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -5786,7 +5786,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -6216,7 +6216,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -6487,7 +6487,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -6828,7 +6828,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -7080,7 +7080,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -7208,7 +7208,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -7364,7 +7364,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -7543,7 +7543,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -7745,7 +7745,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -7970,7 +7970,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -8218,7 +8218,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -8489,7 +8489,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -8789,7 +8789,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -9023,7 +9023,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -9294,7 +9294,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -9646,7 +9646,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -10024,7 +10024,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -10428,7 +10428,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -10858,7 +10858,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -11314,7 +11314,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -11621,7 +11621,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -11836,7 +11836,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -12074,7 +12074,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -12335,7 +12335,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -12625,7 +12625,7 @@
         {
           "kind": "Reference",
           "text": "Type",
-          "canonicalReference": "@angular/core!Type$1:interface"
+          "canonicalReference": "@angular/core!Type:interface"
         },
         { "kind": "Content", "text": "<" },
         {

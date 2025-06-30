@@ -1,5 +1,142 @@
 <a name="20.0.0-beta.0"></a>
 
+# [20.0.0-beta.0](https://github.com/ngrx/platform/compare/19.2.1...20.0.0-beta.0) (2025-06-30)
+
+### Bug Fixes
+
+- **signals:** handle events in the dispatched order ([#4857](https://github.com/ngrx/platform/issues/4857)) ([fa50f43](https://github.com/ngrx/platform/commit/fa50f43)), closes [#4852](https://github.com/ngrx/platform/issues/4852)
+- **www:** Add padding to code snippets ([#4812](https://github.com/ngrx/platform/issues/4812)) ([9e942db](https://github.com/ngrx/platform/commit/9e942db)), closes [#4811](https://github.com/ngrx/platform/issues/4811)
+- **www:** add styles for video ([#4851](https://github.com/ngrx/platform/issues/4851)) ([85680a0](https://github.com/ngrx/platform/commit/85680a0))
+- **www:** fix color-scheme and combine duplicate html declarations ([#4855](https://github.com/ngrx/platform/issues/4855)) ([f9b2565](https://github.com/ngrx/platform/commit/f9b2565))
+- **www:** remove duplicate scrollbar ([#4829](https://github.com/ngrx/platform/issues/4829)) ([f0f1f2a](https://github.com/ngrx/platform/commit/f0f1f2a)), closes [#4828](https://github.com/ngrx/platform/issues/4828)
+- **www:** remove horizontal scrollbar ([#4808](https://github.com/ngrx/platform/issues/4808)) ([2639f67](https://github.com/ngrx/platform/commit/2639f67))
+
+### build
+
+- update to Angular 20 ([#4778](https://github.com/ngrx/platform/issues/4778)) ([8a4ecd9](https://github.com/ngrx/platform/commit/8a4ecd9))
+
+### Features
+
+- **effects:** remove act operator ([#4839](https://github.com/ngrx/platform/issues/4839)) ([9a83f1d](https://github.com/ngrx/platform/commit/9a83f1d))
+- **entity:** strengthen typing of getInitialState ([#4819](https://github.com/ngrx/platform/issues/4819)) ([bfb21c2](https://github.com/ngrx/platform/commit/bfb21c2)), closes [#4422](https://github.com/ngrx/platform/issues/4422)
+- **eslint-plugin:** add new rule enforce type call ([#4809](https://github.com/ngrx/platform/issues/4809)) ([9b82e67](https://github.com/ngrx/platform/commit/9b82e67)), closes [#4797](https://github.com/ngrx/platform/issues/4797)
+- **operators:** deprecate `tapResponse` signature with a sequence of callbacks ([#4844](https://github.com/ngrx/platform/issues/4844)) ([9a16813](https://github.com/ngrx/platform/commit/9a16813)), closes [#4840](https://github.com/ngrx/platform/issues/4840)
+- **signals:** allow user-defined signals in `withState` and `signalState` by splitting `STATE_SOURCE` ([#4795](https://github.com/ngrx/platform/issues/4795)) ([521a2a6](https://github.com/ngrx/platform/commit/521a2a6))
+- **signals:** enhance `withComputed` to accept computation functions ([#4822](https://github.com/ngrx/platform/issues/4822)) ([c8b15dd](https://github.com/ngrx/platform/commit/c8b15dd)), closes [#4782](https://github.com/ngrx/platform/issues/4782)
+- **www:** add sidebar for mobile view and make home page responsive ([#4813](https://github.com/ngrx/platform/issues/4813)) ([4397bfb](https://github.com/ngrx/platform/commit/4397bfb)), closes [#4807](https://github.com/ngrx/platform/issues/4807)
+
+### BREAKING CHANGES
+
+- **signals:** The internal `STATE_SOURCE` is no longer represented as a single `WritableSignal` holding the entire state object. Instead, each top-level state property becomes its own `WritableSignal` or remains as-is if a `WritableSignal` is provided as a state property.
+
+BEFORE:
+
+1. The initial state object reference is preserved:
+
+const initialState = { ngrx: 'rocks' };
+
+// signalState:
+const state = signalState(initialState);
+state() === initialState; // true
+
+// withState:
+const Store = signalStore(withState(initialState));
+const store = new Store();
+getState(store) === initialState; // true
+
+2. Top-level `WritableSignal`s are wrapped with `Signal`s:
+
+// signalState:
+const state = signalState({ ngrx: signal('rocks') });
+state.ngrx // type: Signal<WritableSignal<string>>
+
+// withState:
+const Store = signalStore(withState({ ngrx: signal('rocks') }));
+const store = new Store();
+store.ngrx // type: Signal<WritableSignal<string>>
+
+3. Root state properties can be added dynamically:
+
+// signalState:
+const state = signalState<Record<string, string>>({});
+console.log(state()); // {}
+
+patchState(state, { ngrx: 'rocks' });
+console.log(state()); // { ngrx: 'rocks' }
+
+// withState:
+const Store = signalStore(
+{ protectedState: false },
+withState<Record<string, string>>({})
+);
+const store = new Store();
+console.log(getState(store)); // {}
+
+patchState(store, { ngrx: 'rocks' });
+console.log(getState(store)); // { ngrx: 'rocks' }
+
+AFTER:
+
+1. The initial state object reference is not preserved:
+
+const initialState = { ngrx: 'rocks' };
+
+// signalState:
+const state = signalState(initialState);
+state() === initialState; // false
+
+// withState:
+const Store = signalStore(withState(initialState));
+const store = new Store();
+getState(store) === initialState; // false
+
+2. Top-level `WritableSignal`s are not wrapped with `Signal`s:
+
+// signalState:
+const state = signalState({ ngrx: signal('rocks') });
+state.ngrx // type: Signal<string>
+
+// withState:
+const Store = signalStore(withState({ ngrx: signal('rocks') }));
+const store = new Store();
+store.ngrx // type: Signal<string>
+
+3. Root state properties can not be added dynamically:
+
+// signalState:
+const state = signalState<Record<string, string>>({});
+console.log(state()); // {}
+
+patchState(state, { ngrx: 'rocks' });
+console.log(state()); // {}
+
+// withState:
+const Store = signalStore(
+{ protectedState: false },
+withState<Record<string, string>>({})
+);
+const store = new Store();
+console.log(getState(store)); // {}
+
+patchState(store, { ngrx: 'rocks' });
+console.log(getState(store)); // {}
+
+Co-authored-by: Tim Deschryver <28659384+timdeschryver@users.noreply.github.com>
+Co-authored-by: michael-small <33669563+michael-small@users.noreply.github.com>
+Co-authored-by: Marko Stanimirović <markostanimirovic95@gmail.com>
+
+- The minimum required version of Angular has been updated.
+
+BEFORE:
+
+The minimum required version is Angular 19.x
+
+AFTER:
+
+The minimum required version is Angular 20.x
+
+<a name="20.0.0-beta.0"></a>
+
 # [20.0.0-beta.0](https://github.com/ngrx/platform/compare/19.2.1...20.0.0-beta.0) (2025-06-10)
 
 ### Bug Fixes

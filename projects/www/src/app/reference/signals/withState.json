@@ -29,14 +29,20 @@
           "text": "EmptyFeatureResult",
           "canonicalReference": "@ngrx/signals!EmptyFeatureResult:type"
         },
+        { "kind": "Content", "text": ", {\n    state: " },
+        {
+          "kind": "Reference",
+          "text": "StateResult",
+          "canonicalReference": "@ngrx/signals!~StateResult:type"
+        },
         {
           "kind": "Content",
-          "text": ", {\n    state: State;\n    props: {};\n    methods: {};\n}>"
+          "text": "<State>;\n    props: {};\n    methods: {};\n}>"
         },
         { "kind": "Content", "text": ";" }
       ],
       "fileUrlPath": "../../dist/modules/signals/src/with-state.d.ts",
-      "returnTypeTokenRange": { "startIndex": 5, "endIndex": 9 },
+      "returnTypeTokenRange": { "startIndex": 5, "endIndex": 11 },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [
@@ -96,14 +102,20 @@
           "text": "EmptyFeatureResult",
           "canonicalReference": "@ngrx/signals!EmptyFeatureResult:type"
         },
+        { "kind": "Content", "text": ", {\n    state: " },
+        {
+          "kind": "Reference",
+          "text": "StateResult",
+          "canonicalReference": "@ngrx/signals!~StateResult:type"
+        },
         {
           "kind": "Content",
-          "text": ", {\n    state: State;\n    props: {};\n    methods: {};\n}>"
+          "text": "<State>;\n    props: {};\n    methods: {};\n}>"
         },
         { "kind": "Content", "text": ";" }
       ],
       "fileUrlPath": "../../dist/modules/signals/src/with-state.d.ts",
-      "returnTypeTokenRange": { "startIndex": 5, "endIndex": 9 },
+      "returnTypeTokenRange": { "startIndex": 5, "endIndex": 11 },
       "releaseTag": "Public",
       "overloadIndex": 2,
       "parameters": [
