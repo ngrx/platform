@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { queueScheduler } from 'rxjs';
 import { EventInstance } from './event-instance';
 import { Events, EVENTS, ReducerEvents } from './events-service';
 
@@ -32,6 +33,6 @@ export class Dispatcher {
 
   dispatch(event: EventInstance<string, unknown>): void {
     this.reducerEvents[EVENTS].next(event);
-    this.events[EVENTS].next(event);
+    queueScheduler.schedule(() => this.events[EVENTS].next(event));
   }
 }

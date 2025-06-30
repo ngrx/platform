@@ -3,6 +3,7 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import {
   delay,
   exhaustMap,
+  map,
   mergeMap,
   Observable,
   of,
@@ -25,6 +26,8 @@ import {
   withEntities,
 } from '@ngrx/signals/entities';
 import {
+  Dispatcher,
+  event,
   eventGroup,
   Events,
   injectDispatch,
@@ -230,6 +233,53 @@ describe('Integration Tests', () => {
       });
       expect(console.error).toHaveBeenCalledWith('Error!');
     }));
+
+    it('handles events in the order they are dispatched', () => {
+      const handledEventsLog: string[] = [];
+      const first = event('first');
+      const second = event('second');
+      const save = event('save', type<string>());
+      const Store = signalStore(
+        { providedIn: 'root' },
+        withState({ savedEvents: [] as string[] }),
+        withEffects((_, events = inject(Events)) => ({
+          emitSecond$: events.on(first).pipe(
+            tap(({ type }) =>
+              handledEventsLog.push(`emitSecond$ effect: ${type}`)
+            ),
+            map(() => second())
+          ),
+          save$: events.on(first, second).pipe(
+            tap(({ type }) => handledEventsLog.push(`save$ effect: ${type}`)),
+            map(({ type }) => save(type))
+          ),
+        })),
+        withReducer(
+          on(first, second, save, ({ type, payload }) => {
+            handledEventsLog.push(`reducer: ${type}${payload ?? ''}`);
+            return {};
+          }),
+          on(save, ({ payload }, state) => ({
+            savedEvents: [...state.savedEvents, payload],
+          }))
+        )
+      );
+
+      const dispatcher = TestBed.inject(Dispatcher);
+      const store = TestBed.inject(Store);
+
+      dispatcher.dispatch(first());
+      expect(store.savedEvents()).toEqual(['first', 'second']);
+      expect(handledEventsLog).toEqual([
+        'reducer: first',
+        'emitSecond$ effect: first',
+        'reducer: second',
+        'save$ effect: first',
+        'reducer: savefirst',
+        'save$ effect: second',
+        'reducer: savesecond',
+      ]);
+    });
   });
 
   describe('custom withReducer and withEffects', () => {
