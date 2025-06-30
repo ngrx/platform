@@ -73,7 +73,7 @@ export function defaultMemoize(
   isResultEqual = isEqualCheck
 ): MemoizedProjection {
   let lastArguments: null | IArguments = null;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, , , , ,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let lastResult: any = null;
   let overrideResult: any;
 
