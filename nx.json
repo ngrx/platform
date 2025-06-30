@@ -47,7 +47,7 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"],
-      "cache": false
+      "cache": true
     },
     "e2e": {
       "inputs": ["default", "^production"],
