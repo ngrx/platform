@@ -10,7 +10,7 @@ import * as ts from 'typescript';
 
 export default function migrateTapResponse(): Rule {
   return (tree: Tree, context: SchematicContext) => {
-    visitTSSourceFiles(tree, (sourceFile) => {
+    visitTSSourceFiles(tree, (sourceFile: any) => {
       const changes: Change[] = [];
       const visited = new Set<number>();
       const tapResponseIdentifiers = new Set(['tapResponse']);
@@ -33,7 +33,7 @@ export default function migrateTapResponse(): Rule {
 
       const printer = ts.createPrinter();
 
-      visitCallExpression(sourceFile, (node) => {
+      visitCallExpression(sourceFile, (node: any) => {
         const { expression, arguments: args } = node;
 
         // Avoid duplicates by tracking position
@@ -51,7 +51,8 @@ export default function migrateTapResponse(): Rule {
           tapResponseIdentifiers.has(fnName) &&
           (args.length === 2 || args.length === 3) &&
           args.every(
-            (arg) => ts.isArrowFunction(arg) || ts.isFunctionExpression(arg)
+            (arg: any) =>
+              ts.isArrowFunction(arg) || ts.isFunctionExpression(arg)
           )
         ) {
           const props: ts.PropertyAssignment[] = [
