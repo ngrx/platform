@@ -60,7 +60,7 @@ describe('withComputed', () => {
     `;
 
     expectSnippet(snippet).toFail(
-      /not assignable to parameter of type 'WritableStateSource<{ a: number; }>'/
+      /not assignable to parameter of type 'WritableStateSource<object>'/
     );
   });
 
