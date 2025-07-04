@@ -4,7 +4,7 @@ import {
   createReplaceChange,
   commitChanges,
   Change,
-} from '@ngrx/component/schematics-core';
+} from '../../schematics-core/index';
 import { visitCallExpression } from '@ngrx/schematics-core/utility/visitors';
 import * as ts from 'typescript';
 
@@ -12,43 +12,73 @@ export default function migrateTapResponse(): Rule {
   return (tree: Tree, context: SchematicContext) => {
     visitTSSourceFiles(tree, (sourceFile: ts.SourceFile) => {
       const changes: Change[] = [];
-      const visited = new Set<number>();
-      const tapResponseIdentifiers = new Set<string>(['tapResponse']);
+      const printer = ts.createPrinter();
 
-      // Track aliases like: const myTapResponse = tapResponse;
+      const tapResponseIdentifiers = new Set<string>();
+      const namespaceImportsFromOperators = new Set<string>();
+      const aliasedTapResponseVariables = new Set<string>();
+
+      // Collect import origins and aliases
       ts.forEachChild(sourceFile, (node: ts.Node) => {
+        if (
+          ts.isImportDeclaration(node) &&
+          ts.isStringLiteral(node.moduleSpecifier) &&
+          node.moduleSpecifier.text === '@ngrx/operators' &&
+          node.importClause?.namedBindings
+        ) {
+          const bindings = node.importClause.namedBindings;
+
+          if (ts.isNamedImports(bindings)) {
+            for (const element of bindings.elements) {
+              tapResponseIdentifiers.add(element.name.text);
+            }
+          } else if (ts.isNamespaceImport(bindings)) {
+            namespaceImportsFromOperators.add(bindings.name.text);
+          }
+        }
+
+        // Track variables assigned to known tapResponse identifiers
         if (ts.isVariableStatement(node)) {
           for (const decl of node.declarationList.declarations) {
             if (
               ts.isIdentifier(decl.name) &&
               decl.initializer &&
               ts.isIdentifier(decl.initializer) &&
-              decl.initializer.text === 'tapResponse'
+              tapResponseIdentifiers.has(decl.initializer.text)
             ) {
-              tapResponseIdentifiers.add(decl.name.text);
+              aliasedTapResponseVariables.add(decl.name.text);
             }
           }
         }
       });
 
-      const printer = ts.createPrinter();
+      // Combine aliases into the main set
+      for (const alias of aliasedTapResponseVariables) {
+        tapResponseIdentifiers.add(alias);
+      }
 
       visitCallExpression(sourceFile, (node: ts.CallExpression) => {
         const { expression, arguments: args } = node;
 
-        // Avoid duplicates by tracking position
-        if (visited.has(node.getStart())) return;
-        visited.add(node.getStart());
+        let isTapResponseCall = false;
 
-        let fnName = '';
         if (ts.isIdentifier(expression)) {
-          fnName = expression.text;
+          if (tapResponseIdentifiers.has(expression.text)) {
+            isTapResponseCall = true;
+          }
         } else if (ts.isPropertyAccessExpression(expression)) {
-          fnName = expression.name.text;
+          const namespace = expression.expression.getText();
+          const fnName = expression.name.text;
+          if (
+            fnName === 'tapResponse' &&
+            namespaceImportsFromOperators.has(namespace)
+          ) {
+            isTapResponseCall = true;
+          }
         }
 
         if (
-          tapResponseIdentifiers.has(fnName) &&
+          isTapResponseCall &&
           (args.length === 2 || args.length === 3) &&
           args.every(
             (arg) => ts.isArrowFunction(arg) || ts.isFunctionExpression(arg)
@@ -65,9 +95,10 @@ export default function migrateTapResponse(): Rule {
             );
           }
 
-          const newCall = ts.factory.createCallExpression(
+          const newCall = ts.factory.updateCallExpression(
+            node,
             expression,
-            undefined,
+            node.typeArguments,
             [ts.factory.createObjectLiteralExpression(props, true)]
           );
 
@@ -85,8 +116,8 @@ export default function migrateTapResponse(): Rule {
 
       if (changes.length) {
         commitChanges(tree, sourceFile.fileName, changes);
-        context.logger.debug(
-          `[rxjs] Migrated deprecated tapResponse in ${sourceFile.fileName}`
+        context.logger.info(
+          `[ngrx/operators] Migrated deprecated tapResponse in ${sourceFile.fileName}`
         );
       }
     });

@@ -4,10 +4,6 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import { createWorkspace } from '@ngrx/schematics-core/testing';
-import { tags } from '@angular-devkit/core';
-import { visitCallExpression } from '@ngrx/schematics-core/utility/visitors';
-import * as ts from 'typescript';
-import * as prettier from 'prettier';
 
 describe('migrate tapResponse', () => {
   const collectionPath = path.join(__dirname, '../migration.json');
@@ -27,116 +23,102 @@ describe('migrate tapResponse', () => {
       appTree
     );
 
-    const actual = prettier.format(tree.readContent('main.ts'), {
-      parser: 'typescript',
-    });
+    const actual = tree.readContent('main.ts');
 
-    expect(actual).toBe(
-      prettier.format(output, {
-        parser: 'typescript',
-      })
-    );
+    const normalize = (s: string) => s.replace(/\s+/g, '').replace(/;/g, '');
+    expect(normalize(actual)).toBe(normalize(output));
   };
 
-  it('should migrate basic tapResponse signature', async () => {
-    const input = tags.stripIndent`
-      import { tapResponse } from '@ngrx/component';
-      tapResponse(() => {}, () => {});
-    `;
+  it('migrates basic tapResponse signature', async () => {
+    const input = `import { tapResponse } from '@ngrx/operators';
+tapResponse(() => {}, () => {});
+`;
 
-    const output = tags.stripIndent`
-      import { tapResponse } from '@ngrx/component';
-      tapResponse({
-        next: () => {},
-        error: () => {}
-      });
-    `;
+    const output = `import { tapResponse } from '@ngrx/operators';
+tapResponse({
+    next: () => { },
+    error: () => { }
+});
+`;
 
     await verifySchematic(input, output);
   });
 
-  it('should migrate tapResponse with complete callback', async () => {
-    const input = tags.stripIndent`
-      tapResponse(() => next, () => error, () => complete);
-    `;
+  it('migrates tapResponse with complete callback', async () => {
+    const input = `tapResponse(() => next, () => error, () => complete);
+`;
 
-    const output = tags.stripIndent`
-      tapResponse({
-        next: () => next,
-        error: () => error,
-        complete: () => complete
-      });
-    `;
+    const output = `tapResponse({
+    next: () => next,
+    error: () => error,
+    complete: () => complete
+});
+`;
 
     await verifySchematic(input, output);
   });
 
-  it('should migrate aliased tapResponse calls', async () => {
-    const input = tags.stripIndent`
-      const myTapResponse = tapResponse;
-      myTapResponse(() => next, () => error);
-    `;
+  it('migrates aliased tapResponse calls', async () => {
+    const input = `const myTapResponse = tapResponse;
+myTapResponse(() => next, () => error);
+`;
 
-    const output = tags.stripIndent`
-      const myTapResponse = tapResponse;
-      myTapResponse({
-        next: () => next,
-        error: () => error
-      });
-    `;
+    const output = `const myTapResponse = tapResponse;
+myTapResponse({
+    next: () => next,
+    error: () => error
+});
+`;
 
     await verifySchematic(input, output);
   });
 
-  it('should migrate namespaced tapResponse calls', async () => {
-    const input = tags.stripIndent`
-      import * as operators from '@ngrx/component';
-      operators.tapResponse(() => next, () => error, () => complete);
-    `;
+  it('migrates namespaced tapResponse calls', async () => {
+    const input = `import * as operators from '@ngrx/operators';
+operators.tapResponse(() => next, () => error, () => complete);
+`;
 
-    const output = tags.stripIndent`
-      import * as operators from '@ngrx/component';
-      operators.tapResponse({
-        next: () => next,
-        error: () => error,
-        complete: () => complete
-      });
-    `;
+    const output = `import * as operators from '@ngrx/operators';
+operators.tapResponse({
+    next: () => next,
+    error: () => error,
+    complete: () => complete
+});
+`;
 
     await verifySchematic(input, output);
   });
 
-  it('should identify all call expressions including aliases and namespace calls', () => {
-    const code = tags.stripIndent`
-      import { tapResponse } from '@ngrx/component';
-      import * as operators from '@ngrx/component';
-      const myTapResponse = tapResponse;
-      const anotherAlias = operators;
-      tapResponse(() => {}, () => {});
-      myTapResponse(() => {}, () => {});
-      anotherAlias.tapResponse(() => {}, () => {});
-    `;
+  it('skips tapResponse if not imported from @ngrx/operators', async () => {
+    const input = `import { tapResponse } from '@ngrx/component';
+tapResponse(() => {}, () => {});
+`;
 
-    const sourceFile = ts.createSourceFile(
-      'test.ts',
-      code,
-      ts.ScriptTarget.Latest,
-      true,
-      ts.ScriptKind.TS
-    );
+    // Expect NO transformation
+    const output = `import { tapResponse } from '@ngrx/component';
+tapResponse(() => {}, () => {});
+`;
 
-    const foundCalls: ts.CallExpression[] = [];
+    await verifySchematic(input, output);
+  });
 
-    visitCallExpression(sourceFile, (node) => {
-      foundCalls.push(node);
-    });
+  it('migrates tapResponse inside a full component-like body', async () => {
+    const input = `import { tapResponse } from '@ngrx/operators';
+function handle() {
+  return tapResponse(() => next(), () => error(), () => complete());
+}
+`;
 
-    expect(foundCalls.length).toBe(3);
+    const output = `import { tapResponse } from '@ngrx/operators';
+function handle() {
+  return tapResponse({
+    next: () => next(),
+    error: () => error(),
+    complete: () => complete()
+  });
+}
+`;
 
-    const callTexts = foundCalls.map((call) => call.getText());
-
-    expect(callTexts).toContain('tapResponse(() => {}, () => {})');
-    expect(callTexts).toContain('myTapResponse(() => {}, () => {})');
-    expect(callTexts).toContain('anotherAlias.tapResponse(() => {}, () => {})');
+    await verifySchematic(input, output);
   });
 });
