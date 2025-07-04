@@ -5,7 +5,7 @@ import {
   commitChanges,
   Change,
 } from '../../schematics-core/index';
-import { visitCallExpression } from '@ngrx/schematics-core/utility/visitors';
+import { visitCallExpression } from '../../schematics-core/utility/visitors';
 import * as ts from 'typescript';
 
 export default function migrateTapResponse(): Rule {
