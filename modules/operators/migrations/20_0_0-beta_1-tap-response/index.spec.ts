@@ -45,30 +45,45 @@ tapResponse({
   });
 
   it('migrates tapResponse with complete callback', async () => {
-    const input = `tapResponse(() => next, () => error, () => complete);
-`;
+    const input = `
+    import { tapResponse } from '@ngrx/operators';
+    tapResponse(
+      () => next,
+      () => error,
+      () => complete
+    );
+  `;
 
-    const output = `tapResponse({
-    next: () => next,
-    error: () => error,
-    complete: () => complete
-});
-`;
+    const output = `
+    import { tapResponse } from '@ngrx/operators';
+    tapResponse({
+      next: () => next,
+      error: () => error,
+      complete: () => complete
+    });
+  `;
 
     await verifySchematic(input, output);
   });
 
   it('migrates aliased tapResponse calls', async () => {
-    const input = `const myTapResponse = tapResponse;
-myTapResponse(() => next, () => error);
-`;
+    const input = `
+    import { tapResponse } from '@ngrx/operators';
+    const myTapResponse = tapResponse;
+    myTapResponse(
+      () => next,
+      () => error
+    );
+  `;
 
-    const output = `const myTapResponse = tapResponse;
-myTapResponse({
-    next: () => next,
-    error: () => error
-});
-`;
+    const output = `
+    import { tapResponse } from '@ngrx/operators';
+    const myTapResponse = tapResponse;
+    myTapResponse({
+      next: () => next,
+      error: () => error
+    });
+  `;
 
     await verifySchematic(input, output);
   });
@@ -102,6 +117,23 @@ tapResponse(() => {}, () => {});
     await verifySchematic(input, output);
   });
 
+  it('skips correct tapResponse signature', async () => {
+    const input = `import { tapResponse } from '@ngrx/operators';
+tapResponse({
+    next: () => { },
+    error: () => { }
+});
+`;
+
+    const output = `import { tapResponse } from '@ngrx/operators';
+tapResponse({
+    next: () => { },
+    error: () => { }
+});
+`;
+    await verifySchematic(input, output);
+  });
+
   it('migrates tapResponse inside a full component-like body', async () => {
     const input = `import { tapResponse } from '@ngrx/operators';
 function handle() {
@@ -118,6 +150,39 @@ function handle() {
   });
 }
 `;
+
+    await verifySchematic(input, output);
+  });
+
+  it('should migrate tapResponse(onNext, onError) to object form', async () => {
+    const input = `
+    import { tapResponse } from '@ngrx/operators';
+    const obs = tapResponse(
+      (value) => console.log(value),
+      (error) => console.error(error)
+    );
+  `;
+
+    const output = `
+    import { tapResponse } from '@ngrx/operators';
+    const obs = tapResponse({
+      next: (value) => console.log(value),
+      error: (error) => console.error(error)
+    });
+  `;
+    await verifySchematic(input, output);
+  });
+
+  it('should NOT migrate tapResponse imported from another module', async () => {
+    const input = `
+    import { tapResponse } from 'some-other-lib';
+    const obs = tapResponse(
+      (value) => console.log(value),
+      (error) => console.error(error)
+    );
+  `;
+
+    const output = input; // Should remain unchanged
 
     await verifySchematic(input, output);
   });

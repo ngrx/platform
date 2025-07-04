@@ -17,36 +17,48 @@ export default function migrateTapResponse(): Rule {
       const tapResponseIdentifiers = new Set<string>();
       const namespaceImportsFromOperators = new Set<string>();
       const aliasedTapResponseVariables = new Set<string>();
+      const importOriginMap = new Map<string, string>();
 
       // Collect import origins and aliases
       ts.forEachChild(sourceFile, (node: ts.Node) => {
         if (
           ts.isImportDeclaration(node) &&
           ts.isStringLiteral(node.moduleSpecifier) &&
-          node.moduleSpecifier.text === '@ngrx/operators' &&
           node.importClause?.namedBindings
         ) {
+          const moduleName = node.moduleSpecifier.text;
           const bindings = node.importClause.namedBindings;
 
           if (ts.isNamedImports(bindings)) {
             for (const element of bindings.elements) {
-              tapResponseIdentifiers.add(element.name.text);
+              const importedName = element.name.text;
+              importOriginMap.set(importedName, moduleName);
+              if (moduleName === '@ngrx/operators') {
+                tapResponseIdentifiers.add(importedName);
+              }
             }
           } else if (ts.isNamespaceImport(bindings)) {
-            namespaceImportsFromOperators.add(bindings.name.text);
+            if (moduleName === '@ngrx/operators') {
+              namespaceImportsFromOperators.add(bindings.name.text);
+            }
           }
         }
 
-        // Track variables assigned to known tapResponse identifiers
+        // Track variables assigned to known tapResponse identifiers from @ngrx/operators
         if (ts.isVariableStatement(node)) {
           for (const decl of node.declarationList.declarations) {
             if (
               ts.isIdentifier(decl.name) &&
               decl.initializer &&
-              ts.isIdentifier(decl.initializer) &&
-              tapResponseIdentifiers.has(decl.initializer.text)
+              ts.isIdentifier(decl.initializer)
             ) {
-              aliasedTapResponseVariables.add(decl.name.text);
+              const original = decl.initializer.text;
+              if (
+                tapResponseIdentifiers.has(original) &&
+                importOriginMap.get(original) === '@ngrx/operators'
+              ) {
+                aliasedTapResponseVariables.add(decl.name.text);
+              }
             }
           }
         }
