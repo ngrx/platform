@@ -211,7 +211,7 @@ describe('StateSource', () => {
       });
     });
 
-    it("sets all root properties and relies on the Signal's equals function", () => {
+    it('sets only root properties which values have changed (equal check)', () => {
       let updateCounter = 0;
       const userSignal = signal(
         {
@@ -235,18 +235,18 @@ describe('StateSource', () => {
       expect(updateCounter).toBe(0);
 
       patchState(store, { city: 'Xian' });
-      expect(updateCounter).toBe(1);
+      expect(updateCounter).toBe(0);
 
       patchState(store, (state) => state);
-      expect(updateCounter).toBe(2);
+      expect(updateCounter).toBe(0);
 
       patchState(store, ({ user }) => ({ user }));
-      expect(updateCounter).toBe(3);
+      expect(updateCounter).toBe(0);
 
       patchState(store, ({ user }) => ({
         user: { ...user, firstName: 'Jane' },
       }));
-      expect(updateCounter).toBe(4);
+      expect(updateCounter).toBe(1);
     });
   });
 
@@ -293,6 +293,27 @@ describe('StateSource', () => {
 
         TestBed.tick();
         expect(executionCount).toBe(2);
+      });
+
+      it('does not support a dynamic type as state', () => {
+        const Store = signalStore(
+          { providedIn: 'root' },
+          withState<Record<number, number>>({}),
+          withMethods((store) => ({
+            addNumber(num: number): void {
+              patchState(store, {
+                [num]: num,
+              });
+            },
+          }))
+        );
+        const store = TestBed.inject(Store);
+
+        store.addNumber(1);
+        store.addNumber(2);
+        store.addNumber(3);
+
+        expect(getState(store)).toEqual({});
       });
     });
 
