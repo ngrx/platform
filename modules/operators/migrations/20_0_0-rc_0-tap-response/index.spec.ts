@@ -18,7 +18,7 @@ describe('migrate tapResponse', () => {
     appTree.create('main.ts', input);
 
     const tree = await schematicRunner.runSchematic(
-      '20.0.0-beta_1-tap-response',
+      '20.0.0-rc_0-tap-response',
       {},
       appTree
     );
@@ -154,7 +154,7 @@ function handle() {
     await verifySchematic(input, output);
   });
 
-  it('should migrate tapResponse(onNext, onError) to object form', async () => {
+  it('migrates tapResponse(onNext, onError) to object form', async () => {
     const input = `
     import { tapResponse } from '@ngrx/operators';
     const obs = tapResponse(
@@ -173,7 +173,7 @@ function handle() {
     await verifySchematic(input, output);
   });
 
-  it('should NOT migrate tapResponse imported from another module', async () => {
+  it('skips migrating tapResponse imported from another module', async () => {
     const input = `
     import { tapResponse } from 'some-other-lib';
     const obs = tapResponse(
