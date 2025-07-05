@@ -44,7 +44,7 @@ describe('withComputed', () => {
     expectSnippet(snippet).toSucceed();
   });
 
-  it('has no access to the state', () => {
+  it('has no access to the state source', () => {
     const snippet = `
       signalStore(
         withState({
