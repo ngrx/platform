@@ -1,4 +1,5 @@
 import { computed, signal } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import {
   deepComputed,
   signalStoreFeature,
@@ -7,7 +8,6 @@ import {
   withState,
 } from '../src';
 import { getInitialInnerStore, signalStore } from '../src/signal-store';
-import { TestBed } from '@angular/core/testing';
 
 describe('withComputed', () => {
   it('adds computed signals to the store immutably', () => {

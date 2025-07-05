@@ -1,15 +1,17 @@
 import { expecter } from 'ts-snippet';
 import { compilerOptions } from './helpers';
-import { signalStore, withComputed } from 'modules/signals/src';
-import { TestBed } from '@angular/core/testing';
 
 describe('withComputed', () => {
   const expectSnippet = expecter(
     (code) => `
         import {
           deepComputed,
+          patchState,
           signalStore,
           withComputed,
+          withMethods,
+          withProps,
+          withState,
         } from '@ngrx/signals';
         import { TestBed } from '@angular/core/testing';
         import { signal } from '@angular/core';
@@ -18,6 +20,49 @@ describe('withComputed', () => {
       `,
     compilerOptions()
   );
+
+  it('has access to props, state signals and methods', () => {
+    const snippet = `
+      signalStore(
+        withState({
+          a: 1,
+        }),
+        withProps(() => {
+          return {
+            b: 2,
+          };
+        }),
+        withMethods(({ a, b }) => ({
+          sum: () => a() + b,
+        })),
+        withComputed(({ a, b, sum }) => ({
+          prettySum: () => \`Sum: \${a()} + \${b} = \${sum()}\`,
+        }))
+      );
+    `;
+
+    expectSnippet(snippet).toSucceed();
+  });
+
+  it('has no access to the state source', () => {
+    const snippet = `
+      signalStore(
+        withState({
+          a: 1,
+        }),
+        withComputed((store) => ({
+          prettySum: () => {
+            patchState(store, { a: 2 });
+            return store.a();
+          },
+        }))
+      );
+    `;
+
+    expectSnippet(snippet).toFail(
+      /not assignable to parameter of type 'WritableStateSource<object>'/
+    );
+  });
 
   it('creates a Signal automatically', () => {
     const snippet = `
