@@ -1,5 +1,6 @@
 import { expecter } from 'ts-snippet';
 import { compilerOptions } from './helpers';
+import { signalStore, withLinkedState, withState } from '@ngrx/signals';
 
 describe('withLinkedState', () => {
   const expectSnippet = expecter(
@@ -100,7 +101,7 @@ describe('withLinkedState', () => {
     expectSnippet(snippet).toInfer('lastname', 'Signal<string>');
   });
 
-  it('should set stateSignals as DeepSignal for automatic linkedSignal', () => {
+  it('sets stateSignals as DeepSignal for automatic linkedSignal', () => {
     const snippet = `
       const UserStore = signalStore(
         { providedIn: 'root' },
@@ -128,7 +129,7 @@ describe('withLinkedState', () => {
     );
   });
 
-  it('should set stateSignals as DeepSignal for manual linkedSignal', () => {
+  it('sets stateSignals as DeepSignal for manual linkedSignal', () => {
     const snippet = `
       const UserStore = signalStore(
         { providedIn: 'root' },
@@ -154,5 +155,27 @@ describe('withLinkedState', () => {
       'user',
       'DeepSignal<{ id: number; name: string; }>'
     );
+  });
+
+  it('infers the types for a mixed setting', () => {
+    const snippet = `
+      const Store = signalStore(
+        withState({ foo: 'bar' }),
+        withLinkedState(({ foo }) => ({
+          bar: () => foo(),
+          baz: linkedSignal(() => foo()),
+        }))
+      );
+
+      const store = new Store();
+
+      const bar = store.bar;
+      const baz = store.baz;
+    `;
+
+    expectSnippet(snippet).toSucceed();
+
+    expectSnippet(snippet).toInfer('bar', 'Signal<string>');
+    expectSnippet(snippet).toInfer('baz', 'Signal<string>');
   });
 });
