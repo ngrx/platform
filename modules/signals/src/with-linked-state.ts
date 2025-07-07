@@ -2,7 +2,6 @@ import { linkedSignal, WritableSignal } from '@angular/core';
 
 import { toDeepSignal } from './deep-signal';
 import {
-  EmptyFeatureResult,
   InnerSignalStore,
   SignalsDictionary,
   SignalStoreFeature,
