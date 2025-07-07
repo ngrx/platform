@@ -1,6 +1,5 @@
 import { expecter } from 'ts-snippet';
 import { compilerOptions } from './helpers';
-import { signalStore, withLinkedState, withState } from '@ngrx/signals';
 
 describe('withLinkedState', () => {
   const expectSnippet = expecter(
