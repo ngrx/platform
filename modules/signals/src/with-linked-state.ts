@@ -29,8 +29,7 @@ type LinkedStateResult<
 /**
  *
  * @description
- * Generates and adds the properties of a `linkedSignal`
- * to the store's state.
+ * Adds linked state slices to a SignalStore.
  *
  * @usageNotes
  * ```typescript
