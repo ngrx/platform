@@ -1,7 +1,7 @@
 import { expecter } from 'ts-snippet';
 import { compilerOptions } from './helpers';
 
-describe('patchState', () => {
+describe('withLinkedState', () => {
   const expectSnippet = expecter(
     (code) => `
         import { computed, inject, linkedSignal, Signal, signal } from '@angular/core';
