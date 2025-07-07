@@ -42,7 +42,42 @@ describe('toDeepSignal', () => {
     expect(deepSig.user.firstName()).toBe('John');
   });
 
-  it('does not create deep signals for primitives', () => {
+  it('allows lazy initialization', () => {
+    const sig = signal(undefined as unknown as { m: { s: 't' } });
+    const deepSig = toDeepSignal(sig);
+
+    sig.set({ m: { s: 't' } });
+
+    expect(deepSig()).toEqual({ m: { s: 't' } });
+    expect(deepSig.m()).toEqual({ s: 't' });
+    expect(deepSig.m.s()).toBe('t');
+  });
+
+  it('creates a deep signal when value is a union of objects', () => {
+    const sig = signal({ m: { s: 't' } } as
+      | { s: 'asdf' }
+      | { m: { s: string } });
+    const deepSig = toDeepSignal(sig);
+
+    expect('m' in deepSig).toBe(true);
+    expect('m' in deepSig && deepSig.m()).toEqual({ s: 't' });
+    expect('m' in deepSig && deepSig.m.s()).toBe('t');
+
+    sig.set({ s: 'asdf' });
+
+    expect('m' in deepSig).toBe(false);
+    expect('s' in deepSig).toBe(true);
+    expect('s' in deepSig && deepSig.s()).toBe('asdf');
+
+    sig.set({ m: { s: 'ngrx' } });
+
+    expect('s' in deepSig).toBe(false);
+    expect('m' in deepSig).toBe(true);
+    expect('m' in deepSig && deepSig.m()).toEqual({ s: 'ngrx' });
+    expect('m' in deepSig && deepSig.m.s()).toBe('ngrx');
+  });
+
+  it('does not affect signals with primitives as values', () => {
     const num = signal(0);
     const str = signal('str');
     const bool = signal(true);
@@ -51,12 +86,17 @@ describe('toDeepSignal', () => {
     const deepStr = toDeepSignal(str);
     const deepBool = toDeepSignal(bool);
 
-    expect(deepNum).toBe(num);
-    expect(deepStr).toBe(str);
-    expect(deepBool).toBe(bool);
+    expect(isSignal(deepNum)).toBe(true);
+    expect(deepNum()).toBe(num());
+
+    expect(isSignal(deepStr)).toBe(true);
+    expect(deepStr()).toBe(str());
+
+    expect(isSignal(deepBool)).toBe(true);
+    expect(deepBool()).toBe(bool());
   });
 
-  it('does not create deep signals for iterables', () => {
+  it('does not affect signals with iterables as values', () => {
     const array = signal([]);
     const set = signal(new Set());
     const map = signal(new Map());
@@ -69,14 +109,23 @@ describe('toDeepSignal', () => {
     const deepUintArray = toDeepSignal(uintArray);
     const deepFloatArray = toDeepSignal(floatArray);
 
-    expect(deepArray).toBe(array);
-    expect(deepSet).toBe(set);
-    expect(deepMap).toBe(map);
-    expect(deepUintArray).toBe(uintArray);
-    expect(deepFloatArray).toBe(floatArray);
+    expect(isSignal(deepArray)).toBe(true);
+    expect(deepArray()).toBe(array());
+
+    expect(isSignal(deepSet)).toBe(true);
+    expect(deepSet()).toBe(set());
+
+    expect(isSignal(deepMap)).toBe(true);
+    expect(deepMap()).toBe(map());
+
+    expect(isSignal(deepUintArray)).toBe(true);
+    expect(deepUintArray()).toBe(uintArray());
+
+    expect(isSignal(deepFloatArray)).toBe(true);
+    expect(deepFloatArray()).toBe(floatArray());
   });
 
-  it('does not create deep signals for built-in object types', () => {
+  it('does not affect signals with built-in object types as values', () => {
     const weakSet = signal(new WeakSet());
     const weakMap = signal(new WeakMap());
     const promise = signal(Promise.resolve(10));
@@ -95,17 +144,32 @@ describe('toDeepSignal', () => {
     const deepArrayBuffer = toDeepSignal(arrayBuffer);
     const deepDataView = toDeepSignal(dataView);
 
-    expect(deepWeakSet).toBe(weakSet);
-    expect(deepWeakMap).toBe(weakMap);
-    expect(deepPromise).toBe(promise);
-    expect(deepDate).toBe(date);
-    expect(deepError).toBe(error);
-    expect(deepRegExp).toBe(regExp);
-    expect(deepArrayBuffer).toBe(arrayBuffer);
-    expect(deepDataView).toBe(dataView);
+    expect(isSignal(deepWeakSet)).toBe(true);
+    expect(deepWeakSet()).toBe(weakSet());
+
+    expect(isSignal(deepWeakMap)).toBe(true);
+    expect(deepWeakMap()).toBe(weakMap());
+
+    expect(isSignal(deepPromise)).toBe(true);
+    expect(deepPromise()).toBe(promise());
+
+    expect(isSignal(deepDate)).toBe(true);
+    expect(deepDate()).toBe(date());
+
+    expect(isSignal(deepError)).toBe(true);
+    expect(deepError()).toBe(error());
+
+    expect(isSignal(deepRegExp)).toBe(true);
+    expect(deepRegExp()).toBe(regExp());
+
+    expect(isSignal(deepArrayBuffer)).toBe(true);
+    expect(deepArrayBuffer()).toBe(arrayBuffer());
+
+    expect(isSignal(deepDataView)).toBe(true);
+    expect(deepDataView()).toBe(dataView());
   });
 
-  it('does not create deep signals for functions', () => {
+  it('does not affect signals with functions as values', () => {
     const fn1 = signal(new Function());
     const fn2 = signal(function () {});
     const fn3 = signal(() => {});
@@ -114,12 +178,17 @@ describe('toDeepSignal', () => {
     const deepFn2 = toDeepSignal(fn2);
     const deepFn3 = toDeepSignal(fn3);
 
-    expect(deepFn1).toBe(fn1);
-    expect(deepFn2).toBe(fn2);
-    expect(deepFn3).toBe(fn3);
+    expect(isSignal(deepFn1)).toBe(true);
+    expect(deepFn1()).toBe(fn1());
+
+    expect(isSignal(deepFn2)).toBe(true);
+    expect(deepFn2()).toBe(fn2());
+
+    expect(isSignal(deepFn3)).toBe(true);
+    expect(deepFn3()).toBe(fn3());
   });
 
-  it('does not create deep signals for custom class instances that are iterables', () => {
+  it('does not affect signals with custom class instances that are iterables as values', () => {
     class CustomArray extends Array {}
 
     class CustomSet extends Set {}
@@ -134,12 +203,17 @@ describe('toDeepSignal', () => {
     const deepFloatArray = toDeepSignal(floatArray);
     const deepSet = toDeepSignal(set);
 
-    expect(deepArray).toBe(array);
-    expect(deepFloatArray).toBe(floatArray);
-    expect(deepSet).toBe(set);
+    expect(isSignal(deepArray)).toBe(true);
+    expect(deepArray()).toBe(array());
+
+    expect(isSignal(deepFloatArray)).toBe(true);
+    expect(deepFloatArray()).toBe(floatArray());
+
+    expect(isSignal(deepSet)).toBe(true);
+    expect(deepSet()).toBe(set());
   });
 
-  it('does not create deep signals for custom class instances that extend built-in object types', () => {
+  it('does not affect signals with custom class instances that extend built-in object types as values', () => {
     class CustomWeakMap extends WeakMap {}
 
     class CustomError extends Error {}
@@ -154,8 +228,13 @@ describe('toDeepSignal', () => {
     const deepError = toDeepSignal(error);
     const deepArrayBuffer = toDeepSignal(arrayBuffer);
 
-    expect(deepWeakMap).toBe(weakMap);
-    expect(deepError).toBe(error);
-    expect(deepArrayBuffer).toBe(arrayBuffer);
+    expect(isSignal(deepWeakMap)).toBe(true);
+    expect(deepWeakMap()).toBe(weakMap());
+
+    expect(isSignal(deepError)).toBe(true);
+    expect(deepError()).toBe(error());
+
+    expect(isSignal(deepArrayBuffer)).toBe(true);
+    expect(deepArrayBuffer()).toBe(arrayBuffer());
   });
 });
