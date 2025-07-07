@@ -72,9 +72,7 @@ export function withLinkedState<
   ) => State
 ): SignalStoreFeature<
   Input,
-  EmptyFeatureResult & {
-    state: LinkedStateResult<State>;
-  }
+  { state: LinkedStateResult<State>; props: {}; methods: {} }
 > {
   return (store) => {
     const linkedState = linkedStateFactory({
