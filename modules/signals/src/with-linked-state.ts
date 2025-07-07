@@ -46,12 +46,17 @@ type LinkedStateResult<
  * For advanced use cases, `linkedSignal` can be called within `withLinkedState`:
  *
  * ```typescript
+ * type Option = { id: number; label: string };
+ *
  * const UserStore = signalStore(
- *   withState({ id: 1 }),
- *   withLinkedState(({ id }) => ({
- *     user: linkedSignal({
- *       source: id,
- *       computation: () => ({ firstname: '', lastname: '' })
+ *   withState({ options: new Array<Option>() }),
+ *   withLinkedState(({ options }) => ({
+ *     selectedOption: linkedSignal<Option[], Option>({
+ *       source: options,
+ *       computation: (newOptions, previous) => {
+ *         const option = newOptions.find((o) => o.id=== previous?.value.id);
+ *         return option ?? newOptions[0];
+ *       },
  *     })
  *   }))
  * )
