@@ -10,8 +10,6 @@ import {
 } from './signal-store-models';
 import { isWritableSignal, STATE_SOURCE } from './state-source';
 import { Prettify } from './ts-helpers';
-import { signalStore } from './signal-store';
-import { withState } from './with-state';
 
 type LinkedStateResult<
   LinkedStateInput extends Record<
@@ -102,13 +100,3 @@ export function withLinkedState<
     } as InnerSignalStore<LinkedStateResult<State>>;
   };
 }
-
-const BookStore = signalStore(
-  withState({
-    options: [1, 2, 3],
-    selectedIx: 0,
-  }),
-  withLinkedState(({ options, selectedIx }) => ({
-    selectedOption: () => options()[selectedIx()] ?? 0,
-  }))
-);
