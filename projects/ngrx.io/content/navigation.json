@@ -244,6 +244,10 @@
                   "url": "guide/signals/signal-store/custom-store-properties"
                 },
                 {
+                  "title": "Linked State",
+                  "url": "guide/signals/signal-store/linked-state"
+                },
+                {
                   "title": "State Tracking",
                   "url": "guide/signals/signal-store/state-tracking"
                 },
