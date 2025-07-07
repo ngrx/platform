@@ -58,7 +58,7 @@ type LinkedStateResult<
  * )
  * ```
  *
- * @param linkedStateFactory A function that returns an object literal with properties container an actual `linkedSignal` or the computation function.
+ * @param linkedStateFactory A function that returns an object literal with properties containing an actual `linkedSignal` or the computation function.
  */
 export function withLinkedState<
   State extends Record<
