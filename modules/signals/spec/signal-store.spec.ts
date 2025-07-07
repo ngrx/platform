@@ -504,7 +504,7 @@ describe('signalStore', () => {
         })
       );
       TestBed.inject(Store);
-      TestBed.resetTestEnvironment();
+      TestBed.resetTestingModule();
 
       expect(messages).toEqual(['ending...']);
     });
