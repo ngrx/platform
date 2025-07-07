@@ -109,12 +109,7 @@ operators.tapResponse({
 tapResponse(() => {}, () => {});
 `;
 
-    // Expect NO transformation
-    const output = `import { tapResponse } from '@ngrx/component';
-tapResponse(() => {}, () => {});
-`;
-
-    await verifySchematic(input, output);
+    await verifySchematic(input, input);
   });
 
   it('skips correct tapResponse signature', async () => {
@@ -125,13 +120,7 @@ tapResponse({
 });
 `;
 
-    const output = `import { tapResponse } from '@ngrx/operators';
-tapResponse({
-    next: () => { },
-    error: () => { }
-});
-`;
-    await verifySchematic(input, output);
+    await verifySchematic(input, input);
   });
 
   it('migrates tapResponse inside a full component-like body', async () => {
@@ -182,8 +171,6 @@ function handle() {
     );
   `;
 
-    const output = input; // Should remain unchanged
-
-    await verifySchematic(input, output);
+    await verifySchematic(input, input);
   });
 });
