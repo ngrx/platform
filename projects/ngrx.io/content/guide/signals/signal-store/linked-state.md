@@ -14,7 +14,7 @@ The following example shows the implicit notation, where a function returns a va
 
 <code-example header="book-store.ts">
 
-import { signalStore, withLinkedState } from '@ngrx/signals';
+import { signalStore, withLinkedState, withState } from '@ngrx/signals';
 
 const BookStore = signalStore(
   withState({
