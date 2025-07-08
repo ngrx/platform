@@ -52,7 +52,7 @@ type LinkedStateResult<
  * type Option = { id: number; label: string };
  *
  * const OptionsStore = signalStore(
- *   withState({ options: [1, 2, 3] }),
+ *   withState({ options: [] as Option[] }),
  *   withLinkedState(({ options }) => ({
  *     selectedOption: linkedSignal<Option[], Option>({
  *       source: options,
