@@ -12,7 +12,7 @@ Linked state can be added to the store using the `withLinkedState()` feature. Th
 
 The following example shows the implicit notation, where a function returns a value. That function is wrapped into a `linkedSignal()`, which means it is tracked, and if one of the tracked Signals changes, the function is re-executed synchronously.
 
-<code-example header="book-store.ts">
+<code-example header="options-store.ts">
 
 import { signalStore, withLinkedState, withState } from '@ngrx/signals';
 
