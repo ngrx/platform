@@ -28,7 +28,7 @@ const BookStore = signalStore(
 
 </code-example>
 
-### Explicit Linking
+## Explicit Linking
 
 For the explicit notation, users need to execute `linkedSignal()` manually, but they have the advantage of using the more powerful version of `linkedSignal()`, which comes with `source` and `computation` options.
 
