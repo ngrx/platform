@@ -28,7 +28,9 @@ export function withComputed<
   >
 >(
   computedFactory: (
-    store: Prettify<StateSignals<Input['state']> & Input['props']>
+    store: Prettify<
+      StateSignals<Input['state']> & Input['props'] & Input['methods']
+    >
   ) => ComputedDictionary
 ): SignalStoreFeature<
   Input,
