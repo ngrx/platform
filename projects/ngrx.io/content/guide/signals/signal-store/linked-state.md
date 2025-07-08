@@ -8,7 +8,7 @@ Linked state can be added to the store using the `withLinkedState()` feature. Th
 - Functions that return values, which the SignalStore wraps automatically into a `linkedSignal()`, or
 - `WritableSignal`, which the user can create with `linkedSignal()`.
 
-### Implicit Linking
+## Implicit Linking
 
 The following example shows the implicit notation, where a function returns a value. That function is wrapped into a `linkedSignal()`, which means it is tracked, and if one of the tracked Signals changes, the function is re-executed synchronously.
 
