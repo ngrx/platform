@@ -36,22 +36,16 @@ For the explicit notation, users need to execute `linkedSignal()` manually, but 
 
 import { signalStore, linkedSignal } from '@ngrx/signals';
 
-const BookStore = signalStore(
-  withState({
-    options: [1, 2, 3],
-    selectedIx: undefined as number | undefined,
-  }),
-  withLinkedState(({ options, selectedIx }) => ({
-    safeSelectedOption: linkedSignal({
-      source: selectedIx,
-      computation: (sel, previous) => {
-        const ix = selectedIx();
-        if (ix === undefined) {
-          return previous;
-        }
-        return options()[ix];
+export const OptionsStore = signalStore(
+  withState({ options: [] as Option[] }),
+  withLinkedState(({ options }) => ({
+    selectedOption: linkedSignal&lt;Option[], Option&gt;({
+      source: options,
+      computation: (newOptions, previous) => {
+        const option = newOptions.find((o) => o.id=== previous?.value.id);
+        return option ?? newOptions[0];
       },
-    }),
+    })
   }))
 );
 
