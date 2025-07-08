@@ -16,13 +16,10 @@ The following example shows the implicit notation, where a function returns a va
 
 import { signalStore, withLinkedState, withState } from '@ngrx/signals';
 
-const BookStore = signalStore(
-  withState({
-    options: [1, 2, 3],
-    selectedIx: 0,
-  }),
-  withLinkedState(({ options, selectedIx }) => ({
-    selectedOption: () => options()[selectedIx()] ?? 0,
+export const OptionsStore = signalStore(
+  withState({ options: [1, 2, 3] }),
+  withLinkedState(({ options }) => ({
+    selectedOption: () => options()[0] ?? undefined,
   }))
 );
 
@@ -34,7 +31,8 @@ For the explicit notation, users need to execute `linkedSignal()` manually, but 
 
 <code-example header="options-store.ts">
 
-import { signalStore, linkedSignal } from '@ngrx/signals';
+import { linkedSignal } from '@angular/core';
+import { signalStore, withLinkedState, withState } from '@ngrx/signals';
 
 export const OptionsStore = signalStore(
   withState({ options: [] as Option[] }),
@@ -42,46 +40,10 @@ export const OptionsStore = signalStore(
     selectedOption: linkedSignal&lt;Option[], Option&gt;({
       source: options,
       computation: (newOptions, previous) => {
-        const option = newOptions.find((o) => o.id=== previous?.value.id);
+        const option = newOptions.find((o) => o.id === previous?.value.id);
         return option ?? newOptions[0];
       },
     })
-  }))
-);
-
-</code-example>
-
-### Mixed Linking
-
-Both implicit and explicit linking can be used together as well.
-
-<code-example header="book-store.ts">
-
-import { signalStore, linkedSignal, withLinkedState } from '@ngrx/signals';
-
-const BookStore = signalStore(
-  withState({
-    options: [1, 2, 3],
-    selectedIx: undefined as number | undefined,
-  }),
-  withLinkedState(({ options, selectedIx }) => ({
-    selectedOption: () => {
-      const ix = selectedIx();
-      if (ix === undefined) {
-        return undefined;
-      }
-      return options()[ix];
-    },
-    safeSelectedOption: linkedSignal({
-      source: selectedIx,
-      computation: (sel, previous) => {
-        const ix = selectedIx();
-        if (ix === undefined) {
-          return previous;
-        }
-        return options()[ix];
-      },
-    }),
   }))
 );
 

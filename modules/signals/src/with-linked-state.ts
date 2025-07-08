@@ -33,27 +33,31 @@ type LinkedStateResult<
  *
  * @usageNotes
  * ```typescript
- * const UserStore = signalStore(
+ * type Option = { id: number; label: string };
+ *
+ * const OptionsStore = signalStore(
  *   withState({ options: [1, 2, 3] }),
- *   withLinkedState(({ options }) => ({ selectOption: () => options()[0] ?? undefined }))
+ *   withLinkedState(({ options }) => ({
+ *     selectedOption: () => options()[0] ?? undefined,
+ *   }))
  * );
  * ```
  *
- * The resulting state is of type `{ options: number[], selectOption: number | undefined }`.
- * Whenever the `options` signal changes, the `selectOption` will automatically update.
+ * The resulting state is of type `{ options: number[], selectedOption: number | undefined }`.
+ * Whenever the `options` signal changes, the `selectedOption` will automatically update.
  *
  * For advanced use cases, `linkedSignal` can be called within `withLinkedState`:
  *
  * ```typescript
  * type Option = { id: number; label: string };
  *
- * const UserStore = signalStore(
- *   withState({ options: new Array<Option>() }),
+ * const OptionsStore = signalStore(
+ *   withState({ options: [1, 2, 3] }),
  *   withLinkedState(({ options }) => ({
  *     selectedOption: linkedSignal<Option[], Option>({
  *       source: options,
  *       computation: (newOptions, previous) => {
- *         const option = newOptions.find((o) => o.id=== previous?.value.id);
+ *         const option = newOptions.find((o) => o.id === previous?.value.id);
  *         return option ?? newOptions[0];
  *       },
  *     })
