@@ -32,7 +32,7 @@ const BookStore = signalStore(
 
 For the explicit notation, users need to execute `linkedSignal()` manually, but they have the advantage of using the more powerful version of `linkedSignal()`, which comes with `source` and `computation` options.
 
-<code-example header="book-store.ts">
+<code-example header="options-store.ts">
 
 import { signalStore, linkedSignal } from '@ngrx/signals';
 
