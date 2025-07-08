@@ -13,6 +13,8 @@ export interface Signal<T> extends NgSignal<T> {
   length: unknown;
 }
 
+const DEEP_SIGNAL = Symbol('DEEP_SIGNAL');
+
 export type DeepSignal<T> = Signal<T> &
   (IsKnownRecord<T> extends true
     ? Readonly<{
@@ -23,14 +25,17 @@ export type DeepSignal<T> = Signal<T> &
     : unknown);
 
 export function toDeepSignal<T>(signal: Signal<T>): DeepSignal<T> {
-  const value = untracked(() => signal());
-  if (!isRecord(value)) {
-    return signal as DeepSignal<T>;
-  }
-
   return new Proxy(signal, {
+    has(target: any, prop) {
+      return !!this.get!(target, prop, undefined);
+    },
     get(target: any, prop) {
-      if (!(prop in value)) {
+      const value = untracked(target);
+      if (!isRecord(value) || !(prop in value)) {
+        if (isSignal(target[prop]) && (target[prop] as any)[DEEP_SIGNAL]) {
+          delete target[prop];
+        }
+
         return target[prop];
       }
 
@@ -39,6 +44,7 @@ export function toDeepSignal<T>(signal: Signal<T>): DeepSignal<T> {
           value: computed(() => target()[prop]),
           configurable: true,
         });
+        target[prop][DEEP_SIGNAL] = true;
       }
 
       return toDeepSignal(target[prop]);
