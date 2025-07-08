@@ -1,17 +1,5 @@
-import {
-  computed,
-  isSignal,
-  Signal as NgSignal,
-  untracked,
-} from '@angular/core';
+import { computed, isSignal, Signal, untracked } from '@angular/core';
 import { IsKnownRecord } from './ts-helpers';
-
-// An extended Signal type that enables the correct typing
-// of nested signals with the `name` or `length` key.
-export interface Signal<T> extends NgSignal<T> {
-  name: unknown;
-  length: unknown;
-}
 
 const DEEP_SIGNAL = Symbol('DEEP_SIGNAL');
 

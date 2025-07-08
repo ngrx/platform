@@ -121,90 +121,117 @@ describe('signalState', () => {
   it('does not create deep signals for iterables', () => {
     const snippet = `
       const arrayState = signalState<string[]>([]);
+      const arrayStateValue = arrayState();
       declare const arrayStateKeys: keyof typeof arrayState;
 
       const setState = signalState(new Set<number>());
+      const setStateValue = setState();
       declare const setStateKeys: keyof typeof setState;
 
       const mapState = signalState(new Map<number, { bar: boolean }>());
+      const mapStateValue = mapState();
       declare const mapStateKeys: keyof typeof mapState;
 
       const uintArrayState = signalState(new Uint8ClampedArray());
+      const uintArrayStateValue = uintArrayState();
       declare const uintArrayStateKeys: keyof typeof uintArrayState;
     `;
 
     expectSnippet(snippet).toSucceed();
 
+    expectSnippet(snippet).toInfer('arrayStateValue', 'string[]');
     expectSnippet(snippet).toInfer(
       'arrayStateKeys',
-      'unique symbol | keyof Signal<string[]>'
+      'unique symbol | unique symbol'
     );
 
+    expectSnippet(snippet).toInfer('setStateValue', 'StateResult<Set<number>>');
     expectSnippet(snippet).toInfer(
       'setStateKeys',
-      'unique symbol | keyof Signal<StateResult<Set<number>>>'
+      'unique symbol | unique symbol'
     );
 
+    expectSnippet(snippet).toInfer(
+      'mapStateValue',
+      'StateResult<Map<number, { bar: boolean; }>>'
+    );
     expectSnippet(snippet).toInfer(
       'mapStateKeys',
-      'unique symbol | keyof Signal<StateResult<Map<number, { bar: boolean; }>>>'
+      'unique symbol | unique symbol'
     );
 
     expectSnippet(snippet).toInfer(
+      'uintArrayStateValue',
+      'StateResult<Uint8ClampedArray<ArrayBuffer>>'
+    );
+    expectSnippet(snippet).toInfer(
       'uintArrayStateKeys',
-      'unique symbol | keyof Signal<StateResult<Uint8ClampedArray<ArrayBuffer>>>'
+      'unique symbol | unique symbol'
     );
   });
 
   it('does not create deep signals for built-in object types', () => {
     const snippet = `
       const weakSetState = signalState(new WeakSet<{ foo: string }>());
+      const weakSetStateValue = weakSetState();
       declare const weakSetStateKeys: keyof typeof weakSetState;
 
       const dateState = signalState(new Date());
+      const dateStateValue = dateState();
       declare const dateStateKeys: keyof typeof dateState;
 
       const errorState = signalState(new Error());
+      const errorStateValue = errorState();
       declare const errorStateKeys: keyof typeof errorState;
 
       const regExpState = signalState(new RegExp(''));
+      const regExpStateValue = regExpState();
       declare const regExpStateKeys: keyof typeof regExpState;
     `;
 
     expectSnippet(snippet).toSucceed();
 
     expectSnippet(snippet).toInfer(
+      'weakSetStateValue',
+      'StateResult<WeakSet<{ foo: string; }>>'
+    );
+    expectSnippet(snippet).toInfer(
       'weakSetStateKeys',
-      'unique symbol | keyof Signal<StateResult<WeakSet<{ foo: string; }>>>'
+      'unique symbol | unique symbol'
     );
 
+    expectSnippet(snippet).toInfer('dateStateValue', 'StateResult<Date>');
     expectSnippet(snippet).toInfer(
       'dateStateKeys',
-      'unique symbol | keyof Signal<StateResult<Date>>'
+      'unique symbol | unique symbol'
     );
 
+    expectSnippet(snippet).toInfer('errorStateValue', 'StateResult<Error>');
     expectSnippet(snippet).toInfer(
       'errorStateKeys',
-      'unique symbol | keyof Signal<StateResult<Error>>'
+      'unique symbol | unique symbol'
     );
 
+    expectSnippet(snippet).toInfer('regExpStateValue', 'StateResult<RegExp>');
     expectSnippet(snippet).toInfer(
       'regExpStateKeys',
-      'unique symbol | keyof Signal<StateResult<RegExp>>'
+      'unique symbol | unique symbol'
     );
   });
 
   it('does not create deep signals for functions', () => {
     const snippet = `
       const state = signalState(() => {});
+      const stateValue = state();
       declare const stateKeys: keyof typeof state;
     `;
 
     expectSnippet(snippet).toSucceed();
 
+    expectSnippet(snippet).toInfer('stateValue', 'StateResult<() => void>');
     expectSnippet(snippet).toInfer(
       'stateKeys',
-      'unique symbol | keyof Signal<StateResult<() => void>>'
+      'unique symbol | unique symbol'
     );
   });
 
@@ -282,7 +309,7 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'state1Keys',
-      'unique symbol | keyof Signal<StateResult<{ [key: string]: number; }>>'
+      'unique symbol | unique symbol'
     );
 
     expectSnippet(snippet).toInfer(
@@ -292,7 +319,7 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'state2Keys',
-      'unique symbol | keyof Signal<StateResult<{ [key: number]: { foo: string; }; }>>'
+      'unique symbol | unique symbol'
     );
 
     expectSnippet(snippet).toInfer(
@@ -302,7 +329,7 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'state3Keys',
-      'unique symbol | keyof Signal<StateResult<Record<string, { bar: number; }>>>'
+      'unique symbol | unique symbol'
     );
 
     expectSnippet(snippet).toInfer(
@@ -398,10 +425,7 @@ describe('signalState', () => {
     expectSnippet(snippet).toSucceed();
     expectSnippet(snippet).toInfer('name', 'Signal<number>');
     expectSnippet(snippet).toInfer('length1', 'Signal<boolean[]>');
-    expectSnippet(snippet).toInfer(
-      'name2',
-      'Signal<{ length: string; }> & Readonly<{ length: Signal<string>; }>'
-    );
+    expectSnippet(snippet).toInfer('name2', 'DeepSignal<{ length: string; }>');
     expectSnippet(snippet).toInfer('length2', 'Signal<string>');
   });
 
