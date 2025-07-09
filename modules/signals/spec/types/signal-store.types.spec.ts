@@ -366,10 +366,7 @@ describe('signalStore', () => {
     `;
 
     expectSnippet(snippet2).toSucceed();
-    expectSnippet(snippet2).toInfer(
-      'length',
-      'Signal<{ name: boolean; }> & Readonly<{ name: Signal<boolean>; }>'
-    );
+    expectSnippet(snippet2).toInfer('length', 'DeepSignal<{ name: boolean; }>');
     expectSnippet(snippet2).toInfer('name', 'Signal<boolean>');
   });
 
