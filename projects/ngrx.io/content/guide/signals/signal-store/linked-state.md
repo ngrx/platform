@@ -27,7 +27,7 @@ export const OptionsStore = signalStore(
 
 ## Explicit Linking
 
-For the explicit notation, users need to execute `linkedSignal()` manually, but they have the advantage of using the more powerful version of `linkedSignal()`, which comes with `source` and `computation` options.
+The explicit notation requires users to execute `linkedSignal()` manually; however, it offers the advantage of using the more powerful version of `linkedSignal()`, which includes the `source` and `computation` options.
 
 <code-example header="options-store.ts">
 
