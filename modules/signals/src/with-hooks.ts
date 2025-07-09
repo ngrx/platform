@@ -12,7 +12,7 @@ type HookFn<Input extends SignalStoreFeatureResult> = (
     StateSignals<Input['state']> &
       Input['props'] &
       Input['methods'] &
-      WritableStateSource<Prettify<Input['state']>>
+      WritableStateSource<Input['state']>
   >
 ) => void;
 
@@ -21,7 +21,7 @@ type HooksFactory<Input extends SignalStoreFeatureResult> = (
     StateSignals<Input['state']> &
       Input['props'] &
       Input['methods'] &
-      WritableStateSource<Prettify<Input['state']>>
+      WritableStateSource<Input['state']>
   >
 ) => {
   onInit?: () => void;
