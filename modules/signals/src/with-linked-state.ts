@@ -33,12 +33,10 @@ type LinkedStateResult<
  *
  * @usageNotes
  * ```typescript
- * type Option = { id: number; label: string };
- *
  * const OptionsStore = signalStore(
  *   withState({ options: [1, 2, 3] }),
  *   withLinkedState(({ options }) => ({
- *     selectedOption: () => options()[0] ?? undefined,
+ *     selectedOption: () => options()[0],
  *   }))
  * );
  * ```
