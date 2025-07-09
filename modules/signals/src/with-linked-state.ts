@@ -41,7 +41,8 @@ type LinkedStateResult<
  * );
  * ```
  *
- * The resulting state is of type `{ options: number[], selectedOption: number | undefined }`.
+ * This returns a state of type `{ options: number[], selectedOption: number | undefined }`.
+ * When the `options` signal changes, the `selectedOption` automatically updates.
  * Whenever the `options` signal changes, the `selectedOption` will automatically update.
  *
  * For advanced use cases, `linkedSignal` can be called within `withLinkedState`:
