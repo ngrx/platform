@@ -3,14 +3,18 @@ import {
   inject,
   InjectionToken,
   isSignal,
+  linkedSignal,
   signal,
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
+  getState,
   patchState,
   signalStore,
+  signalStoreFeature,
   withComputed,
   withHooks,
+  withLinkedState,
   withMethods,
   withProps,
   withState,
@@ -500,7 +504,7 @@ describe('signalStore', () => {
         })
       );
       TestBed.inject(Store);
-      TestBed.resetTestEnvironment();
+      TestBed.resetTestingModule();
 
       expect(messages).toEqual(['ending...']);
     });
@@ -563,6 +567,231 @@ describe('signalStore', () => {
       expect(secretStore.reveil()).toBe('not your business');
       expect(secretStore.secret()).toBe('not your business');
       expect(secretStore[SECRET]).toBe('not your business');
+    });
+  });
+
+  describe('withLinkedState', () => {
+    describe('updates automatically if the source changes', () =>
+      [
+        {
+          name: 'automatic',
+          linkedStateFeature: signalStoreFeature(
+            withState({ userId: 1 }),
+
+            withLinkedState(({ userId }) => ({
+              books: () => {
+                userId();
+
+                return [] as string[];
+              },
+            }))
+          ),
+        },
+        {
+          name: 'manual',
+          linkedStateFeature: signalStoreFeature(
+            withState({ userId: 1 }),
+            withLinkedState(({ userId }) => ({
+              books: linkedSignal({
+                source: userId,
+                computation: () => [] as string[],
+              }),
+            }))
+          ),
+        },
+      ].forEach(({ name, linkedStateFeature }) => {
+        it(name, () => {
+          const BookStore = signalStore(
+            { providedIn: 'root', protectedState: false },
+            linkedStateFeature,
+            withState({ version: 1 }),
+            withMethods((store) => ({
+              updateUser() {
+                patchState(store, (value) => value);
+                patchState(store, ({ userId }) => ({ userId: userId + 1 }));
+              },
+              addBook(title: string) {
+                patchState(store, ({ books }) => ({
+                  books: [...books, title],
+                }));
+              },
+              increaseVersion() {
+                patchState(store, ({ version }) => ({ version: version + 1 }));
+              },
+            }))
+          );
+
+          const bookStore = TestBed.inject(BookStore);
+          bookStore.addBook('The Neverending Story');
+          bookStore.increaseVersion();
+          expect(bookStore.books()).toEqual(['The Neverending Story']);
+          expect(bookStore.version()).toEqual(2);
+
+          patchState(bookStore, { userId: 2 });
+          expect(bookStore.books()).toEqual([]);
+          expect(bookStore.version()).toEqual(2);
+        });
+      }));
+
+    describe('updates also a spread linkedSignal', () => {
+      [
+        {
+          name: 'automatic',
+          linkedStateFeature: signalStoreFeature(
+            withState({ userId: 1 }),
+            withLinkedState(({ userId }) => ({
+              user: () => {
+                userId();
+                return { name: 'John Doe' };
+              },
+              location: () => {
+                userId();
+                return { city: 'Berlin', country: 'Germany' };
+              },
+            }))
+          ),
+        },
+        {
+          name: 'manual',
+          linkedStateFeature: signalStoreFeature(
+            withState({ userId: 1 }),
+            withLinkedState(({ userId }) => ({
+              user: linkedSignal({
+                source: userId,
+                computation: () => ({ name: 'John Doe' }),
+              }),
+              location: linkedSignal({
+                source: userId,
+                computation: () => ({ city: 'Berlin', country: 'Germany' }),
+              }),
+            }))
+          ),
+        },
+      ].forEach(({ name, linkedStateFeature }) => {
+        it(name, () => {
+          const UserStore = signalStore(
+            { providedIn: 'root', protectedState: false },
+            linkedStateFeature,
+            withMethods((store) => ({
+              updateUser(name: string) {
+                patchState(store, () => ({
+                  user: { name },
+                }));
+              },
+              updateLocation(city: string, country: string) {
+                patchState(store, () => ({
+                  location: { city, country },
+                }));
+              },
+            }))
+          );
+
+          const userStore = TestBed.inject(UserStore);
+
+          userStore.updateUser('Jane Doe');
+          userStore.updateLocation('London', 'UK');
+
+          expect(getState(userStore)).toEqual({
+            userId: 1,
+            user: { name: 'Jane Doe' },
+            location: { city: 'London', country: 'UK' },
+          });
+
+          patchState(userStore, { userId: 2 });
+          expect(getState(userStore)).toEqual({
+            userId: 2,
+            user: { name: 'John Doe' },
+            location: { city: 'Berlin', country: 'Germany' },
+          });
+        });
+      });
+    });
+
+    describe('can depend on a Signal from another SignalStore', () => {
+      const UserStore = signalStore(
+        { providedIn: 'root', protectedState: false },
+        withState({ userId: 1 })
+      );
+
+      [
+        {
+          name: 'automatic',
+          linkedStateFeature: signalStoreFeature(
+            withLinkedState(() => ({
+              books: () => {
+                TestBed.inject(UserStore).userId();
+
+                return [] as string[];
+              },
+            }))
+          ),
+        },
+        {
+          name: 'manual',
+          linkedStateFeature: signalStoreFeature(
+            withLinkedState(() => {
+              const userStore = TestBed.inject(UserStore);
+
+              return {
+                books: linkedSignal({
+                  source: userStore.userId,
+                  computation: () => [] as string[],
+                }),
+              };
+            })
+          ),
+        },
+      ].forEach(({ name, linkedStateFeature }) => {
+        it(name, () => {
+          const BookStore = signalStore(
+            { providedIn: 'root' },
+            linkedStateFeature,
+            withMethods((store) => ({
+              addBook(title: string) {
+                patchState(store, ({ books }) => ({
+                  books: [...books, title],
+                }));
+              },
+            }))
+          );
+
+          const userStore = TestBed.inject(UserStore);
+          const bookStore = TestBed.inject(BookStore);
+
+          bookStore.addBook('The Neverending Story');
+          expect(bookStore.books()).toEqual(['The Neverending Story']);
+
+          patchState(userStore, { userId: 2 });
+
+          expect(bookStore.books()).toEqual([]);
+        });
+      });
+    });
+
+    describe('InnerSignalStore access', () => {
+      it('can access the state signals', () => {
+        const UserStore = signalStore(
+          { providedIn: 'root' },
+          withState({ userId: 1 }),
+          withLinkedState(({ userId }) => ({ value: userId }))
+        );
+
+        const userStore = TestBed.inject(UserStore);
+
+        expect(userStore.value()).toBe(1);
+      });
+
+      it('can access the props', () => {
+        const UserStore = signalStore(
+          { providedIn: 'root' },
+          withProps(() => ({ userId: 1 })),
+          withLinkedState(({ userId }) => ({ value: () => userId }))
+        );
+
+        const userStore = TestBed.inject(UserStore);
+
+        expect(userStore.value()).toBe(1);
+      });
     });
   });
 });
