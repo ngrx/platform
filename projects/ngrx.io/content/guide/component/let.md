@@ -1,3 +1,10 @@
+<div class="alert is-critical">
+
+The `@ngrx/component` package is in <a href="https://github.com/ngrx/platform/issues/4872" target="_blank">maintenance mode</a>.
+Changes to this package are limited to critical bug fixes.
+
+</div>
+
 # Let Directive
 
 The `*ngrxLet` directive serves a convenient way of binding observables to a view context
