@@ -36,19 +36,19 @@ describe('patchState', () => {
 
   it('fails with wrong partial state object', () => {
     expectSnippet('patchState(state, { x: 1 })').toFail(
-      /'x' does not exist in type 'Partial<{ count: number; foo: string; }>/
+      /'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>>/
     );
     expectSnippet("patchState(state, { foo: 'baz' }, { x: 1 })").toFail(
-      /'x' does not exist in type 'Partial<{ count: number; foo: string; }>/
+      /'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>>/
     );
     expectSnippet('patchState(state, { x: 1 }, { count: 0 })').toFail(
-      /'x' does not exist in type 'Partial<{ count: number; foo: string; }>/
+      /'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>>/
     );
     expectSnippet('patchState(state, increment(), { x: 1 })').toFail(
-      /'x' does not exist in type 'Partial<{ count: number; foo: string; }>/
+      /'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>>/
     );
     expectSnippet('patchState(state, { x: 1 }, increment())').toFail(
-      /'x' does not exist in type 'Partial<{ count: number; foo: string; }>/
+      /'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>>/
     );
   });
 

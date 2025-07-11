@@ -19,7 +19,7 @@ export function withMethods<
       StateSignals<Input['state']> &
         Input['props'] &
         Input['methods'] &
-        WritableStateSource<Prettify<Input['state']>>
+        WritableStateSource<Input['state']>
     >
   ) => Methods
 ): SignalStoreFeature<Input, { state: {}; props: {}; methods: Methods }> {

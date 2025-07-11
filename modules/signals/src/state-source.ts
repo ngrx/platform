@@ -8,7 +8,6 @@ import {
   untracked,
   WritableSignal,
 } from '@angular/core';
-import { Prettify } from './ts-helpers';
 
 declare const ngDevMode: unknown;
 
@@ -64,8 +63,7 @@ export function isWritableStateSource<State extends object>(
 export function patchState<State extends object>(
   stateSource: WritableStateSource<State>,
   ...updaters: Array<
-    | Partial<Prettify<NoInfer<State>>>
-    | PartialStateUpdater<Prettify<NoInfer<State>>>
+    Partial<NoInfer<State>> | PartialStateUpdater<NoInfer<State>>
   >
 ): void {
   const currentState = untracked(() => getState(stateSource));

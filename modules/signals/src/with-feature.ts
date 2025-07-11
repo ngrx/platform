@@ -37,7 +37,7 @@ export function withFeature<
       StateSignals<Input['state']> &
         Input['props'] &
         Input['methods'] &
-        WritableStateSource<Prettify<Input['state']>>
+        WritableStateSource<Input['state']>
     >
   ) => SignalStoreFeature<Input, Output>
 ): SignalStoreFeature<Input, Output> {
