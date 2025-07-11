@@ -39,43 +39,19 @@ The following tutorial shows you how to manage the state of a counter, and how t
 
 2.  Right click on the `app` folder in StackBlitz and create a new file named `counter.actions.ts` to describe the counter actions to increment, decrement, and reset its value.
 
-<ngrx-code-example header="src/app/counter.actions.ts">
-
-```ts
-
-```
-
-</ngrx-code-example>
+<ngrx-code-example header="src/app/counter.actions.ts" path="store/src/app/counter.actions.ts"></ngrx-code-example>
 
 3.  Define a reducer function to handle changes in the counter value based on the provided actions.
 
-<ngrx-code-example header="src/app/counter.reducer.ts">
-
-```ts
-
-```
-
-</ngrx-code-example>
+<ngrx-code-example header="src/app/counter.reducer.ts" path="store/src/app/counter.reducer.ts"></ngrx-code-example>
 
 4.  Import the `StoreModule` from `@ngrx/store` and the `counter.reducer` file.
 
-<ngrx-code-example header="src/app/app.module.ts (imports)">
-
-```ts
-
-```
-
-</ngrx-code-example>
+<ngrx-code-example header="src/app/app.module.ts (imports)" path="store/src/app/app.module.ts" region="imports"></ngrx-code-example>
 
 5.  Add the `StoreModule.forRoot` function in the `imports` array of your `AppModule` with an object containing the `count` and the `counterReducer` that manages the state of the counter. The `StoreModule.forRoot()` method registers the global providers needed to access the `Store` throughout your application.
 
-<ngrx-code-example header="src/app/app.module.ts (StoreModule)">
-
-```ts
-
-```
-
-</ngrx-code-example>
+<ngrx-code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.1.ts"></ngrx-code-example>
 
 6.  Create a new file called `my-counter.component.ts` in a folder named `my-counter` within the `app` folder that will define a new component called `MyCounterComponent`. This component will render buttons that allow the user to change the count state. Also, create the `my-counter.component.html` file within this same folder.
 
@@ -128,31 +104,13 @@ export class MyCounterComponent {
 
 7.  Add the new component to your AppModule's declarations and declare it in the template:
 
-<ngrx-code-example header="src/app/app.component.html">
+<ngrx-code-example header="src/app/app.component.html" path="store/src/app/app.component.html" region="counter"></ngrx-code-example>
 
-```html
-
-```
-
-</ngrx-code-example>
-
-<ngrx-code-example header="src/app/app.module.ts">
-
-```ts
-
-```
-
-</ngrx-code-example>
+<ngrx-code-example header="src/app/app.module.ts" path="store/src/app/app.module.ts"></ngrx-code-example>
 
 8.  Inject the store into `MyCounterComponent` and connect the `count$` stream to the store's `count` state. Implement the `increment`, `decrement`, and `reset` methods by dispatching actions to the store.
 
-<ngrx-code-example header="src/app/my-counter/my-counter.component.ts">
-
-```ts
-
-```
-
-</ngrx-code-example>
+<ngrx-code-example header="src/app/my-counter/my-counter.component.ts" path="store/src/app/my-counter/my-counter.component.ts"></ngrx-code-example>
 
 And that's it! Click the increment, decrement, and reset buttons to change the state of the counter.
 
