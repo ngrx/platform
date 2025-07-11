@@ -509,7 +509,7 @@ Finally, the component will subscribe to the store, telling the number of state 
 
 <ngrx-code-example header="app.component.ts">
 
-```bash
+```ts
 // Subscribe to the store using the custom pipeable operator
 store.pipe(selectLastStateTransitions(3)).subscribe(/* .. */);
 ```
