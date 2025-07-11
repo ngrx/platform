@@ -1,3 +1,10 @@
+<ngrx-docs-alert type="error">
+
+The `@ngrx/component` package is in <a href="https://github.com/ngrx/platform/issues/4872" target="_blank">maintenance mode</a>.
+Changes to this package are limited to critical bug fixes.
+
+</ngrx-docs-alert>
+
 # @ngrx/component
 
 Component is a library for building reactive Angular templates.

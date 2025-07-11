@@ -150,14 +150,14 @@ export class MyCounterComponent {
 
 <ngrx-code-example header="src/app/my-counter/my-counter.component.html" >
 
-```ts
-    <button (click)="increment()">Increment</button>
+```html
+<button (click)="increment()">Increment</button>
 
-    <div>Current Count: {{ count$ | async }}</div>
+<div>Current Count: {{ count$ | async }}</div>
 
-    <button (click)="decrement()">Decrement</button>
+<button (click)="decrement()">Decrement</button>
 
-    <button (click)="reset()">Reset Counter</button>
+<button (click)="reset()">Reset Counter</button>
 ```
 
 </ngrx-code-example>

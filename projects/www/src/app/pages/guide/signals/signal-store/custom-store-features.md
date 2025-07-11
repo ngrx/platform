@@ -10,7 +10,7 @@ A custom feature is created using the `signalStoreFeature` function, which accep
 
 The following example demonstrates how to create a custom feature that includes the `requestStatus` state slice along with computed signals for checking the request status.
 
-<ngrx-code-example header="request-status.feature.ts">
+<ngrx-code-example header="with-request-status.ts">
 
 ```ts
 import { computed } from '@angular/core';
@@ -46,7 +46,7 @@ export function withRequestStatus() {
 
 In addition to the state slice and computed signals, this feature also specifies a set of state updaters for modifying the request status.
 
-<ngrx-code-example header="request-status.feature.ts">
+<ngrx-code-example header="with-request-status.ts">
 
 ```ts
 export function setPending(): RequestStatusState {
@@ -72,7 +72,7 @@ For a custom feature, it is recommended to define state updaters as standalone f
 
 The `withRequestStatus` feature and updaters can be used to add the `requestStatus` state slice, along with the `isPending`, `isFulfilled`, and `error` computed signals to the `BooksStore`, as follows:
 
-<ngrx-code-example header="books.store.ts">
+<ngrx-code-example header="books-store.ts">
 
 ```ts
 import { inject } from '@angular/core';
@@ -82,9 +82,9 @@ import {
   setFulfilled,
   setPending,
   withRequestStatus,
-} from './request-status.feature';
-import { Book } from './book.model';
-import { BooksService } from './books.service';
+} from './with-request-status';
+import { BooksService } from './books-service';
+import { Book } from './book';
 
 export const BooksStore = signalStore(
   withEntities<Book>(),
@@ -129,7 +129,7 @@ For more details, refer to the [Entity Management guide](guide/signals/signal-st
 
 The following example shows how to create a custom feature that logs SignalStore state changes to the console.
 
-<ngrx-code-example header="logger.feature.ts">
+<ngrx-code-example header="with-logger.ts">
 
 ```ts
 import { effect } from '@angular/core';
@@ -157,14 +157,14 @@ export function withLogger(name: string) {
 
 The `withLogger` feature can be used in the `BooksStore` as follows:
 
-<ngrx-code-example header="books.store.ts">
+<ngrx-code-example header="books-store.ts">
 
 ```ts
 import { signalStore } from '@ngrx/signals';
 import { withEntities } from '@ngrx/signals/entities';
-import { withRequestStatus } from './request-status.feature';
-import { withLogger } from './logger.feature';
-import { Book } from './book.model';
+import { withRequestStatus } from './with-request-status';
+import { withLogger } from './with-logger';
+import { Book } from './book';
 
 export const BooksStore = signalStore(
   withEntities<Book>(),
@@ -194,7 +194,7 @@ It's recommended to define loosely-coupled/independent features whenever possibl
 
 The following example demonstrates how to create the `withSelectedEntity` feature.
 
-<ngrx-code-example header="selected-entity.feature.ts">
+<ngrx-code-example header="with-selected-entity.ts">
 
 ```ts
 import { computed } from '@angular/core';
@@ -230,13 +230,13 @@ The `withSelectedEntity` feature adds the `selectedEntityId` state slice and the
 However, it expects state properties from the `EntityState` type to be defined in that store.
 These properties can be added to the store by using the `withEntities` feature from the `entities` plugin.
 
-<ngrx-code-example header="books.store.ts">
+<ngrx-code-example header="books-store.ts">
 
 ```ts
 import { signalStore } from '@ngrx/signals';
 import { withEntities } from '@ngrx/signals/entities';
-import { withSelectedEntity } from './selected-entity.feature';
-import { Book } from './book.model';
+import { withSelectedEntity } from './with-selected-entity';
+import { Book } from './book';
 
 export const BooksStore = signalStore(
   withEntities<Book>(),
@@ -261,12 +261,12 @@ The `BooksStore` instance will contain the following properties:
 The `@ngrx/signals` package offers high-level type safety.
 Therefore, if `BooksStore` does not contain state properties from the `EntityState` type, the compilation error will occur.
 
-<ngrx-code-example header="books.store.ts">
+<ngrx-code-example header="books-store.ts">
 
 ```ts
 import { signalStore } from '@ngrx/signals';
-import { withSelectedEntity } from './selected-entity.feature';
-import { Book } from './book.model';
+import { withSelectedEntity } from './with-selected-entity';
+import { Book } from './book';
 
 export const BooksStore = signalStore(
   withState({ books: [] as Book[], isLoading: false }),
@@ -281,7 +281,7 @@ export const BooksStore = signalStore(
 
 In addition to state, it's also possible to define expected properties and methods in the following way:
 
-<ngrx-code-example header="baz.feature.ts">
+<ngrx-code-example header="with-baz.ts">
 
 ```ts
 import { Signal } from '@angular/core';
@@ -306,6 +306,50 @@ export function withBaz<Foo extends string | number>() {
 </ngrx-code-example>
 
 The `withBaz` feature can only be used in a store where the property `foo` and the method `bar` are defined.
+
+## Using `withFeature`
+
+An alternative approach to custom features with input is using the `withFeature` utility, which offers more flexibility.
+
+The `withFeature` function accepts a callback that receives a store instance and returns a SignalStore feature.
+This enables using features that rely on external inputs without depending on the store’s internal structure.
+
+```ts
+import { computed, Signal } from '@angular/core';
+import {
+  patchState,
+  signalStore,
+  signalStoreFeature,
+  withComputed,
+  withFeature,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+import { withEntities } from '@ngrx/signals/entities';
+import { Book } from './book';
+
+export function withBooksFilter(books: Signal<Book[]>) {
+  return signalStoreFeature(
+    withState({ query: '' }),
+    withComputed(({ query }) => ({
+      filteredBooks: computed(() =>
+        books().filter((b) => b.name.includes(query()))
+      ),
+    })),
+    withMethods((store) => ({
+      setQuery(query: string): void {
+        patchState(store, { query });
+      },
+    }))
+  );
+}
+
+export const BooksStore = signalStore(
+  withEntities<Book>(),
+  // 👇 Using `withFeature` to pass input to the `withBooksFilter` feature.
+  withFeature(({ entities }) => withBooksFilter(entities))
+);
+```
 
 ## Known TypeScript Issues
 
@@ -359,50 +403,3 @@ const Store = signalStore(
   withW()
 ); // ✅ works as expected
 ```
-
-For more complicated use cases, `withFeature` offers an alternative approach.
-
-## Connecting a Custom Feature with the Store
-
-The `withFeature` function allows passing properties, methods, or signals from a SignalStore to a custom feature.
-
-This is an alternative to the input approach above and allows more flexibility:
-
-<ngrx-code-example header="loader.store.ts">
-
-```ts
-import { computed, Signal } from '@angular/core';
-import {
-  patchState,
-  signalStore,
-  signalStoreFeature,
-  withComputed,
-  withFeature,
-  withMethods,
-  withState,
-} from '@ngrx/signals';
-import { withEntities } from '@ngrx/signals/entities';
-
-export function withBooksFilter(books: Signal<Book[]>) {
-  return signalStoreFeature(
-    withState({ query: '' }),
-    withComputed(({ query }) => ({
-      filteredBooks: computed(() =>
-        books().filter((b) => b.name.includes(query()))
-      ),
-    })),
-    withMethods((store) => ({
-      setQuery(query: string): void {
-        patchState(store, { query });
-      },
-    }))
-  );
-}
-
-export const BooksStore = signalStore(
-  withEntities<Book>(),
-  withFeature(({ entities }) => withBooksFilter(entities))
-);
-```
-
-</ngrx-code-example>
