@@ -102,7 +102,15 @@ First, the state for the component needs to be identified. In `SlideToggleCompon
 <ngrx-code-example
   header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
-  region="state"></ngrx-code-example>
+  region="state">
+
+```ts
+export interface SlideToggleState {
+  checked: boolean;
+}
+```
+
+</ngrx-code-example>
 
 Then we need to provide `ComponentStore` in the component's providers, so that each new instance of `SlideToggleComponent` has its own `ComponentStore`. It also has to be injected into the constructor.
 
@@ -115,7 +123,15 @@ In this example `ComponentStore` is provided directly in the component. This wor
 <ngrx-code-example linenums="false"
   header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
-  region="providers"></ngrx-code-example>
+  region="providers">
+
+```ts
+@Component({
+  selector: 'mat-slide-toggle',
+  templateUrl: 'slide-toggle.html',
+```
+
+</ngrx-code-example>
 
 Next, the default state for the component needs to be set. It could be done lazily, however it needs to be done before any of `updater`s are executed, because they rely on the state to be present and would throw an error if the state is not initialized by the time they are invoked.
 
@@ -134,7 +150,103 @@ When it is called with a callback, the state is updated.
 <ngrx-code-example
   header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
-  region="init"></ngrx-code-example>
+  region="init">
+
+```ts
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
+import { ComponentStore } from '@ngrx/component-store';
+import { tap } from 'rxjs/operators';
+
+// #docregion state
+export interface SlideToggleState {
+  checked: boolean;
+}
+// #enddocregion state
+
+/** Change event object emitted by a SlideToggleComponent. */
+export interface MatSlideToggleChange {
+  /** The source MatSlideToggle of the event. */
+  readonly source: SlideToggleComponent;
+  /** The new `checked` value of the MatSlideToggle. */
+  readonly checked: boolean;
+}
+
+// #docregion providers
+@Component({
+  selector: 'mat-slide-toggle',
+  templateUrl: 'slide-toggle.html',
+  // #enddocregion providers
+  styleUrls: ['./slide-toggle.scss'],
+  encapsulation: ViewEncapsulation.None,
+  // #docregion providers
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ComponentStore],
+})
+export class SlideToggleComponent {
+  // #enddocregion providers
+  // #docregion updater
+  @Input() set checked(value: boolean) {
+    this.setChecked(value);
+  }
+  // #enddocregion updater
+  // #docregion selector
+  // Observable<MatSlideToggleChange> used instead of EventEmitter
+  @Output() readonly change = this.componentStore.select((state) => ({
+    source: this,
+    checked: state.checked,
+  }));
+  // #enddocregion selector
+
+  // #docregion updater
+  readonly setChecked = this.componentStore.updater(
+    (state, value: boolean) => ({ ...state, checked: value })
+  );
+  // #enddocregion updater
+
+  // #docregion selector
+  // ViewModel for the component
+  readonly vm$ = this.componentStore.select((state) => ({
+    checked: state.checked,
+  }));
+  // #enddocregion selector
+
+  // #docregion providers, init
+  constructor(
+    private readonly componentStore: ComponentStore<SlideToggleState>
+  ) {
+    // #enddocregion providers
+    // set defaults
+    this.componentStore.setState({
+      checked: false,
+    });
+  }
+  // #enddocregion init
+
+  // #docregion updater
+  onChangeEvent = this.componentStore.effect<{
+    source: Event;
+    checked: boolean;
+  }>((event$) => {
+    return event$.pipe(
+      tap<{ source: Event; checked: boolean }>((event) => {
+        event.source.stopPropagation();
+        this.setChecked(!event.checked);
+      })
+    );
+  });
+  // #enddocregion updater
+  // #docregion providers
+}
+// #enddocregion providers
+```
+
+</ngrx-code-example>
 
 #### Step 2. Updating state
 
@@ -147,7 +259,15 @@ When a user clicks the toggle (triggering a 'change' event), instead of calling 
 <ngrx-code-example linenums="false"
   header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
-  region="updater"></ngrx-code-example>
+  region="updater">
+
+```ts
+@Input() set checked(value: boolean) {
+    this.setChecked(value);
+  }
+```
+
+</ngrx-code-example>
 
 #### Step 3. Reading the state
 
@@ -159,7 +279,17 @@ Finally, the state is aggregated with selectors into two properties:
 <ngrx-code-example
   header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
-  region="selector"></ngrx-code-example>
+  region="selector">
+
+```ts
+// Observable<MatSlideToggleChange> used instead of EventEmitter
+  @Output() readonly change = this.componentStore.select((state) => ({
+    source: this,
+    checked: state.checked,
+  }));
+```
+
+</ngrx-code-example>
 
 This example does not have a lot of business logic, however it is still fully reactive.
 
@@ -214,7 +344,27 @@ With `ComponentStore` extracted into `PaginatorStore`, the developer is now usin
 <ngrx-code-example
   header="src/app/paginator.store.ts"
   path="component-store-paginator-service/src/app/paginator.component.ts"
-  region="inputs"></ngrx-code-example>
+  region="inputs">
+
+```ts
+@Input() set pageIndex(value: string | number) {
+    this.paginatorStore.setPageIndex(value);
+  }
+
+  @Input() set length(value: string | number) {
+    this.paginatorStore.setLength(value);
+  }
+
+  @Input() set pageSize(value: string | number) {
+    this.paginatorStore.setPageSize(value);
+  }
+
+  @Input() set pageSizeOptions(value: readonly number[]) {
+    this.paginatorStore.setPageSizeOptions(value);
+  }
+```
+
+</ngrx-code-example>
 
 Not all `updater`s have to be called in the `@Input`. For example, `changePageSize` is called from the template.
 
@@ -223,7 +373,27 @@ Effects are used to perform additional validation and get extra information from
 <ngrx-code-example
   header="src/app/paginator.store.ts"
   path="component-store-paginator-service/src/app/paginator.component.ts"
-  region="updating-state"></ngrx-code-example>
+  region="updating-state">
+
+```ts
+changePageSize(newPageSize: number) {
+    this.paginatorStore.changePageSize(newPageSize);
+  }
+  nextPage() {
+    this.paginatorStore.nextPage();
+  }
+  firstPage() {
+    this.paginatorStore.firstPage();
+  }
+  previousPage() {
+    this.paginatorStore.previousPage();
+  }
+  lastPage() {
+    this.paginatorStore.lastPage();
+  }
+```
+
+</ngrx-code-example>
 
 #### Reading the state
 

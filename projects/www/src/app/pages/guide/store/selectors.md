@@ -131,7 +131,7 @@ Inside the component we can define the `props`:
 
 <ngrx-code-example header="app.component.ts">
 
-```sh
+```ts
 ngOnInit() {
   this.counter = this.store.select(fromRoot.selectCount, { multiply: 2 })
 }
@@ -159,7 +159,7 @@ The component's selectors are now calling the factory function to create differe
 
 <ngrx-code-example header="app.component.ts">
 
-```sh
+```ts
 ngOnInit() {
   this.counter2 = this.store.select(fromRoot.selectCount(), { id: 'counter2', multiply: 2 });
   this.counter4 = this.store.select(fromRoot.selectCount(), { id: 'counter4', multiply: 4 });
@@ -509,7 +509,7 @@ Finally, the component will subscribe to the store, telling the number of state 
 
 <ngrx-code-example header="app.component.ts">
 
-```ts
+```bash
 // Subscribe to the store using the custom pipeable operator
 store.pipe(selectLastStateTransitions(3)).subscribe(/* .. */);
 ```
