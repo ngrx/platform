@@ -18,13 +18,120 @@ You can see the full example at StackBlitz: <live-example name="router-store-sel
 
 ## Creating a Selector for A Single Entity With Id As Route Param
 
-<ngrx-code-example header="router.selectors.ts" path="router-store-selectors/src/app/router.selectors.ts" region="routerSelectors"></ngrx-code-example>
+<ngrx-code-example header="router.selectors.ts" path="router-store-selectors/src/app/router.selectors.ts" region="routerSelectors">
 
-<ngrx-code-example header="car.reducer.ts" path="router-store-selectors/src/app/car/car.reducer.ts" region="carReducer"></ngrx-code-example>
+```ts
+import {
+  getRouterSelectors,
+  RouterReducerState,
+} from '@ngrx/router-store';
 
-<ngrx-code-example header="car.selectors.ts" path="router-store-selectors/src/app/car/car.selectors.ts" region="carSelectors"></ngrx-code-example>
+// `router` is used as the default feature name. You can use the feature name
+// of your choice by creating a feature selector and pass it to the `getRouterSelectors` function
+// export const selectRouter = createFeatureSelector<RouterReducerState>('yourFeatureName');
 
-<ngrx-code-example header="car.component.ts" path="router-store-selectors/src/app/car/car.component.ts" region="carComponent"></ngrx-code-example>
+export const {
+  selectCurrentRoute, // select the current route
+  selectFragment, // select the current route fragment
+  selectQueryParams, // select the current route query params
+  selectQueryParam, // factory function to select a query param
+  selectRouteParams, // select the current route params
+  selectRouteParam, // factory function to select a route param
+  selectRouteData, // select the current route data
+  selectRouteDataParam, // factory function to select a route data param
+  selectUrl, // select the current url
+  selectTitle, // select the title if available
+} = getRouterSelectors();
+```
+
+</ngrx-code-example>
+
+<ngrx-code-example header="car.reducer.ts" path="router-store-selectors/src/app/car/car.reducer.ts" region="carReducer">
+
+```ts
+import { createReducer, on } from '@ngrx/store';
+import { EntityState, createEntityAdapter } from '@ngrx/entity';
+import { appInit } from './car.actions';
+
+export interface Car {
+  id: string;
+  year: string;
+  make: string;
+  model: string;
+}
+
+export type CarState = EntityState<Car>;
+
+export const carAdapter = createEntityAdapter<Car>({
+  selectId: (car) => car.id,
+});
+
+const initialState = carAdapter.getInitialState();
+
+export const reducer = createReducer<CarState>(
+  initialState,
+  on(appInit, (state, { cars }) => carAdapter.addMany(cars, state))
+);
+```
+
+</ngrx-code-example>
+
+<ngrx-code-example header="car.selectors.ts" path="router-store-selectors/src/app/car/car.selectors.ts" region="carSelectors">
+
+```ts
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { selectRouteParams } from '../router.selectors';
+import { carAdapter, CarState } from './car.reducer';
+
+export const carsFeatureSelector =
+  createFeatureSelector<CarState>('cars');
+
+const { selectEntities, selectAll } = carAdapter.getSelectors();
+
+export const selectCarEntities = createSelector(
+  carsFeatureSelector,
+  selectEntities
+);
+
+export const selectCars = createSelector(
+  carsFeatureSelector,
+  selectAll
+);
+
+// you can combine the `selectRouteParams` with `selectCarEntities`
+// to get a selector for the active car for this component based
+// on the route
+export const selectCar = createSelector(
+  selectCarEntities,
+  selectRouteParams,
+  (cars, { carId }) => cars[carId]
+);
+```
+
+</ngrx-code-example>
+
+<ngrx-code-example header="car.component.ts" path="router-store-selectors/src/app/car/car.component.ts" region="carComponent">
+
+```ts
+import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { selectCar } from './car.selectors';
+import { AsyncPipe, JsonPipe } from '@angular/common';
+
+@Component({
+  standalone: true,
+  selector: 'app-car',
+  templateUrl: './car.component.html',
+  styleUrls: ['./car.component.css'],
+  imports: [AsyncPipe, JsonPipe],
+})
+export class CarComponent {
+  private store = inject(Store);
+  car$ = this.store.select(selectCar);
+}
+```
+
+</ngrx-code-example>
 
 ## Extracting all params in the current route
 
