@@ -276,19 +276,19 @@ selectTotal({
 });
 
 /**
- - Memoized Values before calling selectTotal.release()
- - selectSumEvenNums  6
- - selectSumOddNums   4
- - selectTotal        10
+ * Memoized Values before calling selectTotal.release()
+ *   selectSumEvenNums  6
+ *   selectSumOddNums   4
+ *   selectTotal        10
  */
 
 selectTotal.release();
 
 /**
- - Memoized Values after calling selectTotal.release()
- - selectSumEvenNums  null
- - selectSumOddNums   null
- - selectTotal        null
+ * Memoized Values after calling selectTotal.release()
+ *   selectSumEvenNums  null
+ *   selectSumOddNums   null
+ *   selectTotal        null
  */
 ```
 

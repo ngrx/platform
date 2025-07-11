@@ -93,7 +93,7 @@ described [below](#disable-change-tracking).
 
 A `changeState` map adheres to the following interface
 
-<ngrx-code-example header="ChangeState">
+<ngrx-code-example header="ChangeState" linenums="false">
 
 ```ts
 export interface ChangeState<T> {
@@ -144,7 +144,7 @@ Delete (remove) is a special case with special rules.
 
 Here are the most important `EntityOps` that record an entity in the `changeState` map:
 
-<ngrx-code-example>
+<ngrx-code-example linenums="false">
 
 ```ts
 // Save operations when isOptimistic flag is true
@@ -188,7 +188,7 @@ Operations that put that entity in the store also remove it from the `changeStat
 
 Here are the operations that remove one or more specified entities from the `changeState` map.
 
-<ngrx-code-example>
+<ngrx-code-example linenums="false">
 
 ```ts
 QUERY_ALL_SUCCESS;
@@ -216,7 +216,7 @@ UNDO_MANY;
 The `EntityOps` that replace or remove every entity in the collection also reset the `changeState` to an empty object.
 All entities in the collection (if any) become "unchanged".
 
-<ngrx-code-example>
+<ngrx-code-example linenums="false">
 
 ```ts
 ADD_ALL;
