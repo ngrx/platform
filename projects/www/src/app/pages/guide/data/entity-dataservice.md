@@ -176,7 +176,7 @@ To support this feature, we 'll create a `HeroDataService` class that implements
 In the sample app the `HeroDataService` derives from the NgRx Data `DefaultDataService<T>` in order to leverage its base functionality.
 It only overrides what it really needs.
 
-<ngrx-code-example header="store/entity/hero-data-service.ts" linenums="false">
+<ngrx-code-example header="store/entity/hero-data-service.ts">
 
 ```ts
 import { Injectable } from '@angular/core';
@@ -239,7 +239,7 @@ Finally, we must tell NgRx Data about this new data service.
 
 The sample app provides `HeroDataService` and registers it by calling the `registerService()` method on the `EntityDataService` in the app's _entity store module_:
 
-<ngrx-code-example header="store/entity-store.module.ts" linenums="false">
+<ngrx-code-example header="store/entity-store.module.ts">
 
 ```ts
 import { EntityDataService } from '@ngrx/data'; // <-- import the NgRx Data data service registry

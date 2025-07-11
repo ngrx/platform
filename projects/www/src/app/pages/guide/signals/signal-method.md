@@ -9,7 +9,7 @@ import { signalMethod } from '@ngrx/signals';
 @Component({
   /* ... */
 })
-export class NumbersComponent {
+export class Numbers {
   // 👇 This method will have an input argument
   // of type `number | Signal<number>`.
   readonly logDoubledNumber = signalMethod<number>((num) => {
@@ -25,7 +25,7 @@ export class NumbersComponent {
 @Component({
   /* ... */
 })
-export class NumbersComponent {
+export class Numbers {
   readonly logDoubledNumber = signalMethod<number>((num) => {
     const double = num * 2;
     console.log(double);
@@ -48,7 +48,7 @@ export class NumbersComponent {
 ## Automatic Cleanup
 
 `signalMethod` uses an `effect` internally to track the Signal changes.
-By default, the `effect` runs in the injection context of the caller. In the example above, that is `NumbersComponent`. That means, that the `effect` is automatically cleaned up when the component is destroyed.
+By default, the `effect` runs in the injection context of the caller. In the example above, that is the `Numbers` component. That means, that the `effect` is automatically cleaned up when the component is destroyed.
 
 If the call happens outside an injection context, then the injector of the `signalMethod` is used. This would be the case, if `logDoubledNumber` runs in `ngOnInit`:
 
@@ -56,7 +56,7 @@ If the call happens outside an injection context, then the injector of the `sign
 @Component({
   /* ... */
 })
-export class NumbersComponent implements OnInit {
+export class Numbers implements OnInit {
   readonly logDoubledNumber = signalMethod<number>((num) => {
     const double = num * 2;
     console.log(double);
@@ -64,13 +64,13 @@ export class NumbersComponent implements OnInit {
 
   ngOnInit(): void {
     const value = signal(2);
-    // 👇 Uses the injection context of the `NumbersComponent`.
+    // 👇 Uses the injection context of the `Numbers` component.
     this.logDoubledNumber(value);
   }
 }
 ```
 
-Even though `logDoubledNumber` is called outside an injection context, automatic cleanup occurs when `NumbersComponent` is destroyed, since `logDoubledNumber` was created within the component's injection context.
+Even though `logDoubledNumber` is called outside an injection context, automatic cleanup occurs when the `Numbers` component is destroyed, since `logDoubledNumber` was created within the component's injection context.
 
 However, when creating a `signalMethod` in an ancestor injection context, the cleanup behavior is different:
 
@@ -86,7 +86,7 @@ export class NumbersService {
 @Component({
   /* ... */
 })
-export class NumbersComponent implements OnInit {
+export class Numbers implements OnInit {
   readonly numbersService = inject(NumbersService);
 
   ngOnInit(): void {
@@ -97,7 +97,7 @@ export class NumbersComponent implements OnInit {
 }
 ```
 
-Here, the `effect` outlives the component, which would produce a memory leak.
+Here, the `effect` used internally by `signalMethod` outlives the component, which would produce a memory leak.
 
 <ngrx-docs-alert type="inform">
 
@@ -113,13 +113,13 @@ When a `signalMethod` is created in an ancestor injection context, it's necessar
 @Component({
   /* ... */
 })
-export class NumbersComponent implements OnInit {
+export class Numbers implements OnInit {
   readonly numbersService = inject(NumbersService);
   readonly injector = inject(Injector);
 
   ngOnInit(): void {
     const value = signal(1);
-    // 👇 Providing the `NumbersComponent` injector
+    // 👇 Providing the `Numbers` component injector
     // to ensure cleanup on component destroy.
     this.numbersService.logDoubledNumber(value, {
       injector: this.injector,
@@ -139,10 +139,10 @@ The `signalMethod` must be initialized within an injection context. To initializ
 @Component({
   /* ... */
 })
-export class NumbersComponent implements OnInit {
+export class Numbers implements OnInit {
   readonly injector = inject(Injector);
 
-  ngOnInit() {
+  ngOnInit(): void {
     const logDoubledNumber = signalMethod<number>(
       (num) => console.log(num * 2),
       { injector: this.injector }
@@ -159,7 +159,7 @@ At first sight, `signalMethod`, might be the same as `effect`:
 @Component({
   /* ... */
 })
-export class NumbersComponent {
+export class Numbers {
   readonly num = signal(2);
   readonly logDoubledNumberEffect = effect(() => {
     console.log(this.num() * 2);

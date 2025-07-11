@@ -9,7 +9,7 @@ SignalState is instantiated using the `signalState` function, which accepts an i
 
 ```ts
 import { signalState } from '@ngrx/signals';
-import { User } from './user.model';
+import { User } from './user';
 
 type UserState = { user: User; isAdmin: boolean };
 
@@ -117,11 +117,39 @@ patchState(userState, (state) => ({
 patchState(userState, setFirstName('Stevie'), setAdmin());
 ```
 
+## Using User-Defined Signals
+
+The `signalState` function supports integrating user-defined `WritableSignal` instances as part of the state.
+
+If a root state property is a `WritableSignal`, its value becomes an integral part of the state.
+The SignalState instance and the original signal remain synchronized - updating one will immediately reflect in the other.
+
+```ts
+const name = signal('Jimi Hendrix');
+const userState = signalState({
+  // 👇 Providing an external signal as part of the initial state.
+  name,
+  isAdmin: false,
+});
+
+console.log(userState.name()); // logs: Jimi Hendrix
+
+// Updating the external signal
+name.set('Brian May');
+// reflects the value in the SignalState instance.
+console.log(userState.name()); // logs: Brian May
+
+// Updating the SignalState instance
+patchState(userState, { name: 'Eric Clapton' });
+// reflects the value in the external signal.
+console.log(name()); // logs: Eric Clapton
+```
+
 ## Usage
 
 ### Example 1: SignalState in a Component
 
-<ngrx-code-example header="counter.component.ts" linenums="true">
+<ngrx-code-example header="counter.ts">
 
 ```ts
 import { ChangeDetectionStrategy, Component } from '@angular/core';
@@ -138,7 +166,7 @@ import { signalState, patchState } from '@ngrx/signals';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CounterComponent {
+export class Counter {
   readonly state = signalState({ count: 0 });
 
   increment(): void {
@@ -160,89 +188,80 @@ export class CounterComponent {
 ### Example 2: SignalState in a Service
 
 <code-tabs linenums="true">
-<code-pane header="books.store.ts">
+<code-pane header="book-list-store.ts">
 
-```ts
 import { inject, Injectable } from '@angular/core';
 import { exhaustMap, pipe, tap } from 'rxjs';
 import { signalState, patchState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
-import { BooksService } from './books.service';
-import { Book } from './book.model';
+import { BooksService } from './books-service';
+import { Book } from './book';
 
-type BooksState = { books: Book[]; isLoading: boolean };
+type BookListState = { books: Book[]; isLoading: boolean };
 
-const initialState: BooksState = {
-  books: [],
-  isLoading: false,
+const initialState: BookListState = {
+books: [],
+isLoading: false,
 };
 
 @Injectable()
-export class BooksStore {
-  readonly #booksService = inject(BooksService);
-  readonly #state = signalState(initialState);
+export class BookListStore {
+readonly #booksService = inject(BooksService);
+readonly #state = signalState(initialState);
 
-  readonly books = this.#state.books;
-  readonly isLoading = this.#state.isLoading;
+readonly books = this.#state.books;
+readonly isLoading = this.#state.isLoading;
 
-  readonly loadBooks = rxMethod<void>(
-    pipe(
-      tap(() => patchState(this.#state, { isLoading: true })),
-      exhaustMap(() => {
-        return this.#booksService.getAll().pipe(
-          tapResponse({
-            next: (books) => patchState(this.#state, { books }),
-            error: console.error,
-            finalize: () =>
-              patchState(this.#state, { isLoading: false }),
-          })
-        );
-      })
-    )
-  );
+readonly loadBooks = rxMethod<void>(
+pipe(
+tap(() => patchState(this.#state, { isLoading: true })),
+exhaustMap(() => {
+return this.#booksService.getAll().pipe(
+tapResponse({
+next: (books) => patchState(this.#state, { books }),
+error: console.error,
+finalize: () => patchState(this.#state, { isLoading: false }),
+})
+);
+})
+)
+);
 }
-```
 
 </code-pane>
 
-<code-pane header="books.component.ts">
+<code-pane header="book-list.ts">
 
-```ts
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnInit,
-} from '@angular/core';
-import { BooksStore } from './books.store';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { BookListStore } from './book-list-store';
 
 @Component({
-  selector: 'ngrx-books',
-  template: `
-    <h1>Books</h1>
+selector: 'ngrx-book-list',
+template: `
+&lth1>Books</h1>
 
     @if (store.isLoading()) {
-    <p>Loading...</p>
+      <p>Loading...</p>
     } @else {
-    <ul>
-      @for (book of store.books(); track book.id) {
-      <li>{{ book.title }}</li>
-      }
-    </ul>
+      <ul>
+        @for (book of store.books(); track book.id) {
+          <li>{{ book.title }}</li>
+        }
+      </ul>
     }
-  `,
-  providers: [BooksStore],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class BooksComponent implements OnInit {
-  readonly store = inject(BooksStore);
 
-  ngOnInit(): void {
-    this.store.loadBooks();
-  }
+`,
+providers: [BookListStore],
+changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class BookList {
+readonly store = inject(BookListStore);
+
+constructor() {
+this.store.loadBooks();
 }
-```
+}
 
 </code-pane>
 </code-tabs>

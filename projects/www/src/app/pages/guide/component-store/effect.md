@@ -99,7 +99,7 @@ To make this possible set the generic type of the `effect` method to `void`.
 <ngrx-code-example header="movies.store.ts">
 
 ```ts
-  readonly getAllMovies = this.effect<void>(
+readonly getAllMovies = this.effect<void>(
     // The name of the source stream doesn't matter: `trigger$`, `source$` or `$` are good
     // names. We encourage to choose one of these and use them consistently in your codebase.
     (trigger$) => trigger$.pipe(

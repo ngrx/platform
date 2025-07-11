@@ -18,16 +18,36 @@ You can see the full example at StackBlitz: <live-example name="router-store-sel
 
 ## Creating a Selector for A Single Entity With Id As Route Param
 
-<ngrx-code-example header="router.selectors.ts" path="router-store-selectors/src/app/router.selectors.ts" region="routerSelectors">
+<ngrx-code-example header="router.selectors.ts">
+
+```ts
+
+```
+
 </ngrx-code-example>
 
-<ngrx-code-example header="car.reducer.ts" path="router-store-selectors/src/app/car/car.reducer.ts" region="carReducer">
+<ngrx-code-example header="car.reducer.ts">
+
+```ts
+
+```
+
 </ngrx-code-example>
 
-<ngrx-code-example header="car.selectors.ts" path="router-store-selectors/src/app/car/car.selectors.ts" region="carSelectors">
+<ngrx-code-example header="car.selectors.ts">
+
+```ts
+
+```
+
 </ngrx-code-example>
 
-<ngrx-code-example header="car.component.ts" path="router-store-selectors/src/app/car/car.component.ts" region="carComponent">
+<ngrx-code-example header="car.component.ts">
+
+```ts
+
+```
+
 </ngrx-code-example>
 
 ## Extracting all params in the current route
@@ -57,27 +77,33 @@ Using `selectRouteParam{s}` will get the `matched` param but not the `urlPath` p
 
 If all params in the URL Tree need to be extracted (both `urlPath` and `matched`), the following custom selector can be used. It accumulates params of all the segments in the matched route:
 
-<ngrx-code-example >
+<ngrx-code-example>
 
 ```ts
 import { Params } from '@angular/router';
 import { createSelector } from '@ngrx/store';
 
-export const selectRouteNestedParams = createSelector(selectRouter, (router) => {
-  let currentRoute = router?.state?.root;
-  let params: Params = {};
-  while (currentRoute?.firstChild) {
-    currentRoute = currentRoute.firstChild;
-    params = {
-      ...params,
-      ...currentRoute.params,
-    };
+export const selectRouteNestedParams = createSelector(
+  selectRouter,
+  (router) => {
+    let currentRoute = router?.state?.root;
+    let params: Params = {};
+    while (currentRoute?.firstChild) {
+      currentRoute = currentRoute.firstChild;
+      params = {
+        ...params,
+        ...currentRoute.params,
+      };
+    }
+    return params;
   }
-  return params;
-});
+);
 
 export const selectRouteNestedParam = (param: string) =>
-  createSelector(selectRouteNestedParams, (params) => params &amp;&amp; params[param]);
+  createSelector(
+    selectRouteNestedParams,
+    (params) => params && params[param]
+  );
 ```
 
 </ngrx-code-example>

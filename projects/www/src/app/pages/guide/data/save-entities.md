@@ -49,7 +49,7 @@ We assume a server is ready to handle such a request.
 
 First create the changes (each a `ChangeSetItem`) for the `ChangeSet`.
 
-<ngrx-code-example linenums="false">
+<ngrx-code-example>
 
 ```ts
 import { ChangeSetOperation } from '@ngrx/data';
@@ -134,7 +134,7 @@ This complicated dance is standard NgRx. Fortunately, all you have to know is th
 The `ChangeSet` interface is a simple structure with only one critical property,
 `changes`, which holds the entity data to save.
 
-<ngrx-code-example header="ChangeSet" linenums="false">
+<ngrx-code-example header="ChangeSet">
 
 ```ts
 export interface ChangeSet<T = any> {
@@ -142,8 +142,8 @@ export interface ChangeSet<T = any> {
   changes: ChangeSetItem[];
 
   /**
-   * An arbitrary, serializable object that should travel with the ChangeSet.
-   * Meaningful to the ChangeSet producer and consumer. Ignored by NgRx Data.
+   - An arbitrary, serializable object that should travel with the ChangeSet.
+   - Meaningful to the ChangeSet producer and consumer. Ignored by NgRx Data.
    */
   extras?: T;
 

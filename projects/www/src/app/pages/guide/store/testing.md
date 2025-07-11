@@ -71,15 +71,19 @@ describe('Auth Guard', () => {
 
 Usage:
 
-<ngrx-code-example header="src/app/state/books.selectors.ts" path="testing-store/src/app/state/books.selectors.ts">
+<ngrx-code-example header="src/app/state/books.selectors.ts">
 
-`ts`
+```ts
+
+```
 
 </ngrx-code-example>
 
-<ngrx-code-example header="src/app/app.component.spec.ts (Using Mock Selectors) " path="store-walkthrough/src/app/tests/app.component.1.spec.ts" region="mockSelector">
+<ngrx-code-example header="src/app/app.component.spec.ts (Using Mock Selectors) ">
 
-`ts`
+```ts
+
+```
 
 </ngrx-code-example>
 
@@ -87,9 +91,11 @@ In this example based on the [walkthrough](guide/store/walkthrough), we mock the
 
 You can reset selectors by calling the `MockStore.resetSelectors()` method in the `afterEach()` hook.
 
-<ngrx-code-example header="src/app/app.component.spec.ts (Reset Mock Selector) " path="store-walkthrough/src/app/tests/app.component.1.spec.ts" region="resetMockSelector">
+<ngrx-code-example header="src/app/app.component.spec.ts (Reset Mock Selector) ">
 
-`ts`
+```ts
+
+```
 
 </ngrx-code-example>
 
@@ -99,28 +105,45 @@ Try the <live-example name="testing-store"></live-example>.
 
 An integration test should verify that the `Store` coherently works together with our components and services that inject `Store`. An integration test will not mock the store or individual selectors, as unit tests do, but will instead integrate a `Store` by using `StoreModule.forRoot` in your `TestBed` configuration. Here is part of an integration test for the `AppComponent` introduced in the [walkthrough](guide/store/walkthrough).
 
-<ngrx-code-example header="src/app/tests/integration.spec.ts (Integrate Store)" path="store-walkthrough/src/app/tests/integration.spec.ts" region="integrate">
+<ngrx-code-example header="src/app/tests/integration.spec.ts (Integrate Store)">
+
+```ts
+
+```
+
 </ngrx-code-example>
 
 The integration test sets up the dependent `Store` by importing the `StoreModule`. In this part of the example, we assert that clicking the `add` button dispatches the corresponding action and is correctly emitted by the `collection` selector.
 
-<ngrx-code-example header="src/app/tests/integration.spec.ts (addButton Test)" path="store-walkthrough/src/app/tests/integration.spec.ts" region="addTest">
+<ngrx-code-example header="src/app/tests/integration.spec.ts (addButton Test)">
+
+```ts
+
+```
+
 </ngrx-code-example>
 
 ### Testing selectors
 
 You can use the projector function used by the selector by accessing the `.projector` property. The following example tests the `books` selector from the [walkthrough](guide/store/walkthrough).
 
-<ngrx-code-example header="src/app/state/books.selectors.spec.ts" path="testing-store/src/app/state/books.selectors.spec.ts">
+<ngrx-code-example header="src/app/state/books.selectors.spec.ts">
+
+```ts
+
+```
+
 </ngrx-code-example>
 
 ### Testing reducers
 
 The following example tests the `booksReducer` from the [walkthrough](guide/store/walkthrough). In the first test we check that the state returns the same reference when the reducer is not supposed to handle the action (unknown action). The second test checks that `retrievedBookList` action updates the state and returns the new instance of it.
 
-<ngrx-code-example header="src/app/state/books.reducer.spec.ts" path="testing-store/src/app/state/books.reducer.spec.ts">
+<ngrx-code-example header="src/app/state/books.reducer.spec.ts">
 
-`ts`
+```ts
+
+```
 
 </ngrx-code-example>
 
