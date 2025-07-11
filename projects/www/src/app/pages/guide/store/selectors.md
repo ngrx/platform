@@ -301,7 +301,9 @@ The most common way to select information from the store is to use a selector fu
 So, when injecting `Store` into components and other injectables, the generic type can be omitted. If injected without the generic, the default generic applied is `Store<T = object>`.
 
 <ngrx-docs-alert type="inform">
+
 It is important to continue to provide a Store type generic if you are using the string version of selectors as types cannot be inferred automatically in those instances.
+
 </ngrx-docs-alert>
 
 The follow example demonstrates the use of `Store` without providing a generic:
