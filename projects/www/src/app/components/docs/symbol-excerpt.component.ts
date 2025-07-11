@@ -42,6 +42,9 @@ import { CodeHighlightPipe } from './code-highlight.pipe';
         font-family: 'Space Mono', monospace;
         font-variant-ligatures: none;
         font-size: 12px;
+        @media only screen and (max-width: 1280px) {
+          white-space: pre-wrap;
+        }
       }
 
       .links {
