@@ -99,13 +99,10 @@ Below are the steps of integrating `ComponentStore` into a component.
 
 First, the state for the component needs to be identified. In `SlideToggleComponent` only the state of whether the toggle is turned ON or OFF is stored.
 
-<ngrx-code-example header="src/app/slide-toggle.component.ts">
-
-```ts
-
-```
-
-</ngrx-code-example>
+<ngrx-code-example
+  header="src/app/slide-toggle.component.ts"
+  path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
+  region="state"></ngrx-code-example>
 
 Then we need to provide `ComponentStore` in the component's providers, so that each new instance of `SlideToggleComponent` has its own `ComponentStore`. It also has to be injected into the constructor.
 
@@ -115,13 +112,10 @@ In this example `ComponentStore` is provided directly in the component. This wor
 
 </ngrx-docs-alert>
 
-<ngrx-code-example header="src/app/slide-toggle.component.ts">
-
-```ts
-
-```
-
-</ngrx-code-example>
+<ngrx-code-example linenums="false"
+  header="src/app/slide-toggle.component.ts"
+  path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
+  region="providers"></ngrx-code-example>
 
 Next, the default state for the component needs to be set. It could be done lazily, however it needs to be done before any of `updater`s are executed, because they rely on the state to be present and would throw an error if the state is not initialized by the time they are invoked.
 
@@ -137,13 +131,10 @@ When it is called with a callback, the state is updated.
 
 </ngrx-docs-alert>
 
-<ngrx-code-example header="src/app/slide-toggle.component.ts">
-
-```ts
-
-```
-
-</ngrx-code-example>
+<ngrx-code-example
+  header="src/app/slide-toggle.component.ts"
+  path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
+  region="init"></ngrx-code-example>
 
 #### Step 2. Updating state
 
@@ -153,13 +144,10 @@ In the slide-toggle example, the state is updated either through `@Input` or by 
 
 When a user clicks the toggle (triggering a 'change' event), instead of calling the same updater directly, the `onChangeEvent` effect is called. This is done because we also need to have the side-effect of `event.source.stopPropagation` to prevent this event from bubbling up (slide-toggle output event in named 'change' as well) and only after that the `setChecked` updater is called with the value of the input element.
 
-<ngrx-code-example header="src/app/slide-toggle.component.ts">
-
-```ts
-
-```
-
-</ngrx-code-example>
+<ngrx-code-example linenums="false"
+  header="src/app/slide-toggle.component.ts"
+  path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
+  region="updater"></ngrx-code-example>
 
 #### Step 3. Reading the state
 
@@ -168,13 +156,10 @@ Finally, the state is aggregated with selectors into two properties:
 - `vm$` property collects all the data needed for the template - this is the _ViewModel_ of `SlideToggleComponent`.
 - `change` is the `@Output` of `SlideToggleComponent`. Instead of creating an `EventEmitter`, here the output is connected to the Observable source directly.
 
-<ngrx-code-example header="src/app/slide-toggle.component.ts">
-
-```ts
-
-```
-
-</ngrx-code-example>
+<ngrx-code-example
+  header="src/app/slide-toggle.component.ts"
+  path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
+  region="selector"></ngrx-code-example>
 
 This example does not have a lot of business logic, however it is still fully reactive.
 
@@ -226,25 +211,19 @@ You can see the examples at StackBlitz:
 
 With `ComponentStore` extracted into `PaginatorStore`, the developer is now using updaters and effects to update the state. `@Input` values are passed directly into `updater`s as their arguments.
 
-<ngrx-code-example header="src/app/paginator.store.ts">
-
-```ts
-
-```
-
-</ngrx-code-example>
+<ngrx-code-example
+  header="src/app/paginator.store.ts"
+  path="component-store-paginator-service/src/app/paginator.component.ts"
+  region="inputs"></ngrx-code-example>
 
 Not all `updater`s have to be called in the `@Input`. For example, `changePageSize` is called from the template.
 
 Effects are used to perform additional validation and get extra information from sources with derived data (i.e. selectors).
 
-  <ngrx-code-example header="src/app/paginator.store.ts">
-
-```ts
-
-```
-
-</ngrx-code-example>
+<ngrx-code-example
+  header="src/app/paginator.store.ts"
+  path="component-store-paginator-service/src/app/paginator.component.ts"
+  region="updating-state"></ngrx-code-example>
 
 #### Reading the state
 

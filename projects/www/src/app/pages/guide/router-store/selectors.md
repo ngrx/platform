@@ -18,37 +18,13 @@ You can see the full example at StackBlitz: <live-example name="router-store-sel
 
 ## Creating a Selector for A Single Entity With Id As Route Param
 
-<ngrx-code-example header="router.selectors.ts">
+<ngrx-code-example header="router.selectors.ts" path="router-store-selectors/src/app/router.selectors.ts" region="routerSelectors"></ngrx-code-example>
 
-```ts
+<ngrx-code-example header="car.reducer.ts" path="router-store-selectors/src/app/car/car.reducer.ts" region="carReducer"></ngrx-code-example>
 
-```
+<ngrx-code-example header="car.selectors.ts" path="router-store-selectors/src/app/car/car.selectors.ts" region="carSelectors"></ngrx-code-example>
 
-</ngrx-code-example>
-
-<ngrx-code-example header="car.reducer.ts">
-
-```ts
-
-```
-
-</ngrx-code-example>
-
-<ngrx-code-example header="car.selectors.ts">
-
-```ts
-
-```
-
-</ngrx-code-example>
-
-<ngrx-code-example header="car.component.ts">
-
-```ts
-
-```
-
-</ngrx-code-example>
+<ngrx-code-example header="car.component.ts" path="router-store-selectors/src/app/car/car.component.ts" region="carComponent"></ngrx-code-example>
 
 ## Extracting all params in the current route
 
