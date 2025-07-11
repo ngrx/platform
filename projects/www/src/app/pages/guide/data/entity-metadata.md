@@ -148,17 +148,16 @@ The demo uses this helper to create hero and villain filters. Here's how the app
 
 ```typescript
 /**
- * Filter for entities whose name or saying
- * matches the case-insensitive pattern.
+ - Filter for entities whose name or saying
+ - matches the case-insensitive pattern.
  */
 export function nameAndSayingFilter(
   entities: Villain[],
   pattern: string
 ) {
-  return (
-    PropsFilterFnFactory <
-    Villain >
-    ['name', 'saying'](entities, pattern)
+  return PropsFilterFnFactory<Villain>[('name', 'saying')](
+    entities,
+    pattern
   );
 }
 ```

@@ -7,9 +7,7 @@ To prevent Store Devtools from being included in your bundle, you can exclude it
 To exclude the DevTools, put `@ngrx/store-devtools` into an `environment.ts` file, which is replaced with `environment.prod.ts`.
 
 <ngrx-docs-alert type="help">
-
 If the environment files don't exist in your project you can use the `ng generate environments` command to create them.
-
 </ngrx-docs-alert>
 
 Given the below example:

@@ -29,9 +29,7 @@ ng generate @ngrx/schematics:store State --root --module app.module.ts
 ```
 
 <ngrx-docs-alert type="inform">
-
-The @ngrx/schematics command prefix is only needed when the default collection isn't set.
-
+  The @ngrx/schematics command prefix is only needed when the default collection isn't set.
 </ngrx-docs-alert>
 
 ## Initial Effects Setup
