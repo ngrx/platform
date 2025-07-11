@@ -21,7 +21,7 @@ It's optional `payload` carries the message data necessary to perform the operat
 An `EntityAction` is a super-set of the _NgRx `Action`_.
 It has additional properties that guide NgRx Data's handling of the action. Here's the full interface.
 
-<ngrx-code-example header="EntityAction">
+<ngrx-code-example header="EntityAction" linenums="false">
 
 ```ts
 export interface EntityAction<P = any> extends Action {
@@ -32,7 +32,7 @@ export interface EntityAction<P = any> extends Action {
 
 </ngrx-code-example>
 
-<ngrx-code-example header="EntityActionPayload">
+<ngrx-code-example header="EntityActionPayload" linenums="false">
 
 ```ts
 export interface EntityActionPayload<P = any>

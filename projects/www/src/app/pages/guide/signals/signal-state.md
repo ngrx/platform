@@ -149,7 +149,7 @@ console.log(name()); // logs: Eric Clapton
 
 ### Example 1: SignalState in a Component
 
-<ngrx-code-example header="counter.ts">
+<ngrx-code-example header="counter.ts" linenums="true">
 
 ```ts
 import { ChangeDetectionStrategy, Component } from '@angular/core';
