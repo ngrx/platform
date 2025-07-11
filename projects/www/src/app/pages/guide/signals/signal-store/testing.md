@@ -394,7 +394,7 @@ This similarity arises primarily due to the asynchronous tasks involved.
 
 <ngrx-code-example header="movies.store.spec.ts">
 
-```bash
+```ts
 describe('MoviesStore', () => {
   // ... setup omitted
 
@@ -408,7 +408,9 @@ describe('MoviesStore', () => {
 
     studio.set('Universal');
     tick(100);
-    expect(store.movies()).toEqual([{ id: 2, name: 'Jurassic Park' }]);
+    expect(store.movies()).toEqual([
+      { id: 2, name: 'Jurassic Park' },
+    ]);
   }));
 
   it('should cancel a running request when a new one is made via a Signal', fakeAsync(() => {
@@ -428,7 +430,9 @@ describe('MoviesStore', () => {
     expect(store.loading()).toBe(true);
 
     tick(50);
-    expect(store.movies()).toEqual([{ id: 2, name: 'Jurassic Park' }]);
+    expect(store.movies()).toEqual([
+      { id: 2, name: 'Jurassic Park' },
+    ]);
     expect(store.loading()).toBe(false);
   }));
 });
