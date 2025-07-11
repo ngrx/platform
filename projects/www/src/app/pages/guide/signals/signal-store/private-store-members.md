@@ -10,12 +10,12 @@ This includes root-level state slices, properties, and methods.
 import { computed } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import {
-patchState,
-signalStore,
-withComputed,
-withMethods,
-withProps,
-withState,
+    patchState,
+    signalStore,
+    withComputed,
+    withMethods,
+    withProps,
+    withState,
 } from '@ngrx/signals';
 
 export const CounterStore = signalStore(

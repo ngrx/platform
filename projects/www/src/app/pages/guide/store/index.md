@@ -42,7 +42,6 @@ The following tutorial shows you how to manage the state of a counter, and how t
 <ngrx-code-example header="src/app/counter.actions.ts" path="store/src/app/counter.actions.ts">
 
 ```ts
-// #docregion
 import { createAction } from '@ngrx/store';
 
 export const increment = createAction(
@@ -61,7 +60,6 @@ export const reset = createAction('[Counter Component] Reset');
 <ngrx-code-example header="src/app/counter.reducer.ts" path="store/src/app/counter.reducer.ts">
 
 ```ts
-// #docregion
 import { createReducer, on } from '@ngrx/store';
 import { increment, decrement, reset } from './counter.actions';
 
@@ -93,7 +91,6 @@ import { counterReducer } from './counter.reducer';
 <ngrx-code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.1.ts">
 
 ```ts
-// #docregion
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -178,16 +175,13 @@ export class MyCounterComponent {
 <ngrx-code-example header="src/app/app.module.ts" path="store/src/app/app.module.ts">
 
 ```ts
-// #docregion
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-// #docregion imports
 import { StoreModule } from '@ngrx/store';
 import { counterReducer } from './counter.reducer';
-// #enddocregion imports
 import { MyCounterComponent } from './my-counter/my-counter.component';
 
 @NgModule({
