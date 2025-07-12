@@ -298,6 +298,14 @@ describe('signalState', () => {
       });
       const bar = state5.bar;
       const baz = bar.baz;
+
+      const state6 = signalState({
+        x: {} as Record<symbol, string>
+      });
+      const x = state6.x;
+
+      const state7 = signalState({ y: {} });
+      const y = state7.y;
     `;
 
     expectSnippet(snippet).toSucceed();
@@ -353,6 +361,17 @@ describe('signalState', () => {
     );
 
     expectSnippet(snippet).toInfer('baz', 'Signal<Record<number, unknown>>');
+
+    expectSnippet(snippet).toInfer(
+      'state6',
+      'SignalState<{ x: Record<symbol, string>; }>'
+    );
+
+    expectSnippet(snippet).toInfer('x', 'Signal<Record<symbol, string>>');
+
+    expectSnippet(snippet).toInfer('state7', 'SignalState<{ y: {}; }>');
+
+    expectSnippet(snippet).toInfer('y', 'Signal<{}>');
   });
 
   it('succeeds when state is an empty object', () => {
