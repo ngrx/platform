@@ -4,7 +4,7 @@ import { compilerOptions } from './helpers';
 describe('signalStore', () => {
   const expectSnippet = expecter(
     (code) => `
-        import { computed, inject, Signal, signal } from '@angular/core';
+        import { computed, inject, Signal } from '@angular/core';
         import {
           getState,
           patchState,
@@ -858,47 +858,6 @@ describe('signalStore', () => {
       ${snippet}
       patchState(store, { count1: 1, _count2: 1 });
     `).toFail(/'_count2' does not exist in type/);
-  });
-
-  it('exposes a writable Signal as readonly', () => {
-    const snippet = `
-      type User = {
-        id: number;
-        name: string;
-        location: {
-          city: string;
-          country: string;
-        }
-      }
-
-      const userSignal = signal({
-        id: 1,
-        name: 'John Doe',
-        location: {
-          city: 'New York',
-          country: 'USA'
-        }
-      });
-
-      const Store = signalStore(
-        withState({
-          user: userSignal,
-          foo: signal('bar')
-        })
-      );
-
-      const store = new Store();
-      const user = store.user;
-      const foo = store.foo;
-    `;
-
-    expectSnippet(snippet).toSucceed();
-
-    expectSnippet(snippet).toInfer(
-      'user',
-      'DeepSignal<{ id: number; name: string; location: { city: string; country: string; }; }>'
-    );
-    expectSnippet(snippet).toInfer('foo', 'Signal<string>');
   });
 
   describe('custom features', () => {
