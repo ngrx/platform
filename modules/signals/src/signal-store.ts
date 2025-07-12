@@ -1,4 +1,4 @@
-import { DestroyRef, inject, Injectable, signal, Type } from '@angular/core';
+import { DestroyRef, inject, Injectable, Type } from '@angular/core';
 import { STATE_SOURCE, StateSource, WritableStateSource } from './state-source';
 import {
   EmptyFeatureResult,
