@@ -18,7 +18,11 @@ export type IsRecord<T> = T extends object
     : true
   : false;
 
-export type IsUnknownRecord<T> = string extends keyof T
+export type IsUnknownRecord<T> = keyof T extends never
+  ? true
+  : string extends keyof T
+  ? true
+  : symbol extends keyof T
   ? true
   : number extends keyof T
   ? true
