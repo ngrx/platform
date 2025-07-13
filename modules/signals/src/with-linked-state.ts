@@ -44,7 +44,7 @@ type LinkedStateResult<
  * This returns a state of type `{ options: number[], selectedOption: number | undefined }`.
  * When the `options` signal changes, the `selectedOption` automatically updates.
  *
- * For advanced use cases, `linkedSignal` can be called within `withLinkedState`:
+ * For advanced use cases, `linkedSignal` or any other `WritableSignal` instance can be used within `withLinkedState`:
  *
  * ```typescript
  * type Option = { id: number; label: string };
