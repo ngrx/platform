@@ -63,7 +63,7 @@ jobs:
           cache-dependency-path: '**/pnpm-lock.yaml'
       - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v4
-      - run: pnpm exec nx run-many -t test --exclude=docs-app,www
+      - run: pnpm exec nx run-many -t test --exclude=docs-app,www --skip-nx-cache
 
   e2e:
     runs-on: ubuntu-latest
