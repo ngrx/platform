@@ -124,7 +124,8 @@ For example, the default generated `Action.type` for the operation that queries 
 The `EntityActionFactory.create()` method calls the factory's `formatActionType()` method
 to produce the `Action.type` string.
 
-Because NgRx Data ignores the `type`, you can replace `formatActionType()` with your own method if you prefer a different format or provide and inject your own `EntityActionFactory`.
+Because NgRx Data ignores the `type`, you can replace `formatActionType()` with your own method if you prefer a different format
+or provide and inject your own `EntityActionFactory`.
 
 </ngrx-docs-alert>
 

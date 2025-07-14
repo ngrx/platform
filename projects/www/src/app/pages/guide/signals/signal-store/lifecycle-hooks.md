@@ -7,7 +7,7 @@ The `withHooks` feature has two signatures.
 The first signature expects an object with `onInit` and/or `onDestroy` methods.
 Both methods receive the store instance as input arguments.
 
-<ngrx-code-example header="counter.store.ts">
+<ngrx-code-example header="counter-store.ts">
 
 ```ts
 import { computed } from '@angular/core';
@@ -51,7 +51,7 @@ If there is a need to share code between lifecycle hooks or use injected depende
 Similar to the `withMethods` and `withComputed` features, the second signature of the `withHooks` feature expects a factory function.
 This function receives a store instance as an input argument, returns an object with `onInit` and/or `onDestroy` methods, and is executed within the injection context.
 
-<ngrx-code-example header="counter.store.ts">
+<ngrx-code-example header="counter-store.ts">
 
 ```ts
 export const CounterStore = signalStore(
