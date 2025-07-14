@@ -61,7 +61,7 @@ export class OptionList {
 
 The `withLinkedState` feature also supports providing `WritableSignal` instances as linked state slices.
 This can include signals created using `linkedSignal()` with `source` and `computation` options, as well as any other `WritableSignal` instances.
-In both cases, the SignalStore and the original signal remain fully synchronized - updating one will immediately reflect in the other.
+In both cases, the SignalStore and the original signal remain fully synchronized - updating one immediately reflects in the other.
 
 <code-example header="options-store.ts">
 
