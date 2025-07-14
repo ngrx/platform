@@ -59,7 +59,7 @@ describe('withLinkedState', () => {
     );
   });
 
-  it('resolves to a normal state signal with automatic linkedSignal', () => {
+  it('adds state slice with computation function', () => {
     const snippet = `
       const UserStore = signalStore(
         { providedIn: 'root' },
@@ -78,7 +78,7 @@ describe('withLinkedState', () => {
     expectSnippet(snippet).toInfer('lastname', 'Signal<string>');
   });
 
-  it('resolves to a normal state signal with manual linkedSignal', () => {
+  it('adds state slice with explicit linkedSignal', () => {
     const snippet = `
       const UserStore = signalStore(
         { providedIn: 'root' },
@@ -100,7 +100,7 @@ describe('withLinkedState', () => {
     expectSnippet(snippet).toInfer('lastname', 'Signal<string>');
   });
 
-  it('sets stateSignals as DeepSignal for automatic linkedSignal', () => {
+  it('creates deep signals with computation functions', () => {
     const snippet = `
       const UserStore = signalStore(
         { providedIn: 'root' },
@@ -128,7 +128,7 @@ describe('withLinkedState', () => {
     );
   });
 
-  it('sets stateSignals as DeepSignal for manual linkedSignal', () => {
+  it('creates deep signals with explicit linked signals', () => {
     const snippet = `
       const UserStore = signalStore(
         { providedIn: 'root' },
@@ -163,6 +163,7 @@ describe('withLinkedState', () => {
         withLinkedState(({ foo }) => ({
           bar: () => foo(),
           baz: linkedSignal(() => foo()),
+          qux: signal({ x: 1 }),
         }))
       );
 
@@ -170,11 +171,13 @@ describe('withLinkedState', () => {
 
       const bar = store.bar;
       const baz = store.baz;
+      const qux = store.qux;
     `;
 
     expectSnippet(snippet).toSucceed();
 
     expectSnippet(snippet).toInfer('bar', 'Signal<string>');
     expectSnippet(snippet).toInfer('baz', 'Signal<string>');
+    expectSnippet(snippet).toInfer('qux', 'DeepSignal<{ x: number; }>');
   });
 });
