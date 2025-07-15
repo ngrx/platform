@@ -44,16 +44,26 @@ import { SymbolUsageNotesComponent } from './symbol-usage-notes.component';
         max-width: 960px;
         margin: 0 auto;
         padding: 54px 0 24px;
+        @media only screen and (max-width: 1280px) {
+          padding: 90px 30px 24px;
+          max-width: 100%;
+        }
       }
 
       .header {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        @media only screen and (max-width: 600px) {
+          flex-wrap: wrap;
+        }
       }
 
       h1 {
         margin: 0;
+        @media only screen and (max-width: 600px) {
+          margin-bottom: 10px;
+        }
       }
 
       .symbol-call-signature {
