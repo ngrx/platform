@@ -1,4 +1,3 @@
-// @ts-check
 import { FlatCompat } from '@eslint/eslintrc';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -7,7 +6,6 @@ import baseConfig from '../../eslint.config.mjs';
 
 const compat = new FlatCompat({
   baseDirectory: dirname(fileURLToPath(import.meta.url)),
-  // @ts-expect-error - can't use @ts-check without this
   recommendedConfig: js.configs.recommended,
 });
 
