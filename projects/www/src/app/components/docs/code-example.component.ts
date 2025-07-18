@@ -26,7 +26,7 @@ import { Component, Input } from '@angular/core';
       }
 
       .body {
-        padding: 0 0px;
+        padding: 0px 0px;
         overflow-x: wrap;
       }
     `,
