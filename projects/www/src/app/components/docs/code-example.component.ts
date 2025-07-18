@@ -15,7 +15,6 @@ import { Component, Input } from '@angular/core';
         display: flex;
         flex-direction: column;
         border: 1px solid rgba(255, 255, 255, 0.12);
-        margin: 14px 0 24px;
       }
 
       .header {
