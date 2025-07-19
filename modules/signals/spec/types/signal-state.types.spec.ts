@@ -145,7 +145,7 @@ describe('signalState', () => {
       'unique symbol | unique symbol'
     );
 
-    expectSnippet(snippet).toInfer('setStateValue', 'StateResult<Set<number>>');
+    expectSnippet(snippet).toInfer('setStateValue', 'Set<number>');
     expectSnippet(snippet).toInfer(
       'setStateKeys',
       'unique symbol | unique symbol'
@@ -153,7 +153,7 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'mapStateValue',
-      'StateResult<Map<number, { bar: boolean; }>>'
+      'Map<number, { bar: boolean; }>'
     );
     expectSnippet(snippet).toInfer(
       'mapStateKeys',
@@ -162,7 +162,7 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'uintArrayStateValue',
-      'StateResult<Uint8ClampedArray<ArrayBuffer>>'
+      'Uint8ClampedArray<ArrayBuffer>'
     );
     expectSnippet(snippet).toInfer(
       'uintArrayStateKeys',
@@ -193,26 +193,26 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toInfer(
       'weakSetStateValue',
-      'StateResult<WeakSet<{ foo: string; }>>'
+      'WeakSet<{ foo: string; }>'
     );
     expectSnippet(snippet).toInfer(
       'weakSetStateKeys',
       'unique symbol | unique symbol'
     );
 
-    expectSnippet(snippet).toInfer('dateStateValue', 'StateResult<Date>');
+    expectSnippet(snippet).toInfer('dateStateValue', 'Date');
     expectSnippet(snippet).toInfer(
       'dateStateKeys',
       'unique symbol | unique symbol'
     );
 
-    expectSnippet(snippet).toInfer('errorStateValue', 'StateResult<Error>');
+    expectSnippet(snippet).toInfer('errorStateValue', 'Error');
     expectSnippet(snippet).toInfer(
       'errorStateKeys',
       'unique symbol | unique symbol'
     );
 
-    expectSnippet(snippet).toInfer('regExpStateValue', 'StateResult<RegExp>');
+    expectSnippet(snippet).toInfer('regExpStateValue', 'RegExp');
     expectSnippet(snippet).toInfer(
       'regExpStateKeys',
       'unique symbol | unique symbol'
@@ -228,7 +228,7 @@ describe('signalState', () => {
 
     expectSnippet(snippet).toSucceed();
 
-    expectSnippet(snippet).toInfer('stateValue', 'StateResult<() => void>');
+    expectSnippet(snippet).toInfer('stateValue', '() => void');
     expectSnippet(snippet).toInfer(
       'stateKeys',
       'unique symbol | unique symbol'
@@ -298,6 +298,14 @@ describe('signalState', () => {
       });
       const bar = state5.bar;
       const baz = bar.baz;
+
+      const state6 = signalState({
+        x: {} as Record<symbol, string>
+      });
+      const x = state6.x;
+
+      const state7 = signalState({ y: {} });
+      const y = state7.y;
     `;
 
     expectSnippet(snippet).toSucceed();
@@ -353,6 +361,17 @@ describe('signalState', () => {
     );
 
     expectSnippet(snippet).toInfer('baz', 'Signal<Record<number, unknown>>');
+
+    expectSnippet(snippet).toInfer(
+      'state6',
+      'SignalState<{ x: Record<symbol, string>; }>'
+    );
+
+    expectSnippet(snippet).toInfer('x', 'Signal<Record<symbol, string>>');
+
+    expectSnippet(snippet).toInfer('state7', 'SignalState<{ y: {}; }>');
+
+    expectSnippet(snippet).toInfer('y', 'Signal<{}>');
   });
 
   it('succeeds when state is an empty object', () => {

@@ -1,33 +1,67 @@
 # Linked State
 
-The `withLinkedState` feature enables the creation of state slices that depend on other parts of the state. It supports both implicit and explicit linking.
-
-In the context of the SignalStore, `withLinkedState()` serves as the equivalent to Angular's `linkedSignal()`.
-
-Linked state can be added to the store using the `withLinkedState()` feature. This feature accepts a factory function as an input argument, which is executed within the injection context. The factory should return a dictionary containing:
-- Functions that return values, which the SignalStore wraps automatically into a `linkedSignal()`, or
-- `WritableSignal`, which the user can create with `linkedSignal()`.
+The `withLinkedState` feature enables the creation of state slices that depend on other signals.
+This feature accepts a factory function as an input argument, which is executed within the injection context.
+The factory should return a dictionary containing linked state slices, defined as either computation functions or `WritableSignal` instances.
+These linked state slices become an integral part of the SignalStore's state and are treated the same as regular state slices - `DeepSignal`s are created for each of them, and they can be updated using `patchState`.
 
 ## Implicit Linking
 
-The following example shows the implicit notation, where a function returns a value. That function is wrapped into a `linkedSignal()`, which means it is tracked, and if one of the tracked Signals changes, the function is re-executed synchronously.
+When a computation function is provided, the SignalStore wraps it in a `linkedSignal()`.
+As a result, the linked state slice is updated automatically whenever any of its dependent signals change.
 
-<code-example header="options-store.ts">
+<code-tabs linenums="true">
+<code-pane header="options-store.ts">
 
-import { signalStore, withLinkedState, withState } from '@ngrx/signals';
+import { patchState, signalStore, withLinkedState, withState } from '@ngrx/signals';
 
 export const OptionsStore = signalStore(
   withState({ options: [1, 2, 3] }),
   withLinkedState(({ options }) => ({
+    // 👇 Defining a linked state slice.
     selectedOption: () => options()[0] ?? undefined,
-  }))
+  })),
+  withMethods((store) => ({
+    setOptions(options: number[]): void {
+      patchState(store, { options });
+    },
+    setSelectedOption(selectedOption: number): void {
+      // 👇 Updating a linked state slice.
+      patchState(store, { selectedOption });
+    },
+  }),
 );
 
-</code-example>
+</code-pane>
+
+<code-pane header="option-list.ts">
+
+@Component({
+  // ... other metadata
+  providers: [OptionsStore],
+})
+export class OptionList {
+  readonly store = inject(OptionsStore);
+
+  constructor() {
+    console.log(this.store.selectedOption()); // logs: 1
+
+    this.store.setSelectedOption(2);
+    console.log(this.store.selectedOption()); // logs: 2
+
+    this.store.setOptions([4, 5, 6]);
+    console.log(this.store.selectedOption()); // logs: 4
+  }
+}
+
+</code-pane>
+</code-tabs>
 
 ## Explicit Linking
 
-The explicit notation requires users to execute `linkedSignal()` manually; however, it offers the advantage of using the more powerful version of `linkedSignal()`, which includes the `source` and `computation` options.
+The `withLinkedState` feature also supports providing `WritableSignal` instances as linked state slices.
+This can include signals created using `linkedSignal()` with `source` and `computation` options, as well as any other `WritableSignal` instances.
+In both cases, the SignalStore and the original signal remain fully synchronized - updating one immediately reflects in the other.
 
 <code-example header="options-store.ts">
 
@@ -43,7 +77,7 @@ export const OptionsStore = signalStore(
         const option = newOptions.find((o) => o.id === previous?.value.id);
         return option ?? newOptions[0];
       },
-    })
+    }),
   }))
 );
 

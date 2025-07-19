@@ -1,5 +1,4 @@
 import { linkedSignal, WritableSignal } from '@angular/core';
-
 import { toDeepSignal } from './deep-signal';
 import {
   InnerSignalStore,
@@ -27,11 +26,12 @@ type LinkedStateResult<
 };
 
 /**
- *
  * @description
+ *
  * Adds linked state slices to a SignalStore.
  *
  * @usageNotes
+ *
  * ```typescript
  * const OptionsStore = signalStore(
  *   withState({ options: [1, 2, 3] }),
@@ -43,9 +43,8 @@ type LinkedStateResult<
  *
  * This returns a state of type `{ options: number[], selectedOption: number | undefined }`.
  * When the `options` signal changes, the `selectedOption` automatically updates.
- * Whenever the `options` signal changes, the `selectedOption` will automatically update.
  *
- * For advanced use cases, `linkedSignal` can be called within `withLinkedState`:
+ * For advanced use cases, `linkedSignal` or any other `WritableSignal` instance can be used within `withLinkedState`:
  *
  * ```typescript
  * type Option = { id: number; label: string };
@@ -90,10 +89,10 @@ export function withLinkedState<
     const stateSignals = {} as SignalsDictionary;
 
     for (const key of stateKeys) {
-      const signalOrFunction = linkedState[key];
-      stateSource[key] = isWritableSignal(signalOrFunction)
-        ? signalOrFunction
-        : linkedSignal(signalOrFunction);
+      const signalOrComputationFn = linkedState[key];
+      stateSource[key] = isWritableSignal(signalOrComputationFn)
+        ? signalOrComputationFn
+        : linkedSignal(signalOrComputationFn);
       stateSignals[key] = toDeepSignal(stateSource[key]);
     }
 

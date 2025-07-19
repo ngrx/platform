@@ -1,3 +1,21 @@
+<a name="20.0.0-rc.0"></a>
+
+# [20.0.0-rc.0](https://github.com/ngrx/platform/compare/20.0.0-beta.0...20.0.0-rc.0) (2025-07-14)
+
+### Bug Fixes
+
+- **signals:** allow generic template literals as state keys ([#4871](https://github.com/ngrx/platform/issues/4871)) ([9fefc77](https://github.com/ngrx/platform/commit/9fefc77)), closes [#4638](https://github.com/ngrx/platform/issues/4638)
+- **signals:** allow lazy initialization of DeepSignal ([#4866](https://github.com/ngrx/platform/issues/4866)) ([cb1a2ba](https://github.com/ngrx/platform/commit/cb1a2ba)), closes [#4749](https://github.com/ngrx/platform/issues/4749)
+- **signals:** do not create deep signals for empty objects and unknown records with symbol keys ([#4880](https://github.com/ngrx/platform/issues/4880)) ([bae9f18](https://github.com/ngrx/platform/commit/bae9f18))
+- **signals:** remove internal Signal type ([#4867](https://github.com/ngrx/platform/issues/4867)) ([4a4a5db](https://github.com/ngrx/platform/commit/4a4a5db))
+
+### Features
+
+- **operators:** add migration for deprecated tapResponse signature ([#4858](https://github.com/ngrx/platform/issues/4858)) ([551ceb4](https://github.com/ngrx/platform/commit/551ceb4))
+- **signals:** add `withLinkedState()` ([#4818](https://github.com/ngrx/platform/issues/4818)) ([4bb7fdd](https://github.com/ngrx/platform/commit/4bb7fdd))
+- **signals:** allow access to methods in `withComputed` ([#4864](https://github.com/ngrx/platform/issues/4864)) ([e11c23f](https://github.com/ngrx/platform/commit/e11c23f)), closes [#4846](https://github.com/ngrx/platform/issues/4846)
+- **signals:** disallow user-defined signals in withState and signalState ([#4879](https://github.com/ngrx/platform/issues/4879)) ([306ed5a](https://github.com/ngrx/platform/commit/306ed5a))
+
 <a name="20.0.0-beta.0"></a>
 
 # [20.0.0-beta.0](https://github.com/ngrx/platform/compare/19.2.1...20.0.0-beta.0) (2025-06-30)

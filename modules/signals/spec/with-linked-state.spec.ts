@@ -1,4 +1,4 @@
-import { linkedSignal } from '@angular/core';
+import { linkedSignal, signal } from '@angular/core';
 import {
   getState,
   patchState,
@@ -10,10 +10,10 @@ import { getInitialInnerStore } from '../src/signal-store';
 import { isWritableSignal, STATE_SOURCE } from '../src/state-source';
 
 describe('withLinkedState', () => {
-  describe('sets linkedSignal as WritableSignals of STATE_SOURCE', () => {
+  describe('adds linked state slices to the STATE_SOURCE', () => {
     [
       {
-        name: 'automatic',
+        name: 'with computation function',
         linkedStateFeature: () =>
           withLinkedState(() => ({
             user: () => ({ id: 1, name: 'John Doe' }),
@@ -21,11 +21,22 @@ describe('withLinkedState', () => {
           })),
       },
       {
-        name: 'manual',
+        name: 'with explicit linkedSignal',
         linkedStateFeature: () =>
           withLinkedState(() => ({
             user: linkedSignal(() => ({ id: 1, name: 'John Doe' })),
             location: linkedSignal(() => ({
+              city: 'Berlin',
+              country: 'Germany',
+            })),
+          })),
+      },
+      {
+        name: 'with user-defined WritableSignal',
+        linkedStateFeature: () =>
+          withLinkedState(() => ({
+            user: signal(() => ({ id: 1, name: 'John Doe' })),
+            location: signal(() => ({
               city: 'Berlin',
               country: 'Germany',
             })),
@@ -44,10 +55,10 @@ describe('withLinkedState', () => {
     });
   });
 
-  describe('spreads the linkedSignal properties to the state', () =>
+  describe('spreads properties of the linked state slice to the state', () =>
     [
       {
-        name: 'automatic',
+        name: 'with computation function',
         linkedStateFeature: () =>
           withLinkedState(() => ({
             user: () => ({ id: 1, name: 'John Doe' }),
@@ -55,7 +66,7 @@ describe('withLinkedState', () => {
           })),
       },
       {
-        name: 'manual',
+        name: 'with explicit linkedSignal',
         linkedStateFeature: () =>
           withLinkedState(() => ({
             user: linkedSignal(() => ({ id: 1, name: 'John Doe' })),
@@ -63,6 +74,17 @@ describe('withLinkedState', () => {
               city: 'Berlin',
               country: 'Germany',
             })),
+          })),
+      },
+      {
+        name: 'with user-defined WritableSignal',
+        linkedStateFeature: () =>
+          withLinkedState(() => ({
+            user: signal({ id: 1, name: 'John Doe' }),
+            location: signal({
+              city: 'Berlin',
+              country: 'Germany',
+            }),
           })),
       },
     ].forEach(({ name, linkedStateFeature }) => {
@@ -78,10 +100,10 @@ describe('withLinkedState', () => {
       });
     }));
 
-  describe('can depend on another linkedState (chained)', () => {
+  describe('can depend on another withLinkedState', () => {
     [
       {
-        name: 'automatic',
+        name: 'with computation function',
         linkedStateFeature: () =>
           signalStoreFeature(
             withState({ id: 1 }),
@@ -94,10 +116,29 @@ describe('withLinkedState', () => {
           ),
       },
       {
-        name: 'manual',
+        name: 'with explicit linkedSignal',
         linkedStateFeature: () =>
           signalStoreFeature(
             withState({ id: 1 }),
+            withLinkedState(({ id }) => ({
+              level1: linkedSignal({
+                source: id,
+                computation: () => id() * 2,
+              }),
+            })),
+            withLinkedState(({ level1 }) => ({
+              level2: linkedSignal({
+                source: level1,
+                computation: () => level1() * 10,
+              }),
+            }))
+          ),
+      },
+      {
+        name: 'with user-defined WritableSignal',
+        linkedStateFeature: () =>
+          signalStoreFeature(
+            withLinkedState(() => ({ id: signal(1) })),
             withLinkedState(({ id }) => ({
               level1: linkedSignal({
                 source: id,
@@ -141,7 +182,7 @@ describe('withLinkedState', () => {
   describe('keeps DeepSignal updated', () => {
     [
       {
-        name: 'automatic',
+        name: 'with computation function',
         linkedStateFeature: () =>
           signalStoreFeature(
             withState({ userId: 1 }),
@@ -151,7 +192,7 @@ describe('withLinkedState', () => {
           ),
       },
       {
-        name: 'manual',
+        name: 'with explicit linkedSignal',
         linkedStateFeature: () =>
           signalStoreFeature(
             withState({ userId: 1 }),
@@ -169,14 +210,29 @@ describe('withLinkedState', () => {
         const userStore = linkedStateFeature()(initialStore);
 
         const name = userStore.stateSignals.user.name;
-        expect(name()).toEqual('John Doe');
+        expect(name()).toBe('John Doe');
 
         patchState(userStore, { user: { id: 2, name: 'Tom Smith' } });
-        expect(name()).toEqual('Tom Smith');
+        expect(name()).toBe('Tom Smith');
 
         patchState(userStore, { userId: 2 });
-        expect(name()).toEqual('John Doe');
+        expect(name()).toBe('John Doe');
       });
+    });
+
+    it('with user-defined WritableSignal', () => {
+      const initialStore = getInitialInnerStore();
+      const user = signal({ name: 'John' });
+      const userStore = withLinkedState(() => ({ user }))(initialStore);
+
+      const name = userStore.stateSignals.user.name;
+      expect(name()).toBe('John');
+
+      patchState(userStore, { user: { name: 'Tom' } });
+      expect(name()).toBe('Tom');
+
+      user.set({ name: 'Mark' });
+      expect(name()).toBe('Mark');
     });
   });
 });
