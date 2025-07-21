@@ -117,34 +117,6 @@ patchState(userState, (state) => ({
 patchState(userState, setFirstName('Stevie'), setAdmin());
 ```
 
-## Using User-Defined Signals
-
-The `signalState` function supports integrating user-defined `WritableSignal` instances as part of the state.
-
-If a root state property is a `WritableSignal`, its value becomes an integral part of the state.
-The SignalState instance and the original signal remain synchronized - updating one will immediately reflect in the other.
-
-```ts
-const name = signal('Jimi Hendrix');
-const userState = signalState({
-  // 👇 Providing an external signal as part of the initial state.
-  name,
-  isAdmin: false,
-});
-
-console.log(userState.name()); // logs: Jimi Hendrix
-
-// Updating the external signal
-name.set('Brian May');
-// reflects the value in the SignalState instance.
-console.log(userState.name()); // logs: Brian May
-
-// Updating the SignalState instance
-patchState(userState, { name: 'Eric Clapton' });
-// reflects the value in the external signal.
-console.log(name()); // logs: Eric Clapton
-```
-
 ## Usage
 
 ### Example 1: SignalState in a Component

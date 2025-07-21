@@ -293,7 +293,7 @@ Effects are used to perform additional validation and get extra information from
   region="updating-state">
 
 ```ts
-  changePageSize(newPageSize: number) {
+changePageSize(newPageSize: number) {
     this.paginatorStore.changePageSize(newPageSize);
   }
   nextPage() {
