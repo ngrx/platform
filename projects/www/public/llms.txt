@@ -1,0 +1,29 @@
+# NgRx
+
+## Overview
+[NgRx](https://ngrx-site-v19.netlify.app/): NgRx is a set of reactive libraries for Angular that helps manage state and side effects in applications. It leverages the power of RxJS to provide a robust framework for building scalable applications.
+
+## Workshops
+[co_present Workshops](https://ngrx-site-v19.netlify.app/workshops): This section provides information about workshops that focus on NgRx, offering hands-on experience and practical knowledge for developers looking to enhance their skills in state management with NgRx.
+
+## API Reference
+[description API Reference](https://ngrx-site-v19.netlify.app/api): The API Reference documentation details the various components and functionalities of NgRx, including the Store, Effects, and other essential features. It serves as a comprehensive guide for developers to understand how to implement and utilize NgRx in their applications.
+
+## Support
+[help Support](https://ngrx-site-v19.netlify.app/support): This section offers support resources for NgRx users, including FAQs, troubleshooting tips, and links to community forums where developers can seek help and share knowledge.
+
+## Code Repository
+[code GitHub](https://github.com/ngrx/platform): The GitHub repository for NgRx contains the source code, issue tracking, and contribution guidelines. Developers can access the latest updates, report bugs, and contribute to the NgRx project.
+
+## Core Concepts
+### Store
+[Store](https://ngrx-site-v19.netlify.app/guide/store): The Store is a central feature of NgRx that holds the application state. It provides a single source of truth and allows for state management through actions and reducers.
+
+### Effects
+[Effects](https://ngrx-site-v19.netlify.app/guide/effects): Effects are used in NgRx to handle side effects, such as API calls or other asynchronous operations. They allow developers to manage complex interactions outside of the Store.
+
+### Signals
+[Signals](https://ngrx-site-v19.netlify.app/guide/signals): Signals in NgRx provide a way to react to changes in state or actions, enabling developers to create more dynamic and responsive applications.
+
+### Operators
+[Operators](https://ngrx-site-v19.netlify.app/guide/operators): NgRx utilizes various RxJS operators to manipulate streams of data, allowing for powerful and flexible data handling within the application. This section covers the most commonly used operators in NgRx.
