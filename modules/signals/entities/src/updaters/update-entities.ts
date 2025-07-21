@@ -15,6 +15,9 @@ import {
   updateEntitiesMutably,
 } from '../helpers';
 
+/**
+ * @public
+ */
 export function updateEntities<
   Collection extends string,
   State extends NamedEntityState<any, Collection>,
@@ -29,6 +32,9 @@ export function updateEntities<
     selectId: SelectEntityId<NoInfer<Entity>>;
   }
 ): PartialStateUpdater<State>;
+/**
+ * @public
+ */
 export function updateEntities<
   Collection extends string,
   State extends NamedEntityState<any, Collection>,
@@ -43,6 +49,9 @@ export function updateEntities<
     selectId: SelectEntityId<NoInfer<Entity>>;
   }
 ): PartialStateUpdater<State>;
+/**
+ * @public
+ */
 export function updateEntities<
   Collection extends string,
   State extends NamedEntityState<any, Collection>,
@@ -59,6 +68,9 @@ export function updateEntities<
   },
   config: { collection: Collection }
 ): PartialStateUpdater<State>;
+/**
+ * @public
+ */
 export function updateEntities<
   Collection extends string,
   State extends NamedEntityState<any, Collection>,
@@ -75,6 +87,9 @@ export function updateEntities<
   },
   config: { collection: Collection }
 ): PartialStateUpdater<State>;
+/**
+ * @public
+ */
 export function updateEntities<Entity>(
   update: {
     ids: EntityId[];
@@ -82,6 +97,9 @@ export function updateEntities<Entity>(
   },
   config: { selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @public
+ */
 export function updateEntities<Entity>(
   update: {
     predicate: EntityPredicate<Entity>;
@@ -89,10 +107,16 @@ export function updateEntities<Entity>(
   },
   config: { selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @public
+ */
 export function updateEntities<Entity extends { id: EntityId }>(update: {
   ids: EntityId[];
   changes: EntityChanges<NoInfer<Entity>>;
 }): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @public
+ */
 export function updateEntities<Entity extends { id: EntityId }>(update: {
   predicate: EntityPredicate<Entity>;
   changes: EntityChanges<NoInfer<Entity>>;

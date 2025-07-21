@@ -4,6 +4,9 @@ import { Subscription } from 'rxjs';
 
 import { EffectSources } from './effect_sources';
 
+/**
+ * @public
+ */
 @Injectable({ providedIn: 'root' })
 export class EffectsRunner implements OnDestroy {
   private effectsSubscription: Subscription | null = null;

@@ -2,6 +2,10 @@ import { SchematicsException, Tree } from '@angular-devkit/schematics';
 
 // The interfaces below are generated from the Angular CLI configuration schema
 // https://github.com/angular/angular-cli/blob/master/packages/@angular/cli/lib/config/schema.json
+
+/**
+ * @public
+ */
 export interface AppConfig {
   /**
    * Name of the app.
@@ -128,6 +132,9 @@ export interface AppConfig {
   };
 }
 
+/**
+ * @public
+ */
 export function getWorkspacePath(host: Tree): string {
   const possibleFiles = ['/angular.json', '/.angular.json', '/workspace.json'];
   const path = possibleFiles.filter((path) => host.exists(path))[0];
@@ -135,6 +142,9 @@ export function getWorkspacePath(host: Tree): string {
   return path;
 }
 
+/**
+ * @public
+ */
 export function getWorkspace(host: Tree) {
   const path = getWorkspacePath(host);
   const configBuffer = host.read(path);

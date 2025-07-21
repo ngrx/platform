@@ -9,7 +9,9 @@ import {
  * Module without effects or dataservices which means no HTTP calls
  * This module helpful for internal testing.
  * Also helpful for apps that handle server access on their own and
- * therefore opt-out of @ngrx/effects for entities
+ * therefore opt-out of \@ngrx/effects for entities
+ *
+ * @public
  */
 @NgModule({
   providers: [BASE_ENTITY_DATA_PROVIDERS],

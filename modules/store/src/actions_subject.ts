@@ -3,8 +3,14 @@ import { BehaviorSubject } from 'rxjs';
 
 import { Action } from './models';
 
+/**
+ * @public
+ */
 export const INIT = '@ngrx/store/init' as const;
 
+/**
+ * @public
+ */
 @Injectable()
 export class ActionsSubject
   extends BehaviorSubject<Action>

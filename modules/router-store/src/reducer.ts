@@ -8,6 +8,11 @@ import {
 import { BaseRouterStoreState } from './serializers/base';
 import { SerializedRouterStateSnapshot } from './serializers/full_serializer';
 
+/**
+ * The state shape for the router store reducer.
+ *
+ * @public
+ */
 export type RouterReducerState<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot
 > = {
@@ -15,6 +20,15 @@ export type RouterReducerState<
   navigationId: number;
 };
 
+/**
+ * Reducer for router state that handles router navigation events.
+ *
+ * @param state - The current router state.
+ * @param action - The action to process.
+ * @returns The new router state.
+ *
+ * @public
+ */
 export function routerReducer<
   RouterState extends BaseRouterStoreState = SerializedRouterStateSnapshot,
   Result = RouterReducerState<RouterState>

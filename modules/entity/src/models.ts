@@ -1,58 +1,110 @@
 import { MemoizedSelector } from '@ngrx/store';
 
+/**
+ * @public
+ */
 export type Comparer<T> = (a: T, b: T) => number;
 
+/**
+ * @public
+ */
 export type IdSelectorStr<T> = (model: T) => string;
+
+/**
+ * @public
+ */
 export type IdSelectorNum<T> = (model: T) => number;
 
+/**
+ * @public
+ */
 export type IdSelector<T> = IdSelectorStr<T> | IdSelectorNum<T>;
 
+/**
+ * @public
+ */
 export interface DictionaryNum<T> {
   [id: number]: T | undefined;
 }
 
+/**
+ * @public
+ */
 export abstract class Dictionary<T> implements DictionaryNum<T> {
   [id: string]: T | undefined;
 }
 
+/**
+ * @public
+ */
 export interface UpdateStr<T> {
   id: string;
   changes: Partial<T>;
 }
 
+/**
+ * @public
+ */
 export interface UpdateNum<T> {
   id: number;
   changes: Partial<T>;
 }
 
+/**
+ * @public
+ */
 export type Update<T> = UpdateStr<T> | UpdateNum<T>;
 
+/**
+ * @public
+ */
 export type Predicate<T> = (entity: T) => boolean;
 
+/**
+ * @public
+ */
 export type EntityMap<T> = (entity: T) => T;
 
+/**
+ * @public
+ */
 export interface EntityMapOneNum<T> {
   id: number;
   map: EntityMap<T>;
 }
 
+/**
+ * @public
+ */
 export interface EntityMapOneStr<T> {
   id: string;
   map: EntityMap<T>;
 }
 
+/**
+ * @public
+ */
 export type EntityMapOne<T> = EntityMapOneNum<T> | EntityMapOneStr<T>;
 
+/**
+ * @public
+ */
 export interface EntityState<T> {
   ids: string[] | number[];
   entities: Dictionary<T>;
 }
 
+/**
+ * @public
+ */
 export interface EntityDefinition<T> {
   selectId: IdSelector<T>;
   sortComparer: false | Comparer<T>;
 }
 
+/**
+ * @public
+ */
 export interface EntityStateAdapter<T> {
   addOne<S extends EntityState<T>>(entity: T, state: S): S;
   addMany<S extends EntityState<T>>(entities: T[], state: S): S;
@@ -80,6 +132,9 @@ export interface EntityStateAdapter<T> {
   map<S extends EntityState<T>>(map: EntityMap<T>, state: S): S;
 }
 
+/**
+ * @public
+ */
 export type EntitySelectors<T, V> = {
   selectIds: (state: V) => string[] | number[];
   selectEntities: (state: V) => Dictionary<T>;
@@ -87,6 +142,9 @@ export type EntitySelectors<T, V> = {
   selectTotal: (state: V) => number;
 };
 
+/**
+ * @public
+ */
 export type MemoizedEntitySelectors<T, V> = {
   selectIds: MemoizedSelector<
     V,
@@ -106,6 +164,9 @@ export type MemoizedEntitySelectors<T, V> = {
   >;
 };
 
+/**
+ * @public
+ */
 export interface EntityAdapter<T> extends EntityStateAdapter<T> {
   selectId: IdSelector<T>;
   sortComparer: false | Comparer<T>;

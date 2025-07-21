@@ -18,20 +18,22 @@ import { MockReducerManager } from './mock_reducer_manager';
 import { MockSelector } from './mock_selector';
 import { MOCK_SELECTORS } from './tokens';
 
+/**
+ * @public
+ */
 export interface MockStoreConfig<T> {
   initialState?: T;
   selectors?: MockSelector[];
 }
 
 /**
- * @description
  * Creates mock store providers.
  *
- * @param config `MockStoreConfig<T>` to provide the values for `INITIAL_STATE` and `MOCK_SELECTORS` tokens.
+ * @param config - `MockStoreConfig<T>` to provide the values for `INITIAL_STATE` and `MOCK_SELECTORS` tokens.
  * By default, `initialState` and `selectors` are not defined.
  * @returns Mock store providers that can be used with both `TestBed.configureTestingModule` and `Injector.create`.
  *
- * @usageNotes
+ * @example
  *
  * **With `TestBed.configureTestingModule`**
  *
@@ -74,6 +76,8 @@ export interface MockStoreConfig<T> {
  *   });
  * });
  * ```
+ *
+ * @public
  */
 export function provideMockStore<T = any>(
   config: MockStoreConfig<T> = {}
@@ -127,14 +131,13 @@ function mockStoreFactory<T>(
 }
 
 /**
- * @description
  * Creates mock store with all necessary dependencies outside of the `TestBed`.
  *
- * @param config `MockStoreConfig<T>` to provide the values for `INITIAL_STATE` and `MOCK_SELECTORS` tokens.
+ * @param config - `MockStoreConfig<T>` to provide the values for `INITIAL_STATE` and `MOCK_SELECTORS` tokens.
  * By default, `initialState` and `selectors` are not defined.
  * @returns `MockStore<T>`
  *
- * @usageNotes
+ * @example
  *
  * ```typescript
  * describe('Books Effects', () => {
@@ -151,6 +154,8 @@ function mockStoreFactory<T>(
  *   });
  * });
  * ```
+ *
+ * @public
  */
 export function createMockStore<T>(
   config: MockStoreConfig<T> = {}

@@ -8,7 +8,7 @@
     {
       "kind": "TypeAlias",
       "canonicalReference": "@ngrx/router-store!StateKeyOrSelector:type",
-      "docComment": "",
+      "docComment": "/**\n * A type representing either a state key string or a selector function.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -55,13 +55,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "A type representing either a state key string or a selector function.\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

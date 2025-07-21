@@ -15,12 +15,24 @@ import {
   omit,
 } from './utils';
 
+/**
+ * @public
+ */
 export abstract class ReducerObservable extends Observable<
   ActionReducer<any, any>
 > {}
+/**
+ * @public
+ */
 export abstract class ReducerManagerDispatcher extends ActionsSubject {}
+/**
+ * @public
+ */
 export const UPDATE = '@ngrx/store/update-reducers' as const;
 
+/**
+ * @public
+ */
 @Injectable()
 export class ReducerManager
   extends BehaviorSubject<ActionReducer<any, any>>
@@ -108,6 +120,9 @@ export class ReducerManager
   }
 }
 
+/**
+ * @public
+ */
 export const REDUCER_MANAGER_PROVIDERS: Provider[] = [
   ReducerManager,
   { provide: ReducerObservable, useExisting: ReducerManager },

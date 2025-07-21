@@ -3,6 +3,9 @@ import { Subject } from 'rxjs';
 
 import { Action } from './models';
 
+/**
+ * @public
+ */
 @Injectable()
 export class ScannedActionsSubject
   extends Subject<Action>
@@ -13,6 +16,9 @@ export class ScannedActionsSubject
   }
 }
 
+/**
+ * @public
+ */
 export const SCANNED_ACTIONS_SUBJECT_PROVIDERS: Provider[] = [
   ScannedActionsSubject,
 ];

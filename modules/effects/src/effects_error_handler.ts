@@ -3,6 +3,9 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+/**
+ * @public
+ */
 export type EffectsErrorHandler = <T extends Action>(
   observable$: Observable<T>,
   errorHandler: ErrorHandler
@@ -10,6 +13,9 @@ export type EffectsErrorHandler = <T extends Action>(
 
 const MAX_NUMBER_OF_RETRY_ATTEMPTS = 10;
 
+/**
+ * @public
+ */
 export function defaultEffectsErrorHandler<T extends Action>(
   observable$: Observable<T>,
   errorHandler: ErrorHandler,

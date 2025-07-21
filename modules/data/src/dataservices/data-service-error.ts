@@ -4,8 +4,9 @@ import { RequestData } from './interfaces';
 /**
  * Error from a DataService
  * The source error either comes from a failed HTTP response or was thrown within the service.
- * @param error the HttpErrorResponse or the error thrown by the service
- * @param requestData the HTTP request information such as the method and the url.
+ * @param error - the HttpErrorResponse or the error thrown by the service
+ * @param requestData - the HTTP request information such as the method and the url.
+ * @public
  */
 export class DataServiceError extends Error {
   constructor(public error: any, public requestData: RequestData | null) {
@@ -37,7 +38,10 @@ function extractMessage(sourceError: any): string | null {
     : null;
 }
 
-/** Payload for an EntityAction data service error such as QUERY_ALL_ERROR */
+/**
+ * Payload for an EntityAction data service error such as QUERY_ALL_ERROR
+ * @public
+ */
 export interface EntityActionDataServiceError {
   error: DataServiceError;
   originalAction: EntityAction;

@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!EntityServices:class",
-      "docComment": "/**\n * Class-Interface for EntityCache and EntityCollection services. Serves as an Angular provider token for this service class. Includes a registry of EntityCollectionServices for all entity types. Creates a new default EntityCollectionService for any entity type not in the registry. Optionally register specialized EntityCollectionServices for individual types\n */\n",
+      "docComment": "/**\n * Class-Interface for EntityCache and EntityCollection services. Serves as an Angular provider token for this service class. Includes a registry of EntityCollectionServices for all entity types. Creates a new default EntityCollectionService for any entity type not in the registry. Optionally register specialized EntityCollectionServices for individual types\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -470,13 +470,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Class-Interface for EntityCache and EntityCollection services. Serves as an Angular provider token for this service class. Includes a registry of EntityCollectionServices for all entity types. Creates a new default EntityCollectionService for any entity type not in the registry. Optionally register specialized EntityCollectionServices for individual types\n",
+        "summary": "Class-Interface for EntityCache and EntityCollection services. Serves as an Angular provider token for this service class. Includes a registry of EntityCollectionServices for all entity types. Creates a new default EntityCollectionService for any entity type not in the registry. Optionally register specialized EntityCollectionServices for individual types\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

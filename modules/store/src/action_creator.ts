@@ -13,13 +13,12 @@ import { REGISTERED_ACTION_TYPES } from './globals';
 // fit current NgRx usage. Thank you Nicholas Jamieson (@cartant).
 
 /**
- * @description
  * Creates a configured `Creator` function that, when called, returns an object in the shape of the
  * `Action` interface with no additional metadata.
  *
- * @param type Describes the action that will be dispatched
+ * @param type - Describes the action that will be dispatched
  *
- * @usageNotes
+ * @example
  *
  * Declaring an action creator:
  *
@@ -48,18 +47,19 @@ import { REGISTERED_ACTION_TYPES } from './globals';
  *   )
  * );
  * ```
+ *
+ * @public
  */
 export function createAction<T extends string>(
   type: T
 ): ActionCreator<T, () => Action<T>>;
 /**
- * @description
  * Creates a configured `Creator` function that, when called, returns an object in the shape of the
  * `Action` interface with metadata provided by the `props` or `emptyProps` functions.
  *
- * @param type Describes the action that will be dispatched
+ * @param type - Describes the action that will be dispatched
  *
- * @usageNotes
+ * @example
  *
  * Declaring an action creator:
  *
@@ -91,11 +91,16 @@ export function createAction<T extends string>(
  *   )
  * );
  * ```
+ *
+ * @public
  */
 export function createAction<T extends string, P extends object>(
   type: T,
   config: ActionCreatorProps<P> & NotAllowedCheck<P>
 ): ActionCreator<T, (props: P & NotAllowedCheck<P>) => P & Action<T>>;
+/**
+ * @public
+ */
 export function createAction<
   T extends string,
   P extends any[],
@@ -105,15 +110,14 @@ export function createAction<
   creator: Creator<P, R & NotAllowedCheck<R>>
 ): FunctionWithParametersType<P, R & Action<T>> & Action<T>;
 /**
- * @description
  * Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface.
  *
  * Action creators reduce the explicitness of class-based action creators.
  *
- * @param type Describes the action that will be dispatched
- * @param config Additional metadata needed for the handling of the action.  See {@link createAction#usage-notes Usage Notes}.
+ * @param type - Describes the action that will be dispatched
+ * @param config - Additional metadata needed for the handling of the action.  See {@link createAction#usage-notes Usage Notes}.
  *
- * @usageNotes
+ * @example
  *
  * **Declaring an action creator**
  *
@@ -175,6 +179,8 @@ export function createAction<
  *   )
  * );
  * ```
+ *
+ * @public
  */
 export function createAction<T extends string, C extends Creator>(
   type: T,
@@ -202,6 +208,9 @@ export function createAction<T extends string, C extends Creator>(
   }
 }
 
+/**
+ * @public
+ */
 export function props<
   P extends SafeProps,
   SafeProps = NotAllowedInPropsCheck<P>
@@ -210,6 +219,9 @@ export function props<
   return { _as: 'props', _p: undefined! };
 }
 
+/**
+ * @public
+ */
 export function union<
   C extends { [key: string]: ActionCreator<string, Creator> }
 >(creators: C): ReturnType<C[keyof C]> {

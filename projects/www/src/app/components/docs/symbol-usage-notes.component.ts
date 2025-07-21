@@ -9,7 +9,7 @@ import { ApiMember } from '@ngrx-io/shared';
   template: `
     @if (notes()) {
     <div class="notes">
-      <h3>{{ '@usageNotes' }}</h3>
+      <h3>{{ '@example' }}</h3>
       <div [innerHTML]="notes() | ngrxMarkdown"></div>
     </div>
     }

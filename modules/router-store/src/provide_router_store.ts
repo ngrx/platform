@@ -25,7 +25,7 @@ import { StoreRouterConnectingService } from './store_router_connecting.service'
 /**
  * Connects the Angular Router to the Store.
  *
- * @usageNotes
+ * @example
  *
  * ```ts
  * bootstrapApplication(AppComponent, {
@@ -35,6 +35,11 @@ import { StoreRouterConnectingService } from './store_router_connecting.service'
  *   ],
  * });
  * ```
+ *
+ * @param config - Configuration options for the router store.
+ * @returns Environment providers for router store functionality.
+ *
+ * @public
  */
 export function provideRouterStore<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot

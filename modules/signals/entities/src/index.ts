@@ -23,5 +23,7 @@ export {
   NamedEntityProps,
   NamedEntityState,
   SelectEntityId,
+  EntityPredicate,
+  EntityChanges,
 } from './models';
 export { withEntities } from './with-entities';

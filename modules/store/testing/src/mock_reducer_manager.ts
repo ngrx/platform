@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ActionReducer } from '@ngrx/store';
 
+/**
+ * @public
+ */
 @Injectable()
 export class MockReducerManager extends BehaviorSubject<
   ActionReducer<any, any>

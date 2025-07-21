@@ -3,6 +3,9 @@ import { StoreRootModule, StoreFeatureModule } from '@ngrx/store';
 import { EffectsRootModule } from './effects_root_module';
 import { _FEATURE_EFFECTS_INSTANCE_GROUPS } from './tokens';
 
+/**
+ * @public
+ */
 @NgModule({})
 export class EffectsFeatureModule {
   constructor(

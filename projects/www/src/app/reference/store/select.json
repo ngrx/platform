@@ -1,1 +1,941 @@
-{"name":"select","canonicalReference":"@ngrx/store!select:function","kind":"Function","fileUrlPath":"../../dist/modules/store/src/store.d.ts","isDeprecated":false,"members":[{"kind":"Function","canonicalReference":"@ngrx/store!select:function(1)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function select<T, K>(mapFn: "},{"kind":"Content","text":"(state: T) => K"},{"kind":"Content","text":"): "},{"kind":"Content","text":"(source$: "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T>) => "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<K>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/store.d.ts","returnTypeTokenRange":{"startIndex":3,"endIndex":8},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"mapFn","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"K","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"select","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Function","canonicalReference":"@ngrx/store!select:function(2)","docComment":"/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n */\n","excerptTokens":[{"kind":"Content","text":"export declare function select<T, Props, K>(mapFn: "},{"kind":"Content","text":"(state: T, props: Props) => K"},{"kind":"Content","text":", props: "},{"kind":"Content","text":"Props"},{"kind":"Content","text":"): "},{"kind":"Content","text":"(source$: "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T>) => "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<K>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/store.d.ts","returnTypeTokenRange":{"startIndex":5,"endIndex":10},"releaseTag":"Public","overloadIndex":2,"parameters":[{"parameterName":"mapFn","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false},{"parameterName":"props","parameterTypeTokenRange":{"startIndex":3,"endIndex":4},"isOptional":false}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"Props","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"K","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"select","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n","returns":"","see":[],"params":[]}},{"kind":"Function","canonicalReference":"@ngrx/store!select:function(3)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function select<T, a extends "},{"kind":"Content","text":"keyof T"},{"kind":"Content","text":">(key: "},{"kind":"Content","text":"a"},{"kind":"Content","text":"): "},{"kind":"Content","text":"(source$: "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T>) => "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T[a]>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/store.d.ts","returnTypeTokenRange":{"startIndex":5,"endIndex":10},"releaseTag":"Public","overloadIndex":3,"parameters":[{"parameterName":"key","parameterTypeTokenRange":{"startIndex":3,"endIndex":4},"isOptional":false}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"a","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"select","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Function","canonicalReference":"@ngrx/store!select:function(4)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function select<T, a extends "},{"kind":"Content","text":"keyof T"},{"kind":"Content","text":", b extends "},{"kind":"Content","text":"keyof T[a]"},{"kind":"Content","text":">(key1: "},{"kind":"Content","text":"a"},{"kind":"Content","text":", key2: "},{"kind":"Content","text":"b"},{"kind":"Content","text":"): "},{"kind":"Content","text":"(source$: "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T>) => "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T[a][b]>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/store.d.ts","returnTypeTokenRange":{"startIndex":9,"endIndex":14},"releaseTag":"Public","overloadIndex":4,"parameters":[{"parameterName":"key1","parameterTypeTokenRange":{"startIndex":5,"endIndex":6},"isOptional":false},{"parameterName":"key2","parameterTypeTokenRange":{"startIndex":7,"endIndex":8},"isOptional":false}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"a","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"b","constraintTokenRange":{"startIndex":3,"endIndex":4},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"select","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Function","canonicalReference":"@ngrx/store!select:function(5)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function select<T, a extends "},{"kind":"Content","text":"keyof T"},{"kind":"Content","text":", b extends "},{"kind":"Content","text":"keyof T[a]"},{"kind":"Content","text":", c extends "},{"kind":"Content","text":"keyof T[a][b]"},{"kind":"Content","text":">(key1: "},{"kind":"Content","text":"a"},{"kind":"Content","text":", key2: "},{"kind":"Content","text":"b"},{"kind":"Content","text":", key3: "},{"kind":"Content","text":"c"},{"kind":"Content","text":"): "},{"kind":"Content","text":"(source$: "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T>) => "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T[a][b][c]>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/store.d.ts","returnTypeTokenRange":{"startIndex":13,"endIndex":18},"releaseTag":"Public","overloadIndex":5,"parameters":[{"parameterName":"key1","parameterTypeTokenRange":{"startIndex":7,"endIndex":8},"isOptional":false},{"parameterName":"key2","parameterTypeTokenRange":{"startIndex":9,"endIndex":10},"isOptional":false},{"parameterName":"key3","parameterTypeTokenRange":{"startIndex":11,"endIndex":12},"isOptional":false}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"a","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"b","constraintTokenRange":{"startIndex":3,"endIndex":4},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"c","constraintTokenRange":{"startIndex":5,"endIndex":6},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"select","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Function","canonicalReference":"@ngrx/store!select:function(6)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function select<T, a extends "},{"kind":"Content","text":"keyof T"},{"kind":"Content","text":", b extends "},{"kind":"Content","text":"keyof T[a]"},{"kind":"Content","text":", c extends "},{"kind":"Content","text":"keyof T[a][b]"},{"kind":"Content","text":", d extends "},{"kind":"Content","text":"keyof T[a][b][c]"},{"kind":"Content","text":">(key1: "},{"kind":"Content","text":"a"},{"kind":"Content","text":", key2: "},{"kind":"Content","text":"b"},{"kind":"Content","text":", key3: "},{"kind":"Content","text":"c"},{"kind":"Content","text":", key4: "},{"kind":"Content","text":"d"},{"kind":"Content","text":"): "},{"kind":"Content","text":"(source$: "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T>) => "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T[a][b][c][d]>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/store.d.ts","returnTypeTokenRange":{"startIndex":17,"endIndex":22},"releaseTag":"Public","overloadIndex":6,"parameters":[{"parameterName":"key1","parameterTypeTokenRange":{"startIndex":9,"endIndex":10},"isOptional":false},{"parameterName":"key2","parameterTypeTokenRange":{"startIndex":11,"endIndex":12},"isOptional":false},{"parameterName":"key3","parameterTypeTokenRange":{"startIndex":13,"endIndex":14},"isOptional":false},{"parameterName":"key4","parameterTypeTokenRange":{"startIndex":15,"endIndex":16},"isOptional":false}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"a","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"b","constraintTokenRange":{"startIndex":3,"endIndex":4},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"c","constraintTokenRange":{"startIndex":5,"endIndex":6},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"d","constraintTokenRange":{"startIndex":7,"endIndex":8},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"select","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Function","canonicalReference":"@ngrx/store!select:function(7)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function select<T, a extends "},{"kind":"Content","text":"keyof T"},{"kind":"Content","text":", b extends "},{"kind":"Content","text":"keyof T[a]"},{"kind":"Content","text":", c extends "},{"kind":"Content","text":"keyof T[a][b]"},{"kind":"Content","text":", d extends "},{"kind":"Content","text":"keyof T[a][b][c]"},{"kind":"Content","text":", e extends "},{"kind":"Content","text":"keyof T[a][b][c][d]"},{"kind":"Content","text":">(key1: "},{"kind":"Content","text":"a"},{"kind":"Content","text":", key2: "},{"kind":"Content","text":"b"},{"kind":"Content","text":", key3: "},{"kind":"Content","text":"c"},{"kind":"Content","text":", key4: "},{"kind":"Content","text":"d"},{"kind":"Content","text":", key5: "},{"kind":"Content","text":"e"},{"kind":"Content","text":"): "},{"kind":"Content","text":"(source$: "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T>) => "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T[a][b][c][d][e]>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/store.d.ts","returnTypeTokenRange":{"startIndex":21,"endIndex":26},"releaseTag":"Public","overloadIndex":7,"parameters":[{"parameterName":"key1","parameterTypeTokenRange":{"startIndex":11,"endIndex":12},"isOptional":false},{"parameterName":"key2","parameterTypeTokenRange":{"startIndex":13,"endIndex":14},"isOptional":false},{"parameterName":"key3","parameterTypeTokenRange":{"startIndex":15,"endIndex":16},"isOptional":false},{"parameterName":"key4","parameterTypeTokenRange":{"startIndex":17,"endIndex":18},"isOptional":false},{"parameterName":"key5","parameterTypeTokenRange":{"startIndex":19,"endIndex":20},"isOptional":false}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"a","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"b","constraintTokenRange":{"startIndex":3,"endIndex":4},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"c","constraintTokenRange":{"startIndex":5,"endIndex":6},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"d","constraintTokenRange":{"startIndex":7,"endIndex":8},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"e","constraintTokenRange":{"startIndex":9,"endIndex":10},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"select","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Function","canonicalReference":"@ngrx/store!select:function(8)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function select<T, a extends "},{"kind":"Content","text":"keyof T"},{"kind":"Content","text":", b extends "},{"kind":"Content","text":"keyof T[a]"},{"kind":"Content","text":", c extends "},{"kind":"Content","text":"keyof T[a][b]"},{"kind":"Content","text":", d extends "},{"kind":"Content","text":"keyof T[a][b][c]"},{"kind":"Content","text":", e extends "},{"kind":"Content","text":"keyof T[a][b][c][d]"},{"kind":"Content","text":", f extends "},{"kind":"Content","text":"keyof T[a][b][c][d][e]"},{"kind":"Content","text":">(key1: "},{"kind":"Content","text":"a"},{"kind":"Content","text":", key2: "},{"kind":"Content","text":"b"},{"kind":"Content","text":", key3: "},{"kind":"Content","text":"c"},{"kind":"Content","text":", key4: "},{"kind":"Content","text":"d"},{"kind":"Content","text":", key5: "},{"kind":"Content","text":"e"},{"kind":"Content","text":", key6: "},{"kind":"Content","text":"f"},{"kind":"Content","text":"): "},{"kind":"Content","text":"(source$: "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T>) => "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T[a][b][c][d][e][f]>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/store.d.ts","returnTypeTokenRange":{"startIndex":25,"endIndex":30},"releaseTag":"Public","overloadIndex":8,"parameters":[{"parameterName":"key1","parameterTypeTokenRange":{"startIndex":13,"endIndex":14},"isOptional":false},{"parameterName":"key2","parameterTypeTokenRange":{"startIndex":15,"endIndex":16},"isOptional":false},{"parameterName":"key3","parameterTypeTokenRange":{"startIndex":17,"endIndex":18},"isOptional":false},{"parameterName":"key4","parameterTypeTokenRange":{"startIndex":19,"endIndex":20},"isOptional":false},{"parameterName":"key5","parameterTypeTokenRange":{"startIndex":21,"endIndex":22},"isOptional":false},{"parameterName":"key6","parameterTypeTokenRange":{"startIndex":23,"endIndex":24},"isOptional":false}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"a","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"b","constraintTokenRange":{"startIndex":3,"endIndex":4},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"c","constraintTokenRange":{"startIndex":5,"endIndex":6},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"d","constraintTokenRange":{"startIndex":7,"endIndex":8},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"e","constraintTokenRange":{"startIndex":9,"endIndex":10},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"f","constraintTokenRange":{"startIndex":11,"endIndex":12},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"select","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Function","canonicalReference":"@ngrx/store!select:function(9)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function select<T, a extends "},{"kind":"Content","text":"keyof T"},{"kind":"Content","text":", b extends "},{"kind":"Content","text":"keyof T[a]"},{"kind":"Content","text":", c extends "},{"kind":"Content","text":"keyof T[a][b]"},{"kind":"Content","text":", d extends "},{"kind":"Content","text":"keyof T[a][b][c]"},{"kind":"Content","text":", e extends "},{"kind":"Content","text":"keyof T[a][b][c][d]"},{"kind":"Content","text":", f extends "},{"kind":"Content","text":"keyof T[a][b][c][d][e]"},{"kind":"Content","text":", K = "},{"kind":"Content","text":"any"},{"kind":"Content","text":">(key1: "},{"kind":"Content","text":"a"},{"kind":"Content","text":", key2: "},{"kind":"Content","text":"b"},{"kind":"Content","text":", key3: "},{"kind":"Content","text":"c"},{"kind":"Content","text":", key4: "},{"kind":"Content","text":"d"},{"kind":"Content","text":", key5: "},{"kind":"Content","text":"e"},{"kind":"Content","text":", key6: "},{"kind":"Content","text":"f"},{"kind":"Content","text":", ...paths: "},{"kind":"Content","text":"string[]"},{"kind":"Content","text":"): "},{"kind":"Content","text":"(source$: "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T>) => "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<K>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/store.d.ts","returnTypeTokenRange":{"startIndex":29,"endIndex":34},"releaseTag":"Public","overloadIndex":9,"parameters":[{"parameterName":"key1","parameterTypeTokenRange":{"startIndex":15,"endIndex":16},"isOptional":false},{"parameterName":"key2","parameterTypeTokenRange":{"startIndex":17,"endIndex":18},"isOptional":false},{"parameterName":"key3","parameterTypeTokenRange":{"startIndex":19,"endIndex":20},"isOptional":false},{"parameterName":"key4","parameterTypeTokenRange":{"startIndex":21,"endIndex":22},"isOptional":false},{"parameterName":"key5","parameterTypeTokenRange":{"startIndex":23,"endIndex":24},"isOptional":false},{"parameterName":"key6","parameterTypeTokenRange":{"startIndex":25,"endIndex":26},"isOptional":false},{"parameterName":"paths","parameterTypeTokenRange":{"startIndex":27,"endIndex":28},"isOptional":false}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"a","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"b","constraintTokenRange":{"startIndex":3,"endIndex":4},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"c","constraintTokenRange":{"startIndex":5,"endIndex":6},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"d","constraintTokenRange":{"startIndex":7,"endIndex":8},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"e","constraintTokenRange":{"startIndex":9,"endIndex":10},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"f","constraintTokenRange":{"startIndex":11,"endIndex":12},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"K","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":13,"endIndex":14}}],"name":"select","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "select",
+  "canonicalReference": "@ngrx/store!select:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/store!select:function(1)",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function select<T, K>(mapFn: "
+        },
+        { "kind": "Content", "text": "(state: T) => K" },
+        { "kind": "Content", "text": "): " },
+        { "kind": "Content", "text": "(source$: " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T>) => " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<K>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "returnTypeTokenRange": { "startIndex": 3, "endIndex": 8 },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "mapFn",
+          "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "K",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "select",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/store!select:function(2)",
+      "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n *\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function select<T, Props, K>(mapFn: "
+        },
+        { "kind": "Content", "text": "(state: T, props: Props) => K" },
+        { "kind": "Content", "text": ", props: " },
+        { "kind": "Content", "text": "Props" },
+        { "kind": "Content", "text": "): " },
+        { "kind": "Content", "text": "(source$: " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T>) => " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<K>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "returnTypeTokenRange": { "startIndex": 5, "endIndex": 10 },
+      "releaseTag": "Public",
+      "overloadIndex": 2,
+      "parameters": [
+        {
+          "parameterName": "mapFn",
+          "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "props",
+          "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "Props",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "K",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "select",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n\n\n",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/store!select:function(3)",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function select<T, a extends "
+        },
+        { "kind": "Content", "text": "keyof T" },
+        { "kind": "Content", "text": ">(key: " },
+        { "kind": "Content", "text": "a" },
+        { "kind": "Content", "text": "): " },
+        { "kind": "Content", "text": "(source$: " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T>) => " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T[a]>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "returnTypeTokenRange": { "startIndex": 5, "endIndex": 10 },
+      "releaseTag": "Public",
+      "overloadIndex": 3,
+      "parameters": [
+        {
+          "parameterName": "key",
+          "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "a",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "select",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/store!select:function(4)",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function select<T, a extends "
+        },
+        { "kind": "Content", "text": "keyof T" },
+        { "kind": "Content", "text": ", b extends " },
+        { "kind": "Content", "text": "keyof T[a]" },
+        { "kind": "Content", "text": ">(key1: " },
+        { "kind": "Content", "text": "a" },
+        { "kind": "Content", "text": ", key2: " },
+        { "kind": "Content", "text": "b" },
+        { "kind": "Content", "text": "): " },
+        { "kind": "Content", "text": "(source$: " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T>) => " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T[a][b]>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "returnTypeTokenRange": { "startIndex": 9, "endIndex": 14 },
+      "releaseTag": "Public",
+      "overloadIndex": 4,
+      "parameters": [
+        {
+          "parameterName": "key1",
+          "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key2",
+          "parameterTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "a",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "b",
+          "constraintTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "select",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/store!select:function(5)",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function select<T, a extends "
+        },
+        { "kind": "Content", "text": "keyof T" },
+        { "kind": "Content", "text": ", b extends " },
+        { "kind": "Content", "text": "keyof T[a]" },
+        { "kind": "Content", "text": ", c extends " },
+        { "kind": "Content", "text": "keyof T[a][b]" },
+        { "kind": "Content", "text": ">(key1: " },
+        { "kind": "Content", "text": "a" },
+        { "kind": "Content", "text": ", key2: " },
+        { "kind": "Content", "text": "b" },
+        { "kind": "Content", "text": ", key3: " },
+        { "kind": "Content", "text": "c" },
+        { "kind": "Content", "text": "): " },
+        { "kind": "Content", "text": "(source$: " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T>) => " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T[a][b][c]>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "returnTypeTokenRange": { "startIndex": 13, "endIndex": 18 },
+      "releaseTag": "Public",
+      "overloadIndex": 5,
+      "parameters": [
+        {
+          "parameterName": "key1",
+          "parameterTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key2",
+          "parameterTypeTokenRange": { "startIndex": 9, "endIndex": 10 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key3",
+          "parameterTypeTokenRange": { "startIndex": 11, "endIndex": 12 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "a",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "b",
+          "constraintTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "c",
+          "constraintTokenRange": { "startIndex": 5, "endIndex": 6 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "select",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/store!select:function(6)",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function select<T, a extends "
+        },
+        { "kind": "Content", "text": "keyof T" },
+        { "kind": "Content", "text": ", b extends " },
+        { "kind": "Content", "text": "keyof T[a]" },
+        { "kind": "Content", "text": ", c extends " },
+        { "kind": "Content", "text": "keyof T[a][b]" },
+        { "kind": "Content", "text": ", d extends " },
+        { "kind": "Content", "text": "keyof T[a][b][c]" },
+        { "kind": "Content", "text": ">(key1: " },
+        { "kind": "Content", "text": "a" },
+        { "kind": "Content", "text": ", key2: " },
+        { "kind": "Content", "text": "b" },
+        { "kind": "Content", "text": ", key3: " },
+        { "kind": "Content", "text": "c" },
+        { "kind": "Content", "text": ", key4: " },
+        { "kind": "Content", "text": "d" },
+        { "kind": "Content", "text": "): " },
+        { "kind": "Content", "text": "(source$: " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T>) => " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T[a][b][c][d]>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "returnTypeTokenRange": { "startIndex": 17, "endIndex": 22 },
+      "releaseTag": "Public",
+      "overloadIndex": 6,
+      "parameters": [
+        {
+          "parameterName": "key1",
+          "parameterTypeTokenRange": { "startIndex": 9, "endIndex": 10 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key2",
+          "parameterTypeTokenRange": { "startIndex": 11, "endIndex": 12 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key3",
+          "parameterTypeTokenRange": { "startIndex": 13, "endIndex": 14 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key4",
+          "parameterTypeTokenRange": { "startIndex": 15, "endIndex": 16 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "a",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "b",
+          "constraintTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "c",
+          "constraintTokenRange": { "startIndex": 5, "endIndex": 6 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "d",
+          "constraintTokenRange": { "startIndex": 7, "endIndex": 8 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "select",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/store!select:function(7)",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function select<T, a extends "
+        },
+        { "kind": "Content", "text": "keyof T" },
+        { "kind": "Content", "text": ", b extends " },
+        { "kind": "Content", "text": "keyof T[a]" },
+        { "kind": "Content", "text": ", c extends " },
+        { "kind": "Content", "text": "keyof T[a][b]" },
+        { "kind": "Content", "text": ", d extends " },
+        { "kind": "Content", "text": "keyof T[a][b][c]" },
+        { "kind": "Content", "text": ", e extends " },
+        { "kind": "Content", "text": "keyof T[a][b][c][d]" },
+        { "kind": "Content", "text": ">(key1: " },
+        { "kind": "Content", "text": "a" },
+        { "kind": "Content", "text": ", key2: " },
+        { "kind": "Content", "text": "b" },
+        { "kind": "Content", "text": ", key3: " },
+        { "kind": "Content", "text": "c" },
+        { "kind": "Content", "text": ", key4: " },
+        { "kind": "Content", "text": "d" },
+        { "kind": "Content", "text": ", key5: " },
+        { "kind": "Content", "text": "e" },
+        { "kind": "Content", "text": "): " },
+        { "kind": "Content", "text": "(source$: " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T>) => " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T[a][b][c][d][e]>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "returnTypeTokenRange": { "startIndex": 21, "endIndex": 26 },
+      "releaseTag": "Public",
+      "overloadIndex": 7,
+      "parameters": [
+        {
+          "parameterName": "key1",
+          "parameterTypeTokenRange": { "startIndex": 11, "endIndex": 12 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key2",
+          "parameterTypeTokenRange": { "startIndex": 13, "endIndex": 14 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key3",
+          "parameterTypeTokenRange": { "startIndex": 15, "endIndex": 16 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key4",
+          "parameterTypeTokenRange": { "startIndex": 17, "endIndex": 18 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key5",
+          "parameterTypeTokenRange": { "startIndex": 19, "endIndex": 20 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "a",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "b",
+          "constraintTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "c",
+          "constraintTokenRange": { "startIndex": 5, "endIndex": 6 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "d",
+          "constraintTokenRange": { "startIndex": 7, "endIndex": 8 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "e",
+          "constraintTokenRange": { "startIndex": 9, "endIndex": 10 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "select",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/store!select:function(8)",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function select<T, a extends "
+        },
+        { "kind": "Content", "text": "keyof T" },
+        { "kind": "Content", "text": ", b extends " },
+        { "kind": "Content", "text": "keyof T[a]" },
+        { "kind": "Content", "text": ", c extends " },
+        { "kind": "Content", "text": "keyof T[a][b]" },
+        { "kind": "Content", "text": ", d extends " },
+        { "kind": "Content", "text": "keyof T[a][b][c]" },
+        { "kind": "Content", "text": ", e extends " },
+        { "kind": "Content", "text": "keyof T[a][b][c][d]" },
+        { "kind": "Content", "text": ", f extends " },
+        { "kind": "Content", "text": "keyof T[a][b][c][d][e]" },
+        { "kind": "Content", "text": ">(key1: " },
+        { "kind": "Content", "text": "a" },
+        { "kind": "Content", "text": ", key2: " },
+        { "kind": "Content", "text": "b" },
+        { "kind": "Content", "text": ", key3: " },
+        { "kind": "Content", "text": "c" },
+        { "kind": "Content", "text": ", key4: " },
+        { "kind": "Content", "text": "d" },
+        { "kind": "Content", "text": ", key5: " },
+        { "kind": "Content", "text": "e" },
+        { "kind": "Content", "text": ", key6: " },
+        { "kind": "Content", "text": "f" },
+        { "kind": "Content", "text": "): " },
+        { "kind": "Content", "text": "(source$: " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T>) => " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T[a][b][c][d][e][f]>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "returnTypeTokenRange": { "startIndex": 25, "endIndex": 30 },
+      "releaseTag": "Public",
+      "overloadIndex": 8,
+      "parameters": [
+        {
+          "parameterName": "key1",
+          "parameterTypeTokenRange": { "startIndex": 13, "endIndex": 14 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key2",
+          "parameterTypeTokenRange": { "startIndex": 15, "endIndex": 16 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key3",
+          "parameterTypeTokenRange": { "startIndex": 17, "endIndex": 18 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key4",
+          "parameterTypeTokenRange": { "startIndex": 19, "endIndex": 20 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key5",
+          "parameterTypeTokenRange": { "startIndex": 21, "endIndex": 22 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key6",
+          "parameterTypeTokenRange": { "startIndex": 23, "endIndex": 24 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "a",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "b",
+          "constraintTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "c",
+          "constraintTokenRange": { "startIndex": 5, "endIndex": 6 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "d",
+          "constraintTokenRange": { "startIndex": 7, "endIndex": 8 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "e",
+          "constraintTokenRange": { "startIndex": 9, "endIndex": 10 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "f",
+          "constraintTokenRange": { "startIndex": 11, "endIndex": 12 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "select",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/store!select:function(9)",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function select<T, a extends "
+        },
+        { "kind": "Content", "text": "keyof T" },
+        { "kind": "Content", "text": ", b extends " },
+        { "kind": "Content", "text": "keyof T[a]" },
+        { "kind": "Content", "text": ", c extends " },
+        { "kind": "Content", "text": "keyof T[a][b]" },
+        { "kind": "Content", "text": ", d extends " },
+        { "kind": "Content", "text": "keyof T[a][b][c]" },
+        { "kind": "Content", "text": ", e extends " },
+        { "kind": "Content", "text": "keyof T[a][b][c][d]" },
+        { "kind": "Content", "text": ", f extends " },
+        { "kind": "Content", "text": "keyof T[a][b][c][d][e]" },
+        { "kind": "Content", "text": ", K = " },
+        { "kind": "Content", "text": "any" },
+        { "kind": "Content", "text": ">(key1: " },
+        { "kind": "Content", "text": "a" },
+        { "kind": "Content", "text": ", key2: " },
+        { "kind": "Content", "text": "b" },
+        { "kind": "Content", "text": ", key3: " },
+        { "kind": "Content", "text": "c" },
+        { "kind": "Content", "text": ", key4: " },
+        { "kind": "Content", "text": "d" },
+        { "kind": "Content", "text": ", key5: " },
+        { "kind": "Content", "text": "e" },
+        { "kind": "Content", "text": ", key6: " },
+        { "kind": "Content", "text": "f" },
+        { "kind": "Content", "text": ", ...paths: " },
+        { "kind": "Content", "text": "string[]" },
+        { "kind": "Content", "text": "): " },
+        { "kind": "Content", "text": "(source$: " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<T>) => " },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<K>" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "returnTypeTokenRange": { "startIndex": 29, "endIndex": 34 },
+      "releaseTag": "Public",
+      "overloadIndex": 9,
+      "parameters": [
+        {
+          "parameterName": "key1",
+          "parameterTypeTokenRange": { "startIndex": 15, "endIndex": 16 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key2",
+          "parameterTypeTokenRange": { "startIndex": 17, "endIndex": 18 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key3",
+          "parameterTypeTokenRange": { "startIndex": 19, "endIndex": 20 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key4",
+          "parameterTypeTokenRange": { "startIndex": 21, "endIndex": 22 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key5",
+          "parameterTypeTokenRange": { "startIndex": 23, "endIndex": 24 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "key6",
+          "parameterTypeTokenRange": { "startIndex": 25, "endIndex": 26 },
+          "isOptional": false
+        },
+        {
+          "parameterName": "paths",
+          "parameterTypeTokenRange": { "startIndex": 27, "endIndex": 28 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "a",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "b",
+          "constraintTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "c",
+          "constraintTokenRange": { "startIndex": 5, "endIndex": 6 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "d",
+          "constraintTokenRange": { "startIndex": 7, "endIndex": 8 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "e",
+          "constraintTokenRange": { "startIndex": 9, "endIndex": 10 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "f",
+          "constraintTokenRange": { "startIndex": 11, "endIndex": 12 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "K",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 13, "endIndex": 14 }
+        }
+      ],
+      "name": "select",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

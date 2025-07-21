@@ -7,11 +7,10 @@ import { STATE_SOURCE, WritableStateSource } from './state-source';
 import { Prettify } from './ts-helpers';
 
 /**
- * @description
  * Allows passing properties, methods, or signals from a SignalStore
  * to a feature.
  *
- * @usageNotes
+ * @example
  * ```typescript
  * signalStore(
  *   withMethods((store) => ({
@@ -26,7 +25,9 @@ import { Prettify } from './ts-helpers';
  * );
  * ```
  *
- * @param featureFactory function returning the actual feature
+ * @param featureFactory - function returning the actual feature
+ *
+ * @public
  */
 export function withFeature<
   Input extends SignalStoreFeatureResult,

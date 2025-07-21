@@ -1,4 +1,8 @@
-/** How to merge an entity, after query or save, when the corresponding entity in the collection has unsaved changes. */
+/**
+ * How to merge an entity, after query or save, when the corresponding entity in the collection has unsaved changes.
+ *
+ * @public
+ */
 export enum MergeStrategy {
   /**
    * Update the collection entities and ignore all change tracking for this operation.

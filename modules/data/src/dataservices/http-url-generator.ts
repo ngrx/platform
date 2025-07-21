@@ -6,6 +6,7 @@ import { Pluralizer } from '../utils/interfaces';
  * Each entity's resource URLS are endpoints that
  * target single entity and multi-entity HTTP operations.
  * Used by the `DefaultHttpUrlGenerator`.
+ * @public
  */
 export abstract class EntityHttpResourceUrls {
   [entityName: string]: HttpResourceUrls;
@@ -14,6 +15,7 @@ export abstract class EntityHttpResourceUrls {
 /**
  * Resource URLS for HTTP operations that target single entity
  * and multi-entity endpoints.
+ * @public
  */
 export interface HttpResourceUrls {
   /**
@@ -35,6 +37,7 @@ export interface HttpResourceUrls {
 /**
  * Generate the base part of an HTTP URL for
  * single entity or entity collection resource
+ * @public
  */
 export abstract class HttpUrlGenerator {
   /**
@@ -55,13 +58,16 @@ export abstract class HttpUrlGenerator {
 
   /**
    * Register known single-entity and collection resource URLs for HTTP calls
-   * @param entityHttpResourceUrls {EntityHttpResourceUrls} resource urls for specific entity type names
+   * @param entityHttpResourceUrls - resource urls for specific entity type names
    */
   abstract registerHttpResourceUrls(
     entityHttpResourceUrls?: EntityHttpResourceUrls
   ): void;
 }
 
+/**
+ * @public
+ */
 @Injectable()
 export class DefaultHttpUrlGenerator implements HttpUrlGenerator {
   /**
@@ -76,8 +82,8 @@ export class DefaultHttpUrlGenerator implements HttpUrlGenerator {
 
   /**
    * Get or generate the entity and collection resource URLs for the given entity type name
-   * @param entityName {string} Name of the entity type, e.g, 'Hero'
-   * @param root {string} Root path to the resource, e.g., 'some-api`
+   * @param entityName - Name of the entity type, e.g, 'Hero'
+   * @param root - Root path to the resource, e.g., 'some-api'
    */
   protected getResourceUrls(
     entityName: string,
@@ -100,8 +106,8 @@ export class DefaultHttpUrlGenerator implements HttpUrlGenerator {
 
   /**
    * Create the path to a single entity resource
-   * @param entityName {string} Name of the entity type, e.g, 'Hero'
-   * @param root {string} Root path to the resource, e.g., 'some-api`
+   * @param entityName - Name of the entity type, e.g, 'Hero'
+   * @param root - Root path to the resource, e.g., 'some-api'
    * @returns complete path to resource, e.g, 'some-api/hero'
    */
   entityResource(
@@ -115,8 +121,8 @@ export class DefaultHttpUrlGenerator implements HttpUrlGenerator {
 
   /**
    * Create the path to a multiple entity (collection) resource
-   * @param entityName {string} Name of the entity type, e.g, 'Hero'
-   * @param root {string} Root path to the resource, e.g., 'some-api`
+   * @param entityName - Name of the entity type, e.g, 'Hero'
+   * @param root - Root path to the resource, e.g., 'some-api'
    * @returns complete path to resource, e.g, 'some-api/heroes'
    */
   collectionResource(entityName: string, root: string): string {
@@ -125,7 +131,7 @@ export class DefaultHttpUrlGenerator implements HttpUrlGenerator {
 
   /**
    * Register known single-entity and collection resource URLs for HTTP calls
-   * @param entityHttpResourceUrls {EntityHttpResourceUrls} resource urls for specific entity type names
+   * @param entityHttpResourceUrls - resource urls for specific entity type names
    * Well-formed resource urls end in a '/';
    * Note: this method does not ensure that resource urls are well-formed.
    */
@@ -139,7 +145,10 @@ export class DefaultHttpUrlGenerator implements HttpUrlGenerator {
   }
 }
 
-/** Remove leading & trailing spaces or slashes */
+/**
+ * Remove leading & trailing spaces or slashes
+ * @public
+ */
 export function normalizeRoot(root: string) {
   return root.replace(/^[/\s]+|[/\s]+$/g, '');
 }

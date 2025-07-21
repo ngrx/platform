@@ -14,6 +14,9 @@ const uncountable = [
   'series',
 ];
 
+/**
+ * @public
+ */
 @Injectable()
 export class DefaultPluralizer {
   pluralNames: EntityPluralNames = {};
@@ -31,7 +34,7 @@ export class DefaultPluralizer {
 
   /**
    * Pluralize a singular name using common English language pluralization rules
-   * Examples: "company" -> "companies", "employee" -> "employees", "tax" -> "taxes"
+   * Examples: "company" -\> "companies", "employee" -\> "employees", "tax" -\> "taxes"
    */
   pluralize(name: string) {
     const plural = this.pluralNames[name];
@@ -57,7 +60,7 @@ export class DefaultPluralizer {
 
   /**
    * Register a mapping of entity type name to the entity name's plural
-   * @param pluralNames {EntityPluralNames} plural names for entity types
+   * @param pluralNames - plural names for entity types
    */
   registerPluralNames(pluralNames: EntityPluralNames): void {
     this.pluralNames = { ...this.pluralNames, ...(pluralNames || {}) };

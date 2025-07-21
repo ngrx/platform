@@ -1,6 +1,10 @@
 import { EntityState, Dictionary } from '@ngrx/entity';
 
-/** Types of change in a ChangeState instance */
+/**
+ * Types of change in a ChangeState instance
+ *
+ * @public
+ */
 export enum ChangeType {
   /** The entity has not changed from its last known server state. */
   Unchanged = 0,
@@ -15,6 +19,8 @@ export enum ChangeType {
 /**
  * Change state for an entity with unsaved changes;
  * an entry in an EntityCollection.changeState map
+ *
+ * @public
  */
 export interface ChangeState<T> {
   changeType: ChangeType;
@@ -24,12 +30,16 @@ export interface ChangeState<T> {
 /**
  * Map of entity primary keys to entity ChangeStates.
  * Each entry represents an entity with unsaved changes.
+ *
+ * @public
  */
 export type ChangeStateMap<T> = Dictionary<ChangeState<T>>;
 
 /**
  * Data and information about a collection of entities of a single type.
  * EntityCollections are maintained in the EntityCache within the ngrx store.
+ *
+ * @public
  */
 export interface EntityCollection<T = any> extends EntityState<T> {
   /** Name of the entity type for this collection */

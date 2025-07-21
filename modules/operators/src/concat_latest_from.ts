@@ -8,18 +8,26 @@ import {
 import { concatMap, withLatestFrom } from 'rxjs/operators';
 
 // The array overload is needed first because we want to maintain the proper order in the resulting tuple
+/**
+ * @public
+ */
 export function concatLatestFrom<T extends Observable<unknown>[], V>(
   observablesFactory: (value: V) => [...T]
 ): OperatorFunction<V, [V, ...{ [i in keyof T]: ObservedValueOf<T[i]> }]>;
+
+/**
+ * @public
+ */
 export function concatLatestFrom<T extends Observable<unknown>, V>(
   observableFactory: (value: V) => T
 ): OperatorFunction<V, [V, ObservedValueOf<T>]>;
+
 /**
  * `concatLatestFrom` combines the source value
  * and the last available value from a lazily evaluated Observable
  * in a new array
  *
- * @usageNotes
+ * @example
  *
  * Select the active customer from the NgRx Store
  *
@@ -42,6 +50,8 @@ export function concatLatestFrom<T extends Observable<unknown>, V>(
  *  concatLatestFrom((action) => this.store.select(fromCustomers.selectCustomer(action.customerId)))
  * )
  * ```
+ *
+ * @public
  */
 export function concatLatestFrom<
   T extends ObservableInput<unknown>[] | ObservableInput<unknown>,

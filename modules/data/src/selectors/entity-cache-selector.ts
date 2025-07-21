@@ -6,18 +6,30 @@ import {
   ENTITY_CACHE_NAME_TOKEN,
 } from '../reducers/constants';
 
+/**
+ * @public
+ */
 export const ENTITY_CACHE_SELECTOR_TOKEN = new InjectionToken<
   MemoizedSelector<Object, EntityCache>
 >('@ngrx/data Entity Cache Selector');
 
+/**
+ * @public
+ */
 export const entityCacheSelectorProvider: FactoryProvider = {
   provide: ENTITY_CACHE_SELECTOR_TOKEN,
   useFactory: createEntityCacheSelector,
   deps: [[new Optional(), ENTITY_CACHE_NAME_TOKEN]],
 };
 
+/**
+ * @public
+ */
 export type EntityCacheSelector = MemoizedSelector<Object, EntityCache>;
 
+/**
+ * @public
+ */
 export function createEntityCacheSelector(
   entityCacheName?: string
 ): MemoizedSelector<Object, EntityCache> {

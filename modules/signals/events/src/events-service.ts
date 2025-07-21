@@ -33,11 +33,9 @@ abstract class BaseEvents {
 
 /**
  * @experimental
- * @description
- *
  * Globally provided service for listening to dispatched events.
  *
- * @usageNotes
+ * @example
  *
  * ```ts
  * import { event, Events } from '@ngrx/signals/events';

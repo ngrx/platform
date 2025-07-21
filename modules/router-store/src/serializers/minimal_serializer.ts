@@ -1,6 +1,11 @@
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { BaseRouterStoreState, RouterStateSerializer } from './base';
 
+/**
+ * A minimal representation of an activated route snapshot.
+ *
+ * @public
+ */
 export interface MinimalActivatedRouteSnapshot {
   routeConfig: ActivatedRouteSnapshot['routeConfig'];
   url: ActivatedRouteSnapshot['url'];
@@ -14,11 +19,21 @@ export interface MinimalActivatedRouteSnapshot {
   children: MinimalActivatedRouteSnapshot[];
 }
 
+/**
+ * A minimal representation of the router state snapshot.
+ *
+ * @public
+ */
 export interface MinimalRouterStateSnapshot extends BaseRouterStoreState {
   root: MinimalActivatedRouteSnapshot;
   url: string;
 }
 
+/**
+ * Serializer that preserves only essential router state information.
+ *
+ * @public
+ */
 export class MinimalRouterStateSerializer
   implements RouterStateSerializer<MinimalRouterStateSnapshot>
 {

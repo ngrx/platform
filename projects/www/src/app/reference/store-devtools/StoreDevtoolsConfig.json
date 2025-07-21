@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig:class",
-      "docComment": "/**\n * Chrome extension documentation\n *\n * @see\n *\n * https://github.com/reduxjs/redux-devtools/blob/main/extension/docs/API/Arguments.md Firefox extension documentation\n *\n * @see\n *\n * https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md\n */\n",
+      "docComment": "/**\n * Chrome extension documentation\n *\n * @see\n *\n * https://github.com/reduxjs/redux-devtools/blob/main/extension/docs/API/Arguments.md Firefox extension documentation\n *\n * @see\n *\n * https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -577,7 +577,7 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
@@ -590,7 +590,7 @@
         "returns": "",
         "see": [
           "\n\nhttps://github.com/reduxjs/redux-devtools/blob/main/extension/docs/API/Arguments.md Firefox extension documentation\n\n",
-          "\n\nhttps://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md\n"
+          "\n\nhttps://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md\n\n\n"
         ],
         "params": []
       }

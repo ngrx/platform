@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!SetEntityCache:class",
-      "docComment": "/**\n * Create entity cache action for replacing the entire entity cache. Dangerous because brute force but useful as when re-hydrating an EntityCache from local browser storage when the application launches.\n *\n * @param cache - New state of the entity cache\n *\n * @param tag - Optional tag to identify the operation from the app perspective.\n */\n",
+      "docComment": "/**\n * Create entity cache action for replacing the entire entity cache. Dangerous because brute force but useful as when re-hydrating an EntityCache from local browser storage when the application launches.\n *\n * @param cache - New state of the entity cache\n *\n * @param tag - Optional tag to identify the operation from the app perspective.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -200,7 +200,7 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
@@ -219,7 +219,7 @@
           },
           {
             "name": "tag",
-            "description": "Optional tag to identify the operation from the app perspective.\n"
+            "description": "Optional tag to identify the operation from the app perspective.\n\n\n"
           }
         ]
       }

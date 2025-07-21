@@ -19,6 +19,9 @@ import {
 import { FunctionalEffect } from './models';
 import { getClasses, isToken } from './utils';
 
+/**
+ * @public
+ */
 @NgModule({})
 export class EffectsModule {
   static forFeature(

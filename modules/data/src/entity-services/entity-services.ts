@@ -11,6 +11,7 @@ import { EntityCollectionService } from './entity-collection-service';
  * Includes a registry of EntityCollectionServices for all entity types.
  * Creates a new default EntityCollectionService for any entity type not in the registry.
  * Optionally register specialized EntityCollectionServices for individual types
+ * @public
  */
 export abstract class EntityServices {
   /** Dispatch any action to the store */
@@ -23,7 +24,7 @@ export abstract class EntityServices {
   abstract readonly entityCache$: Observable<EntityCache> | Store<EntityCache>;
 
   /** Get (or create) the singleton instance of an EntityCollectionService
-   * @param entityName {string} Name of the entity type of the service
+   * @param entityName - Name of the entity type of the service
    */
   abstract getEntityCollectionService<T = any>(
     entityName: string
@@ -39,7 +40,7 @@ export abstract class EntityServices {
 
   /** Register an EntityCollectionService under its entity type name.
    * Will replace a pre-existing service for that type.
-   * @param service {EntityCollectionService} The entity service
+   * @param service - The entity service
    */
   abstract registerEntityCollectionService<T>(
     service: EntityCollectionService<T>
@@ -47,7 +48,7 @@ export abstract class EntityServices {
 
   /** Register entity services for several entity types at once.
    * Will replace a pre-existing service for that type.
-   * @param entityCollectionServices Array of EntityCollectionServices to register
+   * @param entityCollectionServices - Array of EntityCollectionServices to register
    */
   abstract registerEntityCollectionServices(
     entityCollectionServices: EntityCollectionService<any>[]
@@ -55,7 +56,7 @@ export abstract class EntityServices {
 
   /** Register entity services for several entity types at once.
    * Will replace a pre-existing service for that type.
-   * @param entityCollectionServiceMap Map of service-name to entity-collection-service
+   * @param entityCollectionServiceMap - Map of service-name to entity-collection-service
    */
   abstract registerEntityCollectionServices(
     // eslint-disable-next-line @typescript-eslint/unified-signatures
@@ -66,6 +67,7 @@ export abstract class EntityServices {
 
 /**
  * A map of service or entity names to their corresponding EntityCollectionServices.
+ * @public
  */
 export interface EntityCollectionServiceMap {
   [entityName: string]: EntityCollectionService<any>;

@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals/entities!updateEntities:function(1)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -41,7 +41,7 @@
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -113,13 +113,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -131,7 +131,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals/entities!updateEntities:function(2)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -158,13 +158,13 @@
         {
           "kind": "Reference",
           "text": "EntityPredicate",
-          "canonicalReference": "@ngrx/signals/entities!~EntityPredicate:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityPredicate:type"
         },
         { "kind": "Content", "text": "<Entity>;\n    changes: " },
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -236,13 +236,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -254,7 +254,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals/entities!updateEntities:function(3)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -293,7 +293,7 @@
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -350,13 +350,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -368,7 +368,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals/entities!updateEntities:function(4)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -401,13 +401,13 @@
         {
           "kind": "Reference",
           "text": "EntityPredicate",
-          "canonicalReference": "@ngrx/signals/entities!~EntityPredicate:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityPredicate:type"
         },
         { "kind": "Content", "text": "<Entity>;\n    changes: " },
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -464,13 +464,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -482,7 +482,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals/entities!updateEntities:function(5)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -498,7 +498,7 @@
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -563,13 +563,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -581,7 +581,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals/entities!updateEntities:function(6)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -591,13 +591,13 @@
         {
           "kind": "Reference",
           "text": "EntityPredicate",
-          "canonicalReference": "@ngrx/signals/entities!~EntityPredicate:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityPredicate:type"
         },
         { "kind": "Content", "text": "<Entity>;\n    changes: " },
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -662,13 +662,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -680,7 +680,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals/entities!updateEntities:function(7)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -704,7 +704,7 @@
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -750,13 +750,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -768,7 +768,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals/entities!updateEntities:function(8)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -786,13 +786,13 @@
         {
           "kind": "Reference",
           "text": "EntityPredicate",
-          "canonicalReference": "@ngrx/signals/entities!~EntityPredicate:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityPredicate:type"
         },
         { "kind": "Content", "text": "<Entity>;\n    changes: " },
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         { "kind": "Content", "text": "<" },
         {
@@ -838,13 +838,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

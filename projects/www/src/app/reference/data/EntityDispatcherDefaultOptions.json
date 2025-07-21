@@ -1,1 +1,220 @@
-{"name":"EntityDispatcherDefaultOptions","canonicalReference":"@ngrx/data!EntityDispatcherDefaultOptions:class","kind":"Class","fileUrlPath":"../../dist/modules/data/src/dispatchers/entity-dispatcher-default-options.d.ts","isDeprecated":false,"members":[{"kind":"Class","canonicalReference":"@ngrx/data!EntityDispatcherDefaultOptions:class","docComment":"/**\n * Default options for EntityDispatcher behavior such as whether `add()` is optimistic or pessimistic by default. An optimistic save modifies the collection immediately and before saving to the server. A pessimistic save modifies the collection after the server confirms the save was successful. This class initializes the defaults to the safest values. Provide an alternative to change the defaults for all entity collections.\n */\n","excerptTokens":[{"kind":"Content","text":"export declare class EntityDispatcherDefaultOptions "}],"fileUrlPath":"../../dist/modules/data/src/dispatchers/entity-dispatcher-default-options.d.ts","releaseTag":"Public","isAbstract":false,"name":"EntityDispatcherDefaultOptions","preserveMemberOrder":false,"members":[{"kind":"Property","canonicalReference":"@ngrx/data!EntityDispatcherDefaultOptions#optimisticAdd:member","docComment":"/**\n * True if added entities are saved optimistically; false if saved pessimistically.\n */\n","excerptTokens":[{"kind":"Content","text":"optimisticAdd: "},{"kind":"Content","text":"boolean"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"optimisticAdd","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"True if added entities are saved optimistically; false if saved pessimistically.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Property","canonicalReference":"@ngrx/data!EntityDispatcherDefaultOptions#optimisticDelete:member","docComment":"/**\n * True if deleted entities are saved optimistically; false if saved pessimistically.\n */\n","excerptTokens":[{"kind":"Content","text":"optimisticDelete: "},{"kind":"Content","text":"boolean"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"optimisticDelete","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"True if deleted entities are saved optimistically; false if saved pessimistically.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Property","canonicalReference":"@ngrx/data!EntityDispatcherDefaultOptions#optimisticSaveEntities:member","docComment":"/**\n * True if entities in a cache saveEntities request are saved optimistically; false if saved pessimistically.\n */\n","excerptTokens":[{"kind":"Content","text":"optimisticSaveEntities: "},{"kind":"Content","text":"boolean"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"optimisticSaveEntities","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"True if entities in a cache saveEntities request are saved optimistically; false if saved pessimistically.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Property","canonicalReference":"@ngrx/data!EntityDispatcherDefaultOptions#optimisticUpdate:member","docComment":"/**\n * True if updated entities are saved optimistically; false if saved pessimistically.\n */\n","excerptTokens":[{"kind":"Content","text":"optimisticUpdate: "},{"kind":"Content","text":"boolean"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"optimisticUpdate","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"True if updated entities are saved optimistically; false if saved pessimistically.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Property","canonicalReference":"@ngrx/data!EntityDispatcherDefaultOptions#optimisticUpsert:member","docComment":"/**\n * True if upsert entities are saved optimistically; false if saved pessimistically.\n */\n","excerptTokens":[{"kind":"Content","text":"optimisticUpsert: "},{"kind":"Content","text":"boolean"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"optimisticUpsert","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"True if upsert entities are saved optimistically; false if saved pessimistically.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"implementsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Default options for EntityDispatcher behavior such as whether `add()` is optimistic or pessimistic by default. An optimistic save modifies the collection immediately and before saving to the server. A pessimistic save modifies the collection after the server confirms the save was successful. This class initializes the defaults to the safest values. Provide an alternative to change the defaults for all entity collections.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "EntityDispatcherDefaultOptions",
+  "canonicalReference": "@ngrx/data!EntityDispatcherDefaultOptions:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/dispatchers/entity-dispatcher-default-options.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!EntityDispatcherDefaultOptions:class",
+      "docComment": "/**\n * Default options for EntityDispatcher behavior such as whether `add()` is optimistic or pessimistic by default. An optimistic save modifies the collection immediately and before saving to the server. A pessimistic save modifies the collection after the server confirms the save was successful. This class initializes the defaults to the safest values. Provide an alternative to change the defaults for all entity collections.\n *\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class EntityDispatcherDefaultOptions "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/dispatchers/entity-dispatcher-default-options.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "EntityDispatcherDefaultOptions",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityDispatcherDefaultOptions#optimisticAdd:member",
+          "docComment": "/**\n * True if added entities are saved optimistically; false if saved pessimistically.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "optimisticAdd: " },
+            { "kind": "Content", "text": "boolean" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "optimisticAdd",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "True if added entities are saved optimistically; false if saved pessimistically.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityDispatcherDefaultOptions#optimisticDelete:member",
+          "docComment": "/**\n * True if deleted entities are saved optimistically; false if saved pessimistically.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "optimisticDelete: " },
+            { "kind": "Content", "text": "boolean" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "optimisticDelete",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "True if deleted entities are saved optimistically; false if saved pessimistically.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityDispatcherDefaultOptions#optimisticSaveEntities:member",
+          "docComment": "/**\n * True if entities in a cache saveEntities request are saved optimistically; false if saved pessimistically.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "optimisticSaveEntities: " },
+            { "kind": "Content", "text": "boolean" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "optimisticSaveEntities",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "True if entities in a cache saveEntities request are saved optimistically; false if saved pessimistically.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityDispatcherDefaultOptions#optimisticUpdate:member",
+          "docComment": "/**\n * True if updated entities are saved optimistically; false if saved pessimistically.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "optimisticUpdate: " },
+            { "kind": "Content", "text": "boolean" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "optimisticUpdate",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "True if updated entities are saved optimistically; false if saved pessimistically.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityDispatcherDefaultOptions#optimisticUpsert:member",
+          "docComment": "/**\n * True if upsert entities are saved optimistically; false if saved pessimistically.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "optimisticUpsert: " },
+            { "kind": "Content", "text": "boolean" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "optimisticUpsert",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "True if upsert entities are saved optimistically; false if saved pessimistically.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Default options for EntityDispatcher behavior such as whether `add()` is optimistic or pessimistic by default. An optimistic save modifies the collection immediately and before saving to the server. A pessimistic save modifies the collection after the server confirms the save was successful. This class initializes the defaults to the safest values. Provide an alternative to change the defaults for all entity collections.\n\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

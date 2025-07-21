@@ -5,11 +5,18 @@ import { IdSelector, Comparer } from '@ngrx/entity';
 import { EntityDispatcherDefaultOptions } from '../dispatchers/entity-dispatcher-default-options';
 import { EntityFilterFn } from './entity-filters';
 
+/**
+ * @public
+ */
 export const ENTITY_METADATA_TOKEN = new InjectionToken<EntityMetadataMap>(
   '@ngrx/data Entity Metadata'
 );
 
-/** Metadata that describe an entity type and its collection to @ngrx/data */
+/**
+ * Metadata that describe an entity type and its collection to \@ngrx/data
+ *
+ * @public
+ */
 export interface EntityMetadata<T = any, S extends object = {}> {
   entityName: string;
   entityDispatcherOptions?: Partial<EntityDispatcherDefaultOptions>;
@@ -20,7 +27,11 @@ export interface EntityMetadata<T = any, S extends object = {}> {
   additionalCollectionState?: S;
 }
 
-/** Map entity-type name to its EntityMetadata */
+/**
+ * Map entity-type name to its EntityMetadata
+ *
+ * @public
+ */
 export interface EntityMetadataMap {
   [entityName: string]: Partial<EntityMetadata<any>>;
 }

@@ -4,12 +4,18 @@ import { EntityAction } from '../actions/entity-action';
 import { EntityCollection } from './entity-collection';
 import { EntityCollectionReducerMethodsFactory } from './entity-collection-reducer-methods';
 
+/**
+ * @public
+ */
 export type EntityCollectionReducer<T = any> = (
   collection: EntityCollection<T>,
   action: EntityAction
 ) => EntityCollection<T>;
 
-/** Create a default reducer for a specific entity collection */
+/**
+ * Create a default reducer for a specific entity collection
+ * @public
+ */
 @Injectable()
 export class EntityCollectionReducerFactory {
   constructor(private methodsFactory: EntityCollectionReducerMethodsFactory) {}

@@ -2,17 +2,22 @@ import { FactoryProvider } from '@angular/core';
 import { Actions } from '@ngrx/effects';
 import { defer, Observable } from 'rxjs';
 
+/**
+ * @public
+ */
 export function provideMockActions(source: Observable<any>): FactoryProvider;
+/**
+ * @public
+ */
 export function provideMockActions(
   factory: () => Observable<any>
 ): FactoryProvider;
 /**
- * @description
  * Creates mock actions provider.
  *
- * @param factoryOrSource Actions' source or source creation function
+ * @param factoryOrSource - Actions' source or source creation function
  *
- * @usageNotes
+ * @example
  *
  * **With `TestBed.configureTestingModule`**
  *

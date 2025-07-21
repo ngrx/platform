@@ -28,6 +28,7 @@ import {
 
 /**
  * Dispatches Entity Cache actions to the EntityCache reducer
+ * @public
  */
 @Injectable()
 export class EntityCacheDispatcher {
@@ -61,7 +62,7 @@ export class EntityCacheDispatcher {
 
   /**
    * Dispatch an Action to the store.
-   * @param action the Action
+   * @param action - the Action
    * @returns the dispatched Action
    */
   dispatch(action: Action): Action {
@@ -71,10 +72,10 @@ export class EntityCacheDispatcher {
 
   /**
    * Dispatch action to cancel the saveEntities request with matching correlation id.
-   * @param correlationId The correlation id for the corresponding action
-   * @param [reason] explains why canceled and by whom.
-   * @param [entityNames] array of entity names so can turn off loading flag for their collections.
-   * @param [tag] tag to identify the operation from the app perspective.
+   * @param correlationId - The correlation id for the corresponding action
+   * @param reason - explains why canceled and by whom.
+   * @param entityNames - array of entity names so can turn off loading flag for their collections.
+   * @param tag - tag to identify the operation from the app perspective.
    */
   cancelSaveEntities(
     correlationId: any,
@@ -95,9 +96,9 @@ export class EntityCacheDispatcher {
   }
 
   /** Clear the named entity collections in cache
-   * @param [collections] Array of names of the collections to clear.
+   * @param collections - Array of names of the collections to clear.
    * If empty array, does nothing. If null/undefined/no array, clear all collections.
-   * @param [tag] tag to identify the operation from the app perspective.
+   * @param tag - tag to identify the operation from the app perspective.
    */
   clearCollections(collections?: string[], tag?: string) {
     this.dispatch(new ClearCollections(collections, tag));
@@ -106,8 +107,8 @@ export class EntityCacheDispatcher {
   /**
    * Load multiple entity collections at the same time.
    * before any selectors$ observables emit.
-   * @param collections The collections to load, typically the result of a query.
-   * @param [tag] tag to identify the operation from the app perspective.
+   * @param collections - The collections to load, typically the result of a query.
+   * @param tag - tag to identify the operation from the app perspective.
    * in the form of a map of entity collections.
    */
   loadCollections(collections: EntityCacheQuerySet, tag?: string) {
@@ -119,11 +120,11 @@ export class EntityCacheDispatcher {
    * that returned entities from multiple collections.
    * Corresponding entity cache reducer should add and update all collections
    * at the same time, before any selectors$ observables emit.
-   * @param querySet The result of the query in the form of a map of entity collections.
+   * @param querySet - The result of the query in the form of a map of entity collections.
    * These are the entity data to merge into the respective collections.
-   * @param mergeStrategy How to merge a queried entity when it is already in the collection.
+   * @param mergeStrategy - How to merge a queried entity when it is already in the collection.
    * The default is MergeStrategy.PreserveChanges
-   * @param [tag] tag to identify the operation from the app perspective.
+   * @param tag - tag to identify the operation from the app perspective.
    */
   mergeQuerySet(
     querySet: EntityCacheQuerySet,
@@ -137,8 +138,8 @@ export class EntityCacheDispatcher {
    * Create entity cache action for replacing the entire entity cache.
    * Dangerous because brute force but useful as when re-hydrating an EntityCache
    * from local browser storage when the application launches.
-   * @param cache New state of the entity cache
-   * @param [tag] tag to identify the operation from the app perspective.
+   * @param cache - New state of the entity cache
+   * @param tag - tag to identify the operation from the app perspective.
    */
   setEntityCache(cache: EntityCache, tag?: string) {
     this.dispatch(new SetEntityCache(cache, tag));
@@ -149,10 +150,10 @@ export class EntityCacheDispatcher {
    * Relies on an Ngrx Effect such as EntityEffects.saveEntities$.
    * Important: only call if your server supports the SaveEntities protocol
    * through your EntityDataService.saveEntities method.
-   * @param changes Either the entities to save, as an array of {ChangeSetItem}, or
+   * @param changes - Either the entities to save, as an array of ChangeSetItem, or
    * a ChangeSet that holds such changes.
-   * @param url The server url which receives the save request
-   * @param [options] options such as tag, correlationId, isOptimistic, and mergeStrategy.
+   * @param url - The server url which receives the save request
+   * @param options - options such as tag, correlationId, isOptimistic, and mergeStrategy.
    * These values are defaulted if not supplied.
    * @returns A terminating Observable<ChangeSet> with data returned from the server
    * after server reports successful save OR the save error.
@@ -186,7 +187,7 @@ export class EntityCacheDispatcher {
    * Return Observable of data from the server-success SaveEntities action with
    * the given Correlation Id, after that action was processed by the ngrx store.
    * or else put the server error on the Observable error channel.
-   * @param crid The correlationId for both the save and response actions.
+   * @param crid - The correlationId for both the save and response actions.
    */
   private getSaveEntitiesResponseData$(crid: any): Observable<ChangeSet> {
     /**

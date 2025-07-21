@@ -8,7 +8,7 @@
     {
       "kind": "Variable",
       "canonicalReference": "@ngrx/effects!rootEffectsInit:var",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         { "kind": "Content", "text": "rootEffectsInit: " },
         { "kind": "Content", "text": "import(\"@ngrx/store\")." },
@@ -36,13 +36,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

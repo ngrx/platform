@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/router-store!createRouterSelector:function(1)",
-      "docComment": "",
+      "docComment": "/**\n * Creates a feature selector for the router state.\n *\n * @returns A memoized selector for the router reducer state.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -51,17 +51,17 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "Creates a feature selector for the router state.\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
-        "returns": "",
+        "returns": " A memoized selector for the router reducer state.\n\n\n",
         "see": [],
         "params": []
       }

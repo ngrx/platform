@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/store!createAction:function(1)",
-      "docComment": "/**\n * @description Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface with no additional metadata.\n *\n * @param type - Describes the action that will be dispatched\n *\n * @usageNotes\n *\n * Declaring an action creator:\n * ```ts\n * export const increment = createAction('[Counter] Increment');\n * ```\n *\n * Dispatching an action:\n * ```ts\n * store.dispatch(increment());\n * ```\n *\n * Referencing the action in a reducer:\n * ```ts\n * on(CounterActions.increment, (state) => ({ ...state, count: state.count + 1 }))\n * ```\n *\n * Referencing the action in an effect:\n * ```ts\n * effectName$ = createEffect(\n *   () => this.actions$.pipe(\n *     ofType(CounterActions.increment),\n *     // ...\n *   )\n * );\n * ```\n *\n */\n",
+      "docComment": "/**\n * Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface with no additional metadata.\n *\n * @param type - Describes the action that will be dispatched\n *\n * @example\n *\n * Declaring an action creator:\n * ```ts\n * export const increment = createAction('[Counter] Increment');\n * ```\n *\n * Dispatching an action:\n * ```ts\n * store.dispatch(increment());\n * ```\n *\n * Referencing the action in a reducer:\n * ```ts\n * on(CounterActions.increment, (state) => ({ ...state, count: state.count + 1 }))\n * ```\n *\n * Referencing the action in an effect:\n * ```ts\n * effectName$ = createEffect(\n *   () => this.actions$.pipe(\n *     ofType(CounterActions.increment),\n *     // ...\n *   )\n * );\n * ```\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -54,14 +54,14 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": " Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface with no additional metadata.\n\n",
-        "usageNotes": "\n\nDeclaring an action creator:\n```ts\nexport const increment = createAction('[Counter] Increment');\n```\n\nDispatching an action:\n```ts\nstore.dispatch(increment());\n```\n\nReferencing the action in a reducer:\n```ts\non(CounterActions.increment, (state) => ({ ...state, count: state.count + 1 }))\n```\n\nReferencing the action in an effect:\n```ts\neffectName$ = createEffect(\n  () => this.actions$.pipe(\n    ofType(CounterActions.increment),\n    // ...\n  )\n);\n```\n\n",
+        "summary": "Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface with no additional metadata.\n\n",
+        "usageNotes": "\n\nDeclaring an action creator:\n```ts\nexport const increment = createAction('[Counter] Increment');\n```\n\nDispatching an action:\n```ts\nstore.dispatch(increment());\n```\n\nReferencing the action in a reducer:\n```ts\non(CounterActions.increment, (state) => ({ ...state, count: state.count + 1 }))\n```\n\nReferencing the action in an effect:\n```ts\neffectName$ = createEffect(\n  () => this.actions$.pipe(\n    ofType(CounterActions.increment),\n    // ...\n  )\n);\n```\n\n\n",
         "remarks": "",
         "deprecated": "",
         "returns": "",
@@ -77,7 +77,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/store!createAction:function(2)",
-      "docComment": "/**\n * @description Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface with metadata provided by the `props` or `emptyProps` functions.\n *\n * @param type - Describes the action that will be dispatched\n *\n * @usageNotes\n *\n * Declaring an action creator:\n * ```ts\n * export const loginSuccess = createAction(\n *   '[Auth/API] Login Success',\n *   props<{ user: User }>()\n * );\n * ```\n *\n * Dispatching an action:\n * ```ts\n * store.dispatch(loginSuccess({ user: newUser }));\n * ```\n *\n * Referencing the action in a reducer:\n * ```ts\n * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))\n * ```\n *\n * Referencing the action in an effect:\n * ```ts\n * effectName$ = createEffect(\n *   () => this.actions$.pipe(\n *     ofType(AuthApiActions.loginSuccess),\n *     // ...\n *   )\n * );\n * ```\n *\n */\n",
+      "docComment": "/**\n * Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface with metadata provided by the `props` or `emptyProps` functions.\n *\n * @param type - Describes the action that will be dispatched\n *\n * @example\n *\n * Declaring an action creator:\n * ```ts\n * export const loginSuccess = createAction(\n *   '[Auth/API] Login Success',\n *   props<{ user: User }>()\n * );\n * ```\n *\n * Dispatching an action:\n * ```ts\n * store.dispatch(loginSuccess({ user: newUser }));\n * ```\n *\n * Referencing the action in a reducer:\n * ```ts\n * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))\n * ```\n *\n * Referencing the action in an effect:\n * ```ts\n * effectName$ = createEffect(\n *   () => this.actions$.pipe(\n *     ofType(AuthApiActions.loginSuccess),\n *     // ...\n *   )\n * );\n * ```\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -154,14 +154,14 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": " Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface with metadata provided by the `props` or `emptyProps` functions.\n\n",
-        "usageNotes": "\n\nDeclaring an action creator:\n```ts\nexport const loginSuccess = createAction(\n  '[Auth/API] Login Success',\n  props<{ user: User }>()\n);\n```\n\nDispatching an action:\n```ts\nstore.dispatch(loginSuccess({ user: newUser }));\n```\n\nReferencing the action in a reducer:\n```ts\non(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))\n```\n\nReferencing the action in an effect:\n```ts\neffectName$ = createEffect(\n  () => this.actions$.pipe(\n    ofType(AuthApiActions.loginSuccess),\n    // ...\n  )\n);\n```\n\n",
+        "summary": "Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface with metadata provided by the `props` or `emptyProps` functions.\n\n",
+        "usageNotes": "\n\nDeclaring an action creator:\n```ts\nexport const loginSuccess = createAction(\n  '[Auth/API] Login Success',\n  props<{ user: User }>()\n);\n```\n\nDispatching an action:\n```ts\nstore.dispatch(loginSuccess({ user: newUser }));\n```\n\nReferencing the action in a reducer:\n```ts\non(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))\n```\n\nReferencing the action in an effect:\n```ts\neffectName$ = createEffect(\n  () => this.actions$.pipe(\n    ofType(AuthApiActions.loginSuccess),\n    // ...\n  )\n);\n```\n\n\n",
         "remarks": "",
         "deprecated": "",
         "returns": "",
@@ -177,7 +177,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/store!createAction:function(3)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -261,13 +261,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

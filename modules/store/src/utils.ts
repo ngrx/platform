@@ -7,22 +7,24 @@ import {
   InitialState,
 } from './models';
 
+/**
+ * @public
+ */
 export function combineReducers<T, V extends Action = Action>(
   reducers: ActionReducerMap<T, V>,
   initialState?: Partial<T>
 ): ActionReducer<T, V>;
 /**
- * @description
  * Combines reducers for individual features into a single reducer.
  *
  * You can use this function to delegate handling of state transitions to multiple reducers, each acting on their
  * own sub-state within the root state.
  *
- * @param reducers An object mapping keys of the root state to their corresponding feature reducer.
- * @param initialState Provides a state value if the current state is `undefined`, as it is initially.
+ * @param reducers - An object mapping keys of the root state to their corresponding feature reducer.
+ * @param initialState - Provides a state value if the current state is `undefined`, as it is initially.
  * @returns A reducer function.
  *
- * @usageNotes
+ * @example
  *
  * **Example combining two feature reducers into one "root" reducer**
  *
@@ -43,6 +45,8 @@ export function combineReducers<T, V extends Action = Action>(
  *   featureB: { counterB: 37 }
  * });
  * ```
+ *
+ * @public
  */
 export function combineReducers(
   reducers: any,
@@ -77,6 +81,9 @@ export function combineReducers(
   };
 }
 
+/**
+ * @public
+ */
 export function omit<T extends { [key: string]: any }>(
   object: T,
   keyToRemove: keyof T
@@ -86,20 +93,38 @@ export function omit<T extends { [key: string]: any }>(
     .reduce((result, key) => Object.assign(result, { [key]: object[key] }), {});
 }
 
+/**
+ * @public
+ */
 export function compose<A>(): (i: A) => A;
+/**
+ * @public
+ */
 export function compose<A, B>(b: (i: A) => B): (i: A) => B;
+/**
+ * @public
+ */
 export function compose<A, B, C>(c: (i: B) => C, b: (i: A) => B): (i: A) => C;
+/**
+ * @public
+ */
 export function compose<A, B, C, D>(
   d: (i: C) => D,
   c: (i: B) => C,
   b: (i: A) => B
 ): (i: A) => D;
+/**
+ * @public
+ */
 export function compose<A, B, C, D, E>(
   e: (i: D) => E,
   d: (i: C) => D,
   c: (i: B) => C,
   b: (i: A) => B
 ): (i: A) => E;
+/**
+ * @public
+ */
 export function compose<A, B, C, D, E, F>(
   f: (i: E) => F,
   e: (i: D) => E,
@@ -107,7 +132,13 @@ export function compose<A, B, C, D, E, F>(
   c: (i: B) => C,
   b: (i: A) => B
 ): (i: A) => F;
+/**
+ * @public
+ */
 export function compose<A = any, F = any>(...functions: any[]): (i: A) => F;
+/**
+ * @public
+ */
 export function compose(...functions: any[]) {
   return function (arg: any) {
     if (functions.length === 0) {
@@ -121,6 +152,9 @@ export function compose(...functions: any[]) {
   };
 }
 
+/**
+ * @public
+ */
 export function createReducerFactory<T, V extends Action = Action>(
   reducerFactory: ActionReducerFactory<T, V>,
   metaReducers?: MetaReducer<T, V>[]
@@ -141,6 +175,9 @@ export function createReducerFactory<T, V extends Action = Action>(
   };
 }
 
+/**
+ * @public
+ */
 export function createFeatureReducerFactory<T, V extends Action = Action>(
   metaReducers?: MetaReducer<T, V>[]
 ): (reducer: ActionReducer<T, V>, initialState?: T) => ActionReducer<T, V> {

@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!DefaultPersistenceResultHandler:class",
-      "docComment": "/**\n * Default handling of responses from persistence operation, specifically an EntityDataService\n */\n",
+      "docComment": "/**\n * Default handling of responses from persistence operation, specifically an EntityDataService\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -209,13 +209,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Default handling of responses from persistence operation, specifically an EntityDataService\n",
+        "summary": "Default handling of responses from persistence operation, specifically an EntityDataService\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

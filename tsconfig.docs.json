@@ -17,7 +17,7 @@
     "rootDir": ".",
     "strict": true,
     "paths": {},
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": []
   },
   "exclude": [
     "dist",

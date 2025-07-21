@@ -9,6 +9,9 @@ import { createSelectorsFactory } from './state_selectors';
 import { createSortedStateAdapter } from './sorted_state_adapter';
 import { createUnsortedStateAdapter } from './unsorted_state_adapter';
 
+/**
+ * @public
+ */
 export function createEntityAdapter<T>(
   options: {
     selectId?: IdSelector<T>;

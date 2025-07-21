@@ -10,6 +10,7 @@ import { EntityOp } from '../actions/entity-op';
 /**
  * Dispatches EntityCollection actions to their reducers and effects.
  * The substance of the interface is in EntityCommands.
+ * @public
  */
 export interface EntityDispatcher<T> extends EntityCommands<T> {
   /** Name of the entity type */
@@ -27,10 +28,10 @@ export interface EntityDispatcher<T> extends EntityCommands<T> {
   readonly store: Store<EntityCache>;
 
   /**
-   * Create an {EntityAction} for this entity type.
-   * @param op {EntityOp} the entity operation
-   * @param [data] the action data
-   * @param [options] additional options
+   * Create an \{EntityAction\} for this entity type.
+   * @param op - the entity operation
+   * @param data - the action data
+   * @param options - additional options
    * @returns the EntityAction
    */
   createEntityAction<P = any>(
@@ -40,11 +41,11 @@ export interface EntityDispatcher<T> extends EntityCommands<T> {
   ): EntityAction<P>;
 
   /**
-   * Create an {EntityAction} for this entity type and
+   * Create an \{EntityAction\} for this entity type and
    * dispatch it immediately to the store.
-   * @param op {EntityOp} the entity operation
-   * @param [data] the action data
-   * @param [options] additional options
+   * @param op - the entity operation
+   * @param data - the action data
+   * @param options - additional options
    * @returns the dispatched EntityAction
    */
   createAndDispatch<P = any>(
@@ -55,7 +56,7 @@ export interface EntityDispatcher<T> extends EntityCommands<T> {
 
   /**
    * Dispatch an Action to the store.
-   * @param action the Action
+   * @param action - the Action
    * @returns the dispatched Action
    */
   dispatch(action: Action): Action;
@@ -69,6 +70,7 @@ export interface EntityDispatcher<T> extends EntityCommands<T> {
 
 /**
  * Persistence operation canceled
+ * @public
  */
 export class PersistanceCanceled {
   constructor(public readonly message?: string) {

@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!EntityServicesBase:class",
-      "docComment": "/**\n * Base/default class of a central registry of EntityCollectionServices for all entity types. Create your own subclass to add app-specific members for an improved developer experience.\n *\n * @usageNotes\n * ```ts\n * export class EntityServices extends EntityServicesBase {\n *   constructor(entityServicesElements: EntityServicesElements) {\n *     super(entityServicesElements);\n *   }\n *   // Extend with well-known, app entity collection services\n *   // Convenience property to return a typed custom entity collection service\n *   get companyService() {\n *     return this.getEntityCollectionService<Model.Company>('Company') as CompanyService;\n *   }\n *   // Convenience dispatch methods\n *   clearCompany(companyId: string) {\n *     this.dispatch(new ClearCompanyAction(companyId));\n *   }\n * }\n * ```\n *\n */\n",
+      "docComment": "/**\n * Base/default class of a central registry of EntityCollectionServices for all entity types. Create your own subclass to add app-specific members for an improved developer experience.\n *\n * @example\n * ```ts\n * export class EntityServices extends EntityServicesBase {\n *   constructor(entityServicesElements: EntityServicesElements) {\n *     super(entityServicesElements);\n *   }\n *   // Extend with well-known, app entity collection services\n *   // Convenience property to return a typed custom entity collection service\n *   get companyService() {\n *     return this.getEntityCollectionService<Model.Company>('Company') as CompanyService;\n *   }\n *   // Convenience dispatch methods\n *   clearCompany(companyId: string) {\n *     this.dispatch(new ClearCompanyAction(companyId));\n *   }\n * }\n * ```\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -552,7 +552,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntityServicesBase#registerEntityCollectionServices:member(1)",
-          "docComment": "/**\n * Register entity services for several entity types at once. Will replace a pre-existing service for that type.\n *\n * @param entityCollectionServices - EntityCollectionServices to register, either as a map or an array\n */\n",
+          "docComment": "/**\n * Register entity services for several entity types at once. Will replace a pre-existing service for that type.\n *\n * @param entityCollectionServices - EntityCollectionServiceMap or EntityCollectionService array EntityCollectionServices to register, either as a map or an array\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -607,7 +607,7 @@
             "params": [
               {
                 "name": "entityCollectionServices",
-                "description": "EntityCollectionServices to register, either as a map or an array\n"
+                "description": "EntityCollectionServiceMap or EntityCollectionService array EntityCollectionServices to register, either as a map or an array\n"
               }
             ]
           }
@@ -663,14 +663,14 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
         "summary": "Base/default class of a central registry of EntityCollectionServices for all entity types. Create your own subclass to add app-specific members for an improved developer experience.\n\n",
-        "usageNotes": "\n```ts\nexport class EntityServices extends EntityServicesBase {\n  constructor(entityServicesElements: EntityServicesElements) {\n    super(entityServicesElements);\n  }\n  // Extend with well-known, app entity collection services\n  // Convenience property to return a typed custom entity collection service\n  get companyService() {\n    return this.getEntityCollectionService<Model.Company>('Company') as CompanyService;\n  }\n  // Convenience dispatch methods\n  clearCompany(companyId: string) {\n    this.dispatch(new ClearCompanyAction(companyId));\n  }\n}\n```\n\n",
+        "usageNotes": "\n```ts\nexport class EntityServices extends EntityServicesBase {\n  constructor(entityServicesElements: EntityServicesElements) {\n    super(entityServicesElements);\n  }\n  // Extend with well-known, app entity collection services\n  // Convenience property to return a typed custom entity collection service\n  get companyService() {\n    return this.getEntityCollectionService<Model.Company>('Company') as CompanyService;\n  }\n  // Convenience dispatch methods\n  clearCompany(companyId: string) {\n    this.dispatch(new ClearCompanyAction(companyId));\n  }\n}\n```\n\n\n",
         "remarks": "",
         "deprecated": "",
         "returns": "",

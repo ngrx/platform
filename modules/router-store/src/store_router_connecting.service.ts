@@ -53,6 +53,8 @@ interface StoreRouterActionPayload {
 /**
  * Shared router initialization logic used alongside both the StoreRouterConnectingModule and the provideRouterStore
  * function
+ *
+ * @public
  */
 @Injectable()
 export class StoreRouterConnectingService {

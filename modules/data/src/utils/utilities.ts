@@ -5,6 +5,8 @@ import { IdSelector, Update } from '@ngrx/entity';
  * Assumes that the entity has an `id` pkey property.
  * Returns `undefined` if no entity or `id`.
  * Every selectId fn must return `undefined` when it cannot produce a full pkey.
+ *
+ * @public
  */
 export function defaultSelectId(entity: any) {
   return entity == null ? undefined : entity.id;
@@ -20,7 +22,9 @@ export function defaultSelectId(entity: any) {
  * actions.pipe(ofEntityOp(...persistOps)) // works
  * actions.pipe(ofEntityOp(persistOps)) // also works
  * ```
- * */
+ *
+ * @public
+ */
 export function flattenArgs<T>(args?: any[]): T[] {
   if (args == null) {
     return [];
@@ -36,6 +40,8 @@ export function flattenArgs<T>(args?: any[]): T[] {
  * Return a function that converts an entity (or partial entity) into the `Update<T>`
  * whose `id` is the primary key and
  * `changes` is the entity (or partial entity of changes).
+ *
+ * @public
  */
 export function toUpdateFactory<T>(selectId?: IdSelector<T>) {
   selectId = selectId || (defaultSelectId as IdSelector<T>);
@@ -43,7 +49,7 @@ export function toUpdateFactory<T>(selectId?: IdSelector<T>) {
    * Convert an entity (or partial entity) into the `Update<T>`
    * whose `id` is the primary key and
    * `changes` is the entity (or partial entity of changes).
-   * @param selectId function that returns the entity's primary key (id)
+   * @param selectId - function that returns the entity's primary key (id)
    */
   return function toUpdate(entity: Partial<T>): Update<T> {
     const id: any = selectId!(entity as T);

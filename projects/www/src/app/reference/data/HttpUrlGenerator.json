@@ -1,1 +1,216 @@
-{"name":"HttpUrlGenerator","canonicalReference":"@ngrx/data!HttpUrlGenerator:class","kind":"Class","fileUrlPath":"../../dist/modules/data/src/dataservices/http-url-generator.d.ts","isDeprecated":false,"members":[{"kind":"Class","canonicalReference":"@ngrx/data!HttpUrlGenerator:class","docComment":"/**\n * Generate the base part of an HTTP URL for single entity or entity collection resource\n */\n","excerptTokens":[{"kind":"Content","text":"export declare abstract class HttpUrlGenerator "}],"fileUrlPath":"../../dist/modules/data/src/dataservices/http-url-generator.d.ts","releaseTag":"Public","isAbstract":true,"name":"HttpUrlGenerator","preserveMemberOrder":false,"members":[{"kind":"Method","canonicalReference":"@ngrx/data!HttpUrlGenerator#collectionResource:member(1)","docComment":"/**\n * Return the base URL for a collection resource, e.g., the base URL to get all heroes\n */\n","excerptTokens":[{"kind":"Content","text":"abstract collectionResource(entityName: "},{"kind":"Content","text":"string"},{"kind":"Content","text":", root: "},{"kind":"Content","text":"string"},{"kind":"Content","text":"): "},{"kind":"Content","text":"string"},{"kind":"Content","text":";"}],"isStatic":false,"returnTypeTokenRange":{"startIndex":5,"endIndex":6},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"entityName","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false},{"parameterName":"root","parameterTypeTokenRange":{"startIndex":3,"endIndex":4},"isOptional":false}],"isOptional":false,"isAbstract":true,"name":"collectionResource","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Return the base URL for a collection resource, e.g., the base URL to get all heroes\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/data!HttpUrlGenerator#entityResource:member(1)","docComment":"/**\n * Return the base URL for a single entity resource, e.g., the base URL to get a single hero by its id\n */\n","excerptTokens":[{"kind":"Content","text":"abstract entityResource(entityName: "},{"kind":"Content","text":"string"},{"kind":"Content","text":", root: "},{"kind":"Content","text":"string"},{"kind":"Content","text":", trailingSlashEndpoints: "},{"kind":"Content","text":"boolean"},{"kind":"Content","text":"): "},{"kind":"Content","text":"string"},{"kind":"Content","text":";"}],"isStatic":false,"returnTypeTokenRange":{"startIndex":7,"endIndex":8},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"entityName","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false},{"parameterName":"root","parameterTypeTokenRange":{"startIndex":3,"endIndex":4},"isOptional":false},{"parameterName":"trailingSlashEndpoints","parameterTypeTokenRange":{"startIndex":5,"endIndex":6},"isOptional":false}],"isOptional":false,"isAbstract":true,"name":"entityResource","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Return the base URL for a single entity resource, e.g., the base URL to get a single hero by its id\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/data!HttpUrlGenerator#registerHttpResourceUrls:member(1)","docComment":"/**\n * Register known single-entity and collection resource URLs for HTTP calls\n *\n * @param entityHttpResourceUrls - resource urls for specific entity type names\n */\n","excerptTokens":[{"kind":"Content","text":"abstract registerHttpResourceUrls(entityHttpResourceUrls?: "},{"kind":"Reference","text":"EntityHttpResourceUrls","canonicalReference":"@ngrx/data!EntityHttpResourceUrls:class"},{"kind":"Content","text":"): "},{"kind":"Content","text":"void"},{"kind":"Content","text":";"}],"isStatic":false,"returnTypeTokenRange":{"startIndex":3,"endIndex":4},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"entityHttpResourceUrls","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":true}],"isOptional":false,"isAbstract":true,"name":"registerHttpResourceUrls","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Register known single-entity and collection resource URLs for HTTP calls\n\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[{"name":"entityHttpResourceUrls","description":"resource urls for specific entity type names\n"}]}}],"implementsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Generate the base part of an HTTP URL for single entity or entity collection resource\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "HttpUrlGenerator",
+  "canonicalReference": "@ngrx/data!HttpUrlGenerator:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/dataservices/http-url-generator.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!HttpUrlGenerator:class",
+      "docComment": "/**\n * Generate the base part of an HTTP URL for single entity or entity collection resource\n *\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare abstract class HttpUrlGenerator "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/dataservices/http-url-generator.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": true,
+      "name": "HttpUrlGenerator",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!HttpUrlGenerator#collectionResource:member(1)",
+          "docComment": "/**\n * Return the base URL for a collection resource, e.g., the base URL to get all heroes\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "abstract collectionResource(entityName: "
+            },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ", root: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityName",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "root",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": true,
+          "name": "collectionResource",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Return the base URL for a collection resource, e.g., the base URL to get all heroes\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!HttpUrlGenerator#entityResource:member(1)",
+          "docComment": "/**\n * Return the base URL for a single entity resource, e.g., the base URL to get a single hero by its id\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "abstract entityResource(entityName: "
+            },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ", root: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ", trailingSlashEndpoints: " },
+            { "kind": "Content", "text": "boolean" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityName",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "root",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "trailingSlashEndpoints",
+              "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": true,
+          "name": "entityResource",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Return the base URL for a single entity resource, e.g., the base URL to get a single hero by its id\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!HttpUrlGenerator#registerHttpResourceUrls:member(1)",
+          "docComment": "/**\n * Register known single-entity and collection resource URLs for HTTP calls\n *\n * @param entityHttpResourceUrls - resource urls for specific entity type names\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "abstract registerHttpResourceUrls(entityHttpResourceUrls?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityHttpResourceUrls",
+              "canonicalReference": "@ngrx/data!EntityHttpResourceUrls:class"
+            },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "void" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityHttpResourceUrls",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": true,
+          "name": "registerHttpResourceUrls",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Register known single-entity and collection resource URLs for HTTP calls\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entityHttpResourceUrls",
+                "description": "resource urls for specific entity type names\n"
+              }
+            ]
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Generate the base part of an HTTP URL for single entity or entity collection resource\n\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

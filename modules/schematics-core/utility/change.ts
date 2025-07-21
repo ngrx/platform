@@ -10,11 +10,18 @@ import { Path } from '@angular-devkit/core';
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+
+/**
+ * @public
+ */
 export interface Host {
   write(path: string, content: string): Promise<void>;
   read(path: string): Promise<string>;
 }
 
+/**
+ * @public
+ */
 export interface Change {
   apply(host: Host): Promise<void>;
 
@@ -32,6 +39,8 @@ export interface Change {
 
 /**
  * An operation that does nothing.
+ *
+ * @public
  */
 export class NoopChange implements Change {
   description = 'No operation.';
@@ -44,6 +53,8 @@ export class NoopChange implements Change {
 
 /**
  * Will add text to the source code.
+ *
+ * @public
  */
 export class InsertChange implements Change {
   order: number;
@@ -72,6 +83,8 @@ export class InsertChange implements Change {
 
 /**
  * Will remove text from the source code.
+ *
+ * @public
  */
 export class RemoveChange implements Change {
   order: number;
@@ -98,6 +111,8 @@ export class RemoveChange implements Change {
 
 /**
  * Will replace text from the source code.
+ *
+ * @public
  */
 export class ReplaceChange implements Change {
   order: number;
@@ -134,6 +149,9 @@ export class ReplaceChange implements Change {
   }
 }
 
+/**
+ * @public
+ */
 export function createReplaceChange(
   sourceFile: ts.SourceFile,
   node: ts.Node,
@@ -148,6 +166,9 @@ export function createReplaceChange(
   );
 }
 
+/**
+ * @public
+ */
 export function createRemoveChange(
   sourceFile: ts.SourceFile,
   node: ts.Node,
@@ -157,6 +178,9 @@ export function createRemoveChange(
   return new RemoveChange(sourceFile.fileName, from, to);
 }
 
+/**
+ * @public
+ */
 export function createChangeRecorder(
   tree: Tree,
   path: string,
@@ -176,6 +200,9 @@ export function createChangeRecorder(
   return recorder;
 }
 
+/**
+ * @public
+ */
 export function commitChanges(tree: Tree, path: string, changes: Change[]) {
   if (changes.length === 0) {
     return false;

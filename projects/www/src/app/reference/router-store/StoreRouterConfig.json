@@ -1,1 +1,209 @@
-{"name":"StoreRouterConfig","canonicalReference":"@ngrx/router-store!StoreRouterConfig:interface","kind":"Interface","fileUrlPath":"../../dist/modules/router-store/src/router_store_config.d.ts","isDeprecated":false,"members":[{"kind":"Interface","canonicalReference":"@ngrx/router-store!StoreRouterConfig:interface","docComment":"","excerptTokens":[{"kind":"Content","text":"export interface StoreRouterConfig<T extends "},{"kind":"Reference","text":"BaseRouterStoreState","canonicalReference":"@ngrx/router-store!BaseRouterStoreState:interface"},{"kind":"Content","text":" = "},{"kind":"Reference","text":"SerializedRouterStateSnapshot","canonicalReference":"@ngrx/router-store!SerializedRouterStateSnapshot:interface"},{"kind":"Content","text":"> "}],"fileUrlPath":"../../dist/modules/router-store/src/router_store_config.d.ts","releaseTag":"Public","typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":3,"endIndex":4}}],"name":"StoreRouterConfig","preserveMemberOrder":false,"members":[{"kind":"PropertySignature","canonicalReference":"@ngrx/router-store!StoreRouterConfig#navigationActionTiming:member","docComment":"/**\n * By default, ROUTER_NAVIGATION is dispatched before guards and resolvers run. Therefore, the action could run too soon, for example there may be a navigation cancel due to a guard saying the navigation is not allowed. To run ROUTER_NAVIGATION after guards and resolvers, set this property to NavigationActionTiming.PostActivation.\n */\n","excerptTokens":[{"kind":"Content","text":"navigationActionTiming?: "},{"kind":"Reference","text":"NavigationActionTiming","canonicalReference":"@ngrx/router-store!NavigationActionTiming:enum"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"navigationActionTiming","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"By default, ROUTER_NAVIGATION is dispatched before guards and resolvers run. Therefore, the action could run too soon, for example there may be a navigation cancel due to a guard saying the navigation is not allowed. To run ROUTER_NAVIGATION after guards and resolvers, set this property to NavigationActionTiming.PostActivation.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/router-store!StoreRouterConfig#routerState:member","docComment":"/**\n * Decides which router serializer should be used, if there is none provided, and the metadata on the dispatched @ngrx/router-store action payload. Set to `Minimal` to use the `MinimalRouterStateSerializer` and to set a minimal router event with the navigation id and url as payload. Set to `Full` to use the `FullRouterStateSerializer` and to set the angular router events as payload.\n */\n","excerptTokens":[{"kind":"Content","text":"routerState?: "},{"kind":"Reference","text":"RouterState","canonicalReference":"@ngrx/router-store!RouterState:enum"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"routerState","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Decides which router serializer should be used, if there is none provided, and the metadata on the dispatched @ngrx/router-store action payload. Set to `Minimal` to use the `MinimalRouterStateSerializer` and to set a minimal router event with the navigation id and url as payload. Set to `Full` to use the `FullRouterStateSerializer` and to set the angular router events as payload.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/router-store!StoreRouterConfig#serializer:member","docComment":"","excerptTokens":[{"kind":"Content","text":"serializer?: "},{"kind":"Content","text":"new (...args: any[]) => "},{"kind":"Reference","text":"RouterStateSerializer","canonicalReference":"@ngrx/router-store!RouterStateSerializer:class"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"serializer","propertyTypeTokenRange":{"startIndex":1,"endIndex":3},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/router-store!StoreRouterConfig#stateKey:member","docComment":"","excerptTokens":[{"kind":"Content","text":"stateKey?: "},{"kind":"Reference","text":"StateKeyOrSelector","canonicalReference":"@ngrx/router-store!StateKeyOrSelector:type"},{"kind":"Content","text":"<T>"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"stateKey","propertyTypeTokenRange":{"startIndex":1,"endIndex":3},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"extendsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "StoreRouterConfig",
+  "canonicalReference": "@ngrx/router-store!StoreRouterConfig:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/router-store/src/router_store_config.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/router-store!StoreRouterConfig:interface",
+      "docComment": "/**\n * Configuration interface for the router store.\n *\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export interface StoreRouterConfig<T extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "BaseRouterStoreState",
+          "canonicalReference": "@ngrx/router-store!BaseRouterStoreState:interface"
+        },
+        { "kind": "Content", "text": " = " },
+        {
+          "kind": "Reference",
+          "text": "SerializedRouterStateSnapshot",
+          "canonicalReference": "@ngrx/router-store!SerializedRouterStateSnapshot:interface"
+        },
+        { "kind": "Content", "text": "> " }
+      ],
+      "fileUrlPath": "../../dist/modules/router-store/src/router_store_config.d.ts",
+      "releaseTag": "Public",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 3, "endIndex": 4 }
+        }
+      ],
+      "name": "StoreRouterConfig",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/router-store!StoreRouterConfig#navigationActionTiming:member",
+          "docComment": "/**\n * By default, ROUTER_NAVIGATION is dispatched before guards and resolvers run. Therefore, the action could run too soon, for example there may be a navigation cancel due to a guard saying the navigation is not allowed. To run ROUTER_NAVIGATION after guards and resolvers, set this property to NavigationActionTiming.PostActivation.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "navigationActionTiming?: " },
+            {
+              "kind": "Reference",
+              "text": "NavigationActionTiming",
+              "canonicalReference": "@ngrx/router-store!NavigationActionTiming:enum"
+            },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "navigationActionTiming",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "By default, ROUTER_NAVIGATION is dispatched before guards and resolvers run. Therefore, the action could run too soon, for example there may be a navigation cancel due to a guard saying the navigation is not allowed. To run ROUTER_NAVIGATION after guards and resolvers, set this property to NavigationActionTiming.PostActivation.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/router-store!StoreRouterConfig#routerState:member",
+          "docComment": "/**\n * Decides which router serializer should be used, if there is none provided, and the metadata on the dispatched \\@ngrx/router-store action payload. Set to `Minimal` to use the `MinimalRouterStateSerializer` and to set a minimal router event with the navigation id and url as payload. Set to `Full` to use the `FullRouterStateSerializer` and to set the angular router events as payload.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "routerState?: " },
+            {
+              "kind": "Reference",
+              "text": "RouterState",
+              "canonicalReference": "@ngrx/router-store!RouterState:enum"
+            },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "routerState",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Decides which router serializer should be used, if there is none provided, and the metadata on the dispatched \\@ngrx/router-store action payload. Set to `Minimal` to use the `MinimalRouterStateSerializer` and to set a minimal router event with the navigation id and url as payload. Set to `Full` to use the `FullRouterStateSerializer` and to set the angular router events as payload.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/router-store!StoreRouterConfig#serializer:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "serializer?: " },
+            { "kind": "Content", "text": "new (...args: any[]) => " },
+            {
+              "kind": "Reference",
+              "text": "RouterStateSerializer",
+              "canonicalReference": "@ngrx/router-store!RouterStateSerializer:class"
+            },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "serializer",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/router-store!StoreRouterConfig#stateKey:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "stateKey?: " },
+            {
+              "kind": "Reference",
+              "text": "StateKeyOrSelector",
+              "canonicalReference": "@ngrx/router-store!StateKeyOrSelector:type"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "stateKey",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Configuration interface for the router store.\n\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

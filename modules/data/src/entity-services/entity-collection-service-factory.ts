@@ -7,6 +7,7 @@ import { EntitySelectors$ } from '../selectors/entity-selectors$';
 /**
  * Creates EntityCollectionService instances for
  * a cached collection of T entities in the ngrx store.
+ * @public
  */
 @Injectable()
 export class EntityCollectionServiceFactory {

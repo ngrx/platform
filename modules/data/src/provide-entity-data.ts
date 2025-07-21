@@ -59,6 +59,9 @@ import { EntityEffects } from './effects/entity-effects';
 import { DefaultPluralizer } from './utils/default-pluralizer';
 import { EntityDataModuleConfig } from './entity-data-config';
 
+/**
+ * @public
+ */
 export const BASE_ENTITY_DATA_PROVIDERS: Array<
   Provider | EnvironmentProviders
 > = [
@@ -120,6 +123,9 @@ function initializeBaseEntityData(): void {
   reducerManager.addFeature(entityCacheFeature);
 }
 
+/**
+ * @public
+ */
 export const ENTITY_DATA_EFFECTS_PROVIDERS: Array<
   Provider | EnvironmentProviders
 > = [
@@ -146,6 +152,9 @@ function initializeEntityDataEffects(): void {
   effectsSources.addEffects(entityEffects);
 }
 
+/**
+ * @public
+ */
 export function provideEntityDataConfig(
   config: EntityDataModuleConfig
 ): Provider[] {
@@ -179,7 +188,7 @@ export function provideEntityDataConfig(
  * Sets up base entity data providers with entity config.
  * This function should to be used at the root level.
  *
- * @usageNotes
+ * @example
  *
  * ### Providing entity data with effects
  *
@@ -232,6 +241,7 @@ export function provideEntityDataConfig(
  * });
  * ```
  *
+ * @public
  */
 export function provideEntityData(
   config: EntityDataModuleConfig,
@@ -257,6 +267,8 @@ interface EntityDataFeature {
  * Registers entity data effects and provides HTTP data services.
  *
  * @see `provideEntityData`
+ *
+ * @public
  */
 export function withEffects(): EntityDataFeature {
   return {

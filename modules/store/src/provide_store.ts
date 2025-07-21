@@ -64,16 +64,25 @@ import {
   StoreConfig,
 } from './store_config';
 
+/**
+ * @public
+ */
 export function provideState<T, V extends Action = Action>(
   featureName: string,
   reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,
   config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>
 ): EnvironmentProviders;
+/**
+ * @public
+ */
 export function provideState<T, V extends Action = Action>(
   featureName: string,
   reducer: ActionReducer<T, V> | InjectionToken<ActionReducer<T, V>>,
   config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>
 ): EnvironmentProviders;
+/**
+ * @public
+ */
 export function provideState<T, V extends Action = Action>(
   slice: FeatureSlice<T, V>
 ): EnvironmentProviders;
@@ -81,7 +90,7 @@ export function provideState<T, V extends Action = Action>(
  * Provides additional slices of state in the Store.
  * These providers cannot be used at the component level.
  *
- * @usageNotes
+ * @example
  *
  * ### Providing Store Features
  *
@@ -97,6 +106,8 @@ export function provideState<T, V extends Action = Action>(
  *   },
  * ];
  * ```
+ *
+ * @public
  */
 export function provideState<T, V extends Action = Action>(
   featureNameOrSlice: string | FeatureSlice<T, V>,
@@ -193,7 +204,7 @@ const ENVIRONMENT_STORE_PROVIDER: Array<Provider | EnvironmentProviders> = [
  * the Store.
  * These providers cannot be used at the component level.
  *
- * @usageNotes
+ * @example
  *
  * ### Providing the Global Store
  *
@@ -202,6 +213,8 @@ const ENVIRONMENT_STORE_PROVIDER: Array<Provider | EnvironmentProviders> = [
  *   providers: [provideStore()],
  * });
  * ```
+ *
+ * @public
  */
 export function provideStore<T, V extends Action = Action>(
   reducers?: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>,

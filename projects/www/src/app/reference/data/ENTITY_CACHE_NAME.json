@@ -1,1 +1,41 @@
-{"name":"ENTITY_CACHE_NAME","canonicalReference":"@ngrx/data!ENTITY_CACHE_NAME:var","kind":"Variable","fileUrlPath":"../../dist/modules/data/src/reducers/constants.d.ts","isDeprecated":false,"members":[{"kind":"Variable","canonicalReference":"@ngrx/data!ENTITY_CACHE_NAME:var","docComment":"","excerptTokens":[{"kind":"Content","text":"ENTITY_CACHE_NAME = "},{"kind":"Content","text":"\"entityCache\""}],"fileUrlPath":"../../dist/modules/data/src/reducers/constants.d.ts","initializerTokenRange":{"startIndex":1,"endIndex":2},"isReadonly":true,"releaseTag":"Public","name":"ENTITY_CACHE_NAME","variableTypeTokenRange":{"startIndex":0,"endIndex":0},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "ENTITY_CACHE_NAME",
+  "canonicalReference": "@ngrx/data!ENTITY_CACHE_NAME:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/data/src/reducers/constants.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/data!ENTITY_CACHE_NAME:var",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        { "kind": "Content", "text": "ENTITY_CACHE_NAME = " },
+        { "kind": "Content", "text": "\"entityCache\"" }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/reducers/constants.d.ts",
+      "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "ENTITY_CACHE_NAME",
+      "variableTypeTokenRange": { "startIndex": 0, "endIndex": 0 },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

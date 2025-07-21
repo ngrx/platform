@@ -3,8 +3,6 @@ import {
   DocNode,
   TSDocConfiguration,
   TSDocParser,
-  TSDocTagDefinition,
-  TSDocTagSyntaxKind,
 } from '@microsoft/tsdoc';
 import path from 'path';
 import fs from 'fs';
@@ -24,6 +22,7 @@ import {
   CanonicalReference,
   MinimizedApiMemberSummary,
 } from '@ngrx-io/shared';
+import { format } from 'prettier';
 
 interface ApiPackage {
   name: string;
@@ -260,18 +259,12 @@ function renderDocNode(annotation: string, docNode?: DocNode): string {
 
 function parseTSDoc(foundComment: string): ApiDocs {
   const customConfiguration = new TSDocConfiguration();
-  const usageNotesDefinition = new TSDocTagDefinition({
-    tagName: '@usageNotes',
-    syntaxKind: TSDocTagSyntaxKind.BlockTag,
-  });
-
-  customConfiguration.addTagDefinitions([usageNotesDefinition]);
 
   const tsdocParser = new TSDocParser(customConfiguration);
   const parserContext = tsdocParser.parseString(foundComment);
   const docComment = parserContext.docComment;
   const usageNotesBlock = docComment.customBlocks.find(
-    (block) => block.blockTag.tagName === '@usageNotes'
+    (block) => block.blockTag.tagName === '@example'
   );
 
   return {
@@ -284,7 +277,7 @@ function parseTSDoc(foundComment: string): ApiDocs {
       isExperimental: docComment.modifierTagSet.isExperimental(),
     },
     summary: renderDocNode('@description', docComment.summarySection),
-    usageNotes: renderDocNode('@usageNotes', usageNotesBlock),
+    usageNotes: renderDocNode('@example', usageNotesBlock),
     remarks: renderDocNode('@remarks', docComment.remarksBlock),
     deprecated: renderDocNode('@deprecated', docComment.deprecatedBlock),
     returns: renderDocNode('@returns', docComment.returnsBlock),
@@ -392,11 +385,17 @@ function writeFinalizedApiReport() {
         }.json`
       );
 
-      fs.writeFileSync(symbolPath, JSON.stringify(symbol));
+      fs.writeFileSync(
+        symbolPath,
+        format(JSON.stringify(symbol), { parser: 'json' })
+      );
     }
   }
 
-  fs.writeFileSync(minimizedReportPath, JSON.stringify(minimizedReport));
+  fs.writeFileSync(
+    minimizedReportPath,
+    format(JSON.stringify(minimizedReport), { parser: 'json' })
+  );
 }
 
 writeFinalizedApiReport();

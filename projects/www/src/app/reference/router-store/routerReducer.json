@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/router-store!routerReducer:function(1)",
-      "docComment": "",
+      "docComment": "/**\n * Reducer for router state that handles router navigation events.\n *\n * @param state - The current router state.\n *\n * @param action - The action to process.\n *\n * @returns The new router state.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -76,19 +76,22 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "Reducer for router state that handles router navigation events.\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
-        "returns": "",
+        "returns": " The new router state.\n\n\n",
         "see": [],
-        "params": []
+        "params": [
+          { "name": "state", "description": "The current router state.\n\n" },
+          { "name": "action", "description": "The action to process.\n\n" }
+        ]
       }
     }
   ]

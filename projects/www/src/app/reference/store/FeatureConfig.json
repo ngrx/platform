@@ -1,1 +1,127 @@
-{"name":"FeatureConfig","canonicalReference":"@ngrx/store!FeatureConfig:interface","kind":"Interface","fileUrlPath":"../../dist/modules/store/src/feature_creator.d.ts","isDeprecated":false,"members":[{"kind":"Interface","canonicalReference":"@ngrx/store!FeatureConfig:interface","docComment":"","excerptTokens":[{"kind":"Content","text":"export interface FeatureConfig<FeatureName extends "},{"kind":"Content","text":"string"},{"kind":"Content","text":", FeatureState> "}],"fileUrlPath":"../../dist/modules/store/src/feature_creator.d.ts","releaseTag":"Public","typeParameters":[{"typeParameterName":"FeatureName","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"FeatureState","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"FeatureConfig","preserveMemberOrder":false,"members":[{"kind":"PropertySignature","canonicalReference":"@ngrx/store!FeatureConfig#name:member","docComment":"","excerptTokens":[{"kind":"Content","text":"name: "},{"kind":"Content","text":"FeatureName"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"name","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/store!FeatureConfig#reducer:member","docComment":"","excerptTokens":[{"kind":"Content","text":"reducer: "},{"kind":"Reference","text":"ActionReducer","canonicalReference":"@ngrx/store!ActionReducer:interface"},{"kind":"Content","text":"<FeatureState>"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"reducer","propertyTypeTokenRange":{"startIndex":1,"endIndex":3},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"extendsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "FeatureConfig",
+  "canonicalReference": "@ngrx/store!FeatureConfig:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/store/src/feature_creator.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/store!FeatureConfig:interface",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export interface FeatureConfig<FeatureName extends "
+        },
+        { "kind": "Content", "text": "string" },
+        { "kind": "Content", "text": ", FeatureState> " }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/feature_creator.d.ts",
+      "releaseTag": "Public",
+      "typeParameters": [
+        {
+          "typeParameterName": "FeatureName",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "FeatureState",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "FeatureConfig",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/store!FeatureConfig#name:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "name: " },
+            { "kind": "Content", "text": "FeatureName" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "name",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/store!FeatureConfig#reducer:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "reducer: " },
+            {
+              "kind": "Reference",
+              "text": "ActionReducer",
+              "canonicalReference": "@ngrx/store!ActionReducer:interface"
+            },
+            { "kind": "Content", "text": "<FeatureState>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "reducer",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

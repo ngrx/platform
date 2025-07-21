@@ -7,6 +7,8 @@ import { UpdateResponseData } from '../actions/update-response-data';
  * Guard methods that ensure EntityAction payload is as expected.
  * Each method returns that payload if it passes the guard or
  * throws an error.
+ *
+ * @public
  */
 export class EntityActionGuard<T> {
   constructor(private entityName: string, private selectId: IdSelector<T>) {}

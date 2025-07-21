@@ -7,12 +7,27 @@ import { RouterStateSelectors } from './models';
 import { RouterReducerState } from './reducer';
 import { DEFAULT_ROUTER_FEATURENAME } from './router_store_config';
 
+/**
+ * Creates a feature selector for the router state.
+ *
+ * @returns A memoized selector for the router reducer state.
+ *
+ * @public
+ */
 export function createRouterSelector<
   State extends Record<string, any>
 >(): MemoizedSelector<State, RouterReducerState> {
   return createFeatureSelector(DEFAULT_ROUTER_FEATURENAME);
 }
 
+/**
+ * Creates a collection of router state selectors.
+ *
+ * @param selectState - Optional selector function for the router state.
+ * @returns A collection of router state selectors.
+ *
+ * @public
+ */
 export function getRouterSelectors<V extends Record<string, any>>(
   selectState: (state: V) => RouterReducerState<any> = createRouterSelector<V>()
 ): RouterStateSelectors<V> {

@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!EntityDispatcherFactory:class",
-      "docComment": "/**\n * Creates EntityDispatchers for entity collections\n */\n",
+      "docComment": "/**\n * Creates EntityDispatchers for entity collections\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -310,13 +310,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Creates EntityDispatchers for entity collections\n",
+        "summary": "Creates EntityDispatchers for entity collections\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

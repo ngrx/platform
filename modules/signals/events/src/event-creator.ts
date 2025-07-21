@@ -16,11 +16,9 @@ export function event<Type extends string, Payload>(
 ): EventCreator<Type, Payload>;
 /**
  * @experimental
- * @description
- *
  * Creates an event creator.
  *
- * @usageNotes
+ * @example
  *
  * ### Creating an event creator without payload
  *

@@ -53,7 +53,7 @@ export function createStateObservable(
 /**
  * Provides developer tools and instrumentation for `Store`.
  *
- * @usageNotes
+ * @example
  *
  * ```ts
  * bootstrapApplication(AppComponent, {
@@ -65,6 +65,8 @@ export function createStateObservable(
  *   ],
  * });
  * ```
+ *
+ * @public
  */
 export function provideStoreDevtools(
   options: StoreDevtoolsOptions = {}

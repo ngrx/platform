@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!EntityServicesElements:class",
-      "docComment": "/**\n * Core ingredients of an EntityServices class\n */\n",
+      "docComment": "/**\n * Core ingredients of an EntityServices class\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -348,13 +348,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Core ingredients of an EntityServices class\n",
+        "summary": "Core ingredients of an EntityServices class\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

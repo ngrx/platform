@@ -7,9 +7,9 @@ module.exports = function migrateLegacyJSDocTags(log, createDocMessage) {
       docs.forEach(doc => {
         if (doc.howToUse) {
           if (doc.usageNotes) {
-            throw new Error(createDocMessage('`@usageNotes` and the deprecated `@howToUse` are not allowed on the same doc', doc));
+            throw new Error(createDocMessage('`@example` and the deprecated `@howToUse` are not allowed on the same doc', doc));
           }
-          log.debug(createDocMessage('Using deprecated `@howToUse` tag as though it was `@usageNotes` tag', doc));
+          log.debug(createDocMessage('Using deprecated `@howToUse` tag as though it was `@example` tag', doc));
           doc.usageNotes = doc.howToUse;
           doc.howToUse = null;
           migrated = true;

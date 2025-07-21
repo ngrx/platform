@@ -1,1 +1,173 @@
-{"name":"RequestData","canonicalReference":"@ngrx/data!RequestData:interface","kind":"Interface","fileUrlPath":"../../dist/modules/data/src/dataservices/interfaces.d.ts","isDeprecated":false,"members":[{"kind":"Interface","canonicalReference":"@ngrx/data!RequestData:interface","docComment":"","excerptTokens":[{"kind":"Content","text":"export interface RequestData "}],"fileUrlPath":"../../dist/modules/data/src/dataservices/interfaces.d.ts","releaseTag":"Public","name":"RequestData","preserveMemberOrder":false,"members":[{"kind":"PropertySignature","canonicalReference":"@ngrx/data!RequestData#data:member","docComment":"","excerptTokens":[{"kind":"Content","text":"data?: "},{"kind":"Content","text":"any"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"data","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!RequestData#method:member","docComment":"","excerptTokens":[{"kind":"Content","text":"method: "},{"kind":"Reference","text":"HttpMethods","canonicalReference":"@ngrx/data!HttpMethods:type"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"method","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!RequestData#options:member","docComment":"","excerptTokens":[{"kind":"Content","text":"options?: "},{"kind":"Content","text":"any"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"options","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!RequestData#url:member","docComment":"","excerptTokens":[{"kind":"Content","text":"url: "},{"kind":"Content","text":"string"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"url","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"extendsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "RequestData",
+  "canonicalReference": "@ngrx/data!RequestData:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/data/src/dataservices/interfaces.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/data!RequestData:interface",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        { "kind": "Content", "text": "export interface RequestData " }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/dataservices/interfaces.d.ts",
+      "releaseTag": "Public",
+      "name": "RequestData",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!RequestData#data:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "data?: " },
+            { "kind": "Content", "text": "any" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "data",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!RequestData#method:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "method: " },
+            {
+              "kind": "Reference",
+              "text": "HttpMethods",
+              "canonicalReference": "@ngrx/data!HttpMethods:type"
+            },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "method",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!RequestData#options:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "options?: " },
+            { "kind": "Content", "text": "any" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "options",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!RequestData#url:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "url: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "url",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

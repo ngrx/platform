@@ -30,6 +30,7 @@ import { UpdateResponseData } from '../actions/update-response-data';
 /**
  * Dispatches EntityCollection actions to their reducers and effects (default implementation).
  * All save commands rely on an Ngrx Effect such as `EntityEffects.persist$`.
+ * @public
  */
 export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
   /** Utility class with methods to validate EntityAction payloads.*/
@@ -46,7 +47,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
   constructor(
     /** Name of the entity type for which entities are dispatched */
     public entityName: string,
-    /** Creates an {EntityAction} */
+    /** Creates an \{EntityAction\} */
     public entityActionFactory: EntityActionFactory,
     /** The store, scoped to the EntityCache */
     public store: Store<EntityCache>,
@@ -75,10 +76,10 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
   }
 
   /**
-   * Create an {EntityAction} for this entity type.
-   * @param entityOp {EntityOp} the entity operation
-   * @param [data] the action data
-   * @param [options] additional options
+   * Create an \{EntityAction\} for this entity type.
+   * @param entityOp - the entity operation
+   * @param data - the action data
+   * @param options - additional options
    * @returns the EntityAction
    */
   createEntityAction<P = any>(
@@ -95,11 +96,11 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
   }
 
   /**
-   * Create an {EntityAction} for this entity type and
+   * Create an \{EntityAction\} for this entity type and
    * dispatch it immediately to the store.
-   * @param op {EntityOp} the entity operation
-   * @param [data] the action data
-   * @param [options] additional options
+   * @param op - the entity operation
+   * @param data - the action data
+   * @param options - additional options
    * @returns the dispatched EntityAction
    */
   createAndDispatch<P = any>(
@@ -114,7 +115,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
 
   /**
    * Dispatch an Action to the store.
-   * @param action the Action
+   * @param action - the Action
    * @returns the dispatched Action
    */
   dispatch(action: Action): Action {
@@ -126,7 +127,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
 
   /**
    * Dispatch action to save a new entity to remote storage.
-   * @param entity entity to add, which may omit its key if pessimistic and the server creates the key;
+   * @param entity - entity to add, which may omit its key if pessimistic and the server creates the key;
    * must have a key if optimistic save.
    * @returns A terminating Observable of the entity
    * after server reports successful save or the save error.
@@ -158,8 +159,8 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
    * Dispatch action to cancel the persistence operation (query or save).
    * Will cause save observable to error with a PersistenceCancel error.
    * Caller is responsible for undoing changes in cache from pending optimistic save
-   * @param correlationId The correlation id for the corresponding EntityAction
-   * @param [reason] explains why canceled and by whom.
+   * @param correlationId - The correlation id for the corresponding EntityAction
+   * @param reason - explains why canceled and by whom.
    */
   cancel(
     correlationId: any,
@@ -174,7 +175,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
 
   /**
    * Dispatch action to delete entity from remote storage by key.
-   * @param key The primary key of the entity to remove
+   * @param key - The primary key of the entity to remove
    * @returns A terminating Observable of the deleted key
    * after server reports successful save or the save error.
    */
@@ -182,7 +183,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
 
   /**
    * Dispatch action to delete entity from remote storage by key.
-   * @param key The entity to delete
+   * @param key - The entity to delete
    * @returns A terminating Observable of the deleted key
    * after server reports successful save or the save error.
    */
@@ -267,7 +268,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
    * Dispatch action to query remote storage for the entities that satisfy a query expressed
    * with either a query parameter map or an HTTP URL query string,
    * and merge the results into the cached collection.
-   * @param queryParams the query in a form understood by the server
+   * @param queryParams - the query in a form understood by the server
    * @returns A terminating Observable of the queried entities
    * after server reports successful query or the query error.
    */
@@ -320,16 +321,21 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
    * Dispatch action to query remote storage for the entities that satisfy a query expressed
    * with either a query parameter map or an HTTP URL query string,
    * and completely replace the cached collection with the queried entities.
-   * @param queryParams the query in a form understood by the server
-   * @param [options] options that influence load behavior
+   * @param queryParams - the query in a form understood by the server
+   * @param options - options that influence load behavior
    * @returns A terminating Observable of the queried entities
    * after server reports successful query or the query error.
    */
-  loadWithQuery(queryParams: QueryParams | string,
-                options?: EntityActionOptions
+  loadWithQuery(
+    queryParams: QueryParams | string,
+    options?: EntityActionOptions
   ): Observable<T[]> {
     options = this.setQueryEntityActionOptions(options);
-    const action = this.createEntityAction(EntityOp.QUERY_MANY, queryParams, options);
+    const action = this.createEntityAction(
+      EntityOp.QUERY_MANY,
+      queryParams,
+      options
+    );
     this.dispatch(action);
     return this.getResponseData$<T[]>(options.correlationId).pipe(
       shareReplay(1)
@@ -340,7 +346,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
    * Dispatch action to save the updated entity (or partial entity) in remote storage.
    * The update entity may be partial (but must have its key)
    * in which case it patches the existing entity.
-   * @param entity update entity, which might be a partial of T but must at least have its key.
+   * @param entity - update entity, which might be a partial of T but must at least have its key.
    * @returns A terminating Observable of the updated entity
    * after server reports successful save or the save error.
    */
@@ -377,7 +383,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
   /**
    * Dispatch action to save a new or existing entity to remote storage.
    * Only dispatch this action if your server supports upsert.
-   * @param entity entity to add, which may omit its key if pessimistic and the server creates the key;
+   * @param entity - entity to add, which may omit its key if pessimistic and the server creates the key;
    * must have a key if optimistic save.
    * @returns A terminating Observable of the entity
    * after server reports successful save or the save error.
@@ -448,14 +454,14 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
   /**
    * Remove an entity directly from the cache.
    * Does not delete that entity from remote storage.
-   * @param entity The entity to remove
+   * @param entity - The entity to remove
    */
   removeOneFromCache(entity: T, options?: EntityActionOptions): void;
 
   /**
    * Remove an entity directly from the cache.
    * Does not delete that entity from remote storage.
-   * @param key The primary key of the entity to remove
+   * @param key - The primary key of the entity to remove
    */
   removeOneFromCache(key: number | string, options?: EntityActionOptions): void;
   removeOneFromCache(
@@ -468,14 +474,14 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
   /**
    * Remove multiple entities directly from the cache.
    * Does not delete these entities from remote storage.
-   * @param entity The entities to remove
+   * @param entity - The entities to remove
    */
   removeManyFromCache(entities: T[], options?: EntityActionOptions): void;
 
   /**
    * Remove multiple entities directly from the cache.
    * Does not delete these entities from remote storage.
-   * @param keys The primary keys of the entities to remove
+   * @param keys - The primary keys of the entities to remove
    */
   removeManyFromCache(
     keys: (number | string)[],
@@ -586,7 +592,7 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
    * Return Observable of data from the server-success EntityAction with
    * the given Correlation Id, after that action was processed by the ngrx store.
    * or else put the server error on the Observable error channel.
-   * @param crid The correlationId for both the save and response actions.
+   * @param crid - The correlationId for both the save and response actions.
    */
   private getResponseData$<D = any>(crid: any): Observable<D> {
     /**

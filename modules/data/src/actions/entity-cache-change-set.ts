@@ -1,29 +1,44 @@
 import { Update } from '@ngrx/entity';
 
+/**
+ * @public
+ */
 export enum ChangeSetOperation {
   Add = 'Add',
   Delete = 'Delete',
   Update = 'Update',
   Upsert = 'Upsert',
 }
+/**
+ * @public
+ */
 export interface ChangeSetAdd<T = any> {
   op: ChangeSetOperation.Add;
   entityName: string;
   entities: T[];
 }
 
+/**
+ * @public
+ */
 export interface ChangeSetDelete {
   op: ChangeSetOperation.Delete;
   entityName: string;
   entities: string[] | number[];
 }
 
+/**
+ * @public
+ */
 export interface ChangeSetUpdate<T = any> {
   op: ChangeSetOperation.Update;
   entityName: string;
   entities: Update<T>[];
 }
 
+/**
+ * @public
+ */
 export interface ChangeSetUpsert<T = any> {
   op: ChangeSetOperation.Upsert;
   entityName: string;
@@ -32,6 +47,8 @@ export interface ChangeSetUpsert<T = any> {
 
 /**
  * A entities of a single entity type, which are changed in the same way by a ChangeSetOperation
+ *
+ * @public
  */
 export type ChangeSetItem =
   | ChangeSetAdd
@@ -39,8 +56,10 @@ export type ChangeSetItem =
   | ChangeSetUpdate
   | ChangeSetUpsert;
 
-/*
+/**
  * A set of entity Changes, typically to be saved.
+ *
+ * @public
  */
 export interface ChangeSet<T = any> {
   /** An array of ChangeSetItems to be processed in the array order */
@@ -48,7 +67,7 @@ export interface ChangeSet<T = any> {
 
   /**
    * An arbitrary, serializable object that should travel with the ChangeSet.
-   * Meaningful to the ChangeSet producer and consumer. Ignored by @ngrx/data.
+   * Meaningful to the ChangeSet producer and consumer. Ignored by \@ngrx/data.
    */
   extras?: T;
 
@@ -58,6 +77,8 @@ export interface ChangeSet<T = any> {
 
 /**
  * Factory to create a ChangeSetItem for a ChangeSetOperation
+ *
+ * @public
  */
 export class ChangeSetItemFactory {
   /** Create the ChangeSetAdd for new entities of the given entity type */
@@ -97,12 +118,16 @@ export class ChangeSetItemFactory {
 
 /**
  * Instance of a factory to create a ChangeSetItem for a ChangeSetOperation
+ *
+ * @public
  */
 export const changeSetItemFactory = new ChangeSetItemFactory();
 
 /**
  * Return ChangeSet after filtering out null and empty ChangeSetItems.
- * @param changeSet ChangeSet with changes to filter
+ * @param changeSet - ChangeSet with changes to filter
+ *
+ * @public
  */
 export function excludeEmptyChangeSetItems(changeSet: ChangeSet): ChangeSet {
   changeSet = changeSet && changeSet.changes ? changeSet : { changes: [] };

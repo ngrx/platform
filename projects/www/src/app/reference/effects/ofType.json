@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/effects!ofType:function(1)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -88,13 +88,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -106,7 +106,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/effects!ofType:function(2)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -212,13 +212,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -230,7 +230,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/effects!ofType:function(3)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -343,13 +343,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -361,7 +361,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/effects!ofType:function(4)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -488,13 +488,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -506,7 +506,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/effects!ofType:function(5)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -650,13 +650,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -668,7 +668,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/effects!ofType:function(6)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -826,13 +826,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -844,7 +844,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/effects!ofType:function(7)",
-      "docComment": "/**\n * Fallback for more than 5 arguments. There is no inference, so the return type is the same as the input - Observable<Action>.\n *\n * We provide a type parameter, even though TS will not infer it from the arguments, to preserve backwards compatibility with old versions of ngrx.\n */\n",
+      "docComment": "/**\n * Fallback for more than 5 arguments. There is no inference, so the return type is the same as the input - Observable<Action>.\n *\n * We provide a type parameter, even though TS will not infer it from the arguments, to preserve backwards compatibility with old versions of ngrx.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -911,13 +911,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Fallback for more than 5 arguments. There is no inference, so the return type is the same as the input - Observable<Action>.\n\nWe provide a type parameter, even though TS will not infer it from the arguments, to preserve backwards compatibility with old versions of ngrx.\n",
+        "summary": "Fallback for more than 5 arguments. There is no inference, so the return type is the same as the input - Observable<Action>.\n\nWe provide a type parameter, even though TS will not infer it from the arguments, to preserve backwards compatibility with old versions of ngrx.\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

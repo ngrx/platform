@@ -1,8 +1,19 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { InjectionToken } from '@angular/core';
 
+/**
+ * @public
+ */
 export type ActionSanitizer = (action: Action, id: number) => Action;
+
+/**
+ * @public
+ */
 export type StateSanitizer = (state: any, index: number) => any;
+
+/**
+ * @public
+ */
 export type SerializationOptions = {
   options?: boolean | any;
   replacer?: (key: any, value: any) => {};
@@ -10,6 +21,10 @@ export type SerializationOptions = {
   immutable?: any;
   refs?: Array<any>;
 };
+
+/**
+ * @public
+ */
 export type Predicate = (state: any, action: Action) => boolean;
 
 /**
@@ -17,6 +32,8 @@ export type Predicate = (state: any, action: Action) => boolean;
  * @see https://github.com/reduxjs/redux-devtools/blob/main/extension/docs/API/Arguments.md#features
  * Firefox extension documentation
  * @see https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#features
+ *
+ * @public
  */
 export interface DevToolsFeatureOptions {
   /**
@@ -66,6 +83,8 @@ export interface DevToolsFeatureOptions {
  * @see https://github.com/reduxjs/redux-devtools/blob/main/extension/docs/API/Arguments.md
  * Firefox extension documentation
  * @see https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md
+ *
+ * @public
  */
 export class StoreDevtoolsConfig {
   /**
@@ -122,17 +141,25 @@ export class StoreDevtoolsConfig {
   connectInZone?: boolean;
 }
 
+/**
+ * @public
+ */
 export const STORE_DEVTOOLS_CONFIG = new InjectionToken<StoreDevtoolsConfig>(
   '@ngrx/store-devtools Options'
 );
 
 /**
  * Used to provide a `StoreDevtoolsConfig` for the store-devtools.
+ *
+ * @public
  */
 export const INITIAL_OPTIONS = new InjectionToken<StoreDevtoolsConfig>(
   '@ngrx/store-devtools Initial Config'
 );
 
+/**
+ * @public
+ */
 export type StoreDevtoolsOptions =
   | Partial<StoreDevtoolsConfig>
   | (() => Partial<StoreDevtoolsConfig>);

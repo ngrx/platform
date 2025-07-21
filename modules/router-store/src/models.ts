@@ -1,6 +1,11 @@
 import { Data, Params } from '@angular/router';
 import { MemoizedSelector } from '@ngrx/store';
 
+/**
+ * A collection of router state selectors for accessing router information.
+ *
+ * @public
+ */
 export type RouterStateSelectors<V> = {
   selectCurrentRoute: MemoizedSelector<V, any>;
   selectFragment: MemoizedSelector<V, string | undefined>;

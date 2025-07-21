@@ -19,6 +19,9 @@ export type Actions = DevtoolsActions.All | CoreActions;
 
 export const INIT_ACTION = { type: INIT };
 
+/**
+ * @public
+ */
 export const RECOMPUTE = '@ngrx/store-devtools/recompute' as const;
 export const RECOMPUTE_ACTION = { type: RECOMPUTE };
 
@@ -36,6 +39,9 @@ export interface LiftedActions {
   [id: number]: LiftedAction;
 }
 
+/**
+ * @public
+ */
 export interface LiftedState {
   monitorState: any;
   nextActionId: number;

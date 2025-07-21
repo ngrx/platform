@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!ClearCollections:class",
-      "docComment": "/**\n * Clear the collections identified in the collectionSet.\n *\n * @param collections - Array of names of the collections to clear. If empty array, does nothing. If no array, clear all collections.\n *\n * @param tag - Optional tag to identify the operation from the app perspective.\n */\n",
+      "docComment": "/**\n * Clear the collections identified in the collectionSet.\n *\n * @param collections - Array of names of the collections to clear. If empty array, does nothing. If no array, clear all collections.\n *\n * @param tag - Optional tag to identify the operation from the app perspective.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -154,7 +154,7 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
@@ -173,7 +173,7 @@
           },
           {
             "name": "tag",
-            "description": "Optional tag to identify the operation from the app perspective.\n"
+            "description": "Optional tag to identify the operation from the app perspective.\n\n\n"
           }
         ]
       }

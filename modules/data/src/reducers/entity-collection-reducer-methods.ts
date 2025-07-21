@@ -18,8 +18,10 @@ import { MergeStrategy } from '../actions/merge-strategy';
 import { UpdateResponseData } from '../actions/update-response-data';
 
 /**
- * Map of {EntityOp} to reducer method for the operation.
+ * Map of \{EntityOp\} to reducer method for the operation.
  * If an operation is missing, caller should return the collection for that reducer.
+ *
+ * @public
  */
 export interface EntityCollectionReducerMethodMap<T> {
   [method: string]: (
@@ -30,6 +32,8 @@ export interface EntityCollectionReducerMethodMap<T> {
 
 /**
  * Base implementation of reducer methods for an entity collection.
+ *
+ * @public
  */
 export class EntityCollectionReducerMethods<T> {
   protected adapter: EntityAdapter<T>;
@@ -54,8 +58,8 @@ export class EntityCollectionReducerMethods<T> {
   protected toUpdate: (entity: Partial<T>) => Update<T>;
 
   /**
-   * Dictionary of the {EntityCollectionReducerMethods} for this entity type,
-   * keyed by the {EntityOp}
+   * Dictionary of the \{EntityCollectionReducerMethods\} for this entity type,
+   * keyed by the \{EntityOp\}
    */
   readonly methods: EntityCollectionReducerMethodMap<T> = {
     [EntityOp.CANCEL_PERSIST]: this.cancelPersist.bind(this),
@@ -303,8 +307,8 @@ export class EntityCollectionReducerMethods<T> {
    * Save multiple new entities.
    * If saving pessimistically, delay adding to collection until server acknowledges success.
    * If saving optimistically; add immediately.
-   * @param collection The collection to which the entities should be added.
-   * @param action The action payload holds options, including whether the save is optimistic,
+   * @param collection - The collection to which the entities should be added.
+   * @param action - The action payload holds options, including whether the save is optimistic,
    * and the data, which must be an array of entities.
    * If saving optimistically, the entities must have their keys.
    */
@@ -385,8 +389,8 @@ export class EntityCollectionReducerMethods<T> {
    * Save a new entity.
    * If saving pessimistically, delay adding to collection until server acknowledges success.
    * If saving optimistically; add entity immediately.
-   * @param collection The collection to which the entity should be added.
-   * @param action The action payload holds options, including whether the save is optimistic,
+   * @param collection - The collection to which the entity should be added.
+   * @param action - The action payload holds options, including whether the save is optimistic,
    * and the data, which must be an entity.
    * If saving optimistically, the entity must have a key.
    */
@@ -469,8 +473,8 @@ export class EntityCollectionReducerMethods<T> {
    * and skip the server delete request.
    * An optimistic save removes an existing entity from the collection immediately;
    * a pessimistic save removes it after the server confirms successful delete.
-   * @param collection Will remove the entity with this key from the collection.
-   * @param action The action payload holds options, including whether the save is optimistic,
+   * @param collection - Will remove the entity with this key from the collection.
+   * @param action - The action payload holds options, including whether the save is optimistic,
    * and the data, which must be a primary key or an entity with a key;
    * this reducer extracts the key from the entity.
    */
@@ -564,8 +568,8 @@ export class EntityCollectionReducerMethods<T> {
    * Therefore, the server must be willing to ignore a delete request for an entity it cannot find.
    * An optimistic save removes existing entities from the collection immediately;
    * a pessimistic save removes them after the server confirms successful delete.
-   * @param collection Removes entities from this collection.
-   * @param action The action payload holds options, including whether the save is optimistic,
+   * @param collection - Removes entities from this collection.
+   * @param action - The action payload holds options, including whether the save is optimistic,
    * and the data, which must be an array of primary keys or entities with a key;
    * this reducer extracts the key from the entity.
    */
@@ -654,9 +658,9 @@ export class EntityCollectionReducerMethods<T> {
    * Save an update to an existing entity.
    * If saving pessimistically, update the entity in the collection after the server confirms success.
    * If saving optimistically, update the entity immediately, before the save request.
-   * @param collection The collection to update
-   * @param action The action payload holds options, including if the save is optimistic,
-   * and the data which, must be an {Update<T>}
+   * @param collection - The collection to update
+   * @param action - The action payload holds options, including if the save is optimistic,
+   * and the data which, must be an \{Update<T>\}
    */
   protected saveUpdateOne(
     collection: EntityCollection<T>,
@@ -698,8 +702,8 @@ export class EntityCollectionReducerMethods<T> {
    * Therefore, update the entity in the collection with the returned value (if any)
    * Caution: in a race, this update could overwrite unsaved user changes.
    * Use pessimistic update to avoid this risk.
-   * @param collection The collection to update
-   * @param action The action payload holds options, including if the save is optimistic, and
+   * @param collection - The collection to update
+   * @param action - The action payload holds options, including if the save is optimistic, and
    * the update data which, must be an UpdateResponse<T> that corresponds to the Update sent to the server.
    * You must include an UpdateResponse even if the save was optimistic,
    * to ensure that the change tracking is properly reset.
@@ -726,9 +730,9 @@ export class EntityCollectionReducerMethods<T> {
    * Save updated entities.
    * If saving pessimistically, update the entities in the collection after the server confirms success.
    * If saving optimistically, update the entities immediately, before the save request.
-   * @param collection The collection to update
-   * @param action The action payload holds options, including if the save is optimistic,
-   * and the data which, must be an array of {Update<T>}.
+   * @param collection - The collection to update
+   * @param action - The action payload holds options, including if the save is optimistic,
+   * and the data which, must be an array of \{Update<T>\}.
    */
   protected saveUpdateMany(
     collection: EntityCollection<T>,
@@ -770,8 +774,8 @@ export class EntityCollectionReducerMethods<T> {
    * Therefore, update the entity in the collection with the returned values (if any)
    * Caution: in a race, this update could overwrite unsaved user changes.
    * Use pessimistic update to avoid this risk.
-   * @param collection The collection to update
-   * @param action The action payload holds options, including if the save is optimistic,
+   * @param collection - The collection to update
+   * @param action - The action payload holds options, including if the save is optimistic,
    * and the data which, must be an array of UpdateResponse<T>.
    * You must include an UpdateResponse for every Update sent to the server,
    * even if the save was optimistic, to ensure that the change tracking is properly reset.
@@ -798,8 +802,8 @@ export class EntityCollectionReducerMethods<T> {
    * Save a new or existing entity.
    * If saving pessimistically, delay adding to collection until server acknowledges success.
    * If saving optimistically; add immediately.
-   * @param collection The collection to which the entity should be upserted.
-   * @param action The action payload holds options, including whether the save is optimistic,
+   * @param collection - The collection to which the entity should be upserted.
+   * @param action - The action payload holds options, including whether the save is optimistic,
    * and the data, which must be a whole entity.
    * If saving optimistically, the entity must have its key.
    */
@@ -866,8 +870,8 @@ export class EntityCollectionReducerMethods<T> {
    * Save multiple new or existing entities.
    * If saving pessimistically, delay adding to collection until server acknowledges success.
    * If saving optimistically; add immediately.
-   * @param collection The collection to which the entities should be upserted.
-   * @param action The action payload holds options, including whether the save is optimistic,
+   * @param collection - The collection to which the entities should be upserted.
+   * @param action - The action payload holds options, including whether the save is optimistic,
    * and the data, which must be an array of whole entities.
    * If saving optimistically, the entities must have their keys.
    */
@@ -1222,13 +1226,14 @@ export class EntityCollectionReducerMethods<T> {
 }
 
 /**
- * Creates {EntityCollectionReducerMethods} for a given entity type.
+ * Creates \{EntityCollectionReducerMethods\} for a given entity type.
+ * @public
  */
 @Injectable()
 export class EntityCollectionReducerMethodsFactory {
   constructor(private entityDefinitionService: EntityDefinitionService) {}
 
-  /** Create the  {EntityCollectionReducerMethods} for the named entity type */
+  /** Create the \{EntityCollectionReducerMethods\} for the named entity type */
   create<T>(entityName: string): EntityCollectionReducerMethodMap<T> {
     const definition =
       this.entityDefinitionService.getDefinition<T>(entityName);

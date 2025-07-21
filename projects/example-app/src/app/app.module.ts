@@ -31,7 +31,7 @@ import { AppComponent } from '@example-app/core/containers';
      * StoreModule.forRoot is imported once in the root module, accepting a reducer
      * function or object map of reducer functions. If passed an object of
      * reducers, combineReducers will be run creating your application
-     * meta-reducer. This returns all providers for an @ngrx/store
+     * meta-reducer. This returns all providers for an \@ngrx/store
      * based application.
      */
     StoreModule.forRoot(rootReducers, {
@@ -46,7 +46,7 @@ import { AppComponent } from '@example-app/core/containers';
     }),
 
     /**
-     * @ngrx/router-store keeps router state up-to-date in the store.
+     * \@ngrx/router-store keeps router state up-to-date in the store.
      */
     StoreRouterConnectingModule.forRoot(),
 

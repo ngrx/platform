@@ -12,6 +12,7 @@ import { Logger } from '../utils/interfaces';
 
 /**
  * Handling of responses from persistence operation
+ * @public
  */
 export abstract class PersistenceResultHandler {
   /** Handle successful result of persistence operation for an action */
@@ -28,6 +29,7 @@ export abstract class PersistenceResultHandler {
 /**
  * Default handling of responses from persistence operation,
  * specifically an EntityDataService
+ * @public
  */
 @Injectable()
 export class DefaultPersistenceResultHandler

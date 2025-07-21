@@ -7,13 +7,22 @@ import {
   removeEntitiesMutably,
 } from '../helpers';
 
+/**
+ * @public
+ */
 export function removeEntity(
   id: EntityId
 ): PartialStateUpdater<EntityState<any>>;
+/**
+ * @public
+ */
 export function removeEntity<Collection extends string>(
   id: EntityId,
   config: { collection: Collection }
 ): PartialStateUpdater<NamedEntityState<any, Collection>>;
+/**
+ * @public
+ */
 export function removeEntity(
   id: EntityId,
   config?: { collection?: string }

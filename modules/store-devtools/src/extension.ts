@@ -40,6 +40,9 @@ export const ExtensionActionTypes = {
   ACTION: 'ACTION',
 };
 
+/**
+ * @public
+ */
 export const REDUX_DEVTOOLS_EXTENSION =
   new InjectionToken<ReduxDevtoolsExtension>(
     '@ngrx/store-devtools Redux Devtools Extension'

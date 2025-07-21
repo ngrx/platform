@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/operators!tapResponse:function(1)",
-      "docComment": "",
+      "docComment": "/**\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -65,13 +65,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -83,7 +83,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/operators!tapResponse:function(2)",
-      "docComment": "/**\n * @deprecated\n *\n * Instead of passing a sequence of callbacks, use an observer object. For more info see: https://github.com/ngrx/platform/issues/4840\n */\n",
+      "docComment": "/**\n * @deprecated\n *\n * Instead of passing a sequence of callbacks, use an observer object. For more info see: https://github.com/ngrx/platform/issues/4840\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -149,7 +149,7 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
@@ -158,7 +158,7 @@
         "summary": "",
         "usageNotes": "",
         "remarks": "",
-        "deprecated": "\n\nInstead of passing a sequence of callbacks, use an observer object. For more info see: https://github.com/ngrx/platform/issues/4840\n",
+        "deprecated": "\n\nInstead of passing a sequence of callbacks, use an observer object. For more info see: https://github.com/ngrx/platform/issues/4840\n\n\n",
         "returns": "",
         "see": [],
         "params": []

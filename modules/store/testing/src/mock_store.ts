@@ -24,6 +24,9 @@ type Memoized<Result> =
   | MemoizedSelector<any, Result>
   | MemoizedSelectorWithProps<any, any, Result>;
 
+/**
+ * @public
+ */
 @Injectable()
 export class MockStore<T = object> extends Store<T> {
   private readonly selectors = new Map<Memoized<any> | string, any>();

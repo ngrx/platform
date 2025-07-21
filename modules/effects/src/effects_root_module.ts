@@ -5,6 +5,9 @@ import { EffectSources } from './effect_sources';
 import { _ROOT_EFFECTS_GUARD, _ROOT_EFFECTS_INSTANCES } from './tokens';
 import { ROOT_EFFECTS_INIT } from './effects_actions';
 
+/**
+ * @public
+ */
 @NgModule({})
 export class EffectsRootModule {
   constructor(

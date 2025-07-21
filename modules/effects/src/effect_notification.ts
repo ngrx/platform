@@ -3,6 +3,9 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ObservableNotification } from './utils';
 
+/**
+ * @public
+ */
 export interface EffectNotification {
   effect: Observable<any> | (() => Observable<any>);
   propertyName: PropertyKey;
@@ -11,6 +14,9 @@ export interface EffectNotification {
   notification: ObservableNotification<Action | null | undefined>;
 }
 
+/**
+ * @public
+ */
 export function reportInvalidActions(
   output: EffectNotification,
   reporter: ErrorHandler

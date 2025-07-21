@@ -26,6 +26,7 @@ import { HttpUrlGenerator } from './http-url-generator';
  * A basic, generic entity data service
  * suitable for persistence of most entities.
  * Assumes a common REST-y web API
+ * @public
  */
 export class DefaultDataService<T> implements EntityCollectionDataService<T> {
   protected _name: string;
@@ -275,6 +276,7 @@ export class DefaultDataService<T> implements EntityCollectionDataService<T> {
  * Create a basic, generic entity data service
  * suitable for persistence of most entities.
  * Assumes a common REST-y web API
+ * @public
  */
 @Injectable()
 export class DefaultDataServiceFactory {
@@ -288,8 +290,8 @@ export class DefaultDataServiceFactory {
   }
 
   /**
-   * Create a default {EntityCollectionDataService} for the given entity type
-   * @param entityName {string} Name of the entity type for this data service
+   * Create a default \{EntityCollectionDataService\} for the given entity type
+   * @param entityName - Name of the entity type for this data service
    */
   create<T>(entityName: string): EntityCollectionDataService<T> {
     return new DefaultDataService<T>(

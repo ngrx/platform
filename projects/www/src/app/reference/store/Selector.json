@@ -1,1 +1,52 @@
-{"name":"Selector","canonicalReference":"@ngrx/store!Selector:type","kind":"TypeAlias","fileUrlPath":"../../dist/modules/store/src/models.d.ts","isDeprecated":false,"members":[{"kind":"TypeAlias","canonicalReference":"@ngrx/store!Selector:type","docComment":"","excerptTokens":[{"kind":"Content","text":"export type Selector<T, V> = "},{"kind":"Content","text":"(state: T) => V"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/models.d.ts","releaseTag":"Public","name":"Selector","typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"V","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"typeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "Selector",
+  "canonicalReference": "@ngrx/store!Selector:type",
+  "kind": "TypeAlias",
+  "fileUrlPath": "../../dist/modules/store/src/models.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "TypeAlias",
+      "canonicalReference": "@ngrx/store!Selector:type",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        { "kind": "Content", "text": "export type Selector<T, V> = " },
+        { "kind": "Content", "text": "(state: T) => V" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/models.d.ts",
+      "releaseTag": "Public",
+      "name": "Selector",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "V",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "typeTokenRange": { "startIndex": 1, "endIndex": 2 },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

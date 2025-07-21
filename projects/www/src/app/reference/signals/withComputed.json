@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals!withComputed:function(1)",
-      "docComment": "",
+      "docComment": "/**\n * Adds computed properties to a signal store.\n *\n * @param computedFactory - A factory function that creates computed properties.\n *\n * @returns A signal store feature that adds the computed properties.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -47,7 +47,7 @@
         },
         {
           "kind": "Content",
-          "text": "<Input['state']> & Input['props']>) => ComputedDictionary"
+          "text": "<Input['state']> & Input['props'] & Input['methods']>) => ComputedDictionary"
         },
         { "kind": "Content", "text": "): " },
         {
@@ -94,19 +94,24 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "Adds computed properties to a signal store.\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
-        "returns": "",
+        "returns": " A signal store feature that adds the computed properties.\n\n\n",
         "see": [],
-        "params": []
+        "params": [
+          {
+            "name": "computedFactory",
+            "description": "A factory function that creates computed properties.\n\n"
+          }
+        ]
       }
     }
   ]

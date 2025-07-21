@@ -1,1 +1,149 @@
-{"name":"UpdateResponseData","canonicalReference":"@ngrx/data!UpdateResponseData:interface","kind":"Interface","fileUrlPath":"../../dist/modules/data/src/actions/update-response-data.d.ts","isDeprecated":false,"members":[{"kind":"Interface","canonicalReference":"@ngrx/data!UpdateResponseData:interface","docComment":"/**\n * Data returned in an EntityAction from the EntityEffects for SAVE_UPDATE_ONE_SUCCESS. Effectively extends Update<T> with a 'changed' flag. The is true if the server sent back changes to the entity data after update. Such changes must be in the entity data in changes property. Default is false (server did not return entity data; assume it changed nothing). See EntityEffects.\n */\n","excerptTokens":[{"kind":"Content","text":"export interface UpdateResponseData<T> "}],"fileUrlPath":"../../dist/modules/data/src/actions/update-response-data.d.ts","releaseTag":"Public","typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"UpdateResponseData","preserveMemberOrder":false,"members":[{"kind":"PropertySignature","canonicalReference":"@ngrx/data!UpdateResponseData#changed:member","docComment":"/**\n * Whether the server made additional changes after processing the update. Such additional changes should be in the 'changes' object. Default is false\n */\n","excerptTokens":[{"kind":"Content","text":"changed?: "},{"kind":"Content","text":"boolean"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"changed","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Whether the server made additional changes after processing the update. Such additional changes should be in the 'changes' object. Default is false\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!UpdateResponseData#changes:member","docComment":"/**\n * Entity update data. Should include the key (original or changed)\n */\n","excerptTokens":[{"kind":"Content","text":"changes: "},{"kind":"Reference","text":"Partial","canonicalReference":"!Partial:type"},{"kind":"Content","text":"<T>"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"changes","propertyTypeTokenRange":{"startIndex":1,"endIndex":3},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Entity update data. Should include the key (original or changed)\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!UpdateResponseData#id:member","docComment":"/**\n * Original key (id) of the entity\n */\n","excerptTokens":[{"kind":"Content","text":"id: "},{"kind":"Content","text":"number | string"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"id","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Original key (id) of the entity\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"extendsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Data returned in an EntityAction from the EntityEffects for SAVE_UPDATE_ONE_SUCCESS. Effectively extends Update<T> with a 'changed' flag. The is true if the server sent back changes to the entity data after update. Such changes must be in the entity data in changes property. Default is false (server did not return entity data; assume it changed nothing). See EntityEffects.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "UpdateResponseData",
+  "canonicalReference": "@ngrx/data!UpdateResponseData:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/data/src/actions/update-response-data.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/data!UpdateResponseData:interface",
+      "docComment": "/**\n * Data returned in an EntityAction from the EntityEffects for SAVE_UPDATE_ONE_SUCCESS. Effectively extends Update<T> with a 'changed' flag. The is true if the server sent back changes to the entity data after update. Such changes must be in the entity data in changes property. Default is false (server did not return entity data; assume it changed nothing). See EntityEffects.\n *\n * @public\n */\n",
+      "excerptTokens": [
+        { "kind": "Content", "text": "export interface UpdateResponseData<T> " }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/actions/update-response-data.d.ts",
+      "releaseTag": "Public",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "UpdateResponseData",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!UpdateResponseData#changed:member",
+          "docComment": "/**\n * Whether the server made additional changes after processing the update. Such additional changes should be in the 'changes' object. Default is false\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "changed?: " },
+            { "kind": "Content", "text": "boolean" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "changed",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Whether the server made additional changes after processing the update. Such additional changes should be in the 'changes' object. Default is false\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!UpdateResponseData#changes:member",
+          "docComment": "/**\n * Entity update data. Should include the key (original or changed)\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "changes: " },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "changes",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Entity update data. Should include the key (original or changed)\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!UpdateResponseData#id:member",
+          "docComment": "/**\n * Original key (id) of the entity\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "id: " },
+            { "kind": "Content", "text": "number | string" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "id",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Original key (id) of the entity\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Data returned in an EntityAction from the EntityEffects for SAVE_UPDATE_ONE_SUCCESS. Effectively extends Update<T> with a 'changed' flag. The is true if the server sent back changes to the entity data after update. Such changes must be in the entity data in changes property. Default is false (server did not return entity data; assume it changed nothing). See EntityEffects.\n\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

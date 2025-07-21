@@ -7,14 +7,20 @@ import {
   ENTITY_METADATA_TOKEN,
 } from './entity-metadata';
 
+/**
+ * @public
+ */
 export interface EntityDefinitions {
   [entityName: string]: EntityDefinition<any>;
 }
 
-/** Registry of EntityDefinitions for all cached entity types */
+/**
+ * Registry of EntityDefinitions for all cached entity types
+ * @public
+ */
 @Injectable()
 export class EntityDefinitionService {
-  /** {EntityDefinition} for all cached entity types */
+  /** EntityDefinition for all cached entity types */
   private readonly definitions: EntityDefinitions = {};
 
   constructor(
@@ -31,9 +37,11 @@ export class EntityDefinitionService {
    * Get (or create) a data service for entity type
    * @param entityName - the name of the type
    *
-   * Examples:
+   * @example
+   * ```ts
    *   getDefinition('Hero'); // definition for Heroes, untyped
    *   getDefinition<Hero>(`Hero`); // definition for Heroes, typed with Hero interface
+   * ```
    */
   getDefinition<T>(
     entityName: string,
@@ -50,12 +58,14 @@ export class EntityDefinitionService {
   //////// Registration methods //////////
 
   /**
-   * Create and register the {EntityDefinition} for the {EntityMetadata} of an entity type
+   * Create and register the EntityDefinition for the EntityMetadata of an entity type
    * @param name - the name of the entity type
-   * @param definition - {EntityMetadata} for a collection for that entity type
+   * @param definition - EntityMetadata for a collection for that entity type
    *
-   * Examples:
+   * @example
+   * ```ts
    *   registerMetadata(myHeroEntityDefinition);
+   * ```
    */
   registerMetadata(metadata: EntityMetadata) {
     if (metadata) {
@@ -68,11 +78,13 @@ export class EntityDefinitionService {
    * Register an EntityMetadataMap.
    * @param metadataMap - a map of entityType names to entity metadata
    *
-   * Examples:
+   * @example
+   * ```ts
    *   registerMetadataMap({
    *     'Hero': myHeroMetadata,
    *     Villain: myVillainMetadata
    *   });
+   * ```
    */
   registerMetadataMap(metadataMap: EntityMetadataMap = {}) {
     // The entity type name should be the same as the map key
@@ -82,11 +94,13 @@ export class EntityDefinitionService {
   }
 
   /**
-   * Register an {EntityDefinition} for an entity type
+   * Register an EntityDefinition for an entity type
    * @param definition - EntityDefinition of a collection for that entity type
    *
-   * Examples:
+   * @example
+   * ```ts
    *   registerDefinition('Hero', myHeroEntityDefinition);
+   * ```
    */
   registerDefinition<T>(definition: EntityDefinition<T>) {
     this.definitions[definition.entityName] = definition;
@@ -96,11 +110,13 @@ export class EntityDefinitionService {
    * Register a batch of EntityDefinitions.
    * @param definitions - map of entityType name and associated EntityDefinitions to merge.
    *
-   * Examples:
+   * @example
+   * ```ts
    *   registerDefinitions({
    *     'Hero': myHeroEntityDefinition,
    *     Villain: myVillainEntityDefinition
    *   });
+   * ```
    */
   registerDefinitions(definitions: EntityDefinitions) {
     Object.assign(this.definitions, definitions);

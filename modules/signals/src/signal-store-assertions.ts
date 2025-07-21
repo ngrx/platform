@@ -2,6 +2,14 @@ import { InnerSignalStore } from './signal-store-models';
 
 declare const ngDevMode: unknown;
 
+/**
+ * Asserts that new store members do not override existing ones.
+ *
+ * @param store - The inner signal store.
+ * @param newMemberKeys - Array of new member keys to check.
+ *
+ * @public
+ */
 export function assertUniqueStoreMembers(
   store: InnerSignalStore,
   newMemberKeys: Array<string | symbol>

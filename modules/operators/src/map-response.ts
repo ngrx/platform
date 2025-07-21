@@ -12,7 +12,7 @@ type MapResponseObserver<T, E, R1, R2> = {
  *
  * The main use case is for NgRx Effects which requires an action to be dispatched.
  *
- * @usageNotes
+ * @example
  * ```ts
  * export const loadAllUsers = createEffect((
  *   actions$ = inject(Actions),
@@ -31,6 +31,8 @@ type MapResponseObserver<T, E, R1, R2> = {
  *   );
  * });
  * ```
+ *
+ * @public
  */
 export function mapResponse<T, E, R1, R2>(
   observer: MapResponseObserver<T, E, R1, R2>

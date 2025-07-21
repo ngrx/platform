@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!EntityCacheDataService:class",
-      "docComment": "/**\n * Default data service for making remote service calls targeting the entire EntityCache. See EntityDataService for services that target a single EntityCollection\n */\n",
+      "docComment": "/**\n * Default data service for making remote service calls targeting the entire EntityCache. See EntityDataService for services that target a single EntityCollection\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -192,7 +192,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntityCacheDataService#flattenUpdates:member(1)",
-          "docComment": "/**\n * Convert the entities in update changes from  @ngrx Update<T> structure to just T. Reverse of restoreUpdates().\n */\n",
+          "docComment": "/**\n * Convert the entities in update changes from \\@ngrx Update<T> structure to just T. Reverse of restoreUpdates().\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -235,7 +235,7 @@
               "isOverride": false,
               "isExperimental": false
             },
-            "summary": "Convert the entities in update changes from  @ngrx Update<T> structure to just T. Reverse of restoreUpdates().\n",
+            "summary": "Convert the entities in update changes from \\@ngrx Update<T> structure to just T. Reverse of restoreUpdates().\n",
             "usageNotes": "",
             "remarks": "",
             "deprecated": "",
@@ -438,7 +438,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntityCacheDataService#restoreUpdates:member(1)",
-          "docComment": "/**\n * Convert the flattened T entities in update changes back to  @ngrx Update<T> structures. Reverse of flattenUpdates().\n */\n",
+          "docComment": "/**\n * Convert the flattened T entities in update changes back to \\@ngrx Update<T> structures. Reverse of flattenUpdates().\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -481,7 +481,7 @@
               "isOverride": false,
               "isExperimental": false
             },
-            "summary": "Convert the flattened T entities in update changes back to  @ngrx Update<T> structures. Reverse of flattenUpdates().\n",
+            "summary": "Convert the flattened T entities in update changes back to \\@ngrx Update<T> structures. Reverse of flattenUpdates().\n",
             "usageNotes": "",
             "remarks": "",
             "deprecated": "",
@@ -640,13 +640,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Default data service for making remote service calls targeting the entire EntityCache. See EntityDataService for services that target a single EntityCollection\n",
+        "summary": "Default data service for making remote service calls targeting the entire EntityCache. See EntityDataService for services that target a single EntityCollection\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

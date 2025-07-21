@@ -39,6 +39,9 @@ import { EntityCacheDataService } from '../dataservices/entity-cache-data.servic
 import { ENTITY_EFFECTS_SCHEDULER } from './entity-effects-scheduler';
 import { Logger } from '../utils/interfaces';
 
+/**
+ * @public
+ */
 @Injectable()
 export class EntityCacheEffects {
   // See https://github.com/ReactiveX/rxjs/blob/master/doc/marble-testing.md
@@ -84,7 +87,7 @@ export class EntityCacheEffects {
   /**
    * Perform the requested SaveEntities actions and return a scalar Observable<Action>
    * that the effect should dispatch to the store after the server responds.
-   * @param action The SaveEntities action
+   * @param action - The SaveEntities action
    */
   saveEntities(action: SaveEntities): Observable<Action> {
     const error = action.payload.error;

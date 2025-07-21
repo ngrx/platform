@@ -40,21 +40,33 @@ import {
 import { isOnStateInitDefined, isOnStoreInitDefined } from './lifecycle_hooks';
 import { toSignal } from '@angular/core/rxjs-interop';
 
+/**
+ * @public
+ */
 export interface SelectConfig<T = unknown> {
   debounce?: boolean;
   equal?: ValueEqualityFn<T>;
 }
 
+/**
+ * @public
+ */
 export const INITIAL_STATE_TOKEN = new InjectionToken(
   '@ngrx/component-store Initial State'
 );
 
+/**
+ * @public
+ */
 export type SelectorResults<Selectors extends Observable<unknown>[]> = {
   [Key in keyof Selectors]: Selectors[Key] extends Observable<infer U>
     ? U
     : never;
 };
 
+/**
+ * @public
+ */
 export type Projector<Selectors extends Observable<unknown>[], Result> = (
   ...args: SelectorResults<Selectors>
 ) => Result;
@@ -74,6 +86,9 @@ interface SelectSignalOptions<T> {
   equal?: ValueEqualityFn<T>;
 }
 
+/**
+ * @public
+ */
 @Injectable()
 export class ComponentStore<T extends object> implements OnDestroy {
   // Should be used only in ngOnDestroy.
@@ -114,10 +129,10 @@ export class ComponentStore<T extends object> implements OnDestroy {
    * is initialized. If called with async Observable before initialization then
    * state will not be updated and subscription would be closed.
    *
-   * @param updaterFn A static updater function that takes 2 parameters (the
+   * @param updaterFn - A static updater function that takes 2 parameters (the
    * current state and an argument object) and returns a new instance of the
    * state.
-   * @return A function that accepts one argument which is forwarded as the
+   * @returns A function that accepts one argument which is forwarded as the
    *     second argument to `updaterFn`. Every time this function is called
    *     subscribers will be notified of the state change.
    */
@@ -190,7 +205,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
 
   /**
    * Sets the state specific value.
-   * @param stateOrUpdaterFn object of the same type as the state or an
+   * @param stateOrUpdaterFn - object of the same type as the state or an
    * updaterFn, returning such object.
    */
   setState(stateOrUpdaterFn: T | ((state: T) => T)): void {
@@ -204,7 +219,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
   /**
    * Patches the state with provided partial state.
    *
-   * @param partialStateOrUpdaterFn a partial state or a partial updater
+   * @param partialStateOrUpdaterFn - a partial state or a partial updater
    * function that accepts the state and returns the partial state.
    * @throws Error if the state is not initialized.
    */
@@ -241,11 +256,11 @@ export class ComponentStore<T extends object> implements OnDestroy {
   /**
    * Creates a selector.
    *
-   * @param projector A pure projection function that takes the current state and
+   * @param projector - A pure projection function that takes the current state and
    *   returns some new slice/projection of that state.
-   * @param config SelectConfig that changes the behavior of selector, including
+   * @param config - SelectConfig that changes the behavior of selector, including
    *   the debouncing of the values until the state is settled.
-   * @return An observable of the projector results.
+   * @returns An observable of the projector results.
    */
   select<Result>(
     projector: (s: T) => Result,
@@ -370,10 +385,10 @@ export class ComponentStore<T extends object> implements OnDestroy {
    * Creates an effect.
    *
    * This effect is subscribed to throughout the lifecycle of the ComponentStore.
-   * @param generator A function that takes an origin Observable input and
+   * @param generator - A function that takes an origin Observable input and
    *     returns an Observable. The Observable that is returned will be
    *     subscribed to for the life of the component.
-   * @return A function that, when called, will trigger the origin Observable.
+   * @returns A function that, when called, will trigger the origin Observable.
    */
   effect<
     // This type quickly became part of effect 'API'

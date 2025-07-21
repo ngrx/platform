@@ -6,6 +6,9 @@ import { defaultSelectId } from '../utils/utilities';
 import { EntityCollection } from '../reducers/entity-collection';
 import { EntityMetadata } from './entity-metadata';
 
+/**
+ * @public
+ */
 export interface EntityDefinition<T = any> {
   entityName: string;
   entityAdapter: EntityAdapter<T>;
@@ -17,6 +20,9 @@ export interface EntityDefinition<T = any> {
   sortComparer: false | Comparer<T>;
 }
 
+/**
+ * @public
+ */
 export function createEntityDefinition<T, S extends object>(
   metadata: EntityMetadata<T, S>
 ): EntityDefinition<T> {

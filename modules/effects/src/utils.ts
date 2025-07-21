@@ -1,9 +1,15 @@
 import { InjectionToken, Type } from '@angular/core';
 
+/**
+ * @public
+ */
 export function getSourceForInstance<T>(instance: T): T {
   return Object.getPrototypeOf(instance);
 }
 
+/**
+ * @public
+ */
 export function isClassInstance(obj: object): boolean {
   return (
     !!obj.constructor &&
@@ -12,18 +18,27 @@ export function isClassInstance(obj: object): boolean {
   );
 }
 
+/**
+ * @public
+ */
 export function isClass(
   classOrRecord: Type<unknown> | Record<string, unknown>
 ): classOrRecord is Type<unknown> {
   return typeof classOrRecord === 'function';
 }
 
+/**
+ * @public
+ */
 export function getClasses(
   classesAndRecords: Array<Type<unknown> | Record<string, unknown>>
 ): Type<unknown>[] {
   return classesAndRecords.filter(isClass);
 }
 
+/**
+ * @public
+ */
 export function isToken(
   tokenOrRecord:
     | Type<unknown>
@@ -35,20 +50,32 @@ export function isToken(
 
 // TODO: replace with RxJS interfaces when possible
 // needs dependency on RxJS >=7
+/**
+ * @public
+ */
 export interface NextNotification<T> {
   kind: 'N';
   value: T;
 }
 
+/**
+ * @public
+ */
 export interface ErrorNotification {
   kind: 'E';
   error: any;
 }
 
+/**
+ * @public
+ */
 export interface CompleteNotification {
   kind: 'C';
 }
 
+/**
+ * @public
+ */
 export type ObservableNotification<T> =
   | NextNotification<T>
   | ErrorNotification

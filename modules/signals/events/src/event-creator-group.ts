@@ -17,11 +17,9 @@ type EventCreatorGroup<
 
 /**
  * @experimental
- * @description
- *
  * Creates a group of event creators.
  *
- * @usageNotes
+ * @example
  *
  * ```ts
  * import { type } from '@ngrx/signals';

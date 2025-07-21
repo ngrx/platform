@@ -8,18 +8,25 @@ type TapResponseObserver<T, E> = {
   finalize?: () => void;
 };
 
+/**
+ * @public
+ */
 export function tapResponse<T, E = unknown>(
   observer: TapResponseObserver<T, E>
 ): (source$: Observable<T>) => Observable<T>;
+
 /**
  * @deprecated Instead of passing a sequence of callbacks, use an observer
  * object. For more info see: https://github.com/ngrx/platform/issues/4840
+ *
+ * @public
  */
 export function tapResponse<T, E = unknown>(
   next: (value: T) => void,
   error: (error: E) => void,
   complete?: () => void
 ): (source$: Observable<T>) => Observable<T>;
+
 /**
  * Handles the response in ComponentStore effects in a safe way, without
  * additional boilerplate. It enforces that the error case is handled and
@@ -27,7 +34,7 @@ export function tapResponse<T, E = unknown>(
  *
  * Takes optional callbacks for `complete` and `finalize`.
  *
- * @usageNotes
+ * @example
  *
  * ```ts
  * readonly loadUsers = rxMethod<void>(
@@ -45,6 +52,8 @@ export function tapResponse<T, E = unknown>(
  *   )
  * );
  * ```
+ *
+ * @public
  */
 export function tapResponse<T, E>(
   observerOrNext: TapResponseObserver<T, E> | ((value: T) => void),

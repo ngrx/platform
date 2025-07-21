@@ -1,1 +1,51 @@
-{"name":"USER_PROVIDED_META_REDUCERS","canonicalReference":"@ngrx/store!USER_PROVIDED_META_REDUCERS:var","kind":"Variable","fileUrlPath":"../../dist/modules/store/src/tokens.d.ts","isDeprecated":false,"members":[{"kind":"Variable","canonicalReference":"@ngrx/store!USER_PROVIDED_META_REDUCERS:var","docComment":"/**\n * User-defined meta reducers from StoreModule.forRoot()\n */\n","excerptTokens":[{"kind":"Content","text":"USER_PROVIDED_META_REDUCERS: "},{"kind":"Reference","text":"InjectionToken","canonicalReference":"@angular/core!InjectionToken:class"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"MetaReducer","canonicalReference":"@ngrx/store!MetaReducer:type"},{"kind":"Content","text":"[]>"}],"fileUrlPath":"../../dist/modules/store/src/tokens.d.ts","isReadonly":true,"releaseTag":"Public","name":"USER_PROVIDED_META_REDUCERS","variableTypeTokenRange":{"startIndex":1,"endIndex":5},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"User-defined meta reducers from StoreModule.forRoot()\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "USER_PROVIDED_META_REDUCERS",
+  "canonicalReference": "@ngrx/store!USER_PROVIDED_META_REDUCERS:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/store/src/tokens.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/store!USER_PROVIDED_META_REDUCERS:var",
+      "docComment": "/**\n * User-defined meta reducers from StoreModule.forRoot()\n *\n * @public\n */\n",
+      "excerptTokens": [
+        { "kind": "Content", "text": "USER_PROVIDED_META_REDUCERS: " },
+        {
+          "kind": "Reference",
+          "text": "InjectionToken",
+          "canonicalReference": "@angular/core!InjectionToken:class"
+        },
+        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Reference",
+          "text": "MetaReducer",
+          "canonicalReference": "@ngrx/store!MetaReducer:type"
+        },
+        { "kind": "Content", "text": "[]>" }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/tokens.d.ts",
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "USER_PROVIDED_META_REDUCERS",
+      "variableTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "User-defined meta reducers from StoreModule.forRoot()\n\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

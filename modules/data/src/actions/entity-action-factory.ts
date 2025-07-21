@@ -6,15 +6,21 @@ import {
   EntityActionOptions,
   EntityActionPayload,
 } from './entity-action';
+
+/**
+ * @public
+ */
 @Injectable()
 export class EntityActionFactory {
   /**
    * Create an EntityAction to perform an operation (op) for a particular entity type
    * (entityName) with optional data and other optional flags
-   * @param entityName Name of the entity type
-   * @param entityOp Operation to perform (EntityOp)
-   * @param [data] data for the operation
-   * @param [options] additional options
+   * @param entityName - Name of the entity type
+   * @param entityOp - Operation to perform (EntityOp)
+   * @param data - data for the operation
+   * @param options - additional options
+   *
+   * @public
    */
   create<P = any>(
     entityName: string,
@@ -26,7 +32,7 @@ export class EntityActionFactory {
   /**
    * Create an EntityAction to perform an operation (op) for a particular entity type
    * (entityName) with optional data and other optional flags
-   * @param payload Defines the EntityAction and its options
+   * @param payload - Defines the EntityAction and its options
    */
   create<P = any>(payload: EntityActionPayload<P>): EntityAction<P>;
 
@@ -52,7 +58,7 @@ export class EntityActionFactory {
   /**
    * Create an EntityAction to perform an operation (op) for a particular entity type
    * (entityName) with optional data and other optional flags
-   * @param payload Defines the EntityAction and its options
+   * @param payload - Defines the EntityAction and its options
    */
   protected createCore<P = any>(payload: EntityActionPayload<P>) {
     const { entityName, entityOp, tag } = payload;
@@ -68,8 +74,8 @@ export class EntityActionFactory {
 
   /**
    * Create an EntityAction from another EntityAction, replacing properties with those from newPayload;
-   * @param from Source action that is the base for the new action
-   * @param newProperties New EntityAction properties that replace the source action properties
+   * @param from - Source action that is the base for the new action
+   * @param newProperties - New EntityAction properties that replace the source action properties
    */
   createFromAction<P = any>(
     from: EntityAction,

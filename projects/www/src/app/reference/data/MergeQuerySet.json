@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!MergeQuerySet:class",
-      "docComment": "/**\n * Create entity cache action that merges entities from a query result that returned entities from multiple collections. Corresponding entity cache reducer should add and update all collections at the same time, before any selectors$ observables emit.\n *\n * @param querySet - The result of the query in the form of a map of entity collections. These are the entity data to merge into the respective collections.\n *\n * @param mergeStrategy - How to merge a queried entity when it is already in the collection. The default is MergeStrategy.PreserveChanges\n *\n * @param tag - Optional tag to identify the operation from the app perspective.\n */\n",
+      "docComment": "/**\n * Create entity cache action that merges entities from a query result that returned entities from multiple collections. Corresponding entity cache reducer should add and update all collections at the same time, before any selectors$ observables emit.\n *\n * @param querySet - The result of the query in the form of a map of entity collections. These are the entity data to merge into the respective collections.\n *\n * @param mergeStrategy - How to merge a queried entity when it is already in the collection. The default is MergeStrategy.PreserveChanges\n *\n * @param tag - Optional tag to identify the operation from the app perspective.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -178,7 +178,7 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
@@ -201,7 +201,7 @@
           },
           {
             "name": "tag",
-            "description": "Optional tag to identify the operation from the app perspective.\n"
+            "description": "Optional tag to identify the operation from the app perspective.\n\n\n"
           }
         ]
       }

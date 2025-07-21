@@ -11,6 +11,9 @@ import { EntityActionOptions } from '../actions/entity-action';
 import { EntityCache } from '../reducers/entity-cache';
 import { MergeStrategy } from '../actions/merge-strategy';
 
+/**
+ * @public
+ */
 export enum EntityCacheAction {
   CLEAR_COLLECTIONS = '@ngrx/data/entity-cache/clear-collections',
   LOAD_COLLECTIONS = '@ngrx/data/entity-cache/load-collections',
@@ -28,6 +31,8 @@ export enum EntityCacheAction {
  * Hash of entities keyed by EntityCollection name,
  * typically the result of a query that returned results from a multi-collection query
  * that will be merged into an EntityCache via the `MergeQuerySet` action.
+ *
+ * @public
  */
 export interface EntityCacheQuerySet {
   [entityName: string]: any[];
@@ -35,9 +40,11 @@ export interface EntityCacheQuerySet {
 
 /**
  * Clear the collections identified in the collectionSet.
- * @param [collections] Array of names of the collections to clear.
+ * @param collections - Array of names of the collections to clear.
  * If empty array, does nothing. If no array, clear all collections.
- * @param [tag] Optional tag to identify the operation from the app perspective.
+ * @param tag - Optional tag to identify the operation from the app perspective.
+ *
+ * @public
  */
 export class ClearCollections implements Action {
   readonly payload: { collections?: string[]; tag?: string };
@@ -51,9 +58,11 @@ export class ClearCollections implements Action {
 /**
  * Create entity cache action that loads multiple entity collections at the same time.
  * before any selectors$ observables emit.
- * @param querySet The collections to load, typically the result of a query.
- * @param [tag] Optional tag to identify the operation from the app perspective.
+ * @param querySet - The collections to load, typically the result of a query.
+ * @param tag - Optional tag to identify the operation from the app perspective.
  * in the form of a map of entity collections.
+ *
+ * @public
  */
 export class LoadCollections implements Action {
   readonly payload: { collections: EntityCacheQuerySet; tag?: string };
@@ -69,11 +78,13 @@ export class LoadCollections implements Action {
  * that returned entities from multiple collections.
  * Corresponding entity cache reducer should add and update all collections
  * at the same time, before any selectors$ observables emit.
- * @param querySet The result of the query in the form of a map of entity collections.
+ * @param querySet - The result of the query in the form of a map of entity collections.
  * These are the entity data to merge into the respective collections.
- * @param mergeStrategy How to merge a queried entity when it is already in the collection.
+ * @param mergeStrategy - How to merge a queried entity when it is already in the collection.
  * The default is MergeStrategy.PreserveChanges
- * @param [tag] Optional tag to identify the operation from the app perspective.
+ * @param tag - Optional tag to identify the operation from the app perspective.
+ *
+ * @public
  */
 export class MergeQuerySet implements Action {
   readonly payload: {
@@ -102,8 +113,10 @@ export class MergeQuerySet implements Action {
  * Create entity cache action for replacing the entire entity cache.
  * Dangerous because brute force but useful as when re-hydrating an EntityCache
  * from local browser storage when the application launches.
- * @param cache New state of the entity cache
- * @param [tag] Optional tag to identify the operation from the app perspective.
+ * @param cache - New state of the entity cache
+ * @param tag - Optional tag to identify the operation from the app perspective.
+ *
+ * @public
  */
 export class SetEntityCache implements Action {
   readonly payload: { cache: EntityCache; tag?: string };
@@ -115,6 +128,9 @@ export class SetEntityCache implements Action {
 }
 
 // #region SaveEntities
+/**
+ * @public
+ */
 export class SaveEntities implements Action {
   readonly payload: {
     readonly changeSet: ChangeSet;
@@ -141,6 +157,9 @@ export class SaveEntities implements Action {
   }
 }
 
+/**
+ * @public
+ */
 export class SaveEntitiesCancel implements Action {
   readonly payload: {
     readonly correlationId: any;
@@ -160,6 +179,9 @@ export class SaveEntitiesCancel implements Action {
   }
 }
 
+/**
+ * @public
+ */
 export class SaveEntitiesCanceled implements Action {
   readonly payload: {
     readonly correlationId: any;
@@ -173,6 +195,9 @@ export class SaveEntitiesCanceled implements Action {
   }
 }
 
+/**
+ * @public
+ */
 export class SaveEntitiesError {
   readonly payload: {
     readonly error: DataServiceError;
@@ -186,6 +211,9 @@ export class SaveEntitiesError {
   }
 }
 
+/**
+ * @public
+ */
 export class SaveEntitiesSuccess implements Action {
   readonly payload: {
     readonly changeSet: ChangeSet;

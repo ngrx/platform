@@ -1,1 +1,1790 @@
-{"name":"EntityOp","canonicalReference":"@ngrx/data!EntityOp:enum","kind":"Enum","fileUrlPath":"../../dist/modules/data/src/actions/entity-op.d.ts","isDeprecated":false,"members":[{"kind":"Enum","canonicalReference":"@ngrx/data!EntityOp:enum","docComment":"/**\n * General purpose entity action operations, good for any entity type\n */\n","excerptTokens":[{"kind":"Content","text":"export declare enum EntityOp "}],"fileUrlPath":"../../dist/modules/data/src/actions/entity-op.d.ts","releaseTag":"Public","name":"EntityOp","preserveMemberOrder":false,"members":[{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.ADD_ALL:member","docComment":"","excerptTokens":[{"kind":"Content","text":"ADD_ALL = "},{"kind":"Content","text":"\"@ngrx/data/add-all\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"ADD_ALL","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.ADD_MANY:member","docComment":"","excerptTokens":[{"kind":"Content","text":"ADD_MANY = "},{"kind":"Content","text":"\"@ngrx/data/add-many\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"ADD_MANY","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.ADD_ONE:member","docComment":"","excerptTokens":[{"kind":"Content","text":"ADD_ONE = "},{"kind":"Content","text":"\"@ngrx/data/add-one\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"ADD_ONE","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.CANCEL_PERSIST:member","docComment":"","excerptTokens":[{"kind":"Content","text":"CANCEL_PERSIST = "},{"kind":"Content","text":"\"@ngrx/data/cancel-persist\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"CANCEL_PERSIST","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.CANCELED_PERSIST:member","docComment":"","excerptTokens":[{"kind":"Content","text":"CANCELED_PERSIST = "},{"kind":"Content","text":"\"@ngrx/data/canceled-persist\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"CANCELED_PERSIST","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.COMMIT_ALL:member","docComment":"","excerptTokens":[{"kind":"Content","text":"COMMIT_ALL = "},{"kind":"Content","text":"\"@ngrx/data/commit-all\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"COMMIT_ALL","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.COMMIT_MANY:member","docComment":"","excerptTokens":[{"kind":"Content","text":"COMMIT_MANY = "},{"kind":"Content","text":"\"@ngrx/data/commit-many\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"COMMIT_MANY","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.COMMIT_ONE:member","docComment":"","excerptTokens":[{"kind":"Content","text":"COMMIT_ONE = "},{"kind":"Content","text":"\"@ngrx/data/commit-one\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"COMMIT_ONE","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.QUERY_ALL:member","docComment":"","excerptTokens":[{"kind":"Content","text":"QUERY_ALL = "},{"kind":"Content","text":"\"@ngrx/data/query-all\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"QUERY_ALL","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.QUERY_ALL_ERROR:member","docComment":"","excerptTokens":[{"kind":"Content","text":"QUERY_ALL_ERROR = "},{"kind":"Content","text":"\"@ngrx/data/query-all/error\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"QUERY_ALL_ERROR","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.QUERY_ALL_SUCCESS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"QUERY_ALL_SUCCESS = "},{"kind":"Content","text":"\"@ngrx/data/query-all/success\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"QUERY_ALL_SUCCESS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.QUERY_BY_KEY:member","docComment":"","excerptTokens":[{"kind":"Content","text":"QUERY_BY_KEY = "},{"kind":"Content","text":"\"@ngrx/data/query-by-key\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"QUERY_BY_KEY","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.QUERY_BY_KEY_ERROR:member","docComment":"","excerptTokens":[{"kind":"Content","text":"QUERY_BY_KEY_ERROR = "},{"kind":"Content","text":"\"@ngrx/data/query-by-key/error\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"QUERY_BY_KEY_ERROR","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.QUERY_BY_KEY_SUCCESS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"QUERY_BY_KEY_SUCCESS = "},{"kind":"Content","text":"\"@ngrx/data/query-by-key/success\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"QUERY_BY_KEY_SUCCESS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.QUERY_LOAD:member","docComment":"","excerptTokens":[{"kind":"Content","text":"QUERY_LOAD = "},{"kind":"Content","text":"\"@ngrx/data/query-load\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"QUERY_LOAD","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.QUERY_LOAD_ERROR:member","docComment":"","excerptTokens":[{"kind":"Content","text":"QUERY_LOAD_ERROR = "},{"kind":"Content","text":"\"@ngrx/data/query-load/error\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"QUERY_LOAD_ERROR","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.QUERY_LOAD_SUCCESS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"QUERY_LOAD_SUCCESS = "},{"kind":"Content","text":"\"@ngrx/data/query-load/success\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"QUERY_LOAD_SUCCESS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.QUERY_MANY:member","docComment":"","excerptTokens":[{"kind":"Content","text":"QUERY_MANY = "},{"kind":"Content","text":"\"@ngrx/data/query-many\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"QUERY_MANY","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.QUERY_MANY_ERROR:member","docComment":"","excerptTokens":[{"kind":"Content","text":"QUERY_MANY_ERROR = "},{"kind":"Content","text":"\"@ngrx/data/query-many/error\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"QUERY_MANY_ERROR","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.QUERY_MANY_SUCCESS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"QUERY_MANY_SUCCESS = "},{"kind":"Content","text":"\"@ngrx/data/query-many/success\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"QUERY_MANY_SUCCESS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.REMOVE_ALL:member","docComment":"","excerptTokens":[{"kind":"Content","text":"REMOVE_ALL = "},{"kind":"Content","text":"\"@ngrx/data/remove-all\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"REMOVE_ALL","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.REMOVE_MANY:member","docComment":"","excerptTokens":[{"kind":"Content","text":"REMOVE_MANY = "},{"kind":"Content","text":"\"@ngrx/data/remove-many\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"REMOVE_MANY","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.REMOVE_ONE:member","docComment":"","excerptTokens":[{"kind":"Content","text":"REMOVE_ONE = "},{"kind":"Content","text":"\"@ngrx/data/remove-one\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"REMOVE_ONE","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_ADD_MANY:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_ADD_MANY = "},{"kind":"Content","text":"\"@ngrx/data/save/add-many\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_ADD_MANY","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_ADD_MANY_ERROR:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_ADD_MANY_ERROR = "},{"kind":"Content","text":"\"@ngrx/data/save/add-many/error\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_ADD_MANY_ERROR","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_ADD_MANY_SUCCESS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_ADD_MANY_SUCCESS = "},{"kind":"Content","text":"\"@ngrx/data/save/add-many/success\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_ADD_MANY_SUCCESS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_ADD_ONE:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_ADD_ONE = "},{"kind":"Content","text":"\"@ngrx/data/save/add-one\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_ADD_ONE","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_ADD_ONE_ERROR:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_ADD_ONE_ERROR = "},{"kind":"Content","text":"\"@ngrx/data/save/add-one/error\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_ADD_ONE_ERROR","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_ADD_ONE_SUCCESS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_ADD_ONE_SUCCESS = "},{"kind":"Content","text":"\"@ngrx/data/save/add-one/success\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_ADD_ONE_SUCCESS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_DELETE_MANY:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_DELETE_MANY = "},{"kind":"Content","text":"\"@ngrx/data/save/delete-many\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_DELETE_MANY","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_DELETE_MANY_ERROR:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_DELETE_MANY_ERROR = "},{"kind":"Content","text":"\"@ngrx/data/save/delete-many/error\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_DELETE_MANY_ERROR","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_DELETE_MANY_SUCCESS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_DELETE_MANY_SUCCESS = "},{"kind":"Content","text":"\"@ngrx/data/save/delete-many/success\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_DELETE_MANY_SUCCESS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_DELETE_ONE:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_DELETE_ONE = "},{"kind":"Content","text":"\"@ngrx/data/save/delete-one\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_DELETE_ONE","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_DELETE_ONE_ERROR:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_DELETE_ONE_ERROR = "},{"kind":"Content","text":"\"@ngrx/data/save/delete-one/error\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_DELETE_ONE_ERROR","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_DELETE_ONE_SUCCESS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_DELETE_ONE_SUCCESS = "},{"kind":"Content","text":"\"@ngrx/data/save/delete-one/success\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_DELETE_ONE_SUCCESS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_UPDATE_MANY:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_UPDATE_MANY = "},{"kind":"Content","text":"\"@ngrx/data/save/update-many\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_UPDATE_MANY","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_UPDATE_MANY_ERROR:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_UPDATE_MANY_ERROR = "},{"kind":"Content","text":"\"@ngrx/data/save/update-many/error\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_UPDATE_MANY_ERROR","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_UPDATE_MANY_SUCCESS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_UPDATE_MANY_SUCCESS = "},{"kind":"Content","text":"\"@ngrx/data/save/update-many/success\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_UPDATE_MANY_SUCCESS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_UPDATE_ONE:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_UPDATE_ONE = "},{"kind":"Content","text":"\"@ngrx/data/save/update-one\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_UPDATE_ONE","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_UPDATE_ONE_ERROR:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_UPDATE_ONE_ERROR = "},{"kind":"Content","text":"\"@ngrx/data/save/update-one/error\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_UPDATE_ONE_ERROR","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_UPDATE_ONE_SUCCESS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_UPDATE_ONE_SUCCESS = "},{"kind":"Content","text":"\"@ngrx/data/save/update-one/success\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_UPDATE_ONE_SUCCESS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_UPSERT_MANY:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_UPSERT_MANY = "},{"kind":"Content","text":"\"@ngrx/data/save/upsert-many\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_UPSERT_MANY","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_UPSERT_MANY_ERROR:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_UPSERT_MANY_ERROR = "},{"kind":"Content","text":"\"@ngrx/data/save/upsert-many/error\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_UPSERT_MANY_ERROR","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_UPSERT_MANY_SUCCESS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_UPSERT_MANY_SUCCESS = "},{"kind":"Content","text":"\"@ngrx/data/save/upsert-many/success\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_UPSERT_MANY_SUCCESS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_UPSERT_ONE:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_UPSERT_ONE = "},{"kind":"Content","text":"\"@ngrx/data/save/upsert-one\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_UPSERT_ONE","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_UPSERT_ONE_ERROR:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_UPSERT_ONE_ERROR = "},{"kind":"Content","text":"\"@ngrx/data/save/upsert-one/error\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_UPSERT_ONE_ERROR","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SAVE_UPSERT_ONE_SUCCESS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_UPSERT_ONE_SUCCESS = "},{"kind":"Content","text":"\"@ngrx/data/save/upsert-one/success\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_UPSERT_ONE_SUCCESS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SET_CHANGE_STATE:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SET_CHANGE_STATE = "},{"kind":"Content","text":"\"@ngrx/data/set-change-state\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SET_CHANGE_STATE","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SET_COLLECTION:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SET_COLLECTION = "},{"kind":"Content","text":"\"@ngrx/data/set-collection\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SET_COLLECTION","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SET_FILTER:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SET_FILTER = "},{"kind":"Content","text":"\"@ngrx/data/set-filter\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SET_FILTER","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SET_LOADED:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SET_LOADED = "},{"kind":"Content","text":"\"@ngrx/data/set-loaded\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SET_LOADED","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.SET_LOADING:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SET_LOADING = "},{"kind":"Content","text":"\"@ngrx/data/set-loading\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SET_LOADING","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.UNDO_ALL:member","docComment":"","excerptTokens":[{"kind":"Content","text":"UNDO_ALL = "},{"kind":"Content","text":"\"@ngrx/data/undo-all\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"UNDO_ALL","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.UNDO_MANY:member","docComment":"","excerptTokens":[{"kind":"Content","text":"UNDO_MANY = "},{"kind":"Content","text":"\"@ngrx/data/undo-many\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"UNDO_MANY","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.UNDO_ONE:member","docComment":"","excerptTokens":[{"kind":"Content","text":"UNDO_ONE = "},{"kind":"Content","text":"\"@ngrx/data/undo-one\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"UNDO_ONE","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.UPDATE_MANY:member","docComment":"","excerptTokens":[{"kind":"Content","text":"UPDATE_MANY = "},{"kind":"Content","text":"\"@ngrx/data/update-many\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"UPDATE_MANY","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.UPDATE_ONE:member","docComment":"","excerptTokens":[{"kind":"Content","text":"UPDATE_ONE = "},{"kind":"Content","text":"\"@ngrx/data/update-one\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"UPDATE_ONE","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.UPSERT_MANY:member","docComment":"","excerptTokens":[{"kind":"Content","text":"UPSERT_MANY = "},{"kind":"Content","text":"\"@ngrx/data/upsert-many\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"UPSERT_MANY","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityOp.UPSERT_ONE:member","docComment":"","excerptTokens":[{"kind":"Content","text":"UPSERT_ONE = "},{"kind":"Content","text":"\"@ngrx/data/upsert-one\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"UPSERT_ONE","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"General purpose entity action operations, good for any entity type\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "EntityOp",
+  "canonicalReference": "@ngrx/data!EntityOp:enum",
+  "kind": "Enum",
+  "fileUrlPath": "../../dist/modules/data/src/actions/entity-op.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Enum",
+      "canonicalReference": "@ngrx/data!EntityOp:enum",
+      "docComment": "/**\n * General purpose entity action operations, good for any entity type\n *\n * @public\n */\n",
+      "excerptTokens": [
+        { "kind": "Content", "text": "export declare enum EntityOp " }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/actions/entity-op.d.ts",
+      "releaseTag": "Public",
+      "name": "EntityOp",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.ADD_ALL:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "ADD_ALL = " },
+            { "kind": "Content", "text": "\"@ngrx/data/add-all\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "ADD_ALL",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.ADD_MANY:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "ADD_MANY = " },
+            { "kind": "Content", "text": "\"@ngrx/data/add-many\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "ADD_MANY",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.ADD_ONE:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "ADD_ONE = " },
+            { "kind": "Content", "text": "\"@ngrx/data/add-one\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "ADD_ONE",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.CANCEL_PERSIST:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "CANCEL_PERSIST = " },
+            { "kind": "Content", "text": "\"@ngrx/data/cancel-persist\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "CANCEL_PERSIST",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.CANCELED_PERSIST:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "CANCELED_PERSIST = " },
+            { "kind": "Content", "text": "\"@ngrx/data/canceled-persist\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "CANCELED_PERSIST",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.COMMIT_ALL:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "COMMIT_ALL = " },
+            { "kind": "Content", "text": "\"@ngrx/data/commit-all\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "COMMIT_ALL",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.COMMIT_MANY:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "COMMIT_MANY = " },
+            { "kind": "Content", "text": "\"@ngrx/data/commit-many\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "COMMIT_MANY",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.COMMIT_ONE:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "COMMIT_ONE = " },
+            { "kind": "Content", "text": "\"@ngrx/data/commit-one\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "COMMIT_ONE",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.QUERY_ALL:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "QUERY_ALL = " },
+            { "kind": "Content", "text": "\"@ngrx/data/query-all\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "QUERY_ALL",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.QUERY_ALL_ERROR:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "QUERY_ALL_ERROR = " },
+            { "kind": "Content", "text": "\"@ngrx/data/query-all/error\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "QUERY_ALL_ERROR",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.QUERY_ALL_SUCCESS:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "QUERY_ALL_SUCCESS = " },
+            { "kind": "Content", "text": "\"@ngrx/data/query-all/success\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "QUERY_ALL_SUCCESS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.QUERY_BY_KEY:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "QUERY_BY_KEY = " },
+            { "kind": "Content", "text": "\"@ngrx/data/query-by-key\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "QUERY_BY_KEY",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.QUERY_BY_KEY_ERROR:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "QUERY_BY_KEY_ERROR = " },
+            { "kind": "Content", "text": "\"@ngrx/data/query-by-key/error\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "QUERY_BY_KEY_ERROR",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.QUERY_BY_KEY_SUCCESS:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "QUERY_BY_KEY_SUCCESS = " },
+            { "kind": "Content", "text": "\"@ngrx/data/query-by-key/success\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "QUERY_BY_KEY_SUCCESS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.QUERY_LOAD:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "QUERY_LOAD = " },
+            { "kind": "Content", "text": "\"@ngrx/data/query-load\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "QUERY_LOAD",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.QUERY_LOAD_ERROR:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "QUERY_LOAD_ERROR = " },
+            { "kind": "Content", "text": "\"@ngrx/data/query-load/error\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "QUERY_LOAD_ERROR",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.QUERY_LOAD_SUCCESS:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "QUERY_LOAD_SUCCESS = " },
+            { "kind": "Content", "text": "\"@ngrx/data/query-load/success\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "QUERY_LOAD_SUCCESS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.QUERY_MANY:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "QUERY_MANY = " },
+            { "kind": "Content", "text": "\"@ngrx/data/query-many\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "QUERY_MANY",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.QUERY_MANY_ERROR:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "QUERY_MANY_ERROR = " },
+            { "kind": "Content", "text": "\"@ngrx/data/query-many/error\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "QUERY_MANY_ERROR",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.QUERY_MANY_SUCCESS:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "QUERY_MANY_SUCCESS = " },
+            { "kind": "Content", "text": "\"@ngrx/data/query-many/success\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "QUERY_MANY_SUCCESS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.REMOVE_ALL:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "REMOVE_ALL = " },
+            { "kind": "Content", "text": "\"@ngrx/data/remove-all\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "REMOVE_ALL",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.REMOVE_MANY:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "REMOVE_MANY = " },
+            { "kind": "Content", "text": "\"@ngrx/data/remove-many\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "REMOVE_MANY",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.REMOVE_ONE:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "REMOVE_ONE = " },
+            { "kind": "Content", "text": "\"@ngrx/data/remove-one\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "REMOVE_ONE",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_ADD_MANY:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_ADD_MANY = " },
+            { "kind": "Content", "text": "\"@ngrx/data/save/add-many\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_ADD_MANY",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_ADD_MANY_ERROR:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_ADD_MANY_ERROR = " },
+            { "kind": "Content", "text": "\"@ngrx/data/save/add-many/error\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_ADD_MANY_ERROR",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_ADD_MANY_SUCCESS:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_ADD_MANY_SUCCESS = " },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/save/add-many/success\""
+            }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_ADD_MANY_SUCCESS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_ADD_ONE:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_ADD_ONE = " },
+            { "kind": "Content", "text": "\"@ngrx/data/save/add-one\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_ADD_ONE",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_ADD_ONE_ERROR:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_ADD_ONE_ERROR = " },
+            { "kind": "Content", "text": "\"@ngrx/data/save/add-one/error\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_ADD_ONE_ERROR",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_ADD_ONE_SUCCESS:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_ADD_ONE_SUCCESS = " },
+            { "kind": "Content", "text": "\"@ngrx/data/save/add-one/success\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_ADD_ONE_SUCCESS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_DELETE_MANY:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_DELETE_MANY = " },
+            { "kind": "Content", "text": "\"@ngrx/data/save/delete-many\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_DELETE_MANY",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_DELETE_MANY_ERROR:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_DELETE_MANY_ERROR = " },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/save/delete-many/error\""
+            }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_DELETE_MANY_ERROR",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_DELETE_MANY_SUCCESS:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_DELETE_MANY_SUCCESS = " },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/save/delete-many/success\""
+            }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_DELETE_MANY_SUCCESS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_DELETE_ONE:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_DELETE_ONE = " },
+            { "kind": "Content", "text": "\"@ngrx/data/save/delete-one\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_DELETE_ONE",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_DELETE_ONE_ERROR:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_DELETE_ONE_ERROR = " },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/save/delete-one/error\""
+            }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_DELETE_ONE_ERROR",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_DELETE_ONE_SUCCESS:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_DELETE_ONE_SUCCESS = " },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/save/delete-one/success\""
+            }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_DELETE_ONE_SUCCESS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_UPDATE_MANY:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_UPDATE_MANY = " },
+            { "kind": "Content", "text": "\"@ngrx/data/save/update-many\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_UPDATE_MANY",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_UPDATE_MANY_ERROR:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_UPDATE_MANY_ERROR = " },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/save/update-many/error\""
+            }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_UPDATE_MANY_ERROR",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_UPDATE_MANY_SUCCESS:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_UPDATE_MANY_SUCCESS = " },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/save/update-many/success\""
+            }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_UPDATE_MANY_SUCCESS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_UPDATE_ONE:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_UPDATE_ONE = " },
+            { "kind": "Content", "text": "\"@ngrx/data/save/update-one\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_UPDATE_ONE",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_UPDATE_ONE_ERROR:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_UPDATE_ONE_ERROR = " },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/save/update-one/error\""
+            }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_UPDATE_ONE_ERROR",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_UPDATE_ONE_SUCCESS:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_UPDATE_ONE_SUCCESS = " },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/save/update-one/success\""
+            }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_UPDATE_ONE_SUCCESS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_UPSERT_MANY:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_UPSERT_MANY = " },
+            { "kind": "Content", "text": "\"@ngrx/data/save/upsert-many\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_UPSERT_MANY",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_UPSERT_MANY_ERROR:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_UPSERT_MANY_ERROR = " },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/save/upsert-many/error\""
+            }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_UPSERT_MANY_ERROR",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_UPSERT_MANY_SUCCESS:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_UPSERT_MANY_SUCCESS = " },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/save/upsert-many/success\""
+            }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_UPSERT_MANY_SUCCESS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_UPSERT_ONE:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_UPSERT_ONE = " },
+            { "kind": "Content", "text": "\"@ngrx/data/save/upsert-one\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_UPSERT_ONE",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_UPSERT_ONE_ERROR:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_UPSERT_ONE_ERROR = " },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/save/upsert-one/error\""
+            }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_UPSERT_ONE_ERROR",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SAVE_UPSERT_ONE_SUCCESS:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SAVE_UPSERT_ONE_SUCCESS = " },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/save/upsert-one/success\""
+            }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SAVE_UPSERT_ONE_SUCCESS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SET_CHANGE_STATE:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SET_CHANGE_STATE = " },
+            { "kind": "Content", "text": "\"@ngrx/data/set-change-state\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SET_CHANGE_STATE",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SET_COLLECTION:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SET_COLLECTION = " },
+            { "kind": "Content", "text": "\"@ngrx/data/set-collection\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SET_COLLECTION",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SET_FILTER:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SET_FILTER = " },
+            { "kind": "Content", "text": "\"@ngrx/data/set-filter\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SET_FILTER",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SET_LOADED:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SET_LOADED = " },
+            { "kind": "Content", "text": "\"@ngrx/data/set-loaded\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SET_LOADED",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.SET_LOADING:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "SET_LOADING = " },
+            { "kind": "Content", "text": "\"@ngrx/data/set-loading\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "SET_LOADING",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.UNDO_ALL:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "UNDO_ALL = " },
+            { "kind": "Content", "text": "\"@ngrx/data/undo-all\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "UNDO_ALL",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.UNDO_MANY:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "UNDO_MANY = " },
+            { "kind": "Content", "text": "\"@ngrx/data/undo-many\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "UNDO_MANY",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.UNDO_ONE:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "UNDO_ONE = " },
+            { "kind": "Content", "text": "\"@ngrx/data/undo-one\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "UNDO_ONE",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.UPDATE_MANY:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "UPDATE_MANY = " },
+            { "kind": "Content", "text": "\"@ngrx/data/update-many\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "UPDATE_MANY",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.UPDATE_ONE:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "UPDATE_ONE = " },
+            { "kind": "Content", "text": "\"@ngrx/data/update-one\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "UPDATE_ONE",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.UPSERT_MANY:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "UPSERT_MANY = " },
+            { "kind": "Content", "text": "\"@ngrx/data/upsert-many\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "UPSERT_MANY",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityOp.UPSERT_ONE:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "UPSERT_ONE = " },
+            { "kind": "Content", "text": "\"@ngrx/data/upsert-one\"" }
+          ],
+          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "name": "UPSERT_ONE",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "General purpose entity action operations, good for any entity type\n\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

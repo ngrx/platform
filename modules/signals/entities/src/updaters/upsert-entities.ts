@@ -13,13 +13,22 @@ import {
   setEntitiesMutably,
 } from '../helpers';
 
+/**
+ * @public
+ */
 export function upsertEntities<Entity extends { id: EntityId }>(
   entities: Entity[]
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @public
+ */
 export function upsertEntities<Entity, Collection extends string>(
   entities: Entity[],
   config: { collection: Collection; selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<NamedEntityState<Entity, Collection>>;
+/**
+ * @public
+ */
 export function upsertEntities<
   Entity extends { id: EntityId },
   Collection extends string
@@ -27,6 +36,9 @@ export function upsertEntities<
   entities: Entity[],
   config: { collection: Collection }
 ): PartialStateUpdater<NamedEntityState<Entity, Collection>>;
+/**
+ * @public
+ */
 export function upsertEntities<Entity>(
   entities: Entity[],
   config: { selectId: SelectEntityId<NoInfer<Entity>> }

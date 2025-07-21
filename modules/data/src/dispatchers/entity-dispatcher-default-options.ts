@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
  * A pessimistic save modifies the collection after the server confirms the save was successful.
  * This class initializes the defaults to the safest values.
  * Provide an alternative to change the defaults for all entity collections.
+ * @public
  */
 @Injectable()
 export class EntityDispatcherDefaultOptions {

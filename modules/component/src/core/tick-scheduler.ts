@@ -17,6 +17,11 @@ export abstract class TickScheduler {
 @Injectable({
   providedIn: 'root',
 })
+/**
+ * An animation frame-based tick scheduler that uses requestAnimationFrame.
+ *
+ * @public
+ */
 export class AnimationFrameTickScheduler extends TickScheduler {
   private isScheduled = false;
 
@@ -35,6 +40,11 @@ export class AnimationFrameTickScheduler extends TickScheduler {
   }
 }
 
+/**
+ * A no-operation tick scheduler that does nothing when scheduled.
+ *
+ * @public
+ */
 export class NoopTickScheduler extends TickScheduler {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   schedule(): void {}

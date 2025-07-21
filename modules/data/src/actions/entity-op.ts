@@ -1,7 +1,11 @@
 // Ensure that these suffix values and the EntityOp suffixes match
 // Cannot do that programmatically.
 
-/** General purpose entity action operations, good for any entity type */
+/**
+ * General purpose entity action operations, good for any entity type
+ *
+ * @public
+ */
 export enum EntityOp {
   // Persistance operations
   CANCEL_PERSIST = '@ngrx/data/cancel-persist',
@@ -83,18 +87,34 @@ export enum EntityOp {
   SET_LOADING = '@ngrx/data/set-loading',
 }
 
-/** "Success" suffix appended to EntityOps that are successful.*/
+/**
+ * "Success" suffix appended to EntityOps that are successful.
+ *
+ * @public
+ */
 export const OP_SUCCESS = '/success';
 
-/** "Error" suffix appended to EntityOps that have failed.*/
+/**
+ * "Error" suffix appended to EntityOps that have failed.
+ *
+ * @public
+ */
 export const OP_ERROR = '/error';
 
-/** Make the error EntityOp corresponding to the given EntityOp */
+/**
+ * Make the error EntityOp corresponding to the given EntityOp
+ *
+ * @public
+ */
 export function makeErrorOp(op: EntityOp): EntityOp {
   return <EntityOp>(op + OP_ERROR);
 }
 
-/** Make the success EntityOp corresponding to the given EntityOp */
+/**
+ * Make the success EntityOp corresponding to the given EntityOp
+ *
+ * @public
+ */
 export function makeSuccessOp(op: EntityOp): EntityOp {
   return <EntityOp>(op + OP_SUCCESS);
 }

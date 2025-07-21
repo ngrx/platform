@@ -19,6 +19,7 @@ import { getClasses, isClass } from './utils';
 /**
  * Runs the provided effects.
  * Can be called at the root and feature levels.
+ * @public
  */
 export function provideEffects(
   effects: Array<Type<unknown> | Record<string, FunctionalEffect>>
@@ -26,12 +27,13 @@ export function provideEffects(
 /**
  * Runs the provided effects.
  * Can be called at the root and feature levels.
+ * @public
  */
 export function provideEffects(
   ...effects: Array<Type<unknown> | Record<string, FunctionalEffect>>
 ): EnvironmentProviders;
 /**
- * @usageNotes
+ * @example
  *
  * ### Providing effects at the root level
  *
@@ -55,6 +57,7 @@ export function provideEffects(
  *   },
  * ];
  * ```
+ * @public
  */
 export function provideEffects(
   ...effects:

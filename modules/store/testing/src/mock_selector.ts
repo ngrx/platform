@@ -1,5 +1,8 @@
 import { MemoizedSelector, MemoizedSelectorWithProps } from '@ngrx/store';
 
+/**
+ * @public
+ */
 export interface MockSelector {
   selector:
     | string

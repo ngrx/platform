@@ -20,6 +20,9 @@ type ConditionallyDisallowActionCreator<DT, Result> = DT extends false
     : unknown
   : unknown;
 
+/**
+ * @public
+ */
 export function createEffect<
   C extends EffectConfig & { functional?: false },
   DT extends DispatchType<C>,
@@ -30,28 +33,32 @@ export function createEffect<
   source: () => R & ConditionallyDisallowActionCreator<DT, R>,
   config?: C
 ): R & CreateEffectMetadata;
+/**
+ * @public
+ */
 export function createEffect<Source extends () => Observable<unknown>>(
   source: Source,
   config: EffectConfig & { functional: true; dispatch: false }
 ): FunctionalEffect<Source>;
+/**
+ * @public
+ */
 export function createEffect<Source extends () => Observable<Action>>(
   source: Source & ConditionallyDisallowActionCreator<true, ReturnType<Source>>,
   config: EffectConfig & { functional: true; dispatch?: true }
 ): FunctionalEffect<Source>;
 /**
- * @description
- *
  * Creates an effect from a source and an `EffectConfig`.
  *
- * @param source A function which returns an observable or observable factory.
- * @param config A `EffectConfig` to configure the effect. By default,
+ * @param source - A function which returns an observable or observable factory.
+ * @param config - A `EffectConfig` to configure the effect. By default,
  * `dispatch` is true, `functional` is false, and `useEffectsErrorHandler` is
  * true.
  * @returns If `EffectConfig`#`functional` is true, returns the source function.
  * Else, returns the source function result. When `EffectConfig`#`dispatch` is
  * true, the source function result needs to be `Observable<Action>`.
  *
- * @usageNotes
+ * @example
  *
  * ### Class Effects
  *
@@ -106,6 +113,8 @@ export function createEffect<Source extends () => Observable<Action>>(
  *   { functional: true, dispatch: false }
  * );
  * ```
+ *
+ * @public
  */
 export function createEffect<
   Result extends EffectResult<unknown>,
@@ -125,6 +134,9 @@ export function createEffect<
   return effect as typeof effect & CreateEffectMetadata;
 }
 
+/**
+ * @public
+ */
 export function getCreateEffectMetadata<T extends Record<keyof T, Object>>(
   instance: T
 ): EffectMetadata<T>[] {

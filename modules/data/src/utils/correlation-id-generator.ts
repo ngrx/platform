@@ -8,6 +8,8 @@ import { Injectable } from '@angular/core';
  * for the duration of a single client browser instance.
  * Ngrx entity dispatcher query and save methods call this service to generate default correlation ids.
  * Do NOT use for entity keys.
+ *
+ * @public
  */
 @Injectable()
 export class CorrelationIdGenerator {

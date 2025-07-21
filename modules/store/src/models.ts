@@ -1,9 +1,15 @@
 import { type ValueEqualityFn } from '@angular/core';
 
+/**
+ * @public
+ */
 export interface Action<Type extends string = string> {
   type: Type;
 }
 
+/**
+ * @public
+ */
 export type ActionType<A> = A extends ActionCreator<infer T, infer C>
   ? ReturnType<C> & { type: T }
   : never;
@@ -15,15 +21,23 @@ export type InitialState<T> = Partial<T> | TypeId<Partial<T>> | void;
 /**
  * A function that takes an `Action` and a `State`, and returns a `State`.
  * See `createReducer`.
+ *
+ * @public
  */
 export interface ActionReducer<T, V extends Action = Action> {
   (state: T | undefined, action: V): T;
 }
 
+/**
+ * @public
+ */
 export type ActionReducerMap<T, V extends Action = Action> = {
   [p in keyof T]: ActionReducer<T[p], V>;
 };
 
+/**
+ * @public
+ */
 export interface ActionReducerFactory<T, V extends Action = Action> {
   (
     reducerMap: ActionReducerMap<T, V>,
@@ -31,6 +45,9 @@ export interface ActionReducerFactory<T, V extends Action = Action> {
   ): ActionReducer<T, V>;
 }
 
+/**
+ * @public
+ */
 export type MetaReducer<T = any, V extends Action = Action> = (
   reducer: ActionReducer<T, V>
 ) => ActionReducer<T, V>;
@@ -43,10 +60,15 @@ export interface StoreFeature<T, V extends Action = Action> {
   metaReducers?: MetaReducer<T, V>[];
 }
 
+/**
+ * @public
+ */
 export type Selector<T, V> = (state: T) => V;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export type SelectorWithProps<State, Props, Result> = (
   state: State,
@@ -86,6 +108,8 @@ export type CreatorsNotAllowedCheck<T> = T extends ActionCreator
 
 /**
  * A function that returns an object in the shape of the `Action` interface.  Configured using `createAction`.
+ *
+ * @public
  */
 export type Creator<
   P extends any[] = any[],
@@ -101,6 +125,9 @@ export type Primitive =
   | null
   | undefined;
 
+/**
+ * @public
+ */
 export type NotAllowedCheck<T extends object> = T extends any[]
   ? ArraysAreNotAllowed
   : T extends { type: any }
@@ -123,21 +150,32 @@ export type NotAllowedInPropsCheck<T> = T extends object
 
 /**
  * See `Creator`.
+ *
+ * @public
  */
 export type ActionCreator<
   T extends string = string,
   C extends Creator = Creator
 > = C & Action<T>;
 
+/**
+ * @public
+ */
 export interface ActionCreatorProps<T> {
   _as: 'props';
   _p: T;
 }
 
+/**
+ * @public
+ */
 export type FunctionWithParametersType<P extends unknown[], R = void> = (
   ...args: P
 ) => R;
 
+/**
+ * @public
+ */
 export interface RuntimeChecks {
   /**
    * Verifies if the state is serializable

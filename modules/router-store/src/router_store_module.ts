@@ -45,6 +45,8 @@ import { provideRouterStore } from './provide_router_store';
  * export class AppModule {
  * }
  * ```
+ *
+ * @public
  */
 @NgModule({})
 export class StoreRouterConnectingModule {

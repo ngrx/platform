@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!EntityDispatcherBase:class",
-      "docComment": "/**\n * Dispatches EntityCollection actions to their reducers and effects (default implementation). All save commands rely on an Ngrx Effect such as `EntityEffects.persist$`.\n */\n",
+      "docComment": "/**\n * Dispatches EntityCollection actions to their reducers and effects (default implementation). All save commands rely on an Ngrx Effect such as `EntityEffects.persist$`.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -516,7 +516,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntityDispatcherBase#createAndDispatch:member(1)",
-          "docComment": "/**\n * Create an {EntityAction} for this entity type and dispatch it immediately to the store.\n *\n * @param op - the entity operation\n *\n * @param data - the action data\n *\n * @param options - additional options\n *\n * @returns the dispatched EntityAction\n */\n",
+          "docComment": "/**\n * Create an \\{EntityAction\\} for this entity type and dispatch it immediately to the store.\n *\n * @param op - the entity operation\n *\n * @param data - the action data\n *\n * @param options - additional options\n *\n * @returns the dispatched EntityAction\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "createAndDispatch<P = " },
             { "kind": "Content", "text": "any" },
@@ -584,7 +584,7 @@
               "isOverride": false,
               "isExperimental": false
             },
-            "summary": "Create an {EntityAction} for this entity type and dispatch it immediately to the store.\n\n",
+            "summary": "Create an \\{EntityAction\\} for this entity type and dispatch it immediately to the store.\n\n",
             "usageNotes": "",
             "remarks": "",
             "deprecated": "",
@@ -600,7 +600,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntityDispatcherBase#createEntityAction:member(1)",
-          "docComment": "/**\n * Create an {EntityAction} for this entity type.\n *\n * @param entityOp - the entity operation\n *\n * @param data - the action data\n *\n * @param options - additional options\n *\n * @returns the EntityAction\n */\n",
+          "docComment": "/**\n * Create an \\{EntityAction\\} for this entity type.\n *\n * @param entityOp - the entity operation\n *\n * @param data - the action data\n *\n * @param options - additional options\n *\n * @returns the EntityAction\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "createEntityAction<P = " },
             { "kind": "Content", "text": "any" },
@@ -668,7 +668,7 @@
               "isOverride": false,
               "isExperimental": false
             },
-            "summary": "Create an {EntityAction} for this entity type.\n\n",
+            "summary": "Create an \\{EntityAction\\} for this entity type.\n\n",
             "usageNotes": "",
             "remarks": "",
             "deprecated": "",
@@ -863,7 +863,7 @@
         {
           "kind": "Property",
           "canonicalReference": "@ngrx/data!EntityDispatcherBase#entityActionFactory:member",
-          "docComment": "/**\n * Creates an {EntityAction}\n */\n",
+          "docComment": "/**\n * Creates an \\{EntityAction\\}\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "entityActionFactory: " },
             {
@@ -890,7 +890,7 @@
               "isOverride": false,
               "isExperimental": false
             },
-            "summary": "Creates an {EntityAction}\n",
+            "summary": "Creates an \\{EntityAction\\}\n",
             "usageNotes": "",
             "remarks": "",
             "deprecated": "",
@@ -2163,13 +2163,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Dispatches EntityCollection actions to their reducers and effects (default implementation). All save commands rely on an Ngrx Effect such as `EntityEffects.persist$`.\n",
+        "summary": "Dispatches EntityCollection actions to their reducers and effects (default implementation). All save commands rely on an Ngrx Effect such as `EntityEffects.persist$`.\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

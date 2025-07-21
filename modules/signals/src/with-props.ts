@@ -8,6 +8,14 @@ import {
 } from './signal-store-models';
 import { Prettify } from './ts-helpers';
 
+/**
+ * Adds properties to a signal store.
+ *
+ * @param propsFactory - A factory function that creates properties for the store.
+ * @returns A signal store feature that adds the properties.
+ *
+ * @public
+ */
 export function withProps<
   Input extends SignalStoreFeatureResult,
   Props extends object

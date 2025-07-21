@@ -13,13 +13,22 @@ import {
   getEntityUpdaterResult,
 } from '../helpers';
 
+/**
+ * @public
+ */
 export function prependEntities<Entity extends { id: EntityId }>(
   entities: Entity[]
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @public
+ */
 export function prependEntities<Entity, Collection extends string>(
   entities: Entity[],
   config: { collection: Collection; selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<NamedEntityState<Entity, Collection>>;
+/**
+ * @public
+ */
 export function prependEntities<
   Entity extends { id: EntityId },
   Collection extends string
@@ -27,10 +36,16 @@ export function prependEntities<
   entities: Entity[],
   config: { collection: Collection }
 ): PartialStateUpdater<NamedEntityState<Entity, Collection>>;
+/**
+ * @public
+ */
 export function prependEntities<Entity>(
   entities: Entity[],
   config: { selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @public
+ */
 export function prependEntities(
   entities: any[],
   config?: { collection?: string; selectId?: SelectEntityId<any> }

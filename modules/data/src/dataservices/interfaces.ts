@@ -1,7 +1,10 @@
 import { Observable } from 'rxjs';
 import { Update } from '@ngrx/entity';
 
-/** A service that performs REST-like HTTP data operations for an entity collection */
+/**
+ * A service that performs REST-like HTTP data operations for an entity collection
+ * @public
+ */
 export interface EntityCollectionDataService<T> {
   readonly name: string;
   add(entity: T, httpOptions?: HttpOptions): Observable<T>;
@@ -19,8 +22,14 @@ export interface EntityCollectionDataService<T> {
   upsert(entity: T, httpOptions?: HttpOptions): Observable<T>;
 }
 
+/**
+ * @public
+ */
 export type HttpMethods = 'DELETE' | 'GET' | 'POST' | 'PUT';
 
+/**
+ * @public
+ */
 export interface RequestData {
   method: HttpMethods;
   url: string;
@@ -37,6 +46,7 @@ export interface RequestData {
  * @deprecated Use HttpOptions instead. getWithQuery still accepts QueryParams as its
  * first argument, but HttpOptions.httpParams uses Angular's own HttpParamsOptions which
  * HttpClient accepts as an argument.
+ * @public
  */
 export interface QueryParams {
   [name: string]:
@@ -49,6 +59,7 @@ export interface QueryParams {
 /**
  * Options that adhere to the constructor arguments for HttpParams and
  * HttpHeaders.
+ * @public
  */
 export interface HttpOptions {
   httpParams?: HttpParams;
@@ -57,11 +68,13 @@ export interface HttpOptions {
 
 /**
  * Type that adheres to angular's Http Headers
+ * @public
  */
 export type HttpHeaders = string | { [p: string]: string | string[] };
 
 /**
  * Options that partially adheres to angular's HttpParamsOptions. The non-serializable encoder property is omitted.
+ * @public
  */
 export declare interface HttpParams {
   /**

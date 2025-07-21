@@ -3,6 +3,11 @@ import { IsKnownRecord } from './ts-helpers';
 
 const DEEP_SIGNAL = Symbol('DEEP_SIGNAL');
 
+/**
+ * A signal type that recursively wraps nested object properties as signals.
+ *
+ * @public
+ */
 export type DeepSignal<T> = Signal<T> &
   (IsKnownRecord<T> extends true
     ? Readonly<{
@@ -12,6 +17,14 @@ export type DeepSignal<T> = Signal<T> &
       }>
     : unknown);
 
+/**
+ * Converts a signal into a deep signal that provides reactive access to nested object properties.
+ *
+ * @param signal - The source signal to convert.
+ * @returns A deep signal that wraps the source signal.
+ *
+ * @public
+ */
 export function toDeepSignal<T>(signal: Signal<T>): DeepSignal<T> {
   return new Proxy(signal, {
     has(target: any, prop) {

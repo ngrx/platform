@@ -8,7 +8,7 @@
     {
       "kind": "Variable",
       "canonicalReference": "@ngrx/router-store!routerCancelAction:var",
-      "docComment": "",
+      "docComment": "/**\n * Action creator for router cancel actions.\n *\n * @public\n */\n",
       "excerptTokens": [
         { "kind": "Content", "text": "routerCancelAction: " },
         { "kind": "Content", "text": "import(\"@ngrx/store\")." },
@@ -60,13 +60,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "Action creator for router cancel actions.\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

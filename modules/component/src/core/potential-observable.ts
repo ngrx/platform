@@ -9,6 +9,11 @@ type ObservableDictionary<PO> = Required<{
   [Key in keyof PO]: Observable<unknown>;
 }>;
 
+/**
+ * A type that extracts the result type from potential observables, promises, or plain values.
+ *
+ * @public
+ */
 export type PotentialObservableResult<
   PO,
   ExtendedResult = never
@@ -28,6 +33,14 @@ export type PotentialObservableResult<
       | ExtendedResult
   : PO;
 
+/**
+ * Converts a potential observable (observable, promise, or plain value) into an observable.
+ *
+ * @param potentialObservable - The potential observable to convert.
+ * @returns An observable that emits the result.
+ *
+ * @public
+ */
 export function fromPotentialObservable<PO>(
   potentialObservable: PO
 ): Observable<PotentialObservableResult<PO>> {

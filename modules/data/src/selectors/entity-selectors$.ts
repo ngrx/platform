@@ -22,6 +22,7 @@ import {
 
 /**
  * The selector observable functions for entity collection members.
+ * @public
  */
 export interface EntitySelectors$<T> {
   /** Name of the entity collection for these selectors$ */
@@ -69,7 +70,10 @@ export interface EntitySelectors$<T> {
     | Store<ChangeStateMap<T>>;
 }
 
-/** Creates observable EntitySelectors$ for entity collections. */
+/**
+ * Creates observable EntitySelectors$ for entity collections.
+ * @public
+ */
 @Injectable()
 export class EntitySelectors$Factory {
   /** Observable of the EntityCache */

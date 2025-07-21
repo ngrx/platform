@@ -24,12 +24,10 @@ import { ReducerManager } from './reducer_manager';
 import { StateObservable } from './state';
 import { assertDefined } from './helpers';
 
-@Injectable()
 /**
- * @description
  * Store is an injectable service that provides reactive state management and a public API for dispatching actions.
  *
- * @usageNotes
+ * @example
  *
  * In a component:
  *
@@ -55,7 +53,9 @@ import { assertDefined } from './helpers';
  * }
  * ```
  *
+ * @public
  */
+@Injectable()
 export class Store<T = object>
   extends Observable<T>
   implements Observer<Action>
@@ -79,25 +79,33 @@ export class Store<T = object>
 
   select<K>(mapFn: (state: T) => K): Observable<K>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+   *
+   * @public
    */
   select<K, Props = any>(
     mapFn: (state: T, props: Props) => K,
     props: Props
   ): Observable<K>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+   *
+   * @public
    */
   select<a extends keyof T>(key: a): Observable<T[a]>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+   *
+   * @public
    */
   select<a extends keyof T, b extends keyof T[a]>(
     key1: a,
     key2: b
   ): Observable<T[a][b]>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+   *
+   * @public
    */
   select<a extends keyof T, b extends keyof T[a], c extends keyof T[a][b]>(
     key1: a,
@@ -105,7 +113,9 @@ export class Store<T = object>
     key3: c
   ): Observable<T[a][b][c]>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+   *
+   * @public
    */
   select<
     a extends keyof T,
@@ -114,7 +124,9 @@ export class Store<T = object>
     d extends keyof T[a][b][c]
   >(key1: a, key2: b, key3: c, key4: d): Observable<T[a][b][c][d]>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+   *
+   * @public
    */
   select<
     a extends keyof T,
@@ -124,7 +136,9 @@ export class Store<T = object>
     e extends keyof T[a][b][c][d]
   >(key1: a, key2: b, key3: c, key4: d, key5: e): Observable<T[a][b][c][d][e]>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+   *
+   * @public
    */
   select<
     a extends keyof T,
@@ -142,7 +156,9 @@ export class Store<T = object>
     key6: f
   ): Observable<T[a][b][c][d][e][f]>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+   *
+   * @public
    */
   select<
     a extends keyof T,
@@ -162,7 +178,9 @@ export class Store<T = object>
     ...paths: string[]
   ): Observable<K>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+   *
+   * @public
    */
   select<Props = any, K = any>(
     pathOrMapFn: ((state: T, props?: Props) => K) | string,
@@ -174,16 +192,16 @@ export class Store<T = object>
   /**
    * Returns a signal of the provided selector.
    *
-   * @param selector selector function
-   * @param options select signal options
+   * @param selector - selector function
+   * @param options - select signal options
    * @returns Signal of the state selected by the provided selector
-   * @usageNotes
+   * @example
    *
    * ```ts
    * const count = this.store.selectSignal(state => state.count);
    * ```
    *
-   * Or with a selector created by @ngrx/store!createSelector:function
+   * Or with a selector created by \@ngrx/store!createSelector:function
    *
    * ```ts
    * const selectCount = createSelector(
@@ -192,6 +210,8 @@ export class Store<T = object>
    *
    * const count = this.store.selectSignal(selectCount);
    * ```
+   *
+   * @public
    */
   selectSignal<K>(
     selector: (state: T) => K,
@@ -265,25 +285,42 @@ export class Store<T = object>
   }
 }
 
+/**
+ * @public
+ */
 export const STORE_PROVIDERS: Provider[] = [Store];
 
+/**
+ * @public
+ */
 export function select<T, K>(
   mapFn: (state: T) => K
 ): (source$: Observable<T>) => Observable<K>;
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function select<T, Props, K>(
   mapFn: (state: T, props: Props) => K,
   props: Props
 ): (source$: Observable<T>) => Observable<K>;
+/**
+ * @public
+ */
 export function select<T, a extends keyof T>(
   key: a
 ): (source$: Observable<T>) => Observable<T[a]>;
+/**
+ * @public
+ */
 export function select<T, a extends keyof T, b extends keyof T[a]>(
   key1: a,
   key2: b
 ): (source$: Observable<T>) => Observable<T[a][b]>;
+/**
+ * @public
+ */
 export function select<
   T,
   a extends keyof T,
@@ -294,6 +331,9 @@ export function select<
   key2: b,
   key3: c
 ): (source$: Observable<T>) => Observable<T[a][b][c]>;
+/**
+ * @public
+ */
 export function select<
   T,
   a extends keyof T,
@@ -306,6 +346,9 @@ export function select<
   key3: c,
   key4: d
 ): (source$: Observable<T>) => Observable<T[a][b][c][d]>;
+/**
+ * @public
+ */
 export function select<
   T,
   a extends keyof T,
@@ -320,6 +363,9 @@ export function select<
   key4: d,
   key5: e
 ): (source$: Observable<T>) => Observable<T[a][b][c][d][e]>;
+/**
+ * @public
+ */
 export function select<
   T,
   a extends keyof T,
@@ -336,6 +382,9 @@ export function select<
   key5: e,
   key6: f
 ): (source$: Observable<T>) => Observable<T[a][b][c][d][e][f]>;
+/**
+ * @public
+ */
 export function select<
   T,
   a extends keyof T,

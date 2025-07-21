@@ -1,11 +1,21 @@
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { BaseRouterStoreState, RouterStateSerializer } from './base';
 
+/**
+ * A serialized representation of the router state snapshot with full route information.
+ *
+ * @public
+ */
 export interface SerializedRouterStateSnapshot extends BaseRouterStoreState {
   root: ActivatedRouteSnapshot;
   url: string;
 }
 
+/**
+ * Serializer that preserves all router state information.
+ *
+ * @public
+ */
 export class FullRouterStateSerializer
   implements RouterStateSerializer<SerializedRouterStateSnapshot>
 {

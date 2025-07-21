@@ -11,6 +11,7 @@ import { UpdateResponseData } from '../actions/update-response-data';
  * methods for tracking, committing, and reverting/undoing unsaved entity changes.
  * Used by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection.
  * See EntityChangeTracker docs.
+ * @public
  */
 export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   constructor(
@@ -25,7 +26,7 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Commit all changes as when the collection has been completely reloaded from the server.
    * Harmless when there are no entity changes to commit.
-   * @param collection The entity collection
+   * @param collection - The entity collection
    */
   commitAll(collection: EntityCollection<T>): EntityCollection<T> {
     return Object.keys(collection.changeState).length === 0
@@ -36,8 +37,8 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Commit changes for the given entities as when they have been refreshed from the server.
    * Harmless when there are no entity changes to commit.
-   * @param entityOrIdList The entities to clear tracking or their ids.
-   * @param collection The entity collection
+   * @param entityOrIdList - The entities to clear tracking or their ids.
+   * @param collection - The entity collection
    */
   commitMany(
     entityOrIdList: (number | string | T)[],
@@ -68,8 +69,8 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Commit changes for the given entity as when it have been refreshed from the server.
    * Harmless when no entity changes to commit.
-   * @param entityOrId The entity to clear tracking or its id.
-   * @param collection The entity collection
+   * @param entityOrId - The entity to clear tracking or its id.
+   * @param collection - The entity collection
    */
   commitOne(
     entityOrId: number | string | T,
@@ -85,9 +86,9 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   // #region merge query
   /**
    * Merge query results into the collection, adjusting the ChangeState per the mergeStrategy.
-   * @param entities Entities returned from querying the server.
-   * @param collection The entity collection
-   * @param [mergeStrategy] How to merge a queried entity when the corresponding entity in the collection has an unsaved change.
+   * @param entities - Entities returned from querying the server.
+   * @param collection - The entity collection
+   * @param mergeStrategy - How to merge a queried entity when the corresponding entity in the collection has an unsaved change.
    * Defaults to MergeStrategy.PreserveChanges.
    * @returns The merged EntityCollection.
    */
@@ -109,9 +110,9 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Merge result of saving new entities into the collection, adjusting the ChangeState per the mergeStrategy.
    * The default is MergeStrategy.OverwriteChanges.
-   * @param entities Entities returned from saving new entities to the server.
-   * @param collection The entity collection
-   * @param [mergeStrategy] How to merge a saved entity when the corresponding entity in the collection has an unsaved change.
+   * @param entities - Entities returned from saving new entities to the server.
+   * @param collection - The entity collection
+   * @param mergeStrategy - How to merge a saved entity when the corresponding entity in the collection has an unsaved change.
    * Defaults to MergeStrategy.OverwriteChanges.
    * @returns The merged EntityCollection.
    */
@@ -131,9 +132,9 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Merge successful result of deleting entities on the server that have the given primary keys
    * Clears the entity changeState for those keys unless the MergeStrategy is ignoreChanges.
-   * @param entities keys primary keys of the entities to remove/delete.
-   * @param collection The entity collection
-   * @param [mergeStrategy] How to adjust change tracking when the corresponding entity in the collection has an unsaved change.
+   * @param entities - keys primary keys of the entities to remove/delete.
+   * @param collection - The entity collection
+   * @param mergeStrategy - How to adjust change tracking when the corresponding entity in the collection has an unsaved change.
    * Defaults to MergeStrategy.OverwriteChanges.
    * @returns The merged EntityCollection.
    */
@@ -156,11 +157,11 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Merge result of saving updated entities into the collection, adjusting the ChangeState per the mergeStrategy.
    * The default is MergeStrategy.OverwriteChanges.
-   * @param updateResponseData Entity response data returned from saving updated entities to the server.
-   * @param collection The entity collection
-   * @param [mergeStrategy] How to merge a saved entity when the corresponding entity in the collection has an unsaved change.
+   * @param updateResponseData - Entity response data returned from saving updated entities to the server.
+   * @param collection - The entity collection
+   * @param mergeStrategy - How to merge a saved entity when the corresponding entity in the collection has an unsaved change.
    * Defaults to MergeStrategy.OverwriteChanges.
-   * @param [skipUnchanged] True means skip update if server didn't change it. False by default.
+   * @param skipUnchanged - True means skip update if server didn't change it. False by default.
    * If the update was optimistic and the server didn't make more changes of its own
    * then the updates are already in the collection and shouldn't make them again.
    * @returns The merged EntityCollection.
@@ -265,9 +266,9 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Merge result of saving upserted entities into the collection, adjusting the ChangeState per the mergeStrategy.
    * The default is MergeStrategy.OverwriteChanges.
-   * @param entities Entities returned from saving upserts to the server.
-   * @param collection The entity collection
-   * @param [mergeStrategy] How to merge a saved entity when the corresponding entity in the collection has an unsaved change.
+   * @param entities - Entities returned from saving upserts to the server.
+   * @param collection - The entity collection
+   * @param mergeStrategy - How to merge a saved entity when the corresponding entity in the collection has an unsaved change.
    * Defaults to MergeStrategy.OverwriteChanges.
    * @returns The merged EntityCollection.
    */
@@ -288,10 +289,10 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   // #region query & save helpers
   /**
    *
-   * @param entities Entities to merge
-   * @param collection Collection into which entities are merged
-   * @param defaultMergeStrategy How to merge when action's MergeStrategy is unspecified
-   * @param [mergeStrategy] The action's MergeStrategy
+   * @param entities - Entities to merge
+   * @param collection - Collection into which entities are merged
+   * @param defaultMergeStrategy - How to merge when action's MergeStrategy is unspecified
+   * @param mergeStrategy - The action's MergeStrategy
    */
   private mergeServerUpserts(
     entities: T[],
@@ -363,9 +364,9 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Track multiple entities before adding them to the collection.
    * Does NOT add to the collection (the reducer's job).
-   * @param entities The entities to add. They must all have their ids.
-   * @param collection The entity collection
-   * @param [mergeStrategy] Track by default. Don't track if is MergeStrategy.IgnoreChanges.
+   * @param entities - The entities to add. They must all have their ids.
+   * @param collection - The entity collection
+   * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.
    */
   trackAddMany(
     entities: T[],
@@ -404,9 +405,9 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Track an entity before adding it to the collection.
    * Does NOT add to the collection (the reducer's job).
-   * @param entity The entity to add. It must have an id.
-   * @param collection The entity collection
-   * @param [mergeStrategy] Track by default. Don't track if is MergeStrategy.IgnoreChanges.
+   * @param entity - The entity to add. It must have an id.
+   * @param collection - The entity collection
+   * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.
    * If not specified, implementation supplies a default strategy.
    */
   trackAddOne(
@@ -422,9 +423,9 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Track multiple entities before removing them with the intention of deleting them on the server.
    * Does NOT remove from the collection (the reducer's job).
-   * @param keys The primary keys of the entities to delete.
-   * @param collection The entity collection
-   * @param [mergeStrategy] Track by default. Don't track if is MergeStrategy.IgnoreChanges.
+   * @param keys - The primary keys of the entities to delete.
+   * @param collection - The entity collection
+   * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.
    */
   trackDeleteMany(
     keys: (number | string)[],
@@ -478,9 +479,9 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Track an entity before it is removed with the intention of deleting it on the server.
    * Does NOT remove from the collection (the reducer's job).
-   * @param key The primary key of the entity to delete.
-   * @param collection The entity collection
-   * @param [mergeStrategy] Track by default. Don't track if is MergeStrategy.IgnoreChanges.
+   * @param key - The primary key of the entity to delete.
+   * @param collection - The entity collection
+   * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.
    */
   trackDeleteOne(
     key: number | string,
@@ -495,9 +496,9 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Track multiple entities before updating them in the collection.
    * Does NOT update the collection (the reducer's job).
-   * @param updates The entities to update.
-   * @param collection The entity collection
-   * @param [mergeStrategy] Track by default. Don't track if is MergeStrategy.IgnoreChanges.
+   * @param updates - The entities to update.
+   * @param collection - The entity collection
+   * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.
    */
   trackUpdateMany(
     updates: Update<T>[],
@@ -542,9 +543,9 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Track an entity before updating it in the collection.
    * Does NOT update the collection (the reducer's job).
-   * @param update The entity to update.
-   * @param collection The entity collection
-   * @param [mergeStrategy] Track by default. Don't track if is MergeStrategy.IgnoreChanges.
+   * @param update - The entity to update.
+   * @param collection - The entity collection
+   * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.
    */
   trackUpdateOne(
     update: Update<T>,
@@ -559,9 +560,9 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Track multiple entities before upserting (adding and updating) them to the collection.
    * Does NOT update the collection (the reducer's job).
-   * @param entities The entities to add or update. They must be complete entities with ids.
-   * @param collection The entity collection
-   * @param [mergeStrategy] Track by default. Don't track if is MergeStrategy.IgnoreChanges.
+   * @param entities - The entities to add or update. They must be complete entities with ids.
+   * @param collection - The entity collection
+   * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.
    */
   trackUpsertMany(
     entities: T[],
@@ -606,9 +607,9 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Track an entity before upsert (adding and updating) it to the collection.
    * Does NOT update the collection (the reducer's job).
-   * @param entities The entity to add or update. It must be a complete entity with its id.
-   * @param collection The entity collection
-   * @param [mergeStrategy] Track by default. Don't track if is MergeStrategy.IgnoreChanges.
+   * @param entities - The entity to add or update. It must be a complete entity with its id.
+   * @param collection - The entity collection
+   * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.
    */
   trackUpsertOne(
     entity: T,
@@ -625,7 +626,7 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Revert the unsaved changes for all collection.
    * Harmless when there are no entity changes to undo.
-   * @param collection The entity collection
+   * @param collection - The entity collection
    */
   undoAll(collection: EntityCollection<T>): EntityCollection<T> {
     const ids = Object.keys(collection.changeState);
@@ -666,8 +667,8 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Revert the unsaved changes for the given entities.
    * Harmless when there are no entity changes to undo.
-   * @param entityOrIdList The entities to revert or their ids.
-   * @param collection The entity collection
+   * @param entityOrIdList - The entities to revert or their ids.
+   * @param collection - The entity collection
    */
   undoMany(
     entityOrIdList: (number | string | T)[],
@@ -726,8 +727,8 @@ export class EntityChangeTrackerBase<T> implements EntityChangeTracker<T> {
   /**
    * Revert the unsaved changes for the given entity.
    * Harmless when there are no entity changes to undo.
-   * @param entityOrId The entity to revert or its id.
-   * @param collection The entity collection
+   * @param entityOrId - The entity to revert or its id.
+   * @param collection - The entity collection
    */
   undoOne(
     entityOrId: number | string | T,

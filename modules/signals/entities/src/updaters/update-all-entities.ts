@@ -14,6 +14,9 @@ import {
   updateEntitiesMutably,
 } from '../helpers';
 
+/**
+ * @public
+ */
 export function updateAllEntities<
   Collection extends string,
   State extends NamedEntityState<any, Collection>,
@@ -25,6 +28,9 @@ export function updateAllEntities<
     selectId: SelectEntityId<NoInfer<Entity>>;
   }
 ): PartialStateUpdater<State>;
+/**
+ * @public
+ */
 export function updateAllEntities<
   Collection extends string,
   State extends NamedEntityState<any, Collection>,
@@ -38,10 +44,16 @@ export function updateAllEntities<
   changes: EntityChanges<NoInfer<Entity>>,
   config: { collection: Collection }
 ): PartialStateUpdater<State>;
+/**
+ * @public
+ */
 export function updateAllEntities<Entity>(
   changes: EntityChanges<NoInfer<Entity>>,
   config: { selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @public
+ */
 export function updateAllEntities<Entity extends { id: EntityId }>(
   changes: EntityChanges<NoInfer<Entity>>
 ): PartialStateUpdater<EntityState<Entity>>;

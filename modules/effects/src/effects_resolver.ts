@@ -8,6 +8,9 @@ import { EffectsErrorHandler } from './effects_error_handler';
 import { getSourceForInstance } from './utils';
 import { ErrorHandler } from '@angular/core';
 
+/**
+ * @public
+ */
 export function mergeEffects(
   sourceInstance: any,
   globalErrorHandler: ErrorHandler,

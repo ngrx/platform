@@ -14,6 +14,9 @@ import { ReducerObservable } from './reducer_manager';
 import { ScannedActionsSubject } from './scanned_actions_subject';
 import { INITIAL_STATE } from './tokens';
 
+/**
+ * @public
+ */
 export abstract class StateObservable extends Observable<any> {
   /**
    * @internal
@@ -21,6 +24,9 @@ export abstract class StateObservable extends Observable<any> {
   abstract readonly state: Signal<any>;
 }
 
+/**
+ * @public
+ */
 @Injectable()
 export class State<T> extends BehaviorSubject<any> implements OnDestroy {
   static readonly INIT = INIT;
@@ -71,10 +77,16 @@ export class State<T> extends BehaviorSubject<any> implements OnDestroy {
   }
 }
 
+/**
+ * @public
+ */
 export type StateActionPair<T, V extends Action = Action> = {
   state: T | undefined;
   action?: V;
 };
+/**
+ * @public
+ */
 export function reduceState<T, V extends Action = Action>(
   stateActionPair: StateActionPair<T, V> = { state: undefined },
   [action, reducer]: [V, ActionReducer<T, V>]
@@ -83,6 +95,9 @@ export function reduceState<T, V extends Action = Action>(
   return { state: reducer(state, action), action };
 }
 
+/**
+ * @public
+ */
 export const STATE_PROVIDERS: Provider[] = [
   State,
   { provide: StateObservable, useExisting: State },

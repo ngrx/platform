@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!EntityCollectionServiceBase:class",
-      "docComment": "/**\n * Base class for a concrete EntityCollectionService<T>. Can be instantiated. Cannot be injected. Use EntityCollectionServiceFactory to create.\n *\n * @param EntityCollectionServiceElements - The ingredients for this service as a source of supporting services for creating an EntityCollectionService<T> instance.\n */\n",
+      "docComment": "/**\n * Base class for a concrete EntityCollectionService<T>. Can be instantiated. Cannot be injected. Use EntityCollectionServiceFactory to create.\n *\n * @param EntityCollectionServiceElements - The ingredients for this service as a source of supporting services for creating an EntityCollectionService<T> instance.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -708,7 +708,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntityCollectionServiceBase#createAndDispatch:member(1)",
-          "docComment": "/**\n * Create an {EntityAction} for this entity type and dispatch it immediately to the store.\n *\n * @param op - the entity operation\n *\n * @param data - the action data\n *\n * @param options - additional options\n *\n * @returns the dispatched EntityAction\n */\n",
+          "docComment": "/**\n * Create an \\{EntityAction\\} for this entity type and dispatch it immediately to the store.\n *\n * @param op - the entity operation\n *\n * @param data - the action data\n *\n * @param options - additional options\n *\n * @returns the dispatched EntityAction\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "createAndDispatch<P = " },
             { "kind": "Content", "text": "any" },
@@ -776,7 +776,7 @@
               "isOverride": false,
               "isExperimental": false
             },
-            "summary": "Create an {EntityAction} for this entity type and dispatch it immediately to the store.\n\n",
+            "summary": "Create an \\{EntityAction\\} for this entity type and dispatch it immediately to the store.\n\n",
             "usageNotes": "",
             "remarks": "",
             "deprecated": "",
@@ -792,7 +792,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntityCollectionServiceBase#createEntityAction:member(1)",
-          "docComment": "/**\n * Create an {EntityAction} for this entity type.\n *\n * @param op - the entity operation\n *\n * @param data - the action data\n *\n * @param options - additional options\n *\n * @returns the EntityAction\n */\n",
+          "docComment": "/**\n * Create an \\{EntityAction\\} for this entity type.\n *\n * @param op - the entity operation\n *\n * @param data - the action data\n *\n * @param options - additional options\n *\n * @returns the EntityAction\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "createEntityAction<P = " },
             { "kind": "Content", "text": "any" },
@@ -860,7 +860,7 @@
               "isOverride": false,
               "isExperimental": false
             },
-            "summary": "Create an {EntityAction} for this entity type.\n\n",
+            "summary": "Create an \\{EntityAction\\} for this entity type.\n\n",
             "usageNotes": "",
             "remarks": "",
             "deprecated": "",
@@ -2434,7 +2434,7 @@
         {
           "kind": "Property",
           "canonicalReference": "@ngrx/data!EntityCollectionServiceBase#store:member",
-          "docComment": "/**\n * The NgRx Store for the {EntityCache}\n */\n",
+          "docComment": "/**\n * The NgRx Store for the \\{EntityCache\\}\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "get store(): " },
             {
@@ -2465,7 +2465,7 @@
               "isOverride": false,
               "isExperimental": false
             },
-            "summary": "The NgRx Store for the {EntityCache}\n",
+            "summary": "The NgRx Store for the \\{EntityCache\\}\n",
             "usageNotes": "",
             "remarks": "",
             "deprecated": "",
@@ -2945,7 +2945,7 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
@@ -2960,7 +2960,7 @@
         "params": [
           {
             "name": "EntityCollectionServiceElements",
-            "description": "The ingredients for this service as a source of supporting services for creating an EntityCollectionService<T> instance.\n"
+            "description": "The ingredients for this service as a source of supporting services for creating an EntityCollectionService<T> instance.\n\n\n"
           }
         ]
       }

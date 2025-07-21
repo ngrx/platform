@@ -1,1 +1,45 @@
-{"name":"FEATURE_STATE_PROVIDER","canonicalReference":"@ngrx/store!FEATURE_STATE_PROVIDER:var","kind":"Variable","fileUrlPath":"../../dist/modules/store/src/tokens.d.ts","isDeprecated":false,"members":[{"kind":"Variable","canonicalReference":"@ngrx/store!FEATURE_STATE_PROVIDER:var","docComment":"/**\n * InjectionToken that registers feature states. Mainly used to provide a hook that can be injected to ensure feature state is loaded before something that depends on it.\n */\n","excerptTokens":[{"kind":"Content","text":"FEATURE_STATE_PROVIDER: "},{"kind":"Reference","text":"InjectionToken","canonicalReference":"@angular/core!InjectionToken:class"},{"kind":"Content","text":"<void>"}],"fileUrlPath":"../../dist/modules/store/src/tokens.d.ts","isReadonly":true,"releaseTag":"Public","name":"FEATURE_STATE_PROVIDER","variableTypeTokenRange":{"startIndex":1,"endIndex":3},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"InjectionToken that registers feature states. Mainly used to provide a hook that can be injected to ensure feature state is loaded before something that depends on it.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "FEATURE_STATE_PROVIDER",
+  "canonicalReference": "@ngrx/store!FEATURE_STATE_PROVIDER:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/store/src/tokens.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/store!FEATURE_STATE_PROVIDER:var",
+      "docComment": "/**\n * InjectionToken that registers feature states. Mainly used to provide a hook that can be injected to ensure feature state is loaded before something that depends on it.\n *\n * @public\n */\n",
+      "excerptTokens": [
+        { "kind": "Content", "text": "FEATURE_STATE_PROVIDER: " },
+        {
+          "kind": "Reference",
+          "text": "InjectionToken",
+          "canonicalReference": "@angular/core!InjectionToken:class"
+        },
+        { "kind": "Content", "text": "<void>" }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/tokens.d.ts",
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "FEATURE_STATE_PROVIDER",
+      "variableTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "InjectionToken that registers feature states. Mainly used to provide a hook that can be injected to ensure feature state is loaded before something that depends on it.\n\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

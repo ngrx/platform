@@ -1,1 +1,105 @@
-{"name":"on","canonicalReference":"@ngrx/store!on:function","kind":"Function","fileUrlPath":"../../dist/modules/store/src/reducer_creator.d.ts","isDeprecated":false,"members":[{"kind":"Function","canonicalReference":"@ngrx/store!on:function(1)","docComment":"/**\n * @description Associates actions with a given state change function. A state change function must be provided as the last parameter.\n *\n * @param args - `ActionCreator`'s followed by a state change function.\n *\n * @returns an association of action types with a state change function.\n *\n * @usageNotes\n * ```ts\n * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))\n * ```\n *\n */\n","excerptTokens":[{"kind":"Content","text":"export declare function on<State, Creators extends "},{"kind":"Content","text":"readonly "},{"kind":"Reference","text":"ActionCreator","canonicalReference":"@ngrx/store!ActionCreator:type"},{"kind":"Content","text":"[]"},{"kind":"Content","text":", InferredState = "},{"kind":"Content","text":"State"},{"kind":"Content","text":">(...args: "},{"kind":"Content","text":"[\n    ...creators: Creators,\n    reducer: "},{"kind":"Reference","text":"OnReducer","canonicalReference":"@ngrx/store!~OnReducer:interface"},{"kind":"Content","text":"<State extends infer S ? S : never, Creators, InferredState>\n]"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"ReducerTypes","canonicalReference":"@ngrx/store!ReducerTypes:interface"},{"kind":"Content","text":"<unknown extends State ? InferredState : State, Creators>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/reducer_creator.d.ts","returnTypeTokenRange":{"startIndex":11,"endIndex":13},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"args","parameterTypeTokenRange":{"startIndex":7,"endIndex":10},"isOptional":false}],"typeParameters":[{"typeParameterName":"State","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"Creators","constraintTokenRange":{"startIndex":1,"endIndex":4},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"InferredState","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":5,"endIndex":6}}],"name":"on","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":" Associates actions with a given state change function. A state change function must be provided as the last parameter.\n\n","usageNotes":"\n```ts\non(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))\n```\n\n","remarks":"","deprecated":"","returns":" an association of action types with a state change function.\n\n","see":[],"params":[{"name":"args","description":"`ActionCreator`'s followed by a state change function.\n\n"}]}}]}
+{
+  "name": "on",
+  "canonicalReference": "@ngrx/store!on:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/store/src/reducer_creator.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/store!on:function(1)",
+      "docComment": "/**\n * Associates actions with a given state change function. A state change function must be provided as the last parameter.\n *\n * @param args - `ActionCreator`'s followed by a state change function.\n *\n * @returns an association of action types with a state change function.\n *\n * @example\n * ```ts\n * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))\n * ```\n *\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function on<State, Creators extends "
+        },
+        { "kind": "Content", "text": "readonly " },
+        {
+          "kind": "Reference",
+          "text": "ActionCreator",
+          "canonicalReference": "@ngrx/store!ActionCreator:type"
+        },
+        { "kind": "Content", "text": "[]" },
+        { "kind": "Content", "text": ", InferredState = " },
+        { "kind": "Content", "text": "State" },
+        { "kind": "Content", "text": ">(...args: " },
+        {
+          "kind": "Content",
+          "text": "[\n    ...creators: Creators,\n    reducer: "
+        },
+        {
+          "kind": "Reference",
+          "text": "OnReducer",
+          "canonicalReference": "@ngrx/store!~OnReducer:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<State extends infer S ? S : never, Creators, InferredState>\n]"
+        },
+        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Reference",
+          "text": "ReducerTypes",
+          "canonicalReference": "@ngrx/store!ReducerTypes:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<unknown extends State ? InferredState : State, Creators>"
+        },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/reducer_creator.d.ts",
+      "returnTypeTokenRange": { "startIndex": 11, "endIndex": 13 },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "args",
+          "parameterTypeTokenRange": { "startIndex": 7, "endIndex": 10 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "State",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "Creators",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 4 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        },
+        {
+          "typeParameterName": "InferredState",
+          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+          "defaultTypeTokenRange": { "startIndex": 5, "endIndex": 6 }
+        }
+      ],
+      "name": "on",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Associates actions with a given state change function. A state change function must be provided as the last parameter.\n\n",
+        "usageNotes": "\n```ts\non(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))\n```\n\n\n",
+        "remarks": "",
+        "deprecated": "",
+        "returns": " an association of action types with a state change function.\n\n",
+        "see": [],
+        "params": [
+          {
+            "name": "args",
+            "description": "`ActionCreator`'s followed by a state change function.\n\n"
+          }
+        ]
+      }
+    }
+  ]
+}

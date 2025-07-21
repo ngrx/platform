@@ -1,1 +1,52 @@
-{"name":"StateObservable","canonicalReference":"@ngrx/store!StateObservable:class","kind":"Class","fileUrlPath":"../../dist/modules/store/src/state.d.ts","isDeprecated":false,"members":[{"kind":"Class","canonicalReference":"@ngrx/store!StateObservable:class","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare abstract class StateObservable extends "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<any>"},{"kind":"Content","text":" "}],"fileUrlPath":"../../dist/modules/store/src/state.d.ts","releaseTag":"Public","isAbstract":true,"name":"StateObservable","preserveMemberOrder":false,"members":[],"extendsTokenRange":{"startIndex":1,"endIndex":3},"implementsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "StateObservable",
+  "canonicalReference": "@ngrx/store!StateObservable:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/store/src/state.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/store!StateObservable:class",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare abstract class StateObservable extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        { "kind": "Content", "text": "<any>" },
+        { "kind": "Content", "text": " " }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/state.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": true,
+      "name": "StateObservable",
+      "preserveMemberOrder": false,
+      "members": [],
+      "extendsTokenRange": { "startIndex": 1, "endIndex": 3 },
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

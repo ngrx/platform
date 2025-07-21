@@ -1,1 +1,388 @@
-{"name":"DefaultHttpUrlGenerator","canonicalReference":"@ngrx/data!DefaultHttpUrlGenerator:class","kind":"Class","fileUrlPath":"../../dist/modules/data/src/dataservices/http-url-generator.d.ts","isDeprecated":false,"members":[{"kind":"Class","canonicalReference":"@ngrx/data!DefaultHttpUrlGenerator:class","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare class DefaultHttpUrlGenerator implements "},{"kind":"Reference","text":"HttpUrlGenerator","canonicalReference":"@ngrx/data!HttpUrlGenerator:class"},{"kind":"Content","text":" "}],"fileUrlPath":"../../dist/modules/data/src/dataservices/http-url-generator.d.ts","releaseTag":"Public","isAbstract":false,"name":"DefaultHttpUrlGenerator","preserveMemberOrder":false,"members":[{"kind":"Constructor","canonicalReference":"@ngrx/data!DefaultHttpUrlGenerator:constructor(1)","docComment":"/**\n * Constructs a new instance of the `DefaultHttpUrlGenerator` class\n */\n","excerptTokens":[{"kind":"Content","text":"constructor(pluralizer: "},{"kind":"Reference","text":"Pluralizer","canonicalReference":"@ngrx/data!Pluralizer:class"},{"kind":"Content","text":");"}],"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"pluralizer","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false}],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Constructs a new instance of the `DefaultHttpUrlGenerator` class\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/data!DefaultHttpUrlGenerator#collectionResource:member(1)","docComment":"/**\n * Create the path to a multiple entity (collection) resource\n *\n * @param entityName - Name of the entity type, e.g, 'Hero'\n *\n * @param root - Root path to the resource, e.g., 'some-api`\n *\n * @returns complete path to resource, e.g, 'some-api/heroes'\n */\n","excerptTokens":[{"kind":"Content","text":"collectionResource(entityName: "},{"kind":"Content","text":"string"},{"kind":"Content","text":", root: "},{"kind":"Content","text":"string"},{"kind":"Content","text":"): "},{"kind":"Content","text":"string"},{"kind":"Content","text":";"}],"isStatic":false,"returnTypeTokenRange":{"startIndex":5,"endIndex":6},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"entityName","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false},{"parameterName":"root","parameterTypeTokenRange":{"startIndex":3,"endIndex":4},"isOptional":false}],"isOptional":false,"isAbstract":false,"name":"collectionResource","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Create the path to a multiple entity (collection) resource\n\n","usageNotes":"","remarks":"","deprecated":"","returns":" complete path to resource, e.g, 'some-api/heroes'\n","see":[],"params":[{"name":"entityName","description":"Name of the entity type, e.g, 'Hero'\n\n"},{"name":"root","description":"Root path to the resource, e.g., 'some-api`\n\n"}]}},{"kind":"Method","canonicalReference":"@ngrx/data!DefaultHttpUrlGenerator#entityResource:member(1)","docComment":"/**\n * Create the path to a single entity resource\n *\n * @param entityName - Name of the entity type, e.g, 'Hero'\n *\n * @param root - Root path to the resource, e.g., 'some-api`\n *\n * @returns complete path to resource, e.g, 'some-api/hero'\n */\n","excerptTokens":[{"kind":"Content","text":"entityResource(entityName: "},{"kind":"Content","text":"string"},{"kind":"Content","text":", root: "},{"kind":"Content","text":"string"},{"kind":"Content","text":", trailingSlashEndpoints: "},{"kind":"Content","text":"boolean"},{"kind":"Content","text":"): "},{"kind":"Content","text":"string"},{"kind":"Content","text":";"}],"isStatic":false,"returnTypeTokenRange":{"startIndex":7,"endIndex":8},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"entityName","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false},{"parameterName":"root","parameterTypeTokenRange":{"startIndex":3,"endIndex":4},"isOptional":false},{"parameterName":"trailingSlashEndpoints","parameterTypeTokenRange":{"startIndex":5,"endIndex":6},"isOptional":false}],"isOptional":false,"isAbstract":false,"name":"entityResource","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Create the path to a single entity resource\n\n","usageNotes":"","remarks":"","deprecated":"","returns":" complete path to resource, e.g, 'some-api/hero'\n","see":[],"params":[{"name":"entityName","description":"Name of the entity type, e.g, 'Hero'\n\n"},{"name":"root","description":"Root path to the resource, e.g., 'some-api`\n\n"}]}},{"kind":"Method","canonicalReference":"@ngrx/data!DefaultHttpUrlGenerator#getResourceUrls:member(1)","docComment":"/**\n * Get or generate the entity and collection resource URLs for the given entity type name\n *\n * @param entityName - Name of the entity type, e.g, 'Hero'\n *\n * @param root - Root path to the resource, e.g., 'some-api`\n */\n","excerptTokens":[{"kind":"Content","text":"protected getResourceUrls(entityName: "},{"kind":"Content","text":"string"},{"kind":"Content","text":", root: "},{"kind":"Content","text":"string"},{"kind":"Content","text":", trailingSlashEndpoints?: "},{"kind":"Content","text":"boolean"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"HttpResourceUrls","canonicalReference":"@ngrx/data!HttpResourceUrls:interface"},{"kind":"Content","text":";"}],"isStatic":false,"returnTypeTokenRange":{"startIndex":7,"endIndex":8},"releaseTag":"Public","isProtected":true,"overloadIndex":1,"parameters":[{"parameterName":"entityName","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false},{"parameterName":"root","parameterTypeTokenRange":{"startIndex":3,"endIndex":4},"isOptional":false},{"parameterName":"trailingSlashEndpoints","parameterTypeTokenRange":{"startIndex":5,"endIndex":6},"isOptional":true}],"isOptional":false,"isAbstract":false,"name":"getResourceUrls","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Get or generate the entity and collection resource URLs for the given entity type name\n\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[{"name":"entityName","description":"Name of the entity type, e.g, 'Hero'\n\n"},{"name":"root","description":"Root path to the resource, e.g., 'some-api`\n"}]}},{"kind":"Property","canonicalReference":"@ngrx/data!DefaultHttpUrlGenerator#knownHttpResourceUrls:member","docComment":"/**\n * Known single-entity and collection resource URLs for HTTP calls. Generator methods returns these resource URLs for a given entity type name. If the resources for an entity type name are not know, it generates and caches a resource name for future use\n */\n","excerptTokens":[{"kind":"Content","text":"protected knownHttpResourceUrls: "},{"kind":"Reference","text":"EntityHttpResourceUrls","canonicalReference":"@ngrx/data!EntityHttpResourceUrls:class"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"knownHttpResourceUrls","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"isStatic":false,"isProtected":true,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Known single-entity and collection resource URLs for HTTP calls. Generator methods returns these resource URLs for a given entity type name. If the resources for an entity type name are not know, it generates and caches a resource name for future use\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/data!DefaultHttpUrlGenerator#registerHttpResourceUrls:member(1)","docComment":"/**\n * Register known single-entity and collection resource URLs for HTTP calls\n *\n * @param entityHttpResourceUrls - resource urls for specific entity type names Well-formed resource urls end in a '/'; Note: this method does not ensure that resource urls are well-formed.\n */\n","excerptTokens":[{"kind":"Content","text":"registerHttpResourceUrls(entityHttpResourceUrls: "},{"kind":"Reference","text":"EntityHttpResourceUrls","canonicalReference":"@ngrx/data!EntityHttpResourceUrls:class"},{"kind":"Content","text":"): "},{"kind":"Content","text":"void"},{"kind":"Content","text":";"}],"isStatic":false,"returnTypeTokenRange":{"startIndex":3,"endIndex":4},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"entityHttpResourceUrls","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false}],"isOptional":false,"isAbstract":false,"name":"registerHttpResourceUrls","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Register known single-entity and collection resource URLs for HTTP calls\n\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[{"name":"entityHttpResourceUrls","description":"resource urls for specific entity type names Well-formed resource urls end in a '/'; Note: this method does not ensure that resource urls are well-formed.\n"}]}}],"implementsTokenRanges":[{"startIndex":1,"endIndex":2}],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "DefaultHttpUrlGenerator",
+  "canonicalReference": "@ngrx/data!DefaultHttpUrlGenerator:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/dataservices/http-url-generator.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!DefaultHttpUrlGenerator:class",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class DefaultHttpUrlGenerator implements "
+        },
+        {
+          "kind": "Reference",
+          "text": "HttpUrlGenerator",
+          "canonicalReference": "@ngrx/data!HttpUrlGenerator:class"
+        },
+        { "kind": "Content", "text": " " }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/dataservices/http-url-generator.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "DefaultHttpUrlGenerator",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Constructor",
+          "canonicalReference": "@ngrx/data!DefaultHttpUrlGenerator:constructor(1)",
+          "docComment": "/**\n * Constructs a new instance of the `DefaultHttpUrlGenerator` class\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "constructor(pluralizer: " },
+            {
+              "kind": "Reference",
+              "text": "Pluralizer",
+              "canonicalReference": "@ngrx/data!Pluralizer:class"
+            },
+            { "kind": "Content", "text": ");" }
+          ],
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "pluralizer",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Constructs a new instance of the `DefaultHttpUrlGenerator` class\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!DefaultHttpUrlGenerator#collectionResource:member(1)",
+          "docComment": "/**\n * Create the path to a multiple entity (collection) resource\n *\n * @param entityName - Name of the entity type, e.g, 'Hero'\n *\n * @param root - Root path to the resource, e.g., 'some-api'\n *\n * @returns complete path to resource, e.g, 'some-api/heroes'\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "collectionResource(entityName: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ", root: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityName",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "root",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "collectionResource",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Create the path to a multiple entity (collection) resource\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " complete path to resource, e.g, 'some-api/heroes'\n",
+            "see": [],
+            "params": [
+              {
+                "name": "entityName",
+                "description": "Name of the entity type, e.g, 'Hero'\n\n"
+              },
+              {
+                "name": "root",
+                "description": "Root path to the resource, e.g., 'some-api'\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!DefaultHttpUrlGenerator#entityResource:member(1)",
+          "docComment": "/**\n * Create the path to a single entity resource\n *\n * @param entityName - Name of the entity type, e.g, 'Hero'\n *\n * @param root - Root path to the resource, e.g., 'some-api'\n *\n * @returns complete path to resource, e.g, 'some-api/hero'\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "entityResource(entityName: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ", root: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ", trailingSlashEndpoints: " },
+            { "kind": "Content", "text": "boolean" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityName",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "root",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "trailingSlashEndpoints",
+              "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "entityResource",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Create the path to a single entity resource\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " complete path to resource, e.g, 'some-api/hero'\n",
+            "see": [],
+            "params": [
+              {
+                "name": "entityName",
+                "description": "Name of the entity type, e.g, 'Hero'\n\n"
+              },
+              {
+                "name": "root",
+                "description": "Root path to the resource, e.g., 'some-api'\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!DefaultHttpUrlGenerator#getResourceUrls:member(1)",
+          "docComment": "/**\n * Get or generate the entity and collection resource URLs for the given entity type name\n *\n * @param entityName - Name of the entity type, e.g, 'Hero'\n *\n * @param root - Root path to the resource, e.g., 'some-api'\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "protected getResourceUrls(entityName: "
+            },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ", root: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ", trailingSlashEndpoints?: " },
+            { "kind": "Content", "text": "boolean" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "HttpResourceUrls",
+              "canonicalReference": "@ngrx/data!HttpResourceUrls:interface"
+            },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+          "releaseTag": "Public",
+          "isProtected": true,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityName",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "root",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "trailingSlashEndpoints",
+              "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "getResourceUrls",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Get or generate the entity and collection resource URLs for the given entity type name\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entityName",
+                "description": "Name of the entity type, e.g, 'Hero'\n\n"
+              },
+              {
+                "name": "root",
+                "description": "Root path to the resource, e.g., 'some-api'\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!DefaultHttpUrlGenerator#knownHttpResourceUrls:member",
+          "docComment": "/**\n * Known single-entity and collection resource URLs for HTTP calls. Generator methods returns these resource URLs for a given entity type name. If the resources for an entity type name are not know, it generates and caches a resource name for future use\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "protected knownHttpResourceUrls: " },
+            {
+              "kind": "Reference",
+              "text": "EntityHttpResourceUrls",
+              "canonicalReference": "@ngrx/data!EntityHttpResourceUrls:class"
+            },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "knownHttpResourceUrls",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": true,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Known single-entity and collection resource URLs for HTTP calls. Generator methods returns these resource URLs for a given entity type name. If the resources for an entity type name are not know, it generates and caches a resource name for future use\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!DefaultHttpUrlGenerator#registerHttpResourceUrls:member(1)",
+          "docComment": "/**\n * Register known single-entity and collection resource URLs for HTTP calls\n *\n * @param entityHttpResourceUrls - resource urls for specific entity type names Well-formed resource urls end in a '/'; Note: this method does not ensure that resource urls are well-formed.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "registerHttpResourceUrls(entityHttpResourceUrls: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityHttpResourceUrls",
+              "canonicalReference": "@ngrx/data!EntityHttpResourceUrls:class"
+            },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "void" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityHttpResourceUrls",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "registerHttpResourceUrls",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Register known single-entity and collection resource URLs for HTTP calls\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entityHttpResourceUrls",
+                "description": "resource urls for specific entity type names Well-formed resource urls end in a '/'; Note: this method does not ensure that resource urls are well-formed.\n"
+              }
+            ]
+          }
+        }
+      ],
+      "implementsTokenRanges": [{ "startIndex": 1, "endIndex": 2 }],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

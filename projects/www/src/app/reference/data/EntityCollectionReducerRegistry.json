@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!EntityCollectionReducerRegistry:class",
-      "docComment": "/**\n * Registry of entity types and their previously-constructed reducers. Can create a new CollectionReducer, which it registers for subsequent use.\n */\n",
+      "docComment": "/**\n * Registry of entity types and their previously-constructed reducers. Can create a new CollectionReducer, which it registers for subsequent use.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -195,7 +195,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntityCollectionReducerRegistry#registerReducer:member(1)",
-          "docComment": "/**\n * Register an EntityCollectionReducer for an entity type\n *\n * @param entityName - the name of the entity type\n *\n * @param reducer - reducer for that entity type\n *\n * Examples: registerReducer('Hero', myHeroReducer); registerReducer('Villain', myVillainReducer);\n */\n",
+          "docComment": "/**\n * Register an EntityCollectionReducer for an entity type\n *\n * @param entityName - the name of the entity type\n *\n * @param reducer - reducer for that entity type\n *\n * @example\n * ```ts\n *   registerReducer('Hero', myHeroReducer);\n *   registerReducer('Villain', myVillainReducer);\n * ```\n *\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "registerReducer<T>(entityName: " },
             { "kind": "Content", "text": "string" },
@@ -252,7 +252,7 @@
               "isExperimental": false
             },
             "summary": "Register an EntityCollectionReducer for an entity type\n\n",
-            "usageNotes": "",
+            "usageNotes": "\n```ts\n  registerReducer('Hero', myHeroReducer);\n  registerReducer('Villain', myVillainReducer);\n```\n\n",
             "remarks": "",
             "deprecated": "",
             "returns": "",
@@ -264,7 +264,7 @@
               },
               {
                 "name": "reducer",
-                "description": "reducer for that entity type\n\nExamples: registerReducer('Hero', myHeroReducer); registerReducer('Villain', myVillainReducer);\n"
+                "description": "reducer for that entity type\n\n"
               }
             ]
           }
@@ -272,7 +272,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntityCollectionReducerRegistry#registerReducers:member(1)",
-          "docComment": "/**\n * Register a batch of EntityCollectionReducers.\n *\n * @param reducers - reducers to merge into existing reducers\n *\n * Examples: registerReducers({ Hero: myHeroReducer, Villain: myVillainReducer });\n */\n",
+          "docComment": "/**\n * Register a batch of EntityCollectionReducers.\n *\n * @param reducers - reducers to merge into existing reducers\n *\n * @example\n * ```ts\n *   registerReducers({\n *     Hero: myHeroReducer,\n *     Villain: myVillainReducer\n *   });\n * ```\n *\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "registerReducers(reducers: " },
             {
@@ -309,7 +309,7 @@
               "isExperimental": false
             },
             "summary": "Register a batch of EntityCollectionReducers.\n\n",
-            "usageNotes": "",
+            "usageNotes": "\n```ts\n  registerReducers({\n    Hero: myHeroReducer,\n    Villain: myVillainReducer\n  });\n```\n\n",
             "remarks": "",
             "deprecated": "",
             "returns": "",
@@ -317,7 +317,7 @@
             "params": [
               {
                 "name": "reducers",
-                "description": "reducers to merge into existing reducers\n\nExamples: registerReducers({ Hero: myHeroReducer, Villain: myVillainReducer });\n"
+                "description": "reducers to merge into existing reducers\n\n"
               }
             ]
           }
@@ -327,13 +327,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Registry of entity types and their previously-constructed reducers. Can create a new CollectionReducer, which it registers for subsequent use.\n",
+        "summary": "Registry of entity types and their previously-constructed reducers. Can create a new CollectionReducer, which it registers for subsequent use.\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

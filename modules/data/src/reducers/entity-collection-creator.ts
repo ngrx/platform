@@ -3,6 +3,9 @@ import { Injectable, Optional } from '@angular/core';
 import { EntityCollection } from './entity-collection';
 import { EntityDefinitionService } from '../entity-metadata/entity-definition.service';
 
+/**
+ * @public
+ */
 @Injectable()
 export class EntityCollectionCreator {
   constructor(
@@ -11,7 +14,7 @@ export class EntityCollectionCreator {
 
   /**
    * Create the default collection for an entity type.
-   * @param entityName {string} entity type name
+   * @param entityName - entity type name
    */
   create<T = any, S extends EntityCollection<T> = EntityCollection<T>>(
     entityName: string
@@ -29,6 +32,9 @@ export class EntityCollectionCreator {
   }
 }
 
+/**
+ * @public
+ */
 export function createEmptyEntityCollection<T>(
   entityName?: string
 ): EntityCollection<T> {

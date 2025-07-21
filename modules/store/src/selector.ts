@@ -2,8 +2,14 @@ import { Selector, SelectorWithProps } from './models';
 import { isDevMode } from '@angular/core';
 import { isNgrxMockEnvironment } from './flags';
 
+/**
+ * @public
+ */
 export type AnyFn = (...args: any[]) => any;
 
+/**
+ * @public
+ */
 export type MemoizedProjection = {
   memoized: AnyFn;
   reset: () => void;
@@ -11,12 +17,24 @@ export type MemoizedProjection = {
   clearResult: () => void;
 };
 
+/**
+ * @public
+ */
 export type MemoizeFn = (t: AnyFn) => MemoizedProjection;
 
+/**
+ * @public
+ */
 export type ComparatorFn = (a: any, b: any) => boolean;
 
+/**
+ * @public
+ */
 export type DefaultProjectorFn<T> = (...args: any[]) => T;
 
+/**
+ * @public
+ */
 export interface MemoizedSelector<
   State,
   Result,
@@ -29,7 +47,9 @@ export interface MemoizedSelector<
 }
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see the {@link https://ngrx.io/guide/migration/v12#ngrxstore migration guide}
+ * @deprecated Selectors with props are deprecated, for more info see the {@link https://ngrx.io/guide/migration/v12#ngrxstore | migration guide}
+ *
+ * @public
  */
 export interface MemoizedSelectorWithProps<
   State,
@@ -43,6 +63,9 @@ export interface MemoizedSelectorWithProps<
   clearResult: () => void;
 }
 
+/**
+ * @public
+ */
 export function isEqualCheck(a: any, b: any): boolean {
   return a === b;
 }
@@ -60,6 +83,9 @@ function isArgumentsChanged(
   return false;
 }
 
+/**
+ * @public
+ */
 export function resultMemoize(
   projectionFn: AnyFn,
   isResultEqual: ComparatorFn
@@ -67,6 +93,9 @@ export function resultMemoize(
   return defaultMemoize(projectionFn, isEqualCheck, isResultEqual);
 }
 
+/**
+ * @public
+ */
 export function defaultMemoize(
   projectionFn: AnyFn,
   isArgumentsEqual = isEqualCheck,
@@ -123,21 +152,33 @@ export function defaultMemoize(
   return { memoized, reset, setResult, clearResult };
 }
 
+/**
+ * @public
+ */
 export function createSelector<State, S1, Result>(
   s1: Selector<State, S1>,
   projector: (s1: S1) => Result
 ): MemoizedSelector<State, Result, typeof projector>;
+/**
+ * @public
+ */
 export function createSelector<State, S1, S2, Result>(
   s1: Selector<State, S1>,
   s2: Selector<State, S2>,
   projector: (s1: S1, s2: S2) => Result
 ): MemoizedSelector<State, Result, typeof projector>;
+/**
+ * @public
+ */
 export function createSelector<State, S1, S2, S3, Result>(
   s1: Selector<State, S1>,
   s2: Selector<State, S2>,
   s3: Selector<State, S3>,
   projector: (s1: S1, s2: S2, s3: S3) => Result
 ): MemoizedSelector<State, Result, typeof projector>;
+/**
+ * @public
+ */
 export function createSelector<State, S1, S2, S3, S4, Result>(
   s1: Selector<State, S1>,
   s2: Selector<State, S2>,
@@ -145,6 +186,9 @@ export function createSelector<State, S1, S2, S3, S4, Result>(
   s4: Selector<State, S4>,
   projector: (s1: S1, s2: S2, s3: S3, s4: S4) => Result
 ): MemoizedSelector<State, Result, typeof projector>;
+/**
+ * @public
+ */
 export function createSelector<State, S1, S2, S3, S4, S5, Result>(
   s1: Selector<State, S1>,
   s2: Selector<State, S2>,
@@ -153,6 +197,9 @@ export function createSelector<State, S1, S2, S3, S4, S5, Result>(
   s5: Selector<State, S5>,
   projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5) => Result
 ): MemoizedSelector<State, Result, typeof projector>;
+/**
+ * @public
+ */
 export function createSelector<State, S1, S2, S3, S4, S5, S6, Result>(
   s1: Selector<State, S1>,
   s2: Selector<State, S2>,
@@ -162,6 +209,9 @@ export function createSelector<State, S1, S2, S3, S4, S5, S6, Result>(
   s6: Selector<State, S6>,
   projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6) => Result
 ): MemoizedSelector<State, Result, typeof projector>;
+/**
+ * @public
+ */
 export function createSelector<State, S1, S2, S3, S4, S5, S6, S7, Result>(
   s1: Selector<State, S1>,
   s2: Selector<State, S2>,
@@ -172,6 +222,9 @@ export function createSelector<State, S1, S2, S3, S4, S5, S6, S7, Result>(
   s7: Selector<State, S7>,
   projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, s6: S6, s7: S7) => Result
 ): MemoizedSelector<State, Result, typeof projector>;
+/**
+ * @public
+ */
 export function createSelector<State, S1, S2, S3, S4, S5, S6, S7, S8, Result>(
   s1: Selector<State, S1>,
   s2: Selector<State, S2>,
@@ -193,6 +246,9 @@ export function createSelector<State, S1, S2, S3, S4, S5, S6, S7, S8, Result>(
   ) => Result
 ): MemoizedSelector<State, Result, typeof projector>;
 
+/**
+ * @public
+ */
 export function createSelector<
   Selectors extends Record<string, Selector<State, unknown>>,
   State = Selectors extends Record<string, Selector<infer S, unknown>>
@@ -205,6 +261,9 @@ export function createSelector<
   }
 >(selectors: Selectors): MemoizedSelector<State, Result, never>;
 
+/**
+ * @public
+ */
 export function createSelector<State, Slices extends unknown[], Result>(
   ...args: [...slices: Selector<State, unknown>[], projector: unknown] &
     [
@@ -214,7 +273,9 @@ export function createSelector<State, Slices extends unknown[], Result>(
 ): MemoizedSelector<State, Result, (...s: Slices) => Result>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<State, Props, S1, Result>(
   s1: SelectorWithProps<State, Props, S1>,
@@ -222,7 +283,9 @@ export function createSelector<State, Props, S1, Result>(
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<State, Props, S1, S2, Result>(
   s1: SelectorWithProps<State, Props, S1>,
@@ -231,7 +294,9 @@ export function createSelector<State, Props, S1, S2, Result>(
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<State, Props, S1, S2, S3, Result>(
   s1: SelectorWithProps<State, Props, S1>,
@@ -241,7 +306,9 @@ export function createSelector<State, Props, S1, S2, S3, Result>(
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<State, Props, S1, S2, S3, S4, Result>(
   s1: SelectorWithProps<State, Props, S1>,
@@ -252,7 +319,9 @@ export function createSelector<State, Props, S1, S2, S3, S4, Result>(
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<State, Props, S1, S2, S3, S4, S5, Result>(
   s1: SelectorWithProps<State, Props, S1>,
@@ -264,7 +333,9 @@ export function createSelector<State, Props, S1, S2, S3, S4, S5, Result>(
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<State, Props, S1, S2, S3, S4, S5, S6, Result>(
   s1: SelectorWithProps<State, Props, S1>,
@@ -285,7 +356,9 @@ export function createSelector<State, Props, S1, S2, S3, S4, S5, S6, Result>(
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<
   State,
@@ -319,7 +392,9 @@ export function createSelector<
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<
   State,
@@ -355,6 +430,9 @@ export function createSelector<
   ) => Result
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
+/**
+ * @public
+ */
 export function createSelector<State, Slices extends unknown[], Result>(
   selectors: Selector<State, unknown>[] &
     [...{ [i in keyof Slices]: Selector<State, Slices[i]> }],
@@ -362,7 +440,9 @@ export function createSelector<State, Slices extends unknown[], Result>(
 ): MemoizedSelector<State, Result, (...s: Slices) => Result>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<State, Props, S1, Result>(
   selectors: [SelectorWithProps<State, Props, S1>],
@@ -370,7 +450,9 @@ export function createSelector<State, Props, S1, Result>(
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<State, Props, S1, S2, Result>(
   selectors: [
@@ -381,7 +463,9 @@ export function createSelector<State, Props, S1, S2, Result>(
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<State, Props, S1, S2, S3, Result>(
   selectors: [
@@ -393,7 +477,9 @@ export function createSelector<State, Props, S1, S2, S3, Result>(
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<State, Props, S1, S2, S3, S4, Result>(
   selectors: [
@@ -406,7 +492,9 @@ export function createSelector<State, Props, S1, S2, S3, S4, Result>(
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<State, Props, S1, S2, S3, S4, S5, Result>(
   selectors: [
@@ -420,7 +508,9 @@ export function createSelector<State, Props, S1, S2, S3, S4, S5, Result>(
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<State, Props, S1, S2, S3, S4, S5, S6, Result>(
   selectors: [
@@ -443,7 +533,9 @@ export function createSelector<State, Props, S1, S2, S3, S4, S5, S6, Result>(
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<
   State,
@@ -479,7 +571,9 @@ export function createSelector<
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelector<
   State,
@@ -517,12 +611,18 @@ export function createSelector<
   ) => Result
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
 
+/**
+ * @public
+ */
 export function createSelector(
   ...input: any[]
 ): MemoizedSelector<any, any> | MemoizedSelectorWithProps<any, any, any> {
   return createSelectorFactory(defaultMemoize)(...input);
 }
 
+/**
+ * @public
+ */
 export function defaultStateFn(
   state: any,
   selectors: Selector<any, any>[] | SelectorWithProps<any, any, any>[],
@@ -540,6 +640,9 @@ export function defaultStateFn(
   return memoizedProjector.memoized.apply(null, [...args, props]);
 }
 
+/**
+ * @public
+ */
 export type SelectorFactoryConfig<T = any, V = any> = {
   stateFn: (
     state: T,
@@ -549,21 +652,31 @@ export type SelectorFactoryConfig<T = any, V = any> = {
   ) => V;
 };
 
+/**
+ * @public
+ */
 export function createSelectorFactory<T = any, V = any>(
   memoize: MemoizeFn
 ): (...input: any[]) => MemoizedSelector<T, V>;
+/**
+ * @public
+ */
 export function createSelectorFactory<T = any, V = any>(
   memoize: MemoizeFn,
   options: SelectorFactoryConfig<T, V>
 ): (...input: any[]) => MemoizedSelector<T, V>;
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelectorFactory<T = any, Props = any, V = any>(
   memoize: MemoizeFn
 ): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}
+ *
+ * @public
  */
 export function createSelectorFactory<T = any, Props = any, V = any>(
   memoize: MemoizeFn,
@@ -571,10 +684,10 @@ export function createSelectorFactory<T = any, Props = any, V = any>(
 ): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;
 /**
  *
- * @param memoize The function used to memoize selectors
- * @param options Config Object that may include a `stateFn` function defining how to return the selector's value, given the entire `Store`'s state, parent `Selector`s, `Props`, and a `MemoizedProjection`
+ * @param memoize - The function used to memoize selectors
+ * @param options - Config Object that may include a `stateFn` function defining how to return the selector's value, given the entire `Store`'s state, parent `Selector`s, `Props`, and a `MemoizedProjection`
  *
- * @usageNotes
+ * @example
  *
  * **Creating a Selector Factory Where Array Order Does Not Matter**
  *
@@ -698,11 +811,16 @@ export function createSelectorFactory(
   };
 }
 
+/**
+ * @public
+ */
 export function createFeatureSelector<T>(
   featureName: string
 ): MemoizedSelector<object, T>;
 /**
- * @deprecated  Feature selectors with a root state are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/3179 Github Issue}
+ * @deprecated  Feature selectors with a root state are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/3179 | Github Issue}
+ *
+ * @public
  */
 export function createFeatureSelector<T, V>(
   featureName: keyof T

@@ -30,6 +30,9 @@ import {
 } from './store_config';
 import { _provideState, _provideStore } from './provide_store';
 
+/**
+ * @public
+ */
 @NgModule({})
 export class StoreRootModule {
   constructor(
@@ -46,6 +49,9 @@ export class StoreRootModule {
   ) {}
 }
 
+/**
+ * @public
+ */
 @NgModule({})
 export class StoreFeatureModule implements OnDestroy {
   constructor(
@@ -78,6 +84,9 @@ export class StoreFeatureModule implements OnDestroy {
   }
 }
 
+/**
+ * @public
+ */
 @NgModule({})
 export class StoreModule {
   static forRoot<T, V extends Action = Action>(

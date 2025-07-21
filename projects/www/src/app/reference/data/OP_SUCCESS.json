@@ -1,1 +1,41 @@
-{"name":"OP_SUCCESS","canonicalReference":"@ngrx/data!OP_SUCCESS:var","kind":"Variable","fileUrlPath":"../../dist/modules/data/src/actions/entity-op.d.ts","isDeprecated":false,"members":[{"kind":"Variable","canonicalReference":"@ngrx/data!OP_SUCCESS:var","docComment":"/**\n * \"Success\" suffix appended to EntityOps that are successful.\n */\n","excerptTokens":[{"kind":"Content","text":"OP_SUCCESS = "},{"kind":"Content","text":"\"/success\""}],"fileUrlPath":"../../dist/modules/data/src/actions/entity-op.d.ts","initializerTokenRange":{"startIndex":1,"endIndex":2},"isReadonly":true,"releaseTag":"Public","name":"OP_SUCCESS","variableTypeTokenRange":{"startIndex":0,"endIndex":0},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"\"Success\" suffix appended to EntityOps that are successful.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "OP_SUCCESS",
+  "canonicalReference": "@ngrx/data!OP_SUCCESS:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/data/src/actions/entity-op.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/data!OP_SUCCESS:var",
+      "docComment": "/**\n * \"Success\" suffix appended to EntityOps that are successful.\n *\n * @public\n */\n",
+      "excerptTokens": [
+        { "kind": "Content", "text": "OP_SUCCESS = " },
+        { "kind": "Content", "text": "\"/success\"" }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/actions/entity-op.d.ts",
+      "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "OP_SUCCESS",
+      "variableTypeTokenRange": { "startIndex": 0, "endIndex": 0 },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\"Success\" suffix appended to EntityOps that are successful.\n\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

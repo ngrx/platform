@@ -8,7 +8,10 @@ import { EntityDispatcherFactory } from '../dispatchers/entity-dispatcher-factor
 import { EntitySelectors$Factory } from '../selectors/entity-selectors$';
 import { EntityCollectionServiceFactory } from './entity-collection-service-factory';
 
-/** Core ingredients of an EntityServices class */
+/**
+ * Core ingredients of an EntityServices class
+ * @public
+ */
 @Injectable()
 export class EntityServicesElements {
   constructor(

@@ -20,11 +20,22 @@ type SignalStoreMembers<FeatureResult extends SignalStoreFeatureResult> =
     >
   >;
 
+/**
+ * Creates a signal store with the provided features.
+ *
+ * @param f1 - The first feature to apply to the store.
+ * @returns A signal store class with the combined features.
+ *
+ * @public
+ */
 export function signalStore<F1 extends SignalStoreFeatureResult>(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>
 ): Type<
   SignalStoreMembers<F1> & StateSource<Prettify<OmitPrivate<F1['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -33,6 +44,9 @@ export function signalStore<
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -43,6 +57,9 @@ export function signalStore<
   f2: SignalStoreFeature<{} & F1, F2>,
   f3: SignalStoreFeature<F1 & F2, F3>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -55,6 +72,9 @@ export function signalStore<
   f3: SignalStoreFeature<F1 & F2, F3>,
   f4: SignalStoreFeature<F1 & F2 & F3, F4>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -69,6 +89,9 @@ export function signalStore<
   f4: SignalStoreFeature<F1 & F2 & F3, F4>,
   f5: SignalStoreFeature<F1 & F2 & F3 & F4, F5>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -85,6 +108,9 @@ export function signalStore<
   f5: SignalStoreFeature<F1 & F2 & F3 & F4, F5>,
   f6: SignalStoreFeature<F1 & F2 & F3 & F4 & F5, F6>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -103,6 +129,9 @@ export function signalStore<
   f6: SignalStoreFeature<F1 & F2 & F3 & F4 & F5, F6>,
   f7: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6, F7>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -123,6 +152,9 @@ export function signalStore<
   f7: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6, F7>,
   f8: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7, F8>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -153,6 +185,9 @@ export function signalStore<
   f8: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7, F8>,
   f9: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8, F9>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -186,6 +221,9 @@ export function signalStore<
   f9: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8, F9>,
   f10: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9, F10>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -222,6 +260,9 @@ export function signalStore<
   f10: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9, F10>,
   f11: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9 & F10, F11>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -267,6 +308,9 @@ export function signalStore<
     F12
   >
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -318,6 +362,9 @@ export function signalStore<
     F13
   >
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -375,6 +422,9 @@ export function signalStore<
     F14
   >
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -439,12 +489,18 @@ export function signalStore<
   >
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
 
+/**
+ * @public
+ */
 export function signalStore<F1 extends SignalStoreFeatureResult>(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>
 ): Type<
   SignalStoreMembers<F1> & StateSource<Prettify<OmitPrivate<F1['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -454,6 +510,9 @@ export function signalStore<
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -465,6 +524,9 @@ export function signalStore<
   f2: SignalStoreFeature<{} & F1, F2>,
   f3: SignalStoreFeature<F1 & F2, F3>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -478,6 +540,9 @@ export function signalStore<
   f3: SignalStoreFeature<F1 & F2, F3>,
   f4: SignalStoreFeature<F1 & F2 & F3, F4>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -493,6 +558,9 @@ export function signalStore<
   f4: SignalStoreFeature<F1 & F2 & F3, F4>,
   f5: SignalStoreFeature<F1 & F2 & F3 & F4, F5>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -510,6 +578,9 @@ export function signalStore<
   f5: SignalStoreFeature<F1 & F2 & F3 & F4, F5>,
   f6: SignalStoreFeature<F1 & F2 & F3 & F4 & F5, F6>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -529,6 +600,9 @@ export function signalStore<
   f6: SignalStoreFeature<F1 & F2 & F3 & F4 & F5, F6>,
   f7: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6, F7>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -550,6 +624,9 @@ export function signalStore<
   f7: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6, F7>,
   f8: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7, F8>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -581,6 +658,9 @@ export function signalStore<
   f8: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7, F8>,
   f9: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8, F9>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -615,6 +695,9 @@ export function signalStore<
   f9: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8, F9>,
   f10: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9, F10>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -652,6 +735,9 @@ export function signalStore<
   f10: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9, F10>,
   f11: SignalStoreFeature<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9 & F10, F11>
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -698,6 +784,9 @@ export function signalStore<
     F12
   >
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -750,6 +839,9 @@ export function signalStore<
     F13
   >
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -808,6 +900,9 @@ export function signalStore<
     F14
   >
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -873,6 +968,9 @@ export function signalStore<
   >
 ): Type<SignalStoreMembers<R> & StateSource<Prettify<OmitPrivate<R['state']>>>>;
 
+/**
+ * @public
+ */
 export function signalStore<F1 extends SignalStoreFeatureResult>(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>
@@ -880,6 +978,9 @@ export function signalStore<F1 extends SignalStoreFeatureResult>(
   SignalStoreMembers<F1> &
     WritableStateSource<Prettify<OmitPrivate<F1['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -891,6 +992,9 @@ export function signalStore<
 ): Type<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -904,6 +1008,9 @@ export function signalStore<
 ): Type<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -919,6 +1026,9 @@ export function signalStore<
 ): Type<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -936,6 +1046,9 @@ export function signalStore<
 ): Type<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -955,6 +1068,9 @@ export function signalStore<
 ): Type<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -976,6 +1092,9 @@ export function signalStore<
 ): Type<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -999,6 +1118,9 @@ export function signalStore<
 ): Type<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -1032,6 +1154,9 @@ export function signalStore<
 ): Type<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -1068,6 +1193,9 @@ export function signalStore<
 ): Type<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -1107,6 +1235,9 @@ export function signalStore<
 ): Type<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -1155,6 +1286,9 @@ export function signalStore<
 ): Type<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -1209,6 +1343,9 @@ export function signalStore<
 ): Type<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -1269,6 +1406,9 @@ export function signalStore<
 ): Type<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
+/**
+ * @public
+ */
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -1336,6 +1476,9 @@ export function signalStore<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
 
+/**
+ * @public
+ */
 export function signalStore(
   ...args: [SignalStoreConfig, ...SignalStoreFeature[]] | SignalStoreFeature[]
 ): Type<SignalStoreMembers<any>> {
@@ -1382,6 +1525,13 @@ export function signalStore(
   return SignalStore;
 }
 
+/**
+ * Creates an initial empty inner signal store.
+ *
+ * @returns An empty inner signal store with default values.
+ *
+ * @public
+ */
 export function getInitialInnerStore(): InnerSignalStore {
   return {
     [STATE_SOURCE]: {},

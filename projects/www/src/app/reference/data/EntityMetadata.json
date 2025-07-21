@@ -8,7 +8,7 @@
     {
       "kind": "Interface",
       "canonicalReference": "@ngrx/data!EntityMetadata:interface",
-      "docComment": "/**\n * Metadata that describe an entity type and its collection to @ngrx/data\n */\n",
+      "docComment": "/**\n * Metadata that describe an entity type and its collection to \\@ngrx/data\n *\n * @public\n */\n",
       "excerptTokens": [
         { "kind": "Content", "text": "export interface EntityMetadata<T = " },
         { "kind": "Content", "text": "any" },
@@ -291,13 +291,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Metadata that describe an entity type and its collection to @ngrx/data\n",
+        "summary": "Metadata that describe an entity type and its collection to \\@ngrx/data\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

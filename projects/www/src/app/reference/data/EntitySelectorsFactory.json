@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!EntitySelectorsFactory:class",
-      "docComment": "/**\n * Creates EntitySelector functions for entity collections.\n */\n",
+      "docComment": "/**\n * Creates EntitySelector functions for entity collections.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -79,7 +79,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntitySelectorsFactory#create:member(1)",
-          "docComment": "/**\n * Creates the store-rooted selectors for an entity collection. {EntitySelectors$Factory} turns them into selectors$.\n *\n * @param metadata - EntityMetadata for the collection. May be partial but much have `entityName`.\n *\n * Based on ngrx/entity/state_selectors.ts Differs in that these selectors select from the NgRx store root, through the collection, to the collection members.\n */\n",
+          "docComment": "/**\n * Creates the store-rooted selectors for an entity collection. \\{EntitySelectors$Factory\\} turns them into selectors$.\n *\n * @param metadata - EntityMetadata for the collection. May be partial but much have `entityName`.\n *\n * Based on ngrx/entity/state_selectors.ts Differs in that these selectors select from the NgRx store root, through the collection, to the collection members.\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "create<T, S extends " },
             {
@@ -142,7 +142,7 @@
               "isOverride": false,
               "isExperimental": false
             },
-            "summary": "Creates the store-rooted selectors for an entity collection. {EntitySelectors$Factory} turns them into selectors$.\n\n",
+            "summary": "Creates the store-rooted selectors for an entity collection. \\{EntitySelectors$Factory\\} turns them into selectors$.\n\n",
             "usageNotes": "",
             "remarks": "",
             "deprecated": "",
@@ -159,7 +159,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntitySelectorsFactory#create:member(2)",
-          "docComment": "/**\n * Creates the default store-rooted selectors for an entity collection. {EntitySelectors$Factory} turns them into selectors$. Use the metadata overload for additional collection selectors.\n *\n * @param entityName - name of the entity type.\n *\n * Based on ngrx/entity/state_selectors.ts Differs in that these selectors select from the NgRx store root, through the collection, to the collection members.\n */\n",
+          "docComment": "/**\n * Creates the default store-rooted selectors for an entity collection. \\{EntitySelectors$Factory\\} turns them into selectors$. Use the metadata overload for additional collection selectors.\n *\n * @param entityName - name of the entity type.\n *\n * Based on ngrx/entity/state_selectors.ts Differs in that these selectors select from the NgRx store root, through the collection, to the collection members.\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "create<T, S extends " },
             {
@@ -217,7 +217,7 @@
               "isOverride": false,
               "isExperimental": false
             },
-            "summary": "Creates the default store-rooted selectors for an entity collection. {EntitySelectors$Factory} turns them into selectors$. Use the metadata overload for additional collection selectors.\n\n",
+            "summary": "Creates the default store-rooted selectors for an entity collection. \\{EntitySelectors$Factory\\} turns them into selectors$. Use the metadata overload for additional collection selectors.\n\n",
             "usageNotes": "",
             "remarks": "",
             "deprecated": "",
@@ -491,13 +491,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Creates EntitySelector functions for entity collections.\n",
+        "summary": "Creates EntitySelector functions for entity collections.\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

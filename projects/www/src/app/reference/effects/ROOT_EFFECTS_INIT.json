@@ -1,1 +1,41 @@
-{"name":"ROOT_EFFECTS_INIT","canonicalReference":"@ngrx/effects!ROOT_EFFECTS_INIT:var","kind":"Variable","fileUrlPath":"../../dist/modules/effects/src/effects_actions.d.ts","isDeprecated":false,"members":[{"kind":"Variable","canonicalReference":"@ngrx/effects!ROOT_EFFECTS_INIT:var","docComment":"","excerptTokens":[{"kind":"Content","text":"ROOT_EFFECTS_INIT = "},{"kind":"Content","text":"\"@ngrx/effects/init\""}],"fileUrlPath":"../../dist/modules/effects/src/effects_actions.d.ts","initializerTokenRange":{"startIndex":1,"endIndex":2},"isReadonly":true,"releaseTag":"Public","name":"ROOT_EFFECTS_INIT","variableTypeTokenRange":{"startIndex":0,"endIndex":0},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "ROOT_EFFECTS_INIT",
+  "canonicalReference": "@ngrx/effects!ROOT_EFFECTS_INIT:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/effects/src/effects_actions.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/effects!ROOT_EFFECTS_INIT:var",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        { "kind": "Content", "text": "ROOT_EFFECTS_INIT = " },
+        { "kind": "Content", "text": "\"@ngrx/effects/init\"" }
+      ],
+      "fileUrlPath": "../../dist/modules/effects/src/effects_actions.d.ts",
+      "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "ROOT_EFFECTS_INIT",
+      "variableTypeTokenRange": { "startIndex": 0, "endIndex": 0 },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

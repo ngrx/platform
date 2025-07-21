@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!PersistenceResultHandler:class",
-      "docComment": "/**\n * Handling of responses from persistence operation\n */\n",
+      "docComment": "/**\n * Handling of responses from persistence operation\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -157,13 +157,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Handling of responses from persistence operation\n",
+        "summary": "Handling of responses from persistence operation\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

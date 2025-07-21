@@ -5,6 +5,8 @@
  * Such changes must be in the entity data in changes property.
  * Default is false (server did not return entity data; assume it changed nothing).
  * See EntityEffects.
+ *
+ * @public
  */
 export interface UpdateResponseData<T> {
   /** Original key (id) of the entity */

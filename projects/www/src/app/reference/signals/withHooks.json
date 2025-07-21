@@ -1,1 +1,169 @@
-{"name":"withHooks","canonicalReference":"@ngrx/signals!withHooks:function","kind":"Function","fileUrlPath":"../../dist/modules/signals/src/with-hooks.d.ts","isDeprecated":false,"members":[{"kind":"Function","canonicalReference":"@ngrx/signals!withHooks:function(1)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function withHooks<Input extends "},{"kind":"Reference","text":"SignalStoreFeatureResult","canonicalReference":"@ngrx/signals!SignalStoreFeatureResult:type"},{"kind":"Content","text":">(hooks: "},{"kind":"Content","text":"{\n    onInit?: "},{"kind":"Reference","text":"HookFn","canonicalReference":"@ngrx/signals!~HookFn:type"},{"kind":"Content","text":"<Input>;\n    onDestroy?: "},{"kind":"Reference","text":"HookFn","canonicalReference":"@ngrx/signals!~HookFn:type"},{"kind":"Content","text":"<Input>;\n}"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"SignalStoreFeature","canonicalReference":"@ngrx/signals!SignalStoreFeature:type"},{"kind":"Content","text":"<Input, "},{"kind":"Reference","text":"EmptyFeatureResult","canonicalReference":"@ngrx/signals!EmptyFeatureResult:type"},{"kind":"Content","text":">"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/signals/src/with-hooks.d.ts","returnTypeTokenRange":{"startIndex":9,"endIndex":13},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"hooks","parameterTypeTokenRange":{"startIndex":3,"endIndex":8},"isOptional":false}],"typeParameters":[{"typeParameterName":"Input","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"withHooks","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Function","canonicalReference":"@ngrx/signals!withHooks:function(2)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function withHooks<Input extends "},{"kind":"Reference","text":"SignalStoreFeatureResult","canonicalReference":"@ngrx/signals!SignalStoreFeatureResult:type"},{"kind":"Content","text":">(hooks: "},{"kind":"Reference","text":"HooksFactory","canonicalReference":"@ngrx/signals!~HooksFactory:type"},{"kind":"Content","text":"<Input>"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"SignalStoreFeature","canonicalReference":"@ngrx/signals!SignalStoreFeature:type"},{"kind":"Content","text":"<Input, "},{"kind":"Reference","text":"EmptyFeatureResult","canonicalReference":"@ngrx/signals!EmptyFeatureResult:type"},{"kind":"Content","text":">"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/signals/src/with-hooks.d.ts","returnTypeTokenRange":{"startIndex":6,"endIndex":10},"releaseTag":"Public","overloadIndex":2,"parameters":[{"parameterName":"hooks","parameterTypeTokenRange":{"startIndex":3,"endIndex":5},"isOptional":false}],"typeParameters":[{"typeParameterName":"Input","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"withHooks","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "withHooks",
+  "canonicalReference": "@ngrx/signals!withHooks:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/signals/src/with-hooks.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/signals!withHooks:function(1)",
+      "docComment": "/**\n * Adds lifecycle hooks to a signal store.\n *\n * @param hooks - Static hooks configuration.\n *\n * @returns A signal store feature that adds the hooks.\n *\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function withHooks<Input extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "SignalStoreFeatureResult",
+          "canonicalReference": "@ngrx/signals!SignalStoreFeatureResult:type"
+        },
+        { "kind": "Content", "text": ">(hooks: " },
+        { "kind": "Content", "text": "{\n    onInit?: " },
+        {
+          "kind": "Reference",
+          "text": "HookFn",
+          "canonicalReference": "@ngrx/signals!~HookFn:type"
+        },
+        { "kind": "Content", "text": "<Input>;\n    onDestroy?: " },
+        {
+          "kind": "Reference",
+          "text": "HookFn",
+          "canonicalReference": "@ngrx/signals!~HookFn:type"
+        },
+        { "kind": "Content", "text": "<Input>;\n}" },
+        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Reference",
+          "text": "SignalStoreFeature",
+          "canonicalReference": "@ngrx/signals!SignalStoreFeature:type"
+        },
+        { "kind": "Content", "text": "<Input, " },
+        {
+          "kind": "Reference",
+          "text": "EmptyFeatureResult",
+          "canonicalReference": "@ngrx/signals!EmptyFeatureResult:type"
+        },
+        { "kind": "Content", "text": ">" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/src/with-hooks.d.ts",
+      "returnTypeTokenRange": { "startIndex": 9, "endIndex": 13 },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "hooks",
+          "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 8 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "Input",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "withHooks",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Adds lifecycle hooks to a signal store.\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": " A signal store feature that adds the hooks.\n\n\n",
+        "see": [],
+        "params": [
+          { "name": "hooks", "description": "Static hooks configuration.\n\n" }
+        ]
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/signals!withHooks:function(2)",
+      "docComment": "/**\n * Adds lifecycle hooks to a signal store using a factory function.\n *\n * @param hooks - Factory function that creates hooks.\n *\n * @returns A signal store feature that adds the hooks.\n *\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function withHooks<Input extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "SignalStoreFeatureResult",
+          "canonicalReference": "@ngrx/signals!SignalStoreFeatureResult:type"
+        },
+        { "kind": "Content", "text": ">(hooks: " },
+        {
+          "kind": "Reference",
+          "text": "HooksFactory",
+          "canonicalReference": "@ngrx/signals!~HooksFactory:type"
+        },
+        { "kind": "Content", "text": "<Input>" },
+        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Reference",
+          "text": "SignalStoreFeature",
+          "canonicalReference": "@ngrx/signals!SignalStoreFeature:type"
+        },
+        { "kind": "Content", "text": "<Input, " },
+        {
+          "kind": "Reference",
+          "text": "EmptyFeatureResult",
+          "canonicalReference": "@ngrx/signals!EmptyFeatureResult:type"
+        },
+        { "kind": "Content", "text": ">" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/src/with-hooks.d.ts",
+      "returnTypeTokenRange": { "startIndex": 6, "endIndex": 10 },
+      "releaseTag": "Public",
+      "overloadIndex": 2,
+      "parameters": [
+        {
+          "parameterName": "hooks",
+          "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "Input",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "name": "withHooks",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Adds lifecycle hooks to a signal store using a factory function.\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": " A signal store feature that adds the hooks.\n\n\n",
+        "see": [],
+        "params": [
+          {
+            "name": "hooks",
+            "description": "Factory function that creates hooks.\n\n"
+          }
+        ]
+      }
+    }
+  ]
+}

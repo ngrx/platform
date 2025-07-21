@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!EntityCollectionReducerMethods:class",
-      "docComment": "/**\n * Base implementation of reducer methods for an entity collection.\n */\n",
+      "docComment": "/**\n * Base implementation of reducer methods for an entity collection.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -924,7 +924,7 @@
         {
           "kind": "Property",
           "canonicalReference": "@ngrx/data!EntityCollectionReducerMethods#methods:member",
-          "docComment": "/**\n * Dictionary of the {EntityCollectionReducerMethods} for this entity type, keyed by the {EntityOp}\n */\n",
+          "docComment": "/**\n * Dictionary of the \\{EntityCollectionReducerMethods\\} for this entity type, keyed by the \\{EntityOp\\}\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "readonly methods: " },
             {
@@ -952,7 +952,7 @@
               "isOverride": false,
               "isExperimental": false
             },
-            "summary": "Dictionary of the {EntityCollectionReducerMethods} for this entity type, keyed by the {EntityOp}\n",
+            "summary": "Dictionary of the \\{EntityCollectionReducerMethods\\} for this entity type, keyed by the \\{EntityOp\\}\n",
             "usageNotes": "",
             "remarks": "",
             "deprecated": "",
@@ -2859,7 +2859,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntityCollectionReducerMethods#saveUpdateMany:member(1)",
-          "docComment": "/**\n * Save updated entities. If saving pessimistically, update the entities in the collection after the server confirms success. If saving optimistically, update the entities immediately, before the save request.\n *\n * @param collection - The collection to update\n *\n * @param action - The action payload holds options, including if the save is optimistic, and the data which, must be an array of {Update<T>}.\n */\n",
+          "docComment": "/**\n * Save updated entities. If saving pessimistically, update the entities in the collection after the server confirms success. If saving optimistically, update the entities immediately, before the save request.\n *\n * @param collection - The collection to update\n *\n * @param action - The action payload holds options, including if the save is optimistic, and the data which, must be an array of \\{Update<T>\\}.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -2935,7 +2935,7 @@
               },
               {
                 "name": "action",
-                "description": "The action payload holds options, including if the save is optimistic, and the data which, must be an array of {Update<T>}.\n"
+                "description": "The action payload holds options, including if the save is optimistic, and the data which, must be an array of \\{Update<T>\\}.\n"
               }
             ]
           }
@@ -3102,7 +3102,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntityCollectionReducerMethods#saveUpdateOne:member(1)",
-          "docComment": "/**\n * Save an update to an existing entity. If saving pessimistically, update the entity in the collection after the server confirms success. If saving optimistically, update the entity immediately, before the save request.\n *\n * @param collection - The collection to update\n *\n * @param action - The action payload holds options, including if the save is optimistic, and the data which, must be an {Update<T>}\n */\n",
+          "docComment": "/**\n * Save an update to an existing entity. If saving pessimistically, update the entity in the collection after the server confirms success. If saving optimistically, update the entity immediately, before the save request.\n *\n * @param collection - The collection to update\n *\n * @param action - The action payload holds options, including if the save is optimistic, and the data which, must be an \\{Update<T>\\}\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -3178,7 +3178,7 @@
               },
               {
                 "name": "action",
-                "description": "The action payload holds options, including if the save is optimistic, and the data which, must be an {Update<T>}\n"
+                "description": "The action payload holds options, including if the save is optimistic, and the data which, must be an \\{Update<T>\\}\n"
               }
             ]
           }
@@ -4866,13 +4866,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Base implementation of reducer methods for an entity collection.\n",
+        "summary": "Base implementation of reducer methods for an entity collection.\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

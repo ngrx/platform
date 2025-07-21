@@ -10,6 +10,14 @@ import {
 } from './signal-store-models';
 import { Prettify } from './ts-helpers';
 
+/**
+ * Adds methods to a signal store.
+ *
+ * @param methodsFactory - A factory function that creates methods for the store.
+ * @returns A signal store feature that adds the methods.
+ *
+ * @public
+ */
 export function withMethods<
   Input extends SignalStoreFeatureResult,
   Methods extends MethodsDictionary

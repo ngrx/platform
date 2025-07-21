@@ -15,6 +15,9 @@ import {
 import { REGISTERED_ACTION_TYPES } from './globals';
 import { RUNTIME_CHECK_URL } from './meta-reducers/utils';
 
+/**
+ * @public
+ */
 export function createActiveRuntimeChecks(
   runtimeChecks?: Partial<RuntimeChecks>
 ): RuntimeChecks {
@@ -40,6 +43,9 @@ export function createActiveRuntimeChecks(
   };
 }
 
+/**
+ * @public
+ */
 export function createSerializationCheckMetaReducer({
   strictActionSerializability,
   strictStateSerializability,
@@ -54,6 +60,9 @@ export function createSerializationCheckMetaReducer({
       : reducer;
 }
 
+/**
+ * @public
+ */
 export function createImmutabilityCheckMetaReducer({
   strictActionImmutability,
   strictStateImmutability,
@@ -72,6 +81,9 @@ function ignoreNgrxAction(action: Action) {
   return action.type.startsWith('@ngrx');
 }
 
+/**
+ * @public
+ */
 export function createInNgZoneCheckMetaReducer({
   strictActionWithinNgZone,
 }: RuntimeChecks): MetaReducer {
@@ -84,6 +96,9 @@ export function createInNgZoneCheckMetaReducer({
       : reducer;
 }
 
+/**
+ * @public
+ */
 export function provideRuntimeChecks(
   runtimeChecks?: Partial<RuntimeChecks>
 ): Provider[] {
@@ -123,6 +138,9 @@ export function provideRuntimeChecks(
   ];
 }
 
+/**
+ * @public
+ */
 export function checkForActionTypeUniqueness(): Provider[] {
   return [
     {
@@ -134,12 +152,18 @@ export function checkForActionTypeUniqueness(): Provider[] {
   ];
 }
 
+/**
+ * @public
+ */
 export function _runtimeChecksFactory(
   runtimeChecks: RuntimeChecks
 ): RuntimeChecks {
   return runtimeChecks;
 }
 
+/**
+ * @public
+ */
 export function _actionTypeUniquenessCheck(config: RuntimeChecks): void {
   if (!config.strictActionTypeUniqueness) {
     return;

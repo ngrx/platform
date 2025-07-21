@@ -5,6 +5,9 @@ import { EntityAction } from './actions/entity-action';
 import { EntityMetadataMap } from './entity-metadata/entity-metadata';
 import { EntityCollection } from './reducers/entity-collection';
 
+/**
+ * @public
+ */
 export interface EntityDataModuleConfig {
   entityMetadata?: EntityMetadataMap;
   entityCacheMetaReducers?: (

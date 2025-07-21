@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/data!toUpdateFactory:function(1)",
-      "docComment": "/**\n * Return a function that converts an entity (or partial entity) into the `Update<T>` whose `id` is the primary key and `changes` is the entity (or partial entity of changes).\n */\n",
+      "docComment": "/**\n * Return a function that converts an entity (or partial entity) into the `Update<T>` whose `id` is the primary key and `changes` is the entity (or partial entity of changes).\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -58,13 +58,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Return a function that converts an entity (or partial entity) into the `Update<T>` whose `id` is the primary key and `changes` is the entity (or partial entity of changes).\n",
+        "summary": "Return a function that converts an entity (or partial entity) into the `Update<T>` whose `id` is the primary key and `changes` is the entity (or partial entity of changes).\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

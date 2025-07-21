@@ -7,7 +7,7 @@ import { flattenArgs } from '../utils/utilities';
 
 /**
  * Select actions concerning one of the allowed Entity operations
- * @param allowedEntityOps Entity operations (e.g, EntityOp.QUERY_ALL) whose actions should be selected
+ * @param allowedEntityOps - Entity operations (e.g, EntityOp.QUERY_ALL) whose actions should be selected
  * Example:
  * ```
  *  this.actions.pipe(ofEntityOp(EntityOp.QUERY_ALL, EntityOp.QUERY_MANY), ...)
@@ -15,13 +15,21 @@ import { flattenArgs } from '../utils/utilities';
  *  this.actions.pipe(ofEntityOp(queryOps), ...)
  *  this.actions.pipe(ofEntityOp(), ...) // any action with a defined `entityOp` property
  * ```
+ *
+ * @public
  */
 export function ofEntityOp<T extends EntityAction>(
   allowedOps: string[] | EntityOp[]
 ): OperatorFunction<EntityAction, T>;
+/**
+ * @public
+ */
 export function ofEntityOp<T extends EntityAction>(
   ...allowedOps: (string | EntityOp)[]
 ): OperatorFunction<EntityAction, T>;
+/**
+ * @public
+ */
 export function ofEntityOp<T extends EntityAction>(
   ...allowedEntityOps: any[]
 ): OperatorFunction<EntityAction, T> {
@@ -48,7 +56,7 @@ export function ofEntityOp<T extends EntityAction>(
 
 /**
  * Select actions concerning one of the allowed Entity types
- * @param allowedEntityNames Entity-type names (e.g, 'Hero') whose actions should be selected
+ * @param allowedEntityNames - Entity-type names (e.g, 'Hero') whose actions should be selected
  * Example:
  * ```
  *  this.actions.pipe(ofEntityType(), ...) // ayn EntityAction with a defined entity type property
@@ -57,13 +65,21 @@ export function ofEntityOp<T extends EntityAction>(
  *  this.actions.pipe(ofEntityType(...theChosen), ...)
  *  this.actions.pipe(ofEntityType(theChosen), ...)
  * ```
+ *
+ * @public
  */
 export function ofEntityType<T extends EntityAction>(
   allowedEntityNames?: string[]
 ): OperatorFunction<EntityAction, T>;
+/**
+ * @public
+ */
 export function ofEntityType<T extends EntityAction>(
   ...allowedEntityNames: string[]
 ): OperatorFunction<EntityAction, T>;
+/**
+ * @public
+ */
 export function ofEntityType<T extends EntityAction>(
   ...allowedEntityNames: any[]
 ): OperatorFunction<EntityAction, T> {

@@ -1,1 +1,58 @@
-{"name":"getGuidComb","canonicalReference":"@ngrx/data!getGuidComb:function","kind":"Function","fileUrlPath":"../../dist/modules/data/src/utils/guid-fns.d.ts","isDeprecated":false,"members":[{"kind":"Function","canonicalReference":"@ngrx/data!getGuidComb:function(1)","docComment":"/**\n * Creates a sortable, pseudo-GUID (globally unique identifier) whose trailing 6 bytes (12 hex digits) are time-based Start either with the given getTime() value, seedTime, or get the current time in ms.\n *\n * @param seed - optional seed for reproducible time-part\n */\n","excerptTokens":[{"kind":"Content","text":"export declare function getGuidComb(seed?: "},{"kind":"Content","text":"number"},{"kind":"Content","text":"): "},{"kind":"Content","text":"string"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/data/src/utils/guid-fns.d.ts","returnTypeTokenRange":{"startIndex":3,"endIndex":4},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"seed","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":true}],"name":"getGuidComb","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Creates a sortable, pseudo-GUID (globally unique identifier) whose trailing 6 bytes (12 hex digits) are time-based Start either with the given getTime() value, seedTime, or get the current time in ms.\n\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[{"name":"seed","description":"optional seed for reproducible time-part\n"}]}}]}
+{
+  "name": "getGuidComb",
+  "canonicalReference": "@ngrx/data!getGuidComb:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/data/src/utils/guid-fns.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/data!getGuidComb:function(1)",
+      "docComment": "/**\n * Creates a sortable, pseudo-GUID (globally unique identifier) whose trailing 6 bytes (12 hex digits) are time-based Start either with the given getTime() value, seedTime, or get the current time in ms.\n *\n * @param seed - optional seed for reproducible time-part\n *\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function getGuidComb(seed?: "
+        },
+        { "kind": "Content", "text": "number" },
+        { "kind": "Content", "text": "): " },
+        { "kind": "Content", "text": "string" },
+        { "kind": "Content", "text": ";" }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/utils/guid-fns.d.ts",
+      "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "seed",
+          "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isOptional": true
+        }
+      ],
+      "name": "getGuidComb",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Creates a sortable, pseudo-GUID (globally unique identifier) whose trailing 6 bytes (12 hex digits) are time-based Start either with the given getTime() value, seedTime, or get the current time in ms.\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": [
+          {
+            "name": "seed",
+            "description": "optional seed for reproducible time-part\n\n\n"
+          }
+        ]
+      }
+    }
+  ]
+}

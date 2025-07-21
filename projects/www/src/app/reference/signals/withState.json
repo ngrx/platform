@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals!withState:function(1)",
-      "docComment": "",
+      "docComment": "/**\n * Adds state to a signal store using a factory function.\n *\n * @param stateFactory - A factory function that returns the initial state.\n *\n * @returns A signal store feature that adds the state.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -29,20 +29,14 @@
           "text": "EmptyFeatureResult",
           "canonicalReference": "@ngrx/signals!EmptyFeatureResult:type"
         },
-        { "kind": "Content", "text": ", {\n    state: " },
-        {
-          "kind": "Reference",
-          "text": "StateResult",
-          "canonicalReference": "@ngrx/signals!~StateResult:type"
-        },
         {
           "kind": "Content",
-          "text": "<State>;\n    props: {};\n    methods: {};\n}>"
+          "text": ", {\n    state: State;\n    props: {};\n    methods: {};\n}>"
         },
         { "kind": "Content", "text": ";" }
       ],
       "fileUrlPath": "../../dist/modules/signals/src/with-state.d.ts",
-      "returnTypeTokenRange": { "startIndex": 5, "endIndex": 11 },
+      "returnTypeTokenRange": { "startIndex": 5, "endIndex": 9 },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [
@@ -63,25 +57,30 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "Adds state to a signal store using a factory function.\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
-        "returns": "",
+        "returns": " A signal store feature that adds the state.\n\n\n",
         "see": [],
-        "params": []
+        "params": [
+          {
+            "name": "stateFactory",
+            "description": "A factory function that returns the initial state.\n\n"
+          }
+        ]
       }
     },
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals!withState:function(2)",
-      "docComment": "",
+      "docComment": "/**\n * Adds state to a signal store using a static state object.\n *\n * @param state - The initial state object.\n *\n * @returns A signal store feature that adds the state.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -102,20 +101,14 @@
           "text": "EmptyFeatureResult",
           "canonicalReference": "@ngrx/signals!EmptyFeatureResult:type"
         },
-        { "kind": "Content", "text": ", {\n    state: " },
-        {
-          "kind": "Reference",
-          "text": "StateResult",
-          "canonicalReference": "@ngrx/signals!~StateResult:type"
-        },
         {
           "kind": "Content",
-          "text": "<State>;\n    props: {};\n    methods: {};\n}>"
+          "text": ", {\n    state: State;\n    props: {};\n    methods: {};\n}>"
         },
         { "kind": "Content", "text": ";" }
       ],
       "fileUrlPath": "../../dist/modules/signals/src/with-state.d.ts",
-      "returnTypeTokenRange": { "startIndex": 5, "endIndex": 11 },
+      "returnTypeTokenRange": { "startIndex": 5, "endIndex": 9 },
       "releaseTag": "Public",
       "overloadIndex": 2,
       "parameters": [
@@ -136,19 +129,21 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "Adds state to a signal store using a static state object.\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
-        "returns": "",
+        "returns": " A signal store feature that adds the state.\n\n\n",
         "see": [],
-        "params": []
+        "params": [
+          { "name": "state", "description": "The initial state object.\n\n" }
+        ]
       }
     }
   ]

@@ -2,6 +2,9 @@ import { Injectable, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
 
+/**
+ * @public
+ */
 @Injectable()
 export class MockState<T> extends BehaviorSubject<T> {
   /**

@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!EntityCacheDispatcher:class",
-      "docComment": "/**\n * Dispatches Entity Cache actions to the EntityCache reducer\n */\n",
+      "docComment": "/**\n * Dispatches Entity Cache actions to the EntityCache reducer\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -498,7 +498,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntityCacheDispatcher#saveEntities:member(1)",
-          "docComment": "/**\n * Dispatch action to save multiple entity changes to remote storage. Relies on an Ngrx Effect such as EntityEffects.saveEntities$. Important: only call if your server supports the SaveEntities protocol through your EntityDataService.saveEntities method.\n *\n * @param changes - Either the entities to save, as an array of {ChangeSetItem}, or a ChangeSet that holds such changes.\n *\n * @param url - The server url which receives the save request\n *\n * @param options - options such as tag, correlationId, isOptimistic, and mergeStrategy. These values are defaulted if not supplied.\n *\n * @returns A terminating Observable<ChangeSet> with data returned from the server after server reports successful save OR the save error. TODO: should return the matching entities from cache rather than the raw server data.\n */\n",
+          "docComment": "/**\n * Dispatch action to save multiple entity changes to remote storage. Relies on an Ngrx Effect such as EntityEffects.saveEntities$. Important: only call if your server supports the SaveEntities protocol through your EntityDataService.saveEntities method.\n *\n * @param changes - Either the entities to save, as an array of ChangeSetItem, or a ChangeSet that holds such changes.\n *\n * @param url - The server url which receives the save request\n *\n * @param options - options such as tag, correlationId, isOptimistic, and mergeStrategy. These values are defaulted if not supplied.\n *\n * @returns A terminating Observable<ChangeSet> with data returned from the server after server reports successful save OR the save error. TODO: should return the matching entities from cache rather than the raw server data.\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "saveEntities(changes: " },
             {
@@ -578,7 +578,7 @@
             "params": [
               {
                 "name": "changes",
-                "description": "Either the entities to save, as an array of {ChangeSetItem}, or a ChangeSet that holds such changes.\n\n"
+                "description": "Either the entities to save, as an array of ChangeSetItem, or a ChangeSet that holds such changes.\n\n"
               },
               {
                 "name": "url",
@@ -660,13 +660,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Dispatches Entity Cache actions to the EntityCache reducer\n",
+        "summary": "Dispatches Entity Cache actions to the EntityCache reducer\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

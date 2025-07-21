@@ -4,13 +4,21 @@ import { EntityOp } from './entity-op';
 import { MergeStrategy } from './merge-strategy';
 import { HttpOptions } from '../dataservices/interfaces';
 
-/** Action concerning an entity collection. */
+/**
+ * Action concerning an entity collection.
+ *
+ * @public
+ */
 export interface EntityAction<P = any> extends Action {
   readonly type: string;
   readonly payload: EntityActionPayload<P>;
 }
 
-/** Options of an EntityAction */
+/**
+ * Options of an EntityAction
+ *
+ * @public
+ */
 export interface EntityActionOptions {
   /** Correlate related EntityActions, particularly related saves. Must be serializable. */
   readonly correlationId?: any;
@@ -39,7 +47,11 @@ export interface EntityActionOptions {
   skip?: boolean;
 }
 
-/** Payload of an EntityAction */
+/**
+ * Payload of an EntityAction
+ *
+ * @public
+ */
 export interface EntityActionPayload<P = any> extends EntityActionOptions {
   readonly entityName: string;
   readonly entityOp: EntityOp;

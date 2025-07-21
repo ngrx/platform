@@ -8,7 +8,7 @@
     {
       "kind": "Interface",
       "canonicalReference": "@ngrx/data!EntityChangeTracker:interface",
-      "docComment": "/**\n * Methods for tracking, committing, and reverting/undoing unsaved entity changes. Used by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection. See EntityChangeTracker docs.\n */\n",
+      "docComment": "/**\n * Methods for tracking, committing, and reverting/undoing unsaved entity changes. Used by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection. See EntityChangeTracker docs.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -375,7 +375,7 @@
         {
           "kind": "MethodSignature",
           "canonicalReference": "@ngrx/data!EntityChangeTracker#mergeSaveDeletes:member(1)",
-          "docComment": "/**\n * Merge successful result of deleting entities on the server that have the given primary keys Clears the entity changeState for those keys unless the MergeStrategy is ignoreChanges.\n *\n * @param entities - keys primary keys of the entities to remove/delete.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - How to adjust change tracking when the corresponding entity in the collection has an unsaved change. If not specified, implementation supplies a default strategy.\n *\n * @returns The merged EntityCollection.\n */\n",
+          "docComment": "/**\n * Merge successful result of deleting entities on the server that have the given primary keys Clears the entity changeState for those keys unless the MergeStrategy is ignoreChanges.\n *\n * @param entities - primary keys of the entities to remove/delete.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - How to adjust change tracking when the corresponding entity in the collection has an unsaved change. If not specified, implementation supplies a default strategy.\n *\n * @returns The merged EntityCollection.\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "mergeSaveDeletes(keys: " },
             { "kind": "Content", "text": "(number | string)[]" },
@@ -441,7 +441,7 @@
             "params": [
               {
                 "name": "entities",
-                "description": "keys primary keys of the entities to remove/delete.\n\n"
+                "description": "primary keys of the entities to remove/delete.\n\n"
               },
               {
                 "name": "collection",
@@ -1218,7 +1218,7 @@
         {
           "kind": "MethodSignature",
           "canonicalReference": "@ngrx/data!EntityChangeTracker#trackUpsertOne:member(1)",
-          "docComment": "/**\n * Track an entity before upsert (adding and updating) it to the collection. Does NOT update the collection (the reducer's job).\n *\n * @param entities - The entity to add or update. It must be a complete entity with its id.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
+          "docComment": "/**\n * Track an entity before upsert (adding and updating) it to the collection. Does NOT update the collection (the reducer's job).\n *\n * @param entity - The entity to add or update. It must be a complete entity with its id.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "trackUpsertOne(entity: " },
             { "kind": "Content", "text": "T" },
@@ -1283,7 +1283,7 @@
             "see": [],
             "params": [
               {
-                "name": "entities",
+                "name": "entity",
                 "description": "The entity to add or update. It must be a complete entity with its id.\n\n"
               },
               {
@@ -1483,13 +1483,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Methods for tracking, committing, and reverting/undoing unsaved entity changes. Used by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection. See EntityChangeTracker docs.\n",
+        "summary": "Methods for tracking, committing, and reverting/undoing unsaved entity changes. Used by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection. See EntityChangeTracker docs.\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!LoadCollections:class",
-      "docComment": "/**\n * Create entity cache action that loads multiple entity collections at the same time. before any selectors$ observables emit.\n *\n * @param querySet - The collections to load, typically the result of a query.\n *\n * @param tag - Optional tag to identify the operation from the app perspective. in the form of a map of entity collections.\n */\n",
+      "docComment": "/**\n * Create entity cache action that loads multiple entity collections at the same time. before any selectors$ observables emit.\n *\n * @param querySet - The collections to load, typically the result of a query.\n *\n * @param tag - Optional tag to identify the operation from the app perspective. in the form of a map of entity collections.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -161,7 +161,7 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
@@ -180,7 +180,7 @@
           },
           {
             "name": "tag",
-            "description": "Optional tag to identify the operation from the app perspective. in the form of a map of entity collections.\n"
+            "description": "Optional tag to identify the operation from the app perspective. in the form of a map of entity collections.\n\n\n"
           }
         ]
       }

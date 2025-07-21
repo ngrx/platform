@@ -1,1 +1,44 @@
-{"name":"entityCacheSelectorProvider","canonicalReference":"@ngrx/data!entityCacheSelectorProvider:var","kind":"Variable","fileUrlPath":"../../dist/modules/data/src/selectors/entity-cache-selector.d.ts","isDeprecated":false,"members":[{"kind":"Variable","canonicalReference":"@ngrx/data!entityCacheSelectorProvider:var","docComment":"","excerptTokens":[{"kind":"Content","text":"entityCacheSelectorProvider: "},{"kind":"Reference","text":"FactoryProvider","canonicalReference":"@angular/core!FactoryProvider:interface"}],"fileUrlPath":"../../dist/modules/data/src/selectors/entity-cache-selector.d.ts","isReadonly":true,"releaseTag":"Public","name":"entityCacheSelectorProvider","variableTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "entityCacheSelectorProvider",
+  "canonicalReference": "@ngrx/data!entityCacheSelectorProvider:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/data/src/selectors/entity-cache-selector.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/data!entityCacheSelectorProvider:var",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        { "kind": "Content", "text": "entityCacheSelectorProvider: " },
+        {
+          "kind": "Reference",
+          "text": "FactoryProvider",
+          "canonicalReference": "@angular/core!FactoryProvider:interface"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/selectors/entity-cache-selector.d.ts",
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "entityCacheSelectorProvider",
+      "variableTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

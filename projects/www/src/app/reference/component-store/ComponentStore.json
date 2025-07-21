@@ -1,1 +1,1262 @@
-{"name":"ComponentStore","canonicalReference":"@ngrx/component-store!ComponentStore:class","kind":"Class","fileUrlPath":"../../dist/modules/component-store/src/component-store.d.ts","isDeprecated":false,"members":[{"kind":"Class","canonicalReference":"@ngrx/component-store!ComponentStore:class","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare class ComponentStore<T extends "},{"kind":"Content","text":"object"},{"kind":"Content","text":"> implements "},{"kind":"Reference","text":"OnDestroy","canonicalReference":"@angular/core!OnDestroy:interface"},{"kind":"Content","text":" "}],"fileUrlPath":"../../dist/modules/component-store/src/component-store.d.ts","releaseTag":"Public","typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"isAbstract":false,"name":"ComponentStore","preserveMemberOrder":false,"members":[{"kind":"Constructor","canonicalReference":"@ngrx/component-store!ComponentStore:constructor(1)","docComment":"/**\n * Constructs a new instance of the `ComponentStore` class\n */\n","excerptTokens":[{"kind":"Content","text":"constructor(defaultState?: "},{"kind":"Content","text":"T"},{"kind":"Content","text":");"}],"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"defaultState","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":true}],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Constructs a new instance of the `ComponentStore` class\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Property","canonicalReference":"@ngrx/component-store!ComponentStore#destroy$:member","docComment":"","excerptTokens":[{"kind":"Content","text":"readonly destroy$: "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<void>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"destroy$","propertyTypeTokenRange":{"startIndex":1,"endIndex":3},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/component-store!ComponentStore#effect:member(1)","docComment":"/**\n * Creates an effect.\n *\n * This effect is subscribed to throughout the lifecycle of the ComponentStore.\n *\n * @param generator - A function that takes an origin Observable input and returns an Observable. The Observable that is returned will be subscribed to for the life of the component.  @return A function that, when called, will trigger the origin Observable.\n */\n","excerptTokens":[{"kind":"Content","text":"effect<ProvidedType = "},{"kind":"Content","text":"void"},{"kind":"Content","text":", OriginType extends "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<ProvidedType> | unknown"},{"kind":"Content","text":" = "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<ProvidedType>"},{"kind":"Content","text":", ObservableType = "},{"kind":"Content","text":"OriginType extends "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<infer A> ? A : never"},{"kind":"Content","text":", ReturnType = "},{"kind":"Content","text":"ProvidedType | ObservableType extends void ? (observableOrValue?: ObservableType | "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<ObservableType>) => "},{"kind":"Reference","text":"Subscription","canonicalReference":"rxjs!Subscription:class"},{"kind":"Content","text":" : (observableOrValue: ObservableType | "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<ObservableType>) => "},{"kind":"Reference","text":"Subscription","canonicalReference":"rxjs!Subscription:class"},{"kind":"Content","text":">(generator: "},{"kind":"Content","text":"(origin$: OriginType) => "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<unknown>"},{"kind":"Content","text":"): "},{"kind":"Content","text":"ReturnType"},{"kind":"Content","text":";"}],"typeParameters":[{"typeParameterName":"ProvidedType","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":1,"endIndex":2}},{"typeParameterName":"OriginType","constraintTokenRange":{"startIndex":3,"endIndex":5},"defaultTypeTokenRange":{"startIndex":6,"endIndex":8}},{"typeParameterName":"ObservableType","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":9,"endIndex":12}},{"typeParameterName":"ReturnType","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":13,"endIndex":21}}],"isStatic":false,"returnTypeTokenRange":{"startIndex":26,"endIndex":27},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"generator","parameterTypeTokenRange":{"startIndex":22,"endIndex":25},"isOptional":false}],"isOptional":false,"isAbstract":false,"name":"effect","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Creates an effect.\n\nThis effect is subscribed to throughout the lifecycle of the ComponentStore.\n\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[{"name":"generator","description":"A function that takes an origin Observable input and returns an Observable. The Observable that is returned will be subscribed to for the life of the component.  @return A function that, when called, will trigger the origin Observable.\n"}]}},{"kind":"Method","canonicalReference":"@ngrx/component-store!ComponentStore#get:member(1)","docComment":"","excerptTokens":[{"kind":"Content","text":"protected get(): "},{"kind":"Content","text":"T"},{"kind":"Content","text":";"}],"isStatic":false,"returnTypeTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","isProtected":true,"overloadIndex":1,"parameters":[],"isOptional":false,"isAbstract":false,"name":"get","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/component-store!ComponentStore#get:member(2)","docComment":"","excerptTokens":[{"kind":"Content","text":"protected get<R>(projector: "},{"kind":"Content","text":"(s: T) => R"},{"kind":"Content","text":"): "},{"kind":"Content","text":"R"},{"kind":"Content","text":";"}],"typeParameters":[{"typeParameterName":"R","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"isStatic":false,"returnTypeTokenRange":{"startIndex":3,"endIndex":4},"releaseTag":"Public","isProtected":true,"overloadIndex":2,"parameters":[{"parameterName":"projector","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false}],"isOptional":false,"isAbstract":false,"name":"get","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/component-store!ComponentStore#ngOnDestroy:member(1)","docComment":"/**\n * Completes all relevant Observable streams.\n */\n","excerptTokens":[{"kind":"Content","text":"ngOnDestroy(): "},{"kind":"Content","text":"void"},{"kind":"Content","text":";"}],"isStatic":false,"returnTypeTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[],"isOptional":false,"isAbstract":false,"name":"ngOnDestroy","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Completes all relevant Observable streams.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/component-store!ComponentStore#patchState:member(1)","docComment":"/**\n * Patches the state with provided partial state.\n *\n * @param partialStateOrUpdaterFn - a partial state or a partial updater function that accepts the state and returns the partial state.\n *\n * @throws\n *\n * Error if the state is not initialized.\n */\n","excerptTokens":[{"kind":"Content","text":"patchState(partialStateOrUpdaterFn: "},{"kind":"Reference","text":"Partial","canonicalReference":"!Partial:type"},{"kind":"Content","text":"<T> | "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"Partial","canonicalReference":"!Partial:type"},{"kind":"Content","text":"<T>> | ((state: T) => "},{"kind":"Reference","text":"Partial","canonicalReference":"!Partial:type"},{"kind":"Content","text":"<T>)"},{"kind":"Content","text":"): "},{"kind":"Content","text":"void"},{"kind":"Content","text":";"}],"isStatic":false,"returnTypeTokenRange":{"startIndex":10,"endIndex":11},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"partialStateOrUpdaterFn","parameterTypeTokenRange":{"startIndex":1,"endIndex":9},"isOptional":false}],"isOptional":false,"isAbstract":false,"name":"patchState","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Patches the state with provided partial state.\n\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[{"name":"partialStateOrUpdaterFn","description":"a partial state or a partial updater function that accepts the state and returns the partial state.\n\n"}]}},{"kind":"Method","canonicalReference":"@ngrx/component-store!ComponentStore#select:member(1)","docComment":"/**\n * Creates a selector.\n *\n * @param projector - A pure projection function that takes the current state and returns some new slice/projection of that state.\n *\n * @param config - SelectConfig that changes the behavior of selector, including the debouncing of the values until the state is settled.  @return An observable of the projector results.\n */\n","excerptTokens":[{"kind":"Content","text":"select<Result>(projector: "},{"kind":"Content","text":"(s: T) => Result"},{"kind":"Content","text":", config?: "},{"kind":"Reference","text":"SelectConfig","canonicalReference":"@ngrx/component-store!SelectConfig:interface"},{"kind":"Content","text":"<Result>"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<Result>"},{"kind":"Content","text":";"}],"typeParameters":[{"typeParameterName":"Result","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"isStatic":false,"returnTypeTokenRange":{"startIndex":6,"endIndex":8},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"projector","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false},{"parameterName":"config","parameterTypeTokenRange":{"startIndex":3,"endIndex":5},"isOptional":true}],"isOptional":false,"isAbstract":false,"name":"select","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Creates a selector.\n\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[{"name":"projector","description":"A pure projection function that takes the current state and returns some new slice/projection of that state.\n\n"},{"name":"config","description":"SelectConfig that changes the behavior of selector, including the debouncing of the values until the state is settled.  @return An observable of the projector results.\n"}]}},{"kind":"Method","canonicalReference":"@ngrx/component-store!ComponentStore#select:member(2)","docComment":"","excerptTokens":[{"kind":"Content","text":"select<SelectorsObject extends "},{"kind":"Reference","text":"Record","canonicalReference":"!Record:type"},{"kind":"Content","text":"<string, "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<unknown>>"},{"kind":"Content","text":">(selectorsObject: "},{"kind":"Content","text":"SelectorsObject"},{"kind":"Content","text":", config?: "},{"kind":"Reference","text":"SelectConfig","canonicalReference":"@ngrx/component-store!SelectConfig:interface"},{"kind":"Content","text":"<{\n        [K in keyof SelectorsObject]: "},{"kind":"Reference","text":"ObservedValueOf","canonicalReference":"rxjs!ObservedValueOf:type"},{"kind":"Content","text":"<SelectorsObject[K]>;\n    }>"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<{\n        [K in keyof SelectorsObject]: "},{"kind":"Reference","text":"ObservedValueOf","canonicalReference":"rxjs!ObservedValueOf:type"},{"kind":"Content","text":"<SelectorsObject[K]>;\n    }>"},{"kind":"Content","text":";"}],"typeParameters":[{"typeParameterName":"SelectorsObject","constraintTokenRange":{"startIndex":1,"endIndex":5},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"isStatic":false,"returnTypeTokenRange":{"startIndex":13,"endIndex":17},"releaseTag":"Public","isProtected":false,"overloadIndex":2,"parameters":[{"parameterName":"selectorsObject","parameterTypeTokenRange":{"startIndex":6,"endIndex":7},"isOptional":false},{"parameterName":"config","parameterTypeTokenRange":{"startIndex":8,"endIndex":12},"isOptional":true}],"isOptional":false,"isAbstract":false,"name":"select","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/component-store!ComponentStore#select:member(3)","docComment":"","excerptTokens":[{"kind":"Content","text":"select<Selectors extends "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<unknown>[]"},{"kind":"Content","text":", Result>(...selectorsWithProjector: "},{"kind":"Content","text":"[\n        ...selectors: Selectors,\n        projector: "},{"kind":"Reference","text":"Projector","canonicalReference":"@ngrx/component-store!Projector:type"},{"kind":"Content","text":"<Selectors, Result>\n    ]"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<Result>"},{"kind":"Content","text":";"}],"typeParameters":[{"typeParameterName":"Selectors","constraintTokenRange":{"startIndex":1,"endIndex":3},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"Result","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"isStatic":false,"returnTypeTokenRange":{"startIndex":8,"endIndex":10},"releaseTag":"Public","isProtected":false,"overloadIndex":3,"parameters":[{"parameterName":"selectorsWithProjector","parameterTypeTokenRange":{"startIndex":4,"endIndex":7},"isOptional":false}],"isOptional":false,"isAbstract":false,"name":"select","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/component-store!ComponentStore#select:member(4)","docComment":"","excerptTokens":[{"kind":"Content","text":"select<Selectors extends "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<unknown>[]"},{"kind":"Content","text":", Result>(...selectorsWithProjectorAndConfig: "},{"kind":"Content","text":"[\n        ...selectors: Selectors,\n        projector: "},{"kind":"Reference","text":"Projector","canonicalReference":"@ngrx/component-store!Projector:type"},{"kind":"Content","text":"<Selectors, Result>,\n        config: "},{"kind":"Reference","text":"SelectConfig","canonicalReference":"@ngrx/component-store!SelectConfig:interface"},{"kind":"Content","text":"<Result>\n    ]"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<Result>"},{"kind":"Content","text":";"}],"typeParameters":[{"typeParameterName":"Selectors","constraintTokenRange":{"startIndex":1,"endIndex":3},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"Result","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"isStatic":false,"returnTypeTokenRange":{"startIndex":10,"endIndex":12},"releaseTag":"Public","isProtected":false,"overloadIndex":4,"parameters":[{"parameterName":"selectorsWithProjectorAndConfig","parameterTypeTokenRange":{"startIndex":4,"endIndex":9},"isOptional":false}],"isOptional":false,"isAbstract":false,"name":"select","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/component-store!ComponentStore#selectSignal:member(1)","docComment":"/**\n * Creates a signal from the provided state projector function.\n */\n","excerptTokens":[{"kind":"Content","text":"selectSignal<Result>(projector: "},{"kind":"Content","text":"(state: T) => Result"},{"kind":"Content","text":", options?: "},{"kind":"Reference","text":"SelectSignalOptions","canonicalReference":"@ngrx/component-store!~SelectSignalOptions:interface"},{"kind":"Content","text":"<Result>"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"Signal","canonicalReference":"@angular/core!Signal:type"},{"kind":"Content","text":"<Result>"},{"kind":"Content","text":";"}],"typeParameters":[{"typeParameterName":"Result","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"isStatic":false,"returnTypeTokenRange":{"startIndex":6,"endIndex":8},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"projector","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false},{"parameterName":"options","parameterTypeTokenRange":{"startIndex":3,"endIndex":5},"isOptional":true}],"isOptional":false,"isAbstract":false,"name":"selectSignal","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Creates a signal from the provided state projector function.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/component-store!ComponentStore#selectSignal:member(2)","docComment":"/**\n * Creates a signal by combining provided signals.\n */\n","excerptTokens":[{"kind":"Content","text":"selectSignal<Signals extends "},{"kind":"Reference","text":"Signal","canonicalReference":"@angular/core!Signal:type"},{"kind":"Content","text":"<unknown>[]"},{"kind":"Content","text":", Result>(...args: "},{"kind":"Content","text":"[...signals: Signals, projector: "},{"kind":"Reference","text":"SignalsProjector","canonicalReference":"@ngrx/component-store!~SignalsProjector:type"},{"kind":"Content","text":"<Signals, Result>]"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"Signal","canonicalReference":"@angular/core!Signal:type"},{"kind":"Content","text":"<Result>"},{"kind":"Content","text":";"}],"typeParameters":[{"typeParameterName":"Signals","constraintTokenRange":{"startIndex":1,"endIndex":3},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"Result","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"isStatic":false,"returnTypeTokenRange":{"startIndex":8,"endIndex":10},"releaseTag":"Public","isProtected":false,"overloadIndex":2,"parameters":[{"parameterName":"args","parameterTypeTokenRange":{"startIndex":4,"endIndex":7},"isOptional":false}],"isOptional":false,"isAbstract":false,"name":"selectSignal","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Creates a signal by combining provided signals.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/component-store!ComponentStore#selectSignal:member(3)","docComment":"/**\n * Creates a signal by combining provided signals.\n */\n","excerptTokens":[{"kind":"Content","text":"selectSignal<Signals extends "},{"kind":"Reference","text":"Signal","canonicalReference":"@angular/core!Signal:type"},{"kind":"Content","text":"<unknown>[]"},{"kind":"Content","text":", Result>(...args: "},{"kind":"Content","text":"[\n        ...signals: Signals,\n        projector: "},{"kind":"Reference","text":"SignalsProjector","canonicalReference":"@ngrx/component-store!~SignalsProjector:type"},{"kind":"Content","text":"<Signals, Result>,\n        options: "},{"kind":"Reference","text":"SelectSignalOptions","canonicalReference":"@ngrx/component-store!~SelectSignalOptions:interface"},{"kind":"Content","text":"<Result>\n    ]"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"Signal","canonicalReference":"@angular/core!Signal:type"},{"kind":"Content","text":"<Result>"},{"kind":"Content","text":";"}],"typeParameters":[{"typeParameterName":"Signals","constraintTokenRange":{"startIndex":1,"endIndex":3},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"Result","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"isStatic":false,"returnTypeTokenRange":{"startIndex":10,"endIndex":12},"releaseTag":"Public","isProtected":false,"overloadIndex":3,"parameters":[{"parameterName":"args","parameterTypeTokenRange":{"startIndex":4,"endIndex":9},"isOptional":false}],"isOptional":false,"isAbstract":false,"name":"selectSignal","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Creates a signal by combining provided signals.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/component-store!ComponentStore#setState:member(1)","docComment":"/**\n * Sets the state specific value.\n *\n * @param stateOrUpdaterFn - object of the same type as the state or an updaterFn, returning such object.\n */\n","excerptTokens":[{"kind":"Content","text":"setState(stateOrUpdaterFn: "},{"kind":"Content","text":"T | ((state: T) => T)"},{"kind":"Content","text":"): "},{"kind":"Content","text":"void"},{"kind":"Content","text":";"}],"isStatic":false,"returnTypeTokenRange":{"startIndex":3,"endIndex":4},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"stateOrUpdaterFn","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false}],"isOptional":false,"isAbstract":false,"name":"setState","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Sets the state specific value.\n\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[{"name":"stateOrUpdaterFn","description":"object of the same type as the state or an updaterFn, returning such object.\n"}]}},{"kind":"Property","canonicalReference":"@ngrx/component-store!ComponentStore#state:member","docComment":"","excerptTokens":[{"kind":"Content","text":"readonly state: "},{"kind":"Reference","text":"Signal","canonicalReference":"@angular/core!Signal:type"},{"kind":"Content","text":"<T>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"state","propertyTypeTokenRange":{"startIndex":1,"endIndex":3},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Property","canonicalReference":"@ngrx/component-store!ComponentStore#state$:member","docComment":"","excerptTokens":[{"kind":"Content","text":"readonly state$: "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T>"},{"kind":"Content","text":";"}],"isReadonly":true,"isOptional":false,"releaseTag":"Public","name":"state$","propertyTypeTokenRange":{"startIndex":1,"endIndex":3},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Method","canonicalReference":"@ngrx/component-store!ComponentStore#updater:member(1)","docComment":"/**\n * Creates an updater.\n *\n * Throws an error if updater is called with synchronous values (either imperative value or Observable that is synchronous) before ComponentStore is initialized. If called with async Observable before initialization then state will not be updated and subscription would be closed.\n *\n * @param updaterFn - A static updater function that takes 2 parameters (the current state and an argument object) and returns a new instance of the state.  @return A function that accepts one argument which is forwarded as the second argument to `updaterFn`. Every time this function is called subscribers will be notified of the state change.\n */\n","excerptTokens":[{"kind":"Content","text":"updater<ProvidedType = "},{"kind":"Content","text":"void"},{"kind":"Content","text":", OriginType = "},{"kind":"Content","text":"ProvidedType"},{"kind":"Content","text":", ValueType = "},{"kind":"Content","text":"OriginType"},{"kind":"Content","text":", ReturnType = "},{"kind":"Content","text":"OriginType extends void ? () => void : (observableOrValue: ValueType | "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<ValueType>) => "},{"kind":"Reference","text":"Subscription","canonicalReference":"rxjs!Subscription:class"},{"kind":"Content","text":">(updaterFn: "},{"kind":"Content","text":"(state: T, value: OriginType) => T"},{"kind":"Content","text":"): "},{"kind":"Content","text":"ReturnType"},{"kind":"Content","text":";"}],"typeParameters":[{"typeParameterName":"ProvidedType","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":1,"endIndex":2}},{"typeParameterName":"OriginType","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":3,"endIndex":4}},{"typeParameterName":"ValueType","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":5,"endIndex":6}},{"typeParameterName":"ReturnType","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":7,"endIndex":11}}],"isStatic":false,"returnTypeTokenRange":{"startIndex":14,"endIndex":15},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"updaterFn","parameterTypeTokenRange":{"startIndex":12,"endIndex":13},"isOptional":false}],"isOptional":false,"isAbstract":false,"name":"updater","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Creates an updater.\n\nThrows an error if updater is called with synchronous values (either imperative value or Observable that is synchronous) before ComponentStore is initialized. If called with async Observable before initialization then state will not be updated and subscription would be closed.\n\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[{"name":"updaterFn","description":"A static updater function that takes 2 parameters (the current state and an argument object) and returns a new instance of the state.  @return A function that accepts one argument which is forwarded as the second argument to `updaterFn`. Every time this function is called subscribers will be notified of the state change.\n"}]}}],"implementsTokenRanges":[{"startIndex":3,"endIndex":4}],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "ComponentStore",
+  "canonicalReference": "@ngrx/component-store!ComponentStore:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/component-store/src/component-store.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/component-store!ComponentStore:class",
+      "docComment": "/**\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class ComponentStore<T extends "
+        },
+        { "kind": "Content", "text": "object" },
+        { "kind": "Content", "text": "> implements " },
+        {
+          "kind": "Reference",
+          "text": "OnDestroy",
+          "canonicalReference": "@angular/core!OnDestroy:interface"
+        },
+        { "kind": "Content", "text": " " }
+      ],
+      "fileUrlPath": "../../dist/modules/component-store/src/component-store.d.ts",
+      "releaseTag": "Public",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+        }
+      ],
+      "isAbstract": false,
+      "name": "ComponentStore",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Constructor",
+          "canonicalReference": "@ngrx/component-store!ComponentStore:constructor(1)",
+          "docComment": "/**\n * Constructs a new instance of the `ComponentStore` class\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "constructor(defaultState?: " },
+            { "kind": "Content", "text": "T" },
+            { "kind": "Content", "text": ");" }
+          ],
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "defaultState",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": true
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Constructs a new instance of the `ComponentStore` class\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#destroy$:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly destroy$: " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<void>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "destroy$",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#effect:member(1)",
+          "docComment": "/**\n * Creates an effect.\n *\n * This effect is subscribed to throughout the lifecycle of the ComponentStore.\n *\n * @param generator - A function that takes an origin Observable input and returns an Observable. The Observable that is returned will be subscribed to for the life of the component.\n *\n * @returns A function that, when called, will trigger the origin Observable.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "effect<ProvidedType = " },
+            { "kind": "Content", "text": "void" },
+            { "kind": "Content", "text": ", OriginType extends " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<ProvidedType> | unknown" },
+            { "kind": "Content", "text": " = " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<ProvidedType>" },
+            { "kind": "Content", "text": ", ObservableType = " },
+            { "kind": "Content", "text": "OriginType extends " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<infer A> ? A : never" },
+            { "kind": "Content", "text": ", ReturnType = " },
+            {
+              "kind": "Content",
+              "text": "ProvidedType | ObservableType extends void ? (observableOrValue?: ObservableType | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<ObservableType>) => " },
+            {
+              "kind": "Reference",
+              "text": "Subscription",
+              "canonicalReference": "rxjs!Subscription:class"
+            },
+            {
+              "kind": "Content",
+              "text": " : (observableOrValue: ObservableType | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<ObservableType>) => " },
+            {
+              "kind": "Reference",
+              "text": "Subscription",
+              "canonicalReference": "rxjs!Subscription:class"
+            },
+            { "kind": "Content", "text": ">(generator: " },
+            { "kind": "Content", "text": "(origin$: OriginType) => " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<unknown>" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "ReturnType" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "ProvidedType",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 1, "endIndex": 2 }
+            },
+            {
+              "typeParameterName": "OriginType",
+              "constraintTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "defaultTypeTokenRange": { "startIndex": 6, "endIndex": 8 }
+            },
+            {
+              "typeParameterName": "ObservableType",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 9, "endIndex": 12 }
+            },
+            {
+              "typeParameterName": "ReturnType",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 13, "endIndex": 21 }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 26, "endIndex": 27 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "generator",
+              "parameterTypeTokenRange": { "startIndex": 22, "endIndex": 25 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "effect",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Creates an effect.\n\nThis effect is subscribed to throughout the lifecycle of the ComponentStore.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " A function that, when called, will trigger the origin Observable.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "generator",
+                "description": "A function that takes an origin Observable input and returns an Observable. The Observable that is returned will be subscribed to for the life of the component.\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#get:member(1)",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "protected get(): " },
+            { "kind": "Content", "text": "T" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "isProtected": true,
+          "overloadIndex": 1,
+          "parameters": [],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "get",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#get:member(2)",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "protected get<R>(projector: " },
+            { "kind": "Content", "text": "(s: T) => R" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "R" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "R",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "releaseTag": "Public",
+          "isProtected": true,
+          "overloadIndex": 2,
+          "parameters": [
+            {
+              "parameterName": "projector",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "get",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#ngOnDestroy:member(1)",
+          "docComment": "/**\n * Completes all relevant Observable streams.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "ngOnDestroy(): " },
+            { "kind": "Content", "text": "void" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "ngOnDestroy",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Completes all relevant Observable streams.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#patchState:member(1)",
+          "docComment": "/**\n * Patches the state with provided partial state.\n *\n * @param partialStateOrUpdaterFn - a partial state or a partial updater function that accepts the state and returns the partial state.\n *\n * @throws\n *\n * Error if the state is not initialized.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "patchState(partialStateOrUpdaterFn: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            { "kind": "Content", "text": "<T> | " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            { "kind": "Content", "text": "<T>> | ((state: T) => " },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            { "kind": "Content", "text": "<T>)" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "void" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 10, "endIndex": 11 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "partialStateOrUpdaterFn",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 9 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "patchState",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Patches the state with provided partial state.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "partialStateOrUpdaterFn",
+                "description": "a partial state or a partial updater function that accepts the state and returns the partial state.\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#select:member(1)",
+          "docComment": "/**\n * Creates a selector.\n *\n * @param projector - A pure projection function that takes the current state and returns some new slice/projection of that state.\n *\n * @param config - SelectConfig that changes the behavior of selector, including the debouncing of the values until the state is settled.\n *\n * @returns An observable of the projector results.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "select<Result>(projector: " },
+            { "kind": "Content", "text": "(s: T) => Result" },
+            { "kind": "Content", "text": ", config?: " },
+            {
+              "kind": "Reference",
+              "text": "SelectConfig",
+              "canonicalReference": "@ngrx/component-store!SelectConfig:interface"
+            },
+            { "kind": "Content", "text": "<Result>" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<Result>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "Result",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "projector",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "config",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "select",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Creates a selector.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " An observable of the projector results.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "projector",
+                "description": "A pure projection function that takes the current state and returns some new slice/projection of that state.\n\n"
+              },
+              {
+                "name": "config",
+                "description": "SelectConfig that changes the behavior of selector, including the debouncing of the values until the state is settled.\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#select:member(2)",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "select<SelectorsObject extends " },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            { "kind": "Content", "text": "<string, " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<unknown>>" },
+            { "kind": "Content", "text": ">(selectorsObject: " },
+            { "kind": "Content", "text": "SelectorsObject" },
+            { "kind": "Content", "text": ", config?: " },
+            {
+              "kind": "Reference",
+              "text": "SelectConfig",
+              "canonicalReference": "@ngrx/component-store!SelectConfig:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<{\n        [K in keyof SelectorsObject]: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ObservedValueOf",
+              "canonicalReference": "rxjs!ObservedValueOf:type"
+            },
+            { "kind": "Content", "text": "<SelectorsObject[K]>;\n    }>" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<{\n        [K in keyof SelectorsObject]: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ObservedValueOf",
+              "canonicalReference": "rxjs!ObservedValueOf:type"
+            },
+            { "kind": "Content", "text": "<SelectorsObject[K]>;\n    }>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "SelectorsObject",
+              "constraintTokenRange": { "startIndex": 1, "endIndex": 5 },
+              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 13, "endIndex": 17 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 2,
+          "parameters": [
+            {
+              "parameterName": "selectorsObject",
+              "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "config",
+              "parameterTypeTokenRange": { "startIndex": 8, "endIndex": 12 },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "select",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#select:member(3)",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "select<Selectors extends " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<unknown>[]" },
+            {
+              "kind": "Content",
+              "text": ", Result>(...selectorsWithProjector: "
+            },
+            {
+              "kind": "Content",
+              "text": "[\n        ...selectors: Selectors,\n        projector: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Projector",
+              "canonicalReference": "@ngrx/component-store!Projector:type"
+            },
+            { "kind": "Content", "text": "<Selectors, Result>\n    ]" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<Result>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "Selectors",
+              "constraintTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+            },
+            {
+              "typeParameterName": "Result",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 8, "endIndex": 10 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 3,
+          "parameters": [
+            {
+              "parameterName": "selectorsWithProjector",
+              "parameterTypeTokenRange": { "startIndex": 4, "endIndex": 7 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "select",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#select:member(4)",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "select<Selectors extends " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<unknown>[]" },
+            {
+              "kind": "Content",
+              "text": ", Result>(...selectorsWithProjectorAndConfig: "
+            },
+            {
+              "kind": "Content",
+              "text": "[\n        ...selectors: Selectors,\n        projector: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Projector",
+              "canonicalReference": "@ngrx/component-store!Projector:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<Selectors, Result>,\n        config: "
+            },
+            {
+              "kind": "Reference",
+              "text": "SelectConfig",
+              "canonicalReference": "@ngrx/component-store!SelectConfig:interface"
+            },
+            { "kind": "Content", "text": "<Result>\n    ]" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<Result>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "Selectors",
+              "constraintTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+            },
+            {
+              "typeParameterName": "Result",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 10, "endIndex": 12 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 4,
+          "parameters": [
+            {
+              "parameterName": "selectorsWithProjectorAndConfig",
+              "parameterTypeTokenRange": { "startIndex": 4, "endIndex": 9 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "select",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#selectSignal:member(1)",
+          "docComment": "/**\n * Creates a signal from the provided state projector function.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "selectSignal<Result>(projector: " },
+            { "kind": "Content", "text": "(state: T) => Result" },
+            { "kind": "Content", "text": ", options?: " },
+            {
+              "kind": "Reference",
+              "text": "SelectSignalOptions",
+              "canonicalReference": "@ngrx/component-store!~SelectSignalOptions:interface"
+            },
+            { "kind": "Content", "text": "<Result>" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Signal",
+              "canonicalReference": "@angular/core!Signal:type"
+            },
+            { "kind": "Content", "text": "<Result>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "Result",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "projector",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "selectSignal",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Creates a signal from the provided state projector function.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#selectSignal:member(2)",
+          "docComment": "/**\n * Creates a signal by combining provided signals.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "selectSignal<Signals extends " },
+            {
+              "kind": "Reference",
+              "text": "Signal",
+              "canonicalReference": "@angular/core!Signal:type"
+            },
+            { "kind": "Content", "text": "<unknown>[]" },
+            { "kind": "Content", "text": ", Result>(...args: " },
+            { "kind": "Content", "text": "[...signals: Signals, projector: " },
+            {
+              "kind": "Reference",
+              "text": "SignalsProjector",
+              "canonicalReference": "@ngrx/component-store!~SignalsProjector:type"
+            },
+            { "kind": "Content", "text": "<Signals, Result>]" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Signal",
+              "canonicalReference": "@angular/core!Signal:type"
+            },
+            { "kind": "Content", "text": "<Result>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "Signals",
+              "constraintTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+            },
+            {
+              "typeParameterName": "Result",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 8, "endIndex": 10 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 2,
+          "parameters": [
+            {
+              "parameterName": "args",
+              "parameterTypeTokenRange": { "startIndex": 4, "endIndex": 7 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "selectSignal",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Creates a signal by combining provided signals.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#selectSignal:member(3)",
+          "docComment": "/**\n * Creates a signal by combining provided signals.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "selectSignal<Signals extends " },
+            {
+              "kind": "Reference",
+              "text": "Signal",
+              "canonicalReference": "@angular/core!Signal:type"
+            },
+            { "kind": "Content", "text": "<unknown>[]" },
+            { "kind": "Content", "text": ", Result>(...args: " },
+            {
+              "kind": "Content",
+              "text": "[\n        ...signals: Signals,\n        projector: "
+            },
+            {
+              "kind": "Reference",
+              "text": "SignalsProjector",
+              "canonicalReference": "@ngrx/component-store!~SignalsProjector:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<Signals, Result>,\n        options: "
+            },
+            {
+              "kind": "Reference",
+              "text": "SelectSignalOptions",
+              "canonicalReference": "@ngrx/component-store!~SelectSignalOptions:interface"
+            },
+            { "kind": "Content", "text": "<Result>\n    ]" },
+            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Reference",
+              "text": "Signal",
+              "canonicalReference": "@angular/core!Signal:type"
+            },
+            { "kind": "Content", "text": "<Result>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "Signals",
+              "constraintTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+            },
+            {
+              "typeParameterName": "Result",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 10, "endIndex": 12 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 3,
+          "parameters": [
+            {
+              "parameterName": "args",
+              "parameterTypeTokenRange": { "startIndex": 4, "endIndex": 9 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "selectSignal",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Creates a signal by combining provided signals.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#setState:member(1)",
+          "docComment": "/**\n * Sets the state specific value.\n *\n * @param stateOrUpdaterFn - object of the same type as the state or an updaterFn, returning such object.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "setState(stateOrUpdaterFn: " },
+            { "kind": "Content", "text": "T | ((state: T) => T)" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "void" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "stateOrUpdaterFn",
+              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "setState",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Sets the state specific value.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "stateOrUpdaterFn",
+                "description": "object of the same type as the state or an updaterFn, returning such object.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#state:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly state: " },
+            {
+              "kind": "Reference",
+              "text": "Signal",
+              "canonicalReference": "@angular/core!Signal:type"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "state",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#state$:member",
+          "docComment": "",
+          "excerptTokens": [
+            { "kind": "Content", "text": "readonly state$: " },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<T>" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "state$",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/component-store!ComponentStore#updater:member(1)",
+          "docComment": "/**\n * Creates an updater.\n *\n * Throws an error if updater is called with synchronous values (either imperative value or Observable that is synchronous) before ComponentStore is initialized. If called with async Observable before initialization then state will not be updated and subscription would be closed.\n *\n * @param updaterFn - A static updater function that takes 2 parameters (the current state and an argument object) and returns a new instance of the state.\n *\n * @returns A function that accepts one argument which is forwarded as the second argument to `updaterFn`. Every time this function is called subscribers will be notified of the state change.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "updater<ProvidedType = " },
+            { "kind": "Content", "text": "void" },
+            { "kind": "Content", "text": ", OriginType = " },
+            { "kind": "Content", "text": "ProvidedType" },
+            { "kind": "Content", "text": ", ValueType = " },
+            { "kind": "Content", "text": "OriginType" },
+            { "kind": "Content", "text": ", ReturnType = " },
+            {
+              "kind": "Content",
+              "text": "OriginType extends void ? () => void : (observableOrValue: ValueType | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            { "kind": "Content", "text": "<ValueType>) => " },
+            {
+              "kind": "Reference",
+              "text": "Subscription",
+              "canonicalReference": "rxjs!Subscription:class"
+            },
+            { "kind": "Content", "text": ">(updaterFn: " },
+            { "kind": "Content", "text": "(state: T, value: OriginType) => T" },
+            { "kind": "Content", "text": "): " },
+            { "kind": "Content", "text": "ReturnType" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "ProvidedType",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 1, "endIndex": 2 }
+            },
+            {
+              "typeParameterName": "OriginType",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 3, "endIndex": 4 }
+            },
+            {
+              "typeParameterName": "ValueType",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 5, "endIndex": 6 }
+            },
+            {
+              "typeParameterName": "ReturnType",
+              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
+              "defaultTypeTokenRange": { "startIndex": 7, "endIndex": 11 }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": { "startIndex": 14, "endIndex": 15 },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "updaterFn",
+              "parameterTypeTokenRange": { "startIndex": 12, "endIndex": 13 },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "updater",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Creates an updater.\n\nThrows an error if updater is called with synchronous values (either imperative value or Observable that is synchronous) before ComponentStore is initialized. If called with async Observable before initialization then state will not be updated and subscription would be closed.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " A function that accepts one argument which is forwarded as the second argument to `updaterFn`. Every time this function is called subscribers will be notified of the state change.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "updaterFn",
+                "description": "A static updater function that takes 2 parameters (the current state and an argument object) and returns a new instance of the state.\n\n"
+              }
+            ]
+          }
+        }
+      ],
+      "implementsTokenRanges": [{ "startIndex": 3, "endIndex": 4 }],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

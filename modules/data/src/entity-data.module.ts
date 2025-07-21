@@ -10,6 +10,8 @@ import {
  * entity-data main module includes effects and HTTP data services
  * Configure with `forRoot`.
  * No `forFeature` yet.
+ *
+ * @public
  */
 @NgModule({
   imports: [EntityDataModuleWithoutEffects],

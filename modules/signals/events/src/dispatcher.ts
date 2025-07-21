@@ -5,11 +5,9 @@ import { Events, EVENTS, ReducerEvents } from './events-service';
 
 /**
  * @experimental
- * @description
- *
  * Globally provided service for dispatching events.
  *
- * @usageNotes
+ * @example
  *
  * ```ts
  * import { Dispatcher, event } from '@ngrx/signals/events';

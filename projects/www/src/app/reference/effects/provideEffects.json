@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/effects!provideEffects:function(1)",
-      "docComment": "/**\n * Runs the provided effects. Can be called at the root and feature levels.\n */\n",
+      "docComment": "/**\n * Runs the provided effects. Can be called at the root and feature levels.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -61,13 +61,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Runs the provided effects. Can be called at the root and feature levels.\n",
+        "summary": "Runs the provided effects. Can be called at the root and feature levels.\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
@@ -79,7 +79,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/effects!provideEffects:function(2)",
-      "docComment": "/**\n * Runs the provided effects. Can be called at the root and feature levels.\n */\n",
+      "docComment": "/**\n * Runs the provided effects. Can be called at the root and feature levels.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -132,13 +132,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Runs the provided effects. Can be called at the root and feature levels.\n",
+        "summary": "Runs the provided effects. Can be called at the root and feature levels.\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

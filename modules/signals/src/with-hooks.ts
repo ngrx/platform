@@ -28,14 +28,33 @@ type HooksFactory<Input extends SignalStoreFeatureResult> = (
   onDestroy?: () => void;
 };
 
+/**
+ * Adds lifecycle hooks to a signal store.
+ *
+ * @param hooks - Static hooks configuration.
+ * @returns A signal store feature that adds the hooks.
+ *
+ * @public
+ */
 export function withHooks<Input extends SignalStoreFeatureResult>(hooks: {
   onInit?: HookFn<Input>;
   onDestroy?: HookFn<Input>;
 }): SignalStoreFeature<Input, EmptyFeatureResult>;
+/**
+ * Adds lifecycle hooks to a signal store using a factory function.
+ *
+ * @param hooks - Factory function that creates hooks.
+ * @returns A signal store feature that adds the hooks.
+ *
+ * @public
+ */
 export function withHooks<Input extends SignalStoreFeatureResult>(
   hooks: HooksFactory<Input>
 ): SignalStoreFeature<Input, EmptyFeatureResult>;
 
+/**
+ * @public
+ */
 export function withHooks<Input extends SignalStoreFeatureResult>(
   hooksOrFactory:
     | {

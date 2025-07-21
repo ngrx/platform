@@ -22,7 +22,8 @@ import { EntityMetadata } from '../entity-metadata/entity-metadata';
 /**
  * The selector functions for entity collection members,
  * Selects from the entity collection to the collection member
- * Contrast with {EntitySelectors}.
+ * Contrast with \{EntitySelectors\}.
+ * @public
  */
 export interface CollectionSelectors<T> {
   readonly [selector: string]: any;
@@ -58,7 +59,8 @@ export interface CollectionSelectors<T> {
 /**
  * The selector functions for entity collection members,
  * Selects from store root, through EntityCache, to the entity collection member
- * Contrast with {CollectionSelectors}.
+ * Contrast with \{CollectionSelectors\}.
+ * @public
  */
 export interface EntitySelectors<T> {
   /** Name of the entity collection for these selectors */
@@ -100,7 +102,10 @@ export interface EntitySelectors<T> {
   readonly selectChangeState: MemoizedSelector<Object, ChangeStateMap<T>>;
 }
 
-/** Creates EntitySelector functions for entity collections. */
+/**
+ * Creates EntitySelector functions for entity collections.
+ * @public
+ */
 @Injectable()
 export class EntitySelectorsFactory {
   private entityCollectionCreator: EntityCollectionCreator;
@@ -121,7 +126,7 @@ export class EntitySelectorsFactory {
   /**
    * Create the NgRx selector from the store root to the named collection,
    * e.g. from Object to Heroes.
-   * @param entityName the name of the collection
+   * @param entityName - the name of the collection
    */
   createCollectionSelector<
     T = any,
@@ -234,7 +239,7 @@ export class EntitySelectorsFactory {
   // create(metadata) overload
   /**
    * Creates the store-rooted selectors for an entity collection.
-   * {EntitySelectors$Factory} turns them into selectors$.
+   * \{EntitySelectors$Factory\} turns them into selectors$.
    *
    * @param metadata - EntityMetadata for the collection.
    * May be partial but much have `entityName`.
@@ -250,7 +255,7 @@ export class EntitySelectorsFactory {
   // create(entityName) overload
   /**
    * Creates the default store-rooted selectors for an entity collection.
-   * {EntitySelectors$Factory} turns them into selectors$.
+   * \{EntitySelectors$Factory\} turns them into selectors$.
    * Use the metadata overload for additional collection selectors.
    *
    * @param entityName - name of the entity type.

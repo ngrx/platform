@@ -12,12 +12,26 @@ import {
 
 declare const ngDevMode: unknown;
 
+/**
+ * A signal method function type that can process input values and manage effects.
+ *
+ * @public
+ */
 export type SignalMethod<Input> = ((
   input: Input | Signal<Input>,
   config?: { injector?: Injector }
 ) => EffectRef) &
   EffectRef;
 
+/**
+ * Creates a signal method that can process input values reactively.
+ *
+ * @param processingFn - The function to process input values.
+ * @param config - Optional configuration with injector.
+ * @returns A signal method function.
+ *
+ * @public
+ */
 export function signalMethod<Input>(
   processingFn: (value: Input) => void,
   config?: { injector?: Injector }

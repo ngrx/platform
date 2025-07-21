@@ -11,7 +11,10 @@ import {
   EntitySelectors$Factory,
 } from '../selectors/entity-selectors$';
 
-/** Core ingredients of an EntityCollectionService */
+/**
+ * Core ingredients of an EntityCollectionService
+ * @public
+ */
 export interface EntityCollectionServiceElements<
   T,
   S$ extends EntitySelectors$<T> = EntitySelectors$<T>
@@ -22,7 +25,10 @@ export interface EntityCollectionServiceElements<
   readonly selectors$: S$;
 }
 
-/** Creates the core elements of the EntityCollectionService for an entity type. */
+/**
+ * Creates the core elements of the EntityCollectionService for an entity type.
+ * @public
+ */
 @Injectable()
 export class EntityCollectionServiceElementsFactory {
   constructor(

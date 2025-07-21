@@ -20,11 +20,9 @@ type InjectDispatchResult<
 
 /**
  * @experimental
- * @description
- *
  * Creates self-dispatching events for a given event group.
  *
- * @usageNotes
+ * @example
  *
  * ```ts
  * import { type } from '@ngrx/signals';

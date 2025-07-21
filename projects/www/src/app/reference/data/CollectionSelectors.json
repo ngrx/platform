@@ -8,7 +8,7 @@
     {
       "kind": "Interface",
       "canonicalReference": "@ngrx/data!CollectionSelectors:interface",
-      "docComment": "/**\n * The selector functions for entity collection members, Selects from the entity collection to the collection member Contrast with {EntitySelectors}.\n */\n",
+      "docComment": "/**\n * The selector functions for entity collection members, Selects from the entity collection to the collection member Contrast with \\{EntitySelectors\\}.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -471,13 +471,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "The selector functions for entity collection members, Selects from the entity collection to the collection member Contrast with {EntitySelectors}.\n",
+        "summary": "The selector functions for entity collection members, Selects from the entity collection to the collection member Contrast with \\{EntitySelectors\\}.\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

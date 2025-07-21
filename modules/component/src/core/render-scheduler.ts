@@ -5,7 +5,7 @@ import { TickScheduler } from './tick-scheduler';
  * Provides rendering functionality regardless of whether `zone.js` is present
  * or not. It must be provided at the component/directive level.
  *
- * @usageNotes
+ * @example
  *
  * ### Rerender zone-less app on route changes
  *
@@ -54,6 +54,8 @@ import { TickScheduler } from './tick-scheduler';
  *   }
  * }
  * ```
+ *
+ * @public
  */
 @Injectable()
 export class RenderScheduler {
@@ -72,6 +74,13 @@ export class RenderScheduler {
   }
 }
 
+/**
+ * Creates a render scheduler instance.
+ *
+ * @returns A new render scheduler instance.
+ *
+ * @public
+ */
 export function createRenderScheduler(): RenderScheduler {
   return new RenderScheduler(inject(ChangeDetectorRef), inject(TickScheduler));
 }

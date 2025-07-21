@@ -3,6 +3,7 @@ import { EntityHttpResourceUrls } from './http-url-generator';
 /**
  * Optional configuration settings for an entity collection data service
  * such as the `DefaultDataService<T>`.
+ * @public
  */
 export abstract class DefaultDataServiceConfig {
   /**

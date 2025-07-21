@@ -7,6 +7,9 @@ import {
   MemoizedSelector,
 } from './selector';
 
+/**
+ * @public
+ */
 export interface FeatureConfig<FeatureName extends string, FeatureState> {
   name: FeatureName;
   reducer: ActionReducer<FeatureState>;
@@ -75,11 +78,13 @@ type NotAllowedFeatureStateCheck<FeatureState> =
 /**
  * Creates a feature object with extra selectors.
  *
- * @param featureConfig An object that contains a feature name, a feature
+ * @param featureConfig - An object that contains a feature name, a feature
  * reducer, and extra selectors factory.
  * @returns An object that contains a feature name, a feature reducer,
  * a feature selector, a selector for each feature state property, and
  * extra selectors.
+ *
+ * @public
  */
 export function createFeature<
   FeatureName extends string,
@@ -99,29 +104,30 @@ export function createFeature<
 /**
  * Creates a feature object.
  *
- * @param featureConfig An object that contains a feature name and a feature
+ * @param featureConfig - An object that contains a feature name and a feature
  * reducer.
  * @returns An object that contains a feature name, a feature reducer,
  * a feature selector, and a selector for each feature state property.
+ *
+ * @public
  */
 export function createFeature<FeatureName extends string, FeatureState>(
   featureConfig: FeatureConfig<FeatureName, FeatureState> &
     NotAllowedFeatureStateCheck<FeatureState>
 ): Prettify<Feature<FeatureName, FeatureState>>;
 /**
- * @description
  * A function that accepts a feature name and a feature reducer, and creates
  * a feature selector and a selector for each feature state property.
  * This function also provides the ability to add extra selectors to
  * the feature object.
  *
- * @param featureConfig An object that contains a feature name and a feature
+ * @param featureConfig - An object that contains a feature name and a feature
  * reducer as required, and extra selectors factory as an optional argument.
  * @returns An object that contains a feature name, a feature reducer,
  * a feature selector, a selector for each feature state property, and extra
  * selectors.
  *
- * @usageNotes
+ * @example
  *
  * ```ts
  * interface ProductsState {
@@ -197,6 +203,8 @@ export function createFeature<FeatureName extends string, FeatureState>(
  *   selectError,
  * } = productsFeature;
  * ```
+ *
+ * @public
  */
 export function createFeature<
   FeatureName extends string,

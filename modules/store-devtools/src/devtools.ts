@@ -41,6 +41,9 @@ import { DevtoolsDispatcher } from './devtools-dispatcher';
 import { PERFORM_ACTION } from './actions';
 import { ZoneConfig, injectZoneConfig } from './zone-config';
 
+/**
+ * @public
+ */
 @Injectable()
 export class StoreDevtools implements Observer<any>, OnDestroy {
   private liftedStateSubscription: Subscription;

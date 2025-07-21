@@ -8,19 +8,46 @@ import {
 import { SerializedRouterStateSnapshot } from './serializers/full_serializer';
 import { MinimalRouterStateSerializer } from './serializers/minimal_serializer';
 
+/**
+ * A type representing either a state key string or a selector function.
+ *
+ * @public
+ */
 export type StateKeyOrSelector<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot
 > = string | Selector<any, RouterReducerState<T>>;
 
+/**
+ * Defines when navigation actions should be dispatched.
+ *
+ * @public
+ */
 export enum NavigationActionTiming {
   PreActivation = 1,
   PostActivation = 2,
 }
+
+/**
+ * The default feature name for the router store.
+ *
+ * @public
+ */
 export const DEFAULT_ROUTER_FEATURENAME = 'router';
 
+/**
+ * Internal injection token for router store configuration.
+ *
+ * @public
+ */
 export const _ROUTER_CONFIG = new InjectionToken(
   '@ngrx/router-store Internal Configuration'
 );
+
+/**
+ * Injection token for router store configuration.
+ *
+ * @public
+ */
 export const ROUTER_CONFIG = new InjectionToken(
   '@ngrx/router-store Configuration'
 );
@@ -28,12 +55,22 @@ export const ROUTER_CONFIG = new InjectionToken(
 /**
  * Minimal = Serializes the router event with MinimalRouterStateSerializer
  * Full = Serializes the router event with FullRouterStateSerializer
+ *
+ * @public
  */
 export enum RouterState {
   Full,
   Minimal,
 }
 
+/**
+ * Creates router configuration with default values.
+ *
+ * @param config - The configuration to merge with defaults.
+ * @returns The complete router configuration.
+ *
+ * @public
+ */
 export function _createRouterConfig(
   config: StoreRouterConfig
 ): StoreRouterConfig {
@@ -45,6 +82,11 @@ export function _createRouterConfig(
   };
 }
 
+/**
+ * Configuration interface for the router store.
+ *
+ * @public
+ */
 export interface StoreRouterConfig<
   T extends BaseRouterStoreState = SerializedRouterStateSnapshot
 > {
@@ -59,7 +101,7 @@ export interface StoreRouterConfig<
    */
   navigationActionTiming?: NavigationActionTiming;
   /**
-   * Decides which router serializer should be used, if there is none provided, and the metadata on the dispatched @ngrx/router-store action payload.
+   * Decides which router serializer should be used, if there is none provided, and the metadata on the dispatched \@ngrx/router-store action payload.
    * Set to `Minimal` to use the `MinimalRouterStateSerializer` and to set a minimal router event with the navigation id and url as payload.
    * Set to `Full` to use the `FullRouterStateSerializer` and to set the angular router events as payload.
    */

@@ -7,13 +7,11 @@ import { createRenderEventManager } from '../core/render-event/manager';
 type PushPipeResult<PO> = PotentialObservableResult<PO, undefined>;
 
 /**
- * @description
- *
  * The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.
  * It contains intelligent handling of change detection to enable us
  * running in zone-full as well as zone-less mode without any changes to the code.
  *
- * @usageNotes
+ * @example
  *
  * ### Displaying Observable Values
  *
@@ -33,7 +31,7 @@ type PushPipeResult<PO> = PotentialObservableResult<PO, undefined>;
  * </code>
  * ```
  *
- * @publicApi
+ * @public
  */
 @Pipe({
   name: 'ngrxPush',

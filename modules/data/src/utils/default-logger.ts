@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Logger } from './interfaces';
 
+/**
+ * @public
+ */
 @Injectable()
 export class DefaultLogger implements Logger {
   error(message?: any, extra?: any) {

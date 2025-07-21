@@ -1,1 +1,41 @@
-{"name":"ROUTER_NAVIGATION","canonicalReference":"@ngrx/router-store!ROUTER_NAVIGATION:var","kind":"Variable","fileUrlPath":"../../dist/modules/router-store/src/actions.d.ts","isDeprecated":false,"members":[{"kind":"Variable","canonicalReference":"@ngrx/router-store!ROUTER_NAVIGATION:var","docComment":"/**\n * An action dispatched when the router navigates.\n */\n","excerptTokens":[{"kind":"Content","text":"ROUTER_NAVIGATION = "},{"kind":"Content","text":"\"@ngrx/router-store/navigation\""}],"fileUrlPath":"../../dist/modules/router-store/src/actions.d.ts","initializerTokenRange":{"startIndex":1,"endIndex":2},"isReadonly":true,"releaseTag":"Public","name":"ROUTER_NAVIGATION","variableTypeTokenRange":{"startIndex":0,"endIndex":0},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"An action dispatched when the router navigates.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "ROUTER_NAVIGATION",
+  "canonicalReference": "@ngrx/router-store!ROUTER_NAVIGATION:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/router-store!ROUTER_NAVIGATION:var",
+      "docComment": "/**\n * An action dispatched when the router navigates.\n *\n * @public\n */\n",
+      "excerptTokens": [
+        { "kind": "Content", "text": "ROUTER_NAVIGATION = " },
+        { "kind": "Content", "text": "\"@ngrx/router-store/navigation\"" }
+      ],
+      "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+      "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "ROUTER_NAVIGATION",
+      "variableTypeTokenRange": { "startIndex": 0, "endIndex": 0 },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "An action dispatched when the router navigates.\n\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

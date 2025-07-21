@@ -3,7 +3,6 @@ import { EffectNotification } from '.';
 import { Action } from '@ngrx/store';
 
 /**
- * @description
  * Interface to set an identifier for effect instances.
  *
  * By default, each Effects class is registered
@@ -12,7 +11,7 @@ import { Action } from '@ngrx/store';
  * a unique identifier to register an Effects class instance
  * multiple times.
  *
- * @usageNotes
+ * @example
  *
  * ### Set an identifier for an Effects class
  *
@@ -25,18 +24,25 @@ import { Action } from '@ngrx/store';
  *  }
  *
  * ```
+ *
+ * @public
  */
 export declare interface OnIdentifyEffects {
   /**
-   * @description
    * String identifier to differentiate effect instances.
    */
   ngrxOnIdentifyEffects(): string;
 }
 
+/**
+ * @public
+ */
 export const onIdentifyEffectsKey: keyof OnIdentifyEffects =
   'ngrxOnIdentifyEffects';
 
+/**
+ * @public
+ */
 export function isOnIdentifyEffects(
   instance: any
 ): instance is OnIdentifyEffects {
@@ -44,12 +50,11 @@ export function isOnIdentifyEffects(
 }
 
 /**
- * @description
  * Interface to control the lifecycle of effects.
  *
  * By default, effects are merged and subscribed to the store. Implement the OnRunEffects interface to control the lifecycle of the resolved effects.
  *
- * @usageNotes
+ * @example
  *
  * ### Implement the OnRunEffects interface on an Effects class
  *
@@ -69,10 +74,11 @@ export function isOnIdentifyEffects(
  *   }
  * }
  * ```
+ *
+ * @public
  */
 export declare interface OnRunEffects {
   /**
-   * @description
    * Method to control the lifecycle of effects.
    */
   ngrxOnRunEffects(
@@ -80,14 +86,19 @@ export declare interface OnRunEffects {
   ): Observable<EffectNotification>;
 }
 
+/**
+ * @public
+ */
 export const onRunEffectsKey: keyof OnRunEffects = 'ngrxOnRunEffects';
 
+/**
+ * @public
+ */
 export function isOnRunEffects(instance: any): instance is OnRunEffects {
   return isFunction(instance, onRunEffectsKey);
 }
 
 /**
- * @description
  * Interface to dispatch an action after effect registration.
  *
  * Implement this interface to dispatch a custom action after
@@ -95,7 +106,7 @@ export function isOnRunEffects(instance: any): instance is OnRunEffects {
  * in the rest of the application to execute something after
  * the effect is registered.
  *
- * @usageNotes
+ * @example
  *
  * ### Set an identifier for an Effects class
  *
@@ -105,17 +116,24 @@ export function isOnRunEffects(instance: any): instance is OnRunEffects {
  *    return { type: '[EffectWithInitAction] Init' };
  *  }
  * ```
+ *
+ * @public
  */
 export declare interface OnInitEffects {
   /**
-   * @description
    * Action to be dispatched after the effect is registered.
    */
   ngrxOnInitEffects(): Action;
 }
 
+/**
+ * @public
+ */
 export const onInitEffects: keyof OnInitEffects = 'ngrxOnInitEffects';
 
+/**
+ * @public
+ */
 export function isOnInitEffects(instance: any): instance is OnInitEffects {
   return isFunction(instance, onInitEffects);
 }

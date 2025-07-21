@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals!withMethods:function(1)",
-      "docComment": "",
+      "docComment": "/**\n * Adds methods to a signal store.\n *\n * @param methodsFactory - A factory function that creates methods for the store.\n *\n * @returns A signal store feature that adds the methods.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -47,13 +47,7 @@
           "text": "WritableStateSource",
           "canonicalReference": "@ngrx/signals!WritableStateSource:type"
         },
-        { "kind": "Content", "text": "<" },
-        {
-          "kind": "Reference",
-          "text": "Prettify",
-          "canonicalReference": "@ngrx/signals!Prettify:type"
-        },
-        { "kind": "Content", "text": "<Input['state']>>>) => Methods" },
+        { "kind": "Content", "text": "<Input['state']>>) => Methods" },
         { "kind": "Content", "text": "): " },
         {
           "kind": "Reference",
@@ -67,13 +61,13 @@
         { "kind": "Content", "text": ";" }
       ],
       "fileUrlPath": "../../dist/modules/signals/src/with-methods.d.ts",
-      "returnTypeTokenRange": { "startIndex": 15, "endIndex": 17 },
+      "returnTypeTokenRange": { "startIndex": 13, "endIndex": 15 },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [
         {
           "parameterName": "methodsFactory",
-          "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 14 },
+          "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 12 },
           "isOptional": false
         }
       ],
@@ -93,19 +87,24 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "Adds methods to a signal store.\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
-        "returns": "",
+        "returns": " A signal store feature that adds the methods.\n\n\n",
         "see": [],
-        "params": []
+        "params": [
+          {
+            "name": "methodsFactory",
+            "description": "A factory function that creates methods for the store.\n\n"
+          }
+        ]
       }
     }
   ]

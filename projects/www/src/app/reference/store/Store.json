@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/store!Store:class",
-      "docComment": "",
+      "docComment": "/**\n * Store is an injectable service that provides reactive state management and a public API for dispatching actions.\n *\n * @example\n *\n * In a component:\n * ```ts\n * import { Component, inject } from '@angular/core';\n * import { Store } from '@ngrx/store';\n *\n * @Component({\n *  selector: 'app-my-component',\n *  template: `\n *    <div>{{ count() }}</div>\n *    <button (click)=\"increment()\">Increment</button>\n *  `\n * })\n * export class MyComponent {\n *   private store = inject(Store);\n *\n *   count = this.store.selectSignal(state => state.count);\n *\n *   increment() {\n *     this.store.dispatch({ type: 'INCREMENT' });\n *   }\n * }\n * ```\n *\n * @public\n */\n",
       "excerptTokens": [
         { "kind": "Content", "text": "export declare class Store<T = " },
         { "kind": "Content", "text": "object" },
@@ -652,7 +652,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/store!Store#select:member(2)",
-          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n */\n",
+          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n *\n * @public\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "select<K, Props = " },
             { "kind": "Content", "text": "any" },
@@ -704,7 +704,7 @@
           "docs": {
             "modifiers": {
               "isInternal": false,
-              "isPublic": false,
+              "isPublic": true,
               "isAlpha": false,
               "isBeta": false,
               "isOverride": false,
@@ -713,7 +713,7 @@
             "summary": "",
             "usageNotes": "",
             "remarks": "",
-            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n",
+            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n\n\n",
             "returns": "",
             "see": [],
             "params": []
@@ -722,7 +722,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/store!Store#select:member(3)",
-          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n */\n",
+          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n *\n * @public\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "select<a extends " },
             { "kind": "Content", "text": "keyof T" },
@@ -762,7 +762,7 @@
           "docs": {
             "modifiers": {
               "isInternal": false,
-              "isPublic": false,
+              "isPublic": true,
               "isAlpha": false,
               "isBeta": false,
               "isOverride": false,
@@ -771,7 +771,7 @@
             "summary": "",
             "usageNotes": "",
             "remarks": "",
-            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n",
+            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n\n\n",
             "returns": "",
             "see": [],
             "params": []
@@ -780,7 +780,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/store!Store#select:member(4)",
-          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n */\n",
+          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n *\n * @public\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "select<a extends " },
             { "kind": "Content", "text": "keyof T" },
@@ -834,7 +834,7 @@
           "docs": {
             "modifiers": {
               "isInternal": false,
-              "isPublic": false,
+              "isPublic": true,
               "isAlpha": false,
               "isBeta": false,
               "isOverride": false,
@@ -843,7 +843,7 @@
             "summary": "",
             "usageNotes": "",
             "remarks": "",
-            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n",
+            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n\n\n",
             "returns": "",
             "see": [],
             "params": []
@@ -852,7 +852,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/store!Store#select:member(5)",
-          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n */\n",
+          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n *\n * @public\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "select<a extends " },
             { "kind": "Content", "text": "keyof T" },
@@ -920,7 +920,7 @@
           "docs": {
             "modifiers": {
               "isInternal": false,
-              "isPublic": false,
+              "isPublic": true,
               "isAlpha": false,
               "isBeta": false,
               "isOverride": false,
@@ -929,7 +929,7 @@
             "summary": "",
             "usageNotes": "",
             "remarks": "",
-            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n",
+            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n\n\n",
             "returns": "",
             "see": [],
             "params": []
@@ -938,7 +938,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/store!Store#select:member(6)",
-          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n */\n",
+          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n *\n * @public\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "select<a extends " },
             { "kind": "Content", "text": "keyof T" },
@@ -1020,7 +1020,7 @@
           "docs": {
             "modifiers": {
               "isInternal": false,
-              "isPublic": false,
+              "isPublic": true,
               "isAlpha": false,
               "isBeta": false,
               "isOverride": false,
@@ -1029,7 +1029,7 @@
             "summary": "",
             "usageNotes": "",
             "remarks": "",
-            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n",
+            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n\n\n",
             "returns": "",
             "see": [],
             "params": []
@@ -1038,7 +1038,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/store!Store#select:member(7)",
-          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n */\n",
+          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n *\n * @public\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "select<a extends " },
             { "kind": "Content", "text": "keyof T" },
@@ -1134,7 +1134,7 @@
           "docs": {
             "modifiers": {
               "isInternal": false,
-              "isPublic": false,
+              "isPublic": true,
               "isAlpha": false,
               "isBeta": false,
               "isOverride": false,
@@ -1143,7 +1143,7 @@
             "summary": "",
             "usageNotes": "",
             "remarks": "",
-            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n",
+            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n\n\n",
             "returns": "",
             "see": [],
             "params": []
@@ -1152,7 +1152,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/store!Store#select:member(8)",
-          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n */\n",
+          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n *\n * @public\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "select<a extends " },
             { "kind": "Content", "text": "keyof T" },
@@ -1262,7 +1262,7 @@
           "docs": {
             "modifiers": {
               "isInternal": false,
-              "isPublic": false,
+              "isPublic": true,
               "isAlpha": false,
               "isBeta": false,
               "isOverride": false,
@@ -1271,7 +1271,7 @@
             "summary": "",
             "usageNotes": "",
             "remarks": "",
-            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n",
+            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n\n\n",
             "returns": "",
             "see": [],
             "params": []
@@ -1280,7 +1280,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/store!Store#select:member(9)",
-          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n */\n",
+          "docComment": "/**\n * @deprecated\n *\n * Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n *\n * @public\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "select<a extends " },
             { "kind": "Content", "text": "keyof T" },
@@ -1404,7 +1404,7 @@
           "docs": {
             "modifiers": {
               "isInternal": false,
-              "isPublic": false,
+              "isPublic": true,
               "isAlpha": false,
               "isBeta": false,
               "isOverride": false,
@@ -1413,7 +1413,7 @@
             "summary": "",
             "usageNotes": "",
             "remarks": "",
-            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}\n",
+            "deprecated": "\n\nSelectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 | Github Issue}\n\n\n",
             "returns": "",
             "see": [],
             "params": []
@@ -1422,7 +1422,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/store!Store#selectSignal:member(1)",
-          "docComment": "/**\n * Returns a signal of the provided selector.\n *\n * @param selector - selector function\n *\n * @param options - select signal options\n *\n * @returns Signal of the state selected by the provided selector  @usageNotes\n * ```ts\n * const count = this.store.selectSignal(state => state.count);\n * ```\n *\n * Or with a selector created by @ngrx/store!createSelector:function\n * ```ts\n * const selectCount = createSelector(\n *  (state: State) => state.count,\n * );\n *\n * const count = this.store.selectSignal(selectCount);\n * ```\n *\n */\n",
+          "docComment": "/**\n * Returns a signal of the provided selector.\n *\n * @param selector - selector function\n *\n * @param options - select signal options\n *\n * @returns Signal of the state selected by the provided selector\n *\n * @example\n * ```ts\n * const count = this.store.selectSignal(state => state.count);\n * ```\n *\n * Or with a selector created by \\@ngrx/store!createSelector:function\n * ```ts\n * const selectCount = createSelector(\n *  (state: State) => state.count,\n * );\n *\n * const count = this.store.selectSignal(selectCount);\n * ```\n *\n * @public\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "selectSignal<K>(selector: " },
             { "kind": "Content", "text": "(state: T) => K" },
@@ -1472,17 +1472,17 @@
           "docs": {
             "modifiers": {
               "isInternal": false,
-              "isPublic": false,
+              "isPublic": true,
               "isAlpha": false,
               "isBeta": false,
               "isOverride": false,
               "isExperimental": false
             },
             "summary": "Returns a signal of the provided selector.\n\n",
-            "usageNotes": "\n```ts\nconst count = this.store.selectSignal(state => state.count);\n```\n\nOr with a selector created by @ngrx/store!createSelector:function\n```ts\nconst selectCount = createSelector(\n (state: State) => state.count,\n);\n\nconst count = this.store.selectSignal(selectCount);\n```\n\n",
+            "usageNotes": "\n```ts\nconst count = this.store.selectSignal(state => state.count);\n```\n\nOr with a selector created by \\@ngrx/store!createSelector:function\n```ts\nconst selectCount = createSelector(\n (state: State) => state.count,\n);\n\nconst count = this.store.selectSignal(selectCount);\n```\n\n\n",
             "remarks": "",
             "deprecated": "",
-            "returns": " Signal of the state selected by the provided selector  ",
+            "returns": " Signal of the state selected by the provided selector\n\n",
             "see": [],
             "params": [
               { "name": "selector", "description": "selector function\n\n" },
@@ -1496,14 +1496,14 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
-        "usageNotes": "",
+        "summary": "Store is an injectable service that provides reactive state management and a public API for dispatching actions.\n\n",
+        "usageNotes": "\n\nIn a component:\n```ts\nimport { Component, inject } from '@angular/core';\nimport { Store } from '@ngrx/store';\n\n@Component({\n selector: 'app-my-component',\n template: `\n   <div>{{ count() }}</div>\n   <button (click)=\"increment()\">Increment</button>\n `\n})\nexport class MyComponent {\n  private store = inject(Store);\n\n  count = this.store.selectSignal(state => state.count);\n\n  increment() {\n    this.store.dispatch({ type: 'INCREMENT' });\n  }\n}\n```\n\n\n",
         "remarks": "",
         "deprecated": "",
         "returns": "",

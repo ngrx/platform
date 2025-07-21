@@ -23,6 +23,7 @@ const updateOp = ChangeSetOperation.Update;
 /**
  * Default data service for making remote service calls targeting the entire EntityCache.
  * See EntityDataService for services that target a single EntityCollection
+ * @public
  */
 @Injectable()
 export class EntityCacheDataService {
@@ -46,10 +47,10 @@ export class EntityCacheDataService {
    * in particular the ChangeSet interface (except for Update<T>).
    * This implementation extracts the entity changes from a ChangeSet Update<T>[] and sends those.
    * It then reconstructs Update<T>[] in the returned observable result.
-   * @param changeSet  An array of SaveEntityItems.
+   * @param changeSet - An array of SaveEntityItems.
    * Each SaveEntityItem describe a change operation for one or more entities of a single collection,
    * known by its 'entityName'.
-   * @param url The server endpoint that receives this request.
+   * @param url - The server endpoint that receives this request.
    */
   saveEntities(changeSet: ChangeSet, url: string): Observable<ChangeSet> {
     changeSet = this.filterChangeSet(changeSet);
@@ -86,14 +87,14 @@ export class EntityCacheDataService {
   /**
    * Filter changeSet to remove unwanted ChangeSetItems.
    * This implementation excludes null and empty ChangeSetItems.
-   * @param changeSet ChangeSet with changes to filter
+   * @param changeSet - ChangeSet with changes to filter
    */
   protected filterChangeSet(changeSet: ChangeSet): ChangeSet {
     return excludeEmptyChangeSetItems(changeSet);
   }
 
   /**
-   * Convert the entities in update changes from @ngrx Update<T> structure to just T.
+   * Convert the entities in update changes from \@ngrx Update<T> structure to just T.
    * Reverse of restoreUpdates().
    */
   protected flattenUpdates(changeSet: ChangeSet): ChangeSet {
@@ -117,7 +118,7 @@ export class EntityCacheDataService {
   }
 
   /**
-   * Convert the flattened T entities in update changes back to @ngrx Update<T> structures.
+   * Convert the flattened T entities in update changes back to \@ngrx Update<T> structures.
    * Reverse of flattenUpdates().
    */
   protected restoreUpdates(changeSet: ChangeSet): ChangeSet {
@@ -151,7 +152,7 @@ export class EntityCacheDataService {
 
   /**
    * Get the id (primary key) selector function for an entity type
-   * @param entityName name of the entity type
+   * @param entityName - name of the entity type
    */
   protected getIdSelector(entityName: string) {
     let idSelector = this.idSelectors[entityName];

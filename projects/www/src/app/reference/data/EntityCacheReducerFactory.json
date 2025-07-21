@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!EntityCacheReducerFactory:class",
-      "docComment": "/**\n * Creates the EntityCacheReducer via its create() method\n */\n",
+      "docComment": "/**\n * Creates the EntityCacheReducer via its create() method\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -165,7 +165,7 @@
         {
           "kind": "Method",
           "canonicalReference": "@ngrx/data!EntityCacheReducerFactory#create:member(1)",
-          "docComment": "/**\n * Create the @ngrx/data entity cache reducer which either responds to entity cache level actions or (more commonly) delegates to an EntityCollectionReducer based on the action.payload.entityName.\n */\n",
+          "docComment": "/**\n * Create the \\@ngrx/data entity cache reducer which either responds to entity cache level actions or (more commonly) delegates to an EntityCollectionReducer based on the action.payload.entityName.\n */\n",
           "excerptTokens": [
             { "kind": "Content", "text": "create(): " },
             {
@@ -206,7 +206,7 @@
               "isOverride": false,
               "isExperimental": false
             },
-            "summary": "Create the @ngrx/data entity cache reducer which either responds to entity cache level actions or (more commonly) delegates to an EntityCollectionReducer based on the action.payload.entityName.\n",
+            "summary": "Create the \\@ngrx/data entity cache reducer which either responds to entity cache level actions or (more commonly) delegates to an EntityCollectionReducer based on the action.payload.entityName.\n",
             "usageNotes": "",
             "remarks": "",
             "deprecated": "",
@@ -628,13 +628,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Creates the EntityCacheReducer via its create() method\n",
+        "summary": "Creates the EntityCacheReducer via its create() method\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

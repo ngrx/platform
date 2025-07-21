@@ -91,16 +91,15 @@ type ActionGroup<
 };
 
 /**
- * @description
  * A function that creates a group of action creators with the same source.
  *
- * @param config An object that contains a source and dictionary of events.
+ * @param config - An object that contains a source and dictionary of events.
  * An event is a key-value pair of an event name and event props.
  * @returns A dictionary of action creators.
  * The name of each action creator is created by camel casing the event name.
  * The type of each action is created using the "[Source] Event Name" pattern.
  *
- * @usageNotes
+ * @example
  *
  * ```ts
  * const authApiActions = createActionGroup({
@@ -130,6 +129,8 @@ type ActionGroup<
  * // action type: "[Auth API] Logout Failure";
  * authApiActions.logoutFailure(new Error('Logout Failure!'));
  * ```
+ *
+ * @public
  */
 export function createActionGroup<
   Source extends string,
@@ -149,6 +150,9 @@ export function createActionGroup<
   );
 }
 
+/**
+ * @public
+ */
 export function emptyProps(): ActionCreatorProps<void> {
   return props();
 }

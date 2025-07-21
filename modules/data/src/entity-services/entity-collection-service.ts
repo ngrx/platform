@@ -8,15 +8,16 @@ import { EntitySelectors } from '../selectors/entity-selectors';
 /**
  * A facade for managing
  * a cached collection of T entities in the ngrx store.
+ * @public
  */
 export interface EntityCollectionService<T>
   extends EntityCommands<T>,
     EntitySelectors$<T> {
   /**
-   * Create an {EntityAction} for this entity type.
-   * @param op {EntityOp} the entity operation
-   * @param [data] the action data
-   * @param [options] additional options
+   * Create an \{EntityAction\} for this entity type.
+   * @param op - the entity operation
+   * @param data - the action data
+   * @param options - additional options
    * @returns the EntityAction
    */
   createEntityAction(
@@ -26,11 +27,11 @@ export interface EntityCollectionService<T>
   ): EntityAction<T>;
 
   /**
-   * Create an {EntityAction} for this entity type and
+   * Create an \{EntityAction\} for this entity type and
    * dispatch it immediately to the store.
-   * @param op {EntityOp} the entity operation
-   * @param [data] the action data
-   * @param [options] additional options
+   * @param op - the entity operation
+   * @param data - the action data
+   * @param options - additional options
    * @returns the dispatched EntityAction
    */
   createAndDispatch<P = any>(

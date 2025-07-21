@@ -6,6 +6,7 @@ import { DefaultDataServiceFactory } from './default-data.service';
 /**
  * Registry of EntityCollection data services that make REST-like CRUD calls
  * to entity collection endpoints.
+ * @public
  */
 @Injectable()
 export class EntityDataService {
@@ -19,9 +20,11 @@ export class EntityDataService {
    * Get (or create) a data service for entity type
    * @param entityName - the name of the type
    *
-   * Examples:
+   * @example
+   * ```ts
    *   getService('Hero'); // data service for Heroes, untyped
    *   getService<Hero>('Hero'); // data service for Heroes, typed as Hero
+   * ```
    */
   getService<T>(entityName: string): EntityCollectionDataService<T> {
     entityName = entityName.trim();
@@ -38,9 +41,11 @@ export class EntityDataService {
    * @param entityName - the name of the entity type
    * @param service - data service for that entity type
    *
-   * Examples:
+   * @example
+   * ```ts
    *   registerService('Hero', myHeroDataService);
    *   registerService('Villain', myVillainDataService);
+   * ```
    */
   registerService<T>(
     entityName: string,
@@ -53,11 +58,13 @@ export class EntityDataService {
    * Register a batch of data services.
    * @param services - data services to merge into existing services
    *
-   * Examples:
+   * @example
+   * ```ts
    *   registerServices({
    *     Hero: myHeroDataService,
    *     Villain: myVillainDataService
    *   });
+   * ```
    */
   registerServices(services: {
     [name: string]: EntityCollectionDataService<any>;

@@ -16,6 +16,9 @@ import {
 } from './models';
 import { getEntityStateKeys } from './helpers';
 
+/**
+ * @public
+ */
 export function withEntities<Entity>(): SignalStoreFeature<
   EmptyFeatureResult,
   {
@@ -24,6 +27,9 @@ export function withEntities<Entity>(): SignalStoreFeature<
     methods: {};
   }
 >;
+/**
+ * @public
+ */
 export function withEntities<Entity, Collection extends string>(config: {
   entity: Entity;
   collection: Collection;
@@ -35,6 +41,9 @@ export function withEntities<Entity, Collection extends string>(config: {
     methods: {};
   }
 >;
+/**
+ * @public
+ */
 export function withEntities<Entity>(config: {
   entity: Entity;
 }): SignalStoreFeature<
@@ -45,6 +54,9 @@ export function withEntities<Entity>(config: {
     methods: {};
   }
 >;
+/**
+ * @public
+ */
 export function withEntities<Entity>(config?: {
   entity: Entity;
   collection?: string;

@@ -29,6 +29,7 @@ import { MergeStrategy } from '../actions/merge-strategy';
 
 /**
  * Creates the EntityCacheReducer via its create() method
+ * @public
  */
 @Injectable()
 export class EntityCacheReducerFactory {
@@ -39,7 +40,7 @@ export class EntityCacheReducerFactory {
   ) {}
 
   /**
-   * Create the @ngrx/data entity cache reducer which either responds to entity cache level actions
+   * Create the \@ngrx/data entity cache reducer which either responds to entity cache level actions
    * or (more commonly) delegates to an EntityCollectionReducer based on the action.payload.entityName.
    */
   create(): ActionReducer<EntityCache, Action> {
@@ -118,8 +119,8 @@ export class EntityCacheReducerFactory {
 
   /**
    * Reducer to clear multiple collections at the same time.
-   * @param entityCache the entity cache
-   * @param action a ClearCollections action whose payload is an array of collection names.
+   * @param entityCache - the entity cache
+   * @param action - a ClearCollections action whose payload is an array of collection names.
    * If empty array, does nothing. If no array, clears all the collections.
    */
   protected clearCollectionsReducer(
@@ -149,8 +150,8 @@ export class EntityCacheReducerFactory {
 
   /**
    * Reducer to load collection in the form of a hash of entity data for multiple collections.
-   * @param entityCache the entity cache
-   * @param action a LoadCollections action whose payload is the QuerySet of entity collections to load
+   * @param entityCache - the entity cache
+   * @param action - a LoadCollections action whose payload is the QuerySet of entity collections to load
    */
   protected loadCollectionsReducer(
     entityCache: EntityCache,
@@ -177,8 +178,8 @@ export class EntityCacheReducerFactory {
 
   /**
    * Reducer to merge query sets in the form of a hash of entity data for multiple collections.
-   * @param entityCache the entity cache
-   * @param action a MergeQuerySet action with the query set and a MergeStrategy
+   * @param entityCache - the entity cache
+   * @param action - a MergeQuerySet action with the query set and a MergeStrategy
    */
   protected mergeQuerySetReducer(
     entityCache: EntityCache,

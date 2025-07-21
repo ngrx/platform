@@ -13,24 +13,57 @@ declare const ngDevMode: unknown;
 
 const STATE_WATCHERS = new WeakMap<object, Array<StateWatcher<any>>>();
 
+/**
+ * Symbol used to access the state source in signal stores.
+ *
+ * @public
+ */
 export const STATE_SOURCE = Symbol('STATE_SOURCE');
 
+/**
+ * A state source with writable signals for all state properties.
+ *
+ * @public
+ */
 export type WritableStateSource<State extends object> = {
   [STATE_SOURCE]: { [K in keyof State]: WritableSignal<State[K]> };
 };
 
+/**
+ * A state source with read-only signals for all state properties.
+ *
+ * @public
+ */
 export type StateSource<State extends object> = {
   [STATE_SOURCE]: { [K in keyof State]: Signal<State[K]> };
 };
 
+/**
+ * A function that takes a state and returns a partial state update.
+ *
+ * @public
+ */
 export type PartialStateUpdater<State extends object> = (
   state: State
 ) => Partial<State>;
 
+/**
+ * A function that watches state changes.
+ *
+ * @public
+ */
 export type StateWatcher<State extends object> = (
   state: NoInfer<State>
 ) => void;
 
+/**
+ * Checks if a value is a writable signal.
+ *
+ * @param value - The value to check.
+ * @returns True if the value is a writable signal.
+ *
+ * @public
+ */
 export function isWritableSignal(
   value: unknown
 ): value is WritableSignal<unknown> {
@@ -43,6 +76,14 @@ export function isWritableSignal(
   );
 }
 
+/**
+ * Checks if a state source has writable signals for all its state properties.
+ *
+ * @param stateSource - The state source to check.
+ * @returns True if all state properties are writable.
+ *
+ * @public
+ */
 export function isWritableStateSource<State extends object>(
   stateSource: StateSource<State>
 ): stateSource is WritableStateSource<State> {
@@ -52,6 +93,14 @@ export function isWritableStateSource<State extends object>(
   });
 }
 
+/**
+ * Updates the state source with the provided partial state updates.
+ *
+ * @param stateSource - The writable state source to update.
+ * @param updaters - One or more partial state updates or updater functions.
+ *
+ * @public
+ */
 export function patchState<State extends object>(
   stateSource: WritableStateSource<State>,
   ...updaters: Array<
@@ -90,6 +139,14 @@ export function patchState<State extends object>(
   notifyWatchers(stateSource);
 }
 
+/**
+ * Gets the current state value from a state source.
+ *
+ * @param stateSource - The state source to read from.
+ * @returns The current state value.
+ *
+ * @public
+ */
 export function getState<State extends object>(
   stateSource: StateSource<State>
 ): State {
@@ -105,6 +162,16 @@ export function getState<State extends object>(
   }, {} as State);
 }
 
+/**
+ * Watches state changes and calls the watcher function when the state changes.
+ *
+ * @param stateSource - The state source to watch.
+ * @param watcher - The function to call when state changes.
+ * @param config - Optional configuration with injector.
+ * @returns An object with a destroy method to stop watching.
+ *
+ * @public
+ */
 export function watchState<State extends object>(
   stateSource: StateSource<State>,
   watcher: StateWatcher<State>,

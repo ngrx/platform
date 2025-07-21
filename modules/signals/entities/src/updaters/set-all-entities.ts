@@ -11,13 +11,22 @@ import {
   setEntitiesMutably,
 } from '../helpers';
 
+/**
+ * @public
+ */
 export function setAllEntities<Entity extends { id: EntityId }>(
   entities: Entity[]
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @public
+ */
 export function setAllEntities<Entity, Collection extends string>(
   entities: Entity[],
   config: { collection: Collection; selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<NamedEntityState<Entity, Collection>>;
+/**
+ * @public
+ */
 export function setAllEntities<
   Entity extends { id: EntityId },
   Collection extends string
@@ -25,10 +34,16 @@ export function setAllEntities<
   entities: Entity[],
   config: { collection: Collection }
 ): PartialStateUpdater<NamedEntityState<Entity, Collection>>;
+/**
+ * @public
+ */
 export function setAllEntities<Entity>(
   entities: Entity[],
   config: { selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @public
+ */
 export function setAllEntities(
   entities: any[],
   config?: { collection?: string; selectId?: SelectEntityId<any> }

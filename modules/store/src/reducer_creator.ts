@@ -11,6 +11,8 @@ type ExtractActionTypes<Creators extends readonly ActionCreator[]> = {
 /**
  * Return type of the `on` fn.
  * Contains the action reducer coupled to one or more action types.
+ *
+ * @public
  */
 export interface ReducerTypes<
   State,
@@ -40,18 +42,19 @@ export interface OnReducer<
 }
 
 /**
- * @description
  * Associates actions with a given state change function.
  * A state change function must be provided as the last parameter.
  *
- * @param args `ActionCreator`'s followed by a state change function.
+ * @param args - `ActionCreator`'s followed by a state change function.
  *
  * @returns an association of action types with a state change function.
  *
- * @usageNotes
+ * @example
  * ```ts
  * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
  * ```
+ *
+ * @public
  */
 export function on<
   // State type that is being passed from `createReducer` when created within that factory function
@@ -83,16 +86,15 @@ export function on<
 }
 
 /**
- * @description
  * Creates a reducer function to handle state transitions.
  *
  * Reducer creators reduce the explicitness of reducer functions with switch statements.
  *
- * @param initialState Provides a state value if the current state is `undefined`, as it is initially.
- * @param ons Associations between actions and state changes.
+ * @param initialState - Provides a state value if the current state is `undefined`, as it is initially.
+ * @param ons - Associations between actions and state changes.
  * @returns A reducer function.
  *
- * @usageNotes
+ * @example
  *
  * - Must be used with `ActionCreator`'s (returned by `createAction`). Cannot be used with class-based action creators.
  * - The returned `ActionReducer` does not require being wrapped with another function.
@@ -110,6 +112,8 @@ export function on<
  *   on(featureActions.actionThree, () => initialState);
  * );
  * ```
+ *
+ * @public
  */
 export function createReducer<
   S,

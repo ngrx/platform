@@ -16,12 +16,18 @@ type RxMethodRef = {
   destroy: () => void;
 };
 
+/**
+ * @public
+ */
 export type RxMethod<Input> = ((
   input: Input | Signal<Input> | Observable<Input>,
   config?: { injector?: Injector }
 ) => RxMethodRef) &
   RxMethodRef;
 
+/**
+ * @public
+ */
 export function rxMethod<Input>(
   generator: (source$: Observable<Input>) => Observable<unknown>,
   config?: { injector?: Injector }

@@ -29,6 +29,9 @@ import {
   ObservableNotification,
 } from './utils';
 
+/**
+ * @public
+ */
 @Injectable({ providedIn: 'root' })
 export class EffectSources extends Subject<any> {
   constructor(

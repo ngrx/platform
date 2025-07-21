@@ -4,7 +4,7 @@ module.exports = function(log, createDocMessage) {
     deprecated: true,
     transforms(doc, tag, value) {
       log.warn(createDocMessage('Deprecated `@howToUse` tag found', doc));
-      log.warn('PLEASE FIX by renaming to `@usageNotes.');
+      log.warn('PLEASE FIX by renaming to `@example.');
       return value;
     }
   };

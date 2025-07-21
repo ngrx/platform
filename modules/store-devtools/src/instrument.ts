@@ -2,6 +2,9 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { StoreDevtoolsOptions } from './config';
 import { provideStoreDevtools } from './provide-store-devtools';
 
+/**
+ * @public
+ */
 @NgModule({})
 export class StoreDevtoolsModule {
   static instrument(

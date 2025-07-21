@@ -54,7 +54,6 @@ export type ActionStateStream<T, A> = Observable<
 >;
 
 /**
- * @description
  * Handles pessimistic updates (updating the server first).
  *
  * Updating the server, when implemented naively, suffers from race conditions and poor error handling.
@@ -62,7 +61,7 @@ export type ActionStateStream<T, A> = Observable<
  * `pessimisticUpdate` addresses these problems. It runs all fetches in order, which removes race conditions
  * and forces the developer to handle errors.
  *
- * @usageNotes
+ * @example
  *
  * ```typescript
  * @Injectable()
@@ -122,9 +121,6 @@ export function pessimisticUpdate<T extends Array<unknown>, A extends Action>(
 }
 
 /**
- *
- * @description
- *
  * Handles optimistic updates (updating the client first).
  *
  * It runs all fetches in order, which removes race conditions and forces the developer to handle errors.
@@ -134,7 +130,7 @@ export function pessimisticUpdate<T extends Array<unknown>, A extends Action>(
  *
  * The error handling must be done in the callback, or by means of the undo action.
  *
- * @usageNotes
+ * @example
  *
  * ```typescript
  * @Injectable()
@@ -193,9 +189,6 @@ export function optimisticUpdate<T extends Array<unknown>, A extends Action>(
 }
 
 /**
- *
- * @description
- *
  * Handles data fetching.
  *
  * Data fetching implemented naively suffers from race conditions and poor error handling.
@@ -203,7 +196,7 @@ export function optimisticUpdate<T extends Array<unknown>, A extends Action>(
  * `fetch` addresses these problems. It runs all fetches in order, which removes race conditions
  * and forces the developer to handle errors.
  *
- * @usageNotes
+ * @example
  *
  * ```typescript
  * @Injectable()
@@ -299,8 +292,6 @@ export function fetch<T extends Array<unknown>, A extends Action>(
 }
 
 /**
- * @description
- *
  * Handles data fetching as part of router navigation.
  *
  * Data fetching implemented naively suffers from race conditions and poor error handling.
@@ -311,7 +302,7 @@ export function fetch<T extends Array<unknown>, A extends Action>(
  * callback. It provides the activated snapshot associated with the component and the current state. And it only runs
  * the last request.
  *
- * @usageNotes
+ * @example
  *
  * ```typescript
  * @Injectable()

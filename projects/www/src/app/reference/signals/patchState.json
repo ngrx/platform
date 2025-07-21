@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals!patchState:function(1)",
-      "docComment": "",
+      "docComment": "/**\n * Updates the state source with the provided partial state updates.\n *\n * @param stateSource - The writable state source to update.\n *\n * @param updaters - One or more partial state updates or updater functions.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -37,16 +37,10 @@
         { "kind": "Content", "text": "<" },
         {
           "kind": "Reference",
-          "text": "Prettify",
-          "canonicalReference": "@ngrx/signals!Prettify:type"
-        },
-        { "kind": "Content", "text": "<" },
-        {
-          "kind": "Reference",
           "text": "NoInfer",
           "canonicalReference": "!NoInfer:type"
         },
-        { "kind": "Content", "text": "<State>>> | " },
+        { "kind": "Content", "text": "<State>> | " },
         {
           "kind": "Reference",
           "text": "PartialStateUpdater",
@@ -55,22 +49,16 @@
         { "kind": "Content", "text": "<" },
         {
           "kind": "Reference",
-          "text": "Prettify",
-          "canonicalReference": "@ngrx/signals!Prettify:type"
-        },
-        { "kind": "Content", "text": "<" },
-        {
-          "kind": "Reference",
           "text": "NoInfer",
           "canonicalReference": "!NoInfer:type"
         },
-        { "kind": "Content", "text": "<State>>>>" },
+        { "kind": "Content", "text": "<State>>>" },
         { "kind": "Content", "text": "): " },
         { "kind": "Content", "text": "void" },
         { "kind": "Content", "text": ";" }
       ],
       "fileUrlPath": "../../dist/modules/signals/src/state-source.d.ts",
-      "returnTypeTokenRange": { "startIndex": 21, "endIndex": 22 },
+      "returnTypeTokenRange": { "startIndex": 17, "endIndex": 18 },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [
@@ -81,7 +69,7 @@
         },
         {
           "parameterName": "updaters",
-          "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 20 },
+          "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 16 },
           "isOptional": false
         }
       ],
@@ -96,19 +84,28 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
+        "summary": "Updates the state source with the provided partial state updates.\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",
         "returns": "",
         "see": [],
-        "params": []
+        "params": [
+          {
+            "name": "stateSource",
+            "description": "The writable state source to update.\n\n"
+          },
+          {
+            "name": "updaters",
+            "description": "One or more partial state updates or updater functions.\n\n\n"
+          }
+        ]
       }
     }
   ]

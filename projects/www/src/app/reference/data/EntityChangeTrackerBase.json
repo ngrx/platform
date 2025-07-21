@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!EntityChangeTrackerBase:class",
-      "docComment": "/**\n * The default implementation of EntityChangeTracker with methods for tracking, committing, and reverting/undoing unsaved entity changes. Used by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection. See EntityChangeTracker docs.\n */\n",
+      "docComment": "/**\n * The default implementation of EntityChangeTracker with methods for tracking, committing, and reverting/undoing unsaved entity changes. Used by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection. See EntityChangeTracker docs.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -1605,13 +1605,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "The default implementation of EntityChangeTracker with methods for tracking, committing, and reverting/undoing unsaved entity changes. Used by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection. See EntityChangeTracker docs.\n",
+        "summary": "The default implementation of EntityChangeTracker with methods for tracking, committing, and reverting/undoing unsaved entity changes. Used by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection. See EntityChangeTracker docs.\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!DefaultDataService:class",
-      "docComment": "/**\n * A basic, generic entity data service suitable for persistence of most entities. Assumes a common REST-y web API\n */\n",
+      "docComment": "/**\n * A basic, generic entity data service suitable for persistence of most entities. Assumes a common REST-y web API\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -1052,13 +1052,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "A basic, generic entity data service suitable for persistence of most entities. Assumes a common REST-y web API\n",
+        "summary": "A basic, generic entity data service suitable for persistence of most entities. Assumes a common REST-y web API\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

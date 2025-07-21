@@ -8,6 +8,11 @@ import {
 } from '../potential-observable';
 import { untracked } from '@angular/core';
 
+/**
+ * Interface for managing render events from potential observables.
+ *
+ * @public
+ */
 export interface RenderEventManager<PO> {
   nextPotentialObservable(potentialObservable: PO): void;
   handlePotentialObservableChanges(): Observable<
@@ -15,6 +20,14 @@ export interface RenderEventManager<PO> {
   >;
 }
 
+/**
+ * Creates a render event manager for handling potential observables.
+ *
+ * @param handlers - The handlers for different render event types.
+ * @returns A render event manager instance.
+ *
+ * @public
+ */
 export function createRenderEventManager<PO>(
   handlers: RenderEventHandlers<PotentialObservableResult<PO>>
 ): RenderEventManager<PO> {

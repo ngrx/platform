@@ -3,9 +3,22 @@ import { DeepSignal, toDeepSignal } from './deep-signal';
 import { SignalsDictionary } from './signal-store-models';
 import { STATE_SOURCE, WritableStateSource } from './state-source';
 
+/**
+ * A signal state type that combines deep signal access with writable state source functionality.
+ *
+ * @public
+ */
 export type SignalState<State extends object> = DeepSignal<State> &
   WritableStateSource<State>;
 
+/**
+ * Creates a signal state from the provided initial state.
+ *
+ * @param initialState - The initial state object.
+ * @returns A signal state that provides reactive access to state properties.
+ *
+ * @public
+ */
 export function signalState<State extends object>(
   initialState: State
 ): SignalState<State> {

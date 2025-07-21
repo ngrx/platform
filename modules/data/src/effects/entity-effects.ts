@@ -16,6 +16,9 @@ import { UpdateResponseData } from '../actions/update-response-data';
 import { EntityDataService } from '../dataservices/entity-data.service';
 import { PersistenceResultHandler } from '../dataservices/persistence-result-handler.service';
 
+/**
+ * @public
+ */
 export const persistOps: EntityOp[] = [
   EntityOp.QUERY_ALL,
   EntityOp.QUERY_LOAD,
@@ -27,6 +30,9 @@ export const persistOps: EntityOp[] = [
   EntityOp.SAVE_UPSERT_ONE,
 ];
 
+/**
+ * @public
+ */
 @Injectable()
 export class EntityEffects {
   // See https://github.com/ReactiveX/rxjs/blob/master/doc/marble-testing.md
@@ -72,7 +78,7 @@ export class EntityEffects {
   /**
    * Perform the requested persistence operation and return a scalar Observable<Action>
    * that the effect should dispatch to the store after the server responds.
-   * @param action A persistence operation EntityAction
+   * @param action - A persistence operation EntityAction
    */
   persist(action: EntityAction): Observable<Action> {
     if (action.payload.skip) {

@@ -11,9 +11,20 @@ type PrettifyFeatureResult<Result extends SignalStoreFeatureResult> = Prettify<{
   methods: Prettify<Result['methods']>;
 }>;
 
+/**
+ * Creates a signal store feature by combining one or more signal store features.
+ *
+ * @param f1 - The first feature to apply.
+ * @returns A signal store feature.
+ *
+ * @public
+ */
 export function signalStoreFeature<F1 extends SignalStoreFeatureResult>(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>
 ): SignalStoreFeature<EmptyFeatureResult, F1>;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult
@@ -21,6 +32,9 @@ export function signalStoreFeature<
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>
 ): SignalStoreFeature<EmptyFeatureResult, PrettifyFeatureResult<F1 & F2>>;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -30,6 +44,9 @@ export function signalStoreFeature<
   f2: SignalStoreFeature<{} & F1, F2>,
   f3: SignalStoreFeature<F1 & F2, F3>
 ): SignalStoreFeature<EmptyFeatureResult, PrettifyFeatureResult<F1 & F2 & F3>>;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -44,6 +61,9 @@ export function signalStoreFeature<
   EmptyFeatureResult,
   PrettifyFeatureResult<F1 & F2 & F3 & F4>
 >;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -60,6 +80,9 @@ export function signalStoreFeature<
   EmptyFeatureResult,
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5>
 >;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -78,6 +101,9 @@ export function signalStoreFeature<
   EmptyFeatureResult,
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6>
 >;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -98,6 +124,9 @@ export function signalStoreFeature<
   EmptyFeatureResult,
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7>
 >;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -120,6 +149,9 @@ export function signalStoreFeature<
   EmptyFeatureResult,
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8>
 >;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -144,6 +176,9 @@ export function signalStoreFeature<
   EmptyFeatureResult,
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9>
 >;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
@@ -171,6 +206,9 @@ export function signalStoreFeature<
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9 & F10>
 >;
 
+/**
+ * @public
+ */
 export function signalStoreFeature<
   Input extends Partial<SignalStoreFeatureResult>,
   F1 extends SignalStoreFeatureResult
@@ -178,6 +216,9 @@ export function signalStoreFeature<
   input: Input,
   f1: SignalStoreFeature<EmptyFeatureResult & NoInfer<Input>, F1>
 ): SignalStoreFeature<Prettify<EmptyFeatureResult & Input>, F1>;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   Input extends Partial<SignalStoreFeatureResult>,
   F1 extends SignalStoreFeatureResult,
@@ -190,6 +231,9 @@ export function signalStoreFeature<
   Prettify<EmptyFeatureResult & Input>,
   PrettifyFeatureResult<F1 & F2>
 >;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   Input extends Partial<SignalStoreFeatureResult>,
   F1 extends SignalStoreFeatureResult,
@@ -204,6 +248,9 @@ export function signalStoreFeature<
   Prettify<EmptyFeatureResult & Input>,
   PrettifyFeatureResult<F1 & F2 & F3>
 >;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   Input extends Partial<SignalStoreFeatureResult>,
   F1 extends SignalStoreFeatureResult,
@@ -220,6 +267,9 @@ export function signalStoreFeature<
   Prettify<EmptyFeatureResult & Input>,
   PrettifyFeatureResult<F1 & F2 & F3 & F4>
 >;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   Input extends Partial<SignalStoreFeatureResult>,
   F1 extends SignalStoreFeatureResult,
@@ -238,6 +288,9 @@ export function signalStoreFeature<
   Prettify<EmptyFeatureResult & Input>,
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5>
 >;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   Input extends Partial<SignalStoreFeatureResult>,
   F1 extends SignalStoreFeatureResult,
@@ -258,6 +311,9 @@ export function signalStoreFeature<
   Prettify<EmptyFeatureResult & Input>,
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6>
 >;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   Input extends Partial<SignalStoreFeatureResult>,
   F1 extends SignalStoreFeatureResult,
@@ -280,6 +336,9 @@ export function signalStoreFeature<
   Prettify<EmptyFeatureResult & Input>,
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7>
 >;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   Input extends Partial<SignalStoreFeatureResult>,
   F1 extends SignalStoreFeatureResult,
@@ -304,6 +363,9 @@ export function signalStoreFeature<
   Prettify<EmptyFeatureResult & Input>,
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8>
 >;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   Input extends Partial<SignalStoreFeatureResult>,
   F1 extends SignalStoreFeatureResult,
@@ -333,6 +395,9 @@ export function signalStoreFeature<
   Prettify<EmptyFeatureResult & Input>,
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9>
 >;
+/**
+ * @public
+ */
 export function signalStoreFeature<
   Input extends Partial<SignalStoreFeatureResult>,
   F1 extends SignalStoreFeatureResult,
@@ -368,6 +433,9 @@ export function signalStoreFeature<
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9 & F10>
 >;
 
+/**
+ * @public
+ */
 export function signalStoreFeature(
   ...args:
     | [Partial<SignalStoreFeatureResult>, ...SignalStoreFeature[]]
@@ -381,6 +449,13 @@ export function signalStoreFeature(
     features.reduce((store, feature) => feature(store), inputStore);
 }
 
+/**
+ * Returns the provided type parameter as undefined.
+ *
+ * @returns The type parameter as undefined.
+ *
+ * @public
+ */
 export function type<T>(): T {
   return undefined as T;
 }

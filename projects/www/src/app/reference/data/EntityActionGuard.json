@@ -8,7 +8,7 @@
     {
       "kind": "Class",
       "canonicalReference": "@ngrx/data!EntityActionGuard:class",
-      "docComment": "/**\n * Guard methods that ensure EntityAction payload is as expected. Each method returns that payload if it passes the guard or throws an error.\n */\n",
+      "docComment": "/**\n * Guard methods that ensure EntityAction payload is as expected. Each method returns that payload if it passes the guard or throws an error.\n *\n * @public\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -518,13 +518,13 @@
       "docs": {
         "modifiers": {
           "isInternal": false,
-          "isPublic": false,
+          "isPublic": true,
           "isAlpha": false,
           "isBeta": false,
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "Guard methods that ensure EntityAction payload is as expected. Each method returns that payload if it passes the guard or throws an error.\n",
+        "summary": "Guard methods that ensure EntityAction payload is as expected. Each method returns that payload if it passes the guard or throws an error.\n\n\n",
         "usageNotes": "",
         "remarks": "",
         "deprecated": "",

@@ -29,6 +29,9 @@ import {
   Subscription,
 } from 'rxjs';
 
+/**
+ * @public
+ */
 export function debounceSync<T>(): MonoTypeOperatorFunction<T> {
   return (source) =>
     new Observable<T>((observer) => {

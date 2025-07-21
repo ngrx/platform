@@ -1,1 +1,294 @@
-{"name":"DefaultDataServiceConfig","canonicalReference":"@ngrx/data!DefaultDataServiceConfig:class","kind":"Class","fileUrlPath":"../../dist/modules/data/src/dataservices/default-data-service-config.d.ts","isDeprecated":false,"members":[{"kind":"Class","canonicalReference":"@ngrx/data!DefaultDataServiceConfig:class","docComment":"/**\n * Optional configuration settings for an entity collection data service such as the `DefaultDataService<T>`.\n */\n","excerptTokens":[{"kind":"Content","text":"export declare abstract class DefaultDataServiceConfig "}],"fileUrlPath":"../../dist/modules/data/src/dataservices/default-data-service-config.d.ts","releaseTag":"Public","isAbstract":true,"name":"DefaultDataServiceConfig","preserveMemberOrder":false,"members":[{"kind":"Property","canonicalReference":"@ngrx/data!DefaultDataServiceConfig#delete404OK:member","docComment":"/**\n * Is a DELETE 404 really OK? (default: true)\n */\n","excerptTokens":[{"kind":"Content","text":"delete404OK?: "},{"kind":"Content","text":"boolean"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"delete404OK","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Is a DELETE 404 really OK? (default: true)\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Property","canonicalReference":"@ngrx/data!DefaultDataServiceConfig#entityHttpResourceUrls:member","docComment":"/**\n * Known entity HttpResourceUrls. HttpUrlGenerator will create these URLs for entity types not listed here.\n */\n","excerptTokens":[{"kind":"Content","text":"entityHttpResourceUrls?: "},{"kind":"Reference","text":"EntityHttpResourceUrls","canonicalReference":"@ngrx/data!EntityHttpResourceUrls:class"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"entityHttpResourceUrls","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Known entity HttpResourceUrls. HttpUrlGenerator will create these URLs for entity types not listed here.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Property","canonicalReference":"@ngrx/data!DefaultDataServiceConfig#getDelay:member","docComment":"/**\n * Simulate GET latency in a demo (default: 0)\n */\n","excerptTokens":[{"kind":"Content","text":"getDelay?: "},{"kind":"Content","text":"number"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"getDelay","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Simulate GET latency in a demo (default: 0)\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Property","canonicalReference":"@ngrx/data!DefaultDataServiceConfig#root:member","docComment":"/**\n * root path of the web api. may also include protocol, domain, and port for remote api, e.g.: `'https://api-domain.com:8000/api/v1'` (default: 'api')\n */\n","excerptTokens":[{"kind":"Content","text":"root?: "},{"kind":"Content","text":"string"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"root","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"root path of the web api. may also include protocol, domain, and port for remote api, e.g.: `'https://api-domain.com:8000/api/v1'` (default: 'api')\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Property","canonicalReference":"@ngrx/data!DefaultDataServiceConfig#saveDelay:member","docComment":"/**\n * Simulate save method (PUT/POST/DELETE) latency in a demo (default: 0)\n */\n","excerptTokens":[{"kind":"Content","text":"saveDelay?: "},{"kind":"Content","text":"number"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"saveDelay","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Simulate save method (PUT/POST/DELETE) latency in a demo (default: 0)\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Property","canonicalReference":"@ngrx/data!DefaultDataServiceConfig#timeout:member","docComment":"/**\n * request timeout in MS (default: 0)\n */\n","excerptTokens":[{"kind":"Content","text":"timeout?: "},{"kind":"Content","text":"number"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"timeout","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"request timeout in MS (default: 0)\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Property","canonicalReference":"@ngrx/data!DefaultDataServiceConfig#trailingSlashEndpoints:member","docComment":"/**\n * to keep leading & trailing slashes or not; false by default\n */\n","excerptTokens":[{"kind":"Content","text":"trailingSlashEndpoints?: "},{"kind":"Content","text":"boolean"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"trailingSlashEndpoints","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"to keep leading & trailing slashes or not; false by default\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"implementsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Optional configuration settings for an entity collection data service such as the `DefaultDataService<T>`.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "DefaultDataServiceConfig",
+  "canonicalReference": "@ngrx/data!DefaultDataServiceConfig:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/dataservices/default-data-service-config.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!DefaultDataServiceConfig:class",
+      "docComment": "/**\n * Optional configuration settings for an entity collection data service such as the `DefaultDataService<T>`.\n *\n * @public\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare abstract class DefaultDataServiceConfig "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/dataservices/default-data-service-config.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": true,
+      "name": "DefaultDataServiceConfig",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!DefaultDataServiceConfig#delete404OK:member",
+          "docComment": "/**\n * Is a DELETE 404 really OK? (default: true)\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "delete404OK?: " },
+            { "kind": "Content", "text": "boolean" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "delete404OK",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Is a DELETE 404 really OK? (default: true)\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!DefaultDataServiceConfig#entityHttpResourceUrls:member",
+          "docComment": "/**\n * Known entity HttpResourceUrls. HttpUrlGenerator will create these URLs for entity types not listed here.\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "entityHttpResourceUrls?: " },
+            {
+              "kind": "Reference",
+              "text": "EntityHttpResourceUrls",
+              "canonicalReference": "@ngrx/data!EntityHttpResourceUrls:class"
+            },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "entityHttpResourceUrls",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Known entity HttpResourceUrls. HttpUrlGenerator will create these URLs for entity types not listed here.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!DefaultDataServiceConfig#getDelay:member",
+          "docComment": "/**\n * Simulate GET latency in a demo (default: 0)\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "getDelay?: " },
+            { "kind": "Content", "text": "number" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "getDelay",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Simulate GET latency in a demo (default: 0)\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!DefaultDataServiceConfig#root:member",
+          "docComment": "/**\n * root path of the web api. may also include protocol, domain, and port for remote api, e.g.: `'https://api-domain.com:8000/api/v1'` (default: 'api')\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "root?: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "root",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "root path of the web api. may also include protocol, domain, and port for remote api, e.g.: `'https://api-domain.com:8000/api/v1'` (default: 'api')\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!DefaultDataServiceConfig#saveDelay:member",
+          "docComment": "/**\n * Simulate save method (PUT/POST/DELETE) latency in a demo (default: 0)\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "saveDelay?: " },
+            { "kind": "Content", "text": "number" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "saveDelay",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Simulate save method (PUT/POST/DELETE) latency in a demo (default: 0)\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!DefaultDataServiceConfig#timeout:member",
+          "docComment": "/**\n * request timeout in MS (default: 0)\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "timeout?: " },
+            { "kind": "Content", "text": "number" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "timeout",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "request timeout in MS (default: 0)\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!DefaultDataServiceConfig#trailingSlashEndpoints:member",
+          "docComment": "/**\n * to keep leading & trailing slashes or not; false by default\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "trailingSlashEndpoints?: " },
+            { "kind": "Content", "text": "boolean" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "trailingSlashEndpoints",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "to keep leading & trailing slashes or not; false by default\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Optional configuration settings for an entity collection data service such as the `DefaultDataService<T>`.\n\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

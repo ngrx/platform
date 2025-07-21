@@ -14,6 +14,11 @@ import { createRenderEventManager } from '../core/render-event/manager';
 
 type LetViewContextValue<PO> = PotentialObservableResult<PO>;
 
+/**
+ * The view context provided to templates using the ngrxLet directive.
+ *
+ * @public
+ */
 export interface LetViewContext<PO> {
   /**
    * using `$implicit` to enable `let` syntax: `*ngrxLet="obs$; let o"`
@@ -34,13 +39,10 @@ export interface LetViewContext<PO> {
 }
 
 /**
- *
- * @description
- *
  * The `*ngrxLet` directive serves a convenient way of binding observables to a view context
  * (DOM element's scope). It also helps with several internal processing under the hood.
  *
- * @usageNotes
+ * @example
  *
  * ### Displaying Observable Values
  *
@@ -100,7 +102,7 @@ export interface LetViewContext<PO> {
  * </ng-container>
  * ```
  *
- * @publicApi
+ * @public
  */
 @Directive({
   selector: '[ngrxLet]',

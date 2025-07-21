@@ -1,1 +1,105 @@
-{"name":"HttpResourceUrls","canonicalReference":"@ngrx/data!HttpResourceUrls:interface","kind":"Interface","fileUrlPath":"../../dist/modules/data/src/dataservices/http-url-generator.d.ts","isDeprecated":false,"members":[{"kind":"Interface","canonicalReference":"@ngrx/data!HttpResourceUrls:interface","docComment":"/**\n * Resource URLS for HTTP operations that target single entity and multi-entity endpoints.\n */\n","excerptTokens":[{"kind":"Content","text":"export interface HttpResourceUrls "}],"fileUrlPath":"../../dist/modules/data/src/dataservices/http-url-generator.d.ts","releaseTag":"Public","name":"HttpResourceUrls","preserveMemberOrder":false,"members":[{"kind":"PropertySignature","canonicalReference":"@ngrx/data!HttpResourceUrls#collectionResourceUrl:member","docComment":"/**\n * The URL path for a multiple-entity endpoint, e.g, `some-api-root/heroes/` such as you'd use when getting all heroes. Example: `httpClient.get<Hero[]>('some-api-root/heroes/')` Note trailing slash (/).\n */\n","excerptTokens":[{"kind":"Content","text":"collectionResourceUrl: "},{"kind":"Content","text":"string"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"collectionResourceUrl","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"The URL path for a multiple-entity endpoint, e.g, `some-api-root/heroes/` such as you'd use when getting all heroes. Example: `httpClient.get<Hero[]>('some-api-root/heroes/')` Note trailing slash (/).\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/data!HttpResourceUrls#entityResourceUrl:member","docComment":"/**\n * The URL path for a single entity endpoint, e.g, `some-api-root/hero/` such as you'd use to add a hero. Example: `httpClient.post<Hero>('some-api-root/hero/', addedHero)`. Note trailing slash (/).\n */\n","excerptTokens":[{"kind":"Content","text":"entityResourceUrl: "},{"kind":"Content","text":"string"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"entityResourceUrl","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"The URL path for a single entity endpoint, e.g, `some-api-root/hero/` such as you'd use to add a hero. Example: `httpClient.post<Hero>('some-api-root/hero/', addedHero)`. Note trailing slash (/).\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"extendsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Resource URLS for HTTP operations that target single entity and multi-entity endpoints.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "HttpResourceUrls",
+  "canonicalReference": "@ngrx/data!HttpResourceUrls:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/data/src/dataservices/http-url-generator.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/data!HttpResourceUrls:interface",
+      "docComment": "/**\n * Resource URLS for HTTP operations that target single entity and multi-entity endpoints.\n *\n * @public\n */\n",
+      "excerptTokens": [
+        { "kind": "Content", "text": "export interface HttpResourceUrls " }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/dataservices/http-url-generator.d.ts",
+      "releaseTag": "Public",
+      "name": "HttpResourceUrls",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!HttpResourceUrls#collectionResourceUrl:member",
+          "docComment": "/**\n * The URL path for a multiple-entity endpoint, e.g, `some-api-root/heroes/` such as you'd use when getting all heroes. Example: `httpClient.get<Hero[]>('some-api-root/heroes/')` Note trailing slash (/).\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "collectionResourceUrl: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "collectionResourceUrl",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "The URL path for a multiple-entity endpoint, e.g, `some-api-root/heroes/` such as you'd use when getting all heroes. Example: `httpClient.get<Hero[]>('some-api-root/heroes/')` Note trailing slash (/).\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!HttpResourceUrls#entityResourceUrl:member",
+          "docComment": "/**\n * The URL path for a single entity endpoint, e.g, `some-api-root/hero/` such as you'd use to add a hero. Example: `httpClient.post<Hero>('some-api-root/hero/', addedHero)`. Note trailing slash (/).\n */\n",
+          "excerptTokens": [
+            { "kind": "Content", "text": "entityResourceUrl: " },
+            { "kind": "Content", "text": "string" },
+            { "kind": "Content", "text": ";" }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "entityResourceUrl",
+          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "The URL path for a single entity endpoint, e.g, `some-api-root/hero/` such as you'd use to add a hero. Example: `httpClient.post<Hero>('some-api-root/hero/', addedHero)`. Note trailing slash (/).\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": true,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Resource URLS for HTTP operations that target single entity and multi-entity endpoints.\n\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

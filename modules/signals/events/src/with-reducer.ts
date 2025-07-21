@@ -16,11 +16,9 @@ import { ReducerEvents } from './events-service';
 
 /**
  * @experimental
- * @description
- *
  * SignalStore feature for defining state changes based on dispatched events.
  *
- * @usageNotes
+ * @example
  *
  * ```ts
  * import { signalStore, type, withState } from '@ngrx/signals';

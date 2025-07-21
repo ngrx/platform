@@ -20,6 +20,14 @@ type ComputedResult<
     : never;
 };
 
+/**
+ * Adds computed properties to a signal store.
+ *
+ * @param computedFactory - A factory function that creates computed properties.
+ * @returns A signal store feature that adds the computed properties.
+ *
+ * @public
+ */
 export function withComputed<
   Input extends SignalStoreFeatureResult,
   ComputedDictionary extends Record<

@@ -9,7 +9,10 @@ import {
   EntityCollectionReducerFactory,
 } from './entity-collection-reducer';
 
-/** A hash of EntityCollectionReducers */
+/**
+ * A hash of EntityCollectionReducers
+ * @public
+ */
 export interface EntityCollectionReducers {
   [entity: string]: EntityCollectionReducer<any>;
 }
@@ -17,6 +20,7 @@ export interface EntityCollectionReducers {
 /**
  * Registry of entity types and their previously-constructed reducers.
  * Can create a new CollectionReducer, which it registers for subsequent use.
+ * @public
  */
 @Injectable()
 export class EntityCollectionReducerRegistry {
@@ -41,7 +45,7 @@ export class EntityCollectionReducerRegistry {
 
   /**
    * Get the registered EntityCollectionReducer<T> for this entity type or create one and register it.
-   * @param entityName Name of the entity type for this reducer
+   * @param entityName - Name of the entity type for this reducer
    */
   getOrCreateReducer<T>(entityName: string): EntityCollectionReducer<T> {
     let reducer: EntityCollectionReducer<T> =
@@ -60,9 +64,11 @@ export class EntityCollectionReducerRegistry {
    * @param entityName - the name of the entity type
    * @param reducer - reducer for that entity type
    *
-   * Examples:
+   * @example
+   * ```ts
    *   registerReducer('Hero', myHeroReducer);
    *   registerReducer('Villain', myVillainReducer);
+   * ```
    */
   registerReducer<T>(
     entityName: string,
@@ -76,11 +82,13 @@ export class EntityCollectionReducerRegistry {
    * Register a batch of EntityCollectionReducers.
    * @param reducers - reducers to merge into existing reducers
    *
-   * Examples:
+   * @example
+   * ```ts
    *   registerReducers({
    *     Hero: myHeroReducer,
    *     Villain: myVillainReducer
    *   });
+   * ```
    */
   registerReducers(reducers: EntityCollectionReducers) {
     const keys = reducers ? Object.keys(reducers) : [];

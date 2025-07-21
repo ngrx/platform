@@ -18,11 +18,9 @@ import { SOURCE_TYPE } from './events-service';
 
 /**
  * @experimental
- * @description
- *
  * SignalStore feature for defining side effects.
  *
- * @usageNotes
+ * @example
  *
  * ```ts
  * import { signalStore, withState } from '@ngrx/signals';

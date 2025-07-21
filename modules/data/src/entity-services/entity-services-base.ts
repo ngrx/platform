@@ -15,7 +15,7 @@ import { EntityServicesElements } from './entity-services-elements';
  * Base/default class of a central registry of EntityCollectionServices for all entity types.
  * Create your own subclass to add app-specific members for an improved developer experience.
  *
- * @usageNotes
+ * @example
  * ```ts
  * export class EntityServices extends EntityServicesBase {
  *   constructor(entityServicesElements: EntityServicesElements) {
@@ -32,6 +32,7 @@ import { EntityServicesElements } from './entity-services-elements';
  *   }
  * }
  * ```
+ * @public
  */
 @Injectable()
 export class EntityServicesBase implements EntityServices {
@@ -88,7 +89,7 @@ export class EntityServicesBase implements EntityServices {
    * Create a new default instance of an EntityCollectionService.
    * Prefer getEntityCollectionService() unless you really want a new default instance.
    * This one will NOT be registered with EntityServices!
-   * @param entityName {string} Name of the entity type of the service
+   * @param entityName - Name of the entity type of the service
    */
   protected createEntityCollectionService<
     T,
@@ -98,7 +99,7 @@ export class EntityServicesBase implements EntityServices {
   }
 
   /** Get (or create) the singleton instance of an EntityCollectionService
-   * @param entityName {string} Name of the entity type of the service
+   * @param entityName - Name of the entity type of the service
    */
   getEntityCollectionService<
     T,
@@ -114,8 +115,8 @@ export class EntityServicesBase implements EntityServices {
 
   /** Register an EntityCollectionService under its entity type name.
    * Will replace a pre-existing service for that type.
-   * @param service {EntityCollectionService} The entity service
-   * @param serviceName {string} optional service name to use instead of the service's entityName
+   * @param service - The entity service
+   * @param serviceName - optional service name to use instead of the service's entityName
    */
   registerEntityCollectionService<T>(
     service: EntityCollectionService<T>,
@@ -127,7 +128,7 @@ export class EntityServicesBase implements EntityServices {
   /**
    * Register entity services for several entity types at once.
    * Will replace a pre-existing service for that type.
-   * @param entityCollectionServices {EntityCollectionServiceMap | EntityCollectionService<any>[]}
+   * @param entityCollectionServices - EntityCollectionServiceMap or EntityCollectionService array
    * EntityCollectionServices to register, either as a map or an array
    */
   registerEntityCollectionServices(
