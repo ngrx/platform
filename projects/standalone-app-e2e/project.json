@@ -3,6 +3,8 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "projects/standalone-app-e2e/src",
   "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["standalone-app"],
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
@@ -24,7 +26,5 @@
         "lintFilePatterns": ["projects/standalone-app-e2e/**/*.{js,ts}"]
       }
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["standalone-app"]
+  }
 }
