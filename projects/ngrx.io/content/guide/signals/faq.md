@@ -75,3 +75,29 @@ export class Counter {
 }
 ```
 </details>
+
+<details>
+  <summary><b>#6</b> Can features like `withComputed` or `withMethods` reference other members inside the same feature?</summary>
+
+It may be necessary for a computed in a `withComputed` feature to need to reference another computed value, 
+or a method in a `withMethods` feature to refer to another method. To do so, you can break out the common piece 
+with a helper `const` that can serve as a function or computed itself. 
+
+Although it is possible to have multiple features that reference each other, we recommend having everything in one call. 
+That adheres more to JavaScript's functional style and keeps features co-located.
+
+```ts
+export const BooksStore = signalStore(
+  withState(initialState),
+  withComputed(({ filter }) => {
+    // 👇 Define helper functions (or computeds).
+    const sortDirection = computed(() => (filter.order() === 'asc' ? 1 : -1));
+
+    return {
+      sortDirection: sortDirection,
+      sortDirectionReversed: computed(() => sortDirection() * -1),
+    };
+  })
+);
+```
+</details>
