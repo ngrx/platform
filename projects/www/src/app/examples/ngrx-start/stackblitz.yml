@@ -1,0 +1,6 @@
+name: 'Starter project with NgRx dependencies'
+description: 'A simple Angular project with NgRx dependencies'
+extends: '../__base/stackblitz.yml'
+files:
+  src/app.component.ts: './src/app.component.ts'
+  src/app.config.ts: './src/app.config.ts'

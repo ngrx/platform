@@ -93,7 +93,7 @@ You can reset selectors by calling the `MockStore.resetSelectors()` method in th
 
 </ngrx-code-example>
 
-Try the <live-example name="testing-store"></live-example>.
+Try the <ngrx-docs-stackblitz name="testing-store"></ngrx-docs-stackblitz>.
 
 ### Integration Testing
 
