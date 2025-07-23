@@ -82,16 +82,13 @@ You can see the full example at StackBlitz: <live-example name="component-store-
 
 </ngrx-docs-alert>
 
-<code-tabs linenums="true">
-  <code-pane
-    header="src/app/slide-toggle.component.ts"
-    path="component-store-slide-toggle/src/app/slide-toggle.component.ts">
-  </code-pane>
-  <code-pane
-    header="src/app/slide-toggle.html"
-    path="component-store-slide-toggle/src/app/slide-toggle.html">
-  </code-pane>
-</code-tabs>
+<ngrx-code-tabs>
+  <ngrx-code-example header="src/app/slide-toggle.component.ts">
+  </ngrx-code-example>
+
+  <ngrx-code-example header="src/app/slide-toggle.component.html">
+  </ngrx-code-example>
+</ngrx-code-tabs>
 
 Below are the steps of integrating `ComponentStore` into a component.
 
@@ -102,9 +99,6 @@ First, the state for the component needs to be identified. In `SlideToggleCompon
 <ngrx-code-example header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="state">
-
-`ts`
-
 </ngrx-code-example>
 
 Then we need to provide `ComponentStore` in the component's providers, so that each new instance of `SlideToggleComponent` has its own `ComponentStore`. It also has to be injected into the constructor.
@@ -119,9 +113,6 @@ In this example `ComponentStore` is provided directly in the component. This wor
   header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="providers">
-
-`ts`
-
 </ngrx-code-example>
 
 Next, the default state for the component needs to be set. It could be done lazily, however it needs to be done before any of `updater`s are executed, because they rely on the state to be present and would throw an error if the state is not initialized by the time they are invoked.
@@ -141,9 +132,6 @@ When it is called with a callback, the state is updated.
 <ngrx-code-example header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="init">
-
-`ts`
-
 </ngrx-code-example>
 
 #### Step 2. Updating state
@@ -158,9 +146,6 @@ When a user clicks the toggle (triggering a 'change' event), instead of calling 
   header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="updater">
-
-`ts`
-
 </ngrx-code-example>
 
 #### Step 3. Reading the state
@@ -173,12 +158,24 @@ Finally, the state is aggregated with selectors into two properties:
 <ngrx-code-example header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="selector">
-
-`ts`
-
 </ngrx-code-example>
 
 This example does not have a lot of business logic, however it is still fully reactive.
+
+<ngrx-code-tabs linenums="true">
+  <ngrx-code-example
+    header="PaginatorComponent with PaginatorStore Service"
+    path="component-store-paginator-service/src/app/paginator.component.ts">
+  </ngrx-code-example>
+  <ngrx-code-example
+    header="PaginatorComponent providing ComponentStore"
+    path="component-store-paginator/src/app/paginator.component.ts">
+  </ngrx-code-example>
+  <ngrx-code-example
+    header="src/app/paginator.store.ts"
+    path="component-store-paginator-service/src/app/paginator.store.ts">
+  </ngrx-code-example>
+</ngrx-code-tabs>
 
 ### Example 2: Service extending ComponentStore
 
@@ -209,21 +206,6 @@ You can see the examples at StackBlitz:
 
 </ngrx-docs-alert>
 
-<code-tabs linenums="true">
-  <code-pane
-    header="PaginatorComponent with PaginatorStore Service"
-    path="component-store-paginator-service/src/app/paginator.component.ts">
-  </code-pane>
-  <code-pane
-    header="PaginatorComponent providing ComponentStore"
-    path="component-store-paginator/src/app/paginator.component.ts">
-  </code-pane>
-  <code-pane
-    header="src/app/paginator.store.ts"
-    path="component-store-paginator-service/src/app/paginator.store.ts">
-  </code-pane>
-</code-tabs>
-
 #### Updating the state
 
 With `ComponentStore` extracted into `PaginatorStore`, the developer is now using updaters and effects to update the state. `@Input` values are passed directly into `updater`s as their arguments.
@@ -231,9 +213,6 @@ With `ComponentStore` extracted into `PaginatorStore`, the developer is now usin
 <ngrx-code-example header="src/app/paginator.store.ts"
   path="component-store-paginator-service/src/app/paginator.component.ts"
   region="inputs">
-
-`ts`
-
 </ngrx-code-example>
 
 Not all `updater`s have to be called in the `@Input`. For example, `changePageSize` is called from the template.
@@ -243,28 +222,25 @@ Effects are used to perform additional validation and get extra information from
 <ngrx-code-example header="src/app/paginator.store.ts"
   path="component-store-paginator-service/src/app/paginator.component.ts"
   region="updating-state">
-
-`ts`
-
 </ngrx-code-example>
 
 #### Reading the state
 
 `PaginatorStore` exposes the two properties: `vm$` for an aggregated _ViewModel_ to be used in the template and `page$` that would emit whenever data aggregated from a `PageEvent` changes.
 
-<code-tabs>
-  <code-pane
+<ngrx-code-tabs>
+  <ngrx-code-example
     header="src/app/paginator.component.ts"
     path="component-store-paginator-service/src/app/paginator.component.ts"
     region="selectors"
     >
-  </code-pane>
-  <code-pane
+  </ngrx-code-examp>
+  <ngrx-code-example
     header="src/app/paginator.store.ts"
     path="component-store-paginator-service/src/app/paginator.store.ts"
     region="selectors">
-  </code-pane>
-</code-tabs>
+  </ngrx-code-example>
+</ngrx-code-tabs>
 
 <ngrx-docs-alert type="help">
 

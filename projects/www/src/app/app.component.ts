@@ -5,6 +5,7 @@ import { MenuComponent } from './components/menu.component';
 import { MarkdownSymbolLinkComponent } from './components/docs/markdown-symbol-link.component';
 import { AlertComponent } from './components/docs/alert.component';
 import { CodeExampleComponent } from './components/docs/code-example.component';
+import { CodeTabsComponent } from './components/docs/code-tabs.component';
 import { StackblitzComponent } from './components/docs/stackblitz.component';
 import { FooterComponent } from './components/footer.component';
 
@@ -73,6 +74,11 @@ export class AppComponent {
       injector: this.injector,
     });
     customElements.define('ngrx-code-example', codeExampleElement);
+
+    const codeTabsElement = createCustomElement(CodeTabsComponent, {
+      injector: this.injector,
+    });
+    customElements.define('ngrx-code-tabs', codeTabsElement);
 
     const stackblitzElement = createCustomElement(StackblitzComponent, {
       injector: this.injector,

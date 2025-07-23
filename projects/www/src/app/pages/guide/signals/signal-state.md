@@ -159,8 +159,8 @@ export class CounterComponent {
 
 ### Example 2: SignalState in a Service
 
-<code-tabs linenums="true">
-<code-pane header="books.store.ts">
+<ngrx-code-tabs linenums="true">
+<ngrx-code-example header="books.store.ts">
 
 ```ts
 import { inject, Injectable } from '@angular/core';
@@ -204,9 +204,9 @@ export class BooksStore {
 }
 ```
 
-</code-pane>
+</ngrx-code-example>
 
-<code-pane header="books.component.ts">
+<ngrx-code-example header="books.component.ts">
 
 ```ts
 import {
@@ -244,5 +244,5 @@ export class BooksComponent implements OnInit {
 }
 ```
 
-</code-pane>
-</code-tabs>
+</ngrx-code-example>
+</ngrx-code-tabs>
