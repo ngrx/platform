@@ -234,7 +234,7 @@ Effects are used to perform additional validation and get extra information from
     path="component-store-paginator-service/src/app/paginator.component.ts"
     region="selectors"
     >
-  </ngrx-code-examp>
+  </ngrx-code-example>
   <ngrx-code-example
     header="src/app/paginator.store.ts"
     path="component-store-paginator-service/src/app/paginator.store.ts"
