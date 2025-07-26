@@ -39,6 +39,12 @@ type Heading = { level: number; text: string; id: string; url: string };
         width: 100%;
         position: relative;
         padding-right: 240px;
+        @media only screen and (max-width: 1280px) {
+          padding-top: 40px;
+          padding-right: 0px;
+          display: flex;
+          flex-direction: column-reverse;
+        }
       }
 
       menu {
@@ -52,6 +58,12 @@ type Heading = { level: number; text: string; id: string; url: string };
         margin: 0;
         padding: 0;
         border-left: 1px solid rgba(255, 255, 255, 0.12);
+        @media only screen and (max-width: 1280px) {
+          position: relative;
+          width: 100%;
+          padding: 24px;
+          right: 0px;
+        }
       }
 
       menu a {
@@ -70,9 +82,18 @@ type Heading = { level: number; text: string; id: string; url: string };
       }
 
       article {
-        width: 960px;
+        max-width: 960px;
+        width: calc(100% - 120px);
         padding: 24px;
         margin: 0 auto;
+        @media only screen and (max-width: 1500px) {
+          margin: 0px;
+        }
+        @media only screen and (max-width: 1280px) {
+          max-width: 100%;
+          width: 100%;
+          margin: 20px 0px 0px;
+        }
       }
 
       article ::ng-deep h1 {
@@ -94,6 +115,10 @@ type Heading = { level: number; text: string; id: string; url: string };
         border-left: 1px solid rgba(255, 255, 255, 0.12);
         border-right: 1px solid rgba(255, 255, 255, 0.12);
         margin: 14px 0;
+        @media only screen and (max-width: 1280px) {
+          display: block;
+          overflow-x: scroll;
+        }
       }
 
       article ::ng-deep table thead {
