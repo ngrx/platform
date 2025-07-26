@@ -45,10 +45,16 @@ import { FlattenedLink } from '../services/guide-menu.service';
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 24px;
-        max-width: 960px;
+        width: 960px;
         padding-top: 24px;
         margin-top: 24px;
         border-top: 1px solid rgba(255, 255, 255, 0.12);
+        @media only screen and (max-width: 1280px) {
+          width: 100%;
+        }
+        @media only screen and (max-width: 480px) {
+          grid-template-columns: 1fr;
+        }
       }
 
       .linkWrapper a {
@@ -60,6 +66,7 @@ import { FlattenedLink } from '../services/guide-menu.service';
         border: 1px solid rgba(255, 255, 255, 0.12);
         align-items: center;
         transition: border-color 200ms;
+        height: 100%;
       }
 
       .linkWrapper.previous a {
