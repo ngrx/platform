@@ -28,6 +28,9 @@ import { DeprecatedChipComponent } from './deprecated-chip.component';
         align-items: center;
         padding: 16px;
         gap: 16px;
+        @media only screen and (max-width: 600px) {
+          grid-template-columns: 1fr;
+        }
       }
 
       h3 {
