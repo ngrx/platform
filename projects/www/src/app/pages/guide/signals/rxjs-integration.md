@@ -17,7 +17,7 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 @Component({
   /* ... */
 })
-export class NumbersComponent {
+export class Numbers {
   // 👇 This reactive method will have an input argument
   // of type `number | Signal<number> | Observable<number>`.
   readonly logDoubledNumber = rxMethod<number>(
@@ -34,14 +34,14 @@ Each invocation of the reactive method pushes the input value through the reacti
 When called with a static value, the reactive chain executes once.
 
 ```ts
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { map, pipe, tap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 
 @Component({
   /* ... */
 })
-export class NumbersComponent implements OnInit {
+export class Numbers {
   readonly logDoubledNumber = rxMethod<number>(
     pipe(
       map((num) => num * 2),
@@ -49,7 +49,7 @@ export class NumbersComponent implements OnInit {
     )
   );
 
-  ngOnInit(): void {
+  constructor() {
     this.logDoubledNumber(1);
     // console output: 2
 
@@ -62,14 +62,14 @@ export class NumbersComponent implements OnInit {
 When a reactive method is called with a signal, the reactive chain is executed every time the signal value changes.
 
 ```ts
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { map, pipe, tap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 
 @Component({
   /* ... */
 })
-export class NumbersComponent implements OnInit {
+export class Numbers {
   readonly logDoubledNumber = rxMethod<number>(
     pipe(
       map((num) => num * 2),
@@ -77,7 +77,7 @@ export class NumbersComponent implements OnInit {
     )
   );
 
-  ngOnInit(): void {
+  constructor() {
     const num = signal(10);
     this.logDoubledNumber(num);
     // console output: 20
@@ -91,14 +91,14 @@ export class NumbersComponent implements OnInit {
 When a reactive method is called with an observable, the reactive chain is executed every time the observable emits a new value.
 
 ```ts
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { interval, map, of, pipe, tap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 
 @Component({
   /* ... */
 })
-export class NumbersComponent implements OnInit {
+export class Numbers {
   readonly logDoubledNumber = rxMethod<number>(
     pipe(
       map((num) => num * 2),
@@ -106,7 +106,7 @@ export class NumbersComponent implements OnInit {
     )
   );
 
-  ngOnInit(): void {
+  constructor() {
     const num1$ = of(100, 200, 300);
     this.logDoubledNumber(num1$);
     // console output: 200, 400, 600
@@ -127,17 +127,17 @@ The `rxMethod` is a great choice for handling API calls in a reactive manner.
 The subsequent example demonstrates how to use `rxMethod` to fetch the book by id whenever the `selectedBookId` signal value changes.
 
 ```ts
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { concatMap, filter, pipe } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
-import { Book } from './book.model';
-import { BooksService } from './books.service';
+import { BooksService } from './books-service';
+import { Book } from './book';
 
 @Component({
   /* ... */
 })
-export class BooksComponent implements OnInit {
+export class BookList {
   readonly #booksService = inject(BooksService);
 
   readonly bookMap = signal<Record<string, Book>>({});
@@ -157,7 +157,7 @@ export class BooksComponent implements OnInit {
     )
   );
 
-  ngOnInit(): void {
+  constructor() {
     // 👇 Load book by id whenever the `selectedBookId` value changes.
     this.loadBookById(this.selectedBookId);
   }
@@ -186,17 +186,17 @@ Further details can be found in the [Reactive Store Methods](guide/signals/signa
 To create a reactive method without arguments, the `void` type should be specified as a generic argument to the `rxMethod` function.
 
 ```ts
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { exhaustMap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
-import { Book } from './book.model';
-import { BooksService } from './books.service';
+import { BooksService } from './books-service';
+import { Book } from './book';
 
 @Component({
   /* ... */
 })
-export class BooksComponent implements OnInit {
+export class BookList {
   readonly #booksService = inject(BooksService);
   readonly books = signal<Book[]>([]);
 
@@ -212,7 +212,7 @@ export class BooksComponent implements OnInit {
     })
   );
 
-  ngOnInit(): void {
+  constructor() {
     this.loadAllBooks();
   }
 }
@@ -244,7 +244,7 @@ export class NumbersService {
 @Component({
   /* ... */
 })
-export class NumbersComponent implements OnInit {
+export class Numbers implements OnInit {
   readonly #injector = inject(Injector);
   readonly #numbersService = inject(NumbersService);
 
@@ -273,17 +273,17 @@ If the injector is not provided when calling the reactive method with a signal o
 If a reactive method needs to be cleaned up before the injector is destroyed, manual cleanup can be performed by calling the `destroy` method.
 
 ```ts
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { interval, tap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 
 @Component({
   /* ... */
 })
-export class NumbersComponent implements OnInit {
+export class Numbers {
   readonly logNumber = rxMethod<number>(tap(console.log));
 
-  ngOnInit(): void {
+  constructor() {
     const num1$ = interval(500);
     const num2$ = interval(1_000);
 
@@ -302,17 +302,17 @@ When invoked, the reactive method returns the object with the `destroy` method.
 This allows manual cleanup of a specific call, preserving the activity of other reactive method calls until the corresponding injector is destroyed.
 
 ```ts
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { interval, tap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 
 @Component({
   /* ... */
 })
-export class NumbersComponent implements OnInit {
+export class Numbers {
   readonly logNumber = rxMethod<number>(tap(console.log));
 
-  ngOnInit(): void {
+  constructor() {
     const num1$ = interval(500);
     const num2$ = interval(1_000);
 
@@ -339,7 +339,7 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 @Component({
   /* ... */
 })
-export class NumbersComponent implements OnInit {
+export class Numbers implements OnInit {
   readonly #injector = inject(Injector);
 
   ngOnInit(): void {

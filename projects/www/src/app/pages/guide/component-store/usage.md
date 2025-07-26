@@ -99,11 +99,16 @@ Below are the steps of integrating `ComponentStore` into a component.
 
 First, the state for the component needs to be identified. In `SlideToggleComponent` only the state of whether the toggle is turned ON or OFF is stored.
 
-<ngrx-code-example header="src/app/slide-toggle.component.ts"
+<ngrx-code-example
+  header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="state">
 
-`ts`
+```ts
+export interface SlideToggleState {
+  checked: boolean;
+}
+```
 
 </ngrx-code-example>
 
@@ -120,7 +125,11 @@ In this example `ComponentStore` is provided directly in the component. This wor
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="providers">
 
-`ts`
+```ts
+@Component({
+  selector: 'mat-slide-toggle',
+  templateUrl: 'slide-toggle.html',
+```
 
 </ngrx-code-example>
 
@@ -138,11 +147,21 @@ When it is called with a callback, the state is updated.
 
 </ngrx-docs-alert>
 
-<ngrx-code-example header="src/app/slide-toggle.component.ts"
+<ngrx-code-example
+  header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="init">
 
-`ts`
+```ts
+constructor(
+  private readonly componentStore: ComponentStore<SlideToggleState>
+) {
+  // set defaults
+  this.componentStore.setState({
+    checked: false,
+  });
+}
+```
 
 </ngrx-code-example>
 
@@ -159,7 +178,11 @@ When a user clicks the toggle (triggering a 'change' event), instead of calling 
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="updater">
 
-`ts`
+```ts
+@Input() set checked(value: boolean) {
+    this.setChecked(value);
+  }
+```
 
 </ngrx-code-example>
 
@@ -170,11 +193,18 @@ Finally, the state is aggregated with selectors into two properties:
 - `vm$` property collects all the data needed for the template - this is the _ViewModel_ of `SlideToggleComponent`.
 - `change` is the `@Output` of `SlideToggleComponent`. Instead of creating an `EventEmitter`, here the output is connected to the Observable source directly.
 
-<ngrx-code-example header="src/app/slide-toggle.component.ts"
+<ngrx-code-example
+  header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="selector">
 
-`ts`
+```ts
+// Observable<MatSlideToggleChange> used instead of EventEmitter
+  @Output() readonly change = this.componentStore.select((state) => ({
+    source: this,
+    checked: state.checked,
+  }));
+```
 
 </ngrx-code-example>
 
@@ -228,11 +258,28 @@ You can see the examples at StackBlitz:
 
 With `ComponentStore` extracted into `PaginatorStore`, the developer is now using updaters and effects to update the state. `@Input` values are passed directly into `updater`s as their arguments.
 
-<ngrx-code-example header="src/app/paginator.store.ts"
+<ngrx-code-example
+  header="src/app/paginator.store.ts"
   path="component-store-paginator-service/src/app/paginator.component.ts"
   region="inputs">
 
-`ts`
+```ts
+@Input() set pageIndex(value: string | number) {
+    this.paginatorStore.setPageIndex(value);
+  }
+
+  @Input() set length(value: string | number) {
+    this.paginatorStore.setLength(value);
+  }
+
+  @Input() set pageSize(value: string | number) {
+    this.paginatorStore.setPageSize(value);
+  }
+
+  @Input() set pageSizeOptions(value: readonly number[]) {
+    this.paginatorStore.setPageSizeOptions(value);
+  }
+```
 
 </ngrx-code-example>
 
@@ -240,11 +287,28 @@ Not all `updater`s have to be called in the `@Input`. For example, `changePageSi
 
 Effects are used to perform additional validation and get extra information from sources with derived data (i.e. selectors).
 
-<ngrx-code-example header="src/app/paginator.store.ts"
+<ngrx-code-example
+  header="src/app/paginator.store.ts"
   path="component-store-paginator-service/src/app/paginator.component.ts"
   region="updating-state">
 
-`ts`
+```ts
+changePageSize(newPageSize: number) {
+    this.paginatorStore.changePageSize(newPageSize);
+  }
+  nextPage() {
+    this.paginatorStore.nextPage();
+  }
+  firstPage() {
+    this.paginatorStore.firstPage();
+  }
+  previousPage() {
+    this.paginatorStore.previousPage();
+  }
+  lastPage() {
+    this.paginatorStore.lastPage();
+  }
+```
 
 </ngrx-code-example>
 
