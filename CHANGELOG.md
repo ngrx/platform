@@ -1,3 +1,11 @@
+<a name="20.0.0"></a>
+
+# [20.0.0](https://github.com/ngrx/platform/compare/20.0.0-rc.0...20.0.0) (2025-07-28)
+
+### Bug Fixes
+
+- **www:** Make API Pages Responsive ([#4885](https://github.com/ngrx/platform/issues/4885)) ([7f09858](https://github.com/ngrx/platform/commit/7f09858)), closes [#4816](https://github.com/ngrx/platform/issues/4816)
+
 <a name="20.0.0-rc.0"></a>
 
 # [20.0.0-rc.0](https://github.com/ngrx/platform/compare/20.0.0-beta.0...20.0.0-rc.0) (2025-07-14)
