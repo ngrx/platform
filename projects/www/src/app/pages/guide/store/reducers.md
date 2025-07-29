@@ -356,7 +356,7 @@ export class AppModule {}
 ```
 
 </ngrx-code-example>
-  
+
 Note: Similarly, if you are using effects, you will need to register both `EffectsModule.forRoot([...])` and `provideEffects([...])`. For more info, see [Effects](guide/effects).
 
 ## Next Steps
