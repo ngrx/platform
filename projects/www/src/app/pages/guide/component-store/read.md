@@ -98,7 +98,7 @@ The `select` method accepts a dictionary of observables as input and returns an 
 <ngrx-code-example header="movies.store.ts">
 
 ```ts
-  private readonly vm$ = this.select({
+private readonly vm$ = this.select({
     movies: this.movies$,
     userPreferredMovieIds: this.userPreferredMovieIds$,
     userPreferredMovies: this.userPreferredMovies$

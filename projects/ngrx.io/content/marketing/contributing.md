@@ -14,14 +14,12 @@ Watch as Brandon Roberts and Jan-Niklas Wortmann walk through how to contribute 
 
 <div class="video-container">
   <div class="video-responsive-wrapper">
-
     <iframe
       src="https://www.youtube.com/embed/ug0c1tUegm4"
       allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen
       frameborder="0"
     ></iframe>
-
   </div>
 </div>
 

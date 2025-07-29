@@ -7,7 +7,7 @@ State tracking enables the implementation of custom SignalStore features such as
 The `getState` function is used to get the current state value of the SignalStore.
 When used within a reactive context, state changes are automatically tracked.
 
-<ngrx-code-example header="counter.store.ts">
+<ngrx-code-example header="counter-store.ts">
 
 ```ts
 import { effect } from '@angular/core';
@@ -54,7 +54,7 @@ It accepts a SignalStore instance as the first argument and a watcher function a
 By default, the `watchState` function needs to be executed within an injection context.
 It is tied to its lifecycle and is automatically cleaned up when the injector is destroyed.
 
-<ngrx-code-example header="counter.store.ts">
+<ngrx-code-example header="counter-store.ts">
 
 ```ts
 import { effect } from '@angular/core';
@@ -100,7 +100,7 @@ Conversely, the `effect` function will be executed only once with the final coun
 
 If a state watcher needs to be cleaned up before the injector is destroyed, manual cleanup can be performed by calling the `destroy` method.
 
-<ngrx-code-example header="counter.store.ts">
+<ngrx-code-example header="counter-store.ts">
 
 ```ts
 import {
@@ -138,18 +138,18 @@ export const CounterStore = signalStore(
 
 The `watchState` function can be used outside an injection context by providing an injector as the second argument.
 
-<ngrx-code-example header="counter.component.ts">
+<ngrx-code-example header="counter.ts">
 
 ```ts
 import { Component, inject, Injector, OnInit } from '@angular/core';
 import { watchState } from '@ngrx/signals';
-import { CounterStore } from './counter.store';
+import { CounterStore } from './counter-store';
 
 @Component({
   /* ... */
   providers: [CounterStore],
 })
-export class CounterComponent implements OnInit {
+export class Counter implements OnInit {
   readonly #injector = inject(Injector);
   readonly store = inject(CounterStore);
 
