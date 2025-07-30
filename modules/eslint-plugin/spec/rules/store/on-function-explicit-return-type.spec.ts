@@ -29,7 +29,6 @@ const reducer = createReducer(
 const reducer = createReducer(
   initialState,
   on(increment, incrementFunc),
-  on(increment, s => incrementFunc(s)),
   on(increment, (s): State => incrementFunc(s)),
 )`,
   `
@@ -174,6 +173,57 @@ const reducer = createReducer(
 const reducer = createReducer(
   initialState,
   on(reset, (): State =>   initialState  ),
+)`,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    code: `
+const reducer = createReducer(
+  initialState,
+  on(reset, s => foo(s)),
+)`,
+    errors: [
+      {
+        column: 13,
+        endColumn: 24,
+        line: 4,
+        messageId: onFunctionExplicitReturnType,
+        suggestions: [
+          {
+            messageId: onFunctionExplicitReturnTypeSuggest,
+            output: `
+const reducer = createReducer(
+  initialState,
+  on(reset, (s): State => foo(s)),
+)`,
+          },
+        ],
+      },
+    ],
+  },
+  // https://github.com/ngrx/platform/issues/4901
+  {
+    code: `
+const reducer = createReducer(
+  initialState,
+  on(reset, s => ({ ...s, counter: Number(1) })),
+)`,
+    errors: [
+      {
+        column: 13,
+        endColumn: 48,
+        line: 4,
+        messageId: onFunctionExplicitReturnType,
+        suggestions: [
+          {
+            messageId: onFunctionExplicitReturnTypeSuggest,
+            output: `
+const reducer = createReducer(
+  initialState,
+  on(reset, (s): State => ({ ...s, counter: Number(1) })),
 )`,
           },
         ],
