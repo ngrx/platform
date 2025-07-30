@@ -4,7 +4,7 @@ The following example more extensively utilizes the key concepts of store to man
 
 ## Tutorial
 
-1.  Generate a new project using StackBlitz <live-example name="ngrx-start" noDownload></live-example> and create a folder named `book-list` inside the `app` folder. This folder is used to hold the book list component later in the tutorial. For now, let's start with adding a file named `books.model.ts` to reference different aspects of a book in the book list.
+1.  Generate a new project using StackBlitz <ngrx-docs-stackblitz name="ngrx-start"></ngrx-docs-stackblitz> and create a folder named `book-list` inside the `app` folder. This folder is used to hold the book list component later in the tutorial. For now, let's start with adding a file named `books.model.ts` to reference different aspects of a book in the book list.
 
 <ngrx-code-example header="src/app/book-list/books.model.ts" path="store-walkthrough/src/app/book-list/books.model.ts">
 
