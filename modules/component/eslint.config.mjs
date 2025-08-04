@@ -34,7 +34,7 @@ export default [
       },
       languageOptions: {
         parserOptions: {
-          project: ['modules/component/tsconfig.*?.json'],
+          project: ['modules/component/tsconfig.*.json'],
         },
       },
     })),

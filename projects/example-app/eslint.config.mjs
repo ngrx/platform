@@ -68,7 +68,7 @@ export default [
       },
       languageOptions: {
         parserOptions: {
-          project: ['projects/example-app/tsconfig.*?.json'],
+          project: ['projects/example-app/tsconfig.*.json'],
         },
       },
     })),

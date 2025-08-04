@@ -227,7 +227,7 @@
     "tsickle": "^0.37.0",
     "tsutils": "2.27.2",
     "typescript": "5.8.2",
-    "typescript-eslint": "8.19.0",
+    "typescript-eslint": "8.39.0",
     "uglify-js": "^3.1.9",
     "vite": "^6.3.0",
     "vite-tsconfig-paths": "^4.2.0",

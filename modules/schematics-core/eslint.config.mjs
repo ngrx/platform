@@ -33,7 +33,7 @@ export default [
       },
       languageOptions: {
         parserOptions: {
-          project: ['modules/schematics-core/tsconfig.*?.json'],
+          project: ['modules/schematics-core/tsconfig.*.json'],
         },
       },
     })),
