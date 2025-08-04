@@ -300,6 +300,9 @@ importers:
       jest-preset-angular:
         specifier: 14.4.2
         version: 14.4.2(vhvs5m2ft5gwghubhr6jbwazre)
+      jiti:
+        specifier: 2.4.2
+        version: 2.4.2
       jsdom:
         specifier: ^22.0.0
         version: 22.1.0

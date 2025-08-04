@@ -165,6 +165,7 @@
     "jest-environment-jsdom": "29.7.0",
     "jest-jasmine2": "29.7.0",
     "jest-preset-angular": "14.4.2",
+    "jiti": "2.4.2",
     "jsdom": "^22.0.0",
     "karma": "6.4.0",
     "karma-chrome-launcher": "3.1.0",
