@@ -1,15 +1,6 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import js from '@eslint/js';
 import baseConfig from '../../eslint.config.mjs';
 import typescriptEslintEslintPlugin from '@typescript-eslint/eslint-plugin';
 import cypressPlugin from 'eslint-plugin-cypress';
-
-const compat = new FlatCompat({
-  baseDirectory: dirname(fileURLToPath(import.meta.url)),
-  recommendedConfig: js.configs.recommended,
-});
 
 export default [
   {
@@ -31,7 +22,7 @@ export default [
     rules: {},
     languageOptions: {
       parserOptions: {
-        project: 'projects/example-app-e2e/tsconfig.*?.json',
+        project: 'projects/example-app-e2e/tsconfig.*.json',
       },
     },
   },
@@ -57,10 +48,6 @@ export default [
         project: null,
       },
     },
-    rules: {
-      // Disable broken rule under ESLint v9
-      'cypress/no-async-tests': 'off',
-      // Add other Cypress rules manually if needed
-    },
+    rules: {},
   },
 ];
