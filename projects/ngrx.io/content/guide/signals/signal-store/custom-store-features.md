@@ -309,6 +309,59 @@ export const BooksStore = signalStore(
 );
 ```
 
+## Using `withFeatureFactory`
+When building reusable store features that depend on a value from the store (such as a Signal), `withFeatureFactory` provides a concise and type-safe alternative to `withFeature`.
+
+`withFeatureFactory` generates a `withFeature` wrapper internally and enforces that the feature factory receives exactly one input. This helps streamline integration of store values into features while maintaining type safety and simplicity.
+
+```ts
+import { computed, Signal } from '@angular/core';
+import {
+  patchState,
+  signalStore,
+  signalStoreFeature,
+  withComputed,
+  withFeatureFactory,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+import { withEntities } from '@ngrx/signals/entities';
+import { Book } from './book';
+
+// 👇 Create a reusable feature with a single input
+export const withBooksFilter = withFeatureFactory((books: Signal<Book[]>) =>
+  signalStoreFeature(
+    withState({ query: '' }),
+    withComputed((store) => ({
+      filteredBooks: computed(() =>
+        books().filter((b) => b.name.includes(store.query()))
+      ),
+    })),
+    withMethods((store) => ({
+      setQuery(query: string): void {
+        patchState(store, { query });
+      },
+    }))
+  )
+);
+
+export const BooksStore = signalStore(
+  withEntities<Book>(),
+// 👇 Use the feature by selecting a value from the parent store
+  withBooksFilter(({ entities }) => entities)
+);
+```
+### `withFeatureFactory` limitations
+`withFeatureFactory` only supports features that accept a single input parameter.
+If your feature needs multiple inputs, group them in a single object:
+```ts
+// ✅ Wrap multiple inputs in a single object
+withFeatureFactory(({ signalA, signalB }) => ...)
+
+// ❌ Not allowed: multiple function parameters
+withFeatureFactory((signalA, signalB) => ...) // Error
+```
+
 ## Known TypeScript Issues
 
 Combining multiple custom features with static input may cause unexpected compilation errors:

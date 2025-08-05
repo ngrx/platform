@@ -24,6 +24,7 @@ export { Prettify } from './ts-helpers';
 
 export { withComputed } from './with-computed';
 export { withFeature } from './with-feature';
+export { withFeatureFactory } from './with-feature-factory';
 export { withHooks } from './with-hooks';
 export { withLinkedState } from './with-linked-state';
 export { withMethods } from './with-methods';
