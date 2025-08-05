@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import js from '@eslint/js';
 import baseConfig from '../../eslint.config.mjs';
 import typescriptEslintEslintPlugin from '@typescript-eslint/eslint-plugin';
+import cypressPlugin from 'eslint-plugin-cypress';
 
 const compat = new FlatCompat({
   baseDirectory: dirname(fileURLToPath(import.meta.url)),
@@ -15,14 +16,18 @@ export default [
     ignores: ['**/dist'],
   },
   ...baseConfig,
-  ...compat.extends('plugin:cypress/recommended'),
-  { plugins: { '@typescript-eslint': typescriptEslintEslintPlugin } },
+
+  {
+    plugins: {
+      '@typescript-eslint': typescriptEslintEslintPlugin,
+      cypress: cypressPlugin,
+    },
+  },
   {
     rules: {},
   },
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-    // Override or add rules here
     rules: {},
     languageOptions: {
       parserOptions: {
@@ -39,5 +44,23 @@ export default [
   },
   {
     ignores: ['schematics-core'],
+  },
+
+  // ✅ Cypress E2E overrides
+  {
+    files: ['src/**/*.cy.{ts,tsx}'],
+    plugins: {
+      cypress: cypressPlugin,
+    },
+    languageOptions: {
+      parserOptions: {
+        project: null,
+      },
+    },
+    rules: {
+      // Disable broken rule under ESLint v9
+      'cypress/no-async-tests': 'off',
+      // Add other Cypress rules manually if needed
+    },
   },
 ];

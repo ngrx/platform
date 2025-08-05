@@ -340,8 +340,8 @@ importers:
         specifier: 10.0.0
         version: 10.0.0(eslint@9.31.0(jiti@2.4.2))
       eslint-plugin-cypress:
-        specifier: 2.14.0
-        version: 2.14.0(eslint@9.31.0(jiti@2.4.2))
+        specifier: 5.1.0
+        version: 5.1.0(eslint@9.31.0(jiti@2.4.2))
       eslint-plugin-import:
         specifier: 2.26.0
         version: 2.26.0(@typescript-eslint/parser@8.39.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.31.0(jiti@2.4.2))
@@ -7187,10 +7187,10 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
 
-  eslint-plugin-cypress@2.14.0:
-    resolution: {integrity: sha512-eW6tv7iIg7xujleAJX4Ujm649Bf5jweqa4ObPEIuueYRyLZt7qXGWhCY/n4bfeFW/j6nQZwbIBHKZt6EKcL/cg==}
+  eslint-plugin-cypress@5.1.0:
+    resolution: {integrity: sha512-tdLXm4aq9vX2hTtKJTUFD3gdNseMKqsf8+P6hI4TtOPdz1LU4xvTpQBd1++qPAsPZP2lyYh71B5mvzu2lBr4Ow==}
     peerDependencies:
-      eslint: '>= 3.2.1'
+      eslint: '>=9'
 
   eslint-plugin-import@2.26.0:
     resolution: {integrity: sha512-hYfi3FXaM8WPLf4S1cikh/r4IxnO6zrhZbEGz2b660EJRbuxgpDS5gkCuYgGWg2xxh2rBuIr4Pvhve/7c31koA==}
@@ -7894,6 +7894,10 @@ packages:
 
   globals@15.14.0:
     resolution: {integrity: sha512-OkToC372DtlQeje9/zHIo5CT8lRP/FUgEOKBEhU4e0abL7J7CD24fD9ohiLN5hagG/kWCYj4K5oaxxtj2Z0Dig==}
+    engines: {node: '>=18'}
+
+  globals@16.3.0:
+    resolution: {integrity: sha512-bqWEnJ1Nt3neqx2q5SFfGS8r/ahumIakg3HcwtNlrVlwXIeNumWn/c7Pn/wKzGhf6SaW6H6uWXLqC30STCMchQ==}
     engines: {node: '>=18'}
 
   globalthis@1.0.4:
@@ -21759,10 +21763,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-cypress@2.14.0(eslint@9.31.0(jiti@2.4.2)):
+  eslint-plugin-cypress@5.1.0(eslint@9.31.0(jiti@2.4.2)):
     dependencies:
       eslint: 9.31.0(jiti@2.4.2)
-      globals: 13.24.0
+      globals: 16.3.0
 
   eslint-plugin-import@2.26.0(@typescript-eslint/parser@8.39.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.31.0(jiti@2.4.2)):
     dependencies:
@@ -22689,6 +22693,8 @@ snapshots:
   globals@14.0.0: {}
 
   globals@15.14.0: {}
+
+  globals@16.3.0: {}
 
   globalthis@1.0.4:
     dependencies:
