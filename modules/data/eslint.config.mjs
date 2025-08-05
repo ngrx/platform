@@ -11,7 +11,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['**/dist'],
+    ignores: ['**/dist', '**/jest.config.ts', '**/schematics-core/test-setup.ts'],
   },
   ...baseConfig,
   ...compat
