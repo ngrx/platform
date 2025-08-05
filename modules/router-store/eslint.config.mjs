@@ -16,7 +16,8 @@ export default [
       '**/router-store/data-persistence/index.ts',
       '**/router-store/data-persistence/src/operators.ts',
       '**/router-store/data-persistence/src/public_api.ts',
-      '**/router-store/schematics-core/jest.config.ts'
+      '**/router-store/schematics-core/jest.config.ts',
+      '**/router-store/schematics-core/test-setup.ts'
     ],
   },
   ...baseConfig,
