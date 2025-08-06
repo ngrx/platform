@@ -1,5 +1,5 @@
 {
-  "extends": ["plugin:cypress/recommended", "../../.eslintrc.json"],
+  "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
