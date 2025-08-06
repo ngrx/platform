@@ -7,19 +7,25 @@ import {
   PLATFORM_ID,
   ViewEncapsulation,
   inject,
-  input,
   viewChild,
 } from '@angular/core';
 import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
 
 @Component({
-  selector: 'ngrx-stackblitz',
+  selector: 'ngrx-docs-stackblitz',
   standalone: true,
-  template: ` <div #example></div> `,
+  template: `
+    @if(isEmbedded) {
+    <div [attr.title]="name" #example></div>
+    } @else {
+    <a (click)="openStackblitz()" [attr.title]="name"
+      ><ng-content>StackBlitz example</ng-content></a
+    >
+    }
+  `,
   encapsulation: ViewEncapsulation.None,
   styles: [
     `
-      ngrx-stackblitz iframe,
       ngrx-docs-stackblitz iframe {
         display: block;
         width: 100%;
@@ -33,11 +39,22 @@ export class StackblitzComponent implements AfterViewInit {
   examplesService = inject(ExamplesService);
   platformId = inject(PLATFORM_ID);
   @Input() name: string = '__base';
+  @Input() embedded: string = 'false';
+
   exampleRef = viewChild.required<ElementRef<HTMLDivElement>>('example');
 
   ngAfterViewInit(): void {
     if (isPlatformServer(this.platformId)) return;
+    if (!this.isEmbedded) return;
 
     this.examplesService.load(this.exampleRef().nativeElement, this.name);
+  }
+
+  openStackblitz(): void {
+    this.examplesService.open(this.name);
+  }
+
+  get isEmbedded(): boolean {
+    return this.embedded !== 'false';
   }
 }

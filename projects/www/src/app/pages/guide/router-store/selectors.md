@@ -12,7 +12,7 @@ Usage:
 
 <ngrx-docs-alert type="help">
 
-You can see the full example at StackBlitz: <live-example name="router-store-selectors"></live-example>
+You can see the full example at StackBlitz: <ngrx-docs-stackblitz name="router-store-selectors"></ngrx-docs-stackblitz>
 
 </ngrx-docs-alert>
 

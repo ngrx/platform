@@ -33,9 +33,11 @@ The following diagram represents the overall general flow of application state i
 
 ## Tutorial
 
-The following tutorial shows you how to manage the state of a counter, and how to select and display it within an Angular component. Try the <live-example name="store" noDownload></live-example>.
+The following tutorial shows you how to manage the state of a counter, and how to select and display it within an Angular component.
 
-1.  Generate a new project using StackBlitz <live-example name="ngrx-start" noDownload></live-example>.
+<ngrx-docs-stackblitz name="store" embedded></ngrx-docs-stackblitz>
+
+1.  Generate a new project using the <ngrx-docs-stackblitz name="ngrx-start"></ngrx-docs-stackblitz>.
 
 2.  Right click on the `app` folder in StackBlitz and create a new file named `counter.actions.ts` to describe the counter actions to increment, decrement, and reset its value.
 

@@ -78,7 +78,7 @@ Here's the simplified `SlideToggleComponent` example which uses `ComponentStore`
 
 <ngrx-docs-alert type="help">
 
-You can see the full example at StackBlitz: <live-example name="component-store-slide-toggle"></live-example>
+You can see the full example at StackBlitz: <ngrx-docs-stackblitz name="component-store-slide-toggle"></ngrx-docs-stackblitz>
 
 </ngrx-docs-alert>
 
@@ -234,8 +234,8 @@ What we can see is that while the _"PaginatorComponent providing ComponentStore"
 
 You can see the examples at StackBlitz:
 
-- "PaginatorComponent providing ComponentStore" <live-example name="component-store-paginator" noDownload></live-example>
-- "PaginatorComponent with PaginatorStore Service" <live-example name="component-store-paginator-service" noDownload></live-example>
+- "PaginatorComponent providing ComponentStore" <ngrx-docs-stackblitz name="component-store-paginator" noDownload></ngrx-docs-stackblitz>
+- "PaginatorComponent with PaginatorStore Service" <ngrx-docs-stackblitz name="component-store-paginator-service" noDownload></ngrx-docs-stackblitz>
 
 </ngrx-docs-alert>
 
