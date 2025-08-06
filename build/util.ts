@@ -102,12 +102,6 @@ export function getPackageFilePath(pkg: string, filename: string) {
   return baseDir(`./modules/${pkg}/${filename}`);
 }
 
-const sorcery = require('sorcery');
-export async function mapSources(file: string) {
-  const chain = await sorcery.load(file);
-  chain.write();
-}
-
 const ora = require('ora');
 async function runTask(name: string, taskFn: () => Promise<any>) {
   const spinner = ora(name);

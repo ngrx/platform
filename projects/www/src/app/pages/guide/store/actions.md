@@ -76,7 +76,7 @@ Use the action creator to return the `Action` when dispatching.
 <ngrx-code-example header="login-page.component.ts">
 
 ```ts
-  onSubmit(username: string, password: string) {
+onSubmit(username: string, password: string) {
     store.dispatch(login({ username: username, password: password }));
   }
 ```

@@ -1,12 +1,12 @@
 # Walkthrough
 
-The following example more extensively utilizes the key concepts of store to manage the state of book list, and how the user can add a book to and remove it from their collection within an Angular component.
+The following example more extensively utilizes the key concepts of store to manage the state of book list, and how the user can add a book to and remove it from their collection within an Angular component. Try the <live-example name="store-walkthrough" noDownload></live-example>.
 
 ## Tutorial
 
-1.  Generate a new project using StackBlitz <live-example name="ngrx-start" noDownload></live-example> and create a folder named `book-list` inside the `app` folder. This folder is used to hold the book list component later in the tutorial. For now, let's start with adding a file named `books.model.ts` to reference different aspects of a book in the book list.
+1.  Generate a new project using StackBlitz <ngrx-docs-stackblitz name="ngrx-start"></ngrx-docs-stackblitz> and create a folder named `book-list` inside the `app` folder. This folder is used to hold the book list component later in the tutorial. For now, let's start with adding a file named `books.model.ts` to reference different aspects of a book in the book list.
 
-<ngrx-code-example header="src/app/book-list/books.model.ts">
+<ngrx-code-example header="src/app/book-list/books.model.ts" path="store-walkthrough/src/app/book-list/books.model.ts">
 
 ```ts
 export interface Book {
@@ -22,7 +22,7 @@ export interface Book {
 
 2.  Right click on the `app` folder to create a state management folder `state`. Within the new folder, create a new file `books.actions.ts` to describe the book actions. Book actions include the book list retrieval, and the add and remove book actions.
 
-<ngrx-code-example header="src/app/state/books.actions.ts">
+<ngrx-code-example header="src/app/state/books.actions.ts" path="store-walkthrough/src/app/state/books.actions.ts">
 
 ```ts
 import { createActionGroup, props } from '@ngrx/store';
@@ -48,7 +48,7 @@ export const BooksApiActions = createActionGroup({
 
 3.  Right click on the `state` folder and create a new file labeled `books.reducer.ts`. Within this file, define a reducer function to handle the retrieval of the book list from the state and consequently, update the state.
 
-<ngrx-code-example header="src/app/state/books.reducer.ts">
+<ngrx-code-example header="src/app/state/books.reducer.ts" path="store-walkthrough/src/app/state/books.reducer.ts">
 
 ```ts
 import { createReducer, on } from '@ngrx/store';
@@ -68,7 +68,7 @@ export const booksReducer = createReducer(
 
 4. Create another file named `collection.reducer.ts` in the `state` folder to handle actions that alter the user's book collection. Define a reducer function that handles the add action by appending the book's ID to the collection, including a condition to avoid duplicate book IDs. Define the same reducer to handle the remove action by filtering the collection array with the book ID.
 
-<ngrx-code-example header="src/app/state/collection.reducer.ts">
+<ngrx-code-example header="src/app/state/collection.reducer.ts" path="store-walkthrough/src/app/state/collection.reducer.ts">
 
 ```ts
 import { createReducer, on } from '@ngrx/store';
@@ -91,42 +91,44 @@ export const collectionReducer = createReducer(
 
 </ngrx-code-example>
 
-5.  Import the `provideStore` from `@ngrx/store` and the `books.reducer` and `collection.reducer` file.
+5.  Import the `StoreModule` from `@ngrx/store` and the `books.reducer` and `collection.reducer` file.
 
-<ngrx-code-example header="src/app/app.config.ts (imports)">
+<ngrx-code-example header="src/app/app.module.ts (imports)" path="store-walkthrough/src/app/app.module.1.ts" region="partialTopLevelImports">
 
 ```ts
-import { provideStore } from '@ngrx/store';
-
+import { HttpClientModule } from '@angular/common/http';
 import { booksReducer } from './state/books.reducer';
 import { collectionReducer } from './state/collection.reducer';
+import { StoreModule } from '@ngrx/store';
 ```
 
 </ngrx-code-example>
 
-6.  Add the `provideStore` function in the `providers` array of your `app.config.ts` with an object containing the `books` and `booksReducer`, as well as the `collection` and `collectionReducer` that manage the state of the book list and the collection. The `provideStore` function registers the global providers needed to access the `Store` throughout your application.
+6.  Add the `StoreModule.forRoot` function in the `imports` array of your `AppModule` with an object containing the `books` and `booksReducer`, as well as the `collection` and `collectionReducer` that manage the state of the book list and the collection. The `StoreModule.forRoot()` method registers the global providers needed to access the `Store` throughout your application.
 
-<ngrx-code-example header="src/app/app.config.ts (StoreModule)">
+<ngrx-code-example header="src/app/app.module.ts (StoreModule)" path="store-walkthrough/src/app/app.module.1.ts" region="storeModuleAddToImports">
 
 ```ts
-import { ApplicationConfig } from '@angular/core';
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    // ..other providers
-    provideStore({
+@NgModule({
+  imports: [
+    BrowserModule,
+    StoreModule.forRoot({
       books: booksReducer,
       collection: collectionReducer,
     }),
+    HttpClientModule,
   ],
-};
+  declarations: [AppComponent],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
 ```
 
 </ngrx-code-example>
 
 7. Create the book list and collection selectors to ensure we get the correct information from the store. As you can see, the `selectBookCollection` selector combines two other selectors in order to build its return value.
 
-<ngrx-code-example header="src/app/state/books.selectors.ts">
+<ngrx-code-example header="src/app/state/books.selectors.ts" path="store-walkthrough/src/app/state/books.selectors.ts">
 
 ```ts
 import { createSelector, createFeatureSelector } from '@ngrx/store';
@@ -153,7 +155,7 @@ export const selectBookCollection = createSelector(
 
 8. In the `book-list` folder, we want to have a service that fetches the data needed for the book list from an API. Create a file in the `book-list` folder named `books.service.ts`, which will call the Google Books API and return a list of books.
 
-<ngrx-code-example header="src/app/book-list/books.service.ts">
+<ngrx-code-example header="src/app/book-list/books.service.ts" path="store-walkthrough/src/app/book-list/books.service.ts">
 
 ```ts
 import { HttpClient } from '@angular/common/http';
@@ -181,26 +183,29 @@ export class GoogleBooksService {
 
 9. In the same folder (`book-list`), create the `BookListComponent` with the following template. Update the `BookListComponent` class to dispatch the `add` event.
 
-<ngrx-code-example header="src/app/book-list/book-list.component.html">
+<ngrx-code-example header="src/app/book-list/book-list.component.html" path="store-walkthrough/src/app/book-list/book-list.component.html">
 
-```angular-ts
-@for(book of books; track book) {
-  <div class="book-item">
-    <p>{{book.volumeInfo.title}}</p><span> by {{book.volumeInfo.authors}}</span>
-    <button
-      (click)="add.emit(book.id)"
-      data-test="add-button"
-    >Add to Collection</button>
-  </div>
-}
+```html
+<div class="book-item" *ngFor="let book of books">
+  <p>{{book.volumeInfo.title}}</p>
+  <span> by {{book.volumeInfo.authors}}</span>
+  <button (click)="add.emit(book.id)" data-test="add-button">
+    Add to Collection
+  </button>
+</div>
 ```
 
 </ngrx-code-example>
 
-<ngrx-code-example header="src/app/book-list/book-list.component.ts">
+<ngrx-code-example header="src/app/book-list/book-list.component.ts" path="store-walkthrough/src/app/book-list/book-list.component.ts">
 
 ```ts
-import { Component, input, output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { Book } from './books.model';
 
 @Component({
@@ -209,8 +214,8 @@ import { Book } from './books.model';
   styleUrls: ['./book-list.component.css'],
 })
 export class BookListComponent {
-  books = input<ReadonlyArray<Book>>([]);
-  add = output<string>();
+  @Input() books: ReadonlyArray<Book> = [];
+  @Output() add = new EventEmitter<string>();
 }
 ```
 
@@ -218,26 +223,29 @@ export class BookListComponent {
 
 10. Create a new _Component_ named `book-collection` in the `app` folder. Update the `BookCollectionComponent` template and class.
 
-<ngrx-code-example header="src/app/book-collection/book-collection.component.html">
+<ngrx-code-example header="src/app/book-collection/book-collection.component.html" path="store-walkthrough/src/app/book-collection/book-collection.component.html">
 
-```angular-ts
-@for(book of books; track book) {
-  <div class="book-item">
-    <p>{{book.volumeInfo.title}}</p><span> by {{book.volumeInfo.authors}}</span>
-    <button
-      (click)="remove.emit(book.id)"
-      data-test="remove-button"
-    >Remove from Collection</button>
-  </div>
-}
+```html
+<div class="book-item" *ngFor="let book of books">
+  <p>{{book.volumeInfo.title}}</p>
+  <span> by {{book.volumeInfo.authors}}</span>
+  <button (click)="remove.emit(book.id)" data-test="remove-button">
+    Remove from Collection
+  </button>
+</div>
 ```
 
 </ngrx-code-example>
 
-<ngrx-code-example header="src/app/book-collection/book-collection.component.ts">
+<ngrx-code-example header="src/app/book-collection/book-collection.component.ts" path="store-walkthrough/src/app/book-collection/book-collection.component.ts">
 
 ```ts
-import { Component, input, output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { Book } from '../book-list/books.model';
 
 @Component({
@@ -246,32 +254,29 @@ import { Book } from '../book-list/books.model';
   styleUrls: ['./book-collection.component.css'],
 })
 export class BookCollectionComponent {
-  books = input<ReadonlyArray<Book>>([]);
-  add = output<string>();
+  @Input() books: ReadonlyArray<Book> = [];
+  @Output() remove = new EventEmitter<string>();
 }
 ```
 
 </ngrx-code-example>
 
-11. Add `BookListComponent` and `BookCollectionComponent` to your `AppComponent` template, and to your imports in `app.component.ts` as well.
+11. Add `BookListComponent` and `BookCollectionComponent` to your `AppComponent` template, and to your declarations (along with their top level import statements) in `app.module.ts` as well.
 
-<ngrx-code-example header="src/app/app.component.html (Components)">
+<ngrx-code-example header="src/app/app.component.html (Components)" path="store-walkthrough/src/app/app.component.html" region="components">
 
 ```html
 <h2>Books</h2>
-
 <app-book-list
   class="book-list"
-  [books]="books()!"
+  [books]="(books$ | async)!"
   (add)="onAdd($event)"
->
-</app-book-list>
+></app-book-list>
 
 <h2>My Collection</h2>
-
 <app-book-collection
   class="book-collection"
-  [books]="bookCollection()!"
+  [books]="(bookCollection$ | async)!"
   (remove)="onRemove($event)"
 >
 </app-book-collection>
@@ -279,27 +284,45 @@ export class BookCollectionComponent {
 
 </ngrx-code-example>
 
-```ts
-import { Component, input, output } from '@angular/core';
-import { Book } from '../book-list/books.model';
+<ngrx-code-example header="src/app/app.module.ts (Final)" path="store-walkthrough/src/app/app.module.ts">
 
-@Component({
-  selector: 'app-book-collection',
-  templateUrl: './book-collection.component.html',
-  styleUrls: ['./book-collection.component.css'],
-  imports: [BookListComponent, BookCollectionComponent],
+```ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { HttpClientModule } from '@angular/common/http';
+import { booksReducer } from './state/books.reducer';
+import { collectionReducer } from './state/collection.reducer';
+import { StoreModule } from '@ngrx/store';
+
+import { AppComponent } from './app.component';
+import { BookListComponent } from './book-list/book-list.component';
+import { BookCollectionComponent } from './book-collection/book-collection.component';
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    StoreModule.forRoot({
+      books: booksReducer,
+      collection: collectionReducer,
+    }),
+    HttpClientModule,
+  ],
+  declarations: [
+    AppComponent,
+    BookListComponent,
+    BookCollectionComponent,
+  ],
+  bootstrap: [AppComponent],
 })
-export class BookCollectionComponent {
-  books = input<ReadonlyArray<Book>>([]);
-  add = output<string>();
-}
+export class AppModule {}
 ```
 
 </ngrx-code-example>
 
 12. In the `AppComponent` class, add the selectors and corresponding actions to dispatch on `add` or `remove` method calls. Then subscribe to the Google Books API in order to update the state. (This should probably be handled by NgRx Effects, which you can read about [here](guide/effects). For the sake of this demo, NgRx Effects is not being included).
 
-<ngrx-code-example header="src/app/app.component.ts">
+<ngrx-code-example header="src/app/app.component.ts" path="store-walkthrough/src/app/app.component.ts">
 
 ```ts
 import { Component, OnInit } from '@angular/core';
@@ -317,8 +340,8 @@ import { GoogleBooksService } from './book-list/books.service';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
-  books = this.store.selectSignal(selectBooks);
-  bookCollection = this.store.selectSignal(selectBookCollection);
+  books$ = this.store.select(selectBooks);
+  bookCollection$ = this.store.select(selectBookCollection);
 
   onAdd(bookId: string) {
     this.store.dispatch(BooksActions.addBook({ bookId }));

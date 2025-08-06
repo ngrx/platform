@@ -22,45 +22,37 @@ The `concatLatestFrom` operator has been moved from `@ngrx/effects` to `@ngrx/op
 
 </ngrx-docs-alert>
 
-<ngrx-code-example header="router.effects.ts">
+<ngrx-code-example header="router-effects.ts">
 
 ```ts
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs';
 
-import {
-  Actions,
-  concatLatestFrom,
-  createEffect,
-  ofType,
-} from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { routerNavigatedAction } from '@ngrx/router-store';
+import { concatLatestFrom } from '@ngrx/operators';
 
-import { selectRouteData } from './router.selectors';
+import { selectRouteData } from './router-selectors';
 
 @Injectable()
 export class RouterEffects {
+  readonly #actions$ = inject(Actions);
+  readonly #store = inject(Store);
+  readonly #titleService = inject(Title);
+
   updateTitle$ = createEffect(
     () =>
-      this.actions$.pipe(
+      this.#actions$.pipe(
         ofType(routerNavigatedAction),
-        concatLatestFrom(() => this.store.select(selectRouteData)),
+        concatLatestFrom(() => this.#store.select(selectRouteData)),
         map(([, data]) => `Book Collection - ${data['title']}`),
-        tap((title) => this.titleService.setTitle(title))
+        tap((title) => this.#titleService.setTitle(title))
       ),
-    {
-      dispatch: false,
-    }
+    { dispatch: false }
   );
-
-  constructor(
-    private actions$: Actions,
-    private store: Store,
-    private titleService: Title
-  ) {}
 }
 ```
 
@@ -79,44 +71,64 @@ The `tapResponse` operator has been moved from `@ngrx/component-store` to `@ngrx
 
 </ngrx-docs-alert>
 
-<ngrx-code-example header="movies.store.ts">
+<ngrx-code-example header="movies-store.ts">
 
 ```ts
-  readonly getMovie = this.effect((movieId$: Observable<string>) => {
-    return movieId$.pipe(
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { tapResponse } from '@ngrx/operators';
+// ... other imports
+
+@Injectable()
+export class MoviesStore {
+  // ... other store members
+
+  readonly loadMovie = rxMethod<string>(
+    pipe(
       // 👇 Handle race condition with the proper choice of the flattening operator.
-      switchMap((id) => this.moviesService.fetchMovie(id).pipe(
-        //👇 Act on the result within inner pipe.
-        tapResponse(
-          (movie) => this.addMovie(movie),
-          (error: HttpErrorResponse) => this.logError(error),
-        ),
-      )),
-    );
-  });
+      switchMap(() =>
+        this.moviesService.getMovie(id).pipe(
+          //👇 Act on the result within inner pipe.
+          tapResponse({
+            next: (movie) => this.addMovie(movie),
+            error: (error: HttpErrorResponse) => this.logError(error),
+          })
+        )
+      )
+    )
+  );
+}
 ```
 
 </ngrx-code-example>
 
-There is also another signature of the `tapResponse` operator that accepts the observer object as an input argument. In addition to the `next` and `error` callbacks, it provides the ability to pass `complete` and/or `finalize` callbacks:
+In addition to the `next` and `error` callbacks, `tapResponse` provides the ability to pass `complete` and/or `finalize` callbacks:
 
-<ngrx-code-example header="movies.store.ts">
+<ngrx-code-example header="movies-store.ts">
 
 ```ts
-  readonly getMoviesByQuery = this.effect<string>((query$) => {
-    return query$.pipe(
-      tap(() => this.patchState({ loading: true }),
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { tapResponse } from '@ngrx/operators';
+// ... other imports
+
+@Injectable()
+export class MoviesStore {
+  // ... other store members
+
+  readonly loadMoviesByQuery = rxMethod<string>(
+    pipe(
+      tap(() => this.isLoading.set(true),
       switchMap((query) =>
-        this.moviesService.fetchMoviesByQuery(query).pipe(
+        this.moviesService.getMoviesByQuery(query).pipe(
           tapResponse({
-            next: (movies) => this.patchState({ movies }),
+            next: (movies) => this.movies.set(movies),
             error: (error: HttpErrorResponse) => this.logError(error),
-            finalize: () => this.patchState({ loading: false }),
+            finalize: () => this.isLoading.set(false),
           })
         )
       )
-    );
-  });
+    )
+  );
+}
 ```
 
 </ngrx-code-example>
@@ -127,9 +139,13 @@ The `mapResponse` operator is particularly useful in scenarios where you need to
 
 In the example below, we use `mapResponse` within an NgRx effect to handle loading movies from an API. It demonstrates how to map successful API responses to an action indicating success, and how to handle errors by dispatching an error action.
 
-<ngrx-code-example header="movies.effects.ts">
+<ngrx-code-example header="movies-effects.ts">
 
 ```ts
+import { createEffect } from '@ngrx/effects';
+import { mapResponse } from '@ngrx/operators';
+// ...other imports
+
 export const loadMovies = createEffect(
   (
     actions$ = inject(Actions),

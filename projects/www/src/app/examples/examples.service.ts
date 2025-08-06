@@ -33,4 +33,22 @@ export class ExamplesService {
       }
     );
   }
+
+  async open(exampleName: string) {
+    const config = await this.getConfig(exampleName);
+
+    return sdk.openProject(
+      {
+        title: config.name,
+        description: config.description,
+        template: 'node',
+        files: {
+          ...config.files,
+        },
+      },
+      {
+        openFile: config.open,
+      }
+    );
+  }
 }
