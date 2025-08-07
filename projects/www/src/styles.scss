@@ -6,15 +6,15 @@
 
 html {
   color-scheme: dark;
+  /* Prevent font size inflation */
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
   @include mat.theme((
     color: mat.$violet-palette,
     typography: Roboto,
     density: 0
   ));
-  /* Prevent font size inflation */
-  -moz-text-size-adjust: none;
-  -webkit-text-size-adjust: none;
-  text-size-adjust: none;
 }
 
 *,
@@ -112,6 +112,7 @@ code {
 a {
   text-decoration: none;
   color: #fface6;
+  cursor: pointer
 }
 
 // Set up Angular Material

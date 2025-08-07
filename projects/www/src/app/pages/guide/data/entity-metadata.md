@@ -158,7 +158,7 @@ export function nameAndSayingFilter(
   return (
     PropsFilterFnFactory <
     Villain >
-    ['name', 'saying'](entities, pattern)
+    [('name', 'saying')](entities, pattern)
   );
 }
 ```
