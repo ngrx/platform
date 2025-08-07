@@ -117,8 +117,6 @@
     "@angular/cli": "~20.0.0",
     "@angular/compiler-cli": "20.0.0",
     "@angular/language-service": "20.0.0",
-    "@eslint/eslintrc": "^2.1.1",
-    "@eslint/js": "~8.57.0",
     "@nx/cypress": "21.1.2",
     "@nx/eslint": "21.1.2",
     "@nx/eslint-plugin": "21.1.2",
