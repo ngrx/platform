@@ -4,6 +4,15 @@
   "projectType": "library",
   "sourceRoot": "modules/store-devtools/src",
   "prefix": "ngrx",
+  "tags": [],
+  "generators": {
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
+    }
+  },
   "targets": {
     "build-package": {
       "executor": "@angular-devkit/build-angular:ng-packagr",
@@ -49,14 +58,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/modules/store-devtools"]
     }
-  },
-  "generators": {
-    "@angular-eslint/schematics:application": {
-      "setParserOptionsProject": true
-    },
-    "@angular-eslint/schematics:library": {
-      "setParserOptionsProject": true
-    }
-  },
-  "tags": []
+  }
 }

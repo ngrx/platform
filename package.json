@@ -24,7 +24,7 @@
     "update:check": "ng update",
     "update:versions": "ts-node ./build/update-version-numbers.ts",
     "postupdate:versions": "npm run changelog",
-    "lint": "nx workspace-lint && ng lint",
+    "lint": "nx run-many --target=lint --all",
     "eslint-plugin:update": "ts-node ./build/generate-eslint-plugin.ts",
     "prepare": "husky install"
   },

@@ -8,7 +8,9 @@
     "module": "ES2022",
     "moduleResolution": "node",
     "outDir": "../../dist/modules/store",
-    "paths": {},
+    "paths": {
+      "@ngrx/store": ["src"]
+    },
     "rootDir": ".",
     "sourceMap": true,
     "inlineSources": true,
