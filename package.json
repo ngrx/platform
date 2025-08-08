@@ -85,6 +85,7 @@
     "@nx/angular": "21.1.2",
     "firebase-admin": "^12.1.1",
     "firebase-functions": "^5.0.1",
+    "front-matter": "^4.0.2",
     "highlight.js": "^11.9.0",
     "marked": "^15.0.7",
     "marked-gfm-heading-id": "^4.1.1",

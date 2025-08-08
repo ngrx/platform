@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json.
 {
   "name": "Platform",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:1.0-20-bullseye",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:22-bullseye",
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
