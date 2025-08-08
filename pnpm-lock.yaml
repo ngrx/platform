@@ -65,6 +65,9 @@ importers:
       firebase-functions:
         specifier: ^5.0.1
         version: 5.1.1(firebase-admin@12.7.0(encoding@0.1.13))
+      front-matter:
+        specifier: ^4.0.2
+        version: 4.0.2
       highlight.js:
         specifier: ^11.9.0
         version: 11.11.1
