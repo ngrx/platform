@@ -1,16 +1,33 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import hljs from 'highlight.js/lib/core';
-import typescript from 'highlight.js/lib/languages/typescript';
+import { inject, Pipe, PipeTransform } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ngrxTheme } from '@ngrx-io/shared/ngrx-shiki-theme';
+import {
+  BundledLanguage,
+  BundledTheme,
+  getHighlighter,
+  HighlighterGeneric,
+} from 'shiki';
 
-hljs.registerLanguage('typescript', typescript);
+let highlighter: HighlighterGeneric<BundledLanguage, BundledTheme>;
+getHighlighter({
+  langs: ['typescript'],
+  themes: [ngrxTheme],
+}).then((h) => (highlighter = h));
 
 @Pipe({
   name: 'ngrxCodeHighlight',
-  pure: true,
   standalone: true,
+  pure: true,
 })
 export class CodeHighlightPipe implements PipeTransform {
-  transform(code: string): string {
-    return hljs.highlight(code, { language: 'typescript' }).value;
+  private sanitizer = inject(DomSanitizer);
+
+  transform(code: string): SafeHtml {
+    const html = highlighter?.codeToHtml(code, {
+      lang: 'typescript',
+      theme: 'ngrx-theme',
+    });
+
+    return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 }

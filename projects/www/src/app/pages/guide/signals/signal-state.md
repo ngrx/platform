@@ -121,7 +121,7 @@ patchState(userState, setFirstName('Stevie'), setAdmin());
 
 ### Example 1: SignalState in a Component
 
-<ngrx-code-example header="counter.ts" linenums="true">
+<ngrx-code-example header="counter.ts">
 
 ```ts
 import { ChangeDetectionStrategy, Component } from '@angular/core';
@@ -159,7 +159,7 @@ export class Counter {
 
 ### Example 2: SignalState in a Service
 
-<code-tabs linenums="true">
+<code-tabs>
 <code-pane header="book-list-store.ts">
 
 ```ts

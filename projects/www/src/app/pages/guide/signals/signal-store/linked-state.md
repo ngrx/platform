@@ -10,7 +10,7 @@ These linked state slices become an integral part of the SignalStore's state and
 When a computation function is provided, the SignalStore wraps it in a `linkedSignal()`.
 As a result, the linked state slice is updated automatically whenever any of its dependent signals change.
 
-<code-tabs linenums="true">
+<code-tabs>
 <code-pane header="options-store.ts">
 
 ```ts

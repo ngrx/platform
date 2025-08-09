@@ -3,7 +3,7 @@
 SignalStore allows defining private members that cannot be accessed from outside the store by using the `_` prefix.
 This includes root-level state slices, properties, and methods.
 
-<code-tabs linenums="false">
+<code-tabs>
 <code-pane header="counter-store.ts">
 
 ```ts
