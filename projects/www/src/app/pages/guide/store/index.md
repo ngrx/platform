@@ -43,37 +43,11 @@ The following tutorial shows you how to manage the state of a counter, and how t
 
 <ngrx-code-example header="src/app/counter.actions.ts" path="store/src/app/counter.actions.ts">
 
-```ts
-import { createAction } from '@ngrx/store';
-
-export const increment = createAction(
-  '[Counter Component] Increment'
-);
-export const decrement = createAction(
-  '[Counter Component] Decrement'
-);
-export const reset = createAction('[Counter Component] Reset');
-```
-
 </ngrx-code-example>
 
 3.  Define a reducer function to handle changes in the counter value based on the provided actions.
 
 <ngrx-code-example header="src/app/counter.reducer.ts" path="store/src/app/counter.reducer.ts">
-
-```ts
-import { createReducer, on } from '@ngrx/store';
-import { increment, decrement, reset } from './counter.actions';
-
-export const initialState = 0;
-
-export const counterReducer = createReducer(
-  initialState,
-  on(increment, (state) => state + 1),
-  on(decrement, (state) => state - 1),
-  on(reset, (state) => 0)
-);
-```
 
 </ngrx-code-example>
 
@@ -81,37 +55,11 @@ export const counterReducer = createReducer(
 
 <ngrx-code-example header="src/app/app.module.ts (imports)" path="store/src/app/app.module.ts" region="imports">
 
-```ts
-import { StoreModule } from '@ngrx/store';
-import { counterReducer } from './counter.reducer';
-```
-
 </ngrx-code-example>
 
 5.  Add the `StoreModule.forRoot` function in the `imports` array of your `AppModule` with an object containing the `count` and the `counterReducer` that manages the state of the counter. The `StoreModule.forRoot()` method registers the global providers needed to access the `Store` throughout your application.
 
 <ngrx-code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.1.ts">
-
-```ts
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-
-import { StoreModule } from '@ngrx/store';
-import { counterReducer } from './counter.reducer';
-
-@NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    StoreModule.forRoot({ count: counterReducer }),
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
-})
-export class AppModule {}
-```
 
 </ngrx-code-example>
 

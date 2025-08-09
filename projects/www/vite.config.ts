@@ -3,6 +3,7 @@ import analog from '@analogjs/platform';
 import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import ngrxStackblitzPlugin from './src/tools/vite-ngrx-stackblits.plugin';
+import { ngrxTheme } from './src/shared/ngrx-shiki-theme';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -30,8 +31,12 @@ export default defineConfig(({ mode }) => {
         content: {
           highlighter: 'shiki',
           shikiOptions: {
+            highlight: {
+              theme: 'ngrx-theme',
+            },
             highlighter: {
               additionalLangs: ['sh'],
+              themes: [ngrxTheme],
             },
           },
         },
