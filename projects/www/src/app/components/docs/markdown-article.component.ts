@@ -8,6 +8,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 
 type Heading = { level: number; text: string; id: string; url: string };
@@ -15,21 +16,32 @@ type Heading = { level: number; text: string; id: string; url: string };
 @Component({
   selector: 'ngrx-markdown-article',
   standalone: true,
+  imports: [MatIcon],
   template: `
     <article #article>
       <ng-content></ng-content>
     </article>
     <menu>
-      @for (heading of headings(); track $index) {
-      <a
-        [href]="heading.url"
-        [style]="{ paddingLeft: 24 + (heading.level - 2) * 8 + 'px' }"
-        [class.active]="activeHeadingId() === heading.id"
-        (click)="navigateToHeading($event, heading)"
-      >
-        {{ heading.text }}
-      </a>
-      }
+      <div class="content-menu" (click)="isMenuOpen.set(!isMenuOpen())">
+        <mat-icon>library_books</mat-icon>
+        @if(isMenuOpen()){
+        <mat-icon>keyboard_arrow_up</mat-icon>
+        }@else{
+        <mat-icon>keyboard_arrow_down</mat-icon>
+        }
+      </div>
+      <div class="content-menu-holder" [class.open]="isMenuOpen()">
+        @for (heading of headings(); track $index) {
+        <a
+          [href]="heading.url"
+          [style]="{ paddingLeft: 24 + (heading.level - 2) * 8 + 'px' }"
+          [class.active]="activeHeadingId() === heading.id"
+          (click)="navigateToHeading($event, heading)"
+        >
+          {{ heading.text }}
+        </a>
+        }
+      </div>
     </menu>
   `,
   styles: [
@@ -81,6 +93,36 @@ type Heading = { level: number; text: string; id: string; url: string };
         border-color: rgba(207, 143, 197, 0.96);
       }
 
+      .content-menu-holder {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        @media only screen and (max-width: 1280px) {
+          display: none;
+          &.open {
+            display: flex;
+          }
+        }
+      }
+
+      .content-menu {
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 10px;
+        background: #201a23;
+        border-radius: 5px;
+        display: flex;
+        margin-bottom: 10px;
+        cursor: pointer;
+        display: none;
+        @media only screen and (max-width: 1280px) {
+          display: flex;
+        }
+        &:hover {
+          background: #262029;
+        }
+      }
+
       article {
         max-width: 960px;
         width: calc(100% - 120px);
@@ -92,7 +134,7 @@ type Heading = { level: number; text: string; id: string; url: string };
         @media only screen and (max-width: 1280px) {
           max-width: 100%;
           width: 100%;
-          margin: 20px 0px 0px;
+          margin: 0px;
         }
       }
 
@@ -151,6 +193,7 @@ export class MarkdownArticleComponent implements OnDestroy {
   articleRef: Signal<ElementRef<HTMLElement>> = viewChild.required('article');
   headings = signal<Heading[]>([]);
   activeHeadingId = signal<string | null>(null);
+  isMenuOpen = signal<boolean>(false);
   mutationObserver?: MutationObserver;
   intersectionObserver?: IntersectionObserver;
 
