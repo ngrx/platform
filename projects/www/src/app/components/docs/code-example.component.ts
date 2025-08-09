@@ -1,12 +1,20 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input, PLATFORM_ID, signal } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { CodeHighlightPipe } from './code-highlight.pipe';
+import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
 
 @Component({
   selector: 'ngrx-code-example',
   standalone: true,
+  imports: [CodeHighlightPipe],
   template: `
     <div class="header">{{ header }}</div>
     <div class="body">
-      <ng-content></ng-content>
+      @if(path) {
+      <div [innerHTML]="codeContent() | ngrxCodeHighlight"></div>
+      }@else{
+      <ng-content />
+      }
     </div>
   `,
   styles: [
@@ -35,4 +43,22 @@ import { Component, Input } from '@angular/core';
 })
 export class CodeExampleComponent {
   @Input() header: string = '';
+  @Input() path: string = '';
+  @Input() region: string = '';
+  @Input() language: string = 'typescript';
+
+  private exampleService = inject(ExamplesService);
+  private platformId = inject(PLATFORM_ID);
+  protected codeContent = signal('');
+
+  async ngAfterViewInit(): Promise<void> {
+    if (isPlatformServer(this.platformId)) return;
+    if (!this.path) return;
+
+    const content = await this.exampleService.extractSnippet(
+      this.path,
+      this.region
+    );
+    this.codeContent.set(content);
+  }
 }
