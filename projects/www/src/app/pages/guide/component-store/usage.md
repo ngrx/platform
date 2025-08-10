@@ -78,7 +78,7 @@ Here's the simplified `SlideToggleComponent` example which uses `ComponentStore`
 
 <ngrx-docs-alert type="help">
 
-You can see the full example at StackBlitz: <live-example name="component-store-slide-toggle"></live-example>
+You can see the full example at StackBlitz: <ngrx-docs-stackblitz name="component-store-slide-toggle"></ngrx-docs-stackblitz>
 
 </ngrx-docs-alert>
 
@@ -96,9 +96,17 @@ Below are the steps of integrating `ComponentStore` into a component.
 
 First, the state for the component needs to be identified. In `SlideToggleComponent` only the state of whether the toggle is turned ON or OFF is stored.
 
-<ngrx-code-example header="src/app/slide-toggle.component.ts"
+<ngrx-code-example
+  header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="state">
+
+```ts
+export interface SlideToggleState {
+  checked: boolean;
+}
+```
+
 </ngrx-code-example>
 
 Then we need to provide `ComponentStore` in the component's providers, so that each new instance of `SlideToggleComponent` has its own `ComponentStore`. It also has to be injected into the constructor.
@@ -113,6 +121,13 @@ In this example `ComponentStore` is provided directly in the component. This wor
   header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="providers">
+
+```ts
+@Component({
+  selector: 'mat-slide-toggle',
+  templateUrl: 'slide-toggle.html',
+```
+
 </ngrx-code-example>
 
 Next, the default state for the component needs to be set. It could be done lazily, however it needs to be done before any of `updater`s are executed, because they rely on the state to be present and would throw an error if the state is not initialized by the time they are invoked.
@@ -129,9 +144,22 @@ When it is called with a callback, the state is updated.
 
 </ngrx-docs-alert>
 
-<ngrx-code-example header="src/app/slide-toggle.component.ts"
+<ngrx-code-example
+  header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="init">
+  
+```ts
+constructor(
+  private readonly componentStore: ComponentStore<SlideToggleState>
+) {
+  // set defaults
+  this.componentStore.setState({
+    checked: false,
+  });
+}
+```
+
 </ngrx-code-example>
 
 #### Step 2. Updating state
@@ -146,6 +174,13 @@ When a user clicks the toggle (triggering a 'change' event), instead of calling 
   header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="updater">
+  
+```ts
+@Input() set checked(value: boolean) {
+    this.setChecked(value);
+  }
+```
+
 </ngrx-code-example>
 
 #### Step 3. Reading the state
@@ -155,9 +190,19 @@ Finally, the state is aggregated with selectors into two properties:
 - `vm$` property collects all the data needed for the template - this is the _ViewModel_ of `SlideToggleComponent`.
 - `change` is the `@Output` of `SlideToggleComponent`. Instead of creating an `EventEmitter`, here the output is connected to the Observable source directly.
 
-<ngrx-code-example header="src/app/slide-toggle.component.ts"
+<ngrx-code-example
+  header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="selector">
+
+```ts
+// Observable<MatSlideToggleChange> used instead of EventEmitter
+  @Output() readonly change = this.componentStore.select((state) => ({
+    source: this,
+    checked: state.checked,
+  }));
+```
+
 </ngrx-code-example>
 
 This example does not have a lot of business logic, however it is still fully reactive.
@@ -201,8 +246,8 @@ What we can see is that while the _"PaginatorComponent providing ComponentStore"
 
 You can see the examples at StackBlitz:
 
-- "PaginatorComponent providing ComponentStore" <live-example name="component-store-paginator" noDownload></live-example>
-- "PaginatorComponent with PaginatorStore Service" <live-example name="component-store-paginator-service" noDownload></live-example>
+- "PaginatorComponent providing ComponentStore" <ngrx-docs-stackblitz name="component-store-paginator" noDownload></ngrx-docs-stackblitz>
+- "PaginatorComponent with PaginatorStore Service" <ngrx-docs-stackblitz name="component-store-paginator-service" noDownload></ngrx-docs-stackblitz>
 
 </ngrx-docs-alert>
 
@@ -210,18 +255,58 @@ You can see the examples at StackBlitz:
 
 With `ComponentStore` extracted into `PaginatorStore`, the developer is now using updaters and effects to update the state. `@Input` values are passed directly into `updater`s as their arguments.
 
-<ngrx-code-example header="src/app/paginator.store.ts"
+<ngrx-code-example
+  header="src/app/paginator.store.ts"
   path="component-store-paginator-service/src/app/paginator.component.ts"
   region="inputs">
+
+```ts
+@Input() set pageIndex(value: string | number) {
+    this.paginatorStore.setPageIndex(value);
+  }
+
+  @Input() set length(value: string | number) {
+    this.paginatorStore.setLength(value);
+  }
+
+  @Input() set pageSize(value: string | number) {
+    this.paginatorStore.setPageSize(value);
+  }
+
+  @Input() set pageSizeOptions(value: readonly number[]) {
+    this.paginatorStore.setPageSizeOptions(value);
+  }
+```
+
 </ngrx-code-example>
 
 Not all `updater`s have to be called in the `@Input`. For example, `changePageSize` is called from the template.
 
 Effects are used to perform additional validation and get extra information from sources with derived data (i.e. selectors).
 
-<ngrx-code-example header="src/app/paginator.store.ts"
+<ngrx-code-example
+  header="src/app/paginator.store.ts"
   path="component-store-paginator-service/src/app/paginator.component.ts"
   region="updating-state">
+
+```ts
+changePageSize(newPageSize: number) {
+    this.paginatorStore.changePageSize(newPageSize);
+  }
+  nextPage() {
+    this.paginatorStore.nextPage();
+  }
+  firstPage() {
+    this.paginatorStore.firstPage();
+  }
+  previousPage() {
+    this.paginatorStore.previousPage();
+  }
+  lastPage() {
+    this.paginatorStore.lastPage();
+  }
+```
+
 </ngrx-code-example>
 
 #### Reading the state
