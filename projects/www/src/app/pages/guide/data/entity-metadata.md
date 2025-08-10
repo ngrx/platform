@@ -155,10 +155,9 @@ export function nameAndSayingFilter(
   entities: Villain[],
   pattern: string
 ) {
-  return (
-    PropsFilterFnFactory <
-    Villain >
-    [('name', 'saying')](entities, pattern)
+  return PropsFilterFnFactory<Villain>[('name', 'saying')](
+    entities,
+    pattern
   );
 }
 ```
