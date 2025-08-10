@@ -1,5 +1,12 @@
-import { ApplicationRef, inject, Injectable, NgZone } from '@angular/core';
+import {
+  ApplicationRef,
+  inject,
+  Injectable,
+  NgZone,
+  PLATFORM_ID,
+} from '@angular/core';
 import { isNgZone } from './zone-helpers';
+import { isPlatformServer } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +14,7 @@ import { isNgZone } from './zone-helpers';
     const zone = inject(NgZone);
     return isNgZone(zone)
       ? new NoopTickScheduler()
-      : inject(AnimationFrameTickScheduler);
+      : inject(ZonelessTickScheduler);
   },
 })
 export abstract class TickScheduler {
@@ -17,17 +24,19 @@ export abstract class TickScheduler {
 @Injectable({
   providedIn: 'root',
 })
-export class AnimationFrameTickScheduler extends TickScheduler {
+export class ZonelessTickScheduler extends TickScheduler {
   private isScheduled = false;
-
-  constructor(private readonly appRef: ApplicationRef) {
-    super();
-  }
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly isServer = isPlatformServer(this.platformId);
+  private readonly appRef = inject(ApplicationRef);
+  private readonly scheduleFn = this.isServer
+    ? setTimeout
+    : requestAnimationFrame;
 
   schedule(): void {
     if (!this.isScheduled) {
       this.isScheduled = true;
-      requestAnimationFrame(() => {
+      this.scheduleFn(() => {
         this.appRef.tick();
         this.isScheduled = false;
       });
