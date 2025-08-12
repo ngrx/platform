@@ -8,6 +8,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 
 type Heading = { level: number; text: string; id: string; url: string };
@@ -15,21 +16,32 @@ type Heading = { level: number; text: string; id: string; url: string };
 @Component({
   selector: 'ngrx-markdown-article',
   standalone: true,
+  imports: [MatIcon],
   template: `
     <article #article>
       <ng-content></ng-content>
     </article>
     <menu>
-      @for (heading of headings(); track $index) {
-      <a
-        [href]="heading.url"
-        [style]="{ paddingLeft: 24 + (heading.level - 2) * 8 + 'px' }"
-        [class.active]="activeHeadingId() === heading.id"
-        (click)="navigateToHeading($event, heading)"
-      >
-        {{ heading.text }}
-      </a>
-      }
+      <div class="content-menu" (click)="isMenuOpen.set(!isMenuOpen())">
+        <mat-icon>library_books</mat-icon>
+        @if(isMenuOpen()){
+        <mat-icon>keyboard_arrow_up</mat-icon>
+        }@else{
+        <mat-icon>keyboard_arrow_down</mat-icon>
+        }
+      </div>
+      <div class="content-menu-holder" [class.open]="isMenuOpen()">
+        @for (heading of headings(); track $index) {
+        <a
+          [href]="heading.url"
+          [style]="{ paddingLeft: 24 + (heading.level - 2) * 8 + 'px' }"
+          [class.active]="activeHeadingId() === heading.id"
+          (click)="navigateToHeading($event, heading)"
+        >
+          {{ heading.text }}
+        </a>
+        }
+      </div>
     </menu>
   `,
   styles: [
@@ -39,6 +51,12 @@ type Heading = { level: number; text: string; id: string; url: string };
         width: 100%;
         position: relative;
         padding-right: 240px;
+        @media only screen and (max-width: 1280px) {
+          padding-top: 40px;
+          padding-right: 0px;
+          display: flex;
+          flex-direction: column-reverse;
+        }
       }
 
       menu {
@@ -52,6 +70,12 @@ type Heading = { level: number; text: string; id: string; url: string };
         margin: 0;
         padding: 0;
         border-left: 1px solid rgba(255, 255, 255, 0.12);
+        @media only screen and (max-width: 1280px) {
+          position: relative;
+          width: 100%;
+          padding: 24px;
+          right: 0px;
+        }
       }
 
       menu a {
@@ -69,10 +93,49 @@ type Heading = { level: number; text: string; id: string; url: string };
         border-color: rgba(207, 143, 197, 0.96);
       }
 
+      .content-menu-holder {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        @media only screen and (max-width: 1280px) {
+          display: none;
+          &.open {
+            display: flex;
+          }
+        }
+      }
+
+      .content-menu {
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 10px;
+        background: #201a23;
+        border-radius: 5px;
+        display: flex;
+        margin-bottom: 10px;
+        cursor: pointer;
+        display: none;
+        @media only screen and (max-width: 1280px) {
+          display: flex;
+        }
+        &:hover {
+          background: #262029;
+        }
+      }
+
       article {
-        width: 960px;
+        max-width: 960px;
+        width: calc(100% - 120px);
         padding: 24px;
         margin: 0 auto;
+        @media only screen and (max-width: 1500px) {
+          margin: 0px;
+        }
+        @media only screen and (max-width: 1280px) {
+          max-width: 100%;
+          width: 100%;
+          margin: 0px;
+        }
       }
 
       article ::ng-deep h1 {
@@ -94,6 +157,10 @@ type Heading = { level: number; text: string; id: string; url: string };
         border-left: 1px solid rgba(255, 255, 255, 0.12);
         border-right: 1px solid rgba(255, 255, 255, 0.12);
         margin: 14px 0;
+        @media only screen and (max-width: 1280px) {
+          display: block;
+          overflow-x: scroll;
+        }
       }
 
       article ::ng-deep table thead {
@@ -126,6 +193,7 @@ export class MarkdownArticleComponent implements OnDestroy {
   articleRef: Signal<ElementRef<HTMLElement>> = viewChild.required('article');
   headings = signal<Heading[]>([]);
   activeHeadingId = signal<string | null>(null);
+  isMenuOpen = signal(false);
   mutationObserver?: MutationObserver;
   intersectionObserver?: IntersectionObserver;
 
