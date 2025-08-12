@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { increment, decrement, reset } from '../counter.actions';
 
 @Component({
-  selector: 'ngrx-app-my-counter',
+  selector: 'ngrx-my-counter',
   template: `
     <button id="increment" (click)="increment()">Increment</button>
 

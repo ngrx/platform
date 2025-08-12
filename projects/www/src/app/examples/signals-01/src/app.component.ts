@@ -14,7 +14,7 @@ const Store = signalStore(
 );
 
 @Component({
-  selector: 'ngrx-app-root',
+  selector: 'ngrx-root',
   template: `
     <h1>Count: {{ store.count() }}</h1>
     <button (click)="store.increment()">Increment</button>
