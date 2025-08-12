@@ -76,6 +76,16 @@ export class GuideMenuService {
         link('Core Concepts', '/guide/signals/signal-store'),
         link('Lifecycle Hooks', '/guide/signals/signal-store/lifecycle-hooks'),
         link(
+          'Custom Store Properties',
+          '/guide/signals/signal-store/custom-store-properties'
+        ),
+        link('Linked State', '/guide/signals/signal-store/linked-state'),
+        link('State Tracking', '/guide/signals/signal-store/state-tracking'),
+        link(
+          'Private Store Members',
+          '/guide/signals/signal-store/private-store-members'
+        ),
+        link(
           'Custom Store Features',
           '/guide/signals/signal-store/custom-store-features'
         ),
@@ -83,8 +93,12 @@ export class GuideMenuService {
           'Entity Management',
           '/guide/signals/signal-store/entity-management'
         ),
+        link('Events', '/guide/signals/signal-store/events'),
+        link('Testing', '/guide/signals/signal-store/testing'),
       ]),
       link('SignalState', '/guide/signals/signal-state'),
+      link('DeepComputed', '/guide/signals/deep-computed'),
+      link('SignalMethod', '/guide/signals/signal-method'),
       link('RxJS Integration', '/guide/signals/rxjs-integration'),
       link('FAQ', '/guide/signals/faq'),
     ]),
@@ -185,18 +199,21 @@ export class GuideMenuService {
     section('Developer Resources', [
       link('Nightlies', '/guide/nightlies'),
       section('Migrations', [
-        link('v17', '/guide/migration/v17'),
-        link('v16', '/guide/migration/v16'),
-        link('v15', '/guide/migration/v15'),
-        link('v14', '/guide/migration/v14'),
-        link('v13', '/guide/migration/v13'),
-        link('v12', '/guide/migration/v12'),
-        link('v11', '/guide/migration/v11'),
-        link('v10', '/guide/migration/v10'),
-        link('v9', '/guide/migration/v9'),
-        link('v8', '/guide/migration/v8'),
-        link('v7', '/guide/migration/v7'),
-        link('v4', '/guide/migration/v4'),
+        link('V20', '/guide/migration/v20'),
+        link('V19', '/guide/migration/v19'),
+        link('V18', '/guide/migration/v18'),
+        link('V17', '/guide/migration/v17'),
+        link('V16', '/guide/migration/v16'),
+        link('V15', '/guide/migration/v15'),
+        link('V14', '/guide/migration/v14'),
+        link('V13', '/guide/migration/v13'),
+        link('V12', '/guide/migration/v12'),
+        link('V11', '/guide/migration/v11'),
+        link('V10', '/guide/migration/v10'),
+        link('V9', '/guide/migration/v9'),
+        link('V8', '/guide/migration/v8'),
+        link('V7', '/guide/migration/v7'),
+        link('V4', '/guide/migration/v4'),
       ]),
     ]),
   ]);
