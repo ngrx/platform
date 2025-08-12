@@ -6,20 +6,20 @@ import {
 } from '@angular/core/testing';
 import { ApplicationRef, NgZone, PLATFORM_ID } from '@angular/core';
 import {
-  ZonelessTickScheduler,
   NoopTickScheduler,
   TickScheduler,
+  ZonelessTickScheduler,
 } from '../../src/core/tick-scheduler';
 import { ngZoneMock, noopNgZoneMock } from '../fixtures/fixtures';
 
 describe('TickScheduler', () => {
-  function setup(ngZone: unknown, server = false) {
+  function setup(ngZone: unknown, isSsrMode = false) {
     TestBed.configureTestingModule({
       providers: [
         { provide: NgZone, useValue: ngZone },
         {
           provide: PLATFORM_ID,
-          useValue: server ? 'server' : 'browser',
+          useValue: isSsrMode ? 'server' : 'browser',
         },
       ],
     });
@@ -37,7 +37,7 @@ describe('TickScheduler', () => {
     });
   });
 
-  describe('when NgZone is not provided and running in server context', () => {
+  describe('when NgZone is not provided and running in browser mode', () => {
     // `fakeAsync` uses 16ms as `requestAnimationFrame` delay
     const animationFrameDelay = 16;
 
@@ -46,7 +46,7 @@ describe('TickScheduler', () => {
       expect(tickScheduler instanceof ZonelessTickScheduler).toBe(true);
     });
 
-    it('should schedule tick using the ZonelessTickScheduler', fakeAsync(() => {
+    it('should schedule tick using requestAnimationFrame', fakeAsync(() => {
       const { tickScheduler, appRef } = setup(noopNgZoneMock);
 
       tickScheduler.schedule();
@@ -94,13 +94,13 @@ describe('TickScheduler', () => {
     }));
   });
 
-  describe('when NgZone is not provided and running in ssr', () => {
+  describe('when NgZone is not provided and running in SSR mode', () => {
     it('should initialize ZonelessTickScheduler', () => {
       const { tickScheduler } = setup(noopNgZoneMock, true);
       expect(tickScheduler instanceof ZonelessTickScheduler).toBe(true);
     });
 
-    it('should schedule tick using the ZonelessTickScheduler', fakeAsync(() => {
+    it('should schedule tick using setTimeout', fakeAsync(() => {
       const { tickScheduler, appRef } = setup(noopNgZoneMock, true);
 
       tickScheduler.schedule();

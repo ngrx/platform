@@ -5,8 +5,8 @@ import {
   NgZone,
   PLATFORM_ID,
 } from '@angular/core';
-import { isNgZone } from './zone-helpers';
 import { isPlatformServer } from '@angular/common';
+import { isNgZone } from './zone-helpers';
 
 @Injectable({
   providedIn: 'root',
@@ -25,13 +25,13 @@ export abstract class TickScheduler {
   providedIn: 'root',
 })
 export class ZonelessTickScheduler extends TickScheduler {
-  private isScheduled = false;
+  private readonly appRef = inject(ApplicationRef);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isServer = isPlatformServer(this.platformId);
-  private readonly appRef = inject(ApplicationRef);
   private readonly scheduleFn = this.isServer
     ? setTimeout
     : requestAnimationFrame;
+  private isScheduled = false;
 
   schedule(): void {
     if (!this.isScheduled) {
