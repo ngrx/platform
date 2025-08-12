@@ -193,7 +193,7 @@ export class MarkdownArticleComponent implements OnDestroy {
   articleRef: Signal<ElementRef<HTMLElement>> = viewChild.required('article');
   headings = signal<Heading[]>([]);
   activeHeadingId = signal<string | null>(null);
-  isMenuOpen = signal<boolean>(false);
+  isMenuOpen = signal(false);
   mutationObserver?: MutationObserver;
   intersectionObserver?: IntersectionObserver;
 
