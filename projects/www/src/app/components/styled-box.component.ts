@@ -1,5 +1,6 @@
 import { isPlatformServer } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   HostBinding,
@@ -11,7 +12,6 @@ import {
 
 @Component({
   selector: 'ngrx-styled-box',
-  standalone: true,
   template: `
     <svg
       [attr.viewBox]="viewBox()"
@@ -119,7 +119,7 @@ import {
     `,
   ],
 })
-export class StyledBoxComponent {
+export class StyledBoxComponent implements AfterViewInit {
   @HostBinding('style.--background-blur-shapes-rotation')
   readonly rotation = `${Math.round(Math.random() * 360)}deg`;
 

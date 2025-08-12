@@ -14,8 +14,7 @@ const Store = signalStore(
 );
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
+  selector: 'ngrx-app-root',
   template: `
     <h1>Count: {{ store.count() }}</h1>
     <button (click)="store.increment()">Increment</button>
@@ -23,6 +22,6 @@ const Store = signalStore(
   `,
   providers: [Store],
 })
-export class App {
+export class AppComponent {
   store = inject(Store);
 }

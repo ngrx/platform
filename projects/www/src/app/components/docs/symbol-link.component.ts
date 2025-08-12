@@ -11,7 +11,7 @@ import {
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { CanonicalReference, ParsedCanonicalReference } from '@ngrx-io/shared';
-import { EMPTY, Observable, fromEvent, switchMap, takeUntil, tap } from 'rxjs';
+import { EMPTY, Observable, fromEvent, switchMap, takeUntil } from 'rxjs';
 import {
   SYMBOl_POPOVER_REF,
   SymbolPopoverComponent,
@@ -20,7 +20,6 @@ import { ReferenceService } from '@ngrx-io/app/reference/reference.service';
 
 @Component({
   selector: 'ngrx-symbol-link',
-  standalone: true,
   imports: [RouterLink, SymbolPopoverComponent],
   // Spacing is intentional to avoid unnecessary whitespace in the output
   template: `@if (isPrivate) {{{ name }}} @else if (shouldUseExternalLink) {<a
@@ -44,12 +43,12 @@ export class SymbolLinkComponent {
   referenceService = inject(ReferenceService);
   internalSymbolLink =
     viewChild<ElementRef<HTMLAnchorElement>>('internalSymbolLink');
-  url: string = '';
-  isPrivate: boolean = true;
+  url = '';
+  isPrivate = true;
   parsedReference: ParsedCanonicalReference = new ParsedCanonicalReference(
     '@ngrx/store!Store:class'
   );
-  shouldUseExternalLink: boolean = false;
+  shouldUseExternalLink = false;
 
   /**
    * Signal inputs aren't supported by @angular/elements, so we need
@@ -65,7 +64,7 @@ export class SymbolLinkComponent {
     if (parsed.isPrivate) {
       this.url = '';
     } else if (parsed.package.startsWith('@ngrx')) {
-      const [ngrx, ...rest] = parsed.package.split('/');
+      const [_ngrx, ...rest] = parsed.package.split('/');
       this.url = `/api/${rest.join('/')}/${parsed.name}`;
     } else if (parsed.package.startsWith('@angular')) {
       const [, packageName] = parsed.package.split('/');

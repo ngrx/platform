@@ -9,7 +9,7 @@ export const CanonicalReferenceExtension = {
   name: 'canonicalReference',
   level: 'inline',
   tokenizer(src: string): any {
-    const rule = /@?[\w\/]+![\w]+:[\w]+/;
+    const rule = /@?[\w/]+![\w]+:[\w]+/;
     const match = rule.exec(src);
     console.log({ src, match });
     if (match) {
@@ -43,7 +43,7 @@ export class MarkdownPipe implements PipeTransform {
   marked = new Marked(
     markedHighlight({
       langPrefix: 'hljs language-',
-      highlight(code, lang, info) {
+      highlight(code, lang, _info) {
         const language = hljs.getLanguage(lang) ? lang : 'plaintext';
         return hljs.highlight(code, { language }).value;
       },

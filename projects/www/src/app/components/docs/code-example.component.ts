@@ -34,5 +34,5 @@ import { Component, Input } from '@angular/core';
   ],
 })
 export class CodeExampleComponent {
-  @Input() header: string = '';
+  @Input() header = '';
 }

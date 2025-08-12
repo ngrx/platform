@@ -8,7 +8,6 @@ import {
 
 @Component({
   selector: 'ngrx-symbol-chip',
-  standalone: true,
   template: `
     <a [routerLink]="url()">
       <span [ngClass]="kind()">{{ firstLetterOfKind() }}</span>
@@ -97,7 +96,7 @@ export class SymbolChipComponent {
     () => new ParsedCanonicalReference(this.symbol().canonicalReference)
   );
   url = computed(() => {
-    const [ngrx, ...rest] = this.parsedReference().package.split('/');
+    const [_ngrx, ...rest] = this.parsedReference().package.split('/');
     return `/api/${rest.join('/')}/${this.parsedReference().name}`;
   });
 }
