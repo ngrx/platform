@@ -124,7 +124,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-my-counter',
+  selector: 'ngrx-my-counter',
   templateUrl: './my-counter.component.html',
 })
 export class MyCounterComponent {
@@ -169,7 +169,7 @@ export class MyCounterComponent {
 <ngrx-code-example header="src/app/app.component.html" path="store/src/app/app.component.html" region="counter">
 
 ```html
-<app-my-counter></app-my-counter>
+<ngrx-my-counter></ngrx-my-counter>
 ```
 
 </ngrx-code-example>
@@ -211,7 +211,7 @@ import { Observable } from 'rxjs';
 import { increment, decrement, reset } from '../counter.actions';
 
 @Component({
-  selector: 'app-my-counter',
+  selector: 'ngrx-my-counter',
   templateUrl: './my-counter.component.html',
 })
 export class MyCounterComponent {

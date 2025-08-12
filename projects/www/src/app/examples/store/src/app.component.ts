@@ -7,7 +7,7 @@ import { MyCounterComponent } from './my-counter/my-counter.component';
   template: `
     <h1>NgRx Tutorial</h1>
 
-    <app-my-counter></app-my-counter>
+    <ngrx-my-counter></ngrx-my-counter>
   `,
 })
 export class AppComponent {}
