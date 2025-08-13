@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { increment, decrement, reset } from '../counter.actions';
 
 @Component({
-  selector: 'ngrx-my-counter',
+  selector: 'app-my-counter',
   templateUrl: './my-counter.component.html',
 })
 export class MyCounterComponent {

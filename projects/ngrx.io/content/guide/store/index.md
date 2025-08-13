@@ -64,7 +64,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'ngrx-my-counter',
+  selector: 'app-my-counter',
   templateUrl: './my-counter.component.html',
 })
 export class MyCounterComponent {
