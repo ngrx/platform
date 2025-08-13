@@ -159,10 +159,8 @@ export class Counter {
 
 ### Example 2: SignalState in a Service
 
-
-<ngrx-code-tabs linenums="true">
+<ngrx-code-tabs>
 <ngrx-code-example header="books.store.ts">
-
 
 ```ts
 import { inject, Injectable } from '@angular/core';

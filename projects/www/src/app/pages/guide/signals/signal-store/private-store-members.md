@@ -3,9 +3,8 @@
 SignalStore allows defining private members that cannot be accessed from outside the store by using the `_` prefix.
 This includes root-level state slices, properties, and methods.
 
-<ngrx-code-tabs linenums="false">
+<ngrx-code-tabs>
 <ngrx-code-example header="counter-store.ts">
-
 
 ```ts
 import { computed } from '@angular/core';
@@ -50,7 +49,6 @@ export const CounterStore = signalStore(
 </ngrx-code-example>
 
 <ngrx-code-example header="counter.ts">
-
 
 ```ts
 import { Component, inject, OnInit } from '@angular/core';

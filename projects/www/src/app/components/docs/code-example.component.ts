@@ -51,6 +51,7 @@ import { MatIcon } from '@angular/material/icon';
       .body {
         padding: 0 0px;
         overflow-x: wrap;
+        position: relative;
       }
 
       .copy-button {

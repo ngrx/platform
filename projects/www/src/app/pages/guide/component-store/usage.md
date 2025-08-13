@@ -148,7 +148,7 @@ When it is called with a callback, the state is updated.
   header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="init">
-  
+
 ```ts
 constructor(
   private readonly componentStore: ComponentStore<SlideToggleState>
@@ -174,7 +174,7 @@ When a user clicks the toggle (triggering a 'change' event), instead of calling 
   header="src/app/slide-toggle.component.ts"
   path="component-store-slide-toggle/src/app/slide-toggle.component.ts"
   region="updater">
-  
+
 ```ts
 @Input() set checked(value: boolean) {
     this.setChecked(value);
@@ -207,21 +207,6 @@ Finally, the state is aggregated with selectors into two properties:
 
 This example does not have a lot of business logic, however it is still fully reactive.
 
-<ngrx-code-tabs linenums="true">
-  <ngrx-code-example
-    header="PaginatorComponent with PaginatorStore Service"
-    path="component-store-paginator-service/src/app/paginator.component.ts">
-  </ngrx-code-example>
-  <ngrx-code-example
-    header="PaginatorComponent providing ComponentStore"
-    path="component-store-paginator/src/app/paginator.component.ts">
-  </ngrx-code-example>
-  <ngrx-code-example
-    header="src/app/paginator.store.ts"
-    path="component-store-paginator-service/src/app/paginator.store.ts">
-  </ngrx-code-example>
-</ngrx-code-tabs>
-
 ### Example 2: Service extending ComponentStore
 
 `SlideToggleComponent` is a fairly simple component and having `ComponentStore` within the component itself is still manageable. When components takes more Inputs and/or has more events within its template, it becomes larger and harder to read/maintain.
@@ -250,6 +235,21 @@ You can see the examples at StackBlitz:
 - "PaginatorComponent with PaginatorStore Service" <ngrx-docs-stackblitz name="component-store-paginator-service" noDownload></ngrx-docs-stackblitz>
 
 </ngrx-docs-alert>
+
+<ngrx-code-tabs>
+  <ngrx-code-example
+    header="PaginatorComponent with PaginatorStore Service"
+    path="component-store-paginator-service/src/app/paginator.component.ts">
+  </ngrx-code-example>
+  <ngrx-code-example
+    header="PaginatorComponent providing ComponentStore"
+    path="component-store-paginator/src/app/paginator.component.ts">
+  </ngrx-code-example>
+  <ngrx-code-example
+    header="src/app/paginator.store.ts"
+    path="component-store-paginator-service/src/app/paginator.store.ts">
+  </ngrx-code-example>
+</ngrx-code-tabs>
 
 #### Updating the state
 
