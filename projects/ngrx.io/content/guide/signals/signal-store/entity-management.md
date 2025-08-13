@@ -29,8 +29,8 @@ export const TodosStore = signalStore(
 The `withEntities` feature adds the following signals to the `TodosStore`:
 
 - `ids: Signal<EntityId[]>`: An array of all entity IDs.
-- `entityMap: Signal<EntityMap<Todo>>`: A map of entities where each key is an ID.
-- `entities: Signal<Todo[]>`: An array of all entities.
+- `entityMap: Signal<EntityMap<Todo>>`: A map of entities where each key is an ID. Note: the signal is prefixed with the collection name, e.g. `todosEntityMap`.
+- `entities: Signal<Todo[]>`: An array of all entities. Note: the signal is prefixed with the collection name, e.g. `todosEntities`.
 
 The `ids` and `entityMap` are state slices, while `entities` is a computed signal.
 
