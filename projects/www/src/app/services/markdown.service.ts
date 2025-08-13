@@ -9,7 +9,7 @@ export const CanonicalReferenceExtension = {
   name: 'canonicalReference',
   level: 'inline',
   tokenizer(this: any, src: string): any {
-    const rule = /@?[\w\/-]+![\w]+:[\w]+/;
+    const rule = /@?[\w/-]+![\w]+:[\w]+/;
     const match = rule.exec(src);
     if (match) {
       const parsed = new ParsedCanonicalReference(
@@ -69,6 +69,7 @@ export class NgRxMarkedSetupService extends MarkedSetupService {
   }
 
   override getMarkedInstance(): typeof marked {
+    // eslint-disable-next-line no-underscore-dangle
     return this._marked as unknown as typeof marked;
   }
 }

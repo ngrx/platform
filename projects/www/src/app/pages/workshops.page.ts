@@ -3,7 +3,6 @@ import { StyledBoxComponent } from '../components/styled-box.component';
 
 @Component({
   selector: 'ngrx-workshops-page',
-  standalone: true,
   imports: [StyledBoxComponent],
   template: `
     <div class="banner"></div>
@@ -199,4 +198,4 @@ import { StyledBoxComponent } from '../components/styled-box.component';
     `,
   ],
 })
-export default class WorkshopsPage {}
+export default class WorkshopsPageComponent {}

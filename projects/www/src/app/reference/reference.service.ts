@@ -40,7 +40,7 @@ export class ReferenceService {
     canonicalReference: CanonicalReference
   ): Promise<ApiMemberSummary> {
     const parsed = new ParsedCanonicalReference(canonicalReference);
-    const [ngrx, ...rest] = parsed.package.split('/');
+    const [_ngrx, ...rest] = parsed.package.split('/');
 
     return this.loadReferenceData(rest.join('/'), parsed.name);
   }
