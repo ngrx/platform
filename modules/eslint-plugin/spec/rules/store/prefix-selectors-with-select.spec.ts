@@ -77,44 +77,60 @@ export const { selectAll: selectAllBooks } = booksAdapter.getSelectors(createSel
   ),
   fromFixture(
     `
-const { selectAll: allItems, selectEntities: entitiesMap } = getSelectors(adapter);
-              ~~~~~~~~~ [${prefixSelectorsWithSelect} suggest]
-                                 ~~~~~~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
+const { selectAll: allItems } = getSelectors(adapter);
+              ~~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
     {
       suggestions: [
         {
           messageId: prefixSelectorsWithSelectSuggest,
           data: { name: 'selectAllItems' },
           output: `
-const { selectAll: selectAllItems, selectEntities: entitiesMap } = getSelectors(adapter);`,
-        },
-        {
-          messageId: prefixSelectorsWithSelectSuggest,
-          data: { name: 'selectEntitiesMap' },
-          output: `
-const { selectAll: allItems, selectEntities: selectEntitiesMap } = getSelectors(adapter);`,
+const { selectAll: selectAllItems } = getSelectors(adapter);`,
         },
       ],
     }
   ),
   fromFixture(
     `
-const { allItems, entitiesMap } = getSelectors(adapter);
-        ~~~~~~~~ [${prefixSelectorsWithSelect} suggest]
-                     ~~~~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
+const { selectEntities: entitiesMap } = getSelectors(adapter);
+                    ~~~~~~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
+    {
+      suggestions: [
+        {
+          messageId: prefixSelectorsWithSelectSuggest,
+          data: { name: 'selectEntitiesMap' },
+          output: `
+const { selectEntities: selectEntitiesMap } = getSelectors(adapter);`,
+        },
+      ],
+    }
+  ),
+  fromFixture(
+    `
+const { allItems } = getSelectors(adapter);
+        ~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
     {
       suggestions: [
         {
           messageId: prefixSelectorsWithSelectSuggest,
           data: { name: 'selectAllItems' },
           output: `
-const { selectAllItems, entitiesMap } = getSelectors(adapter);`,
+const { selectAllItems } = getSelectors(adapter);`,
         },
+      ],
+    }
+  ),
+  fromFixture(
+    `
+const { entitiesMap } = getSelectors(adapter);
+        ~~~~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
+    {
+      suggestions: [
         {
           messageId: prefixSelectorsWithSelectSuggest,
           data: { name: 'selectEntitiesMap' },
           output: `
-const { allItems, selectEntitiesMap } = getSelectors(adapter);`,
+const { selectEntitiesMap } = getSelectors(adapter);`,
         },
       ],
     }
