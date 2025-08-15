@@ -31,11 +31,46 @@ export default createRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: (context) => {
+    function reportIfInvalid(name: string, node: TSESTree.Identifier) {
+      if (!/^select[^a-z]/.test(name)) {
+        const suggestedName = getSuggestedName(name);
+        context.report({
+          node,
+          messageId: prefixSelectorsWithSelect,
+          suggest: [
+            {
+              messageId: prefixSelectorsWithSelectSuggest,
+              data: { name: suggestedName },
+              fix: (fixer) => fixer.replaceText(node, suggestedName),
+            },
+          ],
+        });
+      }
+    }
+
     return {
       VariableDeclarator(node: TSESTree.VariableDeclarator) {
-        const { id } = node;
+        const { id, init } = node;
 
-        // Handle destructuring: { selectAll: selectAllBooks }
+        // Case 1: Destructuring from getSelectors()
+        if (
+          id.type === 'ObjectPattern' &&
+          init?.type === 'CallExpression' &&
+          init.callee.type === 'Identifier' &&
+          init.callee.name === 'getSelectors'
+        ) {
+          for (const prop of id.properties) {
+            if (
+              prop.type === 'Property' &&
+              prop.key.type === 'Identifier' &&
+              prop.value.type === 'Identifier'
+            ) {
+              reportIfInvalid(prop.value.name, prop.value);
+            }
+          }
+        }
+
+        // Case 2: Destructuring from any object
         if (id.type === 'ObjectPattern') {
           for (const prop of id.properties) {
             if (
@@ -43,30 +78,14 @@ export default createRule<Options, MessageIds>({
               prop.key.type === 'Identifier' &&
               prop.value.type === 'Identifier'
             ) {
-              const originalName = prop.value.name;
-              if (!/^select[^a-z]/.test(originalName)) {
-                const suggestedName = getSuggestedName(originalName);
-                context.report({
-                  node: prop.value,
-                  messageId: prefixSelectorsWithSelect,
-                  suggest: [
-                    {
-                      messageId: prefixSelectorsWithSelectSuggest,
-                      data: { name: suggestedName },
-                      fix: (fixer) =>
-                        fixer.replaceText(prop.value, suggestedName),
-                    },
-                  ],
-                });
-              }
+              reportIfInvalid(prop.value.name, prop.value);
             }
           }
         }
 
-        // Handle regular selector declarations
+        // Case 3: Regular selector declaration with MemoizedSelector type
         if (
           id.type === 'Identifier' &&
-          !/^select[^a-z]/.test(id.name) &&
           id.typeAnnotation &&
           id.typeAnnotation.typeAnnotation.type === 'TSTypeReference' &&
           id.typeAnnotation.typeAnnotation.typeName.type === 'Identifier' &&
@@ -74,18 +93,7 @@ export default createRule<Options, MessageIds>({
             id.typeAnnotation.typeAnnotation.typeName.name
           )
         ) {
-          const suggestedName = getSuggestedName(id.name);
-          context.report({
-            node: id,
-            messageId: prefixSelectorsWithSelect,
-            suggest: [
-              {
-                messageId: prefixSelectorsWithSelectSuggest,
-                data: { name: suggestedName },
-                fix: (fixer) => fixer.replaceText(id, suggestedName),
-              },
-            ],
-          });
+          reportIfInvalid(id.name, id);
         }
       },
     };
