@@ -32,63 +32,84 @@ export default createRule<Options, MessageIds>({
   defaultOptions: [],
   create: (context) => {
     return {
-      'VariableDeclarator[id.name!=/^select[^a-z].+$/]:not(:has(Identifier[name="createFeature"])):matches([id.typeAnnotation.typeAnnotation.typeName.name=/^MemoizedSelector(WithProps)?$/], :has(CallExpression[callee.name=/^(create(Feature)?Selector|createSelectorFactory)$/]))'({
-        id,
-      }: TSESTree.VariableDeclarator & { id: TSESTree.Identifier }) {
-        const suggestedName = getSuggestedName(id.name);
-        context.report({
-          loc: {
-            ...id.loc,
-            end: {
-              ...id.loc.end,
-              column: id.typeAnnotation?.range[0]
-                ? id.typeAnnotation.range[0] - 1
-                : id.loc.end.column,
-            },
-          },
-          messageId: prefixSelectorsWithSelect,
-          suggest: [
-            {
-              messageId: prefixSelectorsWithSelectSuggest,
-              data: {
-                name: suggestedName,
+      VariableDeclarator(node: TSESTree.VariableDeclarator) {
+        const { id } = node;
+
+        // Handle destructuring: { selectAll: selectAllBooks }
+        if (id.type === 'ObjectPattern') {
+          for (const prop of id.properties) {
+            if (
+              prop.type === 'Property' &&
+              prop.key.type === 'Identifier' &&
+              prop.value.type === 'Identifier'
+            ) {
+              const originalName = prop.value.name;
+              if (!/^select[^a-z]/.test(originalName)) {
+                const suggestedName = getSuggestedName(originalName);
+                context.report({
+                  node: prop.value,
+                  messageId: prefixSelectorsWithSelect,
+                  suggest: [
+                    {
+                      messageId: prefixSelectorsWithSelectSuggest,
+                      data: { name: suggestedName },
+                      fix: (fixer) =>
+                        fixer.replaceText(prop.value, suggestedName),
+                    },
+                  ],
+                });
+              }
+            }
+          }
+        }
+
+        // Handle regular selector declarations
+        if (
+          id.type === 'Identifier' &&
+          !/^select[^a-z]/.test(id.name) &&
+          id.typeAnnotation &&
+          id.typeAnnotation.typeAnnotation.type === 'TSTypeReference' &&
+          id.typeAnnotation.typeAnnotation.typeName.type === 'Identifier' &&
+          /^MemoizedSelector(WithProps)?$/.test(
+            id.typeAnnotation.typeAnnotation.typeName.name
+          )
+        ) {
+          const suggestedName = getSuggestedName(id.name);
+          context.report({
+            node: id,
+            messageId: prefixSelectorsWithSelect,
+            suggest: [
+              {
+                messageId: prefixSelectorsWithSelectSuggest,
+                data: { name: suggestedName },
+                fix: (fixer) => fixer.replaceText(id, suggestedName),
               },
-              fix: (fixer) =>
-                fixer.replaceTextRange(
-                  [id.range[0], id.typeAnnotation?.range[0] ?? id.range[1]],
-                  suggestedName
-                ),
-            },
-          ],
-        });
+            ],
+          });
+        }
       },
     };
   },
 });
 
-function getSuggestedName(name: string) {
+function getSuggestedName(name: string): string {
+  if (typeof name !== 'string') return 'selectUnknown';
+
   const selectWord = 'select';
-  // Ex: 'selectfeature' => 'selectFeature'
+
+  // Case 1: Already starts with "select" but needs capitalization
   let possibleReplacedName = name.replace(
     new RegExp(`^${selectWord}(.+)`),
-    (_, word: string) => {
-      return `${selectWord}${capitalize(word)}`;
-    }
+    (_, word: string) => `${selectWord}${capitalize(word)}`
   );
+  if (name !== possibleReplacedName) return possibleReplacedName;
 
-  if (name !== possibleReplacedName) {
-    return possibleReplacedName;
-  }
-
-  // Ex: 'getCount' => 'selectCount'
+  // Case 2: Starts with "get"
   possibleReplacedName = name.replace(/^get([^a-z].+)/, (_, word: string) => {
     return `${selectWord}${capitalize(word)}`;
   });
+  if (name !== possibleReplacedName) return possibleReplacedName;
 
-  if (name !== possibleReplacedName) {
-    return possibleReplacedName;
-  }
-
-  // Ex: 'item' => 'selectItem'
+  // Case 3: No prefix
   return `${selectWord}${capitalize(name)}`;
 }

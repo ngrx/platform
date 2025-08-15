@@ -33,6 +33,9 @@ const valid: () => (string | ValidTestCase<Options>)[] = () => [
       }),
     })
   `,
+  `
+    export const { selectAll: selectAllBooks } = booksAdapter.getSelectors(createSelector(selectBookInfo, (state) => state.books));
+  `,
 ];
 
 const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
@@ -44,9 +47,7 @@ export const getCount: MemoizedSelector<any, any> = (state: AppState) => state.f
       suggestions: [
         {
           messageId: prefixSelectorsWithSelectSuggest,
-          data: {
-            name: 'selectCount',
-          },
+          data: { name: 'selectCount' },
           output: `
 export const selectCount: MemoizedSelector<any, any> = (state: AppState) => state.feature`,
         },
@@ -88,10 +89,8 @@ export const select = (id: string) => createSelector(selectThings, things => thi
     {
       suggestions: [
         {
-          data: {
-            name: 'selectSelect',
-          },
           messageId: prefixSelectorsWithSelectSuggest,
+          data: { name: 'selectSelect' },
           output: `
 export const selectSelect = (id: string) => createSelector(selectThings, things => things[id])`,
         },
@@ -108,9 +107,7 @@ export const SELECT_TEST = (id: string) => {
       suggestions: [
         {
           messageId: prefixSelectorsWithSelectSuggest,
-          data: {
-            name: 'selectSELECT_TEST',
-          },
+          data: { name: 'selectSELECT_TEST' },
           output: `
 export const selectSELECT_TEST = (id: string) => {
   return createSelector(selectThings, things => things[id])
@@ -127,9 +124,7 @@ export const feature = createFeatureSelector<AppState, FeatureState>(featureKey)
       suggestions: [
         {
           messageId: prefixSelectorsWithSelectSuggest,
-          data: {
-            name: 'selectFeature',
-          },
+          data: { name: 'selectFeature' },
           output: `
 export const selectFeature = createFeatureSelector<AppState, FeatureState>(featureKey)`,
         },
@@ -144,9 +139,7 @@ export const selectfeature = createSelector((state: AppState) => state.feature)
       suggestions: [
         {
           messageId: prefixSelectorsWithSelectSuggest,
-          data: {
-            name: 'selectFeature',
-          },
+          data: { name: 'selectFeature' },
           output: `
 export const selectFeature = createSelector((state: AppState) => state.feature)`,
         },
@@ -167,9 +160,7 @@ export const createSelect = createSelectorFactory((projectionFun) =>
       suggestions: [
         {
           messageId: prefixSelectorsWithSelectSuggest,
-          data: {
-            name: 'selectCreateSelect',
-          },
+          data: { name: 'selectCreateSelect' },
           output: `
 export const selectCreateSelect = createSelectorFactory((projectionFun) =>
   defaultMemoize(
@@ -182,7 +173,6 @@ export const selectCreateSelect = createSelectorFactory((projectionFun) =>
       ],
     }
   ),
-  // https://github.com/ngrx/platform/issues/3956
   fromFixture(
     `
 import {createFeatureSelector} from '@ngrx/store';
@@ -197,9 +187,7 @@ const featureSelector = createFeatureSelector<FileListResponseState>("name");
       suggestions: [
         {
           messageId: prefixSelectorsWithSelectSuggest,
-          data: {
-            name: 'selectFeatureSelector',
-          },
+          data: { name: 'selectFeatureSelector' },
           output: `
 import {createFeatureSelector} from '@ngrx/store';
 
@@ -208,6 +196,21 @@ export interface FileListResponseState {
 }
 
 const selectFeatureSelector = createFeatureSelector<FileListResponseState>("name");`,
+        },
+      ],
+    }
+  ),
+  fromFixture(
+    `
+export const { selectAll: allBooks } = booksAdapter.getSelectors(createSelector(selectBookInfo, (state) => state.books));
+                          ~~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
+    {
+      suggestions: [
+        {
+          messageId: prefixSelectorsWithSelectSuggest,
+          data: { name: 'selectAllBooks' },
+          output: `
+export const { selectAll: selectAllBooks } = booksAdapter.getSelectors(createSelector(selectBookInfo, (state) => state.books));`,
         },
       ],
     }
