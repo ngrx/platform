@@ -260,7 +260,6 @@ export class MarkdownArticleComponent implements OnDestroy {
   }
 
   private watchHeadings() {
-    console.log('watchHeadings');
     if (this.intersectionObserver) {
       this.intersectionObserver.disconnect();
       this.intersectionObserver = undefined;

@@ -82,16 +82,13 @@ You can see the full example at StackBlitz: <ngrx-docs-stackblitz name="componen
 
 </ngrx-docs-alert>
 
-<code-tabs linenums="true">
-  <code-pane
-    header="src/app/slide-toggle.component.ts"
-    path="component-store-slide-toggle/src/app/slide-toggle.component.ts">
-  </code-pane>
-  <code-pane
-    header="src/app/slide-toggle.html"
-    path="component-store-slide-toggle/src/app/slide-toggle.html">
-  </code-pane>
-</code-tabs>
+<ngrx-code-tabs>
+  <ngrx-code-example header="src/app/slide-toggle.component.ts">
+  </ngrx-code-example>
+
+  <ngrx-code-example header="src/app/slide-toggle.component.html">
+  </ngrx-code-example>
+</ngrx-code-tabs>
 
 Below are the steps of integrating `ComponentStore` into a component.
 
@@ -239,20 +236,20 @@ You can see the examples at StackBlitz:
 
 </ngrx-docs-alert>
 
-<code-tabs linenums="true">
-  <code-pane
+<ngrx-code-tabs>
+  <ngrx-code-example
     header="PaginatorComponent with PaginatorStore Service"
     path="component-store-paginator-service/src/app/paginator.component.ts">
-  </code-pane>
-  <code-pane
+  </ngrx-code-example>
+  <ngrx-code-example
     header="PaginatorComponent providing ComponentStore"
     path="component-store-paginator/src/app/paginator.component.ts">
-  </code-pane>
-  <code-pane
+  </ngrx-code-example>
+  <ngrx-code-example
     header="src/app/paginator.store.ts"
     path="component-store-paginator-service/src/app/paginator.store.ts">
-  </code-pane>
-</code-tabs>
+  </ngrx-code-example>
+</ngrx-code-tabs>
 
 #### Updating the state
 
@@ -316,19 +313,19 @@ changePageSize(newPageSize: number) {
 
 `PaginatorStore` exposes the two properties: `vm$` for an aggregated _ViewModel_ to be used in the template and `page$` that would emit whenever data aggregated from a `PageEvent` changes.
 
-<code-tabs>
-  <code-pane
+<ngrx-code-tabs>
+  <ngrx-code-example
     header="src/app/paginator.component.ts"
     path="component-store-paginator-service/src/app/paginator.component.ts"
     region="selectors"
     >
-  </code-pane>
-  <code-pane
+  </ngrx-code-example>
+  <ngrx-code-example
     header="src/app/paginator.store.ts"
     path="component-store-paginator-service/src/app/paginator.store.ts"
     region="selectors">
-  </code-pane>
-</code-tabs>
+  </ngrx-code-example>
+</ngrx-code-tabs>
 
 <ngrx-docs-alert type="help">
 
