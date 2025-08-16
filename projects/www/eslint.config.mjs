@@ -11,7 +11,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['**/dist', '**/node_modules'],
+    ignores: ['**/dist', '**/node_modules', '**/examples'],
   },
   ...baseConfig,
   ...compat
@@ -43,28 +43,7 @@ export default [
             style: 'kebab-case',
           },
         ],
-        '@typescript-eslint/prefer-namespace-keyword': 'error',
         '@nx/enforce-module-boundaries': 'off',
-        eqeqeq: ['off', 'smart'],
-        'id-blacklist': [
-          'error',
-          'any',
-          'Number',
-          'number',
-          'String',
-          'string',
-          'Boolean',
-          'boolean',
-          'Undefined',
-          'undefined',
-        ],
-        'id-match': 'error',
-        'no-eval': 'off',
-        'no-redeclare': 'error',
-        'no-underscore-dangle': 'error',
-        'no-var': 'error',
-        'no-case-declarations': 'off',
-        '@angular-eslint/prefer-standalone': 'off',
       },
       languageOptions: {
         parserOptions: {
@@ -83,7 +62,4 @@ export default [
         ...config.rules,
       },
     })),
-  {
-    ignores: ['**/environment.prod.ts'],
-  },
 ];
