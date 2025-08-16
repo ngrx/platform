@@ -2,14 +2,18 @@ import { Injectable } from '@angular/core';
 import sdk from '@stackblitz/sdk';
 import type { StackblitzConfig } from '@ngrx-io/tools/vite-ngrx-stackblits.plugin';
 
-const exampleFiles = import.meta.glob(['./**/stackblitz.yml'], {
+const stackblitzProjectFiles = import.meta.glob(['./**/stackblitz.yml'], {
   import: 'default',
+});
+const exampleFiles = import.meta.glob(['./**/*.txt'], {
+  import: 'default',
+  query: '?raw',
 });
 
 @Injectable({ providedIn: 'root' })
 export class ExamplesService {
   async getConfig(exampleName: string): Promise<StackblitzConfig> {
-    return (await exampleFiles[
+    return (await stackblitzProjectFiles[
       `./${exampleName}/stackblitz.yml`
     ]()) as StackblitzConfig;
   }
@@ -54,8 +58,17 @@ export class ExamplesService {
 
   async extractSnippet(path: string, region?: string): Promise<string> {
     try {
-      const response = await fetch(`/src/app/examples/${path}?raw`);
-      const content = await response.text();
+      const txtPath = `./${path.replace('.ts', '.txt')}`;
+      const fileLoader = exampleFiles[txtPath];
+      if (!fileLoader) {
+        return `// File not found: ${path}`;
+      }
+
+      const content = (await fileLoader()) as string;
+      console.log({
+        fileLoader,
+        content,
+      });
 
       if (region) {
         const regionContent = this.extractRegion(content, region);
