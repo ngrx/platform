@@ -75,7 +75,6 @@ export class Counter implements OnInit {
     this.store._increment2(); // ❌
   }
 }
-}
 ```
 
 </ngrx-code-example>

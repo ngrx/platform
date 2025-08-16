@@ -4,7 +4,10 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "dependsOn": [{ "target": "collect-docs" }],
+      "dependsOn": [
+        { "target": "collect-docs" },
+        { "target": "prepare-examples" }
+      ],
       "executor": "@analogjs/platform:vite",
       "defaultConfiguration": "production",
       "configurations": {
@@ -79,6 +82,12 @@
           "target": "build"
         }
       ]
+    },
+    "prepare-examples": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "prepare-examples"
+      }
     }
   },
   "tags": [],

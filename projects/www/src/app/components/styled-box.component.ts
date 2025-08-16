@@ -135,7 +135,7 @@ export class StyledBoxComponent implements AfterViewInit {
     }
 
     const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
+      for (const _entry of entries) {
         const { width, height } =
           this.hostRef.nativeElement.getBoundingClientRect();
         this.width.set(width);

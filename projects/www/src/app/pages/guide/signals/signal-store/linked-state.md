@@ -10,8 +10,8 @@ These linked state slices become an integral part of the SignalStore's state and
 When a computation function is provided, the SignalStore wraps it in a `linkedSignal()`.
 As a result, the linked state slice is updated automatically whenever any of its dependent signals change.
 
-<code-tabs linenums="true">
-<code-pane header="options-store.ts">
+<ngrx-code-tabs>
+<ngrx-code-example header="options-store.ts">
 
 ```ts
 import { patchState, signalStore, withLinkedState, withState } from '@ngrx/signals';
@@ -34,9 +34,9 @@ export const OptionsStore = signalStore(
 );
 ```
 
-</code-pane>
+</ngrx-code-example>
 
-<code-pane header="option-list.ts">
+<ngrx-code-example header="option-list.ts">
 
 ```ts
 @Component({
@@ -58,8 +58,8 @@ export class OptionList {
 }
 ```
 
-</code-pane>
-</code-tabs>
+</ngrx-code-example>
+</ngrx-code-tabs>
 
 ## Explicit Linking
 
