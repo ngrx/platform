@@ -70,26 +70,6 @@ The following example more extensively utilizes the key concepts of store to man
 
 <ngrx-code-example header="src/app/book-collection/book-collection.component.ts" path="store-walkthrough/src/app/book-collection/book-collection.component.ts">
 
-```ts
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
-import { Book } from '../book-list/books.model';
-
-@Component({
-  selector: 'app-book-collection',
-  templateUrl: './book-collection.component.html',
-  styleUrls: ['./book-collection.component.css'],
-})
-export class BookCollectionComponent {
-  @Input() books: ReadonlyArray<Book> = [];
-  @Output() remove = new EventEmitter<string>();
-}
-```
-
 </ngrx-code-example>
 
 11. Add `BookListComponent` and `BookCollectionComponent` to your `AppComponent` template, and to your declarations (along with their top level import statements) in `app.module.ts` as well.
