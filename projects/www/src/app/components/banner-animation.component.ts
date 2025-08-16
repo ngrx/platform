@@ -368,7 +368,7 @@ export class BannerAnimationComponent implements AfterViewInit, OnDestroy {
     const CIRCLE_ANIMATION_DURATION = 7_500;
     const CIRCLE_ANIMATION_DELAY = 2_500;
 
-    let circleAnimationStart = Date.now();
+    const circleAnimationStart = Date.now();
 
     for (const { circle, ellipse } of this.lineGroups()) {
       const [dark, light] =

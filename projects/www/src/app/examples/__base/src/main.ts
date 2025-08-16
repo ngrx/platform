@@ -4,11 +4,11 @@ import {
   mergeApplicationConfig,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import { App } from './app.component';
+import { AppComponent } from './app.component';
 import { appConfig } from './app.config';
 
 const config = mergeApplicationConfig(appConfig, {
   providers: [provideZonelessChangeDetection()],
 });
 
-bootstrapApplication(App, config);
+bootstrapApplication(AppComponent, config);

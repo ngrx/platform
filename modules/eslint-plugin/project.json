@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "modules/eslint-plugin/src",
+  "tags": [],
   "targets": {
     "build-package": {
       "executor": "@nx/js:tsc",
@@ -71,6 +72,5 @@
       },
       "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": []
+  }
 }

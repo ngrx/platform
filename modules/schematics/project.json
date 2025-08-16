@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "modules/schematics/src",
   "projectType": "library",
+  "tags": [],
   "generators": {},
   "targets": {
     "lint": {
@@ -83,6 +84,5 @@
       },
       "outputs": ["{workspaceRoot}/dist/modules/schematics"]
     }
-  },
-  "tags": []
+  }
 }

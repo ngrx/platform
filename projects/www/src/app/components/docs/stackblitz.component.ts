@@ -38,8 +38,8 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
 export class StackblitzComponent implements AfterViewInit {
   examplesService = inject(ExamplesService);
   platformId = inject(PLATFORM_ID);
-  @Input() name: string = '__base';
-  @Input() embedded: string = 'false';
+  @Input() name = '__base';
+  @Input() embedded = 'false';
 
   exampleRef = viewChild.required<ElementRef<HTMLDivElement>>('example');
 

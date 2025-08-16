@@ -115,7 +115,7 @@ import { MatIcon } from '@angular/material/icon';
   ],
 })
 export class CodeExampleComponent {
-  @Input() header: string = '';
+  @Input() header = '';
   codeBody = viewChild.required<ElementRef>('codeBody');
   copied = signal(false);
 

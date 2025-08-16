@@ -10,7 +10,7 @@ import { StackblitzComponent } from './components/docs/stackblitz.component';
 import { FooterComponent } from './components/footer.component';
 
 @Component({
-  selector: 'www-root',
+  selector: 'ngrx-root',
   standalone: true,
   imports: [
     RouterOutlet,

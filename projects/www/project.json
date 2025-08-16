@@ -50,6 +50,13 @@
       "executor": "@analogjs/vitest-angular:test",
       "outputs": ["{projectRoot}/coverage"]
     },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["projects/www/**/*.ts", "projects/www/**/*.html"],
+        "config": "eslint.config.mjs"
+      }
+    },
     "collect-docs": {
       "executor": "nx:run-script",
       "options": {

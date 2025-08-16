@@ -4,6 +4,8 @@
   "projectType": "library",
   "sourceRoot": "modules/entity/src",
   "prefix": "ngrx",
+  "tags": [],
+  "generators": {},
   "targets": {
     "build-package": {
       "executor": "@angular-devkit/build-angular:ng-packagr",
@@ -61,7 +63,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/modules/entity"]
     }
-  },
-  "generators": {},
-  "tags": []
+  }
 }
