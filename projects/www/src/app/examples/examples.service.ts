@@ -93,9 +93,21 @@ export class ExamplesService {
     const startMarker = `#region ${region}`;
     const endMarker = `#endregion`;
 
-    // Also support docregion markers like in Angular docs
-    const docStartMarker = `// #docregion ${region}`;
-    const docEndMarker = `// #enddocregion`;
+    // Also support docregion markers like in Angular docs, across TS/JS/HTML comment styles
+    // Examples:
+    // // #docregion foo
+    // /* #docregion foo */
+    // <!-- #docregion foo -->
+    const docRegionStartRegexes = [
+      /\/\/\s*#docregion(?:\s+(.*))?\s*$/, // line comment
+      /\/\*\s*#docregion(?:\s+(.*?))?\s*\*\/\s*$/, // block comment on one line
+      /<!--\s*#docregion(?:\s+(.*?))?\s*-->/, // HTML comment
+    ];
+    const docRegionEndRegexes = [
+      /\/\/\s*#enddocregion\b(?:\s+.*)?$/, // line comment with optional names
+      /\/\*\s*#enddocregion(?:\s+.*?)?\s*\*\//, // block comment with optional names
+      /<!--\s*#enddocregion(?:\s+.*?)?\s*-->/, // HTML comment with optional names
+    ];
 
     let startIndex = -1;
     let endIndex = -1;
@@ -110,34 +122,33 @@ export class ExamplesService {
         continue;
       }
 
-      // Enhanced handling of // #docregion lines that may declare multiple regions separated by commas
-      if (line.startsWith('//') && line.includes('#docregion')) {
-        // Example: // #docregion providers, init
-        const match = line.match(/\/\/\s*#docregion\s+(.*)$/);
-        if (match) {
-          const declared = match[1]
-            .split(',')
-            .map((r) => r.trim())
-            .filter((r) => r.length > 0); // array of region names
-          // If no specific regions listed (empty array) and region is empty string, treat as match
-          if (
-            (declared.length === 0 && region === '') ||
-            declared.includes(region)
-          ) {
-            startIndex = i + 1;
-            continue;
+      // Enhanced handling of #docregion lines (supports //, /* */, and <!-- -->)
+      if (line.includes('#docregion')) {
+        for (const rx of docRegionStartRegexes) {
+          const match = line.match(rx);
+          if (match) {
+            const declaredList = (match[1] ?? '')
+              .split(',')
+              .map((r) => r.trim())
+              .filter((r) => r.length > 0);
+            if (
+              (declaredList.length === 0 && region === '') ||
+              declaredList.includes(region)
+            ) {
+              startIndex = i + 1;
+              break;
+            }
           }
         }
-        // Fallback to legacy single-region substring check for backward compatibility
-        if (line.includes(docStartMarker)) {
-          startIndex = i + 1;
+        if (startIndex === i + 1) {
           continue;
         }
       }
 
       // End markers
       if (
-        (line.includes(endMarker) || line.includes(docEndMarker)) &&
+        (line.includes(endMarker) ||
+          docRegionEndRegexes.some((rx) => rx.test(line))) &&
         startIndex !== -1
       ) {
         endIndex = i;
