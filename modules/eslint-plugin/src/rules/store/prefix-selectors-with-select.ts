@@ -53,24 +53,11 @@ export default createRule<Options, MessageIds>({
         const { id, init } = node;
 
         // Case 1: Destructuring from getSelectors()
-        if (
-          id.type === 'ObjectPattern' &&
+        const isGetSelectorsCall =
           init?.type === 'CallExpression' &&
           init.callee.type === 'Identifier' &&
-          init.callee.name === 'getSelectors'
-        ) {
-          for (const prop of id.properties) {
-            if (
-              prop.type === 'Property' &&
-              prop.key.type === 'Identifier' &&
-              prop.value.type === 'Identifier'
-            ) {
-              reportIfInvalid(prop.value.name, prop.value);
-            }
-          }
-        }
+          init.callee.name === 'getSelectors';
 
-        // Case 2: Destructuring from any object
         if (id.type === 'ObjectPattern') {
           for (const prop of id.properties) {
             if (
@@ -78,12 +65,16 @@ export default createRule<Options, MessageIds>({
               prop.key.type === 'Identifier' &&
               prop.value.type === 'Identifier'
             ) {
-              reportIfInvalid(prop.value.name, prop.value);
+              const isAliased = prop.key.name !== prop.value.name;
+              if (!isGetSelectorsCall || isAliased) {
+                reportIfInvalid(prop.value.name, prop.value);
+              }
             }
           }
+          return; // Prevent fall-through to other cases
         }
 
-        // Case 3: Regular selector declaration with MemoizedSelector type
+        // Case 2: Regular selector declaration with MemoizedSelector type
         if (
           id.type === 'Identifier' &&
           id.typeAnnotation &&
