@@ -5,10 +5,13 @@ import type { StackblitzConfig } from '@ngrx-io/tools/vite-ngrx-stackblits.plugi
 const stackblitzProjectFiles = import.meta.glob(['./**/stackblitz.yml'], {
   import: 'default',
 });
-const exampleFiles = import.meta.glob(['./**/*.txt'], {
-  import: 'default',
-  query: '?raw',
-});
+const exampleFiles = import.meta.glob(
+  ['./**/*.ts', './**/*.html', './**/*.txt'],
+  {
+    import: 'default',
+    query: '?raw',
+  }
+);
 
 @Injectable({ providedIn: 'root' })
 export class ExamplesService {
@@ -58,18 +61,17 @@ export class ExamplesService {
 
   async extractSnippet(path: string, region?: string): Promise<string> {
     try {
-      const txtPath = `./${path.replace('.ts', '.txt')}`;
-      const fileLoader = exampleFiles[txtPath];
+      // The raw content of a typescript file doesn't seem to be imported correctly
+      // As a hack, we convert the .ts file to .txt (during the build)
+      const exampleFilePath = path.endsWith('.ts')
+        ? `./${path.replace('.ts', '.txt')}`
+        : `./${path}`;
+      const fileLoader = exampleFiles[exampleFilePath];
       if (!fileLoader) {
-        return `// File not found: ${path}`;
+        return `// File not found: ${exampleFilePath}`;
       }
 
       const content = (await fileLoader()) as string;
-      console.log({
-        fileLoader,
-        content,
-      });
-
       if (region) {
         const regionContent = this.extractRegion(content, region);
         return this.normalizeIndentation(regionContent);
