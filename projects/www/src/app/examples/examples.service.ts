@@ -5,13 +5,10 @@ import type { StackblitzConfig } from '@ngrx-io/tools/vite-ngrx-stackblits.plugi
 const stackblitzProjectFiles = import.meta.glob(['./**/stackblitz.yml'], {
   import: 'default',
 });
-const exampleFiles = import.meta.glob(
-  ['./**/*.ts', './**/*.html', './**/*.txt'],
-  {
-    import: 'default',
-    query: '?raw',
-  }
-);
+const exampleFiles = import.meta.glob(['./**/*.html', './**/*.txt'], {
+  import: 'default',
+  query: '?raw',
+});
 
 @Injectable({ providedIn: 'root' })
 export class ExamplesService {

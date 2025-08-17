@@ -152,7 +152,7 @@ export class CodeExampleComponent implements AfterViewInit {
   private platformId = inject(PLATFORM_ID);
   protected codeContent = signal('');
 
-  async ngAfterViewInit(): Promise<void> {
+  async ngAfterViewInit() {
     if (isPlatformServer(this.platformId)) return;
     if (!this.path) return;
 
