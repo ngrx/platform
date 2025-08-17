@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, ElementRef, inject, Input, PLATFORM_ID, signal, viewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  Input,
+  PLATFORM_ID,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { CodeHighlightPipe } from './code-highlight.pipe';
@@ -71,34 +80,36 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
         display: flex;
         align-items: center;
         justify-content: center;
+        border: none;
+        background: none;
       }
 
       .copy-button.copied {
-        animation: copyFeedback 2s ease-in-out;
+        animation: copyFeedback 1s ease-in-out;
       }
 
       @keyframes copyFeedback {
         0% {
-          background: rgba(207, 143, 197, 0.8);
-          border-color: rgba(207, 143, 197, 0.6);
+          background: rgba(207, 143, 197, 0.6);
+          border-color: rgba(207, 143, 197, 0.4);
           color: rgba(255, 255, 255, 1);
           transform: scale(1);
         }
         15% {
-          background: rgba(207, 143, 197, 0.8);
-          border-color: rgba(207, 143, 197, 0.6);
+          background: rgba(207, 143, 197, 0.6);
+          border-color: rgba(207, 143, 197, 0.4);
           color: rgba(255, 255, 255, 1);
           transform: scale(1.1);
         }
         30% {
-          background: rgba(207, 143, 197, 0.8);
-          border-color: rgba(207, 143, 197, 0.6);
+          background: rgba(207, 143, 197, 0.6);
+          border-color: rgba(207, 143, 197, 0.4);
           color: rgba(255, 255, 255, 1);
           transform: scale(1);
         }
         80% {
-          background: rgba(207, 143, 197, 0.8);
-          border-color: rgba(207, 143, 197, 0.6);
+          background: rgba(207, 143, 197, 0.6);
+          border-color: rgba(207, 143, 197, 0.4);
           color: rgba(255, 255, 255, 1);
           transform: scale(1);
         }
@@ -108,11 +119,6 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
           color: rgba(255, 255, 255, 0.8);
           transform: scale(1);
         }
-      }
-
-      .copy-button:hover {
-        border-color: rgba(255, 255, 255, 0.4);
-        color: rgba(255, 255, 255, 1);
       }
 
       .copy-button:active {
