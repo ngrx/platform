@@ -91,7 +91,7 @@ export default createRule<Options, MessageIds>({
               reportIfInvalid(prop.value.name, prop.value);
             }
           }
-          return;
+          return; // Early exit to prevent duplicate lint errors when handling ObjectPattern selectors
         }
 
         if (
@@ -110,10 +110,13 @@ export default createRule<Options, MessageIds>({
 });
 
 function getSuggestedName(name: string): string {
-  if (typeof name !== 'string') return 'selectUnknown';
+  if (typeof name !== 'string') {
+    return 'selectUnknown';
+  }
 
   const selectWord = 'select';
 
+  // Case 1: Already starts with "select" isn't pascal-case
   let possibleReplacedName = name.replace(
     new RegExp(`^${selectWord}(.+)`),
     (_, word: string) => `${selectWord}${capitalize(word)}`
@@ -123,6 +126,7 @@ function getSuggestedName(name: string): string {
     return possibleReplacedName;
   }
 
+  // Case 2: Starts with "get"
   possibleReplacedName = name.replace(/^get([^a-z].+)/, (_, word: string) => {
     return `${selectWord}${capitalize(word)}`;
   });
@@ -131,5 +135,6 @@ function getSuggestedName(name: string): string {
     return possibleReplacedName;
   }
 
+  // Case 3: No prefix
   return `${selectWord}${capitalize(name)}`;
 }
