@@ -48,7 +48,26 @@ export default createRule<Options, MessageIds>({
             {
               messageId: prefixSelectorsWithSelectSuggest,
               data: { name: suggestedName },
-              fix: (fixer) => fixer.replaceText(node, suggestedName),
+              fix: (fixer) => {
+                const sourceCode =
+                  context.sourceCode ?? context.getSourceCode();
+                const parent = node.parent;
+
+                if (
+                  parent &&
+                  parent.type === 'VariableDeclarator' &&
+                  parent.id.type === 'Identifier'
+                ) {
+                  const fullText = sourceCode.getText(parent.id);
+                  const updatedText = fullText.replace(
+                    node.name,
+                    suggestedName
+                  );
+                  return fixer.replaceText(parent.id, updatedText);
+                }
+
+                return fixer.replaceText(node, suggestedName);
+              },
             },
           ],
         });
