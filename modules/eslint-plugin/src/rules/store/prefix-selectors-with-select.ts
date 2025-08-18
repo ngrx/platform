@@ -67,7 +67,7 @@ export default createRule<Options, MessageIds>({
               init.callee.property.type === 'Identifier' &&
               init.callee.property.name === 'getSelectors'));
 
-        if (id.type === 'ObjectPattern') {
+        if (id.type === 'ObjectPattern' && isSelectorSource) {
           for (const prop of id.properties) {
             if (prop.type === 'Property' && prop.value.type === 'Identifier') {
               reportIfInvalid(prop.value.name, prop.value);
