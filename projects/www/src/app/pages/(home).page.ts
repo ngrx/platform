@@ -55,7 +55,9 @@ import { MatIconModule } from '@angular/material/icon';
           Join our free community Discord server to get help with NgRx, or
           schedule a 1:1 session with an NgRx expert.
         </p>
-        <button mat-flat-button>Get Support</button>
+        <a routerLink="/support"
+          ><button mat-flat-button>Get Support</button></a
+        >
       </ngrx-styled-box>
     </div>
   `,
