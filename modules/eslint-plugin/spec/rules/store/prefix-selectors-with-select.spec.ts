@@ -63,7 +63,7 @@ export const selectCount: MemoizedSelector<any, any> = (state: AppState) => stat
   fromFixture(
     `
 export const { selectAll: allBooks } = booksAdapter.getSelectors(createSelector(selectBookInfo, (state) => state.books));
-                                  ~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
+                          ~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
     {
       suggestions: [
         {
@@ -78,7 +78,7 @@ export const { selectAll: selectAllBooks } = booksAdapter.getSelectors(createSel
   fromFixture(
     `
 const { selectAll: allItems } = getSelectors(adapter);
-                        ~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
+                   ~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
     {
       suggestions: [
         {
@@ -93,7 +93,7 @@ const { selectAll: selectAllItems } = getSelectors(adapter);`,
   fromFixture(
     `
 const { selectEntities: entitiesMap } = getSelectors(adapter);
-                              ~~~~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
+                        ~~~~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
     {
       suggestions: [
         {

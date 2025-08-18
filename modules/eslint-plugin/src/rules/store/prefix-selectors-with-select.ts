@@ -32,10 +32,17 @@ export default createRule<Options, MessageIds>({
   defaultOptions: [],
   create: (context) => {
     function reportIfInvalid(name: string, node: TSESTree.Identifier) {
-      if (!/^select[^a-z]/.test(name)) {
+      if (!name.startsWith('select')) {
         const suggestedName = getSuggestedName(name);
         context.report({
           node,
+          loc: {
+            start: node.loc.start,
+            end: {
+              line: node.loc.start.line,
+              column: node.loc.start.column + name.length,
+            },
+          },
           messageId: prefixSelectorsWithSelect,
           suggest: [
             {
@@ -52,33 +59,26 @@ export default createRule<Options, MessageIds>({
       VariableDeclarator(node: TSESTree.VariableDeclarator) {
         const { id, init } = node;
 
-        // Case 1: Destructuring from getSelectors()
-        const isGetSelectorsCall =
+        const isSelectorSource =
           init?.type === 'CallExpression' &&
-          init.callee.type === 'Identifier' &&
-          init.callee.name === 'getSelectors';
+          ((init.callee.type === 'Identifier' &&
+            init.callee.name === 'getSelectors') ||
+            (init.callee.type === 'MemberExpression' &&
+              init.callee.property.type === 'Identifier' &&
+              init.callee.property.name === 'getSelectors'));
 
         if (id.type === 'ObjectPattern') {
           for (const prop of id.properties) {
-            if (
-              prop.type === 'Property' &&
-              prop.key.type === 'Identifier' &&
-              prop.value.type === 'Identifier'
-            ) {
-              const isAliased = prop.key.name !== prop.value.name;
-              if (!isGetSelectorsCall || isAliased) {
-                reportIfInvalid(prop.value.name, prop.value);
-              }
+            if (prop.type === 'Property' && prop.value.type === 'Identifier') {
+              reportIfInvalid(prop.value.name, prop.value);
             }
           }
-          return; // Prevent fall-through to other cases
+          return;
         }
 
-        // Case 2: Regular selector declaration with MemoizedSelector type
         if (
           id.type === 'Identifier' &&
-          id.typeAnnotation &&
-          id.typeAnnotation.typeAnnotation.type === 'TSTypeReference' &&
+          id.typeAnnotation?.typeAnnotation.type === 'TSTypeReference' &&
           id.typeAnnotation.typeAnnotation.typeName.type === 'Identifier' &&
           /^MemoizedSelector(WithProps)?$/.test(
             id.typeAnnotation.typeAnnotation.typeName.name
@@ -96,19 +96,16 @@ function getSuggestedName(name: string): string {
 
   const selectWord = 'select';
 
-  // Case 1: Already starts with "select" but needs capitalization
   let possibleReplacedName = name.replace(
     new RegExp(`^${selectWord}(.+)`),
     (_, word: string) => `${selectWord}${capitalize(word)}`
   );
   if (name !== possibleReplacedName) return possibleReplacedName;
 
-  // Case 2: Starts with "get"
   possibleReplacedName = name.replace(/^get([^a-z].+)/, (_, word: string) => {
     return `${selectWord}${capitalize(word)}`;
   });
   if (name !== possibleReplacedName) return possibleReplacedName;
 
-  // Case 3: No prefix
   return `${selectWord}${capitalize(name)}`;
 }
