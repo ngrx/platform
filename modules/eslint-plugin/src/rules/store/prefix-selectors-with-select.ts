@@ -49,8 +49,7 @@ export default createRule<Options, MessageIds>({
               messageId: prefixSelectorsWithSelectSuggest,
               data: { name: suggestedName },
               fix: (fixer) => {
-                const sourceCode =
-                  context.sourceCode ?? context.getSourceCode();
+                const sourceCode = context.sourceCode;
                 const parent = node.parent;
 
                 if (
@@ -119,12 +118,18 @@ function getSuggestedName(name: string): string {
     new RegExp(`^${selectWord}(.+)`),
     (_, word: string) => `${selectWord}${capitalize(word)}`
   );
-  if (name !== possibleReplacedName) return possibleReplacedName;
+
+  if (name !== possibleReplacedName) {
+    return possibleReplacedName;
+  }
 
   possibleReplacedName = name.replace(/^get([^a-z].+)/, (_, word: string) => {
     return `${selectWord}${capitalize(word)}`;
   });
-  if (name !== possibleReplacedName) return possibleReplacedName;
+
+  if (name !== possibleReplacedName) {
+    return possibleReplacedName;
+  }
 
   return `${selectWord}${capitalize(name)}`;
 }
