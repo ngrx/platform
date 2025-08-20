@@ -32,9 +32,7 @@ import { MatIconModule } from '@angular/material/icon';
           Dive into NgRx with our getting started guide. You will learn how to
           think reactively and architect your Angular apps for success.
         </p>
-        <a routerLink="/guide/store/walkthrough"
-          ><button mat-flat-button>Learn NgRx</button></a
-        >
+        <a routerLink="/guide/store/walkthrough" mat-flat-button>Learn NgRx</a>
       </ngrx-styled-box>
       <ngrx-styled-box>
         <mat-icon inline>co_present</mat-icon>
@@ -44,9 +42,7 @@ import { MatIconModule } from '@angular/material/icon';
           workshops cover the entire NgRx reactive state framework, from Store
           to Effects to SignalStore.
         </p>
-        <a routerLink="/workshops"
-          ><button mat-flat-button>Attend a Workshop</button></a
-        >
+        <a routerLink="/workshops" mat-flat-button>Attend a Workshop</a>
       </ngrx-styled-box>
       <ngrx-styled-box>
         <mat-icon inline>help</mat-icon>
@@ -55,9 +51,7 @@ import { MatIconModule } from '@angular/material/icon';
           Join our free community Discord server to get help with NgRx, or
           schedule a 1:1 session with an NgRx expert.
         </p>
-        <a routerLink="/support"
-          ><button mat-flat-button>Get Support</button></a
-        >
+        <a routerLink="/support" mat-flat-button>Get Support</a>
       </ngrx-styled-box>
     </div>
   `,
