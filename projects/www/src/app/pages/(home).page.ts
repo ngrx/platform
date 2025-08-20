@@ -20,8 +20,8 @@ import { MatIconModule } from '@angular/material/icon';
       <ngrx-banner-animation></ngrx-banner-animation>
       <img src="/ngrx-logo.svg" alt="ngrx logo" width="260" />
       <h1 class="mat-display-large">Reactive State for Angular</h1>
-      <a routerLink="/guide/store/walkthrough"
-        ><button mat-flat-button class="cta">Learn NgRx</button></a
+      <a routerLink="/guide/store/walkthrough" mat-flat-button class="cta"
+        >Learn NgRx</a
       >
     </div>
     <div class="content">
