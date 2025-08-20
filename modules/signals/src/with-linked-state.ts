@@ -1,5 +1,6 @@
 import { linkedSignal, WritableSignal } from '@angular/core';
 import { toDeepSignal } from './deep-signal';
+import { assertUniqueStoreMembers } from './signal-store-assertions';
 import {
   InnerSignalStore,
   SignalsDictionary,
@@ -85,6 +86,7 @@ export function withLinkedState<
       ...store.props,
     });
     const stateKeys = Reflect.ownKeys(linkedState);
+    assertUniqueStoreMembers(store, stateKeys);
     const stateSource = store[STATE_SOURCE] as SignalsDictionary;
     const stateSignals = {} as SignalsDictionary;
 

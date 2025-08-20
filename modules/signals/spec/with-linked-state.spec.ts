@@ -6,8 +6,9 @@ import {
   withLinkedState,
   withState,
 } from '../src';
-import { getInitialInnerStore } from '../src/signal-store';
+import { getInitialInnerStore, signalStore } from '../src/signal-store';
 import { isWritableSignal, STATE_SOURCE } from '../src/state-source';
+import { vi } from 'vitest';
 
 describe('withLinkedState', () => {
   describe('adds linked state slices to the STATE_SOURCE', () => {
@@ -234,5 +235,24 @@ describe('withLinkedState', () => {
       user.set({ name: 'Mark' });
       expect(name()).toBe('Mark');
     });
+  });
+
+  it('logs a warning if previously defined signal store members have the same name', () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    const linkedStateFeature = signalStoreFeature(
+      withState({ value: 1 }),
+      withLinkedState(() => ({
+        value: () => 1,
+      }))
+    );
+
+    linkedStateFeature(getInitialInnerStore());
+
+    expect(console.warn).toHaveBeenCalledWith(
+      '@ngrx/signals: SignalStore members cannot be overridden.',
+      'Trying to override:',
+      'value'
+    );
   });
 });
