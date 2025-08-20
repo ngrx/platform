@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => ({
           if (id.includes('node_modules')) {
             return 'vendor';
           }
-          return undefined; // this will fix a warning that gets thrown, but is this good enough?
+          return undefined;
         },
       },
     },
