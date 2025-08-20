@@ -2,9 +2,15 @@
   "name": "www",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
+  "sourceRoot": "projects/www/src",
+  "tags": [],
   "targets": {
     "build": {
-      "dependsOn": [{ "target": "collect-docs" }],
+      "dependsOn": [
+        {
+          "target": "collect-docs"
+        }
+      ],
       "executor": "@analogjs/platform:vite",
       "defaultConfiguration": "production",
       "configurations": {
@@ -47,12 +53,7 @@
       }
     },
     "test": {
-      "executor": "@analogjs/vitest-angular:test",
-      "options": {
-        "configFile": "./vite.config.ts",
-        "tsConfig": "./tsconfig.spec.json"
-      },
-      "outputs": ["{projectRoot}/coverage"]
+      "executor": "@analogjs/vitest-angular:test"
     },
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -84,7 +85,5 @@
         }
       ]
     }
-  },
-  "tags": [],
-  "sourceRoot": "projects/www/src"
+  }
 }
