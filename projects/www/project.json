@@ -48,6 +48,10 @@
     },
     "test": {
       "executor": "@analogjs/vitest-angular:test",
+      "options": {
+        "configFile": "projects/www/vite.config.ts",
+        "tsConfig": "projects/www/tsconfig.spec.json"
+      },
       "outputs": ["{projectRoot}/coverage"]
     },
     "lint": {
