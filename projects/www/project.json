@@ -53,7 +53,8 @@
       }
     },
     "test": {
-      "executor": "@analogjs/vitest-angular:test"
+      "executor": "@analogjs/vitest-angular:test",
+      "outputs": ["{projectRoot}/coverage"]
     },
     "lint": {
       "executor": "@nx/eslint:lint",

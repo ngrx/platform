@@ -2,8 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "types": ["node", "vitest"],
-    "target": "es2016"
+    "types": ["node", "vitest"]
   },
   "files": ["src/test-setup.ts"],
   "include": ["src/**/*.spec.ts", "**/*.d.ts"]
