@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { BannerAnimationComponent } from '../components/banner-animation.component';
 import { StyledBoxComponent } from '../components/styled-box.component';
@@ -12,13 +13,16 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     StyledBoxComponent,
     MatIconModule,
+    RouterLink,
   ],
   template: `
     <div class="banner">
       <ngrx-banner-animation></ngrx-banner-animation>
       <img src="/ngrx-logo.svg" alt="ngrx logo" width="260" />
       <h1 class="mat-display-large">Reactive State for Angular</h1>
-      <button mat-flat-button class="cta">Learn NgRx</button>
+      <a routerLink="/guide/store/walkthrough" mat-flat-button class="cta"
+        >Learn NgRx</a
+      >
     </div>
     <div class="content">
       <ngrx-styled-box>
@@ -28,7 +32,7 @@ import { MatIconModule } from '@angular/material/icon';
           Dive into NgRx with our getting started guide. You will learn how to
           think reactively and architect your Angular apps for success.
         </p>
-        <button mat-flat-button>Learn NgRx</button>
+        <a routerLink="/guide/store/walkthrough" mat-flat-button>Learn NgRx</a>
       </ngrx-styled-box>
       <ngrx-styled-box>
         <mat-icon inline>co_present</mat-icon>
@@ -38,7 +42,7 @@ import { MatIconModule } from '@angular/material/icon';
           workshops cover the entire NgRx reactive state framework, from Store
           to Effects to SignalStore.
         </p>
-        <button mat-flat-button>Attend a Workshop</button>
+        <a routerLink="/workshops" mat-flat-button>Attend a Workshop</a>
       </ngrx-styled-box>
       <ngrx-styled-box>
         <mat-icon inline>help</mat-icon>
@@ -47,7 +51,7 @@ import { MatIconModule } from '@angular/material/icon';
           Join our free community Discord server to get help with NgRx, or
           schedule a 1:1 session with an NgRx expert.
         </p>
-        <button mat-flat-button>Get Support</button>
+        <a routerLink="/support" mat-flat-button>Get Support</a>
       </ngrx-styled-box>
     </div>
   `,
