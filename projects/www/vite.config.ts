@@ -51,7 +51,11 @@ export default defineConfig(({ mode }) => ({
     ngrxStackblitzPlugin(),
   ],
   test: {
-    pool: 'threads',
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['src/test-setup.ts'],
+    include: ['**/*.spec.ts'],
+    reporters: ['default'],
   },
   define: {
     'import.meta.vitest': mode !== 'production',
