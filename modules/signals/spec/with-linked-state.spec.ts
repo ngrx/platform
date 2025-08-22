@@ -8,7 +8,6 @@ import {
 } from '../src';
 import { getInitialInnerStore } from '../src/signal-store';
 import { isWritableSignal, STATE_SOURCE } from '../src/state-source';
-import { vi } from 'vitest';
 
 describe('withLinkedState', () => {
   describe('adds linked state slices to the STATE_SOURCE', () => {
