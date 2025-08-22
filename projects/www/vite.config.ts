@@ -3,6 +3,7 @@ import analog from '@analogjs/platform';
 import { defineConfig } from 'vite';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import ngrxStackblitzPlugin from './src/tools/vite-ngrx-stackblits.plugin';
+import angular from '@analogjs/vite-plugin-angular';
 
 export default defineConfig(({ mode }) => ({
   root: __dirname,
@@ -43,15 +44,14 @@ export default defineConfig(({ mode }) => ({
         },
       },
     }),
+    angular({
+      inlineStylesExtension: 'scss',
+    }),
     nxViteTsPaths(),
     ngrxStackblitzPlugin(),
   ],
   test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['src/test-setup.ts'],
-    include: ['**/*.spec.ts'],
-    reporters: ['default'],
+    pool: 'threads',
   },
   define: {
     'import.meta.vitest': mode !== 'production',
