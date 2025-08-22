@@ -6,7 +6,7 @@ import {
   withLinkedState,
   withState,
 } from '../src';
-import { getInitialInnerStore, signalStore } from '../src/signal-store';
+import { getInitialInnerStore } from '../src/signal-store';
 import { isWritableSignal, STATE_SOURCE } from '../src/state-source';
 import { vi } from 'vitest';
 
