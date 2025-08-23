@@ -33,6 +33,9 @@ export default defineConfig(({ mode }) => ({
     },
   },
   plugins: [
+    angular({
+      inlineStylesExtension: 'scss',
+    }),
     analog({
       static: true,
       content: {
@@ -43,9 +46,6 @@ export default defineConfig(({ mode }) => ({
           },
         },
       },
-    }),
-    angular({
-      inlineStylesExtension: 'scss',
     }),
     nxViteTsPaths(),
     ngrxStackblitzPlugin(),
