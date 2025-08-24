@@ -1,16 +1,15 @@
 import {
   Component,
-  OnInit,
   ElementRef,
   inject,
   signal,
   viewChild,
+  AfterContentInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CodeExampleComponent } from './code-example.component';
-
 @Component({
   selector: 'ngrx-code-tabs',
   standalone: true,
@@ -34,12 +33,15 @@ import { CodeExampleComponent } from './code-example.component';
     `,
   ],
 })
-export class CodeTabsComponent implements OnInit {
+export class CodeTabsComponent implements AfterContentInit {
   private domSanitizer = inject(DomSanitizer);
   private content = viewChild.required<ElementRef>('content');
   protected tabs = signal<TabInfo[]>([]);
 
-  ngOnInit() {
+  async ngAfterContentInit() {
+    // Wait a short period for content projection to complete because the content is read asynchronously
+    await new Promise((res) => setTimeout(res, 1000));
+
     const codeExamples =
       this.content().nativeElement.querySelectorAll('ngrx-code-example') ?? [];
     const examples: TabInfo[] = [...codeExamples].map((example) =>
