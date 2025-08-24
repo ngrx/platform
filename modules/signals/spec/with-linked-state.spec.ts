@@ -235,4 +235,23 @@ describe('withLinkedState', () => {
       expect(name()).toBe('Mark');
     });
   });
+
+  it('logs a warning if previously defined signal store members have the same name', () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    const linkedStateFeature = signalStoreFeature(
+      withState({ value: 1 }),
+      withLinkedState(() => ({
+        value: () => 1,
+      }))
+    );
+
+    linkedStateFeature(getInitialInnerStore());
+
+    expect(console.warn).toHaveBeenCalledWith(
+      '@ngrx/signals: SignalStore members cannot be overridden.',
+      'Trying to override:',
+      'value'
+    );
+  });
 });

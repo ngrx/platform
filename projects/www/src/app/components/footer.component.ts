@@ -31,10 +31,10 @@ import { RouterLink } from '@angular/router';
 
     <nav class="community">
       <h4>Community</h4>
-      <a href="">Blog</a>
-      <a href="">GitHub</a>
-      <a href="">X/Twitter</a>
-      <a href="">Discord</a>
+      <a href="https://dev.to/ngrx" target="_blank">Blog</a>
+      <a href="https://github.com/ngrx/platform" target="_blank">GitHub</a>
+      <a href="https://x.com/ngrx_io" target="_blank">X/Twitter</a>
+      <a href="https://discord.com/invite/ngrx" target="_blank">Discord</a>
     </nav>
   `,
   styles: [
