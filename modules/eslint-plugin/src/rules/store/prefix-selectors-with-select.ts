@@ -166,10 +166,6 @@ export default createRule<Options, MessageIds>({
 });
 
 function getSuggestedName(name: string): string {
-  if (typeof name !== 'string') {
-    return 'selectUnknown';
-  }
-
   const selectWord = 'select';
 
   // Case 1: Already starts with "select" but not properly capitalized
