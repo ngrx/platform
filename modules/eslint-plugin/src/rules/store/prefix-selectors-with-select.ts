@@ -54,19 +54,36 @@ export default createRule<Options, MessageIds>({
               messageId: prefixSelectorsWithSelectSuggest,
               data: { name: suggestedName },
               fix: (fixer) => {
-                const sourceCode = context.sourceCode;
                 const parent = node.parent;
+                const sourceCode = context.getSourceCode();
 
+                // Handle destructuring: { selectAll: allItems }
+                if (
+                  parent &&
+                  parent.type === 'Property' &&
+                  parent.value === node &&
+                  parent.parent &&
+                  parent.parent.type === 'ObjectPattern'
+                ) {
+                  return fixer.replaceText(node, suggestedName);
+                }
+
+                // Handle simple variable declarator: const allItems = ...
                 if (
                   parent &&
                   parent.type === 'VariableDeclarator' &&
                   parent.id.type === 'Identifier'
                 ) {
-                  const fullText = sourceCode.getText(parent.id);
-                  const updatedText = fullText.replace(name, suggestedName);
-                  return fixer.replaceText(parent.id, updatedText);
+                  const typeAnnotation = parent.id.typeAnnotation
+                    ? sourceCode.getText(parent.id.typeAnnotation)
+                    : '';
+                  return fixer.replaceText(
+                    parent.id,
+                    `${suggestedName}${typeAnnotation}`
+                  );
                 }
 
+                // Fallback: just replace the identifier
                 return fixer.replaceText(node, suggestedName);
               },
             },
@@ -132,13 +149,14 @@ export default createRule<Options, MessageIds>({
         }
 
         if (id.type === 'Identifier') {
-          const hasSelectorType =
+          const typeName =
             node.id.typeAnnotation?.typeAnnotation.type === 'TSTypeReference' &&
-            node.id.typeAnnotation.typeAnnotation.typeName.type ===
-              'Identifier' &&
-            /^MemoizedSelector(WithProps)?$/.test(
-              node.id.typeAnnotation.typeAnnotation.typeName.name
-            );
+            node.id.typeAnnotation.typeAnnotation.typeName.type === 'Identifier'
+              ? node.id.typeAnnotation.typeAnnotation.typeName.name
+              : null;
+
+          const hasSelectorType =
+            typeName !== null && /Selector$/.test(typeName);
 
           const isSelectorCall =
             init?.type === 'CallExpression' && isSelectorFactoryCall(init);
@@ -168,32 +186,25 @@ export default createRule<Options, MessageIds>({
 function getSuggestedName(name: string): string {
   const selectWord = 'select';
 
-  // Case 1: Already starts with "select" but not properly capitalized
   if (name.startsWith(selectWord)) {
     const rest = name.slice(selectWord.length);
     if (rest.length === 0) {
       return 'selectSelect';
     }
-
-    // Preserve casing for snake_case or ALL_CAPS
     if (/^[A-Z_]+$/.test(rest)) {
       return `${selectWord}${rest}`;
     }
-
     return `${selectWord}${capitalize(rest)}`;
   }
 
-  // Case 2: Starts with "get"
   if (/^get([^a-z].+)/.test(name)) {
     const rest = name.slice(3);
     return `${selectWord}${capitalize(rest)}`;
   }
 
-  // Case 3: ALL_CAPS or snake_case
   if (/^[A-Z_]+$/.test(name)) {
     return `${selectWord}${name}`;
   }
 
-  // Case 4: generic or camelCase
   return `${selectWord}${capitalize(name)}`;
 }
