@@ -42,6 +42,9 @@ const valid: () => (string | ValidTestCase<Options>)[] = () => [
   `
     const { selectAll: selectAllItems, selectEntities: selectEntitiesMap } = getSelectors(adapter);
   `,
+  `
+    const { selectItems, ...rest } = getSelectors(adapter);
+  `,
 ];
 
 const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
