@@ -3,7 +3,8 @@ import { packages } from './config';
 import { execSync } from 'child_process';
 
 const RELEASE_TAG = process.env.RELEASE_TAG;
-const DRY_RUN = process.env.DRY_RUN !== 'false';
+const RELEASE_VERSION = process.env.RELEASE_VERSION;
+const DRY_RUN = process.env.DRY_RUN === 'true';
 
 /**
  * Publish release to NPM on "latest" tag
@@ -30,15 +31,16 @@ export async function publishLatestToNpm() {
 
   for (let pkg of publishablePackages) {
     console.log(
-      `Publishing @ngrx/${pkg} on ${RELEASE_TAG} with dry run set to ${DRY_RUN}`
+      `Publishing @ngrx/${pkg} ${RELEASE_VERSION} on ${RELEASE_TAG} with dry run set to ${DRY_RUN}`
     );
 
     const cmd = [
       'npm publish',
       `./dist/modules/${pkg}`,
       '--access=public',
-      `--tag=${RELEASE_TAG === 'latest' ? 'latest' : 'next'}`,
-      `${DRY_RUN ? '--dry-run' : '--dry-run'}`,
+      `--tag=${RELEASE_TAG}`,
+      '--provenance',
+      DRY_RUN ? `--dry-run` : '',
     ];
 
     execSync(cmd.join(' '));
