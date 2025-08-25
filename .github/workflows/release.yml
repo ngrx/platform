@@ -52,12 +52,12 @@ jobs:
         run: |
           git config --global user.email ${{ secrets.RELEASE_EMAIL }}
           git config --global user.name "${{ secrets.RELEASE_NAME }}"
-          git checkout -b main origin/main
+          git checkout -b main
           git add .
           git status
           git commit -m "chore: release ${{ inputs.release_version }}"
           git tag ${{ inputs.release_version }}
-          git push origin main ${{ inputs.release_version }} $(${{ inputs.dry_run != 'false' }} && echo '--dry-run' || echo '')
+          git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/ngrx/platform.git main ${{ inputs.release_version }} $(${{ inputs.dry_run != 'false' }} && echo '--dry-run' || echo '')
       - name: Build Packages
         run: pnpm run build --exclude=docs-app,standalone-app,example-app,www --skip-nx-cache
       - name: Release
