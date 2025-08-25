@@ -50,12 +50,19 @@ jobs:
         run: pnpm install --frozen-lockfile --prefer-offline
       - name: Update Versions
         run: pnpm run update:versions ${{ inputs.release_version }}
+      - name: Tag Release
+        run: |
+          git status
+          git add .
+          git commit -m "chore: release ${{ inputs.release_version }}"
+          git tag ${{ inputs.release_version }}
       - name: Build Packages
         run: pnpm run build --exclude=docs-app,standalone-app,example-app,www --skip-nx-cache
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           DRY_RUN: ${{ inputs.dry_run }}
           RELEASE_TAG: ${{ inputs.release_tag }}
         run: ./node_modules/.bin/ts-node ./build/publish-release.ts
+      # - name: Push Tag
+      #   run: git push origin main ${{ inputs.release_version }}

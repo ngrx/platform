@@ -31,7 +31,7 @@ export async function publishLatestToNpm() {
 
   for (let pkg of publishablePackages) {
     console.log(
-      `Publishing @ngrx/${pkg} ${RELEASE_VERSION}on ${RELEASE_TAG} with dry run set to ${DRY_RUN}`
+      `Publishing @ngrx/${pkg} ${RELEASE_VERSION} on ${RELEASE_TAG} with dry run set to ${DRY_RUN}`
     );
 
     const cmd = [
@@ -39,7 +39,8 @@ export async function publishLatestToNpm() {
       `./dist/modules/${pkg}`,
       '--access=public',
       `--tag=${RELEASE_TAG}`,
-      DRY_RUN ? `--dry-run` : '--dry-run',
+      '--provenance',
+      DRY_RUN ? `--dry-run` : '',
     ];
 
     execSync(cmd.join(' '));
