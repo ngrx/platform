@@ -23,6 +23,8 @@ The template we use for an action's type is `[Source] Event`.
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 export const customersRefresh = createAction('Refresh Customers');
 export const customersLoadedSuccess = createAction(
@@ -30,7 +32,11 @@ export const customersLoadedSuccess = createAction(
 );
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 export const customersRefresh = createAction(
@@ -40,6 +46,8 @@ export const customersLoadedSuccess = createAction(
   '[Customers API] Customers Loaded Success'
 );
 ```
+
+</ngrx-code-example>
 
 ## Further reading
 

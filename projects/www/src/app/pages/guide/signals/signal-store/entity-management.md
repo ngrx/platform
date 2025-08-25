@@ -456,6 +456,8 @@ export const TodosStore = signalStore(
 
 Private entity collections are defined by using the `_` prefix for the collection name.
 
+<ngrx-code-example>
+
 ```ts
 const todoConfig = entityConfig({
   entity: type<Todo>(),
@@ -483,6 +485,8 @@ class Todos {
   readonly store = inject(TodosStore);
 }
 ```
+
+</ngrx-code-example>
 
 <ngrx-docs-alert type="help">
 

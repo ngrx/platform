@@ -22,6 +22,8 @@ Examples of **incorrect** code for this rule:
 
 ### Enrich state with other state in component
 
+<ngrx-code-example>
+
 ```ts
 export class Component {
   vm$ = combineLatest(
@@ -40,6 +42,8 @@ export class Component {
   );
 }
 ```
+
+</ngrx-code-example>
 
 ### Filter state in component
 
@@ -80,6 +84,8 @@ export class Component {
 
 ### Filter state in selector
 
+<ngrx-code-example>
+
 ```ts
 export selectActiveCustomer = createSelector(
   selectCustomers,
@@ -93,6 +99,8 @@ export class Component {
   customer$ = this.store.select(selectActiveCustomer);
 }
 ```
+
+</ngrx-code-example>
 
 ## Further reading
 

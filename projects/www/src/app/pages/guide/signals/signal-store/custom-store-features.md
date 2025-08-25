@@ -380,6 +380,8 @@ const Store = signalStore(
 This issue arises specifically with custom features that accept input but do not define any generic parameters.
 To prevent this issue, it is recommended to specify an unused generic for such custom features:
 
+<ngrx-code-example>
+
 ```ts
 //            👇
 function withZ<_>() {
@@ -403,3 +405,5 @@ const Store = signalStore(
   withW()
 ); // ✅ works as expected
 ```
+
+</ngrx-code-example>

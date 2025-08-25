@@ -17,6 +17,8 @@ This rule enforces that any class which inherits the `ComponentStore` class and 
 
 Example of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 @Injectable()
 export class BooksStore
@@ -31,7 +33,11 @@ export class BooksStore
 }
 ```
 
+</ngrx-code-example>
+
 Example of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 @Injectable()
@@ -47,3 +53,5 @@ export class BooksStore
   }
 }
 ```
+
+</ngrx-code-example>

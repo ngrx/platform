@@ -20,6 +20,8 @@ That's why it's recommended to put (mapping) logic into a selector, instead of i
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 export class Component {
   name$ = this.store
@@ -28,7 +30,11 @@ export class Component {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 // in selectors.ts:
@@ -42,3 +48,5 @@ export class Component {
   name$ = this.store.select(selectLoggedInUserName)
 }
 ```
+
+</ngrx-code-example>

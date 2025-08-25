@@ -15,6 +15,8 @@ The `*ngrxLet` directive serves a convenient way of binding observables to a vie
 The `*ngrxLet` directive is a standalone directive.
 To use it, add the `LetDirective` to the `imports` of your standalone component or NgModule:
 
+<ngrx-code-example>
+
 ```ts
 import { Component } from '@angular/core';
 import { LetDirective } from '@ngrx/component';
@@ -28,6 +30,8 @@ import { LetDirective } from '@ngrx/component';
 })
 export class MyStandaloneComponent {}
 ```
+
+</ngrx-code-example>
 
 ## Comparison with `*ngIf` and `async`
 

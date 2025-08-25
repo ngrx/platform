@@ -67,6 +67,8 @@ Optionally override some rules via the `rules` property.
 
 Import the NgRx Plugin via `@ngrx/eslint-plugin/v9` and use one or more predefined [configurations](#configurations) by adding them to the `extends` array.
 
+<ngrx-code-example>
+
 ```ts
 const tseslint = require('typescript-eslint');
 const ngrx = require('@ngrx/eslint-plugin/v9');
@@ -89,6 +91,8 @@ module.exports = tseslint.config({
   },
 });
 ```
+
+</ngrx-code-example>
 
 ## Rules
 

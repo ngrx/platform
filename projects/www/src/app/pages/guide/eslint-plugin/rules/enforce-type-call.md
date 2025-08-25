@@ -17,10 +17,14 @@ This rule ensures that the `type` function from `@ngrx/signals` is properly call
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 import { type } from '@ngrx/signals';
 const stateType = type<{ count: number }>;
 ```
+
+</ngrx-code-example>
 
 ```ts
 import { type as typeFn } from '@ngrx/signals';
@@ -34,10 +38,14 @@ import { type } from '@ngrx/signals';
 const stateType = type<{ count: number }>();
 ```
 
+<ngrx-code-example>
+
 ```ts
 import { type as typeFn } from '@ngrx/signals';
 const stateType = typeFn<{ count: number; name: string }>();
 ```
+
+</ngrx-code-example>
 
 ## Further reading
 

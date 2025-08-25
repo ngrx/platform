@@ -17,10 +17,14 @@ This rule ensure that a Signal Store feature uses a generic type to define the f
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 const withY = () =>
   signalStoreFeature({ state: type<{ y: number }>() }, withState({}));
 ```
+
+</ngrx-code-example>
 
 ```ts
 const withY = () => {
@@ -56,6 +60,8 @@ const withY = <_>() => {
 };
 ```
 
+<ngrx-code-example>
+
 ```ts
 function withY<_>() {
   return signalStoreFeature(
@@ -64,6 +70,8 @@ function withY<_>() {
   );
 }
 ```
+
+</ngrx-code-example>
 
 ## Further reading
 

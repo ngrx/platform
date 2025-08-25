@@ -13,6 +13,8 @@ As a result, the linked state slice is updated automatically whenever any of its
 <code-tabs linenums="true">
 <code-pane header="options-store.ts">
 
+<ngrx-code-example>
+
 ```ts
 import { patchState, signalStore, withLinkedState, withState } from '@ngrx/signals';
 
@@ -33,6 +35,8 @@ export const OptionsStore = signalStore(
     }),
 );
 ```
+
+</ngrx-code-example>
 
 </code-pane>
 

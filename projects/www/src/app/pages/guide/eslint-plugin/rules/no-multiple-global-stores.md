@@ -17,6 +17,8 @@ There is only one global store, thus there should also only be one global store 
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 export class Component {
   constructor(
@@ -26,10 +28,16 @@ export class Component {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 export class Component {
   constructor(private readonly store: Store) {}
 }
 ```
+
+</ngrx-code-example>

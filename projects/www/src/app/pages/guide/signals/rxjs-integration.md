@@ -9,6 +9,8 @@ It takes a chain of RxJS operators as input and returns a reactive method.
 The reactive method can accept a static value, signal, or observable as an input argument.
 Input can be typed by providing a generic argument to the `rxMethod` function.
 
+<ngrx-code-example>
+
 ```ts
 import { Component } from '@angular/core';
 import { map, pipe, tap } from 'rxjs';
@@ -29,6 +31,8 @@ export class Numbers {
   );
 }
 ```
+
+</ngrx-code-example>
 
 Each invocation of the reactive method pushes the input value through the reactive chain.
 When called with a static value, the reactive chain executes once.
@@ -331,6 +335,8 @@ export class Numbers {
 
 Initialization of the reactive method outside an injection context is possible by providing an injector as the second argument to the `rxMethod` function.
 
+<ngrx-code-example>
+
 ```ts
 import { Component, inject, Injector, OnInit } from '@angular/core';
 import { tap } from 'rxjs';
@@ -351,3 +357,5 @@ export class Numbers implements OnInit {
   }
 }
 ```
+
+</ngrx-code-example>

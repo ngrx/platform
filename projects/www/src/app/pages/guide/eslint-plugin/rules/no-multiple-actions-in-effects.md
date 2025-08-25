@@ -18,6 +18,8 @@ An action can result in several other Effects being triggered, or multiple chang
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 export class Effects {
   loadEmployeeList$ = createEffect(() => {
@@ -54,7 +56,11 @@ export class Effects {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 // in effect:
@@ -92,3 +98,5 @@ export class Effects {
   constructor(private readonly actions$: Actions) {}
 }
 ```
+
+</ngrx-code-example>

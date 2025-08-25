@@ -19,6 +19,8 @@ All checks will automatically be disabled in production builds.
 
 It's possible to override the default configuration of runtime checks. To do so, use the `runtimeChecks` property on the root store's config object. For each runtime check you can toggle the check with a `boolean`, `true` to enable the check, `false` to disable the check.
 
+<ngrx-code-example>
+
 ```ts
 @NgModule({
   imports: [
@@ -36,6 +38,8 @@ It's possible to override the default configuration of runtime checks. To do so,
 })
 export class AppModule {}
 ```
+
+</ngrx-code-example>
 
 <ngrx-docs-alert type="inform">
 
@@ -234,6 +238,8 @@ export const customerPageRefreshed = createAction(
 
 The fix of the violation is to create unique action types:
 
+<ngrx-code-example>
+
 ```ts
 export const customerPageLoaded = createAction(
   '[Customers Page] Loaded'
@@ -242,3 +248,5 @@ export const customerPageRefreshed = createAction(
   '[Customers Page] Refreshed'
 );
 ```
+
+</ngrx-code-example>

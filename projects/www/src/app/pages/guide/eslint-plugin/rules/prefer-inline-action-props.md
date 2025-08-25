@@ -19,6 +19,8 @@ Note: some property names are not allowed to be used, such as `type`
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 export interface User {
   id: number;
@@ -30,7 +32,11 @@ export const addUser = createAction(
 );
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 export const addUser = createAction(
@@ -43,3 +49,5 @@ export const addUser = createAction(
   props<{ user: User }>()
 );
 ```
+
+</ngrx-code-example>

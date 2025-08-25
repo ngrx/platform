@@ -20,6 +20,8 @@ To prevent a misconception that there are multiple stores (and even that multipl
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 export class Component {
   data$ = this.store.select(data);
@@ -28,7 +30,11 @@ export class Component {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 export class Component {
@@ -37,3 +43,5 @@ export class Component {
   constructor(private readonly store: Store) {}
 }
 ```
+
+</ngrx-code-example>

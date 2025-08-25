@@ -17,9 +17,13 @@ This rule ensures that state changes are only managed by the Signal Store to pre
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 const Store = signalStore({ protectedState: false }, withState({}));
 ```
+
+</ngrx-code-example>
 
 Examples of **correct** code for this rule:
 
@@ -27,6 +31,10 @@ Examples of **correct** code for this rule:
 const Store = signalStore(withState({}));
 ```
 
+<ngrx-code-example>
+
 ```ts
 const Store = signalStore({ protectedState: true }, withState({}));
 ```
+
+</ngrx-code-example>

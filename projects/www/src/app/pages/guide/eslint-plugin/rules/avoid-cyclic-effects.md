@@ -20,6 +20,8 @@ For the rare cases where you need to re-dispatch the same action, you can disabl
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 class Effect {
   details$ = createEffect(() =>
@@ -44,7 +46,11 @@ class Effect {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 class Effect {
@@ -71,3 +77,5 @@ class Effect {
   constructor(private actions$: Actions) {}
 }
 ```
+
+</ngrx-code-example>

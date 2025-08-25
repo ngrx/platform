@@ -15,6 +15,8 @@ Avoid mapping logic outside the selector level.
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 export class UserStore extends ComponentStore<UserState> {
   loggedInUser$ = this.select((state) => state.loggedInUser);
@@ -25,7 +27,11 @@ export class UserStore extends ComponentStore<UserState> {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 export class UserStore extends ComponentStore<UserState> {
@@ -34,3 +40,5 @@ export class UserStore extends ComponentStore<UserState> {
   name$ = this.select(this.loggedInUser$, (user) => user.name);
 }
 ```
+
+</ngrx-code-example>

@@ -19,6 +19,8 @@ Examples of **incorrect** code for this rule:
 
 With `forRoot`:
 
+<ngrx-code-example>
+
 ```ts
 @NgModule({
   imports: [EffectsModule.forRoot([CustomersEffect])],
@@ -26,6 +28,8 @@ With `forRoot`:
 })
 export class AppModule {}
 ```
+
+</ngrx-code-example>
 
 With `forFeature`:
 
@@ -50,12 +54,16 @@ export class AppModule {}
 
 With `forFeature`:
 
+<ngrx-code-example>
+
 ```ts
 @NgModule({
   imports: [EffectsModule.forFeature([CustomersEffect])],
 })
 export class CustomersModule {}
 ```
+
+</ngrx-code-example>
 
 ## Further reading
 

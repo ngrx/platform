@@ -19,6 +19,8 @@ Because it's important to keep things consistent, this rule disallows using both
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 export class Component {
   someData$ = this.store.select(someData);
@@ -26,7 +28,11 @@ export class Component {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 export class Component {
@@ -34,6 +40,8 @@ export class Component {
   otherData$ = this.store.select(otherData);
 }
 ```
+
+</ngrx-code-example>
 
 ## Rule Config
 

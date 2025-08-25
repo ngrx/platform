@@ -3,6 +3,8 @@
 The `deepComputed` function creates a `DeepSignal` when a computation result is an object literal.
 It can be used as a regular computed signal, but it also contains computed signals for each nested property.
 
+<ngrx-code-example>
+
 ```ts
 import { signal } from '@angular/core';
 import { deepComputed } from '@ngrx/signals';
@@ -22,6 +24,8 @@ console.log(pagination.currentPage()); // logs: 1
 console.log(pagination.pageSize()); // logs: 25
 console.log(pagination.totalPages()); // logs: 4
 ```
+
+</ngrx-code-example>
 
 <ngrx-docs-alert type="help">
 

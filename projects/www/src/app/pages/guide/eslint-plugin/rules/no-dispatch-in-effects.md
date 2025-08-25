@@ -19,6 +19,8 @@ Dispatching an action from inside an effect instead of (or together with) mappin
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 export class Effects {
   loadData$ = createEffect(() =>
@@ -46,7 +48,11 @@ export class Effects {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 export class Effects {
@@ -78,3 +84,5 @@ export class Effects {
   constructor(private readonly actions$: Actions) {}
 }
 ```
+
+</ngrx-code-example>
