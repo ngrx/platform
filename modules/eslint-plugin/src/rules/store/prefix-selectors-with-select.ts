@@ -32,6 +32,8 @@ export default createRule<Options, MessageIds>({
   defaultOptions: [],
   create: (context) => {
     function reportIfInvalid(name: string, node: TSESTree.Identifier) {
+      // Name starts with select and
+      // the first character after select is an uppercase ASCII letter, _, or $
       const isValid =
         name.startsWith('select') &&
         name.length > 'select'.length &&
