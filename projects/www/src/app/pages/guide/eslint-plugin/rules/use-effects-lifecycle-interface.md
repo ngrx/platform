@@ -18,6 +18,8 @@ This prevents signature typos, and it's safer if the signature changes in the fu
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 class Effect {
   ngrxOnInitEffects(): Action {
@@ -25,6 +27,8 @@ class Effect {
   }
 }
 ```
+
+</ngrx-code-example>
 
 ```ts
 class Effect {
@@ -55,6 +59,8 @@ class Effect implements OnInitEffects {
 }
 ```
 
+<ngrx-code-example>
+
 ```ts
 import { OnRunEffects } from '@ngrx/effects';
 
@@ -72,6 +78,8 @@ class Effect implements OnRunEffects {
   }
 }
 ```
+
+</ngrx-code-example>
 
 ## Further reading
 

@@ -17,6 +17,8 @@ To enforce that the `updater` method from `@ngrx/component-store` returns the ex
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 interface MoviesState {
   movies: Movie[];
@@ -31,7 +33,11 @@ class MoviesStore extends ComponentStore<MoviesState> {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 interface MoviesState {
@@ -48,3 +54,5 @@ class MoviesStore extends ComponentStore<MoviesState> {
   );
 }
 ```
+
+</ngrx-code-example>

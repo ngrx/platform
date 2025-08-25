@@ -17,6 +17,8 @@ When we use the `on` function to create reducers, we usually copy the state into
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 export interface AppState {
   username: string;
@@ -32,7 +34,11 @@ const reducer = createReducer<AppState>(
 );
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 export interface AppState {
@@ -51,3 +57,5 @@ const reducer = createReducer<AppState>(
   )
 );
 ```
+
+</ngrx-code-example>

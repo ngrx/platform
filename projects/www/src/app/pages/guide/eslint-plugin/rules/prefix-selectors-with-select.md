@@ -17,6 +17,8 @@ It's recommended prefixing selector function names with the word "select" combin
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 // ⚠ Usage of a selector without any prefix
 export const feature = createSelector(
@@ -47,7 +49,11 @@ const createSelector = createSelectorFactory((projectionFun) =>
 );
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 export const selectFeature = createSelector(
@@ -63,6 +69,8 @@ const selectFeature = createFeatureSelector<FeatureState>(featureKey);
 export const selectThing = (id: string) =>
   createSelector(selectThings, (things) => things[id]);
 ```
+
+</ngrx-code-example>
 
 ## Further reading
 

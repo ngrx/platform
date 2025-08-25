@@ -15,6 +15,8 @@ Using `action creator` in `ofType` is preferred over `string`.
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 effectNOK = createEffect(() => this.actions$.pipe(ofType('PING')));
 
@@ -23,10 +25,16 @@ effectNOK1 = createEffect(() =>
 );
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 effectOK = createEffect(() =>
   this.actions$.pipe(ofType(userActions.ping.type))
 );
 ```
+
+</ngrx-code-example>

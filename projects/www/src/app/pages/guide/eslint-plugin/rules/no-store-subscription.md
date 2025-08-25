@@ -15,6 +15,8 @@ Using the `async` pipe is preferred over `store` subscription.
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 ngOnInit() {
   this.store.select(selectedItems).subscribe(items => {
@@ -23,13 +25,23 @@ ngOnInit() {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
 
 <!-- prettier-ignore -->
+<ngrx-code-example>
+
 ```ts
 // in code
-selectedItems$ = this.store.select(selectedItems)
+selectedItems$ = this.store.select(selectedItems);
 
 // in template
-{{ selectedItems$ | async }}
+{
+  {
+    selectedItems$ | async;
+  }
+}
 ```
+
+</ngrx-code-example>

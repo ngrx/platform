@@ -22,6 +22,8 @@ You can still use multiple selectors from different feature states together.
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 const customersFeatureState = createFeatureSelector<
   GlobalStore,
@@ -29,9 +31,15 @@ const customersFeatureState = createFeatureSelector<
 >('customers');
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 const customersFeatureState =
   createFeatureSelector<CustomersFeatureState>('customers');
 ```
+
+</ngrx-code-example>
