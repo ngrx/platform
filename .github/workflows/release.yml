@@ -32,8 +32,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -54,10 +52,11 @@ jobs:
         run: |
           git config --global user.email ${{ secrets.RELEASE_EMAIL }}
           git config --global user.name "${{ secrets.RELEASE_NAME }}"
-          git status
           git add .
+          git status
           git commit -m "chore: release ${{ inputs.release_version }}"
           git tag ${{ inputs.release_version }}
+          git push $(${{ inputs.dry_run == 'true' }} && echo '--dry-run' || echo '')
       - name: Build Packages
         run: pnpm run build --exclude=docs-app,standalone-app,example-app,www --skip-nx-cache
       - name: Release
@@ -67,6 +66,3 @@ jobs:
           RELEASE_TAG: ${{ inputs.release_tag }}
           RELEASE_VERSION: ${{ inputs.release_version }}
         run: ./node_modules/.bin/ts-node ./build/publish-release.ts
-      - name: Push Tag
-        if: ${{ inputs.dry_run != 'true' }}
-        run: git push origin main ${{ inputs.release_version }}
