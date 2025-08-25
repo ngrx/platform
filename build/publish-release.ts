@@ -4,7 +4,7 @@ import { execSync } from 'child_process';
 
 const RELEASE_TAG = process.env.RELEASE_TAG;
 const RELEASE_VERSION = process.env.RELEASE_VERSION;
-const DRY_RUN = process.env.DRY_RUN !== 'false';
+const DRY_RUN = process.env.DRY_RUN === 'true';
 
 /**
  * Publish release to NPM on "latest" tag

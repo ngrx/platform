@@ -63,6 +63,8 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           DRY_RUN: ${{ inputs.dry_run }}
           RELEASE_TAG: ${{ inputs.release_tag }}
+          RELEASE_VERSION: ${{ inputs.release_version }}
         run: ./node_modules/.bin/ts-node ./build/publish-release.ts
-      # - name: Push Tag
-      #   run: git push origin main ${{ inputs.release_version }}
+      - name: Push Tag
+        if: ${{ inputs.dry_run != 'true' }}
+        run: git push origin main ${{ inputs.release_version }}
