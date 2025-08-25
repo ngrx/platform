@@ -39,7 +39,6 @@ export async function publishLatestToNpm() {
       `./dist/modules/${pkg}`,
       '--access=public',
       `--tag=${RELEASE_TAG}`,
-      '--provenance',
       DRY_RUN ? `--dry-run` : '',
     ];
 
