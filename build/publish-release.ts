@@ -37,8 +37,8 @@ export async function publishLatestToNpm() {
       'npm publish',
       `./dist/modules/${pkg}`,
       '--access=public',
-      `--tag=${RELEASE_TAG === 'latest' ? 'latest' : 'next'}`,
-      `${DRY_RUN ? '--dry-run' : '--dry-run'}`,
+      `--tag=${RELEASE_TAG}`,
+      DRY_RUN ? `--dry-run` : '--dry-run',
     ];
 
     execSync(cmd.join(' '));
