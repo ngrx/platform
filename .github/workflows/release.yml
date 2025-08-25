@@ -1,4 +1,4 @@
-name: Release Test
+name: Release
 
 permissions:
   contents: read
@@ -10,7 +10,7 @@ on:
         description: 'Version'
         required: true
       release_tag:
-        description: 'Release Tag'
+        description: 'Tag'
         required: true
         default: 'latest'
         type: choice
@@ -18,7 +18,7 @@ on:
           - latest
           - next
       dry_run:
-        description: 'Dry Run Release'
+        description: 'Dry Run'
         required: true
         default: true
         type: boolean
@@ -49,7 +49,7 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile --prefer-offline
       - name: Update Versions
-        run: pnpm run update:versions ${{ inputs.release_tag }}
+        run: pnpm run update:versions ${{ inputs.release_version }}
       - name: Build Packages
         run: pnpm run build --exclude=docs-app,standalone-app,example-app,www --skip-nx-cache
       - name: Release

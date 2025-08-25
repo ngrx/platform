@@ -3,6 +3,7 @@ import { packages } from './config';
 import { execSync } from 'child_process';
 
 const RELEASE_TAG = process.env.RELEASE_TAG;
+const RELEASE_VERSION = process.env.RELEASE_VERSION;
 const DRY_RUN = process.env.DRY_RUN !== 'false';
 
 /**
@@ -30,7 +31,7 @@ export async function publishLatestToNpm() {
 
   for (let pkg of publishablePackages) {
     console.log(
-      `Publishing @ngrx/${pkg} on ${RELEASE_TAG} with dry run set to ${DRY_RUN}`
+      `Publishing @ngrx/${pkg} ${RELEASE_VERSION}on ${RELEASE_TAG} with dry run set to ${DRY_RUN}`
     );
 
     const cmd = [
