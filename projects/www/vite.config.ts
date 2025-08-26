@@ -5,6 +5,7 @@ import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import ngrxStackblitzPlugin from './src/tools/vite-ngrx-stackblits.plugin';
 import angular from '@analogjs/vite-plugin-angular';
 import { ngrxTheme } from './src/shared/ngrx-shiki-theme';
+import { configDefaults } from 'vitest/config';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -63,6 +64,7 @@ export default defineConfig(({ mode }) => {
       environment: 'jsdom',
       setupFiles: ['src/test-setup.ts'],
       include: ['**/*.spec.ts'],
+      exclude: [...configDefaults.exclude, 'src/app/examples/**'],
       reporters: ['default'],
     },
     define: {
