@@ -1,0 +1,67 @@
+name: Release
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Version'
+        required: true
+      release_tag:
+        description: 'Tag'
+        required: true
+        default: 'latest'
+        type: choice
+        options:
+          - latest
+          - next
+      dry_run:
+        description: 'Dry Run'
+        required: true
+        default: true
+        type: boolean
+
+jobs:
+  version:
+    name: Version and Publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .node-version
+      - run: npm install --global corepack@0.31.0
+      - run: corepack enable
+      - run: pnpm --version
+      - name: Install dependencies
+        uses: actions/setup-node@v3
+        with:
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - name: Install
+        run: pnpm install --frozen-lockfile --prefer-offline
+      - name: Update Versions
+        run: pnpm run update:versions ${{ inputs.release_version }}
+      - name: Tag Release
+        run: |
+          git config --global user.email ${{ secrets.RELEASE_EMAIL }}
+          git config --global user.name "${{ secrets.RELEASE_NAME }}"
+          git commit -am "chore: release ${{ inputs.release_version }}"
+          git tag ${{ inputs.release_version }}
+          git push --tags $(${{ inputs.dry_run == true }} && echo '--dry-run' || echo '')
+          git push $(${{ inputs.dry_run == true }} && echo '--dry-run' || echo '')
+      - name: Build Packages
+        run: pnpm run build --exclude=docs-app,standalone-app,example-app,www --skip-nx-cache
+      - name: Release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          RELEASE_VERSION: ${{ inputs.release_version }}
+        run: ./node_modules/.bin/ts-node ./build/publish-release.ts

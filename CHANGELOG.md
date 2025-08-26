@@ -1,3 +1,23 @@
+<a name="20.0.1"></a>
+
+## [20.0.1](https://github.com/ngrx/platform/compare/20.0.0...20.0.1) (2025-08-25)
+
+### Bug Fixes
+
+- **component:** use setTimeout instead of requestAnimationFrame in SSR mode ([#4912](https://github.com/ngrx/platform/issues/4912)) ([3ae98d7](https://github.com/ngrx/platform/commit/3ae98d7)), closes [#4902](https://github.com/ngrx/platform/issues/4902)
+- **eslint-plugin:** report on-function-explicit-return-type for call expressions ([#4904](https://github.com/ngrx/platform/issues/4904)) ([c8e1352](https://github.com/ngrx/platform/commit/c8e1352)), closes [#4901](https://github.com/ngrx/platform/issues/4901)
+- **signals:** add unique member check to `withLinkedState` ([#4932](https://github.com/ngrx/platform/issues/4932)) ([c5a5a27](https://github.com/ngrx/platform/commit/c5a5a27)), closes [#4931](https://github.com/ngrx/platform/issues/4931)
+- **www:** Make Guide Pages Responsive ([#4900](https://github.com/ngrx/platform/issues/4900)) ([4c921e3](https://github.com/ngrx/platform/commit/4c921e3))
+- **www:** use the stackblitz examples ([#4895](https://github.com/ngrx/platform/issues/4895)) ([e7eabd4](https://github.com/ngrx/platform/commit/e7eabd4))
+
+<a name="20.0.1"></a>
+
+## 20.0.1 (2025-08-25)
+
+<a name="20.0.1"></a>
+
+## 20.0.1 (2025-08-25)
+
 <a name="20.0.0"></a>
 
 # [20.0.0](https://github.com/ngrx/platform/compare/20.0.0-rc.0...20.0.0) (2025-07-28)

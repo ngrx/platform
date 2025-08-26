@@ -1,10 +1,22 @@
-import { Component, Input, ElementRef, signal, viewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  Input,
+  PLATFORM_ID,
+  signal,
+  viewChild,
+} from '@angular/core';
+import { isPlatformServer } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
+import { CodeHighlightPipe } from './code-highlight.pipe';
+import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
 
 @Component({
   selector: 'ngrx-code-example',
   standalone: true,
-  imports: [MatIcon],
+  imports: [MatIcon, CodeHighlightPipe],
   template: `
     @if (header) {
     <div class="header">{{ header }}</div>
@@ -27,7 +39,11 @@ import { MatIcon } from '@angular/material/icon';
         }
       </button>
       <div #codeBody>
-        <ng-content></ng-content>
+        @if(path) {
+        <div [innerHTML]="codeContent() | ngrxCodeHighlight"></div>
+        }@else{
+        <ng-content />
+        }
       </div>
     </div>
   `,
@@ -64,34 +80,36 @@ import { MatIcon } from '@angular/material/icon';
         display: flex;
         align-items: center;
         justify-content: center;
+        border: none;
+        background: none;
       }
 
       .copy-button.copied {
-        animation: copyFeedback 2s ease-in-out;
+        animation: copyFeedback 1s ease-in-out;
       }
 
       @keyframes copyFeedback {
         0% {
-          background: rgba(207, 143, 197, 0.8);
-          border-color: rgba(207, 143, 197, 0.6);
+          background: rgba(207, 143, 197, 0.6);
+          border-color: rgba(207, 143, 197, 0.4);
           color: rgba(255, 255, 255, 1);
           transform: scale(1);
         }
         15% {
-          background: rgba(207, 143, 197, 0.8);
-          border-color: rgba(207, 143, 197, 0.6);
+          background: rgba(207, 143, 197, 0.6);
+          border-color: rgba(207, 143, 197, 0.4);
           color: rgba(255, 255, 255, 1);
           transform: scale(1.1);
         }
         30% {
-          background: rgba(207, 143, 197, 0.8);
-          border-color: rgba(207, 143, 197, 0.6);
+          background: rgba(207, 143, 197, 0.6);
+          border-color: rgba(207, 143, 197, 0.4);
           color: rgba(255, 255, 255, 1);
           transform: scale(1);
         }
         80% {
-          background: rgba(207, 143, 197, 0.8);
-          border-color: rgba(207, 143, 197, 0.6);
+          background: rgba(207, 143, 197, 0.6);
+          border-color: rgba(207, 143, 197, 0.4);
           color: rgba(255, 255, 255, 1);
           transform: scale(1);
         }
@@ -103,19 +121,18 @@ import { MatIcon } from '@angular/material/icon';
         }
       }
 
-      .copy-button:hover {
-        border-color: rgba(255, 255, 255, 0.4);
-        color: rgba(255, 255, 255, 1);
-      }
-
       .copy-button:active {
         transform: scale(0.95);
       }
     `,
   ],
 })
-export class CodeExampleComponent {
+export class CodeExampleComponent implements AfterViewInit {
   @Input() header = '';
+  @Input() path = '';
+  @Input() region = '';
+  @Input() language = 'typescript';
+
   codeBody = viewChild.required<ElementRef>('codeBody');
   copied = signal(false);
 
@@ -127,7 +144,22 @@ export class CodeExampleComponent {
     }
   }
 
-  onAnimationEnd(event: AnimationEvent) {
+  onAnimationEnd(_event: AnimationEvent) {
     this.copied.set(false);
+  }
+
+  private exampleService = inject(ExamplesService);
+  private platformId = inject(PLATFORM_ID);
+  protected codeContent = signal('');
+
+  async ngAfterViewInit() {
+    if (isPlatformServer(this.platformId)) return;
+    if (!this.path) return;
+
+    const content = await this.exampleService.extractSnippet(
+      this.path,
+      this.region
+    );
+    this.codeContent.set(content);
   }
 }

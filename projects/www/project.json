@@ -7,9 +7,8 @@
   "targets": {
     "build": {
       "dependsOn": [
-        {
-          "target": "collect-docs"
-        }
+        { "target": "collect-docs" },
+        { "target": "prepare-examples" }
       ],
       "executor": "@analogjs/platform:vite",
       "defaultConfiguration": "production",
@@ -85,6 +84,12 @@
           "target": "build"
         }
       ]
+    },
+    "prepare-examples": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "prepare-examples"
+      }
     }
   }
 }
