@@ -29,9 +29,20 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write # to be able to publish a GitHub release
+      id-token: write # provenance
     steps:
+      - name: Generate bot app token
+        id: generate_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.NGRX_APP_ID }}
+          private-key: ${{ secrets.NGRX_APP_PRIVATE_KEY }}
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
+          fetch-depth: 0
+          persist-credentials: false
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -49,13 +60,17 @@ jobs:
       - name: Update Versions
         run: pnpm run update:versions ${{ inputs.release_version }}
       - name: Tag Release
+        env:
+          GIT_AUTHOR_EMAIL: "${{ secrets.RELEASE_EMAIL }}"
+          GIT_COMMITTER_EMAIL: "${{ secrets.RELEASE_EMAIL }}"
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
           git config --global user.email ${{ secrets.RELEASE_EMAIL }}
           git config --global user.name "${{ secrets.RELEASE_NAME }}"
+          git status
           git commit -am "chore: release ${{ inputs.release_version }}"
           git tag ${{ inputs.release_version }}
-          git push --tags $(${{ inputs.dry_run == true }} && echo '--dry-run' || echo '')
-          git push $(${{ inputs.dry_run == true }} && echo '--dry-run' || echo '')
+          git push https://x-access-token:${{ steps.generate_token.outputs.token }}@github.com/ngrx/platform.git --follow-tags $(${{ inputs.dry_run == true }} && echo '--dry-run' || echo '')
       - name: Build Packages
         run: pnpm run build --exclude=docs-app,standalone-app,example-app,www --skip-nx-cache
       - name: Release
