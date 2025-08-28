@@ -33,6 +33,18 @@ const valid: () => (string | ValidTestCase<Options>)[] = () => [
       }),
     })
   `,
+  `
+    export const { selectAll: selectAllBooks } = booksAdapter.getSelectors(createSelector(selectBookInfo, (state) => state.books));
+  `,
+  `
+    const { selectAll, selectEntities } = getSelectors(adapter);
+  `,
+  `
+    const { selectAll: selectAllItems, selectEntities: selectEntitiesMap } = getSelectors(adapter);
+  `,
+  `
+    const { selectItems, ...rest } = getSelectors(adapter);
+  `,
 ];
 
 const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
@@ -44,9 +56,7 @@ export const getCount: MemoizedSelector<any, any> = (state: AppState) => state.f
       suggestions: [
         {
           messageId: prefixSelectorsWithSelectSuggest,
-          data: {
-            name: 'selectCount',
-          },
+          data: { name: 'selectCount' },
           output: `
 export const selectCount: MemoizedSelector<any, any> = (state: AppState) => state.feature`,
         },
@@ -208,6 +218,81 @@ export interface FileListResponseState {
 }
 
 const selectFeatureSelector = createFeatureSelector<FileListResponseState>("name");`,
+        },
+      ],
+    }
+  ),
+  fromFixture(
+    `
+export const { selectAll: allBooks } = booksAdapter.getSelectors(createSelector(selectBookInfo, (state) => state.books));
+                          ~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
+    {
+      suggestions: [
+        {
+          messageId: prefixSelectorsWithSelectSuggest,
+          data: { name: 'selectAllBooks' },
+          output: `
+export const { selectAll: selectAllBooks } = booksAdapter.getSelectors(createSelector(selectBookInfo, (state) => state.books));`,
+        },
+      ],
+    }
+  ),
+  fromFixture(
+    `
+const { selectAll: allItems } = getSelectors(adapter);
+                   ~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
+    {
+      suggestions: [
+        {
+          messageId: prefixSelectorsWithSelectSuggest,
+          data: { name: 'selectAllItems' },
+          output: `
+const { selectAll: selectAllItems } = getSelectors(adapter);`,
+        },
+      ],
+    }
+  ),
+  fromFixture(
+    `
+const { selectEntities: entitiesMap } = getSelectors(adapter);
+                        ~~~~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
+    {
+      suggestions: [
+        {
+          messageId: prefixSelectorsWithSelectSuggest,
+          data: { name: 'selectEntitiesMap' },
+          output: `
+const { selectEntities: selectEntitiesMap } = getSelectors(adapter);`,
+        },
+      ],
+    }
+  ),
+  fromFixture(
+    `
+const { allItems } = getSelectors(adapter);
+        ~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
+    {
+      suggestions: [
+        {
+          messageId: prefixSelectorsWithSelectSuggest,
+          data: { name: 'selectAllItems' },
+          output: `
+const { selectAllItems } = getSelectors(adapter);`,
+        },
+      ],
+    }
+  ),
+  fromFixture(
+    `
+const { entitiesMap } = getSelectors(adapter);
+        ~~~~~~~~~~~ [${prefixSelectorsWithSelect} suggest]`,
+    {
+      suggestions: [
+        {
+          messageId: prefixSelectorsWithSelectSuggest,
+          data: { name: 'selectEntitiesMap' },
+          output: `
+const { selectEntitiesMap } = getSelectors(adapter);`,
         },
       ],
     }
