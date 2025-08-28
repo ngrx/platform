@@ -2,6 +2,8 @@
 
 `signalMethod` is a standalone factory function used for managing side effects with Angular signals. It accepts a callback and returns a processor function that can handle either a static value or a signal. The input type can be specified using a generic type argument:
 
+<ngrx-code-example>
+
 ```ts
 import { Component } from '@angular/core';
 import { signalMethod } from '@ngrx/signals';
@@ -18,6 +20,8 @@ export class Numbers {
   });
 }
 ```
+
+</ngrx-code-example>
 
 `logDoubledNumber` can be called with a static value of type `number`, or a Signal of type `number`:
 
@@ -155,6 +159,8 @@ export class Numbers implements OnInit {
 
 At first sight, `signalMethod`, might be the same as `effect`:
 
+<ngrx-code-example>
+
 ```ts
 @Component({
   /* ... */
@@ -173,6 +179,8 @@ export class Numbers {
   }
 }
 ```
+
+</ngrx-code-example>
 
 However, `signalMethod` offers three distinctive advantages over `effect`:
 

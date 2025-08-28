@@ -15,6 +15,8 @@ Avoid the word "reducer" in the key names.
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 StoreModule.forRoot({
   customersReducer: customersReducer,
@@ -29,7 +31,11 @@ export const reducers: ActionReducerMap<AppState> = {
 };
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 StoreModule.forRoot({
@@ -44,6 +50,8 @@ export const reducers: ActionReducerMap<AppState> = {
   customers: fromCustomers.reducer,
 };
 ```
+
+</ngrx-code-example>
 
 ## Further reading
 

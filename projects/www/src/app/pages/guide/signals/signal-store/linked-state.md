@@ -11,6 +11,7 @@ When a computation function is provided, the SignalStore wraps it in a `linkedSi
 As a result, the linked state slice is updated automatically whenever any of its dependent signals change.
 
 <ngrx-code-tabs>
+
 <ngrx-code-example header="options-store.ts">
 
 ```ts
@@ -65,6 +66,7 @@ export class OptionList {
 ```
 
 </ngrx-code-example>
+
 </ngrx-code-tabs>
 
 ## Explicit Linking

@@ -26,6 +26,8 @@ However, the NgRx team recommends using the functional style for defining Signal
 
 To define a class-based SignalStore, create a new class and extend from `signalStore`.
 
+<ngrx-code-example>
+
 ```ts
 @Injectable()
 export class CounterStore extends signalStore(
@@ -39,6 +41,8 @@ export class CounterStore extends signalStore(
   }
 }
 ```
+
+</ngrx-code-example>
 
 </details>
 
@@ -93,6 +97,8 @@ with a helper that can serve as a function or computed itself.
 Although it is possible to have multiple features that reference each other, we recommend having everything in one call.
 That adheres more to JavaScript's functional style and keeps features co-located.
 
+<ngrx-code-example>
+
 ```ts
 export const BooksStore = signalStore(
   withState(initialState),
@@ -109,5 +115,7 @@ export const BooksStore = signalStore(
   })
 );
 ```
+
+</ngrx-code-example>
 
 </details>

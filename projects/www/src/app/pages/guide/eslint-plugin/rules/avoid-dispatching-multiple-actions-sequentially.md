@@ -18,6 +18,8 @@ An action can be a composition of several events, in which case the developer mi
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 export class Component implement OnInit {
   constructor(
@@ -33,7 +35,11 @@ export class Component implement OnInit {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 // in component code:
@@ -73,3 +79,5 @@ export class Effects {
   ) {}
 }
 ```
+
+</ngrx-code-example>

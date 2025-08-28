@@ -18,6 +18,8 @@ In contrast to `withLatestFrom` that immediately subscribes whether the action i
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 class Effect {
   detail$ = createEffect(() => {
@@ -33,7 +35,11 @@ class Effect {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 class Effect {
@@ -48,6 +54,8 @@ class Effect {
   })
 }
 ```
+
+</ngrx-code-example>
 
 ## Rule Config
 
