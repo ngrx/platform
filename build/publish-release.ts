@@ -11,7 +11,7 @@ const NPM_TOKEN = process.env.NPM_TOKEN;
  * Publish release to NPM on "latest/next" tag
  */
 export async function publishLatestToNpm() {
-  if (!process.env.CI || !process.env.GITHUB_WORFLOW) {
+  if (!process.env.CI || !process.env.GITHUB_WORKFLOW) {
     throw new Error('Invalid release environment!');
   }
 
