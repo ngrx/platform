@@ -65,6 +65,7 @@ export default [
         'no-var': 'error',
         'no-case-declarations': 'off',
         '@angular-eslint/prefer-standalone': 'off',
+        '@angular-eslint/prefer-inject': 'off',
       },
       languageOptions: {
         parserOptions: {

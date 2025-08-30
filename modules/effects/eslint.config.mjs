@@ -14,7 +14,7 @@ export default [
     ignores: [
       '**/dist',
       '**/jest.config.ts',
-      '**/schematics-core/test-setup.ts',
+      '**/schematics-core/**/*.ts',
     ],
   },
   ...baseConfig,
@@ -35,6 +35,7 @@ export default [
         '@angular-eslint/component-selector': 'off',
         '@angular-eslint/prefer-standalone': 'off',
         '@nx/enforce-module-boundaries': 'off',
+        '@angular-eslint/prefer-inject': 'off',
       },
       languageOptions: {
         parserOptions: {
@@ -74,7 +75,4 @@ export default [
         ...config.rules,
       },
     })),
-  {
-    ignores: ['schematics-core'],
-  },
 ];

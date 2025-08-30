@@ -31,11 +31,6 @@ export default [
         '@angular-eslint/component-selector': 'off',
         'no-prototype-builtins': 'off',
       },
-      languageOptions: {
-        parserOptions: {
-          project: ['modules/schematics-core/tsconfig.*.json'],
-        },
-      },
     })),
   ...compat
     .config({

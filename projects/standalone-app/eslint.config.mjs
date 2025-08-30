@@ -43,6 +43,7 @@ export default [
           },
         ],
         '@angular-eslint/prefer-standalone': 'off',
+        '@angular-eslint/prefer-inject': 'off',
       },
     })),
   ...compat
