@@ -16,9 +16,9 @@ export default createRule<Options, MessageIds>({
   meta: {
     type: 'suggestion',
     hasSuggestions: true,
-    ngrxModule: 'store',
     docs: {
       description: 'Use a consistent name for the global store.',
+      ngrxModule: 'store',
     },
     schema: [
       {

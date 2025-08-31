@@ -17,9 +17,9 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'problem',
-    ngrxModule: 'signals',
     docs: {
       description: `A custom Signal Store feature that accepts an input should define a generic type.`,
+      ngrxModule: 'signals',
     },
     fixable: 'code',
     schema: [],

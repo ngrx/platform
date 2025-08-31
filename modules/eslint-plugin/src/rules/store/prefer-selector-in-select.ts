@@ -20,10 +20,10 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'suggestion',
-    ngrxModule: 'store',
     docs: {
       description:
         'Using a selector in the `select` is preferred over `string` or `props drilling`.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

@@ -12,9 +12,9 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'problem',
-    ngrxModule: 'signals',
     docs: {
       description: 'The `type` function must be called.',
+      ngrxModule: 'signals',
     },
     fixable: 'code',
     schema: [],

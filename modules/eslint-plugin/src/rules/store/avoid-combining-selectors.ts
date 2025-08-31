@@ -17,9 +17,9 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'suggestion',
-    ngrxModule: 'store',
     docs: {
       description: 'Prefer combining selectors at the selector level.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

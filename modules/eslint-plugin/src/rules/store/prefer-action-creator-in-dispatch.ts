@@ -19,10 +19,10 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'suggestion',
-    ngrxModule: 'store',
     docs: {
       description:
         'Using `action creator` in `dispatch` is preferred over `object` or old `Action`.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

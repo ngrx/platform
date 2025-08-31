@@ -12,9 +12,9 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'problem',
-    ngrxModule: 'signals',
     docs: {
       description: `withState should accept a record or dictionary as an input argument.`,
+      ngrxModule: 'signals',
       requiresTypeChecking: true,
     },
     schema: [],

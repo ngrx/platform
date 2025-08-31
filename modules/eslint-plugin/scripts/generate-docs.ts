@@ -23,8 +23,6 @@ for (const rules of RULES_PATHS) {
     const newDoc = format(
       `# ${ruleName}
 
-${meta.version ? '> Required NgRx Version Range: ${meta.version}' : ''}
-
 ${meta.docs?.description}
 
 - **Type**: ${meta.type}
