@@ -99,7 +99,7 @@ export function createAction<T extends string, P extends object>(
 export function createAction<
   T extends string,
   P extends any[],
-  R extends object
+  R extends object,
 >(
   type: T,
   creator: Creator<P, R & NotAllowedCheck<R>>
@@ -204,14 +204,14 @@ export function createAction<T extends string, C extends Creator>(
 
 export function props<
   P extends SafeProps,
-  SafeProps = NotAllowedInPropsCheck<P>
+  SafeProps = NotAllowedInPropsCheck<P>,
 >(): ActionCreatorProps<P> {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return { _as: 'props', _p: undefined! };
 }
 
 export function union<
-  C extends { [key: string]: ActionCreator<string, Creator> }
+  C extends { [key: string]: ActionCreator<string, Creator> },
 >(creators: C): ReturnType<C[keyof C]> {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return undefined!;

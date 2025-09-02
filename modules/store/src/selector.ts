@@ -20,7 +20,7 @@ export type DefaultProjectorFn<T> = (...args: any[]) => T;
 export interface MemoizedSelector<
   State,
   Result,
-  ProjectorFn = DefaultProjectorFn<Result>
+  ProjectorFn = DefaultProjectorFn<Result>,
 > extends Selector<State, Result> {
   release(): void;
   projector: ProjectorFn;
@@ -35,7 +35,7 @@ export interface MemoizedSelectorWithProps<
   State,
   Props,
   Result,
-  ProjectorFn = DefaultProjectorFn<Result>
+  ProjectorFn = DefaultProjectorFn<Result>,
 > extends SelectorWithProps<State, Props, Result> {
   release(): void;
   projector: ProjectorFn;
@@ -202,14 +202,14 @@ export function createSelector<
     [Key in keyof Selectors]: Selectors[Key] extends Selector<State, infer R>
       ? R
       : never;
-  }
+  },
 >(selectors: Selectors): MemoizedSelector<State, Result, never>;
 
 export function createSelector<State, Slices extends unknown[], Result>(
   ...args: [...slices: Selector<State, unknown>[], projector: unknown] &
     [
       ...slices: { [i in keyof Slices]: Selector<State, Slices[i]> },
-      projector: (...s: Slices) => Result
+      projector: (...s: Slices) => Result,
     ]
 ): MemoizedSelector<State, Result, (...s: Slices) => Result>;
 
@@ -297,7 +297,7 @@ export function createSelector<
   S5,
   S6,
   S7,
-  Result
+  Result,
 >(
   s1: SelectorWithProps<State, Props, S1>,
   s2: SelectorWithProps<State, Props, S2>,
@@ -332,7 +332,7 @@ export function createSelector<
   S6,
   S7,
   S8,
-  Result
+  Result,
 >(
   s1: SelectorWithProps<State, Props, S1>,
   s2: SelectorWithProps<State, Props, S2>,
@@ -375,7 +375,7 @@ export function createSelector<State, Props, S1, Result>(
 export function createSelector<State, Props, S1, S2, Result>(
   selectors: [
     SelectorWithProps<State, Props, S1>,
-    SelectorWithProps<State, Props, S2>
+    SelectorWithProps<State, Props, S2>,
   ],
   projector: (s1: S1, s2: S2, props: Props) => Result
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
@@ -387,7 +387,7 @@ export function createSelector<State, Props, S1, S2, S3, Result>(
   selectors: [
     SelectorWithProps<State, Props, S1>,
     SelectorWithProps<State, Props, S2>,
-    SelectorWithProps<State, Props, S3>
+    SelectorWithProps<State, Props, S3>,
   ],
   projector: (s1: S1, s2: S2, s3: S3, props: Props) => Result
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
@@ -400,7 +400,7 @@ export function createSelector<State, Props, S1, S2, S3, S4, Result>(
     SelectorWithProps<State, Props, S1>,
     SelectorWithProps<State, Props, S2>,
     SelectorWithProps<State, Props, S3>,
-    SelectorWithProps<State, Props, S4>
+    SelectorWithProps<State, Props, S4>,
   ],
   projector: (s1: S1, s2: S2, s3: S3, s4: S4, props: Props) => Result
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
@@ -414,7 +414,7 @@ export function createSelector<State, Props, S1, S2, S3, S4, S5, Result>(
     SelectorWithProps<State, Props, S2>,
     SelectorWithProps<State, Props, S3>,
     SelectorWithProps<State, Props, S4>,
-    SelectorWithProps<State, Props, S5>
+    SelectorWithProps<State, Props, S5>,
   ],
   projector: (s1: S1, s2: S2, s3: S3, s4: S4, s5: S5, props: Props) => Result
 ): MemoizedSelectorWithProps<State, Props, Result, typeof projector>;
@@ -429,7 +429,7 @@ export function createSelector<State, Props, S1, S2, S3, S4, S5, S6, Result>(
     SelectorWithProps<State, Props, S3>,
     SelectorWithProps<State, Props, S4>,
     SelectorWithProps<State, Props, S5>,
-    SelectorWithProps<State, Props, S6>
+    SelectorWithProps<State, Props, S6>,
   ],
   projector: (
     s1: S1,
@@ -455,7 +455,7 @@ export function createSelector<
   S5,
   S6,
   S7,
-  Result
+  Result,
 >(
   selectors: [
     SelectorWithProps<State, Props, S1>,
@@ -464,7 +464,7 @@ export function createSelector<
     SelectorWithProps<State, Props, S4>,
     SelectorWithProps<State, Props, S5>,
     SelectorWithProps<State, Props, S6>,
-    SelectorWithProps<State, Props, S7>
+    SelectorWithProps<State, Props, S7>,
   ],
   projector: (
     s1: S1,
@@ -492,7 +492,7 @@ export function createSelector<
   S6,
   S7,
   S8,
-  Result
+  Result,
 >(
   selectors: [
     SelectorWithProps<State, Props, S1>,
@@ -502,7 +502,7 @@ export function createSelector<
     SelectorWithProps<State, Props, S5>,
     SelectorWithProps<State, Props, S6>,
     SelectorWithProps<State, Props, S7>,
-    SelectorWithProps<State, Props, S8>
+    SelectorWithProps<State, Props, S8>,
   ],
   projector: (
     s1: S1,
@@ -744,7 +744,7 @@ function extractArgsFromSelectorsDictionary(
   selectorsDictionary: Record<string, Selector<unknown, unknown>>
 ): [
   ...selectors: Selector<unknown, unknown>[],
-  projector: (...selectorResults: unknown[]) => unknown
+  projector: (...selectorResults: unknown[]) => unknown,
 ] {
   const selectors = Object.values(selectorsDictionary);
   const resultKeys = Object.keys(selectorsDictionary);

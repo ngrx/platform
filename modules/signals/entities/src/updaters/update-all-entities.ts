@@ -17,7 +17,7 @@ import {
 export function updateAllEntities<
   Collection extends string,
   State extends NamedEntityState<any, Collection>,
-  Entity = State extends NamedEntityState<infer E, Collection> ? E : never
+  Entity = State extends NamedEntityState<infer E, Collection> ? E : never,
 >(
   changes: EntityChanges<NoInfer<Entity>>,
   config: {
@@ -33,7 +33,7 @@ export function updateAllEntities<
     Collection
   >
     ? E
-    : never
+    : never,
 >(
   changes: EntityChanges<NoInfer<Entity>>,
   config: { collection: Collection }

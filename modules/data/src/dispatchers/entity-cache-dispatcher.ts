@@ -211,8 +211,8 @@ export class EntityCacheDispatcher {
               )
             )
           : act.type === EntityCacheAction.SAVE_ENTITIES_SUCCESS
-          ? of((act as SaveEntitiesSuccess).payload.changeSet)
-          : throwError((act as SaveEntitiesError).payload);
+            ? of((act as SaveEntitiesSuccess).payload.changeSet)
+            : throwError((act as SaveEntitiesError).payload);
       })
     );
   }

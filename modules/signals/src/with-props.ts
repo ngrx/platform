@@ -10,7 +10,7 @@ import { Prettify } from './ts-helpers';
 
 export function withProps<
   Input extends SignalStoreFeatureResult,
-  Props extends object
+  Props extends object,
 >(
   propsFactory: (
     store: Prettify<

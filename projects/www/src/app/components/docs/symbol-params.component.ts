@@ -9,21 +9,21 @@ import { InlineMarkdownPipe } from './inline-markdown.pipe';
   imports: [SymbolExcerptComponent, InlineMarkdownPipe],
   template: `
     @for (param of params(); track $index) {
-    <div class="param">
-      <div class="header">
-        @if (param.required) {
-        <code class="paramSymbol">{{ '@param' }}</code>
-        } @else {
-        <code class="paramSymbol">{{ '@optional' }}</code>
-        }
-        <code class="name">{{ param.name }}</code>
-        @if (param.description) {
-        <p [innerHtml]="param.description | ngrxInlineMarkdown"></p>
-        }
-      </div>
+      <div class="param">
+        <div class="header">
+          @if (param.required) {
+            <code class="paramSymbol">{{ '@param' }}</code>
+          } @else {
+            <code class="paramSymbol">{{ '@optional' }}</code>
+          }
+          <code class="name">{{ param.name }}</code>
+          @if (param.description) {
+            <p [innerHtml]="param.description | ngrxInlineMarkdown"></p>
+          }
+        </div>
 
-      <ngrx-symbol-excerpt [excerptTokens]="param.excerptTokens" />
-    </div>
+        <ngrx-symbol-excerpt [excerptTokens]="param.excerptTokens" />
+      </div>
     }
   `,
   styles: [

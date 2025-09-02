@@ -8,11 +8,11 @@ import { SymbolExcerptComponent } from './symbol-excerpt.component';
   imports: [SymbolExcerptComponent],
   template: `
     @for (param of params(); track $index) {
-    <div class="param">
-      <code class="paramSymbol">{{ '@type' }}</code>
-      <code class="name">{{ param.name }}</code>
-      <ngrx-symbol-excerpt [excerptTokens]="param.excerptTokens" />
-    </div>
+      <div class="param">
+        <code class="paramSymbol">{{ '@type' }}</code>
+        <code class="name">{{ param.name }}</code>
+        <ngrx-symbol-excerpt [excerptTokens]="param.excerptTokens" />
+      </div>
     }
   `,
   styles: [

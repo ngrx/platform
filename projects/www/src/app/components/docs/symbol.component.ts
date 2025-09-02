@@ -22,18 +22,18 @@ import { SymbolUsageNotesComponent } from './symbol-usage-notes.component';
     </div>
 
     @for (symbol of summary().members; track $index) {
-    <div class="symbol-call-signature">
-      <ngrx-symbol-header [symbol]="symbol" />
-      <ngrx-symbol-summary [symbol]="symbol" />
-      <ngrx-symbol-api [symbol]="symbol" />
-      <ngrx-symbol-params [symbol]="symbol" />
-      <ngrx-symbol-type-params [symbol]="symbol" />
-      <ngrx-symbol-returns [symbol]="symbol" />
-      <ngrx-symbol-usage-notes [symbol]="symbol" />
-      <ngrx-symbol-methods [symbol]="symbol" />
+      <div class="symbol-call-signature">
+        <ngrx-symbol-header [symbol]="symbol" />
+        <ngrx-symbol-summary [symbol]="symbol" />
+        <ngrx-symbol-api [symbol]="symbol" />
+        <ngrx-symbol-params [symbol]="symbol" />
+        <ngrx-symbol-type-params [symbol]="symbol" />
+        <ngrx-symbol-returns [symbol]="symbol" />
+        <ngrx-symbol-usage-notes [symbol]="symbol" />
+        <ngrx-symbol-methods [symbol]="symbol" />
 
-      <!-- <pre>{{ symbol | json }}</pre> -->
-    </div>
+        <!-- <pre>{{ symbol | json }}</pre> -->
+      </div>
     }
   `,
   styles: [

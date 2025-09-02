@@ -18,7 +18,7 @@ import {
 export function updateEntities<
   Collection extends string,
   State extends NamedEntityState<any, Collection>,
-  Entity = State extends NamedEntityState<infer E, Collection> ? E : never
+  Entity = State extends NamedEntityState<infer E, Collection> ? E : never,
 >(
   update: {
     ids: EntityId[];
@@ -32,7 +32,7 @@ export function updateEntities<
 export function updateEntities<
   Collection extends string,
   State extends NamedEntityState<any, Collection>,
-  Entity = State extends NamedEntityState<infer E, Collection> ? E : never
+  Entity = State extends NamedEntityState<infer E, Collection> ? E : never,
 >(
   update: {
     predicate: EntityPredicate<Entity>;
@@ -51,7 +51,7 @@ export function updateEntities<
     Collection
   >
     ? E
-    : never
+    : never,
 >(
   update: {
     ids: EntityId[];
@@ -67,7 +67,7 @@ export function updateEntities<
     Collection
   >
     ? E
-    : never
+    : never,
 >(
   update: {
     predicate: EntityPredicate<Entity>;

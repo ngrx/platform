@@ -109,7 +109,10 @@ export class SetEntityCache implements Action {
   readonly payload: { cache: EntityCache; tag?: string };
   readonly type = EntityCacheAction.SET_ENTITY_CACHE;
 
-  constructor(public readonly cache: EntityCache, tag?: string) {
+  constructor(
+    public readonly cache: EntityCache,
+    tag?: string
+  ) {
     this.payload = { cache, tag };
   }
 }

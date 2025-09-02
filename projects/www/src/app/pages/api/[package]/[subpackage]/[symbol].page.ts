@@ -13,7 +13,7 @@ import { ReferenceService } from '@ngrx-io/app/reference/reference.service';
   standalone: true,
   template: `
     @if (resolvedSymbol(); as summary) {
-    <ngrx-symbol [summary]="summary" />
+      <ngrx-symbol [summary]="summary" />
     }
   `,
   imports: [SymbolComponent],

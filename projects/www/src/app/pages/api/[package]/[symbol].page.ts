@@ -15,7 +15,7 @@ import { switchMap } from 'rxjs';
   standalone: true,
   template: `
     @if (resolvedSymbol(); as summary) {
-    <ngrx-symbol [summary]="summary" />
+      <ngrx-symbol [summary]="summary" />
     }
   `,
   imports: [SymbolComponent],
