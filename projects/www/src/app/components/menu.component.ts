@@ -51,9 +51,13 @@ import { DOCUMENT } from '@angular/common';
         <mat-icon>description</mat-icon>
         API Reference
       </a>
-      <a routerLink="/support" routerLinkActive="active" class="menu-link">
-        <mat-icon>help</mat-icon>
-        Support
+      <a
+        href="https://github.com/sponsors/ngrx"
+        target="_blank"
+        class="menu-link"
+      >
+        <mat-icon>volunteer_activism</mat-icon>
+        Sponsor
       </a>
       <a
         href="https://github.com/ngrx/platform"
