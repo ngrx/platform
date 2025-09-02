@@ -8,7 +8,7 @@ import { MarkdownPipe } from './markdown.pipe';
   imports: [MarkdownPipe],
   template: `
     @if (symbol().docs.summary; as summary) {
-    <div class="summary" [innerHtml]="summary | ngrxMarkdown"></div>
+      <div class="summary" [innerHtml]="summary | ngrxMarkdown"></div>
     }
   `,
   encapsulation: ViewEncapsulation.None,

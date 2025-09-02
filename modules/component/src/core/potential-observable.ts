@@ -9,24 +9,22 @@ type ObservableDictionary<PO> = Required<{
   [Key in keyof PO]: Observable<unknown>;
 }>;
 
-export type PotentialObservableResult<
-  PO,
-  ExtendedResult = never
-> = PO extends ObservableOrPromise<infer Result>
-  ? Result | ExtendedResult
-  : PO extends Primitive
-  ? PO
-  : keyof PO extends never
-  ? PO
-  : PO extends ObservableDictionary<PO>
-  ?
-      | {
-          [Key in keyof PO]: PO[Key] extends Observable<infer Value>
-            ? Value
-            : never;
-        }
-      | ExtendedResult
-  : PO;
+export type PotentialObservableResult<PO, ExtendedResult = never> =
+  PO extends ObservableOrPromise<infer Result>
+    ? Result | ExtendedResult
+    : PO extends Primitive
+      ? PO
+      : keyof PO extends never
+        ? PO
+        : PO extends ObservableDictionary<PO>
+          ?
+              | {
+                  [Key in keyof PO]: PO[Key] extends Observable<infer Value>
+                    ? Value
+                    : never;
+                }
+              | ExtendedResult
+          : PO;
 
 export function fromPotentialObservable<PO>(
   potentialObservable: PO
@@ -71,7 +69,7 @@ function isDictionary(value: unknown): value is Record<string, unknown> {
 }
 
 function toDistinctObsDictionary<
-  OD extends Record<string, Observable<unknown>>
+  OD extends Record<string, Observable<unknown>>,
 >(obsDictionary: OD): OD {
   return Object.keys(obsDictionary).reduce(
     (acc, key) => ({

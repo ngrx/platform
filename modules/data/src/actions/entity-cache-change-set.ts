@@ -74,8 +74,8 @@ export class ChangeSetItemFactory {
     const ids = Array.isArray(keys)
       ? keys
       : keys
-      ? ([keys] as string[] | number[])
-      : [];
+        ? ([keys] as string[] | number[])
+        : [];
     return { entityName, op: ChangeSetOperation.Delete, entities: ids };
   }
 

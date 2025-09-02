@@ -14,7 +14,7 @@ type ExtractActionTypes<Creators extends readonly ActionCreator[]> = {
  */
 export interface ReducerTypes<
   State,
-  Creators extends readonly ActionCreator[]
+  Creators extends readonly ActionCreator[],
 > {
   reducer: OnReducer<State, Creators>;
   types: ExtractActionTypes<Creators>;
@@ -30,7 +30,7 @@ export interface OnReducer<
   // Inferred type from within OnReducer function if `State` is unknown
   InferredState = State,
   // Resulting state would be either a State or if State is unknown then the inferred state from the function itself
-  ResultState = unknown extends State ? InferredState : State
+  ResultState = unknown extends State ? InferredState : State,
 > {
   (
     // if State is unknown then set the InferredState type
@@ -61,7 +61,7 @@ export function on<
   // Inferred type from within OnReducer function if `State` is unknown. This is typically the case when `on` function
   // is created outside of `createReducer` and state type is either explicitly set OR inferred by return type.
   // For example: `const onFn = on(action, (state: State, {prop}) => ({ ...state, name: prop }));`
-  InferredState = State
+  InferredState = State,
 >(
   ...args: [
     ...creators: Creators,
@@ -69,7 +69,7 @@ export function on<
       State extends infer S ? S : never,
       Creators,
       InferredState
-    >
+    >,
   ]
 ): ReducerTypes<unknown extends State ? InferredState : State, Creators> {
   const reducer = args.pop() as unknown as OnReducer<
@@ -117,7 +117,7 @@ export function createReducer<
   // Additional generic for the return type is introduced to enable correct
   // type inference when `createReducer` is used within `createFeature`.
   // For more info see: https://github.com/microsoft/TypeScript/issues/52114
-  R extends ActionReducer<S, A> = ActionReducer<S, A>
+  R extends ActionReducer<S, A> = ActionReducer<S, A>,
 >(initialState: S, ...ons: ReducerTypes<S, readonly ActionCreator[]>[]): R {
   const map = new Map<string, OnReducer<S, ActionCreator[]>>();
   for (const on of ons) {

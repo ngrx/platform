@@ -3,7 +3,7 @@ import { EventCreator } from './event-creator';
 
 export type CaseReducerResult<
   State extends object,
-  EventCreators extends EventCreator<string, any>[]
+  EventCreators extends EventCreator<string, any>[],
 > = {
   reducer: CaseReducer<State, EventCreators>;
   events: EventCreators;
@@ -11,7 +11,7 @@ export type CaseReducerResult<
 
 type CaseReducer<
   State extends object,
-  EventCreators extends EventCreator<string, any>[]
+  EventCreators extends EventCreator<string, any>[],
 > = (
   event: { [K in keyof EventCreators]: ReturnType<EventCreators[K]> }[number],
   state: State
@@ -28,11 +28,11 @@ type CaseReducer<
  */
 export function on<
   State extends object,
-  EventCreators extends EventCreator<string, any>[]
+  EventCreators extends EventCreator<string, any>[],
 >(
   ...args: [
     ...events: [...EventCreators],
-    reducer: CaseReducer<NoInfer<State>, NoInfer<EventCreators>>
+    reducer: CaseReducer<NoInfer<State>, NoInfer<EventCreators>>,
   ]
 ): CaseReducerResult<State, EventCreators> {
   const reducer = args.pop() as CaseReducer<State, EventCreators>;

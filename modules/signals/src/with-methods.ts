@@ -12,7 +12,7 @@ import { Prettify } from './ts-helpers';
 
 export function withMethods<
   Input extends SignalStoreFeatureResult,
-  Methods extends MethodsDictionary
+  Methods extends MethodsDictionary,
 >(
   methodsFactory: (
     store: Prettify<

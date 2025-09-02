@@ -508,7 +508,7 @@ describe('LetDirective', () => {
   describe('with observable dictionary', () => {
     function withObservableDictionarySetup<
       O1 extends Observable<unknown>,
-      O2 extends Observable<unknown>
+      O2 extends Observable<unknown>,
     >(config: { o1$: O1; o2$: O2 }) {
       @Component({
         template: `

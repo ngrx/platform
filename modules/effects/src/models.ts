@@ -37,7 +37,7 @@ export interface FunctionalCreateEffectMetadata extends CreateEffectMetadata {
 }
 
 export type FunctionalEffect<
-  Source extends () => Observable<unknown> = () => Observable<unknown>
+  Source extends () => Observable<unknown> = () => Observable<unknown>,
 > = Source & FunctionalCreateEffectMetadata;
 
 export type EffectPropertyKey<T extends Record<keyof T, Object>> = Exclude<
