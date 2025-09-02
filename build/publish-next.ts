@@ -21,7 +21,7 @@ export async function publishNextToNpm() {
     'operators',
   ];
 
-  for (let pkg of publishablePackages) {
+  for (const pkg of publishablePackages) {
     console.log(`Publishing @ngrx/${pkg}`);
 
     const cmd = [

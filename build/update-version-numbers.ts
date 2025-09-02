@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { EOL } from 'os';
 import * as readline from 'readline';
-import * as glob from 'glob';
+import { globSync } from 'tinyglobby';
 import { createBuilder } from './util';
 import { packages } from './config';
 import { join } from 'path';
@@ -13,7 +13,7 @@ const CONFIG = {
 };
 
 // get the version from the command
-// e.g. ts-node ./build/update-version-numbers.ts 10.0.0
+// e.g. npx tsx ./build/update-version-numbers.ts 10.0.0
 const [newVersion] = process.argv.slice(2);
 
 if (newVersion) {
@@ -56,9 +56,8 @@ function updateVersions(version: string) {
 function createPackageJsonBuilder(version: string) {
   const [major] = version.split('.');
   return async () => {
-    glob
-      .sync('**/package.json', { ignore: '**/node_modules/**' })
-      .map((file) => {
+    globSync('**/package.json', { ignore: '**/node_modules/**' }).map(
+      (file) => {
         const content = readFileSync(file, 'utf-8');
         const pkg = JSON.parse(content);
         let saveFile = false;
@@ -85,7 +84,8 @@ function createPackageJsonBuilder(version: string) {
         if (saveFile) {
           writeAsJson(file, pkg);
         }
-      });
+      }
+    );
   };
 }
 
@@ -94,14 +94,14 @@ function createPackageJsonBuilder(version: string) {
  */
 function createUpdateAddSchematicBuilder(version: string) {
   return async () => {
-    glob
-      .sync('**/libs-version.ts', { ignore: '**/node_modules/**' })
-      .map((file) => {
+    globSync('**/libs-version.ts', { ignore: '**/node_modules/**' }).map(
+      (file) => {
         writeFileSync(
           file,
           `export const platformVersion = '^${version}';${EOL}`
         );
-      });
+      }
+    );
   };
 }
 

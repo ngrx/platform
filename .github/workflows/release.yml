@@ -79,4 +79,4 @@ jobs:
           DRY_RUN: ${{ inputs.dry_run }}
           RELEASE_TAG: ${{ inputs.release_tag }}
           RELEASE_VERSION: ${{ inputs.release_version }}
-        run: ./node_modules/.bin/ts-node ./build/publish-release.ts
+        run: npx tsx ./build/publish-release.ts
