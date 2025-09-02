@@ -4,9 +4,10 @@ export interface Action<Type extends string = string> {
   type: Type;
 }
 
-export type ActionType<A> = A extends ActionCreator<infer T, infer C>
-  ? ReturnType<C> & { type: T }
-  : never;
+export type ActionType<A> =
+  A extends ActionCreator<infer T, infer C>
+    ? ReturnType<C> & { type: T }
+    : never;
 
 export type TypeId<T> = () => T;
 
@@ -89,7 +90,7 @@ export type CreatorsNotAllowedCheck<T> = T extends ActionCreator
  */
 export type Creator<
   P extends any[] = any[],
-  R extends object = object
+  R extends object = object,
 > = FunctionWithParametersType<P, R>;
 
 export type Primitive =
@@ -104,29 +105,29 @@ export type Primitive =
 export type NotAllowedCheck<T extends object> = T extends any[]
   ? ArraysAreNotAllowed
   : T extends { type: any }
-  ? TypePropertyIsNotAllowed
-  : keyof T extends never
-  ? EmptyObjectsAreNotAllowed
-  : unknown;
+    ? TypePropertyIsNotAllowed
+    : keyof T extends never
+      ? EmptyObjectsAreNotAllowed
+      : unknown;
 
 export type NotAllowedInPropsCheck<T> = T extends object
   ? T extends any[]
     ? ArraysAreNotAllowedInProps
     : T extends { type: any }
-    ? TypePropertyIsNotAllowedInProps
-    : keyof T extends never
-    ? EmptyObjectsAreNotAllowedInProps
-    : unknown
+      ? TypePropertyIsNotAllowedInProps
+      : keyof T extends never
+        ? EmptyObjectsAreNotAllowedInProps
+        : unknown
   : T extends Primitive
-  ? PrimitivesAreNotAllowedInProps
-  : never;
+    ? PrimitivesAreNotAllowedInProps
+    : never;
 
 /**
  * See `Creator`.
  */
 export type ActionCreator<
   T extends string = string,
-  C extends Creator = Creator
+  C extends Creator = Creator,
 > = C & Action<T>;
 
 export interface ActionCreatorProps<T> {

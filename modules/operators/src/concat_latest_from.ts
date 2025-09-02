@@ -50,8 +50,8 @@ export function concatLatestFrom<
     V,
     ...(T extends ObservableInput<unknown>[]
       ? { [i in keyof T]: ObservedValueOf<T[i]> }
-      : [ObservedValueOf<T>])
-  ]
+      : [ObservedValueOf<T>]),
+  ],
 >(observablesFactory: (value: V) => T): OperatorFunction<V, R> {
   return concatMap((value) => {
     const observables = observablesFactory(value);

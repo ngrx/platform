@@ -81,7 +81,7 @@ function toEventCreatorMap(
 }
 
 function withSourceType<
-  T extends EventInstance<string, unknown>
+  T extends EventInstance<string, unknown>,
 >(): MonoTypeOperatorFunction<T> {
   return map(({ ...event }) => {
     Object.defineProperty(event, SOURCE_TYPE, { value: event.type });

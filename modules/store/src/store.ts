@@ -111,7 +111,7 @@ export class Store<T = object>
     a extends keyof T,
     b extends keyof T[a],
     c extends keyof T[a][b],
-    d extends keyof T[a][b][c]
+    d extends keyof T[a][b][c],
   >(key1: a, key2: b, key3: c, key4: d): Observable<T[a][b][c][d]>;
   /**
    * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
@@ -121,7 +121,7 @@ export class Store<T = object>
     b extends keyof T[a],
     c extends keyof T[a][b],
     d extends keyof T[a][b][c],
-    e extends keyof T[a][b][c][d]
+    e extends keyof T[a][b][c][d],
   >(key1: a, key2: b, key3: c, key4: d, key5: e): Observable<T[a][b][c][d][e]>;
   /**
    * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
@@ -132,7 +132,7 @@ export class Store<T = object>
     c extends keyof T[a][b],
     d extends keyof T[a][b][c],
     e extends keyof T[a][b][c][d],
-    f extends keyof T[a][b][c][d][e]
+    f extends keyof T[a][b][c][d][e],
   >(
     key1: a,
     key2: b,
@@ -151,7 +151,7 @@ export class Store<T = object>
     d extends keyof T[a][b][c],
     e extends keyof T[a][b][c][d],
     f extends keyof T[a][b][c][d][e],
-    K = any
+    K = any,
   >(
     key1: a,
     key2: b,
@@ -288,7 +288,7 @@ export function select<
   T,
   a extends keyof T,
   b extends keyof T[a],
-  c extends keyof T[a][b]
+  c extends keyof T[a][b],
 >(
   key1: a,
   key2: b,
@@ -299,7 +299,7 @@ export function select<
   a extends keyof T,
   b extends keyof T[a],
   c extends keyof T[a][b],
-  d extends keyof T[a][b][c]
+  d extends keyof T[a][b][c],
 >(
   key1: a,
   key2: b,
@@ -312,7 +312,7 @@ export function select<
   b extends keyof T[a],
   c extends keyof T[a][b],
   d extends keyof T[a][b][c],
-  e extends keyof T[a][b][c][d]
+  e extends keyof T[a][b][c][d],
 >(
   key1: a,
   key2: b,
@@ -327,7 +327,7 @@ export function select<
   c extends keyof T[a][b],
   d extends keyof T[a][b][c],
   e extends keyof T[a][b][c][d],
-  f extends keyof T[a][b][c][d][e]
+  f extends keyof T[a][b][c][d][e],
 >(
   key1: a,
   key2: b,
@@ -344,7 +344,7 @@ export function select<
   d extends keyof T[a][b][c],
   e extends keyof T[a][b][c][d],
   f extends keyof T[a][b][c][d][e],
-  K = any
+  K = any,
 >(
   key1: a,
   key2: b,

@@ -21,7 +21,7 @@ type Feature<FeatureName extends string, FeatureState> = FeatureConfig<
 type FeatureWithExtraSelectors<
   FeatureName extends string,
   FeatureState,
-  ExtraSelectors extends SelectorsDictionary
+  ExtraSelectors extends SelectorsDictionary,
 > = string extends keyof ExtraSelectors
   ? Feature<FeatureName, FeatureState>
   : Omit<Feature<FeatureName, FeatureState>, keyof ExtraSelectors> &
@@ -64,7 +64,7 @@ type SelectorsDictionary = Record<
 type ExtraSelectorsFactory<
   FeatureName extends string,
   FeatureState,
-  ExtraSelectors extends SelectorsDictionary
+  ExtraSelectors extends SelectorsDictionary,
 > = (baseSelectors: BaseSelectors<FeatureName, FeatureState>) => ExtraSelectors;
 
 type NotAllowedFeatureStateCheck<FeatureState> =
@@ -84,7 +84,7 @@ type NotAllowedFeatureStateCheck<FeatureState> =
 export function createFeature<
   FeatureName extends string,
   FeatureState,
-  ExtraSelectors extends SelectorsDictionary
+  ExtraSelectors extends SelectorsDictionary,
 >(
   featureConfig: FeatureConfig<FeatureName, FeatureState> & {
     extraSelectors: ExtraSelectorsFactory<
@@ -201,7 +201,7 @@ export function createFeature<FeatureName extends string, FeatureState>(
 export function createFeature<
   FeatureName extends string,
   FeatureState,
-  ExtraSelectors extends SelectorsDictionary
+  ExtraSelectors extends SelectorsDictionary,
 >(
   featureConfig: FeatureConfig<FeatureName, FeatureState> & {
     extraSelectors?: ExtraSelectorsFactory<

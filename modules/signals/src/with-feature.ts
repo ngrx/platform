@@ -30,7 +30,7 @@ import { Prettify } from './ts-helpers';
  */
 export function withFeature<
   Input extends SignalStoreFeatureResult,
-  Output extends SignalStoreFeatureResult
+  Output extends SignalStoreFeatureResult,
 >(
   featureFactory: (
     store: Prettify<

@@ -44,13 +44,19 @@ export function assertStateSource(
   const stateKeys = Reflect.ownKeys(state);
   const expectedKeys = Reflect.ownKeys(expected);
 
-  const currentState = stateKeys.reduce((acc, key) => {
-    acc[key] = state[key]();
-    return acc;
-  }, {} as Record<string | symbol, unknown>);
-  const expectedState = expectedKeys.reduce((acc, key) => {
-    acc[key] = expected[key]();
-    return acc;
-  }, {} as Record<string | symbol, unknown>);
+  const currentState = stateKeys.reduce(
+    (acc, key) => {
+      acc[key] = state[key]();
+      return acc;
+    },
+    {} as Record<string | symbol, unknown>
+  );
+  const expectedState = expectedKeys.reduce(
+    (acc, key) => {
+      acc[key] = expected[key]();
+      return acc;
+    },
+    {} as Record<string | symbol, unknown>
+  );
   expect(currentState).toEqual(expectedState);
 }

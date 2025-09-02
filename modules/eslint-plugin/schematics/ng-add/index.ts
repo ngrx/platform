@@ -1,5 +1,5 @@
 import type { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
-import * as stripJsonComments from 'strip-json-comments';
+import stripJsonComments from 'strip-json-comments';
 import type { Schema } from './schema';
 import * as ts from 'typescript';
 

@@ -15,9 +15,10 @@ import { DeprecatedChipComponent } from './deprecated-chip.component';
     </h3>
 
     @if (typeTokenRange().length) {
-    <ngrx-symbol-excerpt [excerptTokens]="typeTokenRange()" />
-    } @if (symbol().docs.deprecated) {
-    <ngrx-deprecated-chip [reason]="symbol().docs.deprecated" />
+      <ngrx-symbol-excerpt [excerptTokens]="typeTokenRange()" />
+    }
+    @if (symbol().docs.deprecated) {
+      <ngrx-deprecated-chip [reason]="symbol().docs.deprecated" />
     }
   `,
   styles: [

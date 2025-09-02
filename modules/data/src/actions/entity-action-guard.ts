@@ -9,7 +9,10 @@ import { UpdateResponseData } from '../actions/update-response-data';
  * throws an error.
  */
 export class EntityActionGuard<T> {
-  constructor(private entityName: string, private selectId: IdSelector<T>) {}
+  constructor(
+    private entityName: string,
+    private selectId: IdSelector<T>
+  ) {}
 
   /** Throw if the action payload is not an entity with a valid key */
   mustBeEntity(action: EntityAction<T>): T {

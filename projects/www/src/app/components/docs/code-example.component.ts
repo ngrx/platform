@@ -19,7 +19,7 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
   imports: [MatIcon, CodeHighlightPipe],
   template: `
     @if (header) {
-    <div class="header">{{ header }}</div>
+      <div class="header">{{ header }}</div>
     }
 
     <div class="body">
@@ -33,16 +33,17 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
           copied() ? 'Code copied to clipboard' : 'Copy code to clipboard'
         "
       >
-        @if(copied()) {
-        <mat-icon>done</mat-icon>} @else {
-        <mat-icon>content_copy</mat-icon>
+        @if (copied()) {
+          <mat-icon>done</mat-icon>
+        } @else {
+          <mat-icon>content_copy</mat-icon>
         }
       </button>
       <div #codeBody>
-        @if(path) {
-        <div [innerHTML]="codeContent() | ngrxCodeHighlight"></div>
-        }@else{
-        <ng-content />
+        @if (path) {
+          <div [innerHTML]="codeContent() | ngrxCodeHighlight"></div>
+        } @else {
+          <ng-content />
         }
       </div>
     </div>

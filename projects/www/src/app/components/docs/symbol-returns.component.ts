@@ -9,11 +9,11 @@ import { ApiMember } from '@ngrx-io/shared';
   imports: [SymbolExcerptComponent, InlineMarkdownPipe],
   template: `
     @if (returns(); as returns) {
-    <div class="returns">
-      <h4>{{ '@returns' }}</h4>
-      <div [innerHtml]="returns.description | ngrxInlineMarkdown"></div>
-      <ngrx-symbol-excerpt [excerptTokens]="returns.excerptTokens" />
-    </div>
+      <div class="returns">
+        <h4>{{ '@returns' }}</h4>
+        <div [innerHtml]="returns.description | ngrxInlineMarkdown"></div>
+        <ngrx-symbol-excerpt [excerptTokens]="returns.excerptTokens" />
+      </div>
     }
   `,
   styles: [

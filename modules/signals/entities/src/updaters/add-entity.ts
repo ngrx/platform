@@ -22,7 +22,7 @@ export function addEntity<Entity, Collection extends string>(
 ): PartialStateUpdater<NamedEntityState<Entity, Collection>>;
 export function addEntity<
   Entity extends { id: EntityId },
-  Collection extends string
+  Collection extends string,
 >(
   entity: Entity,
   config: { collection: Collection }

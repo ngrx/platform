@@ -33,9 +33,7 @@ describe('withReducer', () => {
     const CounterStore = signalStore(
       { providedIn: 'root' },
       withState({ count: 10, count2: 0 }),
-      withReducer(
-        on(increment, () => ({ count }) => ({ count: count + 1 }))
-      )
+      withReducer(on(increment, () => ({ count }) => ({ count: count + 1 })))
     );
 
     const store = TestBed.inject(CounterStore);

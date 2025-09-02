@@ -19,7 +19,7 @@ export const ROUTER_REQUEST = '@ngrx/router-store/request';
  * Payload of ROUTER_REQUEST
  */
 export type RouterRequestPayload<
-  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 > = {
   routerState: T;
   event: NavigationStart;
@@ -29,7 +29,7 @@ export type RouterRequestPayload<
  * An action dispatched when a router navigation request is fired.
  */
 export type RouterRequestAction<
-  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 > = {
   type: typeof ROUTER_REQUEST;
   payload: RouterRequestPayload<T>;
@@ -48,7 +48,7 @@ export const ROUTER_NAVIGATION = '@ngrx/router-store/navigation';
  * Payload of ROUTER_NAVIGATION.
  */
 export type RouterNavigationPayload<
-  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 > = {
   routerState: T;
   event: RoutesRecognized;
@@ -58,7 +58,7 @@ export type RouterNavigationPayload<
  * An action dispatched when the router navigates.
  */
 export type RouterNavigationAction<
-  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 > = {
   type: typeof ROUTER_NAVIGATION;
   payload: RouterNavigationPayload<T>;
@@ -79,7 +79,7 @@ export const ROUTER_CANCEL = '@ngrx/router-store/cancel';
  */
 export type RouterCancelPayload<
   T,
-  V extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  V extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 > = {
   routerState: V;
   storeState: T;
@@ -91,7 +91,7 @@ export type RouterCancelPayload<
  */
 export type RouterCancelAction<
   T,
-  V extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  V extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 > = {
   type: typeof ROUTER_CANCEL;
   payload: RouterCancelPayload<T, V>;
@@ -112,7 +112,7 @@ export const ROUTER_ERROR = '@ngrx/router-store/error';
  */
 export type RouterErrorPayload<
   T,
-  V extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  V extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 > = {
   routerState: V;
   storeState: T;
@@ -124,7 +124,7 @@ export type RouterErrorPayload<
  */
 export type RouterErrorAction<
   T,
-  V extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  V extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 > = {
   type: typeof ROUTER_ERROR;
   payload: RouterErrorPayload<T, V>;
@@ -144,7 +144,7 @@ export const ROUTER_NAVIGATED = '@ngrx/router-store/navigated';
  * Payload of ROUTER_NAVIGATED.
  */
 export type RouterNavigatedPayload<
-  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 > = {
   routerState: T;
   event: NavigationEnd;
@@ -154,7 +154,7 @@ export type RouterNavigatedPayload<
  * An action dispatched after navigation has ended and new route is active.
  */
 export type RouterNavigatedAction<
-  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 > = {
   type: typeof ROUTER_NAVIGATED;
   payload: RouterNavigatedPayload<T>;
@@ -170,7 +170,7 @@ export const routerNavigatedAction = createAction(
  */
 export type RouterAction<
   T,
-  V extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  V extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 > =
   | RouterRequestAction<V>
   | RouterNavigationAction<V>
