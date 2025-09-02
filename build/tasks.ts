@@ -13,7 +13,7 @@ export async function copySchematicsCore(config: Config) {
   const filter = (name: string) =>
     !name.endsWith('.eslintrc.json') && !name.endsWith('project.json');
 
-  for (let pkg of util.getTopLevelPackages(config)) {
+  for (const pkg of util.getTopLevelPackages(config)) {
     const packageJson = fs
       .readFileSync(`${modulesDir}${pkg}/package.json`)
       .toString('utf-8');
@@ -41,7 +41,7 @@ export async function copySchematicsCore(config: Config) {
  * Deploy build artifacts to repos
  */
 export async function publishToRepo(config: Config) {
-  for (let pkg of util.getTopLevelPackages(config)) {
+  for (const pkg of util.getTopLevelPackages(config)) {
     const SOURCE_DIR = `./dist/modules/${pkg}`;
     const REPO_URL = `git@github.com:ngrx/${pkg}-builds.git`;
     const REPO_DIR = `./tmp/${pkg}`;
