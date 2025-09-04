@@ -55,13 +55,15 @@ import { MatIconModule } from '@angular/material/icon';
         <a routerLink="/workshops" mat-flat-button>Attend a Workshop</a>
       </ngrx-styled-box>
       <ngrx-styled-box>
-        <mat-icon inline>help</mat-icon>
-        <h3>Support</h3>
-        <p>
-          Join our free community Discord server to get help with NgRx, or
-          schedule a 1:1 session with an NgRx expert.
-        </p>
-        <a routerLink="/support" mat-flat-button>Get Support</a>
+        <mat-icon inline>volunteer_activism</mat-icon>
+        <h3>Support the team</h3>
+        <p>Support the development of NgRx by sponsoring us.</p>
+        <a
+          href="https://github.com/sponsors/ngrx"
+          target="_blank"
+          mat-flat-button
+          >Sponsor</a
+        >
       </ngrx-styled-box>
     </div>
   `,
