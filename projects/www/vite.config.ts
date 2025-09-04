@@ -13,7 +13,7 @@ import { configDefaults } from 'vitest/config';
 
 export default defineConfig(({ mode }) => ({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite',
+  cacheDir: '../../node_modules/.vite/www',
 
   resolve: {
     conditions: [...defaultClientConditions],
