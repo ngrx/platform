@@ -38,7 +38,7 @@ import { MatIconModule } from '@angular/material/icon';
           think reactively and architect your Angular apps for success.
         </p>
         <a routerLink="/guide/store/walkthrough" mat-flat-button
-          >Learn NgRx Store</a
+          >Learn Global Store</a
         >
         <a routerLink="/guide/signals/signal-store" mat-flat-button
           >Learn SignalStore</a
