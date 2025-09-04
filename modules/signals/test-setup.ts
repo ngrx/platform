@@ -1,4 +1,5 @@
 import { TextEncoder, TextDecoder } from 'util';
+import '@angular/compiler';
 import '@analogjs/vitest-angular/setup-zone';
 
 import {

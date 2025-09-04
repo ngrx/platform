@@ -218,7 +218,7 @@ describe('signalMethod', () => {
   });
 
   describe('warns on source injector', () => {
-    const warnSpy = vitest.spyOn(console, 'warn');
+    const warnSpy = vi.spyOn(console, 'warn');
     const n = signal(1);
 
     beforeEach(() => {
