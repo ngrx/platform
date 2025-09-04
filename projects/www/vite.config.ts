@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: '../../dist/projects/www/client',
     reportCompressedSize: true,
-    target: 'es2020',
+    target: 'es2016',
     rollupOptions: {
       output: {
         manualChunks(id) {
