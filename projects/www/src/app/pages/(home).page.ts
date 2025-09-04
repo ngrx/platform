@@ -20,9 +20,14 @@ import { MatIconModule } from '@angular/material/icon';
       <ngrx-banner-animation></ngrx-banner-animation>
       <img src="/ngrx-logo.svg" alt="ngrx logo" width="260" />
       <h1 class="mat-display-large">Reactive State for Angular</h1>
-      <a routerLink="/guide/store/walkthrough" mat-flat-button class="cta"
-        >Learn NgRx</a
-      >
+      <div class="cta-container">
+        <a routerLink="/guide/store/walkthrough" mat-flat-button class="cta"
+          >Learn Global Store</a
+        >
+        <a routerLink="/guide/signals/signal-store" mat-flat-button class="cta"
+          >Learn SignalStore</a
+        >
+      </div>
     </div>
     <div class="content">
       <ngrx-styled-box>
@@ -32,7 +37,12 @@ import { MatIconModule } from '@angular/material/icon';
           Dive into NgRx with our getting started guide. You will learn how to
           think reactively and architect your Angular apps for success.
         </p>
-        <a routerLink="/guide/store/walkthrough" mat-flat-button>Learn NgRx</a>
+        <a routerLink="/guide/store/walkthrough" mat-flat-button
+          >Learn Global Store</a
+        >
+        <a routerLink="/guide/signals/signal-store" mat-flat-button
+          >Learn SignalStore</a
+        >
       </ngrx-styled-box>
       <ngrx-styled-box>
         <mat-icon inline>co_present</mat-icon>
@@ -90,8 +100,16 @@ import { MatIconModule } from '@angular/material/icon';
         text-align: center;
       }
 
+      .cta-container {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
       .cta {
-        transform: scale(1.2);
+        font-size: 1.1rem;
+        padding: 1.5rem 2rem;
       }
 
       ngrx-banner-animation {
