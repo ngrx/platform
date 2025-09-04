@@ -11,13 +11,12 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: [   
+    ignores: [
       '**/dist',
       '**/router-store/data-persistence/index.ts',
       '**/router-store/data-persistence/src/operators.ts',
       '**/router-store/data-persistence/src/public_api.ts',
-      '**/router-store/schematics-core/jest.config.ts',
-      '**/router-store/schematics-core/test-setup.ts'
+      '**/schematics-core/**/*.ts'
     ],
   },
   ...baseConfig,
@@ -37,6 +36,7 @@ export default [
         '@angular-eslint/directive-selector': 'off',
         '@angular-eslint/component-selector': 'off',
         '@angular-eslint/prefer-standalone': 'off',
+        '@angular-eslint/prefer-inject': 'off',
       },
       languageOptions: {
         parserOptions: {
@@ -55,12 +55,4 @@ export default [
         ...config.rules,
       },
     })),
-  {
-    ignores: [
-      'schematics-core',
-      'data-persistence/src/public_api.ts',
-      'data-persistence/src/operators.ts',
-      'data-persistence/index.ts',
-    ],
-  },
 ];

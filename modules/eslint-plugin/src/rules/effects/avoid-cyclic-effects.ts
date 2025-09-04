@@ -24,9 +24,9 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'problem',
-    ngrxModule: 'effects',
     docs: {
       description: 'Avoid `Effect` that re-emit filtered actions.',
+      ngrxModule: 'effects',
       requiresTypeChecking: true,
     },
     schema: [],

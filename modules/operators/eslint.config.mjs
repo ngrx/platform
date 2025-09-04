@@ -47,7 +47,4 @@ export default [
         ...config.rules,
       },
     })),
-  {
-    ignores: ['schematics-core'],
-  },
 ];

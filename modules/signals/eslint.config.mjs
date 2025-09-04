@@ -11,7 +11,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['**/dist'],
+    ignores: ['**/dist', '**/schematics-core/**/*.ts'],
   },
   ...baseConfig,
   ...compat
@@ -31,6 +31,7 @@ export default [
         '@angular-eslint/component-selector': 'off',
         '@nx/enforce-module-boundaries': 'off',
         '@angular-eslint/prefer-standalone': 'off',
+        '@angular-eslint/prefer-inject': 'off',
       },
       languageOptions: {
         parserOptions: {

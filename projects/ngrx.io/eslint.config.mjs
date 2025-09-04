@@ -11,7 +11,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['**/dist'],
+    ignores: ['**/dist', '**/schematics-core/**/*.ts'],
   },
   ...baseConfig,
   ...compat
@@ -54,6 +54,7 @@ export default [
         '@angular-eslint/no-output-on-prefix': 'off',
         '@angular-eslint/no-output-native': 'off',
         '@angular-eslint/use-pipe-transform-interface': 'error',
+        '@angular-eslint/prefer-inject': 'off',
         '@typescript-eslint/consistent-type-definitions': 'error',
         '@typescript-eslint/dot-notation': 'off',
         '@typescript-eslint/explicit-member-accessibility': [
@@ -154,6 +155,8 @@ export default [
         ],
         'no-prototype-builtins': 'off',
         '@angular-eslint/prefer-standalone': 'off',
+        '@angular-eslint/prefer-inject': 'off',
+        '@nx/enforce-module-boundaries': 'off',
       },
       languageOptions: {
         parserOptions: {
@@ -172,7 +175,4 @@ export default [
         ...config.rules,
       },
     })),
-  {
-    ignores: ['schematics-core'],
-  },
 ];

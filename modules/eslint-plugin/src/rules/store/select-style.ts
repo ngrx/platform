@@ -44,10 +44,10 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'suggestion',
-    ngrxModule: 'store',
     docs: {
       description:
         'Selector can be used either with `select` as a pipeable operator or as a method.',
+      ngrxModule: 'store',
     },
     fixable: 'code',
     schema: [

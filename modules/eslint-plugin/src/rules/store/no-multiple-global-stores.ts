@@ -20,9 +20,9 @@ export default createRule<Options, MessageIds>({
   meta: {
     type: 'suggestion',
     hasSuggestions: true,
-    ngrxModule: 'store',
     docs: {
       description: 'There should only be one global store injected.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

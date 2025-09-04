@@ -12,9 +12,9 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'suggestion',
-    ngrxModule: 'store',
     docs: {
       description: 'It is recommended to only dispatch one `Action` at a time.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

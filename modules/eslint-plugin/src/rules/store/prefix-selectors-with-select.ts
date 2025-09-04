@@ -17,10 +17,10 @@ export default createRule<Options, MessageIds>({
   meta: {
     type: 'suggestion',
     hasSuggestions: true,
-    ngrxModule: 'store',
     docs: {
       description:
         'The selector should start with "select", for example "selectEntity".',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

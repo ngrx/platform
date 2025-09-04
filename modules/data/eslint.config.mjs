@@ -11,7 +11,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['**/dist', '**/jest.config.ts', '**/schematics-core/test-setup.ts'],
+    ignores: ['**/dist', '**/jest.config.ts', '**/schematics-core/**/*.ts'],
   },
   ...baseConfig,
   ...compat
@@ -32,6 +32,7 @@ export default [
         '@angular-eslint/component-selector': 'off',
         'no-case-declarations': 'off',
         '@angular-eslint/prefer-standalone': 'off',
+        '@angular-eslint/prefer-inject': 'off',
       },
       languageOptions: {
         parserOptions: {
@@ -50,7 +51,4 @@ export default [
         ...config.rules,
       },
     })),
-  {
-    ignores: ['schematics-core'],
-  },
 ];

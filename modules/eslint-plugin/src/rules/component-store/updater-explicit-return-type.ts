@@ -12,9 +12,9 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'problem',
-    ngrxModule: 'component-store',
     docs: {
       description: '`Updater` should have an explicit return type.',
+      ngrxModule: 'component-store',
     },
     schema: [],
     messages: {

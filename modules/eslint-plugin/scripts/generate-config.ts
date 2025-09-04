@@ -1,8 +1,8 @@
 import { writeFileSync } from 'fs';
 import { join } from 'path';
 import { format, resolveConfig } from 'prettier';
-import type { NgRxRuleModule } from '../src/rule-creator';
 import { rulesForGenerate } from '../src/utils/helper-functions/rules';
+import { NgRxRule } from '../src/rule-creator';
 
 const prettierConfig = resolveConfig.sync(__dirname);
 
@@ -10,14 +10,14 @@ const RULE_MODULE = '@ngrx';
 const CONFIG_DIRECTORY = './modules/eslint-plugin/src/configs/';
 
 writeConfig('all', (_rule) => true);
-writeConfig('store', (rule) => rule.meta.ngrxModule === 'store');
-writeConfig('effects', (rule) => rule.meta.ngrxModule === 'effects');
+writeConfig('store', (rule) => rule.meta.docs?.ngrxModule === 'store');
+writeConfig('effects', (rule) => rule.meta.docs?.ngrxModule === 'effects');
 writeConfig(
   'component-store',
-  (rule) => rule.meta.ngrxModule === 'component-store'
+  (rule) => rule.meta.docs?.ngrxModule === 'component-store'
 );
-writeConfig('operators', (rule) => rule.meta.ngrxModule === 'operators');
-writeConfig('signals', (rule) => rule.meta.ngrxModule === 'signals');
+writeConfig('operators', (rule) => rule.meta.docs?.ngrxModule === 'operators');
+writeConfig('signals', (rule) => rule.meta.docs?.ngrxModule === 'signals');
 
 function writeConfig(
   configName:
@@ -27,7 +27,7 @@ function writeConfig(
     | 'component-store'
     | 'operators'
     | 'signals',
-  predicate: (rule: NgRxRuleModule<[], string>) => boolean
+  predicate: (rule: NgRxRule) => boolean
 ) {
   const rulesForConfig = Object.entries(rulesForGenerate).filter(([_, rule]) =>
     predicate(rule)

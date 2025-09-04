@@ -12,9 +12,9 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'suggestion',
-    ngrxModule: 'store',
     docs: {
       description: 'Ensures the use of good action hygiene.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

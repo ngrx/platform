@@ -26,9 +26,9 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'problem',
-    ngrxModule: 'effects',
     docs: {
       description: '`Effect` should not return multiple actions.',
+      ngrxModule: 'effects',
       requiresTypeChecking: true,
     },
     schema: [],
