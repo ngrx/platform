@@ -12,10 +12,10 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'suggestion',
-    ngrxModule: 'store',
     docs: {
       description:
         'Using the `async` pipe is preferred over `store` subscription.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

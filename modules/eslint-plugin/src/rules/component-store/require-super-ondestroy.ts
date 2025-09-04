@@ -10,10 +10,10 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'problem',
-    ngrxModule: 'component-store',
     docs: {
       description:
         'Overriden ngOnDestroy method in component stores require a call to super.ngOnDestroy().',
+      ngrxModule: 'component-store',
     },
     schema: [],
     messages: {

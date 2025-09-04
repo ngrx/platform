@@ -15,9 +15,9 @@ export default createRule<Options, MessageIds>({
   meta: {
     type: 'suggestion',
     hasSuggestions: true,
-    ngrxModule: 'signals',
     docs: {
       description: `A Signal Store prefers protected state`,
+      ngrxModule: 'signals',
     },
     schema: [],
     messages: {

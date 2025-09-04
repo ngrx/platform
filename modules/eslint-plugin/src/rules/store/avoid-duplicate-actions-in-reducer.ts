@@ -18,9 +18,9 @@ export default createRule<Options, MessageIds>({
   meta: {
     type: 'suggestion',
     hasSuggestions: true,
-    ngrxModule: 'store',
     docs: {
       description: 'A `Reducer` should handle an `Action` once.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

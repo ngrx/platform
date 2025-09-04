@@ -17,10 +17,10 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'problem',
-    ngrxModule: 'effects',
     docs: {
       description:
         '`Effect` should not be listed as a provider if it is added to the `EffectsModule`.',
+      ngrxModule: 'effects',
     },
     fixable: 'code',
     schema: [],

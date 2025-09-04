@@ -16,10 +16,10 @@ export default createRule<Options, MessageIds>({
   meta: {
     type: 'suggestion',
     hasSuggestions: true,
-    ngrxModule: 'store',
     docs: {
       description:
         'Prefer using inline types instead of interfaces, types or classes.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

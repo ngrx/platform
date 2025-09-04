@@ -18,9 +18,9 @@ export default createRule<Options, MessageIds>({
   meta: {
     type: 'suggestion',
     hasSuggestions: true,
-    ngrxModule: 'store',
     docs: {
       description: '`On` function should have an explicit return type.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

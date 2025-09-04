@@ -18,7 +18,11 @@ function generateRules() {
   const moduleRules = Object.entries(rulesForGenerate).reduce<
     Record<string, string[][]>
   >((all, [ruleName, { meta }]) => {
-    all[meta.ngrxModule] = (all[meta.ngrxModule] ?? []).concat([
+    if (!meta.docs) {
+      throw new Error(`Rule ${ruleName} is missing meta.docs information`);
+    }
+
+    all[meta.docs.ngrxModule] = (all[meta.docs.ngrxModule] ?? []).concat([
       [
         `[@ngrx/${ruleName}]${
           meta.docs?.url

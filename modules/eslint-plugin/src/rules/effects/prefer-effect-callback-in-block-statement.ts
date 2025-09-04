@@ -13,9 +13,9 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'suggestion',
-    ngrxModule: 'effects',
     docs: {
       description: 'A block statement is easier to troubleshoot.',
+      ngrxModule: 'effects',
     },
     schema: [],
     messages: {

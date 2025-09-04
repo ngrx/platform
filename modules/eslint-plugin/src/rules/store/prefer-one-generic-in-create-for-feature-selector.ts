@@ -17,9 +17,9 @@ export default createRule<Options, MessageIds>({
   meta: {
     type: 'suggestion',
     hasSuggestions: true,
-    ngrxModule: 'store',
     docs: {
       description: 'Prefer using a single generic to define the feature state.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

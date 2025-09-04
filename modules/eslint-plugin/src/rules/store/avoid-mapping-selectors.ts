@@ -19,9 +19,9 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'suggestion',
-    ngrxModule: 'store',
     docs: {
       description: 'Avoid mapping logic outside the selector level.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

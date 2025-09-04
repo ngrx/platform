@@ -17,10 +17,10 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'suggestion',
-    ngrxModule: 'effects',
     docs: {
       description:
         'Ensures classes implement lifecycle interfaces corresponding to the declared lifecycle methods.',
+      ngrxModule: 'effects',
     },
     fixable: 'code',
     schema: [],

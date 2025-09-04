@@ -20,9 +20,14 @@ import { MatIconModule } from '@angular/material/icon';
       <ngrx-banner-animation></ngrx-banner-animation>
       <img src="/ngrx-logo.svg" alt="ngrx logo" width="260" />
       <h1 class="mat-display-large">Reactive State for Angular</h1>
-      <a routerLink="/guide/store/walkthrough" mat-flat-button class="cta"
-        >Learn NgRx</a
-      >
+      <div class="cta-container">
+        <a routerLink="/guide/store/walkthrough" mat-flat-button class="cta"
+          >Learn Global Store</a
+        >
+        <a routerLink="/guide/signals/signal-store" mat-flat-button class="cta"
+          >Learn SignalStore</a
+        >
+      </div>
     </div>
     <div class="content">
       <ngrx-styled-box>
@@ -32,7 +37,12 @@ import { MatIconModule } from '@angular/material/icon';
           Dive into NgRx with our getting started guide. You will learn how to
           think reactively and architect your Angular apps for success.
         </p>
-        <a routerLink="/guide/store/walkthrough" mat-flat-button>Learn NgRx</a>
+        <a routerLink="/guide/store/walkthrough" mat-flat-button
+          >Learn Global Store</a
+        >
+        <a routerLink="/guide/signals/signal-store" mat-flat-button
+          >Learn SignalStore</a
+        >
       </ngrx-styled-box>
       <ngrx-styled-box>
         <mat-icon inline>co_present</mat-icon>
@@ -45,13 +55,15 @@ import { MatIconModule } from '@angular/material/icon';
         <a routerLink="/workshops" mat-flat-button>Attend a Workshop</a>
       </ngrx-styled-box>
       <ngrx-styled-box>
-        <mat-icon inline>help</mat-icon>
-        <h3>Support</h3>
-        <p>
-          Join our free community Discord server to get help with NgRx, or
-          schedule a 1:1 session with an NgRx expert.
-        </p>
-        <a routerLink="/support" mat-flat-button>Get Support</a>
+        <mat-icon inline>volunteer_activism</mat-icon>
+        <h3>Support the team</h3>
+        <p>Support the development of NgRx by sponsoring us.</p>
+        <a
+          href="https://github.com/sponsors/ngrx"
+          target="_blank"
+          mat-flat-button
+          >Sponsor</a
+        >
       </ngrx-styled-box>
     </div>
   `,
@@ -88,8 +100,16 @@ import { MatIconModule } from '@angular/material/icon';
         text-align: center;
       }
 
+      .cta-container {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
       .cta {
-        transform: scale(1.2);
+        font-size: 1.1rem;
+        padding: 1.5rem 2rem;
       }
 
       ngrx-banner-animation {
