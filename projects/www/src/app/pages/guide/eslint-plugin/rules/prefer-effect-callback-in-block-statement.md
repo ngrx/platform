@@ -18,6 +18,8 @@ This makes it easier to troubleshoot type errors, for when example an RxJS opera
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 class Effect {
   effectNOK = createEffect(() =>
@@ -29,7 +31,11 @@ class Effect {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 class Effect {
@@ -41,6 +47,8 @@ class Effect {
   })
 }
 ```
+
+</ngrx-code-example>
 
 ## Further reading
 

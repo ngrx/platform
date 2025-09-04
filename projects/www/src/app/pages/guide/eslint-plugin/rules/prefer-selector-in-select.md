@@ -20,6 +20,8 @@ Because a selector is just a pure function, it's easier to test.
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 // ⚠ Usage of strings to select state slices
 this.store.select('customers');
@@ -30,7 +32,11 @@ this.store.select((state) => state.customers);
 this.store.pipe(select((state) => state.customers));
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 import * as fromCustomers from '@customers/selectors';
@@ -38,6 +44,8 @@ import * as fromCustomers from '@customers/selectors';
 this.store.select(fromCustomers.selectAllCustomers);
 this.store.pipe(select(fromCustomers.selectAllCustomers));
 ```
+
+</ngrx-code-example>
 
 ## Further reading
 

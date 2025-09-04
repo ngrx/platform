@@ -10,14 +10,6 @@
 - **www:** Make Guide Pages Responsive ([#4900](https://github.com/ngrx/platform/issues/4900)) ([4c921e3](https://github.com/ngrx/platform/commit/4c921e3))
 - **www:** use the stackblitz examples ([#4895](https://github.com/ngrx/platform/issues/4895)) ([e7eabd4](https://github.com/ngrx/platform/commit/e7eabd4))
 
-<a name="20.0.1"></a>
-
-## 20.0.1 (2025-08-25)
-
-<a name="20.0.1"></a>
-
-## 20.0.1 (2025-08-25)
-
 <a name="20.0.0"></a>
 
 # [20.0.0](https://github.com/ngrx/platform/compare/20.0.0-rc.0...20.0.0) (2025-07-28)

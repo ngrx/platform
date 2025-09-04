@@ -15,6 +15,8 @@ Using `action creator` in `dispatch` is preferred over `object` or old `Action`.
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 store$.dispatch(new CustomAction());
 
@@ -23,7 +25,11 @@ this.store$.dispatch(new AuthActions.Login({ type }));
 this.store$.dispatch({ type: 'custom' });
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 store$.dispatch(action);
@@ -32,3 +38,5 @@ this.store$.dispatch(BookActions.load());
 
 this.store$.dispatch(AuthActions.Login({ payload }));
 ```
+
+</ngrx-code-example>

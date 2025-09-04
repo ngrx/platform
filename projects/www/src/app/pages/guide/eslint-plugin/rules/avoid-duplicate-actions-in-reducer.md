@@ -19,6 +19,8 @@ A valid reason why an action can be handled more than once in a single reducer, 
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 export const reducer = createReducer(
   initialState,
@@ -27,7 +29,11 @@ export const reducer = createReducer(
 );
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 export const reducer = createReducer(
@@ -35,3 +41,5 @@ export const reducer = createReducer(
   on(customerLoaded, (state) => ({ ...state, status: 'loaded' }))
 );
 ```
+
+</ngrx-code-example>

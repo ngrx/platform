@@ -7,6 +7,8 @@ It's suitable for managing modest-sized states and can be used directly in compo
 
 SignalState is instantiated using the `signalState` function, which accepts an initial state as an input argument.
 
+<ngrx-code-example>
+
 ```ts
 import { signalState } from '@ngrx/signals';
 import { User } from './user';
@@ -18,6 +20,8 @@ const userState = signalState<UserState>({
   isAdmin: false,
 });
 ```
+
+</ngrx-code-example>
 
 The state's type must be a record/object literal. Add arrays or primitive values to properties.
 

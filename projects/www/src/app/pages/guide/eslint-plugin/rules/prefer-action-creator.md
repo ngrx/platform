@@ -15,6 +15,8 @@ Using `action creator` is preferred over `Action class`.
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 class Test implements Action {
   type = '[Customer Page] Load Customer';
@@ -27,7 +29,11 @@ class Test implements ngrx.Action {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 export const loadUser = createAction('[User Page] Load User');
@@ -40,3 +46,5 @@ class Test implements Action {
   member = '[Customer Page] Load Customer';
 }
 ```
+
+</ngrx-code-example>

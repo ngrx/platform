@@ -129,6 +129,8 @@ Many apps use `@ngrx/data` in conjunction with @ngrx/store including manually wr
 
 #### Example
 
+<ngrx-code-example>
+
 ```ts
 /* src/app/reducers/index.ts */
 import * as fromCat from './cat.reducer';
@@ -160,6 +162,8 @@ export const selectedCatsWithOwners = createSelector(
     }))
 );
 ```
+
+</ngrx-code-example>
 
 ## Custom data service
 
@@ -234,6 +238,8 @@ export class AppModule {}
 
 To unit test the custom HTTP URL generator:
 
+<ngrx-code-example>
+
 ```ts
 import { PluralHttpUrlGenerator } from './plural-http-url-generator';
 import { DefaultPluralizer } from '@ngrx/data';
@@ -275,6 +281,8 @@ describe('PluralHttpUrlGenerator', () => {
   });
 });
 ```
+
+</ngrx-code-example>
 
 ## Serialization with back-end
 

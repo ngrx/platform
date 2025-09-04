@@ -16,6 +16,8 @@ running in zone-full as well as zone-less mode without any changes to the code.
 The `ngrxPush` pipe is a standalone pipe.
 To use it, add the `PushPipe` to the `imports` of your standalone component or NgModule:
 
+<ngrx-code-example>
+
 ```ts
 import { Component } from '@angular/core';
 import { PushPipe } from '@ngrx/component';
@@ -29,6 +31,8 @@ import { PushPipe } from '@ngrx/component';
 })
 export class MyStandaloneComponent {}
 ```
+
+</ngrx-code-example>
 
 ## Comparison with `async` Pipe
 

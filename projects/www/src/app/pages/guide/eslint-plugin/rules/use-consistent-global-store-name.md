@@ -17,6 +17,8 @@ The name of the global store should be used consistent.
 
 Examples of **incorrect** code for this rule:
 
+<ngrx-code-example>
+
 ```ts
 export class ClassOne {
   constructor(private store: Store) {}
@@ -27,7 +29,11 @@ export class ClassTwo {
 }
 ```
 
+</ngrx-code-example>
+
 Examples of **correct** code for this rule:
+
+<ngrx-code-example>
 
 ```ts
 export class ClassOne {
@@ -38,6 +44,8 @@ export class ClassTwo {
   constructor(private store: Store) {}
 }
 ```
+
+</ngrx-code-example>
 
 ## Rule Config
 
