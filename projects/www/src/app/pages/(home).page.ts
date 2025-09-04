@@ -22,7 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
       <h1 class="mat-display-large">Reactive State for Angular</h1>
       <div class="cta-container">
         <a routerLink="/guide/store/walkthrough" mat-flat-button class="cta"
-          >Learn NgRx Store</a
+          >Learn Global Store</a
         >
         <a routerLink="/guide/signals/signal-store" mat-flat-button class="cta"
           >Learn SignalStore</a
