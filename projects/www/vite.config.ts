@@ -7,12 +7,14 @@ import {
 import analog from '@analogjs/platform';
 import angular from '@analogjs/vite-plugin-angular';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
-import ngrxStackblitzPlugin from './src/tools/vite-ngrx-stackblits.plugin';
+import ngrxStackblitzPlugin from './src/tools/vite-ngrx-stackblitz.plugin';
 import { ngrxTheme } from './src/shared/ngrx-shiki-theme';
 import { configDefaults } from 'vitest/config';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 export default defineConfig(({ mode }) => ({
-  root: __dirname,
+  root: dirname(fileURLToPath(import.meta.url)),
   cacheDir: '../../node_modules/.vite/www',
 
   resolve: {
@@ -32,7 +34,13 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          return id.includes('node_modules') ? 'vendor' : undefined;
+          if (id.includes('node_modules')) {
+            const parts = id.split('node_modules/')[1].split('/');
+            return parts[0].startsWith('@')
+              ? `${parts[0]}/${parts[1]}`
+              : parts[0];
+          }
+          return undefined;
         },
       },
     },
