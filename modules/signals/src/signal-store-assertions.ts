@@ -1,15 +1,9 @@
 import { InnerSignalStore } from './signal-store-models';
 
-declare const ngDevMode: unknown;
-
 export function assertUniqueStoreMembers(
   store: InnerSignalStore,
   newMemberKeys: Array<string | symbol>
 ): void {
-  if (typeof ngDevMode === 'undefined' || !ngDevMode) {
-    return;
-  }
-
   const storeMembers = {
     ...store.stateSignals,
     ...store.props,

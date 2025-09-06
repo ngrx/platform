@@ -30,7 +30,9 @@ export function withMethods<
       ...store.props,
       ...store.methods,
     });
-    assertUniqueStoreMembers(store, Reflect.ownKeys(methods));
+    if (typeof ngDevMode !== 'undefined' && ngDevMode) {
+      assertUniqueStoreMembers(store, Reflect.ownKeys(methods));
+    }
 
     return {
       ...store,
