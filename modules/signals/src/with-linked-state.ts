@@ -86,7 +86,9 @@ export function withLinkedState<
       ...store.props,
     });
     const stateKeys = Reflect.ownKeys(linkedState);
-    assertUniqueStoreMembers(store, stateKeys);
+    if (typeof ngDevMode !== 'undefined' && ngDevMode) {
+      assertUniqueStoreMembers(store, stateKeys);
+    }
     const stateSource = store[STATE_SOURCE] as SignalsDictionary;
     const stateSignals = {} as SignalsDictionary;
 

@@ -28,7 +28,9 @@ export function withProps<
       ...store.props,
       ...store.methods,
     });
-    assertUniqueStoreMembers(store, Reflect.ownKeys(props));
+    if (typeof ngDevMode !== 'undefined' && ngDevMode) {
+      assertUniqueStoreMembers(store, Reflect.ownKeys(props));
+    }
 
     return {
       ...store,
