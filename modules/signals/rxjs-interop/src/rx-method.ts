@@ -26,7 +26,7 @@ export function rxMethod<Input>(
   generator: (source$: Observable<Input>) => Observable<unknown>,
   config?: { injector?: Injector }
 ): RxMethod<Input> {
-  if (!config?.injector) {
+  if (typeof ngDevMode !== 'undefined' && ngDevMode && !config?.injector) {
     assertInInjectionContext(rxMethod);
   }
 

@@ -22,7 +22,7 @@ export function signalMethod<Input>(
   processingFn: (value: Input) => void,
   config?: { injector?: Injector }
 ): SignalMethod<Input> {
-  if (!config?.injector) {
+  if (typeof ngDevMode !== 'undefined' && ngDevMode && !config?.injector) {
     assertInInjectionContext(signalMethod);
   }
 
