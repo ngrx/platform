@@ -58,7 +58,7 @@ export function injectDispatch<
   events: EventGroup,
   config?: { injector?: Injector }
 ): Prettify<InjectDispatchResult<EventGroup>> {
-  if (!config?.injector) {
+  if (typeof ngDevMode !== 'undefined' && ngDevMode && !config?.injector) {
     assertInInjectionContext(injectDispatch);
   }
 

@@ -110,7 +110,7 @@ export function watchState<State extends object>(
   watcher: StateWatcher<State>,
   config?: { injector?: Injector }
 ): { destroy(): void } {
-  if (!config?.injector) {
+  if (typeof ngDevMode !== 'undefined' && ngDevMode && !config?.injector) {
     assertInInjectionContext(watchState);
   }
 
