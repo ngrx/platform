@@ -69,13 +69,13 @@
             "command": "cpy modules/schematics/migrations/migration.json dist"
           },
           {
-            "command": "cpy modules/schematics/src/**/files/**/*.* dist"
+            "command": "cpy modules/schematics/src/**/files/**/*.* dist/modules/schematics/src"
           },
           {
-            "command": "cpy modules/schematics/src/**/integration-files/**/*.* dist"
+            "command": "cpy modules/schematics/src/**/integration-files/**/*.* dist/modules/schematics/src"
           },
           {
-            "command": "cpy modules/schematics/src/**/schema.json dist"
+            "command": "cpy modules/schematics/src/**/schema.json dist/modules/schematics/src"
           },
           {
             "command": "cpy LICENSE dist/modules/schematics"
