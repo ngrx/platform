@@ -15,15 +15,15 @@ type LinkedStateResult<
   LinkedStateInput extends Record<
     string | symbol,
     WritableSignal<unknown> | (() => unknown)
-  >
+  >,
 > = {
   [K in keyof LinkedStateInput]: LinkedStateInput[K] extends WritableSignal<
     infer V
   >
     ? V
     : LinkedStateInput[K] extends () => infer V
-    ? V
-    : never;
+      ? V
+      : never;
 };
 
 /**
@@ -71,7 +71,7 @@ export function withLinkedState<
     string | symbol,
     WritableSignal<unknown> | (() => unknown)
   >,
-  Input extends SignalStoreFeatureResult
+  Input extends SignalStoreFeatureResult,
 >(
   linkedStateFactory: (
     store: Prettify<StateSignals<Input['state']> & Input['props']>

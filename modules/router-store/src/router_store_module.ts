@@ -49,7 +49,7 @@ import { provideRouterStore } from './provide_router_store';
 @NgModule({})
 export class StoreRouterConnectingModule {
   static forRoot<
-    T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+    T extends BaseRouterStoreState = SerializedRouterStateSnapshot,
   >(
     config: StoreRouterConfig<T> = {}
   ): ModuleWithProviders<StoreRouterConnectingModule> {

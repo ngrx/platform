@@ -284,8 +284,8 @@ describe('Unsorted State Adapter', () => {
         book.title === TheGreatGatsby.title
           ? firstChange
           : book.title === AClockworkOrange.title
-          ? secondChange
-          : book,
+            ? secondChange
+            : book,
       withMany
     );
 

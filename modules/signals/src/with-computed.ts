@@ -11,13 +11,13 @@ type ComputedResult<
   ComputedDictionary extends Record<
     string | symbol,
     Signal<unknown> | (() => unknown)
-  >
+  >,
 > = {
   [P in keyof ComputedDictionary]: ComputedDictionary[P] extends Signal<unknown>
     ? ComputedDictionary[P]
     : ComputedDictionary[P] extends () => infer V
-    ? Signal<V>
-    : never;
+      ? Signal<V>
+      : never;
 };
 
 export function withComputed<
@@ -25,7 +25,7 @@ export function withComputed<
   ComputedDictionary extends Record<
     string | symbol,
     Signal<unknown> | (() => unknown)
-  >
+  >,
 >(
   computedFactory: (
     store: Prettify<

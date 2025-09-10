@@ -55,11 +55,18 @@ export function sanitizeActions(
   actionSanitizer: ActionSanitizer,
   actions: LiftedActions
 ): LiftedActions {
-  return Object.keys(actions).reduce((sanitizedActions, actionIdx) => {
-    const idx = Number(actionIdx);
-    sanitizedActions[idx] = sanitizeAction(actionSanitizer, actions[idx], idx);
-    return sanitizedActions;
-  }, <LiftedActions>{});
+  return Object.keys(actions).reduce(
+    (sanitizedActions, actionIdx) => {
+      const idx = Number(actionIdx);
+      sanitizedActions[idx] = sanitizeAction(
+        actionSanitizer,
+        actions[idx],
+        idx
+      );
+      return sanitizedActions;
+    },
+    <LiftedActions>{}
+  );
 }
 
 /**

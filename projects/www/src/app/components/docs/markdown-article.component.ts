@@ -24,22 +24,22 @@ type Heading = { level: number; text: string; id: string; url: string };
     <menu>
       <div class="content-menu" (click)="isMenuOpen.set(!isMenuOpen())">
         <mat-icon>library_books</mat-icon>
-        @if(isMenuOpen()){
-        <mat-icon>keyboard_arrow_up</mat-icon>
-        }@else{
-        <mat-icon>keyboard_arrow_down</mat-icon>
+        @if (isMenuOpen()) {
+          <mat-icon>keyboard_arrow_up</mat-icon>
+        } @else {
+          <mat-icon>keyboard_arrow_down</mat-icon>
         }
       </div>
       <div class="content-menu-holder" [class.open]="isMenuOpen()">
         @for (heading of headings(); track $index) {
-        <a
-          [href]="heading.url"
-          [style]="{ paddingLeft: 24 + (heading.level - 2) * 8 + 'px' }"
-          [class.active]="activeHeadingId() === heading.id"
-          (click)="navigateToHeading($event, heading)"
-        >
-          {{ heading.text }}
-        </a>
+          <a
+            [href]="heading.url"
+            [style]="{ paddingLeft: 24 + (heading.level - 2) * 8 + 'px' }"
+            [class.active]="activeHeadingId() === heading.id"
+            (click)="navigateToHeading($event, heading)"
+          >
+            {{ heading.text }}
+          </a>
         }
       </div>
     </menu>

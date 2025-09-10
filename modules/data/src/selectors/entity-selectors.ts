@@ -125,7 +125,7 @@ export class EntitySelectorsFactory {
    */
   createCollectionSelector<
     T = any,
-    C extends EntityCollection<T> = EntityCollection<T>
+    C extends EntityCollection<T> = EntityCollection<T>,
   >(entityName: string) {
     const getCollection = (cache: EntityCache = {}) =>
       <C>(
@@ -148,7 +148,7 @@ export class EntitySelectorsFactory {
    */
   createCollectionSelectors<
     T,
-    S extends CollectionSelectors<T> = CollectionSelectors<T>
+    S extends CollectionSelectors<T> = CollectionSelectors<T>,
   >(metadata: EntityMetadata<T>): S;
 
   /* eslint-disable @typescript-eslint/unified-signatures */
@@ -160,13 +160,13 @@ export class EntitySelectorsFactory {
    */
   createCollectionSelectors<
     T,
-    S extends CollectionSelectors<T> = CollectionSelectors<T>
+    S extends CollectionSelectors<T> = CollectionSelectors<T>,
   >(entityName: string): S;
 
   // createCollectionSelectors implementation
   createCollectionSelectors<
     T,
-    S extends CollectionSelectors<T> = CollectionSelectors<T>
+    S extends CollectionSelectors<T> = CollectionSelectors<T>,
   >(metadataOrName: EntityMetadata<T> | string): S {
     const metadata =
       typeof metadataOrName === 'string'

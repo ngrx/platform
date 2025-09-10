@@ -63,19 +63,19 @@
             "command": "pnpm exec tsc -p modules/schematics/tsconfig.schematics.json"
           },
           {
-            "command": "cpy modules/schematics/collection.json dist/modules/schematics"
+            "command": "cpy modules/schematics/collection.json dist"
           },
           {
-            "command": "cpy modules/schematics/migrations/migration.json dist/modules/schematics/migrations"
+            "command": "cpy modules/schematics/migrations/migration.json dist"
           },
           {
-            "command": "cpy modules/schematics/src/**/files/**/*.* dist/ --parents"
+            "command": "cpy modules/schematics/src/**/files/**/*.* dist/modules/schematics/src"
           },
           {
-            "command": "cpy modules/schematics/src/**/integration-files/**/*.* dist/ --parents"
+            "command": "cpy modules/schematics/src/**/integration-files/**/*.* dist/modules/schematics/src"
           },
           {
-            "command": "cpy modules/schematics/src/**/schema.json dist/ --parents"
+            "command": "cpy modules/schematics/src/**/schema.json dist/modules/schematics/src"
           },
           {
             "command": "cpy LICENSE dist/modules/schematics"
