@@ -24,16 +24,15 @@ import { NGRX_MODULE_PATHS } from './ngrx-modules';
 type ConstructorFunctionExpression = TSESTree.FunctionExpression & {
   parent: TSESTree.MethodDefinition & { kind: 'constructor' };
 };
-type InjectedParameter =
-  | TSESTree.Identifier & {
-      typeAnnotation: TSESTree.TSTypeAnnotation;
-      parent:
-        | ConstructorFunctionExpression
-        | (TSESTree.TSParameterProperty & {
-            parent: ConstructorFunctionExpression;
-          })
-        | TSESTree.PropertyDefinition;
-    };
+type InjectedParameter = TSESTree.Identifier & {
+  typeAnnotation: TSESTree.TSTypeAnnotation;
+  parent:
+    | ConstructorFunctionExpression
+    | (TSESTree.TSParameterProperty & {
+        parent: ConstructorFunctionExpression;
+      })
+    | TSESTree.PropertyDefinition;
+};
 type InjectedParameterWithSourceCode = Readonly<{
   identifiers?: readonly InjectedParameter[];
   sourceCode: Readonly<TSESLint.SourceCode>;

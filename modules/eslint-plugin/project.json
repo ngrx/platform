@@ -42,13 +42,13 @@
             "command": "nx build-package eslint-plugin"
           },
           {
-            "command": "cpy modules/eslint-plugin/migrations/migration.json dist/modules/eslint-plugin/migrations"
+            "command": "cpy modules/eslint-plugin/migrations/migration.json dist"
           },
           {
-            "command": "cpy modules/eslint-plugin/schematics/collection.json dist/modules/eslint-plugin/schematics"
+            "command": "cpy modules/eslint-plugin/schematics/collection.json dist"
           },
           {
-            "command": "cpy modules/eslint-plugin/schematics/ng-add/schema.json dist/modules/eslint-plugin/schematics/ng-add"
+            "command": "cpy modules/eslint-plugin/schematics/ng-add/schema.json dist"
           },
           {
             "command": "cpy LICENSE dist/modules/eslint-plugin"

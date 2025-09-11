@@ -325,11 +325,16 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
    * @returns A terminating Observable of the queried entities
    * after server reports successful query or the query error.
    */
-  loadWithQuery(queryParams: QueryParams | string,
-                options?: EntityActionOptions
+  loadWithQuery(
+    queryParams: QueryParams | string,
+    options?: EntityActionOptions
   ): Observable<T[]> {
     options = this.setQueryEntityActionOptions(options);
-    const action = this.createEntityAction(EntityOp.QUERY_MANY, queryParams, options);
+    const action = this.createEntityAction(
+      EntityOp.QUERY_MANY,
+      queryParams,
+      options
+    );
     this.dispatch(action);
     return this.getResponseData$<T[]>(options.correlationId).pipe(
       shareReplay(1)

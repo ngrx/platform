@@ -15,7 +15,7 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
   selector: 'ngrx-docs-stackblitz',
   standalone: true,
   template: `
-    @if(isEmbedded) {
+    @if (isEmbedded) {
     <div [attr.title]="name" #example></div>
     } @else {
     <a (click)="openStackblitz()" [attr.title]="name"

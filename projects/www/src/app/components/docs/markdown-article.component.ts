@@ -24,9 +24,9 @@ type Heading = { level: number; text: string; id: string; url: string };
     <menu>
       <div class="content-menu" (click)="isMenuOpen.set(!isMenuOpen())">
         <mat-icon>library_books</mat-icon>
-        @if(isMenuOpen()){
+        @if (isMenuOpen()) {
         <mat-icon>keyboard_arrow_up</mat-icon>
-        }@else{
+        } @else {
         <mat-icon>keyboard_arrow_down</mat-icon>
         }
       </div>

@@ -33,15 +33,16 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
           copied() ? 'Code copied to clipboard' : 'Copy code to clipboard'
         "
       >
-        @if(copied()) {
-        <mat-icon>done</mat-icon>} @else {
+        @if (copied()) {
+        <mat-icon>done</mat-icon>
+        } @else {
         <mat-icon>content_copy</mat-icon>
         }
       </button>
       <div #codeBody>
-        @if(path) {
+        @if (path) {
         <div [innerHTML]="codeContent() | ngrxCodeHighlight"></div>
-        }@else{
+        } @else {
         <ng-content />
         }
       </div>

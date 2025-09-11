@@ -22,12 +22,12 @@ import { Section } from '../services/guide-menu.service';
       </header>
       } @if (!collapsible() || isOpen()) {
       <div class="section-content">
-        @for(child of section().children; track $index) { @if(child.kind ===
+        @for (child of section().children; track $index) { @if (child.kind ===
         'link') {
         <ngrx-guide-menu-link [url]="child.url">{{
           child.text
         }}</ngrx-guide-menu-link>
-        } @else if(child.kind === 'break') {
+        } @else if (child.kind === 'break') {
         <hr />
         } @else {
         <ngrx-guide-section [section]="child"></ngrx-guide-section>

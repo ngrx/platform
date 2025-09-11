@@ -34,7 +34,9 @@ export function withState<State extends object>(
     ) as Record<string | symbol, unknown>;
     const stateKeys = Reflect.ownKeys(state);
 
-    assertUniqueStoreMembers(store, stateKeys);
+    if (typeof ngDevMode !== 'undefined' && ngDevMode) {
+      assertUniqueStoreMembers(store, stateKeys);
+    }
 
     const stateSource = store[STATE_SOURCE] as Record<
       string | symbol,
