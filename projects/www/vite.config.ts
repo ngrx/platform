@@ -5,7 +5,6 @@ import {
   defaultServerConditions,
 } from 'vite';
 import analog from '@analogjs/platform';
-import angular from '@analogjs/vite-plugin-angular';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import ngrxStackblitzPlugin from './src/tools/vite-ngrx-stackblitz.plugin';
 import { ngrxTheme } from './src/shared/ngrx-shiki-theme';
@@ -57,9 +56,6 @@ export default defineConfig(({ mode }) => ({
   },
 
   plugins: [
-    angular({
-      inlineStylesExtension: 'scss',
-    }),
     analog({
       static: true,
       content: {
@@ -73,6 +69,9 @@ export default defineConfig(({ mode }) => ({
             themes: [ngrxTheme],
           },
         },
+      },
+      vite: {
+        inlineStylesExtension: 'scss',
       },
     }),
     nxViteTsPaths(),
