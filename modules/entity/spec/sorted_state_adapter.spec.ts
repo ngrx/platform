@@ -344,8 +344,8 @@ describe('Sorted State Adapter', () => {
         book.title === TheGreatGatsby.title
           ? firstChange
           : book.title === AClockworkOrange.title
-          ? secondChange
-          : book,
+            ? secondChange
+            : book,
       withMany
     );
 

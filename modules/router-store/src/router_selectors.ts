@@ -8,7 +8,7 @@ import { RouterReducerState } from './reducer';
 import { DEFAULT_ROUTER_FEATURENAME } from './router_store_config';
 
 export function createRouterSelector<
-  State extends Record<string, any>
+  State extends Record<string, any>,
 >(): MemoizedSelector<State, RouterReducerState> {
   return createFeatureSelector(DEFAULT_ROUTER_FEATURENAME);
 }

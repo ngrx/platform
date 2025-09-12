@@ -35,12 +35,12 @@ import { MinimizedApiMemberSummary } from '@ngrx-io/shared';
     </div>
 
     @for (pkg of filteredPackages(); track pkg.packageName) {
-    <h3>{{ pkg.packageName }}</h3>
-    <div class="packageSymbols">
-      @for (symbol of pkg.symbols; track symbol.canonicalReference) {
-      <ngrx-symbol-chip [symbol]="symbol" />
-      }
-    </div>
+      <h3>{{ pkg.packageName }}</h3>
+      <div class="packageSymbols">
+        @for (symbol of pkg.symbols; track symbol.canonicalReference) {
+          <ngrx-symbol-chip [symbol]="symbol" />
+        }
+      </div>
     }
   `,
   styles: [
@@ -125,21 +125,24 @@ export default class ApiIndexPageComponent {
 
     if (!packageReport) return [];
 
-    return packageReport.packageNames.reduce((packages, packageName) => {
-      const pkg = packageReport.packages[packageName];
-      const symbols = pkg.symbolNames.map(
-        (symbolName) => pkg.symbols[symbolName]
-      );
-      const filteredSymbols = symbols.filter(
-        (symbol) =>
-          !symbol.isDeprecated &&
-          symbol.name.toLocaleLowerCase().includes(term.toLocaleLowerCase())
-      );
+    return packageReport.packageNames.reduce(
+      (packages, packageName) => {
+        const pkg = packageReport.packages[packageName];
+        const symbols = pkg.symbolNames.map(
+          (symbolName) => pkg.symbols[symbolName]
+        );
+        const filteredSymbols = symbols.filter(
+          (symbol) =>
+            !symbol.isDeprecated &&
+            symbol.name.toLocaleLowerCase().includes(term.toLocaleLowerCase())
+        );
 
-      return filteredSymbols.length > 0
-        ? [...packages, { packageName, symbols }]
-        : packages;
-    }, [] as { packageName: string; symbols: MinimizedApiMemberSummary[] }[]);
+        return filteredSymbols.length > 0
+          ? [...packages, { packageName, symbols }]
+          : packages;
+      },
+      [] as { packageName: string; symbols: MinimizedApiMemberSummary[] }[]
+    );
   });
 
   onSearch(event: Event) {

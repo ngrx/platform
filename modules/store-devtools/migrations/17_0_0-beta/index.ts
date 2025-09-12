@@ -140,8 +140,8 @@ function updateConfig(
         currentValue === 'true'
           ? 'false'
           : currentValue === 'false'
-          ? 'true'
-          : `!${currentValue}`
+            ? 'true'
+            : `!${currentValue}`
       )
     );
   }

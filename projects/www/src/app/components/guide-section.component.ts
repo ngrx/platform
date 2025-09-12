@@ -14,25 +14,27 @@ import { Section } from '../services/guide-menu.service';
   template: `
     <section>
       @if (collapsible()) {
-      <header>
-        <button (click)="toggleSection()">
-          <mat-icon>chevron_right</mat-icon>
-          <span>{{ section().title }}</span>
-        </button>
-      </header>
-      } @if (!collapsible() || isOpen()) {
-      <div class="section-content">
-        @for (child of section().children; track $index) { @if (child.kind ===
-        'link') {
-        <ngrx-guide-menu-link [url]="child.url">{{
-          child.text
-        }}</ngrx-guide-menu-link>
-        } @else if (child.kind === 'break') {
-        <hr />
-        } @else {
-        <ngrx-guide-section [section]="child"></ngrx-guide-section>
-        } }
-      </div>
+        <header>
+          <button (click)="toggleSection()">
+            <mat-icon>chevron_right</mat-icon>
+            <span>{{ section().title }}</span>
+          </button>
+        </header>
+      }
+      @if (!collapsible() || isOpen()) {
+        <div class="section-content">
+          @for (child of section().children; track $index) {
+            @if (child.kind === 'link') {
+              <ngrx-guide-menu-link [url]="child.url">{{
+                child.text
+              }}</ngrx-guide-menu-link>
+            } @else if (child.kind === 'break') {
+              <hr />
+            } @else {
+              <ngrx-guide-section [section]="child"></ngrx-guide-section>
+            }
+          }
+        </div>
       }
     </section>
   `,

@@ -10,32 +10,34 @@ import { FlattenedLink } from '../services/guide-menu.service';
   template: `
     <div class="linkWrapper previous">
       @if (previousLink(); as previousLink) {
-      <a [routerLink]="previousLink.url">
-        <mat-icon>chevron_left</mat-icon>
-        <div class="parents">
-          @for (parent of previousLink.parents; track $index) {
-          <span>{{ parent }}</span>
-          @if ($index < previousLink.parents.length - 1) {
-          <span> > </span>
-          } }
-        </div>
-        <span class="linkText">{{ previousLink.text }}</span>
-      </a>
+        <a [routerLink]="previousLink.url">
+          <mat-icon>chevron_left</mat-icon>
+          <div class="parents">
+            @for (parent of previousLink.parents; track $index) {
+              <span>{{ parent }}</span>
+              @if ($index < previousLink.parents.length - 1) {
+                <span> > </span>
+              }
+            }
+          </div>
+          <span class="linkText">{{ previousLink.text }}</span>
+        </a>
       }
     </div>
     <div class="linkWrapper next">
       @if (nextLink(); as nextLink) {
-      <a [routerLink]="nextLink.url">
-        <div class="parents">
-          @for (parent of nextLink.parents; track $index) {
-          <span>{{ parent }}</span>
-          @if ($index < nextLink.parents.length - 1) {
-          <span> > </span>
-          } }
-        </div>
-        <span class="linkText">{{ nextLink.text }}</span>
-        <mat-icon>chevron_right</mat-icon>
-      </a>
+        <a [routerLink]="nextLink.url">
+          <div class="parents">
+            @for (parent of nextLink.parents; track $index) {
+              <span>{{ parent }}</span>
+              @if ($index < nextLink.parents.length - 1) {
+                <span> > </span>
+              }
+            }
+          </div>
+          <span class="linkText">{{ nextLink.text }}</span>
+          <mat-icon>chevron_right</mat-icon>
+        </a>
       }
     </div>
   `,

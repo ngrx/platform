@@ -16,11 +16,11 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
   standalone: true,
   template: `
     @if (isEmbedded) {
-    <div [attr.title]="name" #example></div>
+      <div [attr.title]="name" #example></div>
     } @else {
-    <a (click)="openStackblitz()" [attr.title]="name"
-      ><ng-content>StackBlitz example</ng-content></a
-    >
+      <a (click)="openStackblitz()" [attr.title]="name"
+        ><ng-content>StackBlitz example</ng-content></a
+      >
     }
   `,
   encapsulation: ViewEncapsulation.None,

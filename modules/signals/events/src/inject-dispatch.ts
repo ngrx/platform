@@ -9,10 +9,10 @@ import { Dispatcher } from './dispatcher';
 import { EventCreator } from './event-creator';
 
 type InjectDispatchResult<
-  EventGroup extends Record<string, EventCreator<string, any>>
+  EventGroup extends Record<string, EventCreator<string, any>>,
 > = {
   [EventName in keyof EventGroup]: Parameters<EventGroup[EventName]> extends [
-    infer Payload
+    infer Payload,
   ]
     ? (payload: Payload) => void
     : () => void;
@@ -53,7 +53,7 @@ type InjectDispatchResult<
  * ```
  */
 export function injectDispatch<
-  EventGroup extends Record<string, EventCreator<string, any>>
+  EventGroup extends Record<string, EventCreator<string, any>>,
 >(
   events: EventGroup,
   config?: { injector?: Injector }

@@ -9,7 +9,7 @@ import { SerializedRouterStateSnapshot } from './serializers/full_serializer';
 import { MinimalRouterStateSerializer } from './serializers/minimal_serializer';
 
 export type StateKeyOrSelector<
-  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 > = string | Selector<any, RouterReducerState<T>>;
 
 export enum NavigationActionTiming {
@@ -46,7 +46,7 @@ export function _createRouterConfig(
 }
 
 export interface StoreRouterConfig<
-  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 > {
   stateKey?: StateKeyOrSelector<T>;
   serializer?: new (...args: any[]) => RouterStateSerializer;

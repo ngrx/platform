@@ -19,7 +19,7 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
   imports: [MatIcon, CodeHighlightPipe],
   template: `
     @if (header) {
-    <div class="header">{{ header }}</div>
+      <div class="header">{{ header }}</div>
     }
 
     <div class="body">
@@ -34,16 +34,16 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
         "
       >
         @if (copied()) {
-        <mat-icon>done</mat-icon>
+          <mat-icon>done</mat-icon>
         } @else {
-        <mat-icon>content_copy</mat-icon>
+          <mat-icon>content_copy</mat-icon>
         }
       </button>
       <div #codeBody>
         @if (path) {
-        <div [innerHTML]="codeContent() | ngrxCodeHighlight"></div>
+          <div [innerHTML]="codeContent() | ngrxCodeHighlight"></div>
         } @else {
-        <ng-content />
+          <ng-content />
         }
       </div>
     </div>

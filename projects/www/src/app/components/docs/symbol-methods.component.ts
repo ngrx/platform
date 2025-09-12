@@ -28,35 +28,39 @@ import { SymbolUsageNotesComponent } from './symbol-usage-notes.component';
   ],
   template: `
     @if (methods().length) {
-    <div class="methods">
-      <h3>{{ '@methods' }}</h3>
+      <div class="methods">
+        <h3>{{ '@methods' }}</h3>
 
-      @for (method of methods(); track $index) {
-      <div class="method">
-        <div class="header">
-          <div
-            class="methodName"
-            [ngClass]="{ deprecated: method.docs.deprecated }"
-          >
-            <code
-              [innerHTML]="getMethodSignature(method) | ngrxCodeHighlight"
-            ></code>
+        @for (method of methods(); track $index) {
+          <div class="method">
+            <div class="header">
+              <div
+                class="methodName"
+                [ngClass]="{ deprecated: method.docs.deprecated }"
+              >
+                <code
+                  [innerHTML]="getMethodSignature(method) | ngrxCodeHighlight"
+                ></code>
+              </div>
+              @if (method.docs.deprecated) {
+                <ngrx-deprecated-chip [reason]="method.docs.deprecated" />
+              }
+              @if (method.docs.summary; as summary) {
+                <p
+                  class="summary"
+                  [innerHtml]="summary | ngrxInlineMarkdown"
+                ></p>
+              }
+            </div>
+
+            <ngrx-symbol-api [symbol]="method" />
+            <ngrx-symbol-returns [symbol]="method" />
+            <ngrx-symbol-params [symbol]="method" />
+            <ngrx-symbol-type-params [symbol]="method" />
+            <ngrx-symbol-usage-notes [symbol]="method" />
           </div>
-          @if (method.docs.deprecated) {
-          <ngrx-deprecated-chip [reason]="method.docs.deprecated" />
-          } @if (method.docs.summary; as summary) {
-          <p class="summary" [innerHtml]="summary | ngrxInlineMarkdown"></p>
-          }
-        </div>
-
-        <ngrx-symbol-api [symbol]="method" />
-        <ngrx-symbol-returns [symbol]="method" />
-        <ngrx-symbol-params [symbol]="method" />
-        <ngrx-symbol-type-params [symbol]="method" />
-        <ngrx-symbol-usage-notes [symbol]="method" />
+        }
       </div>
-      }
-    </div>
     }
   `,
   styles: [

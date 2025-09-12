@@ -18,18 +18,19 @@ import {
 import { RECOMPUTE } from '../src/reducer';
 import { IS_EXTENSION_OR_MONITOR_PRESENT } from '../src/provide-store-devtools';
 
-const counter = jasmine
-  .createSpy('counter')
-  .and.callFake(function (state = 0, action: Action) {
-    switch (action.type) {
-      case 'INCREMENT':
-        return state + 1;
-      case 'DECREMENT':
-        return state - 1;
-      default:
-        return state;
-    }
-  });
+const counter = jasmine.createSpy('counter').and.callFake(function (
+  state = 0,
+  action: Action
+) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1;
+    case 'DECREMENT':
+      return state - 1;
+    default:
+      return state;
+  }
+});
 
 declare let mistake: any;
 function counterWithBug(state = 0, action: Action) {

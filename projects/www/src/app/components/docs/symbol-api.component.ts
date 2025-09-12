@@ -17,13 +17,14 @@ import { SymbolExcerptGroupComponent } from './symbol-excerpt-group.component';
     <ngrx-symbol-excerpt-group>
       <ngrx-symbol-excerpt [excerptTokens]="headerExcerptTokens()" />
       @for (member of bodyMembers(); track $index) {
-      <ngrx-symbol-excerpt
-        [excerptTokens]="member.excerptTokens"
-        [deprecated]="!!member.docs.deprecated"
-        class="memberExcerpt"
-      />
-      } @if (footerExcerptTokens().length) {
-      <ngrx-symbol-excerpt [excerptTokens]="footerExcerptTokens()" />
+        <ngrx-symbol-excerpt
+          [excerptTokens]="member.excerptTokens"
+          [deprecated]="!!member.docs.deprecated"
+          class="memberExcerpt"
+        />
+      }
+      @if (footerExcerptTokens().length) {
+        <ngrx-symbol-excerpt [excerptTokens]="footerExcerptTokens()" />
       }
     </ngrx-symbol-excerpt-group>
   `,

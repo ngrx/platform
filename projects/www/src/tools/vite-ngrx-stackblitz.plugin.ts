@@ -33,24 +33,27 @@ export default function ngrxStackblitzPlugin(): Plugin {
     id: string,
     files: Record<string, string>
   ): Record<string, string> {
-    return Object.keys(files).reduce((acc, file) => {
-      const filePath = path.resolve(path.dirname(id), files[file]);
-      const content = fs.readFileSync(filePath, 'utf-8');
+    return Object.keys(files).reduce(
+      (acc, file) => {
+        const filePath = path.resolve(path.dirname(id), files[file]);
+        const content = fs.readFileSync(filePath, 'utf-8');
 
-      if (file === 'package.json') {
-        acc[file] = content
-          .replaceAll('<angular-version>', ANGULAR_VERSION)
-          .replaceAll('<rxjs-version>', RXJS_VERSION)
-          .replaceAll('<zone-js-version>', ZONE_JS_VERSION)
-          .replaceAll('<ngrx-version>', NGRX_VERSION)
-          .replaceAll('<typescript-version>', TYPESCRIPT_VERSION);
+        if (file === 'package.json') {
+          acc[file] = content
+            .replaceAll('<angular-version>', ANGULAR_VERSION)
+            .replaceAll('<rxjs-version>', RXJS_VERSION)
+            .replaceAll('<zone-js-version>', ZONE_JS_VERSION)
+            .replaceAll('<ngrx-version>', NGRX_VERSION)
+            .replaceAll('<typescript-version>', TYPESCRIPT_VERSION);
 
+          return acc;
+        }
+
+        acc[file] = content;
         return acc;
-      }
-
-      acc[file] = content;
-      return acc;
-    }, {} as Record<string, string>);
+      },
+      {} as Record<string, string>
+    );
   }
 
   function getBaseConfig(

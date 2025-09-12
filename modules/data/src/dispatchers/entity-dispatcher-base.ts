@@ -617,8 +617,8 @@ export class EntityDispatcherBase<T> implements EntityDispatcher<T> {
         return entityOp === EntityOp.CANCEL_PERSIST
           ? throwError(new PersistanceCanceled(act.payload.data))
           : entityOp.endsWith(OP_SUCCESS)
-          ? of(act.payload.data as D)
-          : throwError(act.payload.data.error);
+            ? of(act.payload.data as D)
+            : throwError(act.payload.data.error);
       })
     );
   }

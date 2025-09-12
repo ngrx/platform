@@ -8,9 +8,12 @@ import { RequestData } from './interfaces';
  * @param requestData the HTTP request information such as the method and the url.
  */
 export class DataServiceError extends Error {
-  constructor(public error: any, public requestData: RequestData | null) {
+  constructor(
+    public error: any,
+    public requestData: RequestData | null
+  ) {
     super(
-      typeof error === 'string' ? error : extractMessage(error) ?? undefined
+      typeof error === 'string' ? error : (extractMessage(error) ?? undefined)
     );
     this.name = this.constructor.name;
   }
@@ -33,8 +36,8 @@ function extractMessage(sourceError: any): string | null {
   return typeof errMessage === 'string'
     ? errMessage
     : errMessage
-    ? JSON.stringify(errMessage)
-    : null;
+      ? JSON.stringify(errMessage)
+      : null;
 }
 
 /** Payload for an EntityAction data service error such as QUERY_ALL_ERROR */

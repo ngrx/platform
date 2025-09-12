@@ -37,7 +37,7 @@ import { StoreRouterConnectingService } from './store_router_connecting.service'
  * ```
  */
 export function provideRouterStore<
-  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 >(config: StoreRouterConfig<T> = {}): EnvironmentProviders {
   return makeEnvironmentProviders([
     { provide: _ROUTER_CONFIG, useValue: config },
@@ -51,8 +51,8 @@ export function provideRouterStore<
       useClass: config.serializer
         ? config.serializer
         : config.routerState === RouterState.Full
-        ? FullRouterStateSerializer
-        : MinimalRouterStateSerializer,
+          ? FullRouterStateSerializer
+          : MinimalRouterStateSerializer,
     },
     provideEnvironmentInitializer(() => inject(StoreRouterConnectingService)),
     StoreRouterConnectingService,

@@ -15,12 +15,13 @@ import { CodeHighlightPipe } from './code-highlight.pipe';
    */
   template: `
     <div class="links">
-      @for (excerpt of simplifiedExcerptTokens(); track $index) { @if
-      (excerpt.kind === 'Content') {
-      {{ excerpt.text }}
-      } @else if (excerpt.kind === 'Reference') {
-      <ngrx-symbol-link [reference]="excerpt.canonicalReference" />
-      } }
+      @for (excerpt of simplifiedExcerptTokens(); track $index) {
+        @if (excerpt.kind === 'Content') {
+          {{ excerpt.text }}
+        } @else if (excerpt.kind === 'Reference') {
+          <ngrx-symbol-link [reference]="excerpt.canonicalReference" />
+        }
+      }
     </div>
     <pre><code [ngClass]="{deprecated: deprecated()}" [innerHTML]="joinedContent() | ngrxCodeHighlight"></code></pre>
   `,

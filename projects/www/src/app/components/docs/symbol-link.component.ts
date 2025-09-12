@@ -23,11 +23,11 @@ import { ReferenceService } from '@ngrx-io/app/reference/reference.service';
   imports: [RouterLink, SymbolPopoverComponent],
   // Spacing is intentional to avoid unnecessary whitespace in the output
   template: `@if (isPrivate) {
-    {{ name }}
+      {{ name }}
     } @else if (shouldUseExternalLink) {
-    <a [href]="url" target="_blank">{{ name }}</a>
+      <a [href]="url" target="_blank">{{ name }}</a>
     } @else {
-    <a [routerLink]="url" #internalSymbolLink>{{ name }}</a>
+      <a [routerLink]="url" #internalSymbolLink>{{ name }}</a>
     }`,
   styles: [
     `

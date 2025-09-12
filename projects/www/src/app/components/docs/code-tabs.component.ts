@@ -19,9 +19,9 @@ import { CodeExampleComponent } from './code-example.component';
 
     <mat-tab-group [preserveContent]="true">
       @for (tab of tabs(); track tab) {
-      <mat-tab [label]="tab.header">
-        <ngrx-code-example [innerHTML]="tab.code"> </ngrx-code-example>
-      </mat-tab>
+        <mat-tab [label]="tab.header">
+          <ngrx-code-example [innerHTML]="tab.code"> </ngrx-code-example>
+        </mat-tab>
       }
     </mat-tab-group>
   `,
