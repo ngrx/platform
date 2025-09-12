@@ -1,4 +1,23 @@
-import { TextEncoder, TextDecoder } from 'util';
+import {
+  TextEncoder as NodeTextEncoder,
+  TextDecoder as NodeTextDecoder,
+} from 'util';
+
+// Only assign if not already defined, using type assertion to satisfy TypeScript
+if (typeof globalThis.TextEncoder === 'undefined') {
+  globalThis.TextEncoder = NodeTextEncoder as unknown as {
+    new (): TextEncoder;
+    prototype: TextEncoder;
+  };
+}
+
+if (typeof globalThis.TextDecoder === 'undefined') {
+  globalThis.TextDecoder = NodeTextDecoder as unknown as {
+    new (): TextDecoder;
+    prototype: TextDecoder;
+  };
+}
+
 import '@angular/compiler';
 import '@analogjs/vitest-angular/setup-zone';
 
@@ -12,5 +31,3 @@ getTestBed().initTestEnvironment(
   BrowserTestingModule,
   platformBrowserTesting()
 );
-
-Object.assign(global, { TextDecoder, TextEncoder });
