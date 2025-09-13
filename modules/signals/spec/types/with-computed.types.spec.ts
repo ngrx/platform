@@ -15,7 +15,7 @@ describe('withComputed', () => {
         } from '@ngrx/signals';
         import { TestBed } from '@angular/core/testing';
         import { signal } from '@angular/core';
-        
+
         ${code}
       `,
     compilerOptions()
@@ -76,11 +76,9 @@ describe('withComputed', () => {
       const user = store.user;
     `;
 
-    expectSnippet(snippet).toSucceed();
-    expectSnippet(snippet).toInfer(
-      'user',
-      'Signal<{ firstName: string; lastName: string; }>'
-    );
+    const result = expectSnippet(snippet);
+    result.toSucceed();
+    result.toInfer('user', 'Signal<{ firstName: string; lastName: string; }>');
   });
 
   it('keeps a WritableSignal intact, if passed', () => {
@@ -97,8 +95,9 @@ describe('withComputed', () => {
       const userSignal = store.user;
     `;
 
-    expectSnippet(snippet).toSucceed();
-    expectSnippet(snippet).toInfer(
+    const result = expectSnippet(snippet);
+    result.toSucceed();
+    result.toInfer(
       'userSignal',
       'WritableSignal<{ firstName: string; lastName: string; }>'
     );
@@ -126,8 +125,9 @@ describe('withComputed', () => {
     const userSignal = store.user;
   `;
 
-    expectSnippet(snippet).toSucceed();
-    expectSnippet(snippet).toInfer(
+    const result = expectSnippet(snippet);
+    result.toSucceed();
+    result.toInfer(
       'userSignal',
       'DeepSignal<{ name: string; address: { street: string; city: string; }; }>'
     );
