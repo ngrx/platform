@@ -1,4 +1,10 @@
-import { Component, Injector, PLATFORM_ID, inject } from '@angular/core';
+import {
+  Component,
+  Injector,
+  PLATFORM_ID,
+  inject,
+  OnDestroy,
+} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { MenuComponent } from './components/menu.component';
@@ -11,7 +17,6 @@ import { FooterComponent } from './components/footer.component';
 
 @Component({
   selector: 'ngrx-root',
-  standalone: true,
   imports: [
     RouterOutlet,
     MenuComponent,
@@ -47,9 +52,10 @@ import { FooterComponent } from './components/footer.component';
     `,
   ],
 })
-export class AppComponent {
-  injector = inject(Injector);
-  platformId = inject(PLATFORM_ID);
+export class AppComponent implements OnDestroy {
+  private isAlive = true;
+  private injector = inject(Injector);
+  private platformId = inject(PLATFORM_ID);
 
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
@@ -57,28 +63,44 @@ export class AppComponent {
     }
   }
 
+  ngOnDestroy(): void {
+    this.isAlive = false;
+  }
+
   async installCustomElements() {
+    if (!this.isAlive) return;
+
     const { createCustomElement } = await import('@angular/elements');
+
+    if (!this.isAlive) return;
 
     const symbolLinkElement = createCustomElement(MarkdownSymbolLinkComponent, {
       injector: this.injector,
     });
     customElements.define('ngrx-docs-symbol-link', symbolLinkElement);
 
+    if (!this.isAlive) return;
+
     const alertElement = createCustomElement(AlertComponent, {
       injector: this.injector,
     });
     customElements.define('ngrx-docs-alert', alertElement);
+
+    if (!this.isAlive) return;
 
     const codeExampleElement = createCustomElement(CodeExampleComponent, {
       injector: this.injector,
     });
     customElements.define('ngrx-code-example', codeExampleElement);
 
+    if (!this.isAlive) return;
+
     const codeTabsElement = createCustomElement(CodeTabsComponent, {
       injector: this.injector,
     });
     customElements.define('ngrx-code-tabs', codeTabsElement);
+
+    if (!this.isAlive) return;
 
     const stackblitzElement = createCustomElement(StackblitzComponent, {
       injector: this.injector,
