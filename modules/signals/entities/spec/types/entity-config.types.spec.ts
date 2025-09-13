@@ -25,8 +25,10 @@ describe('entityConfig', () => {
       const userConfig = entityConfig({ entity: type<User>() });
     `;
 
-    expectSnippet(snippet).toSucceed();
-    expectSnippet(snippet).toInfer('userConfig', '{ entity: User; }');
+    const result = expectSnippet(snippet);
+
+    result.toSucceed();
+    result.toInfer('userConfig', '{ entity: User; }');
   });
 
   it('succeeds when entity and collection are passed', () => {
@@ -37,11 +39,10 @@ describe('entityConfig', () => {
       });
     `;
 
-    expectSnippet(snippet).toSucceed();
-    expectSnippet(snippet).toInfer(
-      'userConfig',
-      '{ entity: User; collection: "user"; }'
-    );
+    const result = expectSnippet(snippet);
+
+    result.toSucceed();
+    result.toInfer('userConfig', '{ entity: User; collection: "user"; }');
   });
 
   it('succeeds when entity and selectId are passed', () => {
@@ -64,16 +65,18 @@ describe('entityConfig', () => {
       });
     `;
 
-    expectSnippet(snippet).toSucceed();
-    expectSnippet(snippet).toInfer(
+    const result = expectSnippet(snippet);
+
+    result.toSucceed();
+    result.toInfer(
       'userConfig1',
       '{ entity: User; selectId: SelectEntityId<NoInfer<User>>; }'
     );
-    expectSnippet(snippet).toInfer(
+    result.toInfer(
       'userConfig2',
       '{ entity: User; selectId: SelectEntityId<NoInfer<User>>; }'
     );
-    expectSnippet(snippet).toInfer(
+    result.toInfer(
       'userConfig3',
       '{ entity: User; selectId: SelectEntityId<NoInfer<User>>; }'
     );
@@ -129,16 +132,18 @@ describe('entityConfig', () => {
       });
     `;
 
-    expectSnippet(snippet).toSucceed();
-    expectSnippet(snippet).toInfer(
+    const result = expectSnippet(snippet);
+
+    result.toSucceed();
+    result.toInfer(
       'userConfig1',
       '{ entity: User; collection: "user"; selectId: SelectEntityId<NoInfer<User>>; }'
     );
-    expectSnippet(snippet).toInfer(
+    result.toInfer(
       'userConfig2',
       '{ entity: User; collection: "user"; selectId: SelectEntityId<NoInfer<User>>; }'
     );
-    expectSnippet(snippet).toInfer(
+    result.toInfer(
       'userConfig3',
       '{ entity: User; collection: "user"; selectId: SelectEntityId<NoInfer<User>>; }'
     );

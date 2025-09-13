@@ -72,10 +72,10 @@ describe('withLinkedState', () => {
       const lastname = userStore.lastname;
     `;
 
-    expectSnippet(snippet).toSucceed();
-
-    expectSnippet(snippet).toInfer('firstname', 'Signal<string>');
-    expectSnippet(snippet).toInfer('lastname', 'Signal<string>');
+    const result = expectSnippet(snippet);
+    result.toSucceed();
+    result.toInfer('firstname', 'Signal<string>');
+    result.toInfer('lastname', 'Signal<string>');
   });
 
   it('adds state slice with explicit linkedSignal', () => {
@@ -94,10 +94,10 @@ describe('withLinkedState', () => {
       const lastname = userStore.lastname;
     `;
 
-    expectSnippet(snippet).toSucceed();
-
-    expectSnippet(snippet).toInfer('firstname', 'Signal<string>');
-    expectSnippet(snippet).toInfer('lastname', 'Signal<string>');
+    const result = expectSnippet(snippet);
+    result.toSucceed();
+    result.toInfer('firstname', 'Signal<string>');
+    result.toInfer('lastname', 'Signal<string>');
   });
 
   it('creates deep signals with computation functions', () => {
@@ -116,16 +116,13 @@ describe('withLinkedState', () => {
       const user = userStore.user;
     `;
 
-    expectSnippet(snippet).toSucceed();
-
-    expectSnippet(snippet).toInfer(
+    const result = expectSnippet(snippet);
+    result.toSucceed();
+    result.toInfer(
       'location',
       'DeepSignal<{ city: string; country: string; }>'
     );
-    expectSnippet(snippet).toInfer(
-      'user',
-      'DeepSignal<{ id: number; name: string; }>'
-    );
+    result.toInfer('user', 'DeepSignal<{ id: number; name: string; }>');
   });
 
   it('creates deep signals with explicit linked signals', () => {
@@ -144,16 +141,13 @@ describe('withLinkedState', () => {
       const user = userStore.user;
     `;
 
-    expectSnippet(snippet).toSucceed();
-
-    expectSnippet(snippet).toInfer(
+    const result = expectSnippet(snippet);
+    result.toSucceed();
+    result.toInfer(
       'location',
       'DeepSignal<{ city: string; country: string; }>'
     );
-    expectSnippet(snippet).toInfer(
-      'user',
-      'DeepSignal<{ id: number; name: string; }>'
-    );
+    result.toInfer('user', 'DeepSignal<{ id: number; name: string; }>');
   });
 
   it('infers the types for a mixed setting', () => {
@@ -174,10 +168,10 @@ describe('withLinkedState', () => {
       const qux = store.qux;
     `;
 
-    expectSnippet(snippet).toSucceed();
-
-    expectSnippet(snippet).toInfer('bar', 'Signal<string>');
-    expectSnippet(snippet).toInfer('baz', 'Signal<string>');
-    expectSnippet(snippet).toInfer('qux', 'DeepSignal<{ x: number; }>');
+    const result = expectSnippet(snippet);
+    result.toSucceed();
+    result.toInfer('bar', 'Signal<string>');
+    result.toInfer('baz', 'Signal<string>');
+    result.toInfer('qux', 'DeepSignal<{ x: number; }>');
   });
 });

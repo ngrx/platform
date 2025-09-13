@@ -30,9 +30,10 @@ describe('signalStore', () => {
       );
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer(
+    result.toSucceed();
+    result.toInfer(
       'Store',
       'Type<{ foo: Signal<string>; bar: Signal<number[]>; } & StateSource<{ foo: string; bar: number[]; }>>'
     );
@@ -60,26 +61,23 @@ describe('signalStore', () => {
       const flags = store.user.details.flags;
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer(
+    result.toSucceed();
+    result.toInfer(
       'store',
       '{ user: DeepSignal<{ age: number; details: { first: string; flags: boolean[]; }; }>; } & StateSource<{ user: { age: number; details: { first: string; flags: boolean[]; }; }; }>'
     );
-
-    expectSnippet(snippet).toInfer(
+    result.toInfer(
       'user',
       'DeepSignal<{ age: number; details: { first: string; flags: boolean[]; }; }>'
     );
-
-    expectSnippet(snippet).toInfer(
+    result.toInfer(
       'details',
       'DeepSignal<{ first: string; flags: boolean[]; }>'
     );
-
-    expectSnippet(snippet).toInfer('first', 'Signal<string>');
-
-    expectSnippet(snippet).toInfer('flags', 'Signal<boolean[]>');
+    result.toInfer('first', 'Signal<string>');
+    result.toInfer('flags', 'Signal<boolean[]>');
   });
 
   it('does not create deep signals when state slices are unknown records', () => {
@@ -104,16 +102,12 @@ describe('signalStore', () => {
       const z = store.x.y.z;
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer('foo', 'Signal<{ [key: string]: string; }>');
-
-    expectSnippet(snippet).toInfer('baz', 'Signal<Record<number, boolean>>');
-
-    expectSnippet(snippet).toInfer(
-      'z',
-      'Signal<Record<string, boolean | { foo: number; }>>'
-    );
+    result.toSucceed();
+    result.toInfer('foo', 'Signal<{ [key: string]: string; }>');
+    result.toInfer('baz', 'Signal<Record<number, boolean>>');
+    result.toInfer('z', 'Signal<Record<string, boolean | { foo: number; }>>');
   });
 
   it('creates deep signals when state type is an interface', () => {
@@ -147,20 +141,14 @@ describe('signalStore', () => {
       const set = store.set;
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer('user', 'DeepSignal<User>');
-
-    expectSnippet(snippet).toInfer('firstName', 'Signal<string>');
-
-    expectSnippet(snippet).toInfer('num', 'Signal<number>');
-
-    expectSnippet(snippet).toInfer(
-      'map',
-      'Signal<Map<string, { foo: number; }>>'
-    );
-
-    expectSnippet(snippet).toInfer('set', 'Signal<Set<number>>');
+    result.toSucceed();
+    result.toInfer('user', 'DeepSignal<User>');
+    result.toInfer('firstName', 'Signal<string>');
+    result.toInfer('num', 'Signal<number>');
+    result.toInfer('map', 'Signal<Map<string, { foo: number; }>>');
+    result.toInfer('set', 'Signal<Set<number>>');
   });
 
   it('does not create deep signals when state type is an iterable', () => {
@@ -182,12 +170,13 @@ describe('signalStore', () => {
       declare const floatArrayStoreKeys: keyof typeof floatArrayStore;
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer('arrayStoreKeys', 'unique symbol');
-    expectSnippet(snippet).toInfer('setStoreKeys', 'unique symbol');
-    expectSnippet(snippet).toInfer('mapStoreKeys', 'unique symbol');
-    expectSnippet(snippet).toInfer('floatArrayStoreKeys', 'unique symbol');
+    result.toSucceed();
+    result.toInfer('arrayStoreKeys', 'unique symbol');
+    result.toInfer('setStoreKeys', 'unique symbol');
+    result.toInfer('mapStoreKeys', 'unique symbol');
+    result.toInfer('floatArrayStoreKeys', 'unique symbol');
   });
 
   it('does not create deep signals when state type is a built-in object type', () => {
@@ -209,12 +198,13 @@ describe('signalStore', () => {
       declare const regExpStoreKeys: keyof typeof regExpStore;
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer('weakMapStoreKeys', 'unique symbol');
-    expectSnippet(snippet).toInfer('dateStoreKeys', 'unique symbol');
-    expectSnippet(snippet).toInfer('errorStoreKeys', 'unique symbol');
-    expectSnippet(snippet).toInfer('regExpStoreKeys', 'unique symbol');
+    result.toSucceed();
+    result.toInfer('weakMapStoreKeys', 'unique symbol');
+    result.toInfer('dateStoreKeys', 'unique symbol');
+    result.toInfer('errorStoreKeys', 'unique symbol');
+    result.toInfer('regExpStoreKeys', 'unique symbol');
   });
 
   it('does not create deep signals when state type is a function', () => {
@@ -224,17 +214,19 @@ describe('signalStore', () => {
       declare const storeKeys: keyof typeof store;
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer('storeKeys', 'unique symbol');
+    result.toSucceed();
+    result.toInfer('storeKeys', 'unique symbol');
   });
 
   it('succeeds when state is an empty object', () => {
     const snippet = `const Store = signalStore(withState({}))`;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer('Store', 'Type<{} & StateSource<{}>>');
+    result.toSucceed();
+    result.toInfer('Store', 'Type<{} & StateSource<{}>>');
   });
 
   it('succeeds when state slices are union types', () => {
@@ -261,33 +253,19 @@ describe('signalStore', () => {
       const z = store.x.y.z;
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer(
+    result.toSucceed();
+    result.toInfer(
       'store',
       '{ foo: Signal<number | { s: string; }>; bar: DeepSignal<{ baz: { b: boolean; } | null; }>; x: DeepSignal<{ y: { z: number | undefined; }; }>; } & StateSource<{ foo: number | { ...; }; bar: { ...; }; x: { ...; }; }>'
     );
-
-    expectSnippet(snippet).toInfer('foo', 'Signal<number | { s: string; }>');
-
-    expectSnippet(snippet).toInfer(
-      'bar',
-      'DeepSignal<{ baz: { b: boolean; } | null; }>'
-    );
-
-    expectSnippet(snippet).toInfer('baz', 'Signal<{ b: boolean; } | null>');
-
-    expectSnippet(snippet).toInfer(
-      'x',
-      'DeepSignal<{ y: { z: number | undefined; }; }>'
-    );
-
-    expectSnippet(snippet).toInfer(
-      'y',
-      'DeepSignal<{ z: number | undefined; }>'
-    );
-
-    expectSnippet(snippet).toInfer('z', 'Signal<number | undefined>');
+    result.toInfer('foo', 'Signal<number | { s: string; }>');
+    result.toInfer('bar', 'DeepSignal<{ baz: { b: boolean; } | null; }>');
+    result.toInfer('baz', 'Signal<{ b: boolean; } | null>');
+    result.toInfer('x', 'DeepSignal<{ y: { z: number | undefined; }; }>');
+    result.toInfer('y', 'DeepSignal<{ z: number | undefined; }>');
+    result.toInfer('z', 'Signal<number | undefined>');
   });
 
   it('succeeds when root state slices contain Function properties', () => {
@@ -301,9 +279,10 @@ describe('signalStore', () => {
       );
     `;
 
-    expectSnippet(snippet1).toSucceed();
+    const result1 = expectSnippet(snippet1);
 
-    expectSnippet(snippet1).toInfer(
+    result1.toSucceed();
+    result1.toInfer(
       'Store',
       'Type<{ name: DeepSignal<{ x: { y: string; }; }>; arguments: Signal<number[]>; call: Signal<boolean>; } & StateSource<{ name: { x: { y: string; }; }; arguments: number[]; call: boolean; }>>'
     );
@@ -318,9 +297,10 @@ describe('signalStore', () => {
       );
     `;
 
-    expectSnippet(snippet2).toSucceed();
+    const result2 = expectSnippet(snippet2);
 
-    expectSnippet(snippet2).toInfer(
+    result2.toSucceed();
+    result2.toInfer(
       'Store',
       'Type<{ apply: Signal<string>; bind: DeepSignal<{ foo: string; }>; prototype: Signal<string[]>; } & StateSource<{ apply: string; bind: { foo: string; }; prototype: string[]; }>>'
     );
@@ -334,9 +314,10 @@ describe('signalStore', () => {
       );
     `;
 
-    expectSnippet(snippet3).toSucceed();
+    const result3 = expectSnippet(snippet3);
 
-    expectSnippet(snippet3).toInfer(
+    result3.toSucceed();
+    result3.toInfer(
       'Store',
       'Type<{ length: Signal<number>; caller: Signal<undefined>; } & StateSource<{ length: number; caller: undefined; }>>'
     );
@@ -350,11 +331,10 @@ describe('signalStore', () => {
       const name = store.x.name;
     `;
 
-    expectSnippet(snippet1).toSucceed();
-    expectSnippet(snippet1).toInfer(
-      'name',
-      'Signal<string | undefined> | undefined'
-    );
+    const result1 = expectSnippet(snippet1);
+
+    result1.toSucceed();
+    result1.toInfer('name', 'Signal<string | undefined> | undefined');
 
     const snippet2 = `
       const Store = signalStore(
@@ -365,9 +345,11 @@ describe('signalStore', () => {
       const name = store.x.length.name;
     `;
 
-    expectSnippet(snippet2).toSucceed();
-    expectSnippet(snippet2).toInfer('length', 'DeepSignal<{ name: boolean; }>');
-    expectSnippet(snippet2).toInfer('name', 'Signal<boolean>');
+    const result2 = expectSnippet(snippet2);
+
+    result2.toSucceed();
+    result2.toInfer('length', 'DeepSignal<{ name: boolean; }>');
+    result2.toInfer('name', 'Signal<boolean>');
   });
 
   it('succeeds when nested state slices are optional', () => {
@@ -386,32 +368,17 @@ describe('signalStore', () => {
       const y = store.x.y;
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer(
+    result.toSucceed();
+    result.toInfer(
       'store',
       '{ bar: DeepSignal<{ baz?: number | undefined; }>; x: DeepSignal<{ y?: { z: boolean; } | undefined; }>; } & StateSource<{ bar: { baz?: number | undefined; }; x: { y?: { z: boolean; } | undefined; }; }>'
     );
-
-    expectSnippet(snippet).toInfer(
-      'bar',
-      'DeepSignal<{ baz?: number | undefined; }>'
-    );
-
-    expectSnippet(snippet).toInfer(
-      'baz',
-      'Signal<number | undefined> | undefined'
-    );
-
-    expectSnippet(snippet).toInfer(
-      'x',
-      'DeepSignal<{ y?: { z: boolean; } | undefined; }>'
-    );
-
-    expectSnippet(snippet).toInfer(
-      'y',
-      'Signal<{ z: boolean; } | undefined> | undefined'
-    );
+    result.toInfer('bar', 'DeepSignal<{ baz?: number | undefined; }>');
+    result.toInfer('baz', 'Signal<number | undefined> | undefined');
+    result.toInfer('x', 'DeepSignal<{ y?: { z: boolean; } | undefined; }>');
+    result.toInfer('y', 'Signal<{ z: boolean; } | undefined> | undefined');
   });
 
   it('succeeds when root state slices are optional', () => {
@@ -428,11 +395,10 @@ describe('signalStore', () => {
       const foo = store.foo;
     `;
 
-    expectSnippet(snippet).toSucceed();
-    expectSnippet(snippet).toInfer(
-      'foo',
-      'Signal<{ s: string; } | undefined> | undefined'
-    );
+    const result = expectSnippet(snippet);
+
+    result.toSucceed();
+    result.toInfer('foo', 'Signal<{ s: string; } | undefined> | undefined');
   });
 
   it('does not create deep signals when state is an unknown record', () => {
@@ -442,8 +408,10 @@ describe('signalStore', () => {
       declare const storeKeys: keyof typeof store;
     `;
 
-    expectSnippet(snippet1).toSucceed();
-    expectSnippet(snippet1).toInfer('storeKeys', 'unique symbol');
+    const result1 = expectSnippet(snippet1);
+
+    result1.toSucceed();
+    result1.toInfer('storeKeys', 'unique symbol');
 
     const snippet2 = `
       const Store = signalStore(
@@ -453,8 +421,10 @@ describe('signalStore', () => {
       declare const storeKeys: keyof typeof store;
     `;
 
-    expectSnippet(snippet2).toSucceed();
-    expectSnippet(snippet2).toInfer('storeKeys', 'unique symbol');
+    const result2 = expectSnippet(snippet2);
+
+    result2.toSucceed();
+    result2.toInfer('storeKeys', 'unique symbol');
 
     const snippet3 = `
       const Store = signalStore(
@@ -467,8 +437,10 @@ describe('signalStore', () => {
       declare const storeKeys: keyof typeof store;
     `;
 
-    expectSnippet(snippet3).toSucceed();
-    expectSnippet(snippet3).toInfer('storeKeys', 'unique symbol');
+    const result3 = expectSnippet(snippet3);
+
+    result3.toSucceed();
+    result3.toInfer('storeKeys', 'unique symbol');
   });
 
   it('fails when state is not an object', () => {
@@ -496,26 +468,24 @@ describe('signalStore', () => {
       const state2 = getState(store2);
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer(
+    result.toSucceed();
+    result.toInfer(
       'store1',
       '{ count: Signal<number>; } & StateSource<{ count: number; }>'
     );
-
-    expectSnippet(snippet).toInfer('state1', '{ count: number; }');
+    result.toInfer('state1', '{ count: number; }');
+    result.toInfer(
+      'store2',
+      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
+    );
+    result.toInfer('state2', '{ count: number; }');
 
     expectSnippet(`
       ${snippet}
       patchState(store1, { count: 1 });
     `).toFail();
-
-    expectSnippet(snippet).toInfer(
-      'store2',
-      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
-    );
-
-    expectSnippet(snippet).toInfer('state2', '{ count: number; }');
 
     expectSnippet(`
       ${snippet}
@@ -541,26 +511,24 @@ describe('signalStore', () => {
       const state2 = getState(store2);
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer(
+    result.toSucceed();
+    result.toInfer(
       'store1',
       '{ count: Signal<number>; } & StateSource<{ count: number; }>'
     );
-
-    expectSnippet(snippet).toInfer('state1', '{ count: number; }');
+    result.toInfer('state1', '{ count: number; }');
+    result.toInfer(
+      'store2',
+      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
+    );
+    result.toInfer('state2', '{ count: number; }');
 
     expectSnippet(`
       ${snippet}
       patchState(store1, { count: 10 });
     `).toFail();
-
-    expectSnippet(snippet).toInfer(
-      'store2',
-      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
-    );
-
-    expectSnippet(snippet).toInfer('state2', '{ count: number; }');
 
     expectSnippet(`
       ${snippet}
@@ -586,21 +554,19 @@ describe('signalStore', () => {
       const state2 = getState(store2);
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer(
+    result.toSucceed();
+    result.toInfer(
       'store1',
       '{ count: Signal<number>; } & WritableStateSource<{ count: number; }>'
     );
-
-    expectSnippet(snippet).toInfer('state1', '{ count: number; }');
-
-    expectSnippet(snippet).toInfer(
+    result.toInfer('state1', '{ count: number; }');
+    result.toInfer(
       'store2',
       '{ count: Signal<number>; } & WritableStateSource<{ count: number; }>'
     );
-
-    expectSnippet(snippet).toInfer('state2', '{ count: number; }');
+    result.toInfer('state2', '{ count: number; }');
 
     expectSnippet(`
       ${snippet}
@@ -755,9 +721,10 @@ describe('signalStore', () => {
       const store = inject(Store);
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer(
+    result.toSucceed();
+    result.toInfer(
       'store',
       '{ ngrx: Signal<string>; x: DeepSignal<{ y: string; }>; signals: Signal<number[]>; mgmt: (arg: boolean) => number; } & StateSource<{ ngrx: string; x: { y: string; }; }>'
     );
@@ -783,9 +750,10 @@ describe('signalStore', () => {
       const store = component.store;
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer(
+    result.toSucceed();
+    result.toInfer(
       'store',
       '{ foo: Signal<number>; bar: Signal<string>; baz: (x: number) => void; } & StateSource<{ foo: number; }>'
     );
@@ -831,9 +799,10 @@ describe('signalStore', () => {
       const store = new CounterStore();
     `;
 
-    expectSnippet(snippet).toSucceed();
+    const result = expectSnippet(snippet);
 
-    expectSnippet(snippet).toInfer(
+    result.toSucceed();
+    result.toInfer(
       'store',
       '{ count1: Signal<number>; doubleCount2: Signal<number>; increment1: () => void; } & StateSource<{ count1: number; }>'
     );
@@ -1136,16 +1105,12 @@ describe('signalStore', () => {
         );
       `;
 
-      expectSnippet(snippet).toSucceed();
+      const result = expectSnippet(snippet);
 
-      expectSnippet(snippet).toInfer('selectedEntity', 'Signal<User | null>');
-
-      expectSnippet(snippet).toInfer(
-        'selectedEntity2',
-        'Signal<User | undefined>'
-      );
-
-      expectSnippet(snippet).toInfer('loadEntities', '() => Promise<User[]>');
+      result.toSucceed();
+      result.toInfer('selectedEntity', 'Signal<User | null>');
+      result.toInfer('selectedEntity2', 'Signal<User | undefined>');
+      result.toInfer('loadEntities', '() => Promise<User[]>');
     });
 
     it('fails when custom feature with generics is used with wrong input', () => {

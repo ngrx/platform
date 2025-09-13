@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import sdk from '@stackblitz/sdk';
-import type { StackblitzConfig } from '@ngrx-io/tools/vite-ngrx-stackblits.plugin';
+import type { StackblitzConfig } from '@ngrx-io/tools/vite-ngrx-stackblitz.plugin';
 
 const stackblitzProjectFiles = import.meta.glob(['./**/stackblitz.yml'], {
   import: 'default',
