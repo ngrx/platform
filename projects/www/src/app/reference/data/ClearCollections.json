@@ -19,7 +19,10 @@
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": " " }
+        {
+          "kind": "Content",
+          "text": " "
+        }
       ],
       "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-action.d.ts",
       "releaseTag": "Public",
@@ -32,11 +35,26 @@
           "canonicalReference": "@ngrx/data!ClearCollections:constructor(1)",
           "docComment": "/**\n * Constructs a new instance of the `ClearCollections` class\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "constructor(collections?: " },
-            { "kind": "Content", "text": "string[]" },
-            { "kind": "Content", "text": ", tag?: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": ");" }
+            {
+              "kind": "Content",
+              "text": "constructor(collections?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", tag?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ");"
+            }
           ],
           "releaseTag": "Public",
           "isProtected": false,
@@ -44,12 +62,18 @@
           "parameters": [
             {
               "parameterName": "collections",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": true
             },
             {
               "parameterName": "tag",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
               "isOptional": true
             }
           ],
@@ -76,18 +100,27 @@
           "canonicalReference": "@ngrx/data!ClearCollections#payload:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly payload: " },
+            {
+              "kind": "Content",
+              "text": "readonly payload: "
+            },
             {
               "kind": "Content",
               "text": "{\n        collections?: string[];\n        tag?: string;\n    }"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "payload",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -114,20 +147,32 @@
           "canonicalReference": "@ngrx/data!ClearCollections#type:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly type = " },
+            {
+              "kind": "Content",
+              "text": "readonly type = "
+            },
             {
               "kind": "Reference",
               "text": "EntityCacheAction.CLEAR_COLLECTIONS",
               "canonicalReference": "@ngrx/data!EntityCacheAction.CLEAR_COLLECTIONS:member"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "type",
-          "propertyTypeTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -150,7 +195,12 @@
           }
         }
       ],
-      "implementsTokenRanges": [{ "startIndex": 1, "endIndex": 2 }],
+      "implementsTokenRanges": [
+        {
+          "startIndex": 1,
+          "endIndex": 2
+        }
+      ],
       "docs": {
         "modifiers": {
           "isInternal": false,

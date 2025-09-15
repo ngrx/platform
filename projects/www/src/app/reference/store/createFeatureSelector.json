@@ -1,1 +1,180 @@
-{"name":"createFeatureSelector","canonicalReference":"@ngrx/store!createFeatureSelector:function","kind":"Function","fileUrlPath":"../../dist/modules/store/src/selector.d.ts","isDeprecated":false,"members":[{"kind":"Function","canonicalReference":"@ngrx/store!createFeatureSelector:function(1)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function createFeatureSelector<T>(featureName: "},{"kind":"Content","text":"string"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"MemoizedSelector","canonicalReference":"@ngrx/store!MemoizedSelector:interface"},{"kind":"Content","text":"<object, T>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/selector.d.ts","returnTypeTokenRange":{"startIndex":3,"endIndex":5},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"featureName","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"createFeatureSelector","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Function","canonicalReference":"@ngrx/store!createFeatureSelector:function(2)","docComment":"/**\n * @deprecated\n *\n * Feature selectors with a root state are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/3179 Github Issue}\n */\n","excerptTokens":[{"kind":"Content","text":"export declare function createFeatureSelector<T, V>(featureName: "},{"kind":"Content","text":"keyof T"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"MemoizedSelector","canonicalReference":"@ngrx/store!MemoizedSelector:interface"},{"kind":"Content","text":"<T, V>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/selector.d.ts","returnTypeTokenRange":{"startIndex":3,"endIndex":5},"releaseTag":"Public","overloadIndex":2,"parameters":[{"parameterName":"featureName","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"V","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"createFeatureSelector","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"\n\nFeature selectors with a root state are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/3179 Github Issue}\n","returns":"","see":[],"params":[]}}]}
+{
+  "name": "createFeatureSelector",
+  "canonicalReference": "@ngrx/store!createFeatureSelector:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/store!createFeatureSelector:function(1)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function createFeatureSelector<T>(featureName: "
+        },
+        {
+          "kind": "Content",
+          "text": "string"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
+        {
+          "kind": "Reference",
+          "text": "MemoizedSelector",
+          "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<object, T>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "returnTypeTokenRange": {
+        "startIndex": 3,
+        "endIndex": 5
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "featureName",
+          "parameterTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "name": "createFeatureSelector",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/store!createFeatureSelector:function(2)",
+      "docComment": "/**\n * @deprecated\n *\n * Feature selectors with a root state are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/3179 Github Issue}\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function createFeatureSelector<T, V>(featureName: "
+        },
+        {
+          "kind": "Content",
+          "text": "keyof T"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
+        {
+          "kind": "Reference",
+          "text": "MemoizedSelector",
+          "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<T, V>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "returnTypeTokenRange": {
+        "startIndex": 3,
+        "endIndex": 5
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 2,
+      "parameters": [
+        {
+          "parameterName": "featureName",
+          "parameterTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "typeParameterName": "V",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "name": "createFeatureSelector",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "\n\nFeature selectors with a root state are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/3179 Github Issue}\n",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

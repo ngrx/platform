@@ -25,45 +25,72 @@
           "canonicalReference": "@ngrx/data!EntityDataModuleConfig#entityCacheMetaReducers:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "entityCacheMetaReducers?: " },
-            { "kind": "Content", "text": "(" },
+            {
+              "kind": "Content",
+              "text": "entityCacheMetaReducers?: "
+            },
+            {
+              "kind": "Content",
+              "text": "("
+            },
             {
               "kind": "Reference",
               "text": "MetaReducer",
               "canonicalReference": "@ngrx/store!MetaReducer:type"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "EntityCache",
               "canonicalReference": "@ngrx/data!EntityCache:interface"
             },
-            { "kind": "Content", "text": "> | " },
+            {
+              "kind": "Content",
+              "text": "> | "
+            },
             {
               "kind": "Reference",
               "text": "InjectionToken",
               "canonicalReference": "@angular/core!InjectionToken:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "MetaReducer",
               "canonicalReference": "@ngrx/store!MetaReducer:type"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "EntityCache",
               "canonicalReference": "@ngrx/data!EntityCache:interface"
             },
-            { "kind": "Content", "text": ">>)[]" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ">>)[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "entityCacheMetaReducers",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 12 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 12
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -87,32 +114,50 @@
           "canonicalReference": "@ngrx/data!EntityDataModuleConfig#entityCollectionMetaReducers:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "entityCollectionMetaReducers?: " },
+            {
+              "kind": "Content",
+              "text": "entityCollectionMetaReducers?: "
+            },
             {
               "kind": "Reference",
               "text": "MetaReducer",
               "canonicalReference": "@ngrx/store!MetaReducer:type"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": ", " },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
             {
               "kind": "Reference",
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": ">[]" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ">[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "entityCollectionMetaReducers",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 7 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 7
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -136,19 +181,28 @@
           "canonicalReference": "@ngrx/data!EntityDataModuleConfig#entityMetadata:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "entityMetadata?: " },
+            {
+              "kind": "Content",
+              "text": "entityMetadata?: "
+            },
             {
               "kind": "Reference",
               "text": "EntityMetadataMap",
               "canonicalReference": "@ngrx/data!EntityMetadataMap:interface"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "entityMetadata",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -172,26 +226,41 @@
           "canonicalReference": "@ngrx/data!EntityDataModuleConfig#initialEntityCacheState:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "initialEntityCacheState?: " },
+            {
+              "kind": "Content",
+              "text": "initialEntityCacheState?: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCache",
               "canonicalReference": "@ngrx/data!EntityCache:interface"
             },
-            { "kind": "Content", "text": " | (() => " },
+            {
+              "kind": "Content",
+              "text": " | (() => "
+            },
             {
               "kind": "Reference",
               "text": "EntityCache",
               "canonicalReference": "@ngrx/data!EntityCache:interface"
             },
-            { "kind": "Content", "text": ")" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ")"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "initialEntityCacheState",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -215,18 +284,27 @@
           "canonicalReference": "@ngrx/data!EntityDataModuleConfig#pluralNames:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "pluralNames?: " },
+            {
+              "kind": "Content",
+              "text": "pluralNames?: "
+            },
             {
               "kind": "Content",
               "text": "{\n        [name: string]: string;\n    }"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "pluralNames",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,

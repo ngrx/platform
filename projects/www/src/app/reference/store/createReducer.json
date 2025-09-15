@@ -1,1 +1,189 @@
-{"name":"createReducer","canonicalReference":"@ngrx/store!createReducer:function","kind":"Function","fileUrlPath":"../../dist/modules/store/src/reducer_creator.d.ts","isDeprecated":false,"members":[{"kind":"Function","canonicalReference":"@ngrx/store!createReducer:function(1)","docComment":"/**\n * @description Creates a reducer function to handle state transitions.\n *\n * Reducer creators reduce the explicitness of reducer functions with switch statements.\n *\n * @param initialState - Provides a state value if the current state is `undefined`, as it is initially.\n *\n * @param ons - Associations between actions and state changes.\n *\n * @returns A reducer function.\n *\n * @usageNotes\n *\n * - Must be used with `ActionCreator`'s (returned by `createAction`). Cannot be used with class-based action creators. - The returned `ActionReducer` does not require being wrapped with another function.\n *\n * **Declaring a reducer creator**\n * ```ts\n * export const reducer = createReducer(\n *   initialState,\n *   on(\n *     featureActions.actionOne,\n *     featureActions.actionTwo,\n *     (state, { updatedValue }) => ({ ...state, prop: updatedValue })\n *   ),\n *   on(featureActions.actionThree, () => initialState);\n * );\n * ```\n *\n */\n","excerptTokens":[{"kind":"Content","text":"export declare function createReducer<S, A extends "},{"kind":"Reference","text":"Action","canonicalReference":"@ngrx/store!Action:interface"},{"kind":"Content","text":" = "},{"kind":"Reference","text":"Action","canonicalReference":"@ngrx/store!Action:interface"},{"kind":"Content","text":", R extends "},{"kind":"Reference","text":"ActionReducer","canonicalReference":"@ngrx/store!ActionReducer:interface"},{"kind":"Content","text":"<S, A>"},{"kind":"Content","text":" = "},{"kind":"Reference","text":"ActionReducer","canonicalReference":"@ngrx/store!ActionReducer:interface"},{"kind":"Content","text":"<S, A>"},{"kind":"Content","text":">(initialState: "},{"kind":"Content","text":"S"},{"kind":"Content","text":", ...ons: "},{"kind":"Reference","text":"ReducerTypes","canonicalReference":"@ngrx/store!ReducerTypes:interface"},{"kind":"Content","text":"<S, readonly "},{"kind":"Reference","text":"ActionCreator","canonicalReference":"@ngrx/store!ActionCreator:type"},{"kind":"Content","text":"[]>[]"},{"kind":"Content","text":"): "},{"kind":"Content","text":"R"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/reducer_creator.d.ts","returnTypeTokenRange":{"startIndex":18,"endIndex":19},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"initialState","parameterTypeTokenRange":{"startIndex":11,"endIndex":12},"isOptional":false},{"parameterName":"ons","parameterTypeTokenRange":{"startIndex":13,"endIndex":17},"isOptional":false}],"typeParameters":[{"typeParameterName":"S","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"A","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":3,"endIndex":4}},{"typeParameterName":"R","constraintTokenRange":{"startIndex":5,"endIndex":7},"defaultTypeTokenRange":{"startIndex":8,"endIndex":10}}],"name":"createReducer","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":" Creates a reducer function to handle state transitions.\n\nReducer creators reduce the explicitness of reducer functions with switch statements.\n\n","usageNotes":"\n\n- Must be used with `ActionCreator`'s (returned by `createAction`). Cannot be used with class-based action creators. - The returned `ActionReducer` does not require being wrapped with another function.\n\n**Declaring a reducer creator**\n```ts\nexport const reducer = createReducer(\n  initialState,\n  on(\n    featureActions.actionOne,\n    featureActions.actionTwo,\n    (state, { updatedValue }) => ({ ...state, prop: updatedValue })\n  ),\n  on(featureActions.actionThree, () => initialState);\n);\n```\n\n","remarks":"","deprecated":"","returns":" A reducer function.\n\n","see":[],"params":[{"name":"initialState","description":"Provides a state value if the current state is `undefined`, as it is initially.\n\n"},{"name":"ons","description":"Associations between actions and state changes.\n\n"}]}}]}
+{
+  "name": "createReducer",
+  "canonicalReference": "@ngrx/store!createReducer:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/store/src/reducer_creator.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/store!createReducer:function(1)",
+      "docComment": "/**\n * @description Creates a reducer function to handle state transitions.\n *\n * Reducer creators reduce the explicitness of reducer functions with switch statements.\n *\n * @param initialState - Provides a state value if the current state is `undefined`, as it is initially.\n *\n * @param ons - Associations between actions and state changes.\n *\n * @returns A reducer function.\n *\n * @usageNotes\n *\n * - Must be used with `ActionCreator`'s (returned by `createAction`). Cannot be used with class-based action creators. - The returned `ActionReducer` does not require being wrapped with another function.\n *\n * **Declaring a reducer creator**\n * ```ts\n * export const reducer = createReducer(\n *   initialState,\n *   on(\n *     featureActions.actionOne,\n *     featureActions.actionTwo,\n *     (state, { updatedValue }) => ({ ...state, prop: updatedValue })\n *   ),\n *   on(featureActions.actionThree, () => initialState);\n * );\n * ```\n *\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function createReducer<S, A extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "Action",
+          "canonicalReference": "@ngrx/store!Action:interface"
+        },
+        {
+          "kind": "Content",
+          "text": " = "
+        },
+        {
+          "kind": "Reference",
+          "text": "Action",
+          "canonicalReference": "@ngrx/store!Action:interface"
+        },
+        {
+          "kind": "Content",
+          "text": ", R extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "ActionReducer",
+          "canonicalReference": "@ngrx/store!ActionReducer:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<S, A>"
+        },
+        {
+          "kind": "Content",
+          "text": " = "
+        },
+        {
+          "kind": "Reference",
+          "text": "ActionReducer",
+          "canonicalReference": "@ngrx/store!ActionReducer:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<S, A>"
+        },
+        {
+          "kind": "Content",
+          "text": ">(initialState: "
+        },
+        {
+          "kind": "Content",
+          "text": "S"
+        },
+        {
+          "kind": "Content",
+          "text": ", ...ons: "
+        },
+        {
+          "kind": "Reference",
+          "text": "ReducerTypes",
+          "canonicalReference": "@ngrx/store!ReducerTypes:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<S, readonly "
+        },
+        {
+          "kind": "Reference",
+          "text": "ActionCreator",
+          "canonicalReference": "@ngrx/store!ActionCreator:type"
+        },
+        {
+          "kind": "Content",
+          "text": "[]>[]"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
+        {
+          "kind": "Content",
+          "text": "R"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/reducer_creator.d.ts",
+      "returnTypeTokenRange": {
+        "startIndex": 18,
+        "endIndex": 19
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "initialState",
+          "parameterTypeTokenRange": {
+            "startIndex": 11,
+            "endIndex": 12
+          },
+          "isOptional": false
+        },
+        {
+          "parameterName": "ons",
+          "parameterTypeTokenRange": {
+            "startIndex": 13,
+            "endIndex": 17
+          },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "S",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "typeParameterName": "A",
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          }
+        },
+        {
+          "typeParameterName": "R",
+          "constraintTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          }
+        }
+      ],
+      "name": "createReducer",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": " Creates a reducer function to handle state transitions.\n\nReducer creators reduce the explicitness of reducer functions with switch statements.\n\n",
+        "usageNotes": "\n\n- Must be used with `ActionCreator`'s (returned by `createAction`). Cannot be used with class-based action creators. - The returned `ActionReducer` does not require being wrapped with another function.\n\n**Declaring a reducer creator**\n```ts\nexport const reducer = createReducer(\n  initialState,\n  on(\n    featureActions.actionOne,\n    featureActions.actionTwo,\n    (state, { updatedValue }) => ({ ...state, prop: updatedValue })\n  ),\n  on(featureActions.actionThree, () => initialState);\n);\n```\n\n",
+        "remarks": "",
+        "deprecated": "",
+        "returns": " A reducer function.\n\n",
+        "see": [],
+        "params": [
+          {
+            "name": "initialState",
+            "description": "Provides a state value if the current state is `undefined`, as it is initially.\n\n"
+          },
+          {
+            "name": "ons",
+            "description": "Associations between actions and state changes.\n\n"
+          }
+        ]
+      }
+    }
+  ]
+}

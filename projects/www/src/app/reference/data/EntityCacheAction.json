@@ -1,1 +1,385 @@
-{"name":"EntityCacheAction","canonicalReference":"@ngrx/data!EntityCacheAction:enum","kind":"Enum","fileUrlPath":"../../dist/modules/data/src/actions/entity-cache-action.d.ts","isDeprecated":false,"members":[{"kind":"Enum","canonicalReference":"@ngrx/data!EntityCacheAction:enum","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare enum EntityCacheAction "}],"fileUrlPath":"../../dist/modules/data/src/actions/entity-cache-action.d.ts","releaseTag":"Public","name":"EntityCacheAction","preserveMemberOrder":false,"members":[{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityCacheAction.CLEAR_COLLECTIONS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"CLEAR_COLLECTIONS = "},{"kind":"Content","text":"\"@ngrx/data/entity-cache/clear-collections\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"CLEAR_COLLECTIONS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityCacheAction.LOAD_COLLECTIONS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"LOAD_COLLECTIONS = "},{"kind":"Content","text":"\"@ngrx/data/entity-cache/load-collections\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"LOAD_COLLECTIONS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityCacheAction.MERGE_QUERY_SET:member","docComment":"","excerptTokens":[{"kind":"Content","text":"MERGE_QUERY_SET = "},{"kind":"Content","text":"\"@ngrx/data/entity-cache/merge-query-set\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"MERGE_QUERY_SET","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityCacheAction.SAVE_ENTITIES:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_ENTITIES = "},{"kind":"Content","text":"\"@ngrx/data/entity-cache/save-entities\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_ENTITIES","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityCacheAction.SAVE_ENTITIES_CANCEL:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_ENTITIES_CANCEL = "},{"kind":"Content","text":"\"@ngrx/data/entity-cache/save-entities-cancel\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_ENTITIES_CANCEL","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityCacheAction.SAVE_ENTITIES_CANCELED:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_ENTITIES_CANCELED = "},{"kind":"Content","text":"\"@ngrx/data/entity-cache/save-entities-canceled\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_ENTITIES_CANCELED","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityCacheAction.SAVE_ENTITIES_ERROR:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_ENTITIES_ERROR = "},{"kind":"Content","text":"\"@ngrx/data/entity-cache/save-entities-error\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_ENTITIES_ERROR","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityCacheAction.SAVE_ENTITIES_SUCCESS:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SAVE_ENTITIES_SUCCESS = "},{"kind":"Content","text":"\"@ngrx/data/entity-cache/save-entities-success\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SAVE_ENTITIES_SUCCESS","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"EnumMember","canonicalReference":"@ngrx/data!EntityCacheAction.SET_ENTITY_CACHE:member","docComment":"","excerptTokens":[{"kind":"Content","text":"SET_ENTITY_CACHE = "},{"kind":"Content","text":"\"@ngrx/data/entity-cache/set-cache\""}],"initializerTokenRange":{"startIndex":1,"endIndex":2},"releaseTag":"Public","name":"SET_ENTITY_CACHE","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "EntityCacheAction",
+  "canonicalReference": "@ngrx/data!EntityCacheAction:enum",
+  "kind": "Enum",
+  "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-action.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Enum",
+      "canonicalReference": "@ngrx/data!EntityCacheAction:enum",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare enum EntityCacheAction "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-action.d.ts",
+      "releaseTag": "Public",
+      "name": "EntityCacheAction",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityCacheAction.CLEAR_COLLECTIONS:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "CLEAR_COLLECTIONS = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/entity-cache/clear-collections\""
+            }
+          ],
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "name": "CLEAR_COLLECTIONS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityCacheAction.LOAD_COLLECTIONS:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "LOAD_COLLECTIONS = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/entity-cache/load-collections\""
+            }
+          ],
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "name": "LOAD_COLLECTIONS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityCacheAction.MERGE_QUERY_SET:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "MERGE_QUERY_SET = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/entity-cache/merge-query-set\""
+            }
+          ],
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "name": "MERGE_QUERY_SET",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityCacheAction.SAVE_ENTITIES:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "SAVE_ENTITIES = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/entity-cache/save-entities\""
+            }
+          ],
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "name": "SAVE_ENTITIES",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityCacheAction.SAVE_ENTITIES_CANCEL:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "SAVE_ENTITIES_CANCEL = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/entity-cache/save-entities-cancel\""
+            }
+          ],
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "name": "SAVE_ENTITIES_CANCEL",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityCacheAction.SAVE_ENTITIES_CANCELED:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "SAVE_ENTITIES_CANCELED = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/entity-cache/save-entities-canceled\""
+            }
+          ],
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "name": "SAVE_ENTITIES_CANCELED",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityCacheAction.SAVE_ENTITIES_ERROR:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "SAVE_ENTITIES_ERROR = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/entity-cache/save-entities-error\""
+            }
+          ],
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "name": "SAVE_ENTITIES_ERROR",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityCacheAction.SAVE_ENTITIES_SUCCESS:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "SAVE_ENTITIES_SUCCESS = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/entity-cache/save-entities-success\""
+            }
+          ],
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "name": "SAVE_ENTITIES_SUCCESS",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!EntityCacheAction.SET_ENTITY_CACHE:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "SET_ENTITY_CACHE = "
+            },
+            {
+              "kind": "Content",
+              "text": "\"@ngrx/data/entity-cache/set-cache\""
+            }
+          ],
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "name": "SET_ENTITY_CACHE",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

@@ -19,30 +19,51 @@
           "text": "EntityId",
           "canonicalReference": "@ngrx/signals/entities!EntityId:type"
         },
-        { "kind": "Content", "text": "[]" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "[]"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "PartialStateUpdater",
           "canonicalReference": "@ngrx/signals!PartialStateUpdater:type"
         },
-        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
         {
           "kind": "Reference",
           "text": "EntityState",
           "canonicalReference": "@ngrx/signals/entities!EntityState:type"
         },
-        { "kind": "Content", "text": "<any>>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "<any>>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/remove-entities.d.ts",
-      "returnTypeTokenRange": { "startIndex": 4, "endIndex": 8 },
+      "returnTypeTokenRange": {
+        "startIndex": 4,
+        "endIndex": 8
+      },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [
         {
           "parameterName": "ids",
-          "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "parameterTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
           "isOptional": false
         }
       ],
@@ -79,38 +100,65 @@
           "text": "EntityPredicate",
           "canonicalReference": "@ngrx/signals/entities!~EntityPredicate:type"
         },
-        { "kind": "Content", "text": "<Entity>" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "<Entity>"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "PartialStateUpdater",
           "canonicalReference": "@ngrx/signals!PartialStateUpdater:type"
         },
-        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
         {
           "kind": "Reference",
           "text": "EntityState",
           "canonicalReference": "@ngrx/signals/entities!EntityState:type"
         },
-        { "kind": "Content", "text": "<Entity>>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "<Entity>>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/remove-entities.d.ts",
-      "returnTypeTokenRange": { "startIndex": 4, "endIndex": 8 },
+      "returnTypeTokenRange": {
+        "startIndex": 4,
+        "endIndex": 8
+      },
       "releaseTag": "Public",
       "overloadIndex": 2,
       "parameters": [
         {
           "parameterName": "predicate",
-          "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "parameterTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "Entity",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "name": "removeEntities",
@@ -141,52 +189,94 @@
           "kind": "Content",
           "text": "export declare function removeEntities<Collection extends "
         },
-        { "kind": "Content", "text": "string" },
-        { "kind": "Content", "text": ">(ids: " },
+        {
+          "kind": "Content",
+          "text": "string"
+        },
+        {
+          "kind": "Content",
+          "text": ">(ids: "
+        },
         {
           "kind": "Reference",
           "text": "EntityId",
           "canonicalReference": "@ngrx/signals/entities!EntityId:type"
         },
-        { "kind": "Content", "text": "[]" },
-        { "kind": "Content", "text": ", config: " },
-        { "kind": "Content", "text": "{\n    collection: Collection;\n}" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "[]"
+        },
+        {
+          "kind": "Content",
+          "text": ", config: "
+        },
+        {
+          "kind": "Content",
+          "text": "{\n    collection: Collection;\n}"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "PartialStateUpdater",
           "canonicalReference": "@ngrx/signals!PartialStateUpdater:type"
         },
-        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
         {
           "kind": "Reference",
           "text": "NamedEntityState",
           "canonicalReference": "@ngrx/signals/entities!NamedEntityState:type"
         },
-        { "kind": "Content", "text": "<any, Collection>>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "<any, Collection>>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/remove-entities.d.ts",
-      "returnTypeTokenRange": { "startIndex": 8, "endIndex": 12 },
+      "returnTypeTokenRange": {
+        "startIndex": 8,
+        "endIndex": 12
+      },
       "releaseTag": "Public",
       "overloadIndex": 3,
       "parameters": [
         {
           "parameterName": "ids",
-          "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+          "parameterTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "isOptional": false
         },
         {
           "parameterName": "config",
-          "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+          "parameterTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 7
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "Collection",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "name": "removeEntities",
@@ -217,71 +307,137 @@
           "kind": "Content",
           "text": "export declare function removeEntities<Collection extends "
         },
-        { "kind": "Content", "text": "string" },
-        { "kind": "Content", "text": ", State extends " },
+        {
+          "kind": "Content",
+          "text": "string"
+        },
+        {
+          "kind": "Content",
+          "text": ", State extends "
+        },
         {
           "kind": "Reference",
           "text": "NamedEntityState",
           "canonicalReference": "@ngrx/signals/entities!NamedEntityState:type"
         },
-        { "kind": "Content", "text": "<any, Collection>" },
-        { "kind": "Content", "text": ", Entity = " },
-        { "kind": "Content", "text": "State extends " },
+        {
+          "kind": "Content",
+          "text": "<any, Collection>"
+        },
+        {
+          "kind": "Content",
+          "text": ", Entity = "
+        },
+        {
+          "kind": "Content",
+          "text": "State extends "
+        },
         {
           "kind": "Reference",
           "text": "NamedEntityState",
           "canonicalReference": "@ngrx/signals/entities!NamedEntityState:type"
         },
-        { "kind": "Content", "text": "<infer E, Collection> ? E : never" },
-        { "kind": "Content", "text": ">(predicate: " },
+        {
+          "kind": "Content",
+          "text": "<infer E, Collection> ? E : never"
+        },
+        {
+          "kind": "Content",
+          "text": ">(predicate: "
+        },
         {
           "kind": "Reference",
           "text": "EntityPredicate",
           "canonicalReference": "@ngrx/signals/entities!~EntityPredicate:type"
         },
-        { "kind": "Content", "text": "<Entity>" },
-        { "kind": "Content", "text": ", config: " },
-        { "kind": "Content", "text": "{\n    collection: Collection;\n}" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "<Entity>"
+        },
+        {
+          "kind": "Content",
+          "text": ", config: "
+        },
+        {
+          "kind": "Content",
+          "text": "{\n    collection: Collection;\n}"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "PartialStateUpdater",
           "canonicalReference": "@ngrx/signals!PartialStateUpdater:type"
         },
-        { "kind": "Content", "text": "<State>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "<State>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/remove-entities.d.ts",
-      "returnTypeTokenRange": { "startIndex": 15, "endIndex": 17 },
+      "returnTypeTokenRange": {
+        "startIndex": 15,
+        "endIndex": 17
+      },
       "releaseTag": "Public",
       "overloadIndex": 4,
       "parameters": [
         {
           "parameterName": "predicate",
-          "parameterTypeTokenRange": { "startIndex": 10, "endIndex": 12 },
+          "parameterTypeTokenRange": {
+            "startIndex": 10,
+            "endIndex": 12
+          },
           "isOptional": false
         },
         {
           "parameterName": "config",
-          "parameterTypeTokenRange": { "startIndex": 13, "endIndex": 14 },
+          "parameterTypeTokenRange": {
+            "startIndex": 13,
+            "endIndex": 14
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "Collection",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "State",
-          "constraintTokenRange": { "startIndex": 3, "endIndex": 5 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "Entity",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 6, "endIndex": 9 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 9
+          }
         }
       ],
       "name": "removeEntities",

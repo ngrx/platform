@@ -1,1 +1,89 @@
-{"name":"createEmptyEntityCollection","canonicalReference":"@ngrx/data!createEmptyEntityCollection:function","kind":"Function","fileUrlPath":"../../dist/modules/data/src/reducers/entity-collection-creator.d.ts","isDeprecated":false,"members":[{"kind":"Function","canonicalReference":"@ngrx/data!createEmptyEntityCollection:function(1)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function createEmptyEntityCollection<T>(entityName?: "},{"kind":"Content","text":"string"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"EntityCollection","canonicalReference":"@ngrx/data!EntityCollection:interface"},{"kind":"Content","text":"<T>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/data/src/reducers/entity-collection-creator.d.ts","returnTypeTokenRange":{"startIndex":3,"endIndex":5},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"entityName","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":true}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"createEmptyEntityCollection","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "createEmptyEntityCollection",
+  "canonicalReference": "@ngrx/data!createEmptyEntityCollection:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/data/src/reducers/entity-collection-creator.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/data!createEmptyEntityCollection:function(1)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function createEmptyEntityCollection<T>(entityName?: "
+        },
+        {
+          "kind": "Content",
+          "text": "string"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityCollection",
+          "canonicalReference": "@ngrx/data!EntityCollection:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<T>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/reducers/entity-collection-creator.d.ts",
+      "returnTypeTokenRange": {
+        "startIndex": 3,
+        "endIndex": 5
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "entityName",
+          "parameterTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "isOptional": true
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "name": "createEmptyEntityCollection",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

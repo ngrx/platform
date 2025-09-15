@@ -20,8 +20,14 @@
       "typeParameters": [
         {
           "typeParameterName": "T",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "isAbstract": false,
@@ -33,16 +39,31 @@
           "canonicalReference": "@ngrx/data!EntityActionGuard:constructor(1)",
           "docComment": "/**\n * Constructs a new instance of the `EntityActionGuard` class\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "constructor(entityName: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": ", selectId: " },
+            {
+              "kind": "Content",
+              "text": "constructor(entityName: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", selectId: "
+            },
             {
               "kind": "Reference",
               "text": "IdSelector",
               "canonicalReference": "@ngrx/entity!IdSelector:type"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ");" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ");"
+            }
           ],
           "releaseTag": "Public",
           "isProtected": false,
@@ -50,12 +71,18 @@
           "parameters": [
             {
               "parameterName": "entityName",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "selectId",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             }
           ],
@@ -82,26 +109,47 @@
           "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeEntities:member(1)",
           "docComment": "/**\n * Throw if the action payload is not an array of entities with valid keys\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "mustBeEntities(action: " },
+            {
+              "kind": "Content",
+              "text": "mustBeEntities(action: "
+            },
             {
               "kind": "Reference",
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": "<T[]>" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "T[]" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T[]>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 4, "endIndex": 5 },
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "action",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             }
           ],
@@ -131,26 +179,47 @@
           "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeEntity:member(1)",
           "docComment": "/**\n * Throw if the action payload is not an entity with a valid key\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "mustBeEntity(action: " },
+            {
+              "kind": "Content",
+              "text": "mustBeEntity(action: "
+            },
             {
               "kind": "Reference",
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "T" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 4, "endIndex": 5 },
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "action",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             }
           ],
@@ -180,26 +249,47 @@
           "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeKey:member(1)",
           "docComment": "/**\n * Throw if the action payload is not a single, valid key\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "mustBeKey(action: " },
+            {
+              "kind": "Content",
+              "text": "mustBeKey(action: "
+            },
             {
               "kind": "Reference",
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": "<string | number>" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "string | number | never" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<string | number>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string | number | never"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 4, "endIndex": 5 },
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "action",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             }
           ],
@@ -229,26 +319,47 @@
           "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeKeys:member(1)",
           "docComment": "/**\n * Throw if the action payload is not an array of valid keys\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "mustBeKeys(action: " },
+            {
+              "kind": "Content",
+              "text": "mustBeKeys(action: "
+            },
             {
               "kind": "Reference",
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": "<(string | number)[]>" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "(string | number)[]" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<(string | number)[]>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "(string | number)[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 4, "endIndex": 5 },
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "action",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             }
           ],
@@ -278,37 +389,61 @@
           "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeUpdate:member(1)",
           "docComment": "/**\n * Throw if the action payload is not an update with a valid key (id)\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "mustBeUpdate(action: " },
+            {
+              "kind": "Content",
+              "text": "mustBeUpdate(action: "
+            },
             {
               "kind": "Reference",
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "Update",
               "canonicalReference": "@ngrx/entity!Update:type"
             },
-            { "kind": "Content", "text": "<T>>" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "Update",
               "canonicalReference": "@ngrx/entity!Update:type"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "action",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              },
               "isOptional": false
             }
           ],
@@ -338,37 +473,61 @@
           "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeUpdateResponse:member(1)",
           "docComment": "/**\n * Throw if the action payload is not an update response with a valid key (id)\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "mustBeUpdateResponse(action: " },
+            {
+              "kind": "Content",
+              "text": "mustBeUpdateResponse(action: "
+            },
             {
               "kind": "Reference",
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "UpdateResponseData",
               "canonicalReference": "@ngrx/data!UpdateResponseData:interface"
             },
-            { "kind": "Content", "text": "<T>>" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "UpdateResponseData",
               "canonicalReference": "@ngrx/data!UpdateResponseData:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "action",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              },
               "isOptional": false
             }
           ],
@@ -398,37 +557,61 @@
           "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeUpdateResponses:member(1)",
           "docComment": "/**\n * Throw if the action payload is not an array of update responses with valid keys (ids)\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "mustBeUpdateResponses(action: " },
+            {
+              "kind": "Content",
+              "text": "mustBeUpdateResponses(action: "
+            },
             {
               "kind": "Reference",
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "UpdateResponseData",
               "canonicalReference": "@ngrx/data!UpdateResponseData:interface"
             },
-            { "kind": "Content", "text": "<T>[]>" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "<T>[]>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "UpdateResponseData",
               "canonicalReference": "@ngrx/data!UpdateResponseData:interface"
             },
-            { "kind": "Content", "text": "<T>[]" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "action",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              },
               "isOptional": false
             }
           ],
@@ -458,37 +641,61 @@
           "canonicalReference": "@ngrx/data!EntityActionGuard#mustBeUpdates:member(1)",
           "docComment": "/**\n * Throw if the action payload is not an array of updates with valid keys (ids)\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "mustBeUpdates(action: " },
+            {
+              "kind": "Content",
+              "text": "mustBeUpdates(action: "
+            },
             {
               "kind": "Reference",
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "Update",
               "canonicalReference": "@ngrx/entity!Update:type"
             },
-            { "kind": "Content", "text": "<T>[]>" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "<T>[]>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "Update",
               "canonicalReference": "@ngrx/entity!Update:type"
             },
-            { "kind": "Content", "text": "<T>[]" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "action",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              },
               "isOptional": false
             }
           ],

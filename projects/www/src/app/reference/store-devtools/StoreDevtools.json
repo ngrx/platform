@@ -19,14 +19,23 @@
           "text": "Observer",
           "canonicalReference": "rxjs!Observer:interface"
         },
-        { "kind": "Content", "text": "<any>" },
-        { "kind": "Content", "text": ", " },
+        {
+          "kind": "Content",
+          "text": "<any>"
+        },
+        {
+          "kind": "Content",
+          "text": ", "
+        },
         {
           "kind": "Reference",
           "text": "OnDestroy",
           "canonicalReference": "@angular/core!OnDestroy:interface"
         },
-        { "kind": "Content", "text": " " }
+        {
+          "kind": "Content",
+          "text": " "
+        }
       ],
       "fileUrlPath": "../../dist/modules/store-devtools/src/devtools.d.ts",
       "releaseTag": "Public",
@@ -39,51 +48,81 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools:constructor(1)",
           "docComment": "/**\n * Constructs a new instance of the `StoreDevtools` class\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "constructor(dispatcher: " },
+            {
+              "kind": "Content",
+              "text": "constructor(dispatcher: "
+            },
             {
               "kind": "Reference",
               "text": "DevtoolsDispatcher",
               "canonicalReference": "@ngrx/store-devtools!~DevtoolsDispatcher:class"
             },
-            { "kind": "Content", "text": ", actions$: " },
+            {
+              "kind": "Content",
+              "text": ", actions$: "
+            },
             {
               "kind": "Reference",
               "text": "ActionsSubject",
               "canonicalReference": "@ngrx/store!ActionsSubject:class"
             },
-            { "kind": "Content", "text": ", reducers$: " },
+            {
+              "kind": "Content",
+              "text": ", reducers$: "
+            },
             {
               "kind": "Reference",
               "text": "ReducerObservable",
               "canonicalReference": "@ngrx/store!ReducerObservable:class"
             },
-            { "kind": "Content", "text": ", extension: " },
+            {
+              "kind": "Content",
+              "text": ", extension: "
+            },
             {
               "kind": "Reference",
               "text": "DevtoolsExtension",
               "canonicalReference": "@ngrx/store-devtools!~DevtoolsExtension:class"
             },
-            { "kind": "Content", "text": ", scannedActions: " },
+            {
+              "kind": "Content",
+              "text": ", scannedActions: "
+            },
             {
               "kind": "Reference",
               "text": "ScannedActionsSubject",
               "canonicalReference": "@ngrx/store!ScannedActionsSubject:class"
             },
-            { "kind": "Content", "text": ", errorHandler: " },
+            {
+              "kind": "Content",
+              "text": ", errorHandler: "
+            },
             {
               "kind": "Reference",
               "text": "ErrorHandler",
               "canonicalReference": "@angular/core!ErrorHandler:class"
             },
-            { "kind": "Content", "text": ", initialState: " },
-            { "kind": "Content", "text": "any" },
-            { "kind": "Content", "text": ", config: " },
+            {
+              "kind": "Content",
+              "text": ", initialState: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", config: "
+            },
             {
               "kind": "Reference",
               "text": "StoreDevtoolsConfig",
               "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig:class"
             },
-            { "kind": "Content", "text": ");" }
+            {
+              "kind": "Content",
+              "text": ");"
+            }
           ],
           "releaseTag": "Public",
           "isProtected": false,
@@ -91,42 +130,66 @@
           "parameters": [
             {
               "parameterName": "dispatcher",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "actions$",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
               "isOptional": false
             },
             {
               "parameterName": "reducers$",
-              "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
               "isOptional": false
             },
             {
               "parameterName": "extension",
-              "parameterTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+              "parameterTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
               "isOptional": false
             },
             {
               "parameterName": "scannedActions",
-              "parameterTypeTokenRange": { "startIndex": 9, "endIndex": 10 },
+              "parameterTypeTokenRange": {
+                "startIndex": 9,
+                "endIndex": 10
+              },
               "isOptional": false
             },
             {
               "parameterName": "errorHandler",
-              "parameterTypeTokenRange": { "startIndex": 11, "endIndex": 12 },
+              "parameterTypeTokenRange": {
+                "startIndex": 11,
+                "endIndex": 12
+              },
               "isOptional": false
             },
             {
               "parameterName": "initialState",
-              "parameterTypeTokenRange": { "startIndex": 13, "endIndex": 14 },
+              "parameterTypeTokenRange": {
+                "startIndex": 13,
+                "endIndex": 14
+              },
               "isOptional": false
             },
             {
               "parameterName": "config",
-              "parameterTypeTokenRange": { "startIndex": 15, "endIndex": 16 },
+              "parameterTypeTokenRange": {
+                "startIndex": 15,
+                "endIndex": 16
+              },
               "isOptional": false
             }
           ],
@@ -153,12 +216,24 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#commit:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "commit(): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "commit(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
@@ -189,12 +264,24 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#complete:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "complete(): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "complete(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
@@ -225,25 +312,43 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#dispatch:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "dispatch(action: " },
+            {
+              "kind": "Content",
+              "text": "dispatch(action: "
+            },
             {
               "kind": "Reference",
               "text": "Action",
               "canonicalReference": "@ngrx/store!Action:interface"
             },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "action",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -273,19 +378,28 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#dispatcher:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "dispatcher: " },
+            {
+              "kind": "Content",
+              "text": "dispatcher: "
+            },
             {
               "kind": "Reference",
               "text": "ActionsSubject",
               "canonicalReference": "@ngrx/store!ActionsSubject:class"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "dispatcher",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -312,21 +426,42 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#error:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "error(error: " },
-            { "kind": "Content", "text": "any" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "error(error: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "error",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -356,21 +491,42 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#importState:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "importState(nextLiftedState: " },
-            { "kind": "Content", "text": "any" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "importState(nextLiftedState: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "nextLiftedState",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -400,21 +556,42 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#jumpToAction:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "jumpToAction(actionId: " },
-            { "kind": "Content", "text": "number" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "jumpToAction(actionId: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "actionId",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -444,21 +621,42 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#jumpToState:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "jumpToState(index: " },
-            { "kind": "Content", "text": "number" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "jumpToState(index: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "index",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -488,26 +686,41 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#liftedState:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "liftedState: " },
+            {
+              "kind": "Content",
+              "text": "liftedState: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "LiftedState",
               "canonicalReference": "@ngrx/store-devtools!LiftedState:interface"
             },
-            { "kind": "Content", "text": ">" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "liftedState",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -534,21 +747,42 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#lockChanges:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "lockChanges(status: " },
-            { "kind": "Content", "text": "boolean" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "lockChanges(status: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "status",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -578,21 +812,42 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#next:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "next(action: " },
-            { "kind": "Content", "text": "any" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "next(action: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "action",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -622,12 +877,24 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#ngOnDestroy:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "ngOnDestroy(): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "ngOnDestroy(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
@@ -658,21 +925,42 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#pauseRecording:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "pauseRecording(status: " },
-            { "kind": "Content", "text": "boolean" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "pauseRecording(status: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "status",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -702,21 +990,42 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#performAction:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "performAction(action: " },
-            { "kind": "Content", "text": "any" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "performAction(action: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "action",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -746,12 +1055,24 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#refresh:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "refresh(): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "refresh(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
@@ -782,12 +1103,24 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#reset:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "reset(): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "reset(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
@@ -818,12 +1151,24 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#rollback:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "rollback(): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "rollback(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
@@ -854,19 +1199,28 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#state:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "state: " },
+            {
+              "kind": "Content",
+              "text": "state: "
+            },
             {
               "kind": "Reference",
               "text": "StateObservable",
               "canonicalReference": "@ngrx/store!StateObservable:class"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "state",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -893,12 +1247,24 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#sweep:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "sweep(): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "sweep(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
@@ -929,21 +1295,42 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtools#toggleAction:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "toggleAction(id: " },
-            { "kind": "Content", "text": "number" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "toggleAction(id: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "id",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -970,8 +1357,14 @@
         }
       ],
       "implementsTokenRanges": [
-        { "startIndex": 1, "endIndex": 3 },
-        { "startIndex": 4, "endIndex": 5 }
+        {
+          "startIndex": 1,
+          "endIndex": 3
+        },
+        {
+          "startIndex": 4,
+          "endIndex": 5
+        }
       ],
       "docs": {
         "modifiers": {

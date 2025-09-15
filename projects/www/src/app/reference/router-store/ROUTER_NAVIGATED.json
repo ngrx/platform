@@ -1,1 +1,53 @@
-{"name":"ROUTER_NAVIGATED","canonicalReference":"@ngrx/router-store!ROUTER_NAVIGATED:var","kind":"Variable","fileUrlPath":"../../dist/modules/router-store/src/actions.d.ts","isDeprecated":false,"members":[{"kind":"Variable","canonicalReference":"@ngrx/router-store!ROUTER_NAVIGATED:var","docComment":"/**\n * An action dispatched after navigation has ended and new route is active.\n */\n","excerptTokens":[{"kind":"Content","text":"ROUTER_NAVIGATED = "},{"kind":"Content","text":"\"@ngrx/router-store/navigated\""}],"fileUrlPath":"../../dist/modules/router-store/src/actions.d.ts","initializerTokenRange":{"startIndex":1,"endIndex":2},"isReadonly":true,"releaseTag":"Public","name":"ROUTER_NAVIGATED","variableTypeTokenRange":{"startIndex":0,"endIndex":0},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"An action dispatched after navigation has ended and new route is active.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "ROUTER_NAVIGATED",
+  "canonicalReference": "@ngrx/router-store!ROUTER_NAVIGATED:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/router-store!ROUTER_NAVIGATED:var",
+      "docComment": "/**\n * An action dispatched after navigation has ended and new route is active.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "ROUTER_NAVIGATED = "
+        },
+        {
+          "kind": "Content",
+          "text": "\"@ngrx/router-store/navigated\""
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+      "initializerTokenRange": {
+        "startIndex": 1,
+        "endIndex": 2
+      },
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "ROUTER_NAVIGATED",
+      "variableTypeTokenRange": {
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "An action dispatched after navigation has ended and new route is active.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

@@ -1,1 +1,158 @@
-{"name":"SelectConfig","canonicalReference":"@ngrx/component-store!SelectConfig:interface","kind":"Interface","fileUrlPath":"../../dist/modules/component-store/src/component-store.d.ts","isDeprecated":false,"members":[{"kind":"Interface","canonicalReference":"@ngrx/component-store!SelectConfig:interface","docComment":"","excerptTokens":[{"kind":"Content","text":"export interface SelectConfig<T = "},{"kind":"Content","text":"unknown"},{"kind":"Content","text":"> "}],"fileUrlPath":"../../dist/modules/component-store/src/component-store.d.ts","releaseTag":"Public","typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":1,"endIndex":2}}],"name":"SelectConfig","preserveMemberOrder":false,"members":[{"kind":"PropertySignature","canonicalReference":"@ngrx/component-store!SelectConfig#debounce:member","docComment":"","excerptTokens":[{"kind":"Content","text":"debounce?: "},{"kind":"Content","text":"boolean"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"debounce","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"PropertySignature","canonicalReference":"@ngrx/component-store!SelectConfig#equal:member","docComment":"","excerptTokens":[{"kind":"Content","text":"equal?: "},{"kind":"Reference","text":"ValueEqualityFn","canonicalReference":"@angular/core!ValueEqualityFn:type"},{"kind":"Content","text":"<T>"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":true,"releaseTag":"Public","name":"equal","propertyTypeTokenRange":{"startIndex":1,"endIndex":3},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"extendsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "SelectConfig",
+  "canonicalReference": "@ngrx/component-store!SelectConfig:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/component-store/src/component-store.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/component-store!SelectConfig:interface",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export interface SelectConfig<T = "
+        },
+        {
+          "kind": "Content",
+          "text": "unknown"
+        },
+        {
+          "kind": "Content",
+          "text": "> "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/component-store/src/component-store.d.ts",
+      "releaseTag": "Public",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        }
+      ],
+      "name": "SelectConfig",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/component-store!SelectConfig#debounce:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "debounce?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "debounce",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/component-store!SelectConfig#equal:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "equal?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ValueEqualityFn",
+              "canonicalReference": "@angular/core!ValueEqualityFn:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "equal",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

@@ -19,27 +19,45 @@
           "text": "SignalStoreFeatureResult",
           "canonicalReference": "@ngrx/signals!SignalStoreFeatureResult:type"
         },
-        { "kind": "Content", "text": ", ComputedDictionary extends " },
+        {
+          "kind": "Content",
+          "text": ", ComputedDictionary extends "
+        },
         {
           "kind": "Reference",
           "text": "Record",
           "canonicalReference": "!Record:type"
         },
-        { "kind": "Content", "text": "<string | symbol, " },
+        {
+          "kind": "Content",
+          "text": "<string | symbol, "
+        },
         {
           "kind": "Reference",
           "text": "Signal",
           "canonicalReference": "@angular/core!Signal:type"
         },
-        { "kind": "Content", "text": "<unknown> | (() => unknown)>" },
-        { "kind": "Content", "text": ">(computedFactory: " },
-        { "kind": "Content", "text": "(store: " },
+        {
+          "kind": "Content",
+          "text": "<unknown> | (() => unknown)>"
+        },
+        {
+          "kind": "Content",
+          "text": ">(computedFactory: "
+        },
+        {
+          "kind": "Content",
+          "text": "(store: "
+        },
         {
           "kind": "Reference",
           "text": "Prettify",
           "canonicalReference": "@ngrx/signals!Prettify:type"
         },
-        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
         {
           "kind": "Reference",
           "text": "StateSignals",
@@ -47,15 +65,21 @@
         },
         {
           "kind": "Content",
-          "text": "<Input['state']> & Input['props']>) => ComputedDictionary"
+          "text": "<Input['state']> & Input['props'] & Input['methods']>) => ComputedDictionary"
         },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "SignalStoreFeature",
           "canonicalReference": "@ngrx/signals!SignalStoreFeature:type"
         },
-        { "kind": "Content", "text": "<Input, {\n    state: {};\n    props: " },
+        {
+          "kind": "Content",
+          "text": "<Input, {\n    state: {};\n    props: "
+        },
         {
           "kind": "Reference",
           "text": "ComputedResult",
@@ -65,29 +89,50 @@
           "kind": "Content",
           "text": "<ComputedDictionary>;\n    methods: {};\n}>"
         },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/signals/src/with-computed.d.ts",
-      "returnTypeTokenRange": { "startIndex": 14, "endIndex": 18 },
+      "returnTypeTokenRange": {
+        "startIndex": 14,
+        "endIndex": 18
+      },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [
         {
           "parameterName": "computedFactory",
-          "parameterTypeTokenRange": { "startIndex": 8, "endIndex": 13 },
+          "parameterTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 13
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "Input",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "ComputedDictionary",
-          "constraintTokenRange": { "startIndex": 3, "endIndex": 7 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 3,
+            "endIndex": 7
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "name": "withComputed",

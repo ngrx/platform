@@ -1,1 +1,53 @@
-{"name":"ROUTER_REQUEST","canonicalReference":"@ngrx/router-store!ROUTER_REQUEST:var","kind":"Variable","fileUrlPath":"../../dist/modules/router-store/src/actions.d.ts","isDeprecated":false,"members":[{"kind":"Variable","canonicalReference":"@ngrx/router-store!ROUTER_REQUEST:var","docComment":"/**\n * An action dispatched when a router navigation request is fired.\n */\n","excerptTokens":[{"kind":"Content","text":"ROUTER_REQUEST = "},{"kind":"Content","text":"\"@ngrx/router-store/request\""}],"fileUrlPath":"../../dist/modules/router-store/src/actions.d.ts","initializerTokenRange":{"startIndex":1,"endIndex":2},"isReadonly":true,"releaseTag":"Public","name":"ROUTER_REQUEST","variableTypeTokenRange":{"startIndex":0,"endIndex":0},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"An action dispatched when a router navigation request is fired.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "ROUTER_REQUEST",
+  "canonicalReference": "@ngrx/router-store!ROUTER_REQUEST:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/router-store!ROUTER_REQUEST:var",
+      "docComment": "/**\n * An action dispatched when a router navigation request is fired.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "ROUTER_REQUEST = "
+        },
+        {
+          "kind": "Content",
+          "text": "\"@ngrx/router-store/request\""
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+      "initializerTokenRange": {
+        "startIndex": 1,
+        "endIndex": 2
+      },
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "ROUTER_REQUEST",
+      "variableTypeTokenRange": {
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "An action dispatched when a router navigation request is fired.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

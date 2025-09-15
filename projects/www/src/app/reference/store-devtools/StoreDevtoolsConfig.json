@@ -26,19 +26,28 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#actionSanitizer:member",
           "docComment": "/**\n * Function which takes `action` object and id number as arguments, and should return `action` object back.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "actionSanitizer?: " },
+            {
+              "kind": "Content",
+              "text": "actionSanitizer?: "
+            },
             {
               "kind": "Reference",
               "text": "ActionSanitizer",
               "canonicalReference": "@ngrx/store-devtools!~ActionSanitizer:type"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "actionSanitizer",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -65,15 +74,27 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#actionsBlocklist:member",
           "docComment": "/**\n * Action types to be hidden in the monitors. If `actionsSafelist` specified, `actionsBlocklist` is ignored.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "actionsBlocklist?: " },
-            { "kind": "Content", "text": "string[]" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "actionsBlocklist?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "actionsBlocklist",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -100,15 +121,27 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#actionsSafelist:member",
           "docComment": "/**\n * Action types to be shown in the monitors\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "actionsSafelist?: " },
-            { "kind": "Content", "text": "string[]" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "actionsSafelist?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "actionsSafelist",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -135,15 +168,27 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#autoPause:member",
           "docComment": "/**\n * Auto pauses when the extension’s window is not opened, and so has zero impact on your app when not in use.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "autoPause?: " },
-            { "kind": "Content", "text": "boolean" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "autoPause?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "autoPause",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -170,15 +215,27 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#connectInZone:member",
           "docComment": "/**\n * The property determines whether the extension connection is established within the Angular zone or not. It is set to `false` by default.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "connectInZone?: " },
-            { "kind": "Content", "text": "boolean" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "connectInZone?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "connectInZone",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -205,19 +262,28 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#features:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "features?: " },
+            {
+              "kind": "Content",
+              "text": "features?: "
+            },
             {
               "kind": "Reference",
               "text": "DevToolsFeatureOptions",
               "canonicalReference": "@ngrx/store-devtools!DevToolsFeatureOptions:interface"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "features",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -244,15 +310,27 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#logOnly:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "logOnly?: " },
-            { "kind": "Content", "text": "boolean" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "logOnly?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "logOnly",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -279,15 +357,27 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#maxAge:member",
           "docComment": "/**\n * Maximum allowed actions to be stored in the history tree (default: `false`)\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "maxAge: " },
-            { "kind": "Content", "text": "number | false" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "maxAge: "
+            },
+            {
+              "kind": "Content",
+              "text": "number | false"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "maxAge",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -314,20 +404,32 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#monitor:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "monitor?: " },
+            {
+              "kind": "Content",
+              "text": "monitor?: "
+            },
             {
               "kind": "Reference",
               "text": "ActionReducer",
               "canonicalReference": "@ngrx/store!ActionReducer:interface"
             },
-            { "kind": "Content", "text": "<any, any>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<any, any>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "monitor",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -354,15 +456,27 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#name:member",
           "docComment": "/**\n * The instance name to be shown on the monitor page (default: `document.title`)\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "name?: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "name?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "name",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -389,19 +503,28 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#predicate:member",
           "docComment": "/**\n * Called for every action before sending, takes state and action object, and returns true in case it allows sending the current data to the monitor.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "predicate?: " },
+            {
+              "kind": "Content",
+              "text": "predicate?: "
+            },
             {
               "kind": "Reference",
               "text": "Predicate",
               "canonicalReference": "@ngrx/store-devtools!~Predicate:type"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "predicate",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -428,20 +551,32 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#serialize:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "serialize?: " },
-            { "kind": "Content", "text": "boolean | " },
+            {
+              "kind": "Content",
+              "text": "serialize?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean | "
+            },
             {
               "kind": "Reference",
               "text": "SerializationOptions",
               "canonicalReference": "@ngrx/store-devtools!~SerializationOptions:type"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "serialize",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -468,19 +603,28 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#stateSanitizer:member",
           "docComment": "/**\n * Function which takes `state` object and index as arguments, and should return `state` object back.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "stateSanitizer?: " },
+            {
+              "kind": "Content",
+              "text": "stateSanitizer?: "
+            },
             {
               "kind": "Reference",
               "text": "StateSanitizer",
               "canonicalReference": "@ngrx/store-devtools!~StateSanitizer:type"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "stateSanitizer",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -507,15 +651,27 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#trace:member",
           "docComment": "/**\n * If set to true, will include stack trace for every dispatched action\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "trace?: " },
-            { "kind": "Content", "text": "boolean | (() => string)" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "trace?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean | (() => string)"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "trace",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -542,15 +698,27 @@
           "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig#traceLimit:member",
           "docComment": "/**\n * Maximum stack trace frames to be stored (in case trace option was provided as true).\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "traceLimit?: " },
-            { "kind": "Content", "text": "number" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "traceLimit?: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "traceLimit",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,

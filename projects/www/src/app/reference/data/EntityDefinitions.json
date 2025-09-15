@@ -1,1 +1,110 @@
-{"name":"EntityDefinitions","canonicalReference":"@ngrx/data!EntityDefinitions:interface","kind":"Interface","fileUrlPath":"../../dist/modules/data/src/entity-metadata/entity-definition.service.d.ts","isDeprecated":false,"members":[{"kind":"Interface","canonicalReference":"@ngrx/data!EntityDefinitions:interface","docComment":"","excerptTokens":[{"kind":"Content","text":"export interface EntityDefinitions "}],"fileUrlPath":"../../dist/modules/data/src/entity-metadata/entity-definition.service.d.ts","releaseTag":"Public","name":"EntityDefinitions","preserveMemberOrder":false,"members":[{"kind":"IndexSignature","canonicalReference":"@ngrx/data!EntityDefinitions:index(1)","docComment":"","excerptTokens":[{"kind":"Content","text":"[entityName: "},{"kind":"Content","text":"string"},{"kind":"Content","text":"]: "},{"kind":"Reference","text":"EntityDefinition","canonicalReference":"@ngrx/data!EntityDefinition:interface"},{"kind":"Content","text":"<any>"},{"kind":"Content","text":";"}],"isReadonly":false,"returnTypeTokenRange":{"startIndex":3,"endIndex":5},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"entityName","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false}],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"extendsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "EntityDefinitions",
+  "canonicalReference": "@ngrx/data!EntityDefinitions:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/data/src/entity-metadata/entity-definition.service.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/data!EntityDefinitions:interface",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export interface EntityDefinitions "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/entity-metadata/entity-definition.service.d.ts",
+      "releaseTag": "Public",
+      "name": "EntityDefinitions",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "IndexSignature",
+          "canonicalReference": "@ngrx/data!EntityDefinitions:index(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "[entityName: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "]: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityDefinition",
+              "canonicalReference": "@ngrx/data!EntityDefinition:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<any>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityName",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

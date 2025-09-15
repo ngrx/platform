@@ -1,1 +1,84 @@
-{"name":"StoreDevtoolsOptions","canonicalReference":"@ngrx/store-devtools!StoreDevtoolsOptions:type","kind":"TypeAlias","fileUrlPath":"../../dist/modules/store-devtools/src/config.d.ts","isDeprecated":false,"members":[{"kind":"TypeAlias","canonicalReference":"@ngrx/store-devtools!StoreDevtoolsOptions:type","docComment":"","excerptTokens":[{"kind":"Content","text":"export type StoreDevtoolsOptions = "},{"kind":"Reference","text":"Partial","canonicalReference":"!Partial:type"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"StoreDevtoolsConfig","canonicalReference":"@ngrx/store-devtools!StoreDevtoolsConfig:class"},{"kind":"Content","text":"> | (() => "},{"kind":"Reference","text":"Partial","canonicalReference":"!Partial:type"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"StoreDevtoolsConfig","canonicalReference":"@ngrx/store-devtools!StoreDevtoolsConfig:class"},{"kind":"Content","text":">)"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store-devtools/src/config.d.ts","releaseTag":"Public","name":"StoreDevtoolsOptions","typeTokenRange":{"startIndex":1,"endIndex":9},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "StoreDevtoolsOptions",
+  "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsOptions:type",
+  "kind": "TypeAlias",
+  "fileUrlPath": "../../dist/modules/store-devtools/src/config.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "TypeAlias",
+      "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsOptions:type",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export type StoreDevtoolsOptions = "
+        },
+        {
+          "kind": "Reference",
+          "text": "Partial",
+          "canonicalReference": "!Partial:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
+        {
+          "kind": "Reference",
+          "text": "StoreDevtoolsConfig",
+          "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig:class"
+        },
+        {
+          "kind": "Content",
+          "text": "> | (() => "
+        },
+        {
+          "kind": "Reference",
+          "text": "Partial",
+          "canonicalReference": "!Partial:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
+        {
+          "kind": "Reference",
+          "text": "StoreDevtoolsConfig",
+          "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsConfig:class"
+        },
+        {
+          "kind": "Content",
+          "text": ">)"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/store-devtools/src/config.d.ts",
+      "releaseTag": "Public",
+      "name": "StoreDevtoolsOptions",
+      "typeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 9
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

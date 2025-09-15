@@ -10,8 +10,14 @@
       "canonicalReference": "@ngrx/effects!rootEffectsInit:var",
       "docComment": "",
       "excerptTokens": [
-        { "kind": "Content", "text": "rootEffectsInit: " },
-        { "kind": "Content", "text": "import(\"@ngrx/store\")." },
+        {
+          "kind": "Content",
+          "text": "rootEffectsInit: "
+        },
+        {
+          "kind": "Content",
+          "text": "import(\"@ngrx/store\")."
+        },
         {
           "kind": "Reference",
           "text": "ActionCreator",
@@ -26,13 +32,19 @@
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": "<\"@ngrx/effects/init\">>" }
+        {
+          "kind": "Content",
+          "text": "<\"@ngrx/effects/init\">>"
+        }
       ],
       "fileUrlPath": "../../dist/modules/effects/src/effects_actions.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "rootEffectsInit",
-      "variableTypeTokenRange": { "startIndex": 1, "endIndex": 6 },
+      "variableTypeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 6
+      },
       "docs": {
         "modifiers": {
           "isInternal": false,

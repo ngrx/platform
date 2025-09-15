@@ -19,7 +19,10 @@
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": " " }
+        {
+          "kind": "Content",
+          "text": " "
+        }
       ],
       "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-action.d.ts",
       "releaseTag": "Public",
@@ -32,15 +35,27 @@
           "canonicalReference": "@ngrx/data!SetEntityCache:constructor(1)",
           "docComment": "/**\n * Constructs a new instance of the `SetEntityCache` class\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "constructor(cache: " },
+            {
+              "kind": "Content",
+              "text": "constructor(cache: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCache",
               "canonicalReference": "@ngrx/data!EntityCache:interface"
             },
-            { "kind": "Content", "text": ", tag?: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": ");" }
+            {
+              "kind": "Content",
+              "text": ", tag?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ");"
+            }
           ],
           "releaseTag": "Public",
           "isProtected": false,
@@ -48,12 +63,18 @@
           "parameters": [
             {
               "parameterName": "cache",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "tag",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
               "isOptional": true
             }
           ],
@@ -80,19 +101,28 @@
           "canonicalReference": "@ngrx/data!SetEntityCache#cache:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly cache: " },
+            {
+              "kind": "Content",
+              "text": "readonly cache: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCache",
               "canonicalReference": "@ngrx/data!EntityCache:interface"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "cache",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -119,21 +149,36 @@
           "canonicalReference": "@ngrx/data!SetEntityCache#payload:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly payload: " },
-            { "kind": "Content", "text": "{\n        cache: " },
+            {
+              "kind": "Content",
+              "text": "readonly payload: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n        cache: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCache",
               "canonicalReference": "@ngrx/data!EntityCache:interface"
             },
-            { "kind": "Content", "text": ";\n        tag?: string;\n    }" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";\n        tag?: string;\n    }"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "payload",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 4 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -160,20 +205,32 @@
           "canonicalReference": "@ngrx/data!SetEntityCache#type:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly type = " },
+            {
+              "kind": "Content",
+              "text": "readonly type = "
+            },
             {
               "kind": "Reference",
               "text": "EntityCacheAction.SET_ENTITY_CACHE",
               "canonicalReference": "@ngrx/data!EntityCacheAction.SET_ENTITY_CACHE:member"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "type",
-          "propertyTypeTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -196,7 +253,12 @@
           }
         }
       ],
-      "implementsTokenRanges": [{ "startIndex": 1, "endIndex": 2 }],
+      "implementsTokenRanges": [
+        {
+          "startIndex": 1,
+          "endIndex": 2
+        }
+      ],
       "docs": {
         "modifiers": {
           "isInternal": false,

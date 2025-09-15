@@ -19,39 +19,69 @@
           "text": "IdSelector",
           "canonicalReference": "@ngrx/entity!IdSelector:type"
         },
-        { "kind": "Content", "text": "<T>" },
-        { "kind": "Content", "text": "): " },
-        { "kind": "Content", "text": "(entity: " },
+        {
+          "kind": "Content",
+          "text": "<T>"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
+        {
+          "kind": "Content",
+          "text": "(entity: "
+        },
         {
           "kind": "Reference",
           "text": "Partial",
           "canonicalReference": "!Partial:type"
         },
-        { "kind": "Content", "text": "<T>) => " },
+        {
+          "kind": "Content",
+          "text": "<T>) => "
+        },
         {
           "kind": "Reference",
           "text": "Update",
           "canonicalReference": "@ngrx/entity!Update:type"
         },
-        { "kind": "Content", "text": "<T>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "<T>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/data/src/utils/utilities.d.ts",
-      "returnTypeTokenRange": { "startIndex": 4, "endIndex": 9 },
+      "returnTypeTokenRange": {
+        "startIndex": 4,
+        "endIndex": 9
+      },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [
         {
           "parameterName": "selectId",
-          "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "parameterTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
           "isOptional": true
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "T",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "name": "toUpdateFactory",
