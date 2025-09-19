@@ -8,12 +8,12 @@ The full example is available on StackBlitz:
 
 ## Tutorial
 
-1. Generate a new project using the <ngrx-docs-stackblitz name="ngrx-start"></ngrx-docs-stackblitz> and create a folder named `book-list` inside the `src` folder. This folder is used to hold the book list component later in the tutorial. For now, let's start with adding a file named `books.model.ts` to reference different aspects of a book in the book list.
+1. Generate a new project using the <ngrx-docs-stackblitz name="ngrx-start"></ngrx-docs-stackblitz> and create a folder named `book-list` inside the `src` folder. This folder is used to hold the book list component later in the tutorial. For now, let's start with adding a file named `book.ts` to reference different aspects of a book in the book list.
 
-<ngrx-code-example header="src/book-list/books.model.ts" path="store-walkthrough/src/book-list/books.model.ts">
+<ngrx-code-example header="src/book-list/book.ts" path="store-walkthrough/src/book-list/book.ts">
 </ngrx-code-example>
 
-2. Right click on the `app` folder to create a state management folder `state`. Within the new folder, create a new file `books.actions.ts` to describe the book actions. Book actions include the book list retrieval, and the add and remove book actions.
+1. Right click on the `app` folder to create a state management folder `state`. Within the new folder, create a new file `books.actions.ts` to describe the book actions. Book actions include the book list retrieval, and the add and remove book actions.
 
 <ngrx-code-example header="src/state/books.actions.ts" path="store-walkthrough/src/state/books.actions.ts">
 </ngrx-code-example>
@@ -40,12 +40,12 @@ The full example is available on StackBlitz:
 
 7. In the `book-list` folder, we want to have a service that fetches the data needed for the book list from an API. Create a file in the `book-list` folder named `books.service.ts`, which will call the Google Books API and return a list of books.
 
-<ngrx-code-example header="src/book-list/books.ts" path="store-walkthrough/src/book-list/books.ts">
+<ngrx-code-example header="src/book-list/books-service.ts" path="store-walkthrough/src/book-list/books-service.ts">
 </ngrx-code-example>
 
-8. Add the `HttpClient` module using the `provideHttpClient` provider in the `main.ts` file in order to make HTTP requests.
+8. Add the `HttpClient` module using the `provideHttpClient` provider in the `app.config.ts` file in order to make HTTP requests using the `HttpClient`.
 
-<ngrx-code-example header="src/main.ts" path="store-walkthrough/src/main.ts">
+<ngrx-code-example header="src/app.config.ts" path="store-walkthrough/src/app.config.ts">
 </ngrx-code-example>
 
 9. In the same folder (`book-list`), create the `BookList` with the following template. Update the `BookList` class to dispatch the `add` event.

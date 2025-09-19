@@ -1,15 +1,6 @@
 import '@angular/compiler';
 import { bootstrapApplication } from '@angular/platform-browser';
-import {
-  mergeApplicationConfig,
-  provideZonelessChangeDetection,
-} from '@angular/core';
 import { App } from './app';
 import { appConfig } from './app.config';
-import { provideHttpClient } from '@angular/common/http';
 
-const config = mergeApplicationConfig(appConfig, {
-  providers: [provideZonelessChangeDetection(), provideHttpClient()],
-});
-
-bootstrapApplication(App, config);
+bootstrapApplication(App, appConfig);

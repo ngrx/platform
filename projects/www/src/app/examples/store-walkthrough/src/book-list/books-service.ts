@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
 import { Observable, map } from 'rxjs';
-import { Book } from './books.model';
+import { Book } from './book';
 
 @Injectable({ providedIn: 'root' })
-export class GoogleBooks {
+export class GoogleBooksService {
   private readonly http = inject(HttpClient);
 
   getBooks(): Observable<Array<Book>> {

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { selectBookCollection, selectBooks } from './state/books.selectors';
 import { BooksActions, BooksApiActions } from './state/books.actions';
-import { GoogleBooks } from './book-list/books';
+import { GoogleBooksService } from './book-list/books-service';
 import { BookList } from './book-list/book-list';
 import { BookCollection } from './book-collection/book-collection';
 
@@ -24,7 +24,7 @@ import { BookCollection } from './book-collection/book-collection';
   imports: [BookList, BookCollection],
 })
 export class App implements OnInit {
-  private readonly booksService = inject(GoogleBooks);
+  private readonly booksService = inject(GoogleBooksService);
   private readonly store = inject(Store);
 
   protected books = this.store.selectSignal(selectBooks);

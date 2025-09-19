@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Book } from '../book-list/books.model';
+import { Book } from '../book-list/book';
 
 @Component({
   selector: 'app-book-collection',
