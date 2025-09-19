@@ -2,13 +2,17 @@ import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { describe, beforeEach, it, expect } from 'vitest';
 import { provideRouter } from '@angular/router';
+import { PLATFORM_ID } from '@angular/core';
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      providers: [provideRouter([])],
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'server' },
+      ],
       imports: [AppComponent],
-    }).compileComponents();
+    });
   });
 
   it('should create the app', () => {
