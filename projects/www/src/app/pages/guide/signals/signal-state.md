@@ -227,13 +227,13 @@ import { BookListStore } from './book-list-store';
     <h1>Books</h1>
 
     @if (store.isLoading()) {
-    <p>Loading...</p>
+      <p>Loading...</p>
     } @else {
-    <ul>
-      @for (book of store.books(); track book.id) {
-      <li>{{ book.title }}</li>
-      }
-    </ul>
+      <ul>
+        @for (book of store.books(); track book.id) {
+          <li>{{ book.title }}</li>
+        }
+      </ul>
     }
   `,
   providers: [BookListStore],

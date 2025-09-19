@@ -493,11 +493,14 @@ export const selectLastStateTransitions = (count: number) => {
   return pipe(
     // Thanks to `createSelector` the operator will have memoization "for free"
     select(selectProjectedValues), // Combines the last `count` state values in array
-    scan((acc, curr) => {
-      return [curr, ...acc].filter(
-        (val, index) => index < count && val !== undefined
-      );
-    }, [] as { foo: number; bar: string }[]) // XX: Explicit type hint for the array.
+    scan(
+      (acc, curr) => {
+        return [curr, ...acc].filter(
+          (val, index) => index < count && val !== undefined
+        );
+      },
+      [] as { foo: number; bar: string }[]
+    ) // XX: Explicit type hint for the array.
     // Equivalent to what is emitted by the selector
   );
 };
