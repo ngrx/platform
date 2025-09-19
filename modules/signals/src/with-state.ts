@@ -1,4 +1,4 @@
-import { Signal, signal } from '@angular/core';
+import { signal } from '@angular/core';
 import { toDeepSignal } from './deep-signal';
 import { assertUniqueStoreMembers } from './signal-store-assertions';
 import {
@@ -7,6 +7,7 @@ import {
   SignalsDictionary,
   SignalStoreFeature,
   SignalStoreFeatureResult,
+  WritableSignalsDictionary,
 } from './signal-store-models';
 import { STATE_SOURCE } from './state-source';
 
@@ -38,15 +39,12 @@ export function withState<State extends object>(
       assertUniqueStoreMembers(store, stateKeys);
     }
 
-    const stateSource = store[STATE_SOURCE] as Record<
-      string | symbol,
-      Signal<unknown>
-    >;
+    const stateSource = store[STATE_SOURCE] as WritableSignalsDictionary;
     const stateSignals: SignalsDictionary = {};
 
     for (const key of stateKeys) {
       stateSource[key] = signal(state[key]);
-      stateSignals[key] = toDeepSignal(stateSource[key]);
+      stateSignals[key] = toDeepSignal(stateSource[key].asReadonly());
     }
 
     return {

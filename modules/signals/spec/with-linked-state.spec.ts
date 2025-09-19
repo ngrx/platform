@@ -1,4 +1,4 @@
-import { linkedSignal, signal } from '@angular/core';
+import { linkedSignal, signal, WritableSignal } from '@angular/core';
 import {
   getState,
   patchState,
@@ -253,5 +253,16 @@ describe('withLinkedState', () => {
       'Trying to override:',
       'value'
     );
+  });
+
+  it('does not expose linked state properties as writable signals', () => {
+    const initialStore = getInitialInnerStore();
+    const userStore = withLinkedState(() => ({
+      foo: () => 'bar',
+    }))(initialStore);
+
+    expect(() =>
+      (userStore.stateSignals.foo as WritableSignal<string>).set('baz')
+    ).toThrow('set is not a function');
   });
 });

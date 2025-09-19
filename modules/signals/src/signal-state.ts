@@ -1,6 +1,6 @@
 import { computed, signal } from '@angular/core';
 import { DeepSignal, toDeepSignal } from './deep-signal';
-import { SignalsDictionary } from './signal-store-models';
+import { WritableSignalsDictionary } from './signal-store-models';
 import { STATE_SOURCE, WritableStateSource } from './state-source';
 
 export type SignalState<State extends object> = DeepSignal<State> &
@@ -16,7 +16,7 @@ export function signalState<State extends object>(
       ...signalsDict,
       [key]: signal((initialState as Record<string | symbol, unknown>)[key]),
     }),
-    {} as SignalsDictionary
+    {} as WritableSignalsDictionary
   );
 
   const signalState = computed(() =>
@@ -32,7 +32,7 @@ export function signalState<State extends object>(
 
   for (const key of stateKeys) {
     Object.defineProperty(signalState, key, {
-      value: toDeepSignal(stateSource[key]),
+      value: toDeepSignal(stateSource[key].asReadonly()),
     });
   }
 

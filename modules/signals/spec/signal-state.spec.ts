@@ -60,6 +60,13 @@ describe('signalState', () => {
     expect(isSignal(state.ngrx)).toBe(true);
   });
 
+  it('does not expose state slices as writable signals', () => {
+    const state = signalState(initialState);
+    expect(() => (state as any).foo.set('baz')).toThrow(
+      'set is not a function'
+    );
+  });
+
   it('caches previously created signals', () => {
     const state = signalState(initialState);
     const user1 = state.user;
