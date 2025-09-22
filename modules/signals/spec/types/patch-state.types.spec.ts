@@ -27,9 +27,15 @@ describe('patchState', () => {
     compilerOptions()
   );
 
-  it('infers the state type from WritableStateSource', () => {
+  it('infers the state type from WritableStateSource with updater', () => {
     expectSnippet('patchState(state, increment())').toSucceed();
+  });
+
+  it('infers the state type from WritableStateSource with object', () => {
     expectSnippet("patchState(state, { foo: 'baz' })").toSucceed();
+  });
+
+  it('infers the state type from WritableStateSource with updater and object', () => {
     expectSnippet("patchState(state, { foo: 'baz' }, increment())").toSucceed();
     expectSnippet("patchState(state, increment(), { foo: 'baz' })").toSucceed();
   });
