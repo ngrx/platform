@@ -58,9 +58,9 @@ export const reducer = createReducer(
   initialState,
   on(addTodo, (state, { todo }) => {
     // Violation 1: we assign a new value to `todoInput` directly
-    (state.todoInput = ''),
+    ((state.todoInput = ''),
       // Violation 2: `push` modifies the array
-      state.todos.push(todo);
+      state.todos.push(todo));
   })
 );
 ```

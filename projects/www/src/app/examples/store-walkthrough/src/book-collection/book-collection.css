@@ -7,5 +7,5 @@ span {
 p {
   display: inline-block;
   font-style: italic;
-  margin: 0;
+  margin: 0 0 5px;
 }

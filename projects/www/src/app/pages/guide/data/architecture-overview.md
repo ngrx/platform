@@ -24,7 +24,6 @@ such as `QUERY_ALL` for the `Hero` entity type.
 1.  The view/component calls [`EntityCollectionService.getAll()`](guide/data/entity-services), which dispatches the hero's `QUERY_ALL` [EntityAction](guide/data/entity-actions) to the store.
 
 2.  NgRx kicks into gear ...
-
     1.  The NgRx Data [EntityReducer](guide/data/entity-reducer) reads the action's `entityName` property (`Hero` in this example) and
         forwards the action and existing entity collection state to the `EntityCollectionReducer` for heroes.
 

@@ -1,0 +1,8 @@
+name: Base withouth main and app files
+description: Base template for NgRx examples
+files:
+  src/_theme.scss: './src/_theme.scss'
+  src/styles.scss: './src/styles.scss'
+  package.json: './package.json'
+  tsconfig.json: './tsconfig.json'
+  vite.config.js: './vite.config.js'

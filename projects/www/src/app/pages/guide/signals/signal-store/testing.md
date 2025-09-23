@@ -508,7 +508,7 @@ The `MovieComponent` utilizes the `MoviesStore` to display movies:
 
     <ul>
       @for (movie of store.movies(); track movie.id) {
-      <p>{{ movie.id }}: {{ movie.name }}</p>
+        <p>{{ movie.id }}: {{ movie.name }}</p>
       }
     </ul>
   `,
