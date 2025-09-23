@@ -26,25 +26,43 @@
           "canonicalReference": "@ngrx/data!EntityServices#dispatch:member(1)",
           "docComment": "/**\n * Dispatch any action to the store\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "abstract dispatch(action: " },
+            {
+              "kind": "Content",
+              "text": "abstract dispatch(action: "
+            },
             {
               "kind": "Reference",
               "text": "Action",
               "canonicalReference": "@ngrx/store!Action:interface"
             },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "action",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -83,20 +101,32 @@
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": ">" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "entityActionErrors$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": true,
@@ -123,38 +153,59 @@
           "canonicalReference": "@ngrx/data!EntityServices#entityCache$:member",
           "docComment": "/**\n * Observable of the entire entity cache\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "abstract readonly entityCache$: " },
+            {
+              "kind": "Content",
+              "text": "abstract readonly entityCache$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "EntityCache",
               "canonicalReference": "@ngrx/data!EntityCache:interface"
             },
-            { "kind": "Content", "text": "> | " },
+            {
+              "kind": "Content",
+              "text": "> | "
+            },
             {
               "kind": "Reference",
               "text": "Store",
               "canonicalReference": "@ngrx/store!Store:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "EntityCache",
               "canonicalReference": "@ngrx/data!EntityCache:interface"
             },
-            { "kind": "Content", "text": ">" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "entityCache$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 9 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 9
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": true,
@@ -185,34 +236,64 @@
               "kind": "Content",
               "text": "abstract getEntityCollectionService<T = "
             },
-            { "kind": "Content", "text": "any" },
-            { "kind": "Content", "text": ">(entityName: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ">(entityName: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollectionService",
               "canonicalReference": "@ngrx/data!EntityCollectionService:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "typeParameters": [
             {
               "typeParameterName": "T",
-              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-              "defaultTypeTokenRange": { "startIndex": 1, "endIndex": 2 }
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
             }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 5, "endIndex": 7 },
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entityName",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
               "isOptional": false
             }
           ],
@@ -256,20 +337,32 @@
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "Action",
               "canonicalReference": "@ngrx/store!Action:interface"
             },
-            { "kind": "Content", "text": ">" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "reducedActions$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": true,
@@ -305,27 +398,51 @@
               "text": "EntityCollectionService",
               "canonicalReference": "@ngrx/data!EntityCollectionService:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "typeParameters": [
             {
               "typeParameterName": "T",
-              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
             }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 4, "endIndex": 5 },
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "service",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             }
           ],
@@ -348,7 +465,10 @@
             "returns": "",
             "see": [],
             "params": [
-              { "name": "service", "description": "The entity service\n" }
+              {
+                "name": "service",
+                "description": "The entity service\n"
+              }
             ]
           }
         },
@@ -366,20 +486,38 @@
               "text": "EntityCollectionService",
               "canonicalReference": "@ngrx/data!EntityCollectionService:interface"
             },
-            { "kind": "Content", "text": "<any>[]" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<any>[]"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 4, "endIndex": 5 },
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entityCollectionServices",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             }
           ],
@@ -423,19 +561,34 @@
               "text": "EntityCollectionServiceMap",
               "canonicalReference": "@ngrx/data!EntityCollectionServiceMap:interface"
             },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 2,
           "parameters": [
             {
               "parameterName": "entityCollectionServiceMap",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],

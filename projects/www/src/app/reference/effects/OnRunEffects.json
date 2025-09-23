@@ -1,1 +1,134 @@
-{"name":"OnRunEffects","canonicalReference":"@ngrx/effects!OnRunEffects:interface","kind":"Interface","fileUrlPath":"../../dist/modules/effects/src/lifecycle_hooks.d.ts","isDeprecated":false,"members":[{"kind":"Interface","canonicalReference":"@ngrx/effects!OnRunEffects:interface","docComment":"/**\n * @description Interface to control the lifecycle of effects.\n *\n * By default, effects are merged and subscribed to the store. Implement the OnRunEffects interface to control the lifecycle of the resolved effects.\n *\n * @usageNotes\n *\n * ### Implement the OnRunEffects interface on an Effects class\n * ```ts\n * export class UserEffects implements OnRunEffects {\n *   constructor(private actions$: Actions) {}\n *\n *   ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {\n *     return this.actions$.pipe(\n *       ofType('LOGGED_IN'),\n *       exhaustMap(() =>\n *         resolvedEffects$.pipe(\n *           takeUntil(this.actions$.pipe(ofType('LOGGED_OUT')))\n *         )\n *       )\n *     );\n *   }\n * }\n * ```\n *\n */\n","excerptTokens":[{"kind":"Content","text":"export declare interface OnRunEffects "}],"fileUrlPath":"../../dist/modules/effects/src/lifecycle_hooks.d.ts","releaseTag":"Public","name":"OnRunEffects","preserveMemberOrder":false,"members":[{"kind":"MethodSignature","canonicalReference":"@ngrx/effects!OnRunEffects#ngrxOnRunEffects:member(1)","docComment":"/**\n * @description Method to control the lifecycle of effects.\n */\n","excerptTokens":[{"kind":"Content","text":"ngrxOnRunEffects(resolvedEffects$: "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"EffectNotification","canonicalReference":"@ngrx/effects!EffectNotification:interface"},{"kind":"Content","text":">"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"EffectNotification","canonicalReference":"@ngrx/effects!EffectNotification:interface"},{"kind":"Content","text":">"},{"kind":"Content","text":";"}],"isOptional":false,"returnTypeTokenRange":{"startIndex":6,"endIndex":10},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"resolvedEffects$","parameterTypeTokenRange":{"startIndex":1,"endIndex":5},"isOptional":false}],"name":"ngrxOnRunEffects","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":" Method to control the lifecycle of effects.\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"extendsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":" Interface to control the lifecycle of effects.\n\nBy default, effects are merged and subscribed to the store. Implement the OnRunEffects interface to control the lifecycle of the resolved effects.\n\n","usageNotes":"\n\n### Implement the OnRunEffects interface on an Effects class\n```ts\nexport class UserEffects implements OnRunEffects {\n  constructor(private actions$: Actions) {}\n\n  ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {\n    return this.actions$.pipe(\n      ofType('LOGGED_IN'),\n      exhaustMap(() =>\n        resolvedEffects$.pipe(\n          takeUntil(this.actions$.pipe(ofType('LOGGED_OUT')))\n        )\n      )\n    );\n  }\n}\n```\n\n","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "OnRunEffects",
+  "canonicalReference": "@ngrx/effects!OnRunEffects:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/effects/src/lifecycle_hooks.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/effects!OnRunEffects:interface",
+      "docComment": "/**\n * @description Interface to control the lifecycle of effects.\n *\n * By default, effects are merged and subscribed to the store. Implement the OnRunEffects interface to control the lifecycle of the resolved effects.\n *\n * @usageNotes\n *\n * ### Implement the OnRunEffects interface on an Effects class\n * ```ts\n * export class UserEffects implements OnRunEffects {\n *   constructor(private actions$: Actions) {}\n *\n *   ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {\n *     return this.actions$.pipe(\n *       ofType('LOGGED_IN'),\n *       exhaustMap(() =>\n *         resolvedEffects$.pipe(\n *           takeUntil(this.actions$.pipe(ofType('LOGGED_OUT')))\n *         )\n *       )\n *     );\n *   }\n * }\n * ```\n *\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare interface OnRunEffects "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/effects/src/lifecycle_hooks.d.ts",
+      "releaseTag": "Public",
+      "name": "OnRunEffects",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "MethodSignature",
+          "canonicalReference": "@ngrx/effects!OnRunEffects#ngrxOnRunEffects:member(1)",
+          "docComment": "/**\n * @description Method to control the lifecycle of effects.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "ngrxOnRunEffects(resolvedEffects$: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "EffectNotification",
+              "canonicalReference": "@ngrx/effects!EffectNotification:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "EffectNotification",
+              "canonicalReference": "@ngrx/effects!EffectNotification:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isOptional": false,
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "resolvedEffects$",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "ngrxOnRunEffects",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": " Method to control the lifecycle of effects.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": " Interface to control the lifecycle of effects.\n\nBy default, effects are merged and subscribed to the store. Implement the OnRunEffects interface to control the lifecycle of the resolved effects.\n\n",
+        "usageNotes": "\n\n### Implement the OnRunEffects interface on an Effects class\n```ts\nexport class UserEffects implements OnRunEffects {\n  constructor(private actions$: Actions) {}\n\n  ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {\n    return this.actions$.pipe(\n      ofType('LOGGED_IN'),\n      exhaustMap(() =>\n        resolvedEffects$.pipe(\n          takeUntil(this.actions$.pipe(ofType('LOGGED_OUT')))\n        )\n      )\n    );\n  }\n}\n```\n\n",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

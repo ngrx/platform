@@ -1,1 +1,52 @@
-{"name":"EntityId","canonicalReference":"@ngrx/signals/entities!EntityId:type","kind":"TypeAlias","fileUrlPath":"../../dist/modules/signals/entities/src/models.d.ts","isDeprecated":false,"members":[{"kind":"TypeAlias","canonicalReference":"@ngrx/signals/entities!EntityId:type","docComment":"","excerptTokens":[{"kind":"Content","text":"export type EntityId = "},{"kind":"Content","text":"string | number"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/signals/entities/src/models.d.ts","releaseTag":"Public","name":"EntityId","typeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "EntityId",
+  "canonicalReference": "@ngrx/signals/entities!EntityId:type",
+  "kind": "TypeAlias",
+  "fileUrlPath": "../../dist/modules/signals/entities/src/models.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "TypeAlias",
+      "canonicalReference": "@ngrx/signals/entities!EntityId:type",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export type EntityId = "
+        },
+        {
+          "kind": "Content",
+          "text": "string | number"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/entities/src/models.d.ts",
+      "releaseTag": "Public",
+      "name": "EntityId",
+      "typeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 2
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

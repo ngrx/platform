@@ -1,1 +1,228 @@
-{"name":"ofEntityOp","canonicalReference":"@ngrx/data!ofEntityOp:function","kind":"Function","fileUrlPath":"../../dist/modules/data/src/actions/entity-action-operators.d.ts","isDeprecated":false,"members":[{"kind":"Function","canonicalReference":"@ngrx/data!ofEntityOp:function(1)","docComment":"/**\n * Select actions concerning one of the allowed Entity operations\n *\n * @param allowedEntityOps - Entity operations (e.g, EntityOp.QUERY_ALL) whose actions should be selected Example:\n * ```\n *  this.actions.pipe(ofEntityOp(EntityOp.QUERY_ALL, EntityOp.QUERY_MANY), ...)\n *  this.actions.pipe(ofEntityOp(...queryOps), ...)\n *  this.actions.pipe(ofEntityOp(queryOps), ...)\n *  this.actions.pipe(ofEntityOp(), ...) // any action with a defined `entityOp` property\n * ```\n *\n */\n","excerptTokens":[{"kind":"Content","text":"export declare function ofEntityOp<T extends "},{"kind":"Reference","text":"EntityAction","canonicalReference":"@ngrx/data!EntityAction:interface"},{"kind":"Content","text":">(allowedOps: "},{"kind":"Content","text":"string[] | "},{"kind":"Reference","text":"EntityOp","canonicalReference":"@ngrx/data!EntityOp:enum"},{"kind":"Content","text":"[]"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"OperatorFunction","canonicalReference":"rxjs!OperatorFunction:interface"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"EntityAction","canonicalReference":"@ngrx/data!EntityAction:interface"},{"kind":"Content","text":", T>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/data/src/actions/entity-action-operators.d.ts","returnTypeTokenRange":{"startIndex":7,"endIndex":11},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"allowedOps","parameterTypeTokenRange":{"startIndex":3,"endIndex":6},"isOptional":false}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"ofEntityOp","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Select actions concerning one of the allowed Entity operations\n\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[{"name":"allowedEntityOps","description":"Entity operations (e.g, EntityOp.QUERY_ALL) whose actions should be selected Example:\n```\n this.actions.pipe(ofEntityOp(EntityOp.QUERY_ALL, EntityOp.QUERY_MANY), ...)\n this.actions.pipe(ofEntityOp(...queryOps), ...)\n this.actions.pipe(ofEntityOp(queryOps), ...)\n this.actions.pipe(ofEntityOp(), ...) // any action with a defined `entityOp` property\n```\n\n"}]}},{"kind":"Function","canonicalReference":"@ngrx/data!ofEntityOp:function(2)","docComment":"","excerptTokens":[{"kind":"Content","text":"export declare function ofEntityOp<T extends "},{"kind":"Reference","text":"EntityAction","canonicalReference":"@ngrx/data!EntityAction:interface"},{"kind":"Content","text":">(...allowedOps: "},{"kind":"Content","text":"(string | "},{"kind":"Reference","text":"EntityOp","canonicalReference":"@ngrx/data!EntityOp:enum"},{"kind":"Content","text":")[]"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"OperatorFunction","canonicalReference":"rxjs!OperatorFunction:interface"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"EntityAction","canonicalReference":"@ngrx/data!EntityAction:interface"},{"kind":"Content","text":", T>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/data/src/actions/entity-action-operators.d.ts","returnTypeTokenRange":{"startIndex":7,"endIndex":11},"releaseTag":"Public","overloadIndex":2,"parameters":[{"parameterName":"allowedOps","parameterTypeTokenRange":{"startIndex":3,"endIndex":6},"isOptional":false}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"ofEntityOp","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "ofEntityOp",
+  "canonicalReference": "@ngrx/data!ofEntityOp:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/data/src/actions/entity-action-operators.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/data!ofEntityOp:function(1)",
+      "docComment": "/**\n * Select actions concerning one of the allowed Entity operations\n *\n * @param allowedEntityOps - Entity operations (e.g, EntityOp.QUERY_ALL) whose actions should be selected Example:\n * ```\n *  this.actions.pipe(ofEntityOp(EntityOp.QUERY_ALL, EntityOp.QUERY_MANY), ...)\n *  this.actions.pipe(ofEntityOp(...queryOps), ...)\n *  this.actions.pipe(ofEntityOp(queryOps), ...)\n *  this.actions.pipe(ofEntityOp(), ...) // any action with a defined `entityOp` property\n * ```\n *\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function ofEntityOp<T extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityAction",
+          "canonicalReference": "@ngrx/data!EntityAction:interface"
+        },
+        {
+          "kind": "Content",
+          "text": ">(allowedOps: "
+        },
+        {
+          "kind": "Content",
+          "text": "string[] | "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityOp",
+          "canonicalReference": "@ngrx/data!EntityOp:enum"
+        },
+        {
+          "kind": "Content",
+          "text": "[]"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
+        {
+          "kind": "Reference",
+          "text": "OperatorFunction",
+          "canonicalReference": "rxjs!OperatorFunction:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityAction",
+          "canonicalReference": "@ngrx/data!EntityAction:interface"
+        },
+        {
+          "kind": "Content",
+          "text": ", T>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/actions/entity-action-operators.d.ts",
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 11
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "allowedOps",
+          "parameterTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "name": "ofEntityOp",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Select actions concerning one of the allowed Entity operations\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": [
+          {
+            "name": "allowedEntityOps",
+            "description": "Entity operations (e.g, EntityOp.QUERY_ALL) whose actions should be selected Example:\n```\n this.actions.pipe(ofEntityOp(EntityOp.QUERY_ALL, EntityOp.QUERY_MANY), ...)\n this.actions.pipe(ofEntityOp(...queryOps), ...)\n this.actions.pipe(ofEntityOp(queryOps), ...)\n this.actions.pipe(ofEntityOp(), ...) // any action with a defined `entityOp` property\n```\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/data!ofEntityOp:function(2)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function ofEntityOp<T extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityAction",
+          "canonicalReference": "@ngrx/data!EntityAction:interface"
+        },
+        {
+          "kind": "Content",
+          "text": ">(...allowedOps: "
+        },
+        {
+          "kind": "Content",
+          "text": "(string | "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityOp",
+          "canonicalReference": "@ngrx/data!EntityOp:enum"
+        },
+        {
+          "kind": "Content",
+          "text": ")[]"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
+        {
+          "kind": "Reference",
+          "text": "OperatorFunction",
+          "canonicalReference": "rxjs!OperatorFunction:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityAction",
+          "canonicalReference": "@ngrx/data!EntityAction:interface"
+        },
+        {
+          "kind": "Content",
+          "text": ", T>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/actions/entity-action-operators.d.ts",
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 11
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 2,
+      "parameters": [
+        {
+          "parameterName": "allowedOps",
+          "parameterTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "name": "ofEntityOp",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

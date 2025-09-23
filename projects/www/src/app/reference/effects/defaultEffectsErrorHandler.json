@@ -19,56 +19,98 @@
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": ">(observable$: " },
+        {
+          "kind": "Content",
+          "text": ">(observable$: "
+        },
         {
           "kind": "Reference",
           "text": "Observable",
           "canonicalReference": "rxjs!Observable:class"
         },
-        { "kind": "Content", "text": "<T>" },
-        { "kind": "Content", "text": ", errorHandler: " },
+        {
+          "kind": "Content",
+          "text": "<T>"
+        },
+        {
+          "kind": "Content",
+          "text": ", errorHandler: "
+        },
         {
           "kind": "Reference",
           "text": "ErrorHandler",
           "canonicalReference": "@angular/core!ErrorHandler:class"
         },
-        { "kind": "Content", "text": ", retryAttemptLeft?: " },
-        { "kind": "Content", "text": "number" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": ", retryAttemptLeft?: "
+        },
+        {
+          "kind": "Content",
+          "text": "number"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "Observable",
           "canonicalReference": "rxjs!Observable:class"
         },
-        { "kind": "Content", "text": "<T>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "<T>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/effects/src/effects_error_handler.d.ts",
-      "returnTypeTokenRange": { "startIndex": 10, "endIndex": 12 },
+      "returnTypeTokenRange": {
+        "startIndex": 10,
+        "endIndex": 12
+      },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [
         {
           "parameterName": "observable$",
-          "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+          "parameterTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "isOptional": false
         },
         {
           "parameterName": "errorHandler",
-          "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+          "parameterTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 7
+          },
           "isOptional": false
         },
         {
           "parameterName": "retryAttemptLeft",
-          "parameterTypeTokenRange": { "startIndex": 8, "endIndex": 9 },
+          "parameterTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 9
+          },
           "isOptional": true
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "T",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "name": "defaultEffectsErrorHandler",

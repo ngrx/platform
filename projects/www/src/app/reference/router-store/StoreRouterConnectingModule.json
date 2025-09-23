@@ -1,1 +1,160 @@
-{"name":"StoreRouterConnectingModule","canonicalReference":"@ngrx/router-store!StoreRouterConnectingModule:class","kind":"Class","fileUrlPath":"../../dist/modules/router-store/src/router_store_module.d.ts","isDeprecated":false,"members":[{"kind":"Class","canonicalReference":"@ngrx/router-store!StoreRouterConnectingModule:class","docComment":"/**\n * Connects RouterModule with StoreModule.\n *\n * During the navigation, before any guards or resolvers run, the router will dispatch a ROUTER_NAVIGATION action, which has the following signature:\n * ```\n * export type RouterNavigationPayload = {\n *   routerState: SerializedRouterStateSnapshot,\n *   event: RoutesRecognized\n * }\n * ```\n *\n * Either a reducer or an effect can be invoked in response to this action. If the invoked reducer throws, the navigation will be canceled.\n *\n * If navigation gets canceled because of a guard, a ROUTER_CANCEL action will be dispatched. If navigation results in an error, a ROUTER_ERROR action will be dispatched.\n *\n * Both ROUTER_CANCEL and ROUTER_ERROR contain the store state before the navigation which can be used to restore the consistency of the store.\n *\n * Usage:\n * ```typescript\n * @NgModule({\n *   declarations: [AppCmp, SimpleCmp],\n *   imports: [\n *     BrowserModule,\n *     StoreModule.forRoot(mapOfReducers),\n *     RouterModule.forRoot([\n *       { path: '', component: SimpleCmp },\n *       { path: 'next', component: SimpleCmp }\n *     ]),\n *     StoreRouterConnectingModule.forRoot()\n *   ],\n *   bootstrap: [AppCmp]\n * })\n * export class AppModule {\n * }\n * ```\n *\n */\n","excerptTokens":[{"kind":"Content","text":"export declare class StoreRouterConnectingModule "}],"fileUrlPath":"../../dist/modules/router-store/src/router_store_module.d.ts","releaseTag":"Public","isAbstract":false,"name":"StoreRouterConnectingModule","preserveMemberOrder":false,"members":[{"kind":"Method","canonicalReference":"@ngrx/router-store!StoreRouterConnectingModule.forRoot:member(1)","docComment":"","excerptTokens":[{"kind":"Content","text":"static forRoot<T extends "},{"kind":"Reference","text":"BaseRouterStoreState","canonicalReference":"@ngrx/router-store!BaseRouterStoreState:interface"},{"kind":"Content","text":" = "},{"kind":"Reference","text":"SerializedRouterStateSnapshot","canonicalReference":"@ngrx/router-store!SerializedRouterStateSnapshot:interface"},{"kind":"Content","text":">(config?: "},{"kind":"Reference","text":"StoreRouterConfig","canonicalReference":"@ngrx/router-store!StoreRouterConfig:interface"},{"kind":"Content","text":"<T>"},{"kind":"Content","text":"): "},{"kind":"Reference","text":"ModuleWithProviders","canonicalReference":"@angular/core!ModuleWithProviders:interface"},{"kind":"Content","text":"<"},{"kind":"Reference","text":"StoreRouterConnectingModule","canonicalReference":"@ngrx/router-store!StoreRouterConnectingModule:class"},{"kind":"Content","text":">"},{"kind":"Content","text":";"}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":1,"endIndex":2},"defaultTypeTokenRange":{"startIndex":3,"endIndex":4}}],"isStatic":true,"returnTypeTokenRange":{"startIndex":8,"endIndex":12},"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"config","parameterTypeTokenRange":{"startIndex":5,"endIndex":7},"isOptional":true}],"isOptional":false,"isAbstract":false,"name":"forRoot","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"implementsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Connects RouterModule with StoreModule.\n\nDuring the navigation, before any guards or resolvers run, the router will dispatch a ROUTER_NAVIGATION action, which has the following signature:\n```\nexport type RouterNavigationPayload = {\n  routerState: SerializedRouterStateSnapshot,\n  event: RoutesRecognized\n}\n```\n\nEither a reducer or an effect can be invoked in response to this action. If the invoked reducer throws, the navigation will be canceled.\n\nIf navigation gets canceled because of a guard, a ROUTER_CANCEL action will be dispatched. If navigation results in an error, a ROUTER_ERROR action will be dispatched.\n\nBoth ROUTER_CANCEL and ROUTER_ERROR contain the store state before the navigation which can be used to restore the consistency of the store.\n\nUsage:\n```typescript\n@NgModule({\n  declarations: [AppCmp, SimpleCmp],\n  imports: [\n    BrowserModule,\n    StoreModule.forRoot(mapOfReducers),\n    RouterModule.forRoot([\n      { path: '', component: SimpleCmp },\n      { path: 'next', component: SimpleCmp }\n    ]),\n    StoreRouterConnectingModule.forRoot()\n  ],\n  bootstrap: [AppCmp]\n})\nexport class AppModule {\n}\n```\n\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "StoreRouterConnectingModule",
+  "canonicalReference": "@ngrx/router-store!StoreRouterConnectingModule:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/router-store/src/router_store_module.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/router-store!StoreRouterConnectingModule:class",
+      "docComment": "/**\n * Connects RouterModule with StoreModule.\n *\n * During the navigation, before any guards or resolvers run, the router will dispatch a ROUTER_NAVIGATION action, which has the following signature:\n * ```\n * export type RouterNavigationPayload = {\n *   routerState: SerializedRouterStateSnapshot,\n *   event: RoutesRecognized\n * }\n * ```\n *\n * Either a reducer or an effect can be invoked in response to this action. If the invoked reducer throws, the navigation will be canceled.\n *\n * If navigation gets canceled because of a guard, a ROUTER_CANCEL action will be dispatched. If navigation results in an error, a ROUTER_ERROR action will be dispatched.\n *\n * Both ROUTER_CANCEL and ROUTER_ERROR contain the store state before the navigation which can be used to restore the consistency of the store.\n *\n * Usage:\n * ```typescript\n * @NgModule({\n *   declarations: [AppCmp, SimpleCmp],\n *   imports: [\n *     BrowserModule,\n *     StoreModule.forRoot(mapOfReducers),\n *     RouterModule.forRoot([\n *       { path: '', component: SimpleCmp },\n *       { path: 'next', component: SimpleCmp }\n *     ]),\n *     StoreRouterConnectingModule.forRoot()\n *   ],\n *   bootstrap: [AppCmp]\n * })\n * export class AppModule {\n * }\n * ```\n *\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class StoreRouterConnectingModule "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/router-store/src/router_store_module.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "StoreRouterConnectingModule",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/router-store!StoreRouterConnectingModule.forRoot:member(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "static forRoot<T extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "BaseRouterStoreState",
+              "canonicalReference": "@ngrx/router-store!BaseRouterStoreState:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " = "
+            },
+            {
+              "kind": "Reference",
+              "text": "SerializedRouterStateSnapshot",
+              "canonicalReference": "@ngrx/router-store!SerializedRouterStateSnapshot:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">(config?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StoreRouterConfig",
+              "canonicalReference": "@ngrx/router-store!StoreRouterConfig:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "ModuleWithProviders",
+              "canonicalReference": "@angular/core!ModuleWithProviders:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "StoreRouterConnectingModule",
+              "canonicalReference": "@ngrx/router-store!StoreRouterConnectingModule:class"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              }
+            }
+          ],
+          "isStatic": true,
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 12
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "config",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "forRoot",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Connects RouterModule with StoreModule.\n\nDuring the navigation, before any guards or resolvers run, the router will dispatch a ROUTER_NAVIGATION action, which has the following signature:\n```\nexport type RouterNavigationPayload = {\n  routerState: SerializedRouterStateSnapshot,\n  event: RoutesRecognized\n}\n```\n\nEither a reducer or an effect can be invoked in response to this action. If the invoked reducer throws, the navigation will be canceled.\n\nIf navigation gets canceled because of a guard, a ROUTER_CANCEL action will be dispatched. If navigation results in an error, a ROUTER_ERROR action will be dispatched.\n\nBoth ROUTER_CANCEL and ROUTER_ERROR contain the store state before the navigation which can be used to restore the consistency of the store.\n\nUsage:\n```typescript\n@NgModule({\n  declarations: [AppCmp, SimpleCmp],\n  imports: [\n    BrowserModule,\n    StoreModule.forRoot(mapOfReducers),\n    RouterModule.forRoot([\n      { path: '', component: SimpleCmp },\n      { path: 'next', component: SimpleCmp }\n    ]),\n    StoreRouterConnectingModule.forRoot()\n  ],\n  bootstrap: [AppCmp]\n})\nexport class AppModule {\n}\n```\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

@@ -19,41 +19,65 @@
           "text": "Array",
           "canonicalReference": "!Array:interface"
         },
-        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
         {
           "kind": "Reference",
           "text": "Type",
           "canonicalReference": "@angular/core!Type:interface"
         },
-        { "kind": "Content", "text": "<unknown> | " },
+        {
+          "kind": "Content",
+          "text": "<unknown> | "
+        },
         {
           "kind": "Reference",
           "text": "Record",
           "canonicalReference": "!Record:type"
         },
-        { "kind": "Content", "text": "<string, " },
+        {
+          "kind": "Content",
+          "text": "<string, "
+        },
         {
           "kind": "Reference",
           "text": "FunctionalEffect",
           "canonicalReference": "@ngrx/effects!FunctionalEffect:type"
         },
-        { "kind": "Content", "text": ">>" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": ">>"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "EnvironmentProviders",
           "canonicalReference": "@angular/core!EnvironmentProviders:type"
         },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/effects/src/provide_effects.d.ts",
-      "returnTypeTokenRange": { "startIndex": 10, "endIndex": 11 },
+      "returnTypeTokenRange": {
+        "startIndex": 10,
+        "endIndex": 11
+      },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [
         {
           "parameterName": "effects",
-          "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 9 },
+          "parameterTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 9
+          },
           "isOptional": false
         }
       ],
@@ -90,41 +114,65 @@
           "text": "Array",
           "canonicalReference": "!Array:interface"
         },
-        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
         {
           "kind": "Reference",
           "text": "Type",
           "canonicalReference": "@angular/core!Type:interface"
         },
-        { "kind": "Content", "text": "<unknown> | " },
+        {
+          "kind": "Content",
+          "text": "<unknown> | "
+        },
         {
           "kind": "Reference",
           "text": "Record",
           "canonicalReference": "!Record:type"
         },
-        { "kind": "Content", "text": "<string, " },
+        {
+          "kind": "Content",
+          "text": "<string, "
+        },
         {
           "kind": "Reference",
           "text": "FunctionalEffect",
           "canonicalReference": "@ngrx/effects!FunctionalEffect:type"
         },
-        { "kind": "Content", "text": ">>" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": ">>"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "EnvironmentProviders",
           "canonicalReference": "@angular/core!EnvironmentProviders:type"
         },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/effects/src/provide_effects.d.ts",
-      "returnTypeTokenRange": { "startIndex": 10, "endIndex": 11 },
+      "returnTypeTokenRange": {
+        "startIndex": 10,
+        "endIndex": 11
+      },
       "releaseTag": "Public",
       "overloadIndex": 2,
       "parameters": [
         {
           "parameterName": "effects",
-          "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 9 },
+          "parameterTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 9
+          },
           "isOptional": false
         }
       ],

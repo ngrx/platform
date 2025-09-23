@@ -19,32 +19,56 @@
           "text": "Record",
           "canonicalReference": "!Record:type"
         },
-        { "kind": "Content", "text": "<string, any>" },
-        { "kind": "Content", "text": ">(): " },
+        {
+          "kind": "Content",
+          "text": "<string, any>"
+        },
+        {
+          "kind": "Content",
+          "text": ">(): "
+        },
         {
           "kind": "Reference",
           "text": "MemoizedSelector",
           "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
         },
-        { "kind": "Content", "text": "<State, " },
+        {
+          "kind": "Content",
+          "text": "<State, "
+        },
         {
           "kind": "Reference",
           "text": "RouterReducerState",
           "canonicalReference": "@ngrx/router-store!RouterReducerState:type"
         },
-        { "kind": "Content", "text": ">" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": ">"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/router-store/src/router_selectors.d.ts",
-      "returnTypeTokenRange": { "startIndex": 4, "endIndex": 8 },
+      "returnTypeTokenRange": {
+        "startIndex": 4,
+        "endIndex": 8
+      },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [],
       "typeParameters": [
         {
           "typeParameterName": "State",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 3 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "name": "createRouterSelector",

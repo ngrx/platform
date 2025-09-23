@@ -10,24 +10,45 @@
       "canonicalReference": "@ngrx/store/testing!MockStore:class",
       "docComment": "",
       "excerptTokens": [
-        { "kind": "Content", "text": "export declare class MockStore<T = " },
-        { "kind": "Content", "text": "object" },
-        { "kind": "Content", "text": "> extends " },
+        {
+          "kind": "Content",
+          "text": "export declare class MockStore<T = "
+        },
+        {
+          "kind": "Content",
+          "text": "object"
+        },
+        {
+          "kind": "Content",
+          "text": "> extends "
+        },
         {
           "kind": "Reference",
           "text": "Store",
           "canonicalReference": "@ngrx/store!Store:class"
         },
-        { "kind": "Content", "text": "<T>" },
-        { "kind": "Content", "text": " " }
+        {
+          "kind": "Content",
+          "text": "<T>"
+        },
+        {
+          "kind": "Content",
+          "text": " "
+        }
       ],
       "fileUrlPath": "../../dist/modules/store/testing/mock_store.d.ts",
       "releaseTag": "Public",
       "typeParameters": [
         {
           "typeParameterName": "T",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 1, "endIndex": 2 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
         }
       ],
       "isAbstract": false,
@@ -39,35 +60,62 @@
           "canonicalReference": "@ngrx/store/testing!MockStore:constructor(1)",
           "docComment": "/**\n * Constructs a new instance of the `MockStore` class\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "constructor(state$: " },
+            {
+              "kind": "Content",
+              "text": "constructor(state$: "
+            },
             {
               "kind": "Reference",
               "text": "MockState",
               "canonicalReference": "@ngrx/store/testing!MockState:class"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", actionsObserver: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", actionsObserver: "
+            },
             {
               "kind": "Reference",
               "text": "ActionsSubject",
               "canonicalReference": "@ngrx/store!ActionsSubject:class"
             },
-            { "kind": "Content", "text": ", reducerManager: " },
+            {
+              "kind": "Content",
+              "text": ", reducerManager: "
+            },
             {
               "kind": "Reference",
               "text": "ReducerManager",
               "canonicalReference": "@ngrx/store!ReducerManager:class"
             },
-            { "kind": "Content", "text": ", initialState: " },
-            { "kind": "Content", "text": "T" },
-            { "kind": "Content", "text": ", mockSelectors?: " },
+            {
+              "kind": "Content",
+              "text": ", initialState: "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": ", mockSelectors?: "
+            },
             {
               "kind": "Reference",
               "text": "MockSelector",
               "canonicalReference": "@ngrx/store/testing!MockSelector:interface"
             },
-            { "kind": "Content", "text": "[]" },
-            { "kind": "Content", "text": ");" }
+            {
+              "kind": "Content",
+              "text": "[]"
+            },
+            {
+              "kind": "Content",
+              "text": ");"
+            }
           ],
           "releaseTag": "Public",
           "isProtected": false,
@@ -75,27 +123,42 @@
           "parameters": [
             {
               "parameterName": "state$",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             },
             {
               "parameterName": "actionsObserver",
-              "parameterTypeTokenRange": { "startIndex": 4, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              },
               "isOptional": false
             },
             {
               "parameterName": "reducerManager",
-              "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
               "isOptional": false
             },
             {
               "parameterName": "initialState",
-              "parameterTypeTokenRange": { "startIndex": 8, "endIndex": 9 },
+              "parameterTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 9
+              },
               "isOptional": false
             },
             {
               "parameterName": "mockSelectors",
-              "parameterTypeTokenRange": { "startIndex": 10, "endIndex": 12 },
+              "parameterTypeTokenRange": {
+                "startIndex": 10,
+                "endIndex": 12
+              },
               "isOptional": true
             }
           ],
@@ -122,12 +185,24 @@
           "canonicalReference": "@ngrx/store/testing!MockStore#addReducer:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "addReducer(): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "addReducer(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
@@ -158,17 +233,35 @@
           "canonicalReference": "@ngrx/store/testing!MockStore#overrideSelector:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "overrideSelector<Selector extends " },
+            {
+              "kind": "Content",
+              "text": "overrideSelector<Selector extends "
+            },
             {
               "kind": "Reference",
               "text": "Memoized",
               "canonicalReference": "@ngrx/store/testing!~Memoized:type"
             },
-            { "kind": "Content", "text": "<Result>" },
-            { "kind": "Content", "text": ", Value extends " },
-            { "kind": "Content", "text": "Result" },
-            { "kind": "Content", "text": ", Result = " },
-            { "kind": "Content", "text": "Selector extends " },
+            {
+              "kind": "Content",
+              "text": "<Result>"
+            },
+            {
+              "kind": "Content",
+              "text": ", Value extends "
+            },
+            {
+              "kind": "Content",
+              "text": "Result"
+            },
+            {
+              "kind": "Content",
+              "text": ", Result = "
+            },
+            {
+              "kind": "Content",
+              "text": "Selector extends "
+            },
             {
               "kind": "Reference",
               "text": "MemoizedSelector",
@@ -183,57 +276,111 @@
               "text": "MemoizedSelectorWithProps",
               "canonicalReference": "@ngrx/store!MemoizedSelectorWithProps:interface"
             },
-            { "kind": "Content", "text": "<any, any, infer U> ? U : Value" },
-            { "kind": "Content", "text": ">(selector: " },
-            { "kind": "Content", "text": "Selector | string" },
-            { "kind": "Content", "text": ", value: " },
-            { "kind": "Content", "text": "Value" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "<any, any, infer U> ? U : Value"
+            },
+            {
+              "kind": "Content",
+              "text": ">(selector: "
+            },
+            {
+              "kind": "Content",
+              "text": "Selector | string"
+            },
+            {
+              "kind": "Content",
+              "text": ", value: "
+            },
+            {
+              "kind": "Content",
+              "text": "Value"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "OnlyMemoized",
               "canonicalReference": "@ngrx/store/testing!~OnlyMemoized:type"
             },
-            { "kind": "Content", "text": "<typeof " },
+            {
+              "kind": "Content",
+              "text": "<typeof "
+            },
             {
               "kind": "Reference",
               "text": "selector",
               "canonicalReference": "@ngrx/store/testing!~selector:var"
             },
-            { "kind": "Content", "text": ", Result>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ", Result>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "typeParameters": [
             {
               "typeParameterName": "Selector",
-              "constraintTokenRange": { "startIndex": 1, "endIndex": 3 },
-              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
             },
             {
               "typeParameterName": "Value",
-              "constraintTokenRange": { "startIndex": 4, "endIndex": 5 },
-              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+              "constraintTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
             },
             {
               "typeParameterName": "Result",
-              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-              "defaultTypeTokenRange": { "startIndex": 6, "endIndex": 11 }
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 11
+              }
             }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 16, "endIndex": 20 },
+          "returnTypeTokenRange": {
+            "startIndex": 16,
+            "endIndex": 20
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "selector",
-              "parameterTypeTokenRange": { "startIndex": 12, "endIndex": 13 },
+              "parameterTypeTokenRange": {
+                "startIndex": 12,
+                "endIndex": 13
+              },
               "isOptional": false
             },
             {
               "parameterName": "value",
-              "parameterTypeTokenRange": { "startIndex": 14, "endIndex": 15 },
+              "parameterTypeTokenRange": {
+                "startIndex": 14,
+                "endIndex": 15
+              },
               "isOptional": false
             }
           ],
@@ -263,12 +410,24 @@
           "canonicalReference": "@ngrx/store/testing!MockStore#refreshState:member(1)",
           "docComment": "/**\n * Refreshes the existing state.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "refreshState(): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "refreshState(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
@@ -299,12 +458,24 @@
           "canonicalReference": "@ngrx/store/testing!MockStore#removeReducer:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "removeReducer(): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "removeReducer(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
@@ -335,12 +506,24 @@
           "canonicalReference": "@ngrx/store/testing!MockStore#resetSelectors:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "resetSelectors(): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "resetSelectors(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
@@ -371,26 +554,41 @@
           "canonicalReference": "@ngrx/store/testing!MockStore#scannedActions$:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly scannedActions$: " },
+            {
+              "kind": "Content",
+              "text": "readonly scannedActions$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "Action",
               "canonicalReference": "@ngrx/store!Action:interface"
             },
-            { "kind": "Content", "text": ">" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "scannedActions$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -417,33 +615,63 @@
           "canonicalReference": "@ngrx/store/testing!MockStore#select:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "select(selector: " },
-            { "kind": "Content", "text": "any" },
-            { "kind": "Content", "text": ", prop?: " },
-            { "kind": "Content", "text": "any" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "select(selector: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", prop?: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<any>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<any>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 5, "endIndex": 7 },
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "selector",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "prop",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
               "isOptional": true
             }
           ],
@@ -473,21 +701,42 @@
           "canonicalReference": "@ngrx/store/testing!MockStore#setState:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "setState(nextState: " },
-            { "kind": "Content", "text": "T" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "setState(nextState: "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "nextState",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -513,7 +762,10 @@
           }
         }
       ],
-      "extendsTokenRange": { "startIndex": 3, "endIndex": 5 },
+      "extendsTokenRange": {
+        "startIndex": 3,
+        "endIndex": 5
+      },
       "implementsTokenRanges": [],
       "docs": {
         "modifiers": {
