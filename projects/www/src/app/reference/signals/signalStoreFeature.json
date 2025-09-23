@@ -19,26 +19,41 @@
           "text": "SignalStoreFeatureResult",
           "canonicalReference": "@ngrx/signals!SignalStoreFeatureResult:type"
         },
-        { "kind": "Content", "text": " = " },
+        {
+          "kind": "Content",
+          "text": " = "
+        },
         {
           "kind": "Reference",
           "text": "SignalStoreFeatureResult",
           "canonicalReference": "@ngrx/signals!SignalStoreFeatureResult:type"
         },
-        { "kind": "Content", "text": ", Output extends " },
+        {
+          "kind": "Content",
+          "text": ", Output extends "
+        },
         {
           "kind": "Reference",
           "text": "SignalStoreFeatureResult",
           "canonicalReference": "@ngrx/signals!SignalStoreFeatureResult:type"
         },
-        { "kind": "Content", "text": " = " },
+        {
+          "kind": "Content",
+          "text": " = "
+        },
         {
           "kind": "Reference",
           "text": "SignalStoreFeatureResult",
           "canonicalReference": "@ngrx/signals!SignalStoreFeatureResult:type"
         },
-        { "kind": "Content", "text": "> = " },
-        { "kind": "Content", "text": "(store: " },
+        {
+          "kind": "Content",
+          "text": "> = "
+        },
+        {
+          "kind": "Content",
+          "text": "(store: "
+        },
         {
           "kind": "Reference",
           "text": "InnerSignalStore",
@@ -57,7 +72,10 @@
           "kind": "Content",
           "text": "<Output['state'], Output['props'], Output['methods']>"
         },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/signals/src/signal-store-models.d.ts",
       "releaseTag": "Public",
@@ -65,16 +83,31 @@
       "typeParameters": [
         {
           "typeParameterName": "Input",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
-          "defaultTypeTokenRange": { "startIndex": 3, "endIndex": 4 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          }
         },
         {
           "typeParameterName": "Output",
-          "constraintTokenRange": { "startIndex": 5, "endIndex": 6 },
-          "defaultTypeTokenRange": { "startIndex": 7, "endIndex": 8 }
+          "constraintTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 7,
+            "endIndex": 8
+          }
         }
       ],
-      "typeTokenRange": { "startIndex": 9, "endIndex": 14 },
+      "typeTokenRange": {
+        "startIndex": 9,
+        "endIndex": 14
+      },
       "docs": {
         "modifiers": {
           "isInternal": false,

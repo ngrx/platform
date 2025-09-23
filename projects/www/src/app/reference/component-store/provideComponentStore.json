@@ -14,45 +14,78 @@
           "kind": "Content",
           "text": "export declare function provideComponentStore<T extends "
         },
-        { "kind": "Content", "text": "object" },
-        { "kind": "Content", "text": ">(componentStoreClass: " },
+        {
+          "kind": "Content",
+          "text": "object"
+        },
+        {
+          "kind": "Content",
+          "text": ">(componentStoreClass: "
+        },
         {
           "kind": "Reference",
           "text": "Type",
           "canonicalReference": "@angular/core!Type:interface"
         },
-        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
         {
           "kind": "Reference",
           "text": "ComponentStore",
           "canonicalReference": "@ngrx/component-store!ComponentStore:class"
         },
-        { "kind": "Content", "text": "<T>>" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "<T>>"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "Provider",
           "canonicalReference": "@angular/core!Provider:type"
         },
-        { "kind": "Content", "text": "[]" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "[]"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/component-store/src/lifecycle_hooks.d.ts",
-      "returnTypeTokenRange": { "startIndex": 8, "endIndex": 10 },
+      "returnTypeTokenRange": {
+        "startIndex": 8,
+        "endIndex": 10
+      },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [
         {
           "parameterName": "componentStoreClass",
-          "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 7 },
+          "parameterTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 7
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "T",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "name": "provideComponentStore",

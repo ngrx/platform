@@ -20,8 +20,14 @@
       "typeParameters": [
         {
           "typeParameterName": "T",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "name": "EntityChangeTracker",
@@ -32,30 +38,51 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#commitAll:member(1)",
           "docComment": "/**\n * Commit all changes as when the collection has been completely reloaded from the server. Harmless when there are no entity changes to commit.\n *\n * @param collection - The entity collection\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "commitAll(collection: " },
+            {
+              "kind": "Content",
+              "text": "commitAll(collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 4, "endIndex": 6 },
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             }
           ],
@@ -76,7 +103,10 @@
             "returns": "",
             "see": [],
             "params": [
-              { "name": "collection", "description": "The entity collection\n" }
+              {
+                "name": "collection",
+                "description": "The entity collection\n"
+              }
             ]
           }
         },
@@ -85,37 +115,67 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#commitMany:member(1)",
           "docComment": "/**\n * Commit changes for the given entities as when they have been refreshed from the server. Harmless when there are no entity changes to commit.\n *\n * @param entityOrIdList - The entities to clear tracking or their ids.\n *\n * @param collection - The entity collection\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "commitMany(entityOrIdList: " },
-            { "kind": "Content", "text": "(number | string | T)[]" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "commitMany(entityOrIdList: "
+            },
+            {
+              "kind": "Content",
+              "text": "(number | string | T)[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entityOrIdList",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             }
           ],
@@ -140,7 +200,10 @@
                 "name": "entityOrIdList",
                 "description": "The entities to clear tracking or their ids.\n\n"
               },
-              { "name": "collection", "description": "The entity collection\n" }
+              {
+                "name": "collection",
+                "description": "The entity collection\n"
+              }
             ]
           }
         },
@@ -149,37 +212,67 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#commitOne:member(1)",
           "docComment": "/**\n * Commit changes for the given entity as when it have been refreshed from the server. Harmless when no entity changes to commit.\n *\n * @param entityOrId - The entity to clear tracking or its id.\n *\n * @param collection - The entity collection\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "commitOne(entityOrId: " },
-            { "kind": "Content", "text": "number | string | T" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "commitOne(entityOrId: "
+            },
+            {
+              "kind": "Content",
+              "text": "number | string | T"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entityOrId",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             }
           ],
@@ -204,7 +297,10 @@
                 "name": "entityOrId",
                 "description": "The entity to clear tracking or its id.\n\n"
               },
-              { "name": "collection", "description": "The entity collection\n" }
+              {
+                "name": "collection",
+                "description": "The entity collection\n"
+              }
             ]
           }
         },
@@ -213,48 +309,84 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#mergeQueryResults:member(1)",
           "docComment": "/**\n * Merge query results into the collection, adjusting the ChangeState per the mergeStrategy.\n *\n * @param entities - Entities returned from querying the server.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - How to merge a queried entity when the corresponding entity in the collection has an unsaved change. If not specified, implementation supplies a default strategy.\n *\n * @returns The merged EntityCollection.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "mergeQueryResults(entities: " },
-            { "kind": "Content", "text": "T[]" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "mergeQueryResults(entities: "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", mergeStrategy?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
             {
               "kind": "Reference",
               "text": "MergeStrategy",
               "canonicalReference": "@ngrx/data!MergeStrategy:enum"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 8, "endIndex": 10 },
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entities",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             },
             {
               "parameterName": "mergeStrategy",
-              "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
               "isOptional": true
             }
           ],
@@ -295,48 +427,84 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#mergeSaveAdds:member(1)",
           "docComment": "/**\n * Merge result of saving new entities into the collection, adjusting the ChangeState per the mergeStrategy. The default is MergeStrategy.OverwriteChanges.\n *\n * @param entities - Entities returned from saving new entities to the server.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - How to merge a saved entity when the corresponding entity in the collection has an unsaved change. If not specified, implementation supplies a default strategy.\n *\n * @returns The merged EntityCollection.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "mergeSaveAdds(entities: " },
-            { "kind": "Content", "text": "T[]" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "mergeSaveAdds(entities: "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", mergeStrategy?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
             {
               "kind": "Reference",
               "text": "MergeStrategy",
               "canonicalReference": "@ngrx/data!MergeStrategy:enum"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 8, "endIndex": 10 },
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entities",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             },
             {
               "parameterName": "mergeStrategy",
-              "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
               "isOptional": true
             }
           ],
@@ -377,48 +545,84 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#mergeSaveDeletes:member(1)",
           "docComment": "/**\n * Merge successful result of deleting entities on the server that have the given primary keys Clears the entity changeState for those keys unless the MergeStrategy is ignoreChanges.\n *\n * @param entities - keys primary keys of the entities to remove/delete.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - How to adjust change tracking when the corresponding entity in the collection has an unsaved change. If not specified, implementation supplies a default strategy.\n *\n * @returns The merged EntityCollection.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "mergeSaveDeletes(keys: " },
-            { "kind": "Content", "text": "(number | string)[]" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "mergeSaveDeletes(keys: "
+            },
+            {
+              "kind": "Content",
+              "text": "(number | string)[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", mergeStrategy?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
             {
               "kind": "Reference",
               "text": "MergeStrategy",
               "canonicalReference": "@ngrx/data!MergeStrategy:enum"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 8, "endIndex": 10 },
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "keys",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             },
             {
               "parameterName": "mergeStrategy",
-              "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
               "isOptional": true
             }
           ],
@@ -459,60 +663,105 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#mergeSaveUpdates:member(1)",
           "docComment": "/**\n * Merge result of saving updated entities into the collection, adjusting the ChangeState per the mergeStrategy. The default is MergeStrategy.OverwriteChanges.\n *\n * @param updates - Entity response data returned from saving updated entities to the server.\n *\n * @param mergeStrategy - How to merge a saved entity when the corresponding entity in the collection has an unsaved change. If not specified, implementation supplies a default strategy.\n *\n * @param skipUnchanged - True means skip update if server didn't change it. False by default. If the update was optimistic and the server didn't make more changes of its own then the updates are already in the collection and shouldn't make them again.\n *\n * @param collection - The entity collection\n *\n * @returns The merged EntityCollection.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "mergeSaveUpdates(updates: " },
+            {
+              "kind": "Content",
+              "text": "mergeSaveUpdates(updates: "
+            },
             {
               "kind": "Reference",
               "text": "UpdateResponseData",
               "canonicalReference": "@ngrx/data!UpdateResponseData:interface"
             },
-            { "kind": "Content", "text": "<T>[]" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", mergeStrategy?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
             {
               "kind": "Reference",
               "text": "MergeStrategy",
               "canonicalReference": "@ngrx/data!MergeStrategy:enum"
             },
-            { "kind": "Content", "text": ", skipUnchanged?: " },
-            { "kind": "Content", "text": "boolean" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": ", skipUnchanged?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 11, "endIndex": 13 },
+          "returnTypeTokenRange": {
+            "startIndex": 11,
+            "endIndex": 13
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "updates",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 4, "endIndex": 6 },
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 6
+              },
               "isOptional": false
             },
             {
               "parameterName": "mergeStrategy",
-              "parameterTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+              "parameterTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
               "isOptional": true
             },
             {
               "parameterName": "skipUnchanged",
-              "parameterTypeTokenRange": { "startIndex": 9, "endIndex": 10 },
+              "parameterTypeTokenRange": {
+                "startIndex": 9,
+                "endIndex": 10
+              },
               "isOptional": true
             }
           ],
@@ -557,48 +806,84 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#mergeSaveUpserts:member(1)",
           "docComment": "/**\n * Merge result of saving upserted entities into the collection, adjusting the ChangeState per the mergeStrategy. The default is MergeStrategy.OverwriteChanges.\n *\n * @param entities - Entities returned from saving upsert entities to the server.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - How to merge a saved entity when the corresponding entity in the collection has an unsaved change. If not specified, implementation supplies a default strategy.\n *\n * @returns The merged EntityCollection.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "mergeSaveUpserts(entities: " },
-            { "kind": "Content", "text": "T[]" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "mergeSaveUpserts(entities: "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", mergeStrategy?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
             {
               "kind": "Reference",
               "text": "MergeStrategy",
               "canonicalReference": "@ngrx/data!MergeStrategy:enum"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 8, "endIndex": 10 },
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entities",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             },
             {
               "parameterName": "mergeStrategy",
-              "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
               "isOptional": true
             }
           ],
@@ -639,48 +924,84 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#trackAddMany:member(1)",
           "docComment": "/**\n * Track multiple entities before adding them to the collection. Does NOT add to the collection (the reducer's job).\n *\n * @param entities - The entities to add. They must all have their ids.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges. If not specified, implementation supplies a default strategy.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "trackAddMany(entities: " },
-            { "kind": "Content", "text": "T[]" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "trackAddMany(entities: "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", mergeStrategy?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
             {
               "kind": "Reference",
               "text": "MergeStrategy",
               "canonicalReference": "@ngrx/data!MergeStrategy:enum"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 8, "endIndex": 10 },
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entities",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             },
             {
               "parameterName": "mergeStrategy",
-              "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
               "isOptional": true
             }
           ],
@@ -721,48 +1042,84 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#trackAddOne:member(1)",
           "docComment": "/**\n * Track an entity before adding it to the collection. Does NOT add to the collection (the reducer's job).\n *\n * @param entity - The entity to add. It must have an id.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges. If not specified, implementation supplies a default strategy.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "trackAddOne(entity: " },
-            { "kind": "Content", "text": "T" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "trackAddOne(entity: "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", mergeStrategy?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
             {
               "kind": "Reference",
               "text": "MergeStrategy",
               "canonicalReference": "@ngrx/data!MergeStrategy:enum"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 8, "endIndex": 10 },
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entity",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             },
             {
               "parameterName": "mergeStrategy",
-              "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
               "isOptional": true
             }
           ],
@@ -803,48 +1160,84 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#trackDeleteMany:member(1)",
           "docComment": "/**\n * Track multiple entities before removing them with the intention of deleting them on the server. Does NOT remove from the collection (the reducer's job).\n *\n * @param keys - The primary keys of the entities to delete.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "trackDeleteMany(keys: " },
-            { "kind": "Content", "text": "(number | string)[]" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "trackDeleteMany(keys: "
+            },
+            {
+              "kind": "Content",
+              "text": "(number | string)[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", mergeStrategy?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
             {
               "kind": "Reference",
               "text": "MergeStrategy",
               "canonicalReference": "@ngrx/data!MergeStrategy:enum"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 8, "endIndex": 10 },
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "keys",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             },
             {
               "parameterName": "mergeStrategy",
-              "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
               "isOptional": true
             }
           ],
@@ -885,48 +1278,84 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#trackDeleteOne:member(1)",
           "docComment": "/**\n * Track an entity before it is removed with the intention of deleting it on the server. Does NOT remove from the collection (the reducer's job).\n *\n * @param key - The primary key of the entity to delete.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "trackDeleteOne(key: " },
-            { "kind": "Content", "text": "number | string" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "trackDeleteOne(key: "
+            },
+            {
+              "kind": "Content",
+              "text": "number | string"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", mergeStrategy?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
             {
               "kind": "Reference",
               "text": "MergeStrategy",
               "canonicalReference": "@ngrx/data!MergeStrategy:enum"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 8, "endIndex": 10 },
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "key",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             },
             {
               "parameterName": "mergeStrategy",
-              "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
               "isOptional": true
             }
           ],
@@ -967,53 +1396,89 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#trackUpdateMany:member(1)",
           "docComment": "/**\n * Track multiple entities before updating them in the collection. Does NOT update the collection (the reducer's job).\n *\n * @param updates - The entities to update.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "trackUpdateMany(updates: " },
+            {
+              "kind": "Content",
+              "text": "trackUpdateMany(updates: "
+            },
             {
               "kind": "Reference",
               "text": "Update",
               "canonicalReference": "@ngrx/entity!Update:type"
             },
-            { "kind": "Content", "text": "<T>[]" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", mergeStrategy?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
             {
               "kind": "Reference",
               "text": "MergeStrategy",
               "canonicalReference": "@ngrx/data!MergeStrategy:enum"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 9, "endIndex": 11 },
+          "returnTypeTokenRange": {
+            "startIndex": 9,
+            "endIndex": 11
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "updates",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 4, "endIndex": 6 },
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 6
+              },
               "isOptional": false
             },
             {
               "parameterName": "mergeStrategy",
-              "parameterTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+              "parameterTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
               "isOptional": true
             }
           ],
@@ -1054,53 +1519,89 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#trackUpdateOne:member(1)",
           "docComment": "/**\n * Track an entity before updating it in the collection. Does NOT update the collection (the reducer's job).\n *\n * @param update - The entity to update.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "trackUpdateOne(update: " },
+            {
+              "kind": "Content",
+              "text": "trackUpdateOne(update: "
+            },
             {
               "kind": "Reference",
               "text": "Update",
               "canonicalReference": "@ngrx/entity!Update:type"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", mergeStrategy?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
             {
               "kind": "Reference",
               "text": "MergeStrategy",
               "canonicalReference": "@ngrx/data!MergeStrategy:enum"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 9, "endIndex": 11 },
+          "returnTypeTokenRange": {
+            "startIndex": 9,
+            "endIndex": 11
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "update",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 4, "endIndex": 6 },
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 6
+              },
               "isOptional": false
             },
             {
               "parameterName": "mergeStrategy",
-              "parameterTypeTokenRange": { "startIndex": 7, "endIndex": 8 },
+              "parameterTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
               "isOptional": true
             }
           ],
@@ -1121,7 +1622,10 @@
             "returns": "",
             "see": [],
             "params": [
-              { "name": "update", "description": "The entity to update.\n\n" },
+              {
+                "name": "update",
+                "description": "The entity to update.\n\n"
+              },
               {
                 "name": "collection",
                 "description": "The entity collection\n\n"
@@ -1138,48 +1642,84 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#trackUpsertMany:member(1)",
           "docComment": "/**\n * Track multiple entities before upserting (adding and updating) them to the collection. Does NOT update the collection (the reducer's job).\n *\n * @param entities - The entities to add or update. They must be complete entities with ids.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "trackUpsertMany(entities: " },
-            { "kind": "Content", "text": "T[]" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "trackUpsertMany(entities: "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", mergeStrategy?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
             {
               "kind": "Reference",
               "text": "MergeStrategy",
               "canonicalReference": "@ngrx/data!MergeStrategy:enum"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 8, "endIndex": 10 },
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entities",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             },
             {
               "parameterName": "mergeStrategy",
-              "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
               "isOptional": true
             }
           ],
@@ -1220,48 +1760,84 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#trackUpsertOne:member(1)",
           "docComment": "/**\n * Track an entity before upsert (adding and updating) it to the collection. Does NOT update the collection (the reducer's job).\n *\n * @param entities - The entity to add or update. It must be a complete entity with its id.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "trackUpsertOne(entity: " },
-            { "kind": "Content", "text": "T" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "trackUpsertOne(entity: "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", mergeStrategy?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
             {
               "kind": "Reference",
               "text": "MergeStrategy",
               "canonicalReference": "@ngrx/data!MergeStrategy:enum"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 8, "endIndex": 10 },
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entity",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             },
             {
               "parameterName": "mergeStrategy",
-              "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 7 },
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
               "isOptional": true
             }
           ],
@@ -1302,30 +1878,51 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#undoAll:member(1)",
           "docComment": "/**\n * Revert the unsaved changes for all collection. Harmless when there are no entity changes to undo.\n *\n * @param collection - The entity collection\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "undoAll(collection: " },
+            {
+              "kind": "Content",
+              "text": "undoAll(collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 4, "endIndex": 6 },
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             }
           ],
@@ -1346,7 +1943,10 @@
             "returns": "",
             "see": [],
             "params": [
-              { "name": "collection", "description": "The entity collection\n" }
+              {
+                "name": "collection",
+                "description": "The entity collection\n"
+              }
             ]
           }
         },
@@ -1355,37 +1955,67 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#undoMany:member(1)",
           "docComment": "/**\n * Revert the unsaved changes for the given entities. Harmless when there are no entity changes to undo.\n *\n * @param entityOrIdList - The entities to revert or their ids.\n *\n * @param collection - The entity collection\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "undoMany(entityOrIdList: " },
-            { "kind": "Content", "text": "(number | string | T)[]" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "undoMany(entityOrIdList: "
+            },
+            {
+              "kind": "Content",
+              "text": "(number | string | T)[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entityOrIdList",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             }
           ],
@@ -1410,7 +2040,10 @@
                 "name": "entityOrIdList",
                 "description": "The entities to revert or their ids.\n\n"
               },
-              { "name": "collection", "description": "The entity collection\n" }
+              {
+                "name": "collection",
+                "description": "The entity collection\n"
+              }
             ]
           }
         },
@@ -1419,37 +2052,67 @@
           "canonicalReference": "@ngrx/data!EntityChangeTracker#undoOne:member(1)",
           "docComment": "/**\n * Revert the unsaved changes for the given entity. Harmless when there are no entity changes to undo.\n *\n * @param entityOrId - The entity to revert or its id.\n *\n * @param collection - The entity collection\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "undoOne(entityOrId: " },
-            { "kind": "Content", "text": "number | string | T" },
-            { "kind": "Content", "text": ", collection: " },
+            {
+              "kind": "Content",
+              "text": "undoOne(entityOrId: "
+            },
+            {
+              "kind": "Content",
+              "text": "number | string | T"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entityOrId",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "collection",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             }
           ],
@@ -1474,7 +2137,10 @@
                 "name": "entityOrId",
                 "description": "The entity to revert or its id.\n\n"
               },
-              { "name": "collection", "description": "The entity collection\n" }
+              {
+                "name": "collection",
+                "description": "The entity collection\n"
+              }
             ]
           }
         }

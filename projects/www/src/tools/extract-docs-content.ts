@@ -8,6 +8,7 @@ import {
 } from '@microsoft/tsdoc';
 import path from 'path';
 import fs from 'fs';
+import prettier from 'prettier';
 import {
   Extractor,
   ExtractorConfig,
@@ -34,6 +35,14 @@ interface ApiPackage {
 
 const MONOREPO_ROOT = path.join(process.cwd(), '../../');
 const ANGULAR_THETA_CHAR = 'ɵ';
+
+async function formatJsonWithPrettier(jsonContent: any): Promise<string> {
+  const prettierConfig = await prettier.resolveConfig(MONOREPO_ROOT);
+  return prettier.format(JSON.stringify(jsonContent, null, 2), {
+    ...prettierConfig,
+    parser: 'json',
+  });
+}
 
 const PACKAGES_TO_PARSE: ApiPackage[] = [
   {
@@ -353,7 +362,7 @@ function minimizeApiReport(
   return { packageNames: apiReport.packageNames, packages };
 }
 
-function writeFinalizedApiReport() {
+async function writeFinalizedApiReport() {
   const report = parsePackages();
   const minimizedReport = minimizeApiReport(report);
 
@@ -392,11 +401,14 @@ function writeFinalizedApiReport() {
         }.json`
       );
 
-      fs.writeFileSync(symbolPath, JSON.stringify(symbol));
+      const formattedContent = await formatJsonWithPrettier(symbol);
+      fs.writeFileSync(symbolPath, formattedContent);
     }
   }
 
-  fs.writeFileSync(minimizedReportPath, JSON.stringify(minimizedReport));
+  const formattedMinimizedReport =
+    await formatJsonWithPrettier(minimizedReport);
+  fs.writeFileSync(minimizedReportPath, formattedMinimizedReport);
 }
 
-writeFinalizedApiReport();
+writeFinalizedApiReport().catch(console.error);

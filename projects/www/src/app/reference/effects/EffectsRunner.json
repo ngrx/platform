@@ -19,7 +19,10 @@
           "text": "OnDestroy",
           "canonicalReference": "@angular/core!OnDestroy:interface"
         },
-        { "kind": "Content", "text": " " }
+        {
+          "kind": "Content",
+          "text": " "
+        }
       ],
       "fileUrlPath": "../../dist/modules/effects/src/effects_runner.d.ts",
       "releaseTag": "Public",
@@ -32,20 +35,32 @@
           "canonicalReference": "@ngrx/effects!EffectsRunner:constructor(1)",
           "docComment": "/**\n * Constructs a new instance of the `EffectsRunner` class\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "constructor(effectSources: " },
+            {
+              "kind": "Content",
+              "text": "constructor(effectSources: "
+            },
             {
               "kind": "Reference",
               "text": "EffectSources",
               "canonicalReference": "@ngrx/effects!EffectSources:class"
             },
-            { "kind": "Content", "text": ", store: " },
+            {
+              "kind": "Content",
+              "text": ", store: "
+            },
             {
               "kind": "Reference",
               "text": "Store",
               "canonicalReference": "@ngrx/store!Store:class"
             },
-            { "kind": "Content", "text": "<any>" },
-            { "kind": "Content", "text": ");" }
+            {
+              "kind": "Content",
+              "text": "<any>"
+            },
+            {
+              "kind": "Content",
+              "text": ");"
+            }
           ],
           "releaseTag": "Public",
           "isProtected": false,
@@ -53,12 +68,18 @@
           "parameters": [
             {
               "parameterName": "effectSources",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "store",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             }
           ],
@@ -85,15 +106,27 @@
           "canonicalReference": "@ngrx/effects!EffectsRunner#isStarted:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "get isStarted(): " },
-            { "kind": "Content", "text": "boolean" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "get isStarted(): "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "isStarted",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -120,12 +153,24 @@
           "canonicalReference": "@ngrx/effects!EffectsRunner#ngOnDestroy:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "ngOnDestroy(): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "ngOnDestroy(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
@@ -156,12 +201,24 @@
           "canonicalReference": "@ngrx/effects!EffectsRunner#start:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "start(): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "start(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
@@ -188,7 +245,12 @@
           }
         }
       ],
-      "implementsTokenRanges": [{ "startIndex": 1, "endIndex": 2 }],
+      "implementsTokenRanges": [
+        {
+          "startIndex": 1,
+          "endIndex": 2
+        }
+      ],
       "docs": {
         "modifiers": {
           "isInternal": false,

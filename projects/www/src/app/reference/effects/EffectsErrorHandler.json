@@ -10,38 +10,62 @@
       "canonicalReference": "@ngrx/effects!EffectsErrorHandler:type",
       "docComment": "",
       "excerptTokens": [
-        { "kind": "Content", "text": "export type EffectsErrorHandler = " },
-        { "kind": "Content", "text": "<T extends " },
+        {
+          "kind": "Content",
+          "text": "export type EffectsErrorHandler = "
+        },
+        {
+          "kind": "Content",
+          "text": "<T extends "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": ">(observable$: " },
+        {
+          "kind": "Content",
+          "text": ">(observable$: "
+        },
         {
           "kind": "Reference",
           "text": "Observable",
           "canonicalReference": "rxjs!Observable:class"
         },
-        { "kind": "Content", "text": "<T>, errorHandler: " },
+        {
+          "kind": "Content",
+          "text": "<T>, errorHandler: "
+        },
         {
           "kind": "Reference",
           "text": "ErrorHandler",
           "canonicalReference": "@angular/core!ErrorHandler:class"
         },
-        { "kind": "Content", "text": ") => " },
+        {
+          "kind": "Content",
+          "text": ") => "
+        },
         {
           "kind": "Reference",
           "text": "Observable",
           "canonicalReference": "rxjs!Observable:class"
         },
-        { "kind": "Content", "text": "<T>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "<T>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/effects/src/effects_error_handler.d.ts",
       "releaseTag": "Public",
       "name": "EffectsErrorHandler",
-      "typeTokenRange": { "startIndex": 1, "endIndex": 10 },
+      "typeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 10
+      },
       "docs": {
         "modifiers": {
           "isInternal": false,

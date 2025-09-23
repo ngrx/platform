@@ -14,36 +14,60 @@
           "kind": "Content",
           "text": "export declare function createEntityCacheSelector(entityCacheName?: "
         },
-        { "kind": "Content", "text": "string" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "string"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "MemoizedSelector",
           "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
         },
-        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
         {
           "kind": "Reference",
           "text": "Object",
           "canonicalReference": "!Object:interface"
         },
-        { "kind": "Content", "text": ", " },
+        {
+          "kind": "Content",
+          "text": ", "
+        },
         {
           "kind": "Reference",
           "text": "EntityCache",
           "canonicalReference": "@ngrx/data!EntityCache:interface"
         },
-        { "kind": "Content", "text": ">" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": ">"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/data/src/selectors/entity-cache-selector.d.ts",
-      "returnTypeTokenRange": { "startIndex": 3, "endIndex": 9 },
+      "returnTypeTokenRange": {
+        "startIndex": 3,
+        "endIndex": 9
+      },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [
         {
           "parameterName": "entityCacheName",
-          "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "parameterTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isOptional": true
         }
       ],

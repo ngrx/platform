@@ -19,57 +19,105 @@
           "text": "BaseRouterStoreState",
           "canonicalReference": "@ngrx/router-store!BaseRouterStoreState:interface"
         },
-        { "kind": "Content", "text": " = " },
+        {
+          "kind": "Content",
+          "text": " = "
+        },
         {
           "kind": "Reference",
           "text": "SerializedRouterStateSnapshot",
           "canonicalReference": "@ngrx/router-store!SerializedRouterStateSnapshot:interface"
         },
-        { "kind": "Content", "text": ", Result = " },
+        {
+          "kind": "Content",
+          "text": ", Result = "
+        },
         {
           "kind": "Reference",
           "text": "RouterReducerState",
           "canonicalReference": "@ngrx/router-store!RouterReducerState:type"
         },
-        { "kind": "Content", "text": "<RouterState>" },
-        { "kind": "Content", "text": ">(state: " },
-        { "kind": "Content", "text": "Result | undefined" },
-        { "kind": "Content", "text": ", action: " },
+        {
+          "kind": "Content",
+          "text": "<RouterState>"
+        },
+        {
+          "kind": "Content",
+          "text": ">(state: "
+        },
+        {
+          "kind": "Content",
+          "text": "Result | undefined"
+        },
+        {
+          "kind": "Content",
+          "text": ", action: "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": "): " },
-        { "kind": "Content", "text": "Result" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "): "
+        },
+        {
+          "kind": "Content",
+          "text": "Result"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/router-store/src/reducer.d.ts",
-      "returnTypeTokenRange": { "startIndex": 12, "endIndex": 13 },
+      "returnTypeTokenRange": {
+        "startIndex": 12,
+        "endIndex": 13
+      },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [
         {
           "parameterName": "state",
-          "parameterTypeTokenRange": { "startIndex": 8, "endIndex": 9 },
+          "parameterTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 9
+          },
           "isOptional": false
         },
         {
           "parameterName": "action",
-          "parameterTypeTokenRange": { "startIndex": 10, "endIndex": 11 },
+          "parameterTypeTokenRange": {
+            "startIndex": 10,
+            "endIndex": 11
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "RouterState",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
-          "defaultTypeTokenRange": { "startIndex": 3, "endIndex": 4 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          }
         },
         {
           "typeParameterName": "Result",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 5, "endIndex": 7 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          }
         }
       ],
       "name": "routerReducer",

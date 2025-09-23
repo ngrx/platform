@@ -1,1 +1,66 @@
-{"name":"MemoizeFn","canonicalReference":"@ngrx/store!MemoizeFn:type","kind":"TypeAlias","fileUrlPath":"../../dist/modules/store/src/selector.d.ts","isDeprecated":false,"members":[{"kind":"TypeAlias","canonicalReference":"@ngrx/store!MemoizeFn:type","docComment":"","excerptTokens":[{"kind":"Content","text":"export type MemoizeFn = "},{"kind":"Content","text":"(t: "},{"kind":"Reference","text":"AnyFn","canonicalReference":"@ngrx/store!~AnyFn:type"},{"kind":"Content","text":") => "},{"kind":"Reference","text":"MemoizedProjection","canonicalReference":"@ngrx/store!MemoizedProjection:type"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/store/src/selector.d.ts","releaseTag":"Public","name":"MemoizeFn","typeTokenRange":{"startIndex":1,"endIndex":5},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "MemoizeFn",
+  "canonicalReference": "@ngrx/store!MemoizeFn:type",
+  "kind": "TypeAlias",
+  "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "TypeAlias",
+      "canonicalReference": "@ngrx/store!MemoizeFn:type",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export type MemoizeFn = "
+        },
+        {
+          "kind": "Content",
+          "text": "(t: "
+        },
+        {
+          "kind": "Reference",
+          "text": "AnyFn",
+          "canonicalReference": "@ngrx/store!~AnyFn:type"
+        },
+        {
+          "kind": "Content",
+          "text": ") => "
+        },
+        {
+          "kind": "Reference",
+          "text": "MemoizedProjection",
+          "canonicalReference": "@ngrx/store!MemoizedProjection:type"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "releaseTag": "Public",
+      "name": "MemoizeFn",
+      "typeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 5
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

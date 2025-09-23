@@ -11,7 +11,6 @@ import { FooterComponent } from './components/footer.component';
 
 @Component({
   selector: 'ngrx-root',
-  standalone: true,
   imports: [
     RouterOutlet,
     MenuComponent,

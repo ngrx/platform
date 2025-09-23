@@ -10,38 +10,59 @@
       "canonicalReference": "@ngrx/signals/rxjs-interop!RxMethod:type",
       "docComment": "",
       "excerptTokens": [
-        { "kind": "Content", "text": "export type RxMethod<Input> = " },
-        { "kind": "Content", "text": "((input: Input | " },
+        {
+          "kind": "Content",
+          "text": "export type RxMethod<Input> = "
+        },
+        {
+          "kind": "Content",
+          "text": "((input: Input | "
+        },
         {
           "kind": "Reference",
           "text": "Signal",
           "canonicalReference": "@angular/core!Signal:type"
         },
-        { "kind": "Content", "text": "<Input> | " },
+        {
+          "kind": "Content",
+          "text": "<Input> | "
+        },
         {
           "kind": "Reference",
           "text": "Observable",
           "canonicalReference": "rxjs!Observable:class"
         },
-        { "kind": "Content", "text": "<Input>, config?: {\n    injector?: " },
+        {
+          "kind": "Content",
+          "text": "<Input>, config?: {\n    injector?: "
+        },
         {
           "kind": "Reference",
           "text": "Injector",
           "canonicalReference": "@angular/core!Injector:class"
         },
-        { "kind": "Content", "text": ";\n}) => " },
+        {
+          "kind": "Content",
+          "text": ";\n}) => "
+        },
         {
           "kind": "Reference",
           "text": "RxMethodRef",
           "canonicalReference": "@ngrx/signals/rxjs-interop!~RxMethodRef:type"
         },
-        { "kind": "Content", "text": ") & " },
+        {
+          "kind": "Content",
+          "text": ") & "
+        },
         {
           "kind": "Reference",
           "text": "RxMethodRef",
           "canonicalReference": "@ngrx/signals/rxjs-interop!~RxMethodRef:type"
         },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/signals/rxjs-interop/src/rx-method.d.ts",
       "releaseTag": "Public",
@@ -49,11 +70,20 @@
       "typeParameters": [
         {
           "typeParameterName": "Input",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
-      "typeTokenRange": { "startIndex": 1, "endIndex": 11 },
+      "typeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 11
+      },
       "docs": {
         "modifiers": {
           "isInternal": false,

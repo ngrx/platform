@@ -1,1 +1,83 @@
-{"name":"EntityState","canonicalReference":"@ngrx/signals/entities!EntityState:type","kind":"TypeAlias","fileUrlPath":"../../dist/modules/signals/entities/src/models.d.ts","isDeprecated":false,"members":[{"kind":"TypeAlias","canonicalReference":"@ngrx/signals/entities!EntityState:type","docComment":"","excerptTokens":[{"kind":"Content","text":"export type EntityState<Entity> = "},{"kind":"Content","text":"{\n    entityMap: "},{"kind":"Reference","text":"EntityMap","canonicalReference":"@ngrx/signals/entities!EntityMap:type"},{"kind":"Content","text":"<Entity>;\n    ids: "},{"kind":"Reference","text":"EntityId","canonicalReference":"@ngrx/signals/entities!EntityId:type"},{"kind":"Content","text":"[];\n}"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/signals/entities/src/models.d.ts","releaseTag":"Public","name":"EntityState","typeParameters":[{"typeParameterName":"Entity","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"typeTokenRange":{"startIndex":1,"endIndex":6},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "EntityState",
+  "canonicalReference": "@ngrx/signals/entities!EntityState:type",
+  "kind": "TypeAlias",
+  "fileUrlPath": "../../dist/modules/signals/entities/src/models.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "TypeAlias",
+      "canonicalReference": "@ngrx/signals/entities!EntityState:type",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export type EntityState<Entity> = "
+        },
+        {
+          "kind": "Content",
+          "text": "{\n    entityMap: "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityMap",
+          "canonicalReference": "@ngrx/signals/entities!EntityMap:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<Entity>;\n    ids: "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityId",
+          "canonicalReference": "@ngrx/signals/entities!EntityId:type"
+        },
+        {
+          "kind": "Content",
+          "text": "[];\n}"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/entities/src/models.d.ts",
+      "releaseTag": "Public",
+      "name": "EntityState",
+      "typeParameters": [
+        {
+          "typeParameterName": "Entity",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "typeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 6
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

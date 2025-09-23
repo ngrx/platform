@@ -19,27 +19,45 @@
           "text": "BaseRouterStoreState",
           "canonicalReference": "@ngrx/router-store!BaseRouterStoreState:interface"
         },
-        { "kind": "Content", "text": " = " },
+        {
+          "kind": "Content",
+          "text": " = "
+        },
         {
           "kind": "Reference",
           "text": "SerializedRouterStateSnapshot",
           "canonicalReference": "@ngrx/router-store!SerializedRouterStateSnapshot:interface"
         },
-        { "kind": "Content", "text": "> = " },
-        { "kind": "Content", "text": "string | " },
+        {
+          "kind": "Content",
+          "text": "> = "
+        },
+        {
+          "kind": "Content",
+          "text": "string | "
+        },
         {
           "kind": "Reference",
           "text": "Selector",
           "canonicalReference": "@ngrx/store!Selector:type"
         },
-        { "kind": "Content", "text": "<any, " },
+        {
+          "kind": "Content",
+          "text": "<any, "
+        },
         {
           "kind": "Reference",
           "text": "RouterReducerState",
           "canonicalReference": "@ngrx/router-store!RouterReducerState:type"
         },
-        { "kind": "Content", "text": "<T>>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "<T>>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/router-store/src/router_store_config.d.ts",
       "releaseTag": "Public",
@@ -47,11 +65,20 @@
       "typeParameters": [
         {
           "typeParameterName": "T",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
-          "defaultTypeTokenRange": { "startIndex": 3, "endIndex": 4 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          }
         }
       ],
-      "typeTokenRange": { "startIndex": 5, "endIndex": 10 },
+      "typeTokenRange": {
+        "startIndex": 5,
+        "endIndex": 10
+      },
       "docs": {
         "modifiers": {
           "isInternal": false,
