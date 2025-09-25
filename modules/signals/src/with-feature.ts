@@ -44,9 +44,9 @@ export function withFeature<
   return (store) => {
     const storeForFactory = {
       [STATE_SOURCE]: store[STATE_SOURCE],
-      ...store['stateSignals'],
-      ...store['props'],
-      ...store['methods'],
+      ...store.stateSignals,
+      ...store.props,
+      ...store.methods,
     };
 
     return featureFactory(storeForFactory)(store);
