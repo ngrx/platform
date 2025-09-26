@@ -55,10 +55,7 @@ export function withHooks<Input extends SignalStoreFeatureResult>(
       typeof hooksOrFactory === 'function'
         ? hooksOrFactory(storeMembers)
         : hooksOrFactory;
-    const createHook = (name: keyof typeof hooks) => {
-      const hook = hooks[name];
-      const currentHook = store.hooks[name];
-
+    const mergeHooks = (currentHook?: () => void, hook?: HookFn<Input>) => {
       return hook
         ? () => {
             if (currentHook) {
@@ -73,8 +70,8 @@ export function withHooks<Input extends SignalStoreFeatureResult>(
     return {
       ...store,
       hooks: {
-        onInit: createHook('onInit'),
-        onDestroy: createHook('onDestroy'),
+        onInit: mergeHooks(store.hooks.onInit, hooks.onInit),
+        onDestroy: mergeHooks(store.hooks.onDestroy, hooks.onDestroy),
       },
     };
   };
