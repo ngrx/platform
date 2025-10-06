@@ -138,7 +138,7 @@ export function createFeature<FeatureName extends string, FeatureState>(
  *   name: 'products',
  *   reducer: createReducer(
  *     initialState,
- *     on(ProductsApiActions.loadSuccess(state, { products }) => ({
+ *     on(ProductsApiActions.loadSuccess, (state, { products }) => ({
  *       ...state,
  *       products,
  *     }),
