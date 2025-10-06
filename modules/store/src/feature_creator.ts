@@ -141,7 +141,7 @@ export function createFeature<FeatureName extends string, FeatureState>(
  *     on(ProductsApiActions.loadSuccess, (state, { products }) => ({
  *       ...state,
  *       products,
- *     }),
+ *     })),
  *   ),
  * });
  *
