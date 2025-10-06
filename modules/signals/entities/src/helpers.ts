@@ -71,7 +71,8 @@ export function getEntityUpdaterResult(
 export function addEntityMutably(
   state: EntityState<any>,
   entity: any,
-  selectId: SelectEntityId<any>
+  selectId: SelectEntityId<any>,
+  prepend = false
 ): DidMutate {
   const id = selectId(entity);
 
@@ -80,7 +81,12 @@ export function addEntityMutably(
   }
 
   state.entityMap[id] = entity;
-  state.ids.push(id);
+
+  if (prepend) {
+    state.ids.unshift(id);
+  } else {
+    state.ids.push(id);
+  }
 
   return DidMutate.Both;
 }
@@ -88,12 +94,13 @@ export function addEntityMutably(
 export function addEntitiesMutably(
   state: EntityState<any>,
   entities: any[],
-  selectId: SelectEntityId<any>
+  selectId: SelectEntityId<any>,
+  prepend = false
 ): DidMutate {
   let didMutate = DidMutate.None;
 
   for (const entity of entities) {
-    const result = addEntityMutably(state, entity, selectId);
+    const result = addEntityMutably(state, entity, selectId, prepend);
 
     if (result === DidMutate.Both) {
       didMutate = result;
@@ -106,12 +113,16 @@ export function addEntitiesMutably(
 export function setEntityMutably(
   state: EntityState<any>,
   entity: any,
-  selectId: SelectEntityId<any>
+  selectId: SelectEntityId<any>,
+  replace = true
 ): DidMutate {
   const id = selectId(entity);
 
   if (state.entityMap[id]) {
-    state.entityMap[id] = entity;
+    state.entityMap[id] = replace
+      ? entity
+      : { ...state.entityMap[id], ...entity };
+
     return DidMutate.Entities;
   }
 
@@ -124,12 +135,13 @@ export function setEntityMutably(
 export function setEntitiesMutably(
   state: EntityState<any>,
   entities: any[],
-  selectId: SelectEntityId<any>
+  selectId: SelectEntityId<any>,
+  replace = true
 ): DidMutate {
   let didMutate = DidMutate.None;
 
   for (const entity of entities) {
-    const result = setEntityMutably(state, entity, selectId);
+    const result = setEntityMutably(state, entity, selectId, replace);
 
     if (didMutate === DidMutate.Both) {
       continue;
@@ -201,7 +213,11 @@ export function updateEntitiesMutably(
     didMutate = DidMutate.Both;
   }
 
-  if (ngDevMode && state.ids.length !== Object.keys(state.entityMap).length) {
+  if (
+    typeof ngDevMode !== 'undefined' &&
+    ngDevMode &&
+    state.ids.length !== Object.keys(state.entityMap).length
+  ) {
     console.warn(
       '@ngrx/signals/entities: Entities with IDs:',
       ids,

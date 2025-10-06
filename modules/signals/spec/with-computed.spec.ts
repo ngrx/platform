@@ -1,6 +1,13 @@
-import { signal } from '@angular/core';
-import { withComputed, withMethods, withState } from '../src';
-import { getInitialInnerStore } from '../src/signal-store';
+import { computed, signal } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import {
+  deepComputed,
+  signalStoreFeature,
+  withComputed,
+  withMethods,
+  withState,
+} from '../src';
+import { getInitialInnerStore, signalStore } from '../src/signal-store';
 
 describe('withComputed', () => {
   it('adds computed signals to the store immutably', () => {
@@ -11,14 +18,15 @@ describe('withComputed', () => {
 
     const store = withComputed(() => ({ s1, s2 }))(initialStore);
 
-    expect(Object.keys(store.computedSignals)).toEqual(['s1', 's2']);
-    expect(Object.keys(initialStore.computedSignals)).toEqual([]);
+    expect(Object.keys(store.props)).toEqual(['s1', 's2']);
+    expect(Object.keys(initialStore.props)).toEqual([]);
 
-    expect(store.computedSignals.s1).toBe(s1);
-    expect(store.computedSignals.s2).toBe(s2);
+    expect(store.props.s1).toBe(s1);
+    expect(store.props.s2).toBe(s2);
   });
 
   it('logs warning if previously defined signal store members have the same name', () => {
+    const COMPUTED_SECRET = Symbol('computed_secret');
     const initialStore = [
       withState({
         p1: 10,
@@ -27,6 +35,7 @@ describe('withComputed', () => {
       withComputed(() => ({
         s1: signal('s1').asReadonly(),
         s2: signal({ s: 2 }).asReadonly(),
+        [COMPUTED_SECRET]: signal(1).asReadonly(),
       })),
       withMethods(() => ({
         m1() {},
@@ -34,7 +43,7 @@ describe('withComputed', () => {
       })),
     ].reduce((acc, feature) => feature(acc), getInitialInnerStore());
     const s2 = signal(10).asReadonly();
-    jest.spyOn(console, 'warn').mockImplementation();
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     withComputed(() => ({
       p: signal(0).asReadonly(),
@@ -43,12 +52,96 @@ describe('withComputed', () => {
       m1: signal({ m: 1 }).asReadonly(),
       m3: signal({ m: 3 }).asReadonly(),
       s3: signal({ s: 3 }).asReadonly(),
+      [COMPUTED_SECRET]: signal(10).asReadonly(),
     }))(initialStore);
 
     expect(console.warn).toHaveBeenCalledWith(
       '@ngrx/signals: SignalStore members cannot be overridden.',
       'Trying to override:',
-      'p1, s2, m1'
+      'p1, s2, m1, Symbol(computed_secret)'
     );
+  });
+
+  it('adds computed automatically if the value is a function', () => {
+    const initialStore = getInitialInnerStore();
+
+    const store = signalStoreFeature(
+      withState({ a: 2, b: 3 }),
+      withComputed(({ a, b }) => ({
+        sum: () => a() + b(),
+        product: () => a() * b(),
+      }))
+    )(initialStore);
+
+    expect(store.props.sum()).toBe(5);
+    expect(store.props.product()).toBe(6);
+  });
+
+  it('allows to mix user-provided computeds and automatically computed ones', () => {
+    const initialStore = getInitialInnerStore();
+
+    const store = signalStoreFeature(
+      withState({ a: 2, b: 3 }),
+      withComputed(({ a, b }) => ({
+        sum: () => a() + b(),
+        product: computed(() => a() * b()),
+      }))
+    )(initialStore);
+
+    expect(store.props.sum()).toBe(5);
+    expect(store.props.product()).toBe(6);
+  });
+
+  it('does not change a WritableSignal', () => {
+    const user = signal({ firstName: 'John', lastName: 'Doe' });
+
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withComputed(() => ({
+        user,
+      }))
+    );
+
+    const store = TestBed.inject(Store);
+
+    expect(store.user).toBe(user);
+  });
+
+  it('does not change a DeepSignal', () => {
+    const user = deepComputed(
+      signal({
+        name: 'John Doe',
+        address: {
+          street: '123 Main St',
+          city: 'Anytown',
+        },
+      })
+    );
+
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withComputed(() => ({
+        user,
+      }))
+    );
+
+    const store = TestBed.inject(Store);
+
+    expect(store.user).toBe(user);
+  });
+
+  it('does not change a Signal', () => {
+    const user = computed(() => ({ firstName: 'John', lastName: 'Doe' }));
+
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withComputed(() => ({
+        user,
+      }))
+    );
+
+    const store = TestBed.inject(Store);
+
+    expect(store.user).toBe(user);
   });
 });

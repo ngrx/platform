@@ -1,3 +1,447 @@
+<a name="20.0.1"></a>
+
+## [20.0.1](https://github.com/ngrx/platform/compare/20.0.0...20.0.1) (2025-08-25)
+
+### Bug Fixes
+
+- **component:** use setTimeout instead of requestAnimationFrame in SSR mode ([#4912](https://github.com/ngrx/platform/issues/4912)) ([3ae98d7](https://github.com/ngrx/platform/commit/3ae98d7)), closes [#4902](https://github.com/ngrx/platform/issues/4902)
+- **eslint-plugin:** report on-function-explicit-return-type for call expressions ([#4904](https://github.com/ngrx/platform/issues/4904)) ([c8e1352](https://github.com/ngrx/platform/commit/c8e1352)), closes [#4901](https://github.com/ngrx/platform/issues/4901)
+- **signals:** add unique member check to `withLinkedState` ([#4932](https://github.com/ngrx/platform/issues/4932)) ([c5a5a27](https://github.com/ngrx/platform/commit/c5a5a27)), closes [#4931](https://github.com/ngrx/platform/issues/4931)
+- **www:** Make Guide Pages Responsive ([#4900](https://github.com/ngrx/platform/issues/4900)) ([4c921e3](https://github.com/ngrx/platform/commit/4c921e3))
+- **www:** use the stackblitz examples ([#4895](https://github.com/ngrx/platform/issues/4895)) ([e7eabd4](https://github.com/ngrx/platform/commit/e7eabd4))
+
+<a name="20.0.0"></a>
+
+# [20.0.0](https://github.com/ngrx/platform/compare/20.0.0-rc.0...20.0.0) (2025-07-28)
+
+### Bug Fixes
+
+- **www:** Make API Pages Responsive ([#4885](https://github.com/ngrx/platform/issues/4885)) ([7f09858](https://github.com/ngrx/platform/commit/7f09858)), closes [#4816](https://github.com/ngrx/platform/issues/4816)
+
+<a name="20.0.0-rc.0"></a>
+
+# [20.0.0-rc.0](https://github.com/ngrx/platform/compare/20.0.0-beta.0...20.0.0-rc.0) (2025-07-14)
+
+### Bug Fixes
+
+- **signals:** allow generic template literals as state keys ([#4871](https://github.com/ngrx/platform/issues/4871)) ([9fefc77](https://github.com/ngrx/platform/commit/9fefc77)), closes [#4638](https://github.com/ngrx/platform/issues/4638)
+- **signals:** allow lazy initialization of DeepSignal ([#4866](https://github.com/ngrx/platform/issues/4866)) ([cb1a2ba](https://github.com/ngrx/platform/commit/cb1a2ba)), closes [#4749](https://github.com/ngrx/platform/issues/4749)
+- **signals:** do not create deep signals for empty objects and unknown records with symbol keys ([#4880](https://github.com/ngrx/platform/issues/4880)) ([bae9f18](https://github.com/ngrx/platform/commit/bae9f18))
+- **signals:** remove internal Signal type ([#4867](https://github.com/ngrx/platform/issues/4867)) ([4a4a5db](https://github.com/ngrx/platform/commit/4a4a5db))
+
+### Features
+
+- **operators:** add migration for deprecated tapResponse signature ([#4858](https://github.com/ngrx/platform/issues/4858)) ([551ceb4](https://github.com/ngrx/platform/commit/551ceb4))
+- **signals:** add `withLinkedState()` ([#4818](https://github.com/ngrx/platform/issues/4818)) ([4bb7fdd](https://github.com/ngrx/platform/commit/4bb7fdd))
+- **signals:** allow access to methods in `withComputed` ([#4864](https://github.com/ngrx/platform/issues/4864)) ([e11c23f](https://github.com/ngrx/platform/commit/e11c23f)), closes [#4846](https://github.com/ngrx/platform/issues/4846)
+- **signals:** disallow user-defined signals in withState and signalState ([#4879](https://github.com/ngrx/platform/issues/4879)) ([306ed5a](https://github.com/ngrx/platform/commit/306ed5a))
+
+<a name="20.0.0-beta.0"></a>
+
+# [20.0.0-beta.0](https://github.com/ngrx/platform/compare/19.2.1...20.0.0-beta.0) (2025-06-30)
+
+### Bug Fixes
+
+- **signals:** handle events in the dispatched order ([#4857](https://github.com/ngrx/platform/issues/4857)) ([fa50f43](https://github.com/ngrx/platform/commit/fa50f43)), closes [#4852](https://github.com/ngrx/platform/issues/4852)
+- **www:** Add padding to code snippets ([#4812](https://github.com/ngrx/platform/issues/4812)) ([9e942db](https://github.com/ngrx/platform/commit/9e942db)), closes [#4811](https://github.com/ngrx/platform/issues/4811)
+- **www:** add styles for video ([#4851](https://github.com/ngrx/platform/issues/4851)) ([85680a0](https://github.com/ngrx/platform/commit/85680a0))
+- **www:** fix color-scheme and combine duplicate html declarations ([#4855](https://github.com/ngrx/platform/issues/4855)) ([f9b2565](https://github.com/ngrx/platform/commit/f9b2565))
+- **www:** remove duplicate scrollbar ([#4829](https://github.com/ngrx/platform/issues/4829)) ([f0f1f2a](https://github.com/ngrx/platform/commit/f0f1f2a)), closes [#4828](https://github.com/ngrx/platform/issues/4828)
+- **www:** remove horizontal scrollbar ([#4808](https://github.com/ngrx/platform/issues/4808)) ([2639f67](https://github.com/ngrx/platform/commit/2639f67))
+
+### build
+
+- update to Angular 20 ([#4778](https://github.com/ngrx/platform/issues/4778)) ([8a4ecd9](https://github.com/ngrx/platform/commit/8a4ecd9))
+
+### Features
+
+- **effects:** remove act operator ([#4839](https://github.com/ngrx/platform/issues/4839)) ([9a83f1d](https://github.com/ngrx/platform/commit/9a83f1d))
+- **entity:** strengthen typing of getInitialState ([#4819](https://github.com/ngrx/platform/issues/4819)) ([bfb21c2](https://github.com/ngrx/platform/commit/bfb21c2)), closes [#4422](https://github.com/ngrx/platform/issues/4422)
+- **eslint-plugin:** add new rule enforce type call ([#4809](https://github.com/ngrx/platform/issues/4809)) ([9b82e67](https://github.com/ngrx/platform/commit/9b82e67)), closes [#4797](https://github.com/ngrx/platform/issues/4797)
+- **operators:** deprecate `tapResponse` signature with a sequence of callbacks ([#4844](https://github.com/ngrx/platform/issues/4844)) ([9a16813](https://github.com/ngrx/platform/commit/9a16813)), closes [#4840](https://github.com/ngrx/platform/issues/4840)
+- **signals:** allow user-defined signals in `withState` and `signalState` by splitting `STATE_SOURCE` ([#4795](https://github.com/ngrx/platform/issues/4795)) ([521a2a6](https://github.com/ngrx/platform/commit/521a2a6))
+- **signals:** enhance `withComputed` to accept computation functions ([#4822](https://github.com/ngrx/platform/issues/4822)) ([c8b15dd](https://github.com/ngrx/platform/commit/c8b15dd)), closes [#4782](https://github.com/ngrx/platform/issues/4782)
+- **www:** add sidebar for mobile view and make home page responsive ([#4813](https://github.com/ngrx/platform/issues/4813)) ([4397bfb](https://github.com/ngrx/platform/commit/4397bfb)), closes [#4807](https://github.com/ngrx/platform/issues/4807)
+
+### BREAKING CHANGES
+
+- **signals:** The internal `STATE_SOURCE` is no longer represented as a single `WritableSignal` holding the entire state object. Instead, each top-level state property becomes its own `WritableSignal` or remains as-is if a `WritableSignal` is provided as a state property.
+
+BEFORE:
+
+1. The initial state object reference is preserved:
+
+const initialState = { ngrx: 'rocks' };
+
+// signalState:
+const state = signalState(initialState);
+state() === initialState; // true
+
+// withState:
+const Store = signalStore(withState(initialState));
+const store = new Store();
+getState(store) === initialState; // true
+
+2. Top-level `WritableSignal`s are wrapped with `Signal`s:
+
+// signalState:
+const state = signalState({ ngrx: signal('rocks') });
+state.ngrx // type: Signal<WritableSignal<string>>
+
+// withState:
+const Store = signalStore(withState({ ngrx: signal('rocks') }));
+const store = new Store();
+store.ngrx // type: Signal<WritableSignal<string>>
+
+3. Root state properties can be added dynamically:
+
+// signalState:
+const state = signalState<Record<string, string>>({});
+console.log(state()); // {}
+
+patchState(state, { ngrx: 'rocks' });
+console.log(state()); // { ngrx: 'rocks' }
+
+// withState:
+const Store = signalStore(
+{ protectedState: false },
+withState<Record<string, string>>({})
+);
+const store = new Store();
+console.log(getState(store)); // {}
+
+patchState(store, { ngrx: 'rocks' });
+console.log(getState(store)); // { ngrx: 'rocks' }
+
+AFTER:
+
+1. The initial state object reference is not preserved:
+
+const initialState = { ngrx: 'rocks' };
+
+// signalState:
+const state = signalState(initialState);
+state() === initialState; // false
+
+// withState:
+const Store = signalStore(withState(initialState));
+const store = new Store();
+getState(store) === initialState; // false
+
+2. Top-level `WritableSignal`s are not wrapped with `Signal`s:
+
+// signalState:
+const state = signalState({ ngrx: signal('rocks') });
+state.ngrx // type: Signal<string>
+
+// withState:
+const Store = signalStore(withState({ ngrx: signal('rocks') }));
+const store = new Store();
+store.ngrx // type: Signal<string>
+
+3. Root state properties can not be added dynamically:
+
+// signalState:
+const state = signalState<Record<string, string>>({});
+console.log(state()); // {}
+
+patchState(state, { ngrx: 'rocks' });
+console.log(state()); // {}
+
+// withState:
+const Store = signalStore(
+{ protectedState: false },
+withState<Record<string, string>>({})
+);
+const store = new Store();
+console.log(getState(store)); // {}
+
+patchState(store, { ngrx: 'rocks' });
+console.log(getState(store)); // {}
+
+Co-authored-by: Tim Deschryver <28659384+timdeschryver@users.noreply.github.com>
+Co-authored-by: michael-small <33669563+michael-small@users.noreply.github.com>
+Co-authored-by: Marko Stanimirović <markostanimirovic95@gmail.com>
+
+- The minimum required version of Angular has been updated.
+
+BEFORE:
+
+The minimum required version is Angular 19.x
+
+AFTER:
+
+The minimum required version is Angular 20.x
+
+<a name="20.0.0-beta.0"></a>
+
+# [20.0.0-beta.0](https://github.com/ngrx/platform/compare/19.2.1...20.0.0-beta.0) (2025-06-10)
+
+### Bug Fixes
+
+- **www:** Add padding to code snippets ([#4812](https://github.com/ngrx/platform/issues/4812)) ([9e942db](https://github.com/ngrx/platform/commit/9e942db)), closes [#4811](https://github.com/ngrx/platform/issues/4811)
+- **www:** remove horizontal scrollbar ([#4808](https://github.com/ngrx/platform/issues/4808)) ([2639f67](https://github.com/ngrx/platform/commit/2639f67))
+
+### build
+
+- update to Angular 20 ([#4778](https://github.com/ngrx/platform/issues/4778)) ([8a4ecd9](https://github.com/ngrx/platform/commit/8a4ecd9))
+
+### Features
+
+- **eslint-plugin:** add new rule enforce type call ([#4809](https://github.com/ngrx/platform/issues/4809)) ([9b82e67](https://github.com/ngrx/platform/commit/9b82e67)), closes [#4797](https://github.com/ngrx/platform/issues/4797)
+- **www:** add sidebar for mobile view and make home page responsive ([#4813](https://github.com/ngrx/platform/issues/4813)) ([4397bfb](https://github.com/ngrx/platform/commit/4397bfb)), closes [#4807](https://github.com/ngrx/platform/issues/4807)
+
+### BREAKING CHANGES
+
+- The minimum required version of Angular has been updated.
+
+BEFORE:
+
+The minimum required version is Angular 19.x
+
+AFTER:
+
+The minimum required version is Angular 20.x
+
+<a name="20.0.0"></a>
+
+# [20.0.0](https://github.com/ngrx/platform/compare/19.2.1...20.0.0) (2025-06-09)
+
+### Bug Fixes
+
+- **www:** Add padding to code snippets ([#4812](https://github.com/ngrx/platform/issues/4812)) ([9e942db](https://github.com/ngrx/platform/commit/9e942db)), closes [#4811](https://github.com/ngrx/platform/issues/4811)
+- **www:** remove horizontal scrollbar ([#4808](https://github.com/ngrx/platform/issues/4808)) ([2639f67](https://github.com/ngrx/platform/commit/2639f67))
+
+### build
+
+- update to Angular 20 ([#4778](https://github.com/ngrx/platform/issues/4778)) ([8a4ecd9](https://github.com/ngrx/platform/commit/8a4ecd9))
+
+### Features
+
+- **eslint-plugin:** add new rule enforce type call ([#4809](https://github.com/ngrx/platform/issues/4809)) ([9b82e67](https://github.com/ngrx/platform/commit/9b82e67)), closes [#4797](https://github.com/ngrx/platform/issues/4797)
+- **www:** add sidebar for mobile view and make home page responsive ([#4813](https://github.com/ngrx/platform/issues/4813)) ([4397bfb](https://github.com/ngrx/platform/commit/4397bfb)), closes [#4807](https://github.com/ngrx/platform/issues/4807)
+
+### BREAKING CHANGES
+
+- The minimum required version of Angular has been updated.
+
+BEFORE:
+
+The minimum required version is Angular 19.x
+
+AFTER:
+
+The minimum required version is Angular 20.x
+
+<a name="19.2.1"></a>
+
+## [19.2.1](https://github.com/ngrx/platform/compare/19.2.0...19.2.1) (2025-05-29)
+
+### Bug Fixes
+
+- **signals:** add current state as second argument of case reducer ([#4800](https://github.com/ngrx/platform/issues/4800)) ([95dbbfa](https://github.com/ngrx/platform/commit/95dbbfa))
+- **signals:** expose WritableStateSource to withFeature callback ([#4792](https://github.com/ngrx/platform/issues/4792)) ([afb6528](https://github.com/ngrx/platform/commit/afb6528)), closes [#4766](https://github.com/ngrx/platform/issues/4766)
+
+<a name="19.2.0"></a>
+
+# [19.2.0](https://github.com/ngrx/platform/compare/19.1.0...19.2.0) (2025-05-12)
+
+### Features
+
+- **eslint-plugin:** add schematic support for flat configs ([#4747](https://github.com/ngrx/platform/issues/4747)) ([f966d0a](https://github.com/ngrx/platform/commit/f966d0a))
+- **signals:** add Events plugin ([#4769](https://github.com/ngrx/platform/issues/4769)) ([980cf6f](https://github.com/ngrx/platform/commit/980cf6f)), closes [#4580](https://github.com/ngrx/platform/issues/4580)
+
+<a name="19.1.0"></a>
+
+# [19.1.0](https://github.com/ngrx/platform/compare/19.0.1...19.1.0) (2025-04-01)
+
+### Bug Fixes
+
+- **signals:** skip assertions when ngDevMode is not defined ([#4703](https://github.com/ngrx/platform/issues/4703)) ([0b43014](https://github.com/ngrx/platform/commit/0b43014)), closes [#4699](https://github.com/ngrx/platform/issues/4699)
+
+### Features
+
+- **signals:** add `withFeature` ([#4739](https://github.com/ngrx/platform/issues/4739)) ([345ab4f](https://github.com/ngrx/platform/commit/345ab4f)), closes [#4678](https://github.com/ngrx/platform/issues/4678)
+- **signals:** add prepend entity updaters ([#4721](https://github.com/ngrx/platform/issues/4721)) ([dac8665](https://github.com/ngrx/platform/commit/dac8665)), closes [#4723](https://github.com/ngrx/platform/issues/4723)
+- **signals:** add RxMethod and SignalMethod types to public API ([#4744](https://github.com/ngrx/platform/issues/4744)) ([40e78d9](https://github.com/ngrx/platform/commit/40e78d9))
+- **signals:** add unprotected testing helper ([#4725](https://github.com/ngrx/platform/issues/4725)) ([01c2327](https://github.com/ngrx/platform/commit/01c2327))
+- **signals:** add upsert entity updaters ([#4727](https://github.com/ngrx/platform/issues/4727)) ([92fd7c3](https://github.com/ngrx/platform/commit/92fd7c3))
+- **signals:** warn when reactive method runs with source injector ([#4742](https://github.com/ngrx/platform/issues/4742)) ([84a537c](https://github.com/ngrx/platform/commit/84a537c)), closes [#4726](https://github.com/ngrx/platform/issues/4726)
+
+<a name="19.0.1"></a>
+
+## [19.0.1](https://github.com/ngrx/platform/compare/19.0.0...19.0.1) (2025-01-31)
+
+### Bug Fixes
+
+- **signals:** enable `withProps` to handle Symbols ([#4656](https://github.com/ngrx/platform/issues/4656)) ([02320b3](https://github.com/ngrx/platform/commit/02320b3)), closes [#4655](https://github.com/ngrx/platform/issues/4655)
+- **signals:** remove `signalMethod` instance watcher on destroy ([#4648](https://github.com/ngrx/platform/issues/4648)) ([7f42065](https://github.com/ngrx/platform/commit/7f42065)), closes [#4644](https://github.com/ngrx/platform/issues/4644)
+- **signals:** revert the protection for state mutation in dev mode ([#4686](https://github.com/ngrx/platform/issues/4686)) ([ae7922e](https://github.com/ngrx/platform/commit/ae7922e)), closes [#4683](https://github.com/ngrx/platform/issues/4683)
+
+<a name="19.0.0"></a>
+
+# [19.0.0](https://github.com/ngrx/platform/compare/19.0.0-rc.0...19.0.0) (2024-12-17)
+
+<a name="19.0.0-rc.0"></a>
+
+# [19.0.0-rc.0](https://github.com/ngrx/platform/compare/19.0.0-beta.0...19.0.0-rc.0) (2024-12-10)
+
+### Bug Fixes
+
+- **eslint-plugin:** support ESM modudule syntax (.mjs) ([e2f35c8](https://github.com/ngrx/platform/commit/e2f35c8))
+- **signals:** create deep signals for custom class instances ([#4614](https://github.com/ngrx/platform/issues/4614)) ([4d34dc4](https://github.com/ngrx/platform/commit/4d34dc4)), closes [#4604](https://github.com/ngrx/platform/issues/4604)
+
+### Features
+
+- **eslint-plugin:** add new rule require-super-ondestroy ([#4611](https://github.com/ngrx/platform/issues/4611)) ([2ac4372](https://github.com/ngrx/platform/commit/2ac4372)), closes [#4505](https://github.com/ngrx/platform/issues/4505)
+- **signals:** add `signalMethod` ([#4597](https://github.com/ngrx/platform/issues/4597)) ([bdd1d3e](https://github.com/ngrx/platform/commit/bdd1d3e)), closes [#4581](https://github.com/ngrx/platform/issues/4581)
+- **signals:** add `withProps` base feature ([#4607](https://github.com/ngrx/platform/issues/4607)) ([e626082](https://github.com/ngrx/platform/commit/e626082))
+- **signals:** add migration for `withProps` ([#4612](https://github.com/ngrx/platform/issues/4612)) ([5f803d0](https://github.com/ngrx/platform/commit/5f803d0)), closes [#4608](https://github.com/ngrx/platform/issues/4608)
+- **store:** enable dispatching actions on signal changes ([#4600](https://github.com/ngrx/platform/issues/4600)) ([2528d39](https://github.com/ngrx/platform/commit/2528d39)), closes [#4537](https://github.com/ngrx/platform/issues/4537)
+
+### BREAKING CHANGES
+
+- **signals:** - The `computed` property in `SignalStoreFeatureResult` type is renamed to `props`.
+
+* The `EntityComputed` and `NamedEntityComputed` types in the `entities` plugin are renamed to `EntityProps` and `NamedEntityProps`.
+
+BEFORE:
+
+```ts
+import { computed, Signal } from '@angular/core';
+import {
+  signalStoreFeature,
+  SignalStoreFeature,
+  type,
+  withComputed,
+} from '@ngrx/signals';
+import { EntityComputed } from '@ngrx/signals/entities';
+
+export function withTotalEntities<Entity>(): SignalStoreFeature<
+  { state: {}; computed: EntityComputed<Entity>; methods: {} },
+  { state: {}; computed: { total: Signal<number> }; methods: {} }
+> {
+  return signalStoreFeature(
+    { computed: type<EntityComputed<Entity>>() },
+    withComputed(({ entities }) => ({
+      total: computed(() => entities().length),
+    }))
+  );
+}
+```
+
+AFTER:
+
+```ts
+import { computed, Signal } from '@angular/core';
+import {
+  signalStoreFeature,
+  SignalStoreFeature,
+  type,
+  withComputed,
+} from '@ngrx/signals';
+import { EntityProps } from '@ngrx/signals/entities';
+
+export function withTotalEntities<Entity>(): SignalStoreFeature<
+  { state: {}; props: EntityProps<Entity>; methods: {} },
+  { state: {}; props: { total: Signal<number> }; methods: {} }
+> {
+  return signalStoreFeature(
+    { props: type<EntityProps<Entity>>() },
+    withComputed(({ entities }) => ({
+      total: computed(() => entities().length),
+    }))
+  );
+}
+```
+
+<a name="19.0.0-beta.0"></a>
+
+# [19.0.0-beta.0](https://github.com/ngrx/platform/compare/18.1.1...19.0.0-beta.0") (2024-11-20)
+
+### Features
+
+- **schematics:** change standalone default to true for components ([#4569](https://github.com/ngrx/platform/issues/4569)) ([c7d0ce6](https://github.com/ngrx/platform/commit/c7d0ce6))
+- **signals:** rename `rxMethod.unsubscribe` to `destroy` ([#4584](https://github.com/ngrx/platform/issues/4584)) ([57ad5c5](https://github.com/ngrx/platform/commit/57ad5c5))
+- **signals:** throw error in dev mode on state mutation ([#4526](https://github.com/ngrx/platform/issues/4526)) ([7a84209](https://github.com/ngrx/platform/commit/7a84209))
+
+### BREAKING CHANGES
+
+- **signals:** The `signalState`/`signalStore` state object is frozen in development mode.
+  If a mutable change occurs to the state object, an error will be thrown.
+
+BEFORE:
+
+```ts
+const userState = signalState(initialState);
+patchState(userState, (state) => {
+  state.user.firstName = 'mutable change'; // mutable change which went through
+  return state;
+});
+```
+
+AFTER:
+
+```ts
+const userState = signalState(initialState);
+patchState(userState, (state) => {
+  state.user.firstName = 'mutable change'; // throws in dev mode
+  return state;
+});
+```
+
+- **signals:** The `unsubscribe` method from `rxMethod` is renamed to `destroy`.
+
+BEFORE:
+
+```ts
+const logNumber = rxMethod<number>(tap(console.log));
+
+const num1Ref = logNumber(interval(1_000));
+const num2Ref = logNumber(interval(2_000));
+
+// destroy `num1Ref` after 2 seconds
+setTimeout(() => num1Ref.unsubscribe(), 2_000);
+
+// destroy all reactive method refs after 5 seconds
+setTimeout(() => logNumber.unsubscribe(), 5_000);
+```
+
+AFTER:
+
+```ts
+const logNumber = rxMethod<number>(tap(console.log));
+
+const num1Ref = logNumber(interval(1_000));
+const num2Ref = logNumber(interval(2_000));
+
+// destroy `num1Ref` after 2 seconds
+setTimeout(() => num1Ref.destroy(), 2_000);
+
+// destroy all reactive method refs after 5 seconds
+setTimeout(() => logNumber.destroy(), 5_000);
+```
+
+- **schematics:** The default setting for generating components using schematics is updated.
+
+BEFORE:
+
+The default setting for generating components using schematics does not use standalone components.
+
+AFTER:
+
+The default setting for generating components using schematics uses standalone components.
+
+- The minimum required version of Angular has been updated.
+
+BEFORE:
+
+The minimum required version is Angular 18.x
+
+AFTER:
+
+The minimum required version is Angular 19.x
+
 <a name="18.1.1"></a>
 
 ## [18.1.1](https://github.com/ngrx/platform/compare/18.1.0...18.1.1) (2024-10-29)
@@ -501,7 +945,8 @@ const authApiActions = createActionGroup({
 });
 
 // generated actions:
-const { loginSuccess, loginFailure, logoutSuccess, logoutfailure } = authApiActions;
+const { loginSuccess, loginFailure, logoutSuccess, logoutfailure } =
+  authApiActions;
 ```
 
 AFTER:
@@ -509,7 +954,8 @@ AFTER:
 The initial letter of the first word of the event name will be lowercase, and the initial letters of the other words will be uppercase. The case of other letters in the event name will remain the same.
 
 ```ts
-const { logInSuccess, loginFailure, logoutSuccess, logoutFailure } = authApiActions;
+const { logInSuccess, loginFailure, logoutSuccess, logoutFailure } =
+  authApiActions;
 ```
 
 - **store:** The `createFeature` signature with root state is removed in favor of a signature without root state.
@@ -736,13 +1182,17 @@ export class TestComponent {
 BEFORE:
 
 ```html
-<ng-container *ngrxLet="obs$; $error as e; $complete as c"> ... </ng-container>
+<ng-container *ngrxLet="obs$; $error as e; $complete as c">
+  ...
+</ng-container>
 ```
 
 AFTER:
 
 ```html
-<ng-container *ngrxLet="obs$; error as e; complete as c"> ... </ng-container>
+<ng-container *ngrxLet="obs$; error as e; complete as c">
+  ...
+</ng-container>
 ```
 
 <a name="15.0.0-beta.1"></a>
@@ -2270,7 +2720,10 @@ login$ = createEffect(() =>
     ofType(LoginPageActions.login),
     mapToAction(
       // Happy path callback
-      (action) => this.authService.login(action.credentials).pipe(map((user) => AuthApiActions.loginSuccess({ user }))),
+      (action) =>
+        this.authService
+          .login(action.credentials)
+          .pipe(map((user) => AuthApiActions.loginSuccess({ user }))),
       // error callback
       (error) => AuthApiActions.loginFailure({ error })
     )
@@ -2287,7 +2740,12 @@ login$ = createEffect(
       ofType(LoginPageActions.login),
       mapToAction(
         // Happy path callback
-        (action) => this.authService.login(action.credentials).pipe(map((user) => AuthApiActions.loginSuccess({ user }))),
+        (action) =>
+          this.authService
+            .login(action.credentials)
+            .pipe(
+              map((user) => AuthApiActions.loginSuccess({ user }))
+            ),
         // error callback
         (error) => AuthApiActions.loginFailure({ error })
       )
@@ -2395,7 +2853,10 @@ export class AppModule {}
 BEFORE:
 
 ```ts
-const getTodosById = createSelector((state: TodoAppSchema, id: number) => state.todos.find((p) => p.id === id));
+const getTodosById = createSelector(
+  (state: TodoAppSchema, id: number) =>
+    state.todos.find((p) => p.id === id)
+);
 ```
 
 AFTER:
@@ -2945,7 +3406,9 @@ Router state snapshot is returned as a SerializedRouterStateSnapshot with cyclic
   After:
 
   ```ts
-  actions$.ofType('SOME_ACTION').map((action: SomeActionWithPayload) => action.payload);
+  actions$
+    .ofType('SOME_ACTION')
+    .map((action: SomeActionWithPayload) => action.payload);
   ```
 
 - **ErrorHandler:** The ErrorReporter has been replaced with ErrorHandler
@@ -3150,7 +3613,13 @@ AFTER:
 export class AppModule {}
 
 @NgModule({
-  imports: [EffectsModule.forFeature([FeatureSourceA, FeatureSourceB, FeatureSourceC])],
+  imports: [
+    EffectsModule.forFeature([
+      FeatureSourceA,
+      FeatureSourceB,
+      FeatureSourceC,
+    ]),
+  ],
 })
 export class SomeFeatureModule {}
 ```

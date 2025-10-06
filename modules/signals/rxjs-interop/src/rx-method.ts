@@ -8,19 +8,25 @@ import {
   Signal,
   untracked,
 } from '@angular/core';
-import { isObservable, noop, Observable, Subject, Unsubscribable } from 'rxjs';
+import { isObservable, noop, Observable, Subject } from 'rxjs';
 
-type RxMethod<Input> = ((
+declare const ngDevMode: unknown;
+
+type RxMethodRef = {
+  destroy: () => void;
+};
+
+export type RxMethod<Input> = ((
   input: Input | Signal<Input> | Observable<Input>,
   config?: { injector?: Injector }
-) => Unsubscribable) &
-  Unsubscribable;
+) => RxMethodRef) &
+  RxMethodRef;
 
 export function rxMethod<Input>(
   generator: (source$: Observable<Input>) => Observable<unknown>,
   config?: { injector?: Injector }
 ): RxMethod<Input> {
-  if (!config?.injector) {
+  if (typeof ngDevMode !== 'undefined' && ngDevMode && !config?.injector) {
     assertInInjectionContext(rxMethod);
   }
 
@@ -32,14 +38,31 @@ export function rxMethod<Input>(
   const rxMethodFn = (
     input: Input | Signal<Input> | Observable<Input>,
     config?: { injector?: Injector }
-  ) => {
+  ): RxMethodRef => {
     if (isStatic(input)) {
       source$.next(input);
-      return { unsubscribe: noop };
+      return { destroy: noop };
+    }
+
+    const callerInjector = getCallerInjector();
+    if (
+      typeof ngDevMode !== 'undefined' &&
+      ngDevMode &&
+      config?.injector === undefined &&
+      callerInjector === undefined
+    ) {
+      console.warn(
+        '@ngrx/signals/rxjs-interop: The reactive method was called outside',
+        'the injection context with a signal or observable. This may lead to',
+        'a memory leak. Make sure to call it within the injection context',
+        '(e.g. in a constructor or field initializer) or pass an injector',
+        'explicitly via the config parameter.\n\nFor more information, see:',
+        'https://ngrx.io/guide/signals/rxjs-integration#reactive-methods-and-injector-hierarchies'
+      );
     }
 
     const instanceInjector =
-      config?.injector ?? getCallerInjector() ?? sourceInjector;
+      config?.injector ?? callerInjector ?? sourceInjector;
 
     if (isSignal(input)) {
       const watcher = effect(
@@ -49,10 +72,9 @@ export function rxMethod<Input>(
         },
         { injector: instanceInjector }
       );
-      const instanceSub = { unsubscribe: () => watcher.destroy() };
-      sourceSub.add(instanceSub);
+      sourceSub.add({ unsubscribe: () => watcher.destroy() });
 
-      return instanceSub;
+      return watcher;
     }
 
     const instanceSub = input.subscribe((value) => source$.next(value));
@@ -64,9 +86,9 @@ export function rxMethod<Input>(
         .onDestroy(() => instanceSub.unsubscribe());
     }
 
-    return instanceSub;
+    return { destroy: () => instanceSub.unsubscribe() };
   };
-  rxMethodFn.unsubscribe = sourceSub.unsubscribe.bind(sourceSub);
+  rxMethodFn.destroy = sourceSub.unsubscribe.bind(sourceSub);
 
   return rxMethodFn;
 }
@@ -75,10 +97,10 @@ function isStatic<T>(value: T | Signal<T> | Observable<T>): value is T {
   return !isSignal(value) && !isObservable(value);
 }
 
-function getCallerInjector(): Injector | null {
+function getCallerInjector(): Injector | undefined {
   try {
     return inject(Injector);
   } catch {
-    return null;
+    return undefined;
   }
 }

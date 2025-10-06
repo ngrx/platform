@@ -1,0 +1,63 @@
+{
+  "name": "ACTIVE_RUNTIME_CHECKS",
+  "canonicalReference": "@ngrx/store!ACTIVE_RUNTIME_CHECKS:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/store/src/tokens.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/store!ACTIVE_RUNTIME_CHECKS:var",
+      "docComment": "/**\n * Runtime checks currently in use\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "ACTIVE_RUNTIME_CHECKS: "
+        },
+        {
+          "kind": "Reference",
+          "text": "InjectionToken",
+          "canonicalReference": "@angular/core!InjectionToken:class"
+        },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
+        {
+          "kind": "Reference",
+          "text": "RuntimeChecks",
+          "canonicalReference": "@ngrx/store!RuntimeChecks:interface"
+        },
+        {
+          "kind": "Content",
+          "text": ">"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/tokens.d.ts",
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "ACTIVE_RUNTIME_CHECKS",
+      "variableTypeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 5
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Runtime checks currently in use\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

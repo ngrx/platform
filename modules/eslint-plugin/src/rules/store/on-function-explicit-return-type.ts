@@ -18,9 +18,9 @@ export default createRule<Options, MessageIds>({
   meta: {
     type: 'suggestion',
     hasSuggestions: true,
-    ngrxModule: 'store',
     docs: {
       description: '`On` function should have an explicit return type.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {
@@ -32,8 +32,6 @@ export default createRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: (context) => {
-    const sourceCode = context.getSourceCode();
-
     return {
       [onFunctionWithoutType](node: TSESTree.ArrowFunctionExpression) {
         context.report({
@@ -42,7 +40,7 @@ export default createRule<Options, MessageIds>({
           suggest: [
             {
               messageId: onFunctionExplicitReturnTypeSuggest,
-              fix: (fixer) => getFixes(node, sourceCode, fixer),
+              fix: (fixer) => getFixes(node, context.sourceCode, fixer),
             },
           ],
         });

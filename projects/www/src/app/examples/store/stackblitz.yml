@@ -1,0 +1,9 @@
+name: 'Store Example'
+description: 'Basic demonstration of NgRx Store'
+extends: '../__base/stackblitz.yml'
+files:
+  src/my-counter/my-counter.component.ts: './src/my-counter/my-counter.component.ts'
+  src/app.component.ts: './src/app.component.ts'
+  src/app.config.ts: './src/app.config.ts'
+  src/counter.actions.ts: './src/counter.actions.ts'
+  src/counter.reducer.ts: './src/counter.reducer.ts'

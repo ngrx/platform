@@ -1,0 +1,82 @@
+{
+  "name": "PartialStateUpdater",
+  "canonicalReference": "@ngrx/signals!PartialStateUpdater:type",
+  "kind": "TypeAlias",
+  "fileUrlPath": "../../dist/modules/signals/src/state-source.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "TypeAlias",
+      "canonicalReference": "@ngrx/signals!PartialStateUpdater:type",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export type PartialStateUpdater<State extends "
+        },
+        {
+          "kind": "Content",
+          "text": "object"
+        },
+        {
+          "kind": "Content",
+          "text": "> = "
+        },
+        {
+          "kind": "Content",
+          "text": "(state: State) => "
+        },
+        {
+          "kind": "Reference",
+          "text": "Partial",
+          "canonicalReference": "!Partial:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<State>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/src/state-source.d.ts",
+      "releaseTag": "Public",
+      "name": "PartialStateUpdater",
+      "typeParameters": [
+        {
+          "typeParameterName": "State",
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "typeTokenRange": {
+        "startIndex": 3,
+        "endIndex": 6
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

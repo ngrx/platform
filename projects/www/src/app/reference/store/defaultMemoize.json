@@ -1,0 +1,115 @@
+{
+  "name": "defaultMemoize",
+  "canonicalReference": "@ngrx/store!defaultMemoize:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/store!defaultMemoize:function(1)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function defaultMemoize(projectionFn: "
+        },
+        {
+          "kind": "Reference",
+          "text": "AnyFn",
+          "canonicalReference": "@ngrx/store!~AnyFn:type"
+        },
+        {
+          "kind": "Content",
+          "text": ", isArgumentsEqual?: "
+        },
+        {
+          "kind": "Content",
+          "text": "typeof "
+        },
+        {
+          "kind": "Reference",
+          "text": "isEqualCheck",
+          "canonicalReference": "@ngrx/store!~isEqualCheck:function"
+        },
+        {
+          "kind": "Content",
+          "text": ", isResultEqual?: "
+        },
+        {
+          "kind": "Content",
+          "text": "typeof "
+        },
+        {
+          "kind": "Reference",
+          "text": "isEqualCheck",
+          "canonicalReference": "@ngrx/store!~isEqualCheck:function"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
+        {
+          "kind": "Reference",
+          "text": "MemoizedProjection",
+          "canonicalReference": "@ngrx/store!MemoizedProjection:type"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "returnTypeTokenRange": {
+        "startIndex": 9,
+        "endIndex": 10
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "projectionFn",
+          "parameterTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "isOptional": false
+        },
+        {
+          "parameterName": "isArgumentsEqual",
+          "parameterTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
+          "isOptional": true
+        },
+        {
+          "parameterName": "isResultEqual",
+          "parameterTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
+          "isOptional": true
+        }
+      ],
+      "name": "defaultMemoize",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

@@ -24,10 +24,10 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'suggestion',
-    ngrxModule: 'effects',
     hasSuggestions: true,
     docs: {
       description: '`Effect` should not call `store.dispatch`.',
+      ngrxModule: 'effects',
     },
     schema: [],
     messages: {

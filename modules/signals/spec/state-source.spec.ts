@@ -3,20 +3,25 @@ import {
   effect,
   EnvironmentInjector,
   Injectable,
+  signal,
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   getState,
+  isWritableStateSource,
   patchState,
   signalState,
   signalStore,
+  StateSource,
   watchState,
   withHooks,
   withMethods,
   withState,
 } from '../src';
 import { STATE_SOURCE } from '../src/state-source';
-import { createLocalService } from './helpers';
+import { assertStateSource, createLocalService } from './helpers';
+
+const SECRET = Symbol('SECRET');
 
 describe('StateSource', () => {
   const initialState = {
@@ -27,7 +32,32 @@ describe('StateSource', () => {
     foo: 'bar',
     numbers: [1, 2, 3],
     ngrx: 'signals',
+    [SECRET]: 'secret',
   };
+
+  const consoleWarnSpy = vi.spyOn(console, 'warn');
+
+  beforeEach(() => {
+    consoleWarnSpy.mockClear();
+  });
+
+  describe('isWritableStateSource', () => {
+    it('returns true for a writable StateSource', () => {
+      const stateSource: StateSource<{ value: typeof initialState }> = {
+        [STATE_SOURCE]: { value: signal(initialState) },
+      };
+
+      expect(isWritableStateSource(stateSource)).toBe(true);
+    });
+
+    it('returns false for a readonly StateSource', () => {
+      const stateSource: StateSource<{ value: typeof initialState }> = {
+        [STATE_SOURCE]: { value: signal(initialState).asReadonly() },
+      };
+
+      expect(isWritableStateSource(stateSource)).toBe(false);
+    });
+  });
 
   describe('patchState', () => {
     [
@@ -56,10 +86,12 @@ describe('StateSource', () => {
             foo: 'baz',
           });
 
-          expect(state[STATE_SOURCE]()).toEqual({
-            ...initialState,
-            user: { firstName: 'Johannes', lastName: 'Schmidt' },
-            foo: 'baz',
+          assertStateSource(state[STATE_SOURCE], {
+            user: signal({ firstName: 'Johannes', lastName: 'Schmidt' }),
+            foo: signal('baz'),
+            numbers: signal([1, 2, 3]),
+            ngrx: signal('signals'),
+            [SECRET]: signal('secret'),
           });
         });
 
@@ -71,11 +103,20 @@ describe('StateSource', () => {
             ngrx: 'rocks',
           }));
 
-          expect(state[STATE_SOURCE]()).toEqual({
-            ...initialState,
-            numbers: [1, 2, 3, 4],
-            ngrx: 'rocks',
+          assertStateSource(state[STATE_SOURCE], {
+            user: signal({ firstName: 'John', lastName: 'Smith' }),
+            foo: signal('bar'),
+            numbers: signal([1, 2, 3, 4]),
+            ngrx: signal('rocks'),
+            [SECRET]: signal('secret'),
           });
+        });
+
+        it('patches state slice with symbol key', () => {
+          const state = stateFactory();
+
+          patchState(state, { [SECRET]: 'another secret' });
+          expect(state[SECRET]()).toBe('another secret');
         });
 
         it('patches state via sequence of partial state objects and updater functions', () => {
@@ -89,11 +130,12 @@ describe('StateSource', () => {
             { foo: 'foo' }
           );
 
-          expect(state[STATE_SOURCE]()).toEqual({
-            ...initialState,
-            user: { firstName: 'Jovan', lastName: 'Schmidt' },
-            foo: 'foo',
-            numbers: [1, 2, 3, 4],
+          assertStateSource(state[STATE_SOURCE], {
+            user: signal({ firstName: 'Jovan', lastName: 'Schmidt' }),
+            foo: signal('foo'),
+            numbers: signal([1, 2, 3, 4]),
+            ngrx: signal('signals'),
+            [SECRET]: signal('secret'),
           });
         });
 
@@ -112,6 +154,96 @@ describe('StateSource', () => {
           expect(state.ngrx()).not.toBe(initialState.ngrx);
         });
       });
+    });
+
+    describe('undefined root properties', () => {
+      it('skips and warns on optional root properties, when they are missing in the init state', () => {
+        type UserState = {
+          id: number;
+          middleName?: string;
+        };
+        const initialState: UserState = { id: 1 };
+        const userState = signalState(initialState);
+
+        patchState(userState, { middleName: 'Michael' });
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith(
+          "@ngrx/signals: patchState was called with an unknown state slice 'middleName'.",
+          'Ensure that all state properties are explicitly defined in the initial state.',
+          'Updates to properties not present in the initial state will be ignored.'
+        );
+        expect(userState()).toEqual({ id: 1 });
+      });
+
+      it('updates optional properties with an initialized value', () => {
+        type UserState = {
+          id: number;
+          middleName?: string;
+        };
+        const initialState: UserState = { id: 1, middleName: 'Michael' };
+        const userState = signalState(initialState);
+
+        patchState(userState, { middleName: undefined });
+        expect(userState()).toEqual({ id: 1, middleName: undefined });
+
+        patchState(userState, { middleName: 'Martin' });
+        expect(userState()).toEqual({ id: 1, middleName: 'Martin' });
+
+        expect(consoleWarnSpy).not.toHaveBeenCalled();
+      });
+
+      it('supports root properties with union type of undefined and does not warn', () => {
+        type UserState = {
+          id: number;
+          middleName: string | undefined;
+        };
+        const initialState: UserState = { id: 1, middleName: undefined };
+        const userState = signalState(initialState);
+
+        patchState(userState, { middleName: 'Michael' });
+
+        expect(userState()).toEqual({ id: 1, middleName: 'Michael' });
+        expect(consoleWarnSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    it('sets only root properties which values have changed (equal check)', () => {
+      const UserStore = signalStore(
+        { providedIn: 'root', protectedState: false },
+        withState({
+          user: { firstName: 'John', lastName: 'Smith' },
+          city: 'Changan',
+        })
+      );
+      const store = TestBed.inject(UserStore);
+      let userChangedCount = 0;
+      TestBed.runInInjectionContext(() => {
+        effect(() => {
+          store.user();
+          userChangedCount++;
+        });
+      });
+
+      TestBed.tick();
+      expect(userChangedCount).toBe(1);
+
+      patchState(store, { city: 'Xian' });
+      TestBed.tick();
+      expect(userChangedCount).toBe(1);
+
+      patchState(store, (state) => state);
+      TestBed.tick();
+      expect(userChangedCount).toBe(1);
+
+      patchState(store, ({ user }) => ({ user }));
+      TestBed.tick();
+      expect(userChangedCount).toBe(1);
+
+      patchState(store, ({ user }) => ({
+        user: { ...user, firstName: 'Jane' },
+      }));
+      TestBed.tick();
+      expect(userChangedCount).toBe(2);
     });
   });
 
@@ -151,14 +283,35 @@ describe('StateSource', () => {
           });
         });
 
-        TestBed.flushEffects();
+        TestBed.tick();
         expect(executionCount).toBe(1);
 
         store.setFoo('baz');
 
-        TestBed.flushEffects();
+        TestBed.tick();
         expect(executionCount).toBe(2);
       });
+    });
+
+    it('does not support a dynamic dictionary as state', () => {
+      const Store = signalStore(
+        { providedIn: 'root' },
+        withState<Record<number, number>>({}),
+        withMethods((store) => ({
+          addNumber(num: number): void {
+            patchState(store, {
+              [num]: num,
+            });
+          },
+        }))
+      );
+      const store = TestBed.inject(Store);
+
+      store.addNumber(1);
+      store.addNumber(2);
+      store.addNumber(3);
+
+      expect(getState(store)).toEqual({});
     });
   });
 

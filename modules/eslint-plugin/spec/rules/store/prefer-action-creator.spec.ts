@@ -1,4 +1,8 @@
-import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
+import type { ESLintUtils } from '@typescript-eslint/utils';
+import type {
+  InvalidTestCase,
+  ValidTestCase,
+} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, {
   messageId,
@@ -7,9 +11,8 @@ import { ruleTester, fromFixture } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
-type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const valid: () => RunTests['valid'] = () => [
+const valid: () => (string | ValidTestCase<Options>)[] = () => [
   `const loadUser = createAction('[User Page] Load User')`,
   `
     class Test {
@@ -32,7 +35,7 @@ const valid: () => RunTests['valid'] = () => [
     }`,
 ];
 
-const invalid: () => RunTests['invalid'] = () => [
+const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(
     `
 class Test implements Action { type = '[Customer Page] Load Customer' }

@@ -15,17 +15,17 @@ type EffectResult<OT> = Observable<OT> | ((...args: any[]) => Observable<OT>);
 type ConditionallyDisallowActionCreator<DT, Result> = DT extends false
   ? unknown // If DT (DispatchType is false, then we don't enforce any return types)
   : Result extends EffectResult<infer OT>
-  ? OT extends ActionCreator
-    ? 'ActionCreator cannot be dispatched. Did you forget to call the action creator function?'
-    : unknown
-  : unknown;
+    ? OT extends ActionCreator
+      ? 'ActionCreator cannot be dispatched. Did you forget to call the action creator function?'
+      : unknown
+    : unknown;
 
 export function createEffect<
   C extends EffectConfig & { functional?: false },
   DT extends DispatchType<C>,
   OTP,
   R extends EffectResult<OT>,
-  OT extends ObservableType<DT, OTP>
+  OT extends ObservableType<DT, OTP>,
 >(
   source: () => R & ConditionallyDisallowActionCreator<DT, R>,
   config?: C
@@ -109,7 +109,7 @@ export function createEffect<Source extends () => Observable<Action>>(
  */
 export function createEffect<
   Result extends EffectResult<unknown>,
-  Source extends () => Result
+  Source extends () => Result,
 >(
   source: Source,
   config: EffectConfig = {}

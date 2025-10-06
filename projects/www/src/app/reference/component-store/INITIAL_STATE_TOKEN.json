@@ -1,0 +1,54 @@
+{
+  "name": "INITIAL_STATE_TOKEN",
+  "canonicalReference": "@ngrx/component-store!INITIAL_STATE_TOKEN:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/component-store/src/component-store.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/component-store!INITIAL_STATE_TOKEN:var",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "INITIAL_STATE_TOKEN: "
+        },
+        {
+          "kind": "Reference",
+          "text": "InjectionToken",
+          "canonicalReference": "@angular/core!InjectionToken:class"
+        },
+        {
+          "kind": "Content",
+          "text": "<unknown>"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/component-store/src/component-store.d.ts",
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "INITIAL_STATE_TOKEN",
+      "variableTypeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 3
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

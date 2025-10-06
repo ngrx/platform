@@ -121,14 +121,14 @@ describe('Reducer Schematic', () => {
   });
 
   it('should import into a specified module', async () => {
-    const options = { ...defaultOptions, module: 'app.module.ts' };
+    const options = { ...defaultOptions, module: 'app-module.ts' };
 
     const tree = await schematicRunner.runSchematic(
       'reducer',
       options,
       appTree
     );
-    const appModule = tree.readContent(`${projectPath}/src/app/app.module.ts`);
+    const appModule = tree.readContent(`${projectPath}/src/app/app-module.ts`);
 
     expect(appModule).toMatchSnapshot();
   });

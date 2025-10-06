@@ -92,7 +92,7 @@ export class EntityServicesBase implements EntityServices {
    */
   protected createEntityCollectionService<
     T,
-    S$ extends EntitySelectors$<T> = EntitySelectors$<T>
+    S$ extends EntitySelectors$<T> = EntitySelectors$<T>,
   >(entityName: string): EntityCollectionService<T> {
     return this.entityCollectionServiceFactory.create<T, S$>(entityName);
   }
@@ -102,7 +102,7 @@ export class EntityServicesBase implements EntityServices {
    */
   getEntityCollectionService<
     T,
-    S$ extends EntitySelectors$<T> = EntitySelectors$<T>
+    S$ extends EntitySelectors$<T> = EntitySelectors$<T>,
   >(entityName: string): EntityCollectionService<T> {
     let service = this.EntityCollectionServices[entityName];
     if (!service) {

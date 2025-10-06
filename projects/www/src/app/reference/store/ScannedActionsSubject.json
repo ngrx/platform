@@ -1,0 +1,133 @@
+{
+  "name": "ScannedActionsSubject",
+  "canonicalReference": "@ngrx/store!ScannedActionsSubject:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/store/src/scanned_actions_subject.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/store!ScannedActionsSubject:class",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class ScannedActionsSubject extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "Subject",
+          "canonicalReference": "rxjs!Subject:class"
+        },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
+        {
+          "kind": "Reference",
+          "text": "Action",
+          "canonicalReference": "@ngrx/store!Action:interface"
+        },
+        {
+          "kind": "Content",
+          "text": ">"
+        },
+        {
+          "kind": "Content",
+          "text": " implements "
+        },
+        {
+          "kind": "Reference",
+          "text": "OnDestroy",
+          "canonicalReference": "@angular/core!OnDestroy:interface"
+        },
+        {
+          "kind": "Content",
+          "text": " "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/scanned_actions_subject.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "ScannedActionsSubject",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/store!ScannedActionsSubject#ngOnDestroy:member(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "ngOnDestroy(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "ngOnDestroy",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRange": {
+        "startIndex": 1,
+        "endIndex": 5
+      },
+      "implementsTokenRanges": [
+        {
+          "startIndex": 6,
+          "endIndex": 7
+        }
+      ],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "name": "EFFECTS_ERROR_HANDLER",
+  "canonicalReference": "@ngrx/effects!EFFECTS_ERROR_HANDLER:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/effects/src/tokens.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/effects!EFFECTS_ERROR_HANDLER:var",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "EFFECTS_ERROR_HANDLER: "
+        },
+        {
+          "kind": "Reference",
+          "text": "InjectionToken",
+          "canonicalReference": "@angular/core!InjectionToken:class"
+        },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
+        {
+          "kind": "Reference",
+          "text": "EffectsErrorHandler",
+          "canonicalReference": "@ngrx/effects!EffectsErrorHandler:type"
+        },
+        {
+          "kind": "Content",
+          "text": ">"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/effects/src/tokens.d.ts",
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "EFFECTS_ERROR_HANDLER",
+      "variableTypeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 5
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

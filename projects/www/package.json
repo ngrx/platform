@@ -1,0 +1,7 @@
+{
+  "type": "module",
+  "scripts": {
+    "collect-docs": "npx tsx src/tools/extract-docs-content.ts",
+    "prepare-examples": "npx tsx src/tools/prepare-examples.ts"
+  }
+}

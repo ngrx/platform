@@ -3,6 +3,8 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "projects/example-app-e2e/src",
   "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["example-app"],
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
@@ -21,13 +23,11 @@
       "defaultConfiguration": "production"
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["projects/example-app-e2e/**/*.{js,ts}"]
       },
       "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["example-app"]
+  }
 }

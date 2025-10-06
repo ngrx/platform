@@ -20,7 +20,6 @@ export { EffectNotification } from './effect_notification';
 export { EffectsFeatureModule } from './effects_feature_module';
 export { EffectsRootModule } from './effects_root_module';
 export { EFFECTS_ERROR_HANDLER } from './tokens';
-export { act } from './act';
 export {
   OnIdentifyEffects,
   OnRunEffects,

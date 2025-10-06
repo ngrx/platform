@@ -4,6 +4,8 @@
   "projectType": "library",
   "sourceRoot": "modules/signals/src",
   "prefix": "ngrx",
+  "tags": [],
+  "generators": {},
   "targets": {
     "build-package": {
       "executor": "@angular-devkit/build-angular:ng-packagr",
@@ -21,17 +23,29 @@
             "command": "nx build-package signals"
           },
           {
-            "command": "yarn tsc -p modules/signals/tsconfig.schematics.json"
+            "command": "pnpm exec tsc -p modules/signals/tsconfig.schematics.json"
+          },
+          {
+            "command": "pnpm exec rimraf node_modules/@ngrx/signals"
+          },
+          {
+            "command": "pnpm exec mkdirp node_modules/@ngrx/signals"
+          },
+          {
+            "command": "ncp dist/modules/signals node_modules/@ngrx/signals"
           },
           {
             "command": "cpy LICENSE dist/modules/signals"
           }
         ]
       },
-      "outputs": ["{workspaceRoot}/dist/modules/signals"]
+      "outputs": [
+        "{workspaceRoot}/dist/modules/signals",
+        "{workspaceRoot}/node_modules/@ngrx/signals"
+      ]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "modules/signals/*/**/*.ts",
@@ -45,15 +59,9 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "options": {
-        "jestConfig": "modules/signals/jest.config.ts",
-        "runInBand": true,
-        "passWithNoTests": false
-      },
+      "executor": "@analogjs/vitest-angular:test",
+      "dependsOn": ["build"],
       "outputs": ["{workspaceRoot}/coverage/modules/signals"]
     }
-  },
-  "generators": {},
-  "tags": []
+  }
 }

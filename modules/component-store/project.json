@@ -4,6 +4,8 @@
   "projectType": "library",
   "sourceRoot": "modules/component-store/src",
   "prefix": "ngrx",
+  "tags": [],
+  "generators": {},
   "targets": {
     "build-package": {
       "executor": "@angular-devkit/build-angular:ng-packagr",
@@ -21,7 +23,7 @@
             "command": "nx build-package component-store"
           },
           {
-            "command": "yarn tsc -p modules/component-store/tsconfig.schematics.json"
+            "command": "pnpm exec tsc -p modules/component-store/tsconfig.schematics.json"
           },
           {
             "command": "cpy LICENSE dist/modules/component-store"
@@ -31,7 +33,7 @@
       "outputs": ["{workspaceRoot}/dist/modules/component-store"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "modules/component-store/*/**/*.ts",
@@ -49,7 +51,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/modules/component-store"]
     }
-  },
-  "generators": {},
-  "tags": []
+  }
 }

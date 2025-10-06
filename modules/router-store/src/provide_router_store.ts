@@ -1,8 +1,8 @@
 import {
-  ENVIRONMENT_INITIALIZER,
   EnvironmentProviders,
   inject,
   makeEnvironmentProviders,
+  provideEnvironmentInitializer,
 } from '@angular/core';
 import {
   _createRouterConfig,
@@ -37,7 +37,7 @@ import { StoreRouterConnectingService } from './store_router_connecting.service'
  * ```
  */
 export function provideRouterStore<
-  T extends BaseRouterStoreState = SerializedRouterStateSnapshot
+  T extends BaseRouterStoreState = SerializedRouterStateSnapshot,
 >(config: StoreRouterConfig<T> = {}): EnvironmentProviders {
   return makeEnvironmentProviders([
     { provide: _ROUTER_CONFIG, useValue: config },
@@ -51,16 +51,10 @@ export function provideRouterStore<
       useClass: config.serializer
         ? config.serializer
         : config.routerState === RouterState.Full
-        ? FullRouterStateSerializer
-        : MinimalRouterStateSerializer,
+          ? FullRouterStateSerializer
+          : MinimalRouterStateSerializer,
     },
-    {
-      provide: ENVIRONMENT_INITIALIZER,
-      multi: true,
-      useFactory() {
-        return () => inject(StoreRouterConnectingService);
-      },
-    },
+    provideEnvironmentInitializer(() => inject(StoreRouterConnectingService)),
     StoreRouterConnectingService,
   ]);
 }

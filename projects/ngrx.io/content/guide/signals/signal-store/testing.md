@@ -19,7 +19,7 @@ A key concern in testing is maintainability. The more tests are coupled to inter
 
 For example, when testing the store in a loading state, avoid directly setting the loading property. Instead, trigger a loading method and assert against an exposed computed property or slice. This approach reduces dependency on internal implementations, such as properties set during the loading state.
 
-From this perspective, private properties or methods of the SignalStore should not be accessed. Additionally, avoid running `patchState` if the state is protected.
+From this perspective, private properties or methods of the SignalStore should not be accessed.
 
 ---
 
@@ -117,6 +117,35 @@ describe('MoviesStore', () => {
 });
 
 </code-example>
+
+### `unprotected`
+
+The `unprotected` function from the `@ngrx/signals/testing` plugin is used to update the protected state of a SignalStore for testing purposes.
+This utility bypasses state encapsulation, making it possible to test state changes and their impacts.
+
+```ts
+// counter.store.ts
+const CounterStore = signalStore(
+  { providedIn: 'root' },
+  withState({ count: 1 }),
+  withComputed(({ count }) => ({
+    doubleCount: computed(() => count() * 2),
+  })),
+);
+
+// counter.store.spec.ts
+import { TestBed } from '@angular/core/testing';
+import { unprotected } from '@ngrx/signals/testing';
+
+describe('CounterStore', () => {
+  it('recomputes doubleCount on count changes', () => {
+    const counterStore = TestBed.inject(CounterStore);
+
+    patchState(unprotected(counterStore), { count: 10 });
+    expect(counterStore.doubleCount()).toBe(20);
+  });
+});
+```
 
 ### `withComputed`
 
@@ -381,9 +410,9 @@ describe('MoviesStore', () => {
 
 </code-example>
 
-It is important to account for the glitch-free effect when using Signals. The `rxMethod` relies on `effect`, which may need to be triggered manually through `TestBed.flushEffects()`.
+It is important to account for the glitch-free effect when using Signals. The `rxMethod` relies on `effect`, which may need to be triggered manually through `TestBed.tick()`.
 
-If the mocked `MovieService` operates synchronously, the following test fails unless `TestBed.flushEffects()` is called.
+If the mocked `MovieService` operates synchronously, the following test fails unless `TestBed.tick()` is called.
 
 <code-example header="movies.store.spec.ts">
 
@@ -413,11 +442,11 @@ describe('MoviesStore', () => {
     const store = TestBed.inject(MoviesStore);
     const studio = signal('Warner Bros');
     store.load(studio);
-    TestBed.flushEffects(); // required
+    TestBed.tick(); // required
     expect(store.movies()).toEqual([{ id: 1, name: 'Harry Potter' }]);
 
     studio.set('Universal');
-    TestBed.flushEffects(); // required
+    TestBed.tick(); // required
     expect(store.movies()).toEqual([{ id: 2, name: 'Jurassic Park' }]);
   });
 });
@@ -448,7 +477,6 @@ The `MovieComponent` utilizes the `MoviesStore` to display movies:
       }
     &lt;/ul&gt;
   `,
-  standalone: true,
   imports: [FormsModule],
 })
 export class MoviesComponent {

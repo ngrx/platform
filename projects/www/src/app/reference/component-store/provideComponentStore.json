@@ -1,0 +1,116 @@
+{
+  "name": "provideComponentStore",
+  "canonicalReference": "@ngrx/component-store!provideComponentStore:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/component-store/src/lifecycle_hooks.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/component-store!provideComponentStore:function(1)",
+      "docComment": "/**\n * @description\n *\n * Function that returns the ComponentStore class registered as a provider, and uses a factory provider to instantiate the ComponentStore and run the lifecycle hooks defined on the ComponentStore.\n *\n * @param componentStoreClass - The ComponentStore with lifecycle hooks\n *\n * @returns Provider[]\n *\n * @usageNotes\n * ```ts\n * @Injectable()\n * export class MyStore\n *    extends ComponentStore<{ init: boolean }>\n *    implements OnStoreInit, OnStateInit\n *   {\n *\n *   constructor() {\n *     super({ init: true });\n *   }\n *\n *   ngrxOnStoreInit() {\n *     // runs once after store has been instantiated\n *   }\n *\n *   ngrxOnStateInit() {\n *     // runs once after store state has been initialized\n *   }\n * }\n *\n * @Component({\n *   providers: [\n *     provideComponentStore(MyStore)\n *   ]\n * })\n * export class MyComponent {\n *   constructor(private myStore: MyStore) {}\n * }\n * ```\n *\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function provideComponentStore<T extends "
+        },
+        {
+          "kind": "Content",
+          "text": "object"
+        },
+        {
+          "kind": "Content",
+          "text": ">(componentStoreClass: "
+        },
+        {
+          "kind": "Reference",
+          "text": "Type",
+          "canonicalReference": "@angular/core!Type:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
+        {
+          "kind": "Reference",
+          "text": "ComponentStore",
+          "canonicalReference": "@ngrx/component-store!ComponentStore:class"
+        },
+        {
+          "kind": "Content",
+          "text": "<T>>"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
+        {
+          "kind": "Reference",
+          "text": "Provider",
+          "canonicalReference": "@angular/core!Provider:type"
+        },
+        {
+          "kind": "Content",
+          "text": "[]"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/component-store/src/lifecycle_hooks.d.ts",
+      "returnTypeTokenRange": {
+        "startIndex": 8,
+        "endIndex": 10
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "componentStoreClass",
+          "parameterTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 7
+          },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "name": "provideComponentStore",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "\n\nFunction that returns the ComponentStore class registered as a provider, and uses a factory provider to instantiate the ComponentStore and run the lifecycle hooks defined on the ComponentStore.\n\n",
+        "usageNotes": "\n```ts\n@Injectable()\nexport class MyStore\n   extends ComponentStore<{ init: boolean }>\n   implements OnStoreInit, OnStateInit\n  {\n\n  constructor() {\n    super({ init: true });\n  }\n\n  ngrxOnStoreInit() {\n    // runs once after store has been instantiated\n  }\n\n  ngrxOnStateInit() {\n    // runs once after store state has been initialized\n  }\n}\n\n@Component({\n  providers: [\n    provideComponentStore(MyStore)\n  ]\n})\nexport class MyComponent {\n  constructor(private myStore: MyStore) {}\n}\n```\n\n",
+        "remarks": "",
+        "deprecated": "",
+        "returns": " Provider[]\n\n",
+        "see": [],
+        "params": [
+          {
+            "name": "componentStoreClass",
+            "description": "The ComponentStore with lifecycle hooks\n\n"
+          }
+        ]
+      }
+    }
+  ]
+}

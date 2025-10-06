@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 
 import { StoreRouterConfig, StoreRouterConnectingModule } from '../src';
+import { RouterOutlet } from '@angular/router';
 
 export function createTestModule(
   opts: {
@@ -17,6 +18,7 @@ export function createTestModule(
   @Component({
     selector: 'test-app',
     template: '<router-outlet></router-outlet>',
+    imports: [RouterOutlet],
   })
   class AppComponent {}
 
@@ -27,7 +29,6 @@ export function createTestModule(
   class SimpleComponent {}
 
   TestBed.configureTestingModule({
-    declarations: [AppComponent, SimpleComponent],
     imports: [
       StoreModule.forRoot(opts.reducers),
       RouterTestingModule.withRoutes([

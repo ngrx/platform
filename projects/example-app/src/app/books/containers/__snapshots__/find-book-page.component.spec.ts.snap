@@ -21,7 +21,7 @@ exports[`Find Book Page should compile 1`] = `
         class="mat-mdc-card-content"
       >
         <mat-form-field
-          class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-no-animations mat-form-field-appearance-fill mat-primary"
+          class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-primary"
         >
           <div
             class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled mdc-text-field--no-label"
@@ -39,6 +39,7 @@ exports[`Find Book Page should compile 1`] = `
                   aria-invalid="false"
                   aria-required="false"
                   class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input cdk-text-field-autofill-monitored"
+                  id="mat-input-a0"
                   matinput=""
                   placeholder="Search for a book"
                 />
@@ -53,8 +54,9 @@ exports[`Find Book Page should compile 1`] = `
             class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"
           >
             <div
-              class="mat-mdc-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
-              style="opacity: 1; transform: translateY(0%);"
+              aria-atomic="true"
+              aria-live="polite"
+              class="mat-mdc-form-field-hint-wrapper"
             >
               <div
                 class="mat-mdc-form-field-hint-spacer"
@@ -68,7 +70,7 @@ exports[`Find Book Page should compile 1`] = `
           class="mat-mdc-progress-spinner mdc-circular-progress mat-primary _mat-animation-noopable mdc-circular-progress--indeterminate"
           mode="indeterminate"
           role="progressbar"
-          style="width: 30px; height: 30px; --mdc-circular-progress-size: 30px; --mdc-circular-progress-active-indicator-width: 30px;"
+          style="width: 30px; height: 30px; --mat-progress-spinner-size: 30px; --mat-progress-spinner-active-indicator-width: 30px;"
           tabindex="-1"
         >
           <div

@@ -23,9 +23,9 @@ export default createRule<Options, MessageIds>({
   meta: {
     type: 'suggestion',
     hasSuggestions: true,
-    ngrxModule: 'store',
     docs: {
       description: `Avoid the word "${reducerKeyword}" in the key names.`,
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

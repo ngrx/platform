@@ -225,9 +225,8 @@ describe('Component Store', () => {
         const UPDATED_STATE = { updatedState: 'proccessed' };
 
         // Record all the values that go through state$.
-        const recordedStateValues$ = componentStore.state$.pipe(
-          publishReplay()
-        );
+        const recordedStateValues$ =
+          componentStore.state$.pipe(publishReplay());
         // Need to "connect" to start getting notifications.
         (recordedStateValues$ as ConnectableObservable<object>).connect();
 
@@ -410,9 +409,8 @@ describe('Component Store', () => {
         );
 
         // Record all the values that go through state$.
-        const recordedStateValues$ = componentStore.state$.pipe(
-          publishReplay()
-        );
+        const recordedStateValues$ =
+          componentStore.state$.pipe(publishReplay());
         // Need to "connect" to start getting notifications.
         (recordedStateValues$ as ConnectableObservable<object>).connect();
 

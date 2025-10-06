@@ -1,0 +1,55 @@
+{
+  "name": "withEffects",
+  "canonicalReference": "@ngrx/data!withEffects:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/data/src/provide-entity-data.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/data!withEffects:function(1)",
+      "docComment": "/**\n * Registers entity data effects and provides HTTP data services.\n *\n * @see\n *\n * `provideEntityData`\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function withEffects(): "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityDataFeature",
+          "canonicalReference": "@ngrx/data!~EntityDataFeature:interface"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/provide-entity-data.d.ts",
+      "returnTypeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 2
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [],
+      "name": "withEffects",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Registers entity data effects and provides HTTP data services.\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": ["\n\n`provideEntityData`\n"],
+        "params": []
+      }
+    }
+  ]
+}

@@ -72,6 +72,6 @@ export function guidComparer(l: string, r: string) {
       ? -1
       : +(lLow !== rLow)
     : l < r
-    ? -1
-    : +(l !== r);
+      ? -1
+      : +(l !== r);
 }

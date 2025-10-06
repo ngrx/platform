@@ -24,7 +24,7 @@ exports[`Login Page should compile 1`] = `
         >
           <p>
             <mat-form-field
-              class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-no-animations mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine ng-valid"
+              class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine ng-valid"
             >
               <div
                 class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled mdc-text-field--no-label"
@@ -43,6 +43,7 @@ exports[`Login Page should compile 1`] = `
                       aria-required="false"
                       class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
                       formcontrolname="username"
+                      id="mat-input-a0"
                       matinput=""
                       placeholder="Username"
                       type="text"
@@ -58,8 +59,9 @@ exports[`Login Page should compile 1`] = `
                 class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"
               >
                 <div
-                  class="mat-mdc-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
-                  style="opacity: 1; transform: translateY(0%);"
+                  aria-atomic="true"
+                  aria-live="polite"
+                  class="mat-mdc-form-field-hint-wrapper"
                 >
                   <div
                     class="mat-mdc-form-field-hint-spacer"
@@ -70,7 +72,7 @@ exports[`Login Page should compile 1`] = `
           </p>
           <p>
             <mat-form-field
-              class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-no-animations mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine ng-valid"
+              class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-primary ng-untouched ng-pristine ng-valid"
             >
               <div
                 class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled mdc-text-field--no-label"
@@ -89,6 +91,7 @@ exports[`Login Page should compile 1`] = `
                       aria-required="false"
                       class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored"
                       formcontrolname="password"
+                      id="mat-input-a1"
                       matinput=""
                       placeholder="Password"
                       type="password"
@@ -104,8 +107,9 @@ exports[`Login Page should compile 1`] = `
                 class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"
               >
                 <div
-                  class="mat-mdc-form-field-hint-wrapper ng-trigger ng-trigger-transitionMessages"
-                  style="opacity: 1; transform: translateY(0%);"
+                  aria-atomic="true"
+                  aria-live="polite"
+                  class="mat-mdc-form-field-hint-wrapper"
                 >
                   <div
                     class="mat-mdc-form-field-hint-spacer"
@@ -118,7 +122,7 @@ exports[`Login Page should compile 1`] = `
             class="login-buttons"
           >
             <button
-              class="mdc-button mat-mdc-button _mat-animation-noopable mat-unthemed mat-mdc-button-base"
+              class="mdc-button mat-mdc-button-base mat-mdc-button mat-unthemed _mat-animation-noopable"
               mat-button=""
               mat-ripple-loader-class-name="mat-mdc-button-ripple"
               mat-ripple-loader-uninitialized=""
@@ -133,7 +137,7 @@ exports[`Login Page should compile 1`] = `
                 Login
               </span>
               <span
-                class="mat-mdc-focus-indicator"
+                class="mat-focus-indicator"
               />
               <span
                 class="mat-mdc-button-touch-target"

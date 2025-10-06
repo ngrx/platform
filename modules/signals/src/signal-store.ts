@@ -1,4 +1,4 @@
-import { DestroyRef, inject, Injectable, signal, Type } from '@angular/core';
+import { DestroyRef, inject, Injectable, Type } from '@angular/core';
 import { STATE_SOURCE, StateSource, WritableStateSource } from './state-source';
 import {
   EmptyFeatureResult,
@@ -15,7 +15,7 @@ type SignalStoreMembers<FeatureResult extends SignalStoreFeatureResult> =
   Prettify<
     OmitPrivate<
       StateSignals<FeatureResult['state']> &
-        FeatureResult['computed'] &
+        FeatureResult['props'] &
         FeatureResult['methods']
     >
   >;
@@ -28,7 +28,7 @@ export function signalStore<F1 extends SignalStoreFeatureResult>(
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2
+  R extends SignalStoreFeatureResult = F1 & F2,
 >(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>
@@ -37,7 +37,7 @@ export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
   F3 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3
+  R extends SignalStoreFeatureResult = F1 & F2 & F3,
 >(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
@@ -48,7 +48,7 @@ export function signalStore<
   F2 extends SignalStoreFeatureResult,
   F3 extends SignalStoreFeatureResult,
   F4 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4,
 >(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
@@ -61,7 +61,7 @@ export function signalStore<
   F3 extends SignalStoreFeatureResult,
   F4 extends SignalStoreFeatureResult,
   F5 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5,
 >(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
@@ -76,7 +76,7 @@ export function signalStore<
   F4 extends SignalStoreFeatureResult,
   F5 extends SignalStoreFeatureResult,
   F6 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6,
 >(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
@@ -93,7 +93,7 @@ export function signalStore<
   F5 extends SignalStoreFeatureResult,
   F6 extends SignalStoreFeatureResult,
   F7 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6 & F7
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6 & F7,
 >(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
@@ -112,7 +112,7 @@ export function signalStore<
   F6 extends SignalStoreFeatureResult,
   F7 extends SignalStoreFeatureResult,
   F8 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8,
 >(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
@@ -141,7 +141,7 @@ export function signalStore<
     F6 &
     F7 &
     F8 &
-    F9
+    F9,
 >(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
@@ -173,7 +173,7 @@ export function signalStore<
     F7 &
     F8 &
     F9 &
-    F10
+    F10,
 >(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
@@ -208,7 +208,7 @@ export function signalStore<
     F8 &
     F9 &
     F10 &
-    F11
+    F11,
 >(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
@@ -246,7 +246,7 @@ export function signalStore<
     F9 &
     F10 &
     F11 &
-    F12
+    F12,
 >(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
@@ -293,7 +293,7 @@ export function signalStore<
     F10 &
     F11 &
     F12 &
-    F13
+    F13,
 >(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
@@ -346,7 +346,7 @@ export function signalStore<
     F11 &
     F12 &
     F13 &
-    F14
+    F14,
 >(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
@@ -405,7 +405,7 @@ export function signalStore<
     F12 &
     F13 &
     F14 &
-    F15
+    F15,
 >(
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
   f2: SignalStoreFeature<{} & F1, F2>,
@@ -448,7 +448,7 @@ export function signalStore<F1 extends SignalStoreFeatureResult>(
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2
+  R extends SignalStoreFeatureResult = F1 & F2,
 >(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -458,7 +458,7 @@ export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
   F3 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3
+  R extends SignalStoreFeatureResult = F1 & F2 & F3,
 >(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -470,7 +470,7 @@ export function signalStore<
   F2 extends SignalStoreFeatureResult,
   F3 extends SignalStoreFeatureResult,
   F4 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4,
 >(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -484,7 +484,7 @@ export function signalStore<
   F3 extends SignalStoreFeatureResult,
   F4 extends SignalStoreFeatureResult,
   F5 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5,
 >(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -500,7 +500,7 @@ export function signalStore<
   F4 extends SignalStoreFeatureResult,
   F5 extends SignalStoreFeatureResult,
   F6 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6,
 >(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -518,7 +518,7 @@ export function signalStore<
   F5 extends SignalStoreFeatureResult,
   F6 extends SignalStoreFeatureResult,
   F7 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6 & F7
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6 & F7,
 >(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -538,7 +538,7 @@ export function signalStore<
   F6 extends SignalStoreFeatureResult,
   F7 extends SignalStoreFeatureResult,
   F8 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8,
 >(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -568,7 +568,7 @@ export function signalStore<
     F6 &
     F7 &
     F8 &
-    F9
+    F9,
 >(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -601,7 +601,7 @@ export function signalStore<
     F7 &
     F8 &
     F9 &
-    F10
+    F10,
 >(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -637,7 +637,7 @@ export function signalStore<
     F8 &
     F9 &
     F10 &
-    F11
+    F11,
 >(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -676,7 +676,7 @@ export function signalStore<
     F9 &
     F10 &
     F11 &
-    F12
+    F12,
 >(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -724,7 +724,7 @@ export function signalStore<
     F10 &
     F11 &
     F12 &
-    F13
+    F13,
 >(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -778,7 +778,7 @@ export function signalStore<
     F11 &
     F12 &
     F13 &
-    F14
+    F14,
 >(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -838,7 +838,7 @@ export function signalStore<
     F12 &
     F13 &
     F14 &
-    F15
+    F15,
 >(
   config: { providedIn?: 'root'; protectedState?: true },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -883,7 +883,7 @@ export function signalStore<F1 extends SignalStoreFeatureResult>(
 export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2
+  R extends SignalStoreFeatureResult = F1 & F2,
 >(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -895,7 +895,7 @@ export function signalStore<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
   F3 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3
+  R extends SignalStoreFeatureResult = F1 & F2 & F3,
 >(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -909,7 +909,7 @@ export function signalStore<
   F2 extends SignalStoreFeatureResult,
   F3 extends SignalStoreFeatureResult,
   F4 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4,
 >(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -925,7 +925,7 @@ export function signalStore<
   F3 extends SignalStoreFeatureResult,
   F4 extends SignalStoreFeatureResult,
   F5 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5,
 >(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -943,7 +943,7 @@ export function signalStore<
   F4 extends SignalStoreFeatureResult,
   F5 extends SignalStoreFeatureResult,
   F6 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6,
 >(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -963,7 +963,7 @@ export function signalStore<
   F5 extends SignalStoreFeatureResult,
   F6 extends SignalStoreFeatureResult,
   F7 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6 & F7
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6 & F7,
 >(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -985,7 +985,7 @@ export function signalStore<
   F6 extends SignalStoreFeatureResult,
   F7 extends SignalStoreFeatureResult,
   F8 extends SignalStoreFeatureResult,
-  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8
+  R extends SignalStoreFeatureResult = F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8,
 >(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -1017,7 +1017,7 @@ export function signalStore<
     F6 &
     F7 &
     F8 &
-    F9
+    F9,
 >(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -1052,7 +1052,7 @@ export function signalStore<
     F7 &
     F8 &
     F9 &
-    F10
+    F10,
 >(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -1090,7 +1090,7 @@ export function signalStore<
     F8 &
     F9 &
     F10 &
-    F11
+    F11,
 >(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -1131,7 +1131,7 @@ export function signalStore<
     F9 &
     F10 &
     F11 &
-    F12
+    F12,
 >(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -1181,7 +1181,7 @@ export function signalStore<
     F10 &
     F11 &
     F12 &
-    F13
+    F13,
 >(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -1237,7 +1237,7 @@ export function signalStore<
     F11 &
     F12 &
     F13 &
-    F14
+    F14,
 >(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -1299,7 +1299,7 @@ export function signalStore<
     F12 &
     F13 &
     F14 &
-    F15
+    F15,
 >(
   config: { providedIn?: 'root'; protectedState: false },
   f1: SignalStoreFeature<EmptyFeatureResult, F1>,
@@ -1354,12 +1354,16 @@ export function signalStore(
         (store, feature) => feature(store),
         getInitialInnerStore()
       );
-      const { stateSignals, computedSignals, methods, hooks } = innerStore;
-      const storeMembers = { ...stateSignals, ...computedSignals, ...methods };
+      const { stateSignals, props, methods, hooks } = innerStore;
+      const storeMembers: Record<string | symbol, unknown> = {
+        ...stateSignals,
+        ...props,
+        ...methods,
+      };
 
       (this as any)[STATE_SOURCE] = innerStore[STATE_SOURCE];
 
-      for (const key in storeMembers) {
+      for (const key of Reflect.ownKeys(storeMembers)) {
         (this as any)[key] = storeMembers[key];
       }
 
@@ -1380,9 +1384,9 @@ export function signalStore(
 
 export function getInitialInnerStore(): InnerSignalStore {
   return {
-    [STATE_SOURCE]: signal({}),
+    [STATE_SOURCE]: {},
     stateSignals: {},
-    computedSignals: {},
+    props: {},
     methods: {},
     hooks: {},
   };

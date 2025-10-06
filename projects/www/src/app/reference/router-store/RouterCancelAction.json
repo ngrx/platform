@@ -1,0 +1,103 @@
+{
+  "name": "routerCancelAction",
+  "canonicalReference": "@ngrx/router-store!routerCancelAction:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/router-store!routerCancelAction:var",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "routerCancelAction: "
+        },
+        {
+          "kind": "Content",
+          "text": "import(\"@ngrx/store\")."
+        },
+        {
+          "kind": "Reference",
+          "text": "ActionCreator",
+          "canonicalReference": "@ngrx/store!ActionCreator:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<\"@ngrx/router-store/cancel\", (props: {\n    payload: "
+        },
+        {
+          "kind": "Reference",
+          "text": "RouterCancelPayload",
+          "canonicalReference": "@ngrx/router-store!RouterCancelPayload:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
+        {
+          "kind": "Reference",
+          "text": "SerializedRouterStateSnapshot",
+          "canonicalReference": "@ngrx/router-store!SerializedRouterStateSnapshot:interface"
+        },
+        {
+          "kind": "Content",
+          "text": ">;\n}) => {\n    payload: "
+        },
+        {
+          "kind": "Reference",
+          "text": "RouterCancelPayload",
+          "canonicalReference": "@ngrx/router-store!RouterCancelPayload:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
+        {
+          "kind": "Reference",
+          "text": "SerializedRouterStateSnapshot",
+          "canonicalReference": "@ngrx/router-store!SerializedRouterStateSnapshot:interface"
+        },
+        {
+          "kind": "Content",
+          "text": ">;\n} & import(\"@ngrx/store\")."
+        },
+        {
+          "kind": "Reference",
+          "text": "Action",
+          "canonicalReference": "@ngrx/store!Action:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<\"@ngrx/router-store/cancel\">>"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "routerCancelAction",
+      "variableTypeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 14
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

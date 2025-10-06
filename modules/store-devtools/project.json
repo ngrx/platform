@@ -4,6 +4,15 @@
   "projectType": "library",
   "sourceRoot": "modules/store-devtools/src",
   "prefix": "ngrx",
+  "tags": [],
+  "generators": {
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
+    }
+  },
   "targets": {
     "build-package": {
       "executor": "@angular-devkit/build-angular:ng-packagr",
@@ -21,7 +30,7 @@
             "command": "nx build-package store-devtools"
           },
           {
-            "command": "yarn tsc -p modules/store-devtools/tsconfig.schematics.json"
+            "command": "pnpm exec tsc -p modules/store-devtools/tsconfig.schematics.json"
           },
           {
             "command": "cpy LICENSE dist/modules/store-devtools"
@@ -31,7 +40,7 @@
       "outputs": ["{workspaceRoot}/dist/modules/store-devtools"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "modules/store-devtools/*/**/*.ts",
@@ -49,14 +58,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/modules/store-devtools"]
     }
-  },
-  "generators": {
-    "@angular-eslint/schematics:application": {
-      "setParserOptionsProject": true
-    },
-    "@angular-eslint/schematics:library": {
-      "setParserOptionsProject": true
-    }
-  },
-  "tags": []
+  }
 }

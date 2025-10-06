@@ -4,6 +4,8 @@
   "projectType": "library",
   "sourceRoot": "modules/operators/src",
   "prefix": "ngrx",
+  "tags": [],
+  "generators": {},
   "targets": {
     "build-package": {
       "executor": "@angular-devkit/build-angular:ng-packagr",
@@ -21,7 +23,7 @@
             "command": "nx build-package operators"
           },
           {
-            "command": "yarn tsc -p modules/operators/tsconfig.schematics.json"
+            "command": "pnpm exec tsc -p modules/operators/tsconfig.schematics.json"
           },
           {
             "command": "cpy LICENSE dist/modules/operators"
@@ -31,7 +33,7 @@
       "outputs": ["{workspaceRoot}/dist/modules/operators"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "modules/operators/*/**/*.ts",
@@ -49,7 +51,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/modules/operators"]
     }
-  },
-  "generators": {},
-  "tags": []
+  }
 }

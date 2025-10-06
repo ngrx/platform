@@ -1,0 +1,125 @@
+{
+  "name": "EntityDataModule",
+  "canonicalReference": "@ngrx/data!EntityDataModule:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/entity-data.module.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!EntityDataModule:class",
+      "docComment": "/**\n * entity-data main module includes effects and HTTP data services Configure with `forRoot`. No `forFeature` yet.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class EntityDataModule "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/entity-data.module.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "EntityDataModule",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDataModule.forRoot:member(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "static forRoot(config: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityDataModuleConfig",
+              "canonicalReference": "@ngrx/data!EntityDataModuleConfig:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "ModuleWithProviders",
+              "canonicalReference": "@angular/core!ModuleWithProviders:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityDataModule",
+              "canonicalReference": "@ngrx/data!EntityDataModule:class"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "config",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "forRoot",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "entity-data main module includes effects and HTTP data services Configure with `forRoot`. No `forFeature` yet.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

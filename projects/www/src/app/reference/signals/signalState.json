@@ -1,0 +1,87 @@
+{
+  "name": "SignalState",
+  "canonicalReference": "@ngrx/signals!SignalState:type",
+  "kind": "TypeAlias",
+  "fileUrlPath": "../../dist/modules/signals/src/signal-state.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "TypeAlias",
+      "canonicalReference": "@ngrx/signals!SignalState:type",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export type SignalState<State extends "
+        },
+        {
+          "kind": "Content",
+          "text": "object"
+        },
+        {
+          "kind": "Content",
+          "text": "> = "
+        },
+        {
+          "kind": "Reference",
+          "text": "DeepSignal",
+          "canonicalReference": "@ngrx/signals!DeepSignal:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<State> & "
+        },
+        {
+          "kind": "Reference",
+          "text": "WritableStateSource",
+          "canonicalReference": "@ngrx/signals!WritableStateSource:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<State>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/src/signal-state.d.ts",
+      "releaseTag": "Public",
+      "name": "SignalState",
+      "typeParameters": [
+        {
+          "typeParameterName": "State",
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "typeTokenRange": {
+        "startIndex": 3,
+        "endIndex": 7
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

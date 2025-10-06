@@ -1,4 +1,4 @@
-import * as globby from 'globby';
+import { glob } from 'tinyglobby';
 import * as fs from 'fs';
 import { packages as ngrxPackages } from './config';
 
@@ -15,7 +15,7 @@ const EXAMPLE_FILES = [
 ];
 
 (async () => {
-  const paths = await globby(EXAMPLE_FILES, { ignore: ['**/node_modules/**'] });
+  const paths = await glob(EXAMPLE_FILES, { ignore: ['**/node_modules/**'] });
 
   const files = paths.reduce((files, filePath) => {
     const contents = fs.readFileSync(filePath, 'utf-8');

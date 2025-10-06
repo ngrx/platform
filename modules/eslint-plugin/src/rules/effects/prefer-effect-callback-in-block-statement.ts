@@ -13,9 +13,9 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'suggestion',
-    ngrxModule: 'effects',
     docs: {
       description: 'A block statement is easier to troubleshoot.',
+      ngrxModule: 'effects',
     },
     schema: [],
     messages: {
@@ -26,7 +26,6 @@ export default createRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: (context) => {
-    const sourceCode = context.getSourceCode();
     const nonParametrizedEffect =
       `${createEffectExpression} > ArrowFunctionExpression > .body[type!=/^(ArrowFunctionExpression|BlockStatement)$/]` as const;
     const parametrizedEffect =
@@ -43,7 +42,7 @@ export default createRule<Options, MessageIds>({
           messageId,
           fix: (fixer) => {
             const [previousNode, nextNode] = getSafeNodesToApplyFix(
-              sourceCode,
+              context.sourceCode,
               node
             );
             return [

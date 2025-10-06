@@ -1,0 +1,92 @@
+{
+  "name": "RouterNavigatedPayload",
+  "canonicalReference": "@ngrx/router-store!RouterNavigatedPayload:type",
+  "kind": "TypeAlias",
+  "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "TypeAlias",
+      "canonicalReference": "@ngrx/router-store!RouterNavigatedPayload:type",
+      "docComment": "/**\n * Payload of ROUTER_NAVIGATED.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export type RouterNavigatedPayload<T extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "BaseRouterStoreState",
+          "canonicalReference": "@ngrx/router-store!BaseRouterStoreState:interface"
+        },
+        {
+          "kind": "Content",
+          "text": " = "
+        },
+        {
+          "kind": "Reference",
+          "text": "SerializedRouterStateSnapshot",
+          "canonicalReference": "@ngrx/router-store!SerializedRouterStateSnapshot:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "> = "
+        },
+        {
+          "kind": "Content",
+          "text": "{\n    routerState: T;\n    event: "
+        },
+        {
+          "kind": "Reference",
+          "text": "NavigationEnd",
+          "canonicalReference": "@angular/router!NavigationEnd:class"
+        },
+        {
+          "kind": "Content",
+          "text": ";\n}"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+      "releaseTag": "Public",
+      "name": "RouterNavigatedPayload",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          }
+        }
+      ],
+      "typeTokenRange": {
+        "startIndex": 5,
+        "endIndex": 8
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Payload of ROUTER_NAVIGATED.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

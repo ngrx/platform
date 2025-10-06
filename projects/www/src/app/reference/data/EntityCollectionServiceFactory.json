@@ -1,0 +1,268 @@
+{
+  "name": "EntityCollectionServiceFactory",
+  "canonicalReference": "@ngrx/data!EntityCollectionServiceFactory:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/entity-services/entity-collection-service-factory.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!EntityCollectionServiceFactory:class",
+      "docComment": "/**\n * Creates EntityCollectionService instances for a cached collection of T entities in the ngrx store.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class EntityCollectionServiceFactory "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/entity-services/entity-collection-service-factory.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "EntityCollectionServiceFactory",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Constructor",
+          "canonicalReference": "@ngrx/data!EntityCollectionServiceFactory:constructor(1)",
+          "docComment": "/**\n * Constructs a new instance of the `EntityCollectionServiceFactory` class\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "constructor(\n    entityCollectionServiceElementsFactory: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollectionServiceElementsFactory",
+              "canonicalReference": "@ngrx/data!EntityCollectionServiceElementsFactory:class"
+            },
+            {
+              "kind": "Content",
+              "text": ");"
+            }
+          ],
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityCollectionServiceElementsFactory",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Constructs a new instance of the `EntityCollectionServiceFactory` class\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityCollectionServiceFactory#create:member(1)",
+          "docComment": "/**\n * Create an EntityCollectionService for an entity type\n *\n * @param entityName - name of the entity type\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "create<T, S$ extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntitySelectors$",
+              "canonicalReference": "@ngrx/data!EntitySelectors$:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": " = "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntitySelectors$",
+              "canonicalReference": "@ngrx/data!EntitySelectors$:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ">(entityName: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollectionService",
+              "canonicalReference": "@ngrx/data!EntityCollectionService:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "S$",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 6
+              }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 9,
+            "endIndex": 11
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityName",
+              "parameterTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "create",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Create an EntityCollectionService for an entity type\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entityName",
+                "description": "name of the entity type\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityCollectionServiceFactory#entityCollectionServiceElementsFactory:member",
+          "docComment": "/**\n * Creates the core elements of the EntityCollectionService for an entity type.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "entityCollectionServiceElementsFactory: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollectionServiceElementsFactory",
+              "canonicalReference": "@ngrx/data!EntityCollectionServiceElementsFactory:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "entityCollectionServiceElementsFactory",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Creates the core elements of the EntityCollectionService for an entity type.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Creates EntityCollectionService instances for a cached collection of T entities in the ngrx store.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

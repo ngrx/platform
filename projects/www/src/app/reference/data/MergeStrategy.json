@@ -1,0 +1,157 @@
+{
+  "name": "MergeStrategy",
+  "canonicalReference": "@ngrx/data!MergeStrategy:enum",
+  "kind": "Enum",
+  "fileUrlPath": "../../dist/modules/data/src/actions/merge-strategy.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Enum",
+      "canonicalReference": "@ngrx/data!MergeStrategy:enum",
+      "docComment": "/**\n * How to merge an entity, after query or save, when the corresponding entity in the collection has unsaved changes.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare enum MergeStrategy "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/actions/merge-strategy.d.ts",
+      "releaseTag": "Public",
+      "name": "MergeStrategy",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!MergeStrategy.IgnoreChanges:member",
+          "docComment": "/**\n * Update the collection entities and ignore all change tracking for this operation. Each entity's `changeState` is untouched.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "IgnoreChanges = "
+            },
+            {
+              "kind": "Content",
+              "text": "0"
+            }
+          ],
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "name": "IgnoreChanges",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Update the collection entities and ignore all change tracking for this operation. Each entity's `changeState` is untouched.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!MergeStrategy.OverwriteChanges:member",
+          "docComment": "/**\n * Replace the current collection entities. For each merged entity it discards the `changeState` and sets the `changeType` to \"unchanged\". This is the save-success default.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "OverwriteChanges = "
+            },
+            {
+              "kind": "Content",
+              "text": "2"
+            }
+          ],
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "name": "OverwriteChanges",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Replace the current collection entities. For each merged entity it discards the `changeState` and sets the `changeType` to \"unchanged\". This is the save-success default.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/data!MergeStrategy.PreserveChanges:member",
+          "docComment": "/**\n * Updates current values for unchanged entities. For each changed entity it preserves the current value and overwrites the `originalValue` with the merge entity. This is the query-success default.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "PreserveChanges = "
+            },
+            {
+              "kind": "Content",
+              "text": "1"
+            }
+          ],
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "name": "PreserveChanges",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Updates current values for unchanged entities. For each changed entity it preserves the current value and overwrites the `originalValue` with the merge entity. This is the query-success default.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "How to merge an entity, after query or save, when the corresponding entity in the collection has unsaved changes.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

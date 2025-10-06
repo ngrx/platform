@@ -17,9 +17,9 @@ export default createRule<Options, MessageIds>({
   meta: {
     type: 'suggestion',
     hasSuggestions: true,
-    ngrxModule: 'store',
     docs: {
       description: 'Prefer using a single generic to define the feature state.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {
@@ -31,8 +31,6 @@ export default createRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: (context) => {
-    const sourceCode = context.getSourceCode();
-
     return {
       [`CallExpression[callee.name='createFeatureSelector'] > TSTypeParameterInstantiation[params.length>1]`](
         node: TSESTree.TSTypeParameterInstantiation
@@ -45,7 +43,7 @@ export default createRule<Options, MessageIds>({
               messageId: preferOneGenericInCreateForFeatureSelectorSuggest,
               fix: (fixer) => {
                 const [globalState] = node.params;
-                const nextToken = sourceCode.getTokenAfter(globalState);
+                const nextToken = context.sourceCode.getTokenAfter(globalState);
                 return fixer.removeRange([
                   globalState.range[0],
                   nextToken?.range[1] ?? globalState.range[1] + 1,

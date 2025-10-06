@@ -1,0 +1,54 @@
+{
+  "name": "ENTITY_CACHE_NAME_TOKEN",
+  "canonicalReference": "@ngrx/data!ENTITY_CACHE_NAME_TOKEN:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/data/src/reducers/constants.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/data!ENTITY_CACHE_NAME_TOKEN:var",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "ENTITY_CACHE_NAME_TOKEN: "
+        },
+        {
+          "kind": "Reference",
+          "text": "InjectionToken",
+          "canonicalReference": "@angular/core!InjectionToken:class"
+        },
+        {
+          "kind": "Content",
+          "text": "<string>"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/reducers/constants.d.ts",
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "ENTITY_CACHE_NAME_TOKEN",
+      "variableTypeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 3
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

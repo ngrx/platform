@@ -1,4 +1,8 @@
-import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
+import type { ESLintUtils } from '@typescript-eslint/utils';
+import type {
+  InvalidTestCase,
+  ValidTestCase,
+} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, {
   preferInlineActionProps,
@@ -8,9 +12,8 @@ import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
-type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const valid: () => RunTests['valid'] = () => [
+const valid: () => (string | ValidTestCase<Options>)[] = () => [
   `const ok0 = createAction('ok0', props<{ id: number, name: string }>())`,
   `const ok1 = createAction('ok1', props<Readonly<{ description: string }>>())`,
   `const ok2 = createAction('ok2', props<Readonly<HttpErrorResponse & { description: string }>>())`,
@@ -23,7 +26,7 @@ const valid: () => RunTests['valid'] = () => [
     }));`,
 ];
 
-const invalid: () => TSESLint.InvalidTestCase<MessageIds, []>[] = () => [
+const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
   {
     code: `const notOk0 = createAction('notOk0', props<number>())`,
     errors: [

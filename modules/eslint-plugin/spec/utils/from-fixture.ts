@@ -10,7 +10,7 @@ export function fromFixture<TMessageIds extends string>(
 
 export function fromFixture<
   TMessageIds extends string,
-  TOptions extends readonly unknown[]
+  TOptions extends readonly unknown[],
 >(
   fixture: string,
   invalidTestCase: Omit<
@@ -23,7 +23,7 @@ export function fromFixture<
 
 export function fromFixture<
   TMessageIds extends string,
-  TOptions extends readonly unknown[]
+  TOptions extends readonly unknown[],
 >(
   fixture: string,
   invalidTestCase: Omit<

@@ -1,4 +1,8 @@
-import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
+import type { ESLintUtils } from '@typescript-eslint/utils';
+import type {
+  InvalidTestCase,
+  ValidTestCase,
+} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, {
   messageId,
@@ -7,9 +11,8 @@ import { ruleTester, fromFixture } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
-type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const validConstructor: () => RunTests['valid'] = () => [
+const validConstructor: () => (string | ValidTestCase<Options>)[] = () => [
   `
 import { ComponentStore } from '@ngrx/component-store'
 
@@ -62,7 +65,7 @@ class Ok3 {
 }`,
 ];
 
-const validInject: () => RunTests['valid'] = () => [
+const validInject: () => (string | ValidTestCase<Options>)[] = () => [
   `
 import { ComponentStore } from '@ngrx/component-store'
 import { inject } from '@angular/core'
@@ -93,7 +96,7 @@ class Ok5 {
 }`,
 ];
 
-const invalidConstructor: () => RunTests['invalid'] = () => [
+const invalidConstructor: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(`
 import { ComponentStore } from '@ngrx/component-store'
 
@@ -162,7 +165,7 @@ export class CompetitorsStore2 extends CompetitorsStore1 {
 }`),
 ];
 
-const invalidInject: () => RunTests['invalid'] = () => [
+const invalidInject: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(`
 import { ComponentStore } from '@ngrx/component-store'
 import { inject } from '@angular/core'

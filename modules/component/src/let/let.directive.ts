@@ -103,7 +103,6 @@ export interface LetViewContext<PO> {
  * @publicApi
  */
 @Directive({
-  standalone: true,
   selector: '[ngrxLet]',
   providers: [RenderScheduler],
 })

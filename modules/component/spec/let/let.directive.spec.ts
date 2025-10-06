@@ -3,8 +3,6 @@ import {
   Component,
   Directive,
   ErrorHandler,
-  TemplateRef,
-  ViewContainerRef,
 } from '@angular/core';
 import {
   ComponentFixture,
@@ -12,7 +10,6 @@ import {
   flushMicrotasks,
   TestBed,
   tick,
-  waitForAsync,
 } from '@angular/core/testing';
 import {
   BehaviorSubject,
@@ -27,9 +24,10 @@ import {
   throwError,
   timer,
 } from 'rxjs';
-import { LetDirective } from '../../src/let/let.directive';
 import { MockChangeDetectorRef, MockErrorHandler } from '../fixtures/fixtures';
 import { stripSpaces } from '../helpers';
+import { JsonPipe } from '@angular/common';
+import { LetDirective } from '../..';
 
 @Component({
   template: `
@@ -37,6 +35,7 @@ import { stripSpaces } from '../helpers';
       value === null ? 'null' : (value | json) || 'undefined'
     }}</ng-container>
   `,
+  imports: [JsonPipe, LetDirective],
 })
 class LetDirectiveTestComponent {
   value$: unknown;
@@ -48,6 +47,7 @@ class LetDirectiveTestComponent {
       error === undefined ? 'undefined' : error
     }}</ng-container>
   `,
+  imports: [LetDirective],
 })
 class LetDirectiveTestErrorComponent {
   value$ = of(42);
@@ -59,6 +59,7 @@ class LetDirectiveTestErrorComponent {
       complete
     }}</ng-container>
   `,
+  imports: [LetDirective],
 })
 class LetDirectiveTestCompleteComponent {
   value$ = of(42);
@@ -68,6 +69,7 @@ class LetDirectiveTestCompleteComponent {
   template: `
     <ng-container *ngrxLet="value$ as value">{{ value }}</ng-container>
   `,
+  imports: [LetDirective],
 })
 class LetDirectiveTestSuspenseComponent {
   value$ = of(42);
@@ -80,6 +82,7 @@ class LetDirectiveTestSuspenseComponent {
     }}</ng-container>
     <ng-template #loading>Loading...</ng-template>
   `,
+  imports: [LetDirective],
 })
 class LetDirectiveTestSuspenseTplComponent {
   value$ = of(42);
@@ -100,6 +103,7 @@ export class RecursiveDirective {
       value
     }}</ng-container>
   `,
+  imports: [RecursiveDirective, LetDirective],
 })
 class LetDirectiveTestRecursionComponent {
   constructor(public subject: BehaviorSubject<number>) {}
@@ -117,12 +121,8 @@ let componentNativeElement: any;
 
 const setupLetDirectiveTestComponent = (): void => {
   TestBed.configureTestingModule({
-    declarations: [LetDirectiveTestComponent],
-    imports: [LetDirective],
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-      TemplateRef,
-      ViewContainerRef,
     ],
   });
   fixtureLetDirectiveTestComponent = TestBed.createComponent(
@@ -135,13 +135,9 @@ const setupLetDirectiveTestComponent = (): void => {
 
 const setupLetDirectiveTestComponentError = (): void => {
   TestBed.configureTestingModule({
-    declarations: [LetDirectiveTestErrorComponent],
-    imports: [LetDirective],
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       { provide: ErrorHandler, useClass: MockErrorHandler },
-      TemplateRef,
-      ViewContainerRef,
     ],
   });
 
@@ -155,12 +151,8 @@ const setupLetDirectiveTestComponentError = (): void => {
 
 const setupLetDirectiveTestComponentComplete = (): void => {
   TestBed.configureTestingModule({
-    declarations: [LetDirectiveTestCompleteComponent],
-    imports: [LetDirective],
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-      TemplateRef,
-      ViewContainerRef,
     ],
   });
 
@@ -174,13 +166,9 @@ const setupLetDirectiveTestComponentComplete = (): void => {
 
 const setupLetDirectiveTestComponentSuspense = (): void => {
   TestBed.configureTestingModule({
-    declarations: [LetDirectiveTestSuspenseComponent],
-    imports: [LetDirective],
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       { provide: ErrorHandler, useClass: MockErrorHandler },
-      TemplateRef,
-      ViewContainerRef,
     ],
   });
 
@@ -194,13 +182,9 @@ const setupLetDirectiveTestComponentSuspense = (): void => {
 
 const setupLetDirectiveTestComponentSuspenseTpl = (): void => {
   TestBed.configureTestingModule({
-    declarations: [LetDirectiveTestSuspenseTplComponent],
-    imports: [LetDirective],
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
       { provide: ErrorHandler, useClass: MockErrorHandler },
-      TemplateRef,
-      ViewContainerRef,
     ],
   });
 
@@ -215,12 +199,8 @@ const setupLetDirectiveTestComponentSuspenseTpl = (): void => {
 const setupLetDirectiveTestRecursionComponent = (): void => {
   const subject = new BehaviorSubject(0);
   TestBed.configureTestingModule({
-    declarations: [LetDirectiveTestRecursionComponent, RecursiveDirective],
-    imports: [LetDirective],
     providers: [
       { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
-      TemplateRef,
-      ViewContainerRef,
       { provide: BehaviorSubject, useValue: subject },
     ],
   });
@@ -234,7 +214,7 @@ const setupLetDirectiveTestRecursionComponent = (): void => {
 
 describe('LetDirective', () => {
   describe('when nexting values', () => {
-    beforeEach(waitForAsync(setupLetDirectiveTestComponent));
+    beforeEach(setupLetDirectiveTestComponent);
 
     it('should be instantiable', () => {
       expect(fixtureLetDirectiveTestComponent).toBeDefined();
@@ -402,7 +382,7 @@ describe('LetDirective', () => {
   });
 
   describe('when error', () => {
-    beforeEach(waitForAsync(setupLetDirectiveTestComponentError));
+    beforeEach(setupLetDirectiveTestComponentError);
 
     it('should render undefined when next event is emitted', () => {
       letDirectiveTestComponent.value$ = new BehaviorSubject(1);
@@ -432,7 +412,7 @@ describe('LetDirective', () => {
   });
 
   describe('when complete', () => {
-    beforeEach(waitForAsync(setupLetDirectiveTestComponentComplete));
+    beforeEach(setupLetDirectiveTestComponentComplete);
 
     it('should render true if completed', () => {
       letDirectiveTestComponent.value$ = EMPTY;
@@ -442,7 +422,7 @@ describe('LetDirective', () => {
   });
 
   describe('when suspense', () => {
-    beforeEach(waitForAsync(setupLetDirectiveTestComponentSuspense));
+    beforeEach(setupLetDirectiveTestComponentSuspense);
 
     it('should not render when first observable is in suspense state', fakeAsync(() => {
       letDirectiveTestComponent.value$ = of(true).pipe(delay(1000));
@@ -466,7 +446,7 @@ describe('LetDirective', () => {
   });
 
   describe('when suspense template is passed', () => {
-    beforeEach(waitForAsync(setupLetDirectiveTestComponentSuspenseTpl));
+    beforeEach(setupLetDirectiveTestComponentSuspenseTpl);
 
     it('should render main template when observable emits next event', () => {
       letDirectiveTestComponent.value$ = new BehaviorSubject('ngrx');
@@ -516,7 +496,7 @@ describe('LetDirective', () => {
   });
 
   describe('when rendering recursively', () => {
-    beforeEach(waitForAsync(setupLetDirectiveTestRecursionComponent));
+    beforeEach(setupLetDirectiveTestRecursionComponent);
 
     it('should render 2nd emitted value if the observable emits while the view is being rendered', fakeAsync(() => {
       fixtureLetDirectiveTestComponent.detectChanges();
@@ -528,7 +508,7 @@ describe('LetDirective', () => {
   describe('with observable dictionary', () => {
     function withObservableDictionarySetup<
       O1 extends Observable<unknown>,
-      O2 extends Observable<unknown>
+      O2 extends Observable<unknown>,
     >(config: { o1$: O1; o2$: O2 }) {
       @Component({
         template: `
@@ -536,6 +516,7 @@ describe('LetDirective', () => {
             vm.o1 + '-' + vm.o2
           }}</ng-container>
         `,
+        imports: [LetDirective],
       })
       class LetDirectiveTestComponent {
         o1$ = config.o1$;
@@ -543,13 +524,9 @@ describe('LetDirective', () => {
       }
 
       TestBed.configureTestingModule({
-        declarations: [LetDirectiveTestComponent],
-        imports: [LetDirective],
         providers: [
           { provide: ChangeDetectorRef, useClass: MockChangeDetectorRef },
           { provide: ErrorHandler, useClass: MockErrorHandler },
-          TemplateRef,
-          ViewContainerRef,
         ],
       });
 

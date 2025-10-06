@@ -11,10 +11,10 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'suggestion',
-    ngrxModule: 'effects',
     docs: {
       description:
         'Using `action creator` in `ofType` is preferred over `string`.',
+      ngrxModule: 'effects',
     },
     schema: [],
     messages: {

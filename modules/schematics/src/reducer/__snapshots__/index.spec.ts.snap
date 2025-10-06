@@ -184,23 +184,25 @@ export const reducer = createReducer(
 `;
 
 exports[`Reducer Schematic should import into a specified module 1`] = `
-"import { NgModule } from '@angular/core';
+"import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { App } from './app';
 import { StoreModule } from '@ngrx/store';
 import * as fromFoo from './foo.reducer';
 
 @NgModule({
   declarations: [
-    AppComponent
+    App
   ],
   imports: [
     BrowserModule,
     StoreModule.forFeature(fromFoo.fooFeatureKey, fromFoo.reducer)
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    provideBrowserGlobalErrorListeners()
+  ],
+  bootstrap: [App]
 })
 export class AppModule { }
 "

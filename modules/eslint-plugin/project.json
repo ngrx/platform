@@ -1,29 +1,10 @@
 {
   "name": "eslint-plugin",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "modules/eslint-plugin/src",
   "projectType": "library",
-  "generators": {},
+  "sourceRoot": "modules/eslint-plugin/src",
+  "tags": [],
   "targets": {
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "modules/eslint-plugin/*/**/*.ts",
-          "modules/eslint-plugin/*/**/*.html"
-        ]
-      },
-      "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "options": {
-        "jestConfig": "modules/eslint-plugin/jest.config.ts",
-        "runInBand": true,
-        "passWithNoTests": false
-      },
-      "outputs": ["{workspaceRoot}/coverage/modules/eslint-plugin"]
-    },
     "build-package": {
       "executor": "@nx/js:tsc",
       "options": {
@@ -31,6 +12,8 @@
         "tsConfig": "modules/eslint-plugin/tsconfig.build.json",
         "packageJson": "modules/eslint-plugin/package.json",
         "main": "modules/eslint-plugin/src/index.ts",
+        "additionalEntryPoints": ["modules/eslint-plugin/v9/index.ts"],
+        "generateExportsField": true,
         "updateBuildableProjectDepsInPackageJson": false,
         "sourceMap": false,
         "assets": [
@@ -59,13 +42,13 @@
             "command": "nx build-package eslint-plugin"
           },
           {
-            "command": "cpy modules/eslint-plugin/migrations/migration.json dist/modules/eslint-plugin/migrations"
+            "command": "cpy modules/eslint-plugin/migrations/migration.json dist"
           },
           {
-            "command": "cpy modules/eslint-plugin/schematics/collection.json dist/modules/eslint-plugin/schematics"
+            "command": "cpy modules/eslint-plugin/schematics/collection.json dist"
           },
           {
-            "command": "cpy modules/eslint-plugin/schematics/ng-add/schema.json dist/modules/eslint-plugin/schematics/ng-add"
+            "command": "cpy modules/eslint-plugin/schematics/ng-add/schema.json dist"
           },
           {
             "command": "cpy LICENSE dist/modules/eslint-plugin"
@@ -73,7 +56,21 @@
         ]
       },
       "outputs": ["{workspaceRoot}/dist/modules/eslint-plugin"]
+    },
+    "test": {
+      "executor": "@analogjs/vitest-angular:test",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/coverage/modules/eslint-plugin"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": [
+          "modules/eslint-plugin/*/**/*.ts",
+          "modules/eslint-plugin/*/**/*.html"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": []
+  }
 }

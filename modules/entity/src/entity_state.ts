@@ -9,9 +9,9 @@ export function getInitialEntityState<V>(): EntityState<V> {
 
 export function createInitialStateFactory<V>() {
   function getInitialState(): EntityState<V>;
-  function getInitialState<S extends object>(
-    additionalState: S
-  ): EntityState<V> & S;
+  function getInitialState<S extends EntityState<V>>(
+    additionalState: Omit<S, keyof EntityState<V>>
+  ): S;
   function getInitialState(additionalState: any = {}): any {
     return Object.assign(getInitialEntityState(), additionalState);
   }

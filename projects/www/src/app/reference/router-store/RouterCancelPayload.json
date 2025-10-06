@@ -1,0 +1,103 @@
+{
+  "name": "RouterCancelPayload",
+  "canonicalReference": "@ngrx/router-store!RouterCancelPayload:type",
+  "kind": "TypeAlias",
+  "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "TypeAlias",
+      "canonicalReference": "@ngrx/router-store!RouterCancelPayload:type",
+      "docComment": "/**\n * Payload of ROUTER_CANCEL.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export type RouterCancelPayload<T, V extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "BaseRouterStoreState",
+          "canonicalReference": "@ngrx/router-store!BaseRouterStoreState:interface"
+        },
+        {
+          "kind": "Content",
+          "text": " = "
+        },
+        {
+          "kind": "Reference",
+          "text": "SerializedRouterStateSnapshot",
+          "canonicalReference": "@ngrx/router-store!SerializedRouterStateSnapshot:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "> = "
+        },
+        {
+          "kind": "Content",
+          "text": "{\n    routerState: V;\n    storeState: T;\n    event: "
+        },
+        {
+          "kind": "Reference",
+          "text": "NavigationCancel",
+          "canonicalReference": "@angular/router!NavigationCancel:class"
+        },
+        {
+          "kind": "Content",
+          "text": ";\n}"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+      "releaseTag": "Public",
+      "name": "RouterCancelPayload",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "typeParameterName": "V",
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          }
+        }
+      ],
+      "typeTokenRange": {
+        "startIndex": 5,
+        "endIndex": 8
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Payload of ROUTER_CANCEL.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

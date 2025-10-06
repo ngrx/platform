@@ -1,4 +1,8 @@
-import type { ESLintUtils, TSESLint } from '@typescript-eslint/utils';
+import type { ESLintUtils } from '@typescript-eslint/utils';
+import type {
+  InvalidTestCase,
+  ValidTestCase,
+} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, {
   onFunctionExplicitReturnType,
@@ -8,9 +12,8 @@ import { ruleTester } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
-type RunTests = TSESLint.RunTests<MessageIds, Options>;
 
-const valid: () => RunTests['valid'] = () => [
+const valid: () => (string | ValidTestCase<Options>)[] = () => [
   `
 const reducer = createReducer(
   initialState,
@@ -26,7 +29,6 @@ const reducer = createReducer(
 const reducer = createReducer(
   initialState,
   on(increment, incrementFunc),
-  on(increment, s => incrementFunc(s)),
   on(increment, (s): State => incrementFunc(s)),
 )`,
   `
@@ -49,7 +51,7 @@ const reducer = createReducer(
 )`,
 ];
 
-const invalid: () => TSESLint.InvalidTestCase<MessageIds, []>[] = () => [
+const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
   {
     code: `
 const reducer = createReducer(
@@ -171,6 +173,57 @@ const reducer = createReducer(
 const reducer = createReducer(
   initialState,
   on(reset, (): State =>   initialState  ),
+)`,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    code: `
+const reducer = createReducer(
+  initialState,
+  on(reset, s => foo(s)),
+)`,
+    errors: [
+      {
+        column: 13,
+        endColumn: 24,
+        line: 4,
+        messageId: onFunctionExplicitReturnType,
+        suggestions: [
+          {
+            messageId: onFunctionExplicitReturnTypeSuggest,
+            output: `
+const reducer = createReducer(
+  initialState,
+  on(reset, (s): State => foo(s)),
+)`,
+          },
+        ],
+      },
+    ],
+  },
+  // https://github.com/ngrx/platform/issues/4901
+  {
+    code: `
+const reducer = createReducer(
+  initialState,
+  on(reset, s => ({ ...s, counter: Number(1) })),
+)`,
+    errors: [
+      {
+        column: 13,
+        endColumn: 48,
+        line: 4,
+        messageId: onFunctionExplicitReturnType,
+        suggestions: [
+          {
+            messageId: onFunctionExplicitReturnTypeSuggest,
+            output: `
+const reducer = createReducer(
+  initialState,
+  on(reset, (s): State => ({ ...s, counter: Number(1) })),
 )`,
           },
         ],

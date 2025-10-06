@@ -4,9 +4,11 @@
   "projectType": "library",
   "sourceRoot": "modules/schematics-core",
   "prefix": "ngrx",
+  "tags": [],
+  "generators": {},
   "targets": {
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "modules/schematics-core/*/**/*.ts",
@@ -22,7 +24,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/modules/schematics-core"]
     }
-  },
-  "generators": {},
-  "tags": []
+  }
 }

@@ -131,7 +131,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
     // Return either an empty callback or a function requiring specific types as inputs
     ReturnType = OriginType extends void
       ? () => void
-      : (observableOrValue: ValueType | Observable<ValueType>) => Subscription
+      : (observableOrValue: ValueType | Observable<ValueType>) => Subscription,
   >(updaterFn: (state: T, value: OriginType) => T): ReturnType {
     return ((
       observableOrValue?: OriginType | Observable<OriginType>
@@ -262,14 +262,14 @@ export class ComponentStore<T extends object> implements OnDestroy {
   select<Selectors extends Observable<unknown>[], Result>(
     ...selectorsWithProjector: [
       ...selectors: Selectors,
-      projector: Projector<Selectors, Result>
+      projector: Projector<Selectors, Result>,
     ]
   ): Observable<Result>;
   select<Selectors extends Observable<unknown>[], Result>(
     ...selectorsWithProjectorAndConfig: [
       ...selectors: Selectors,
       projector: Projector<Selectors, Result>,
-      config: SelectConfig<Result>
+      config: SelectConfig<Result>,
     ]
   ): Observable<Result>;
   select<
@@ -278,7 +278,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
     >,
     Result,
     ProjectorFn extends (...a: unknown[]) => Result,
-    SelectorsObject extends Record<string, Observable<unknown>>
+    SelectorsObject extends Record<string, Observable<unknown>>,
   >(...args: Selectors): Observable<Result> {
     const { observablesOrSelectorsObject, projector, config } =
       processSelectorArgs<Selectors, Result, ProjectorFn, SelectorsObject>(
@@ -329,7 +329,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
     ...args: [
       ...signals: Signals,
       projector: SignalsProjector<Signals, Result>,
-      options: SelectSignalOptions<Result>
+      options: SelectSignalOptions<Result>,
     ]
   ): Signal<Result>;
   selectSignal(
@@ -337,12 +337,12 @@ export class ComponentStore<T extends object> implements OnDestroy {
       | [(state: T) => unknown, SelectSignalOptions<unknown>?]
       | [
           ...signals: Signal<unknown>[],
-          projector: (...values: unknown[]) => unknown
+          projector: (...values: unknown[]) => unknown,
         ]
       | [
           ...signals: Signal<unknown>[],
           projector: (...values: unknown[]) => unknown,
-          options: SelectSignalOptions<unknown>
+          options: SelectSignalOptions<unknown>,
         ]
   ): Signal<unknown> {
     const selectSignalArgs = [...args];
@@ -391,7 +391,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
         ) => Subscription
       : (
           observableOrValue: ObservableType | Observable<ObservableType>
-        ) => Subscription
+        ) => Subscription,
   >(generator: (origin$: OriginType) => Observable<unknown>): ReturnType {
     const origin$ = new Subject<ObservableType>();
     generator(origin$ as OriginType)
@@ -456,7 +456,7 @@ function processSelectorArgs<
   >,
   Result,
   ProjectorFn extends (...a: unknown[]) => Result,
-  SelectorsObject extends Record<string, Observable<unknown>>
+  SelectorsObject extends Record<string, Observable<unknown>>,
 >(
   args: Selectors
 ):

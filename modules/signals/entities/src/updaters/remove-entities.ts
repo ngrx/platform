@@ -25,7 +25,7 @@ export function removeEntities<Collection extends string>(
 export function removeEntities<
   Collection extends string,
   State extends NamedEntityState<any, Collection>,
-  Entity = State extends NamedEntityState<infer E, Collection> ? E : never
+  Entity = State extends NamedEntityState<infer E, Collection> ? E : never,
 >(
   predicate: EntityPredicate<Entity>,
   config: { collection: Collection }

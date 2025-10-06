@@ -14,7 +14,7 @@ import {
 /** Core ingredients of an EntityCollectionService */
 export interface EntityCollectionServiceElements<
   T,
-  S$ extends EntitySelectors$<T> = EntitySelectors$<T>
+  S$ extends EntitySelectors$<T> = EntitySelectors$<T>,
 > {
   readonly dispatcher: EntityDispatcher<T>;
   readonly entityName: string;

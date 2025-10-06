@@ -30,9 +30,9 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'problem',
-    ngrxModule: 'operators',
     docs: {
       description: `Use \`${concatLatestFromKeyword}\` instead of \`${withLatestFromKeyword}\` to prevent the selector from firing until the correct \`Action\` is dispatched.`,
+      ngrxModule: 'operators',
     },
     fixable: 'code',
     schema: [
@@ -61,7 +61,7 @@ export default createRule<Options, MessageIds>({
           context.report({
             node,
             messageId,
-            fix: (fixer) => getFixes(context.getSourceCode(), fixer, node),
+            fix: (fixer) => getFixes(context.sourceCode, fixer, node),
           });
         },
       };

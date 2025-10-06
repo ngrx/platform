@@ -17,10 +17,10 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'problem',
-    ngrxModule: 'effects',
     docs: {
       description:
         '`Effect` should not be listed as a provider if it is added to the `EffectsModule`.',
+      ngrxModule: 'effects',
     },
     fixable: 'code',
     schema: [],
@@ -31,7 +31,6 @@ export default createRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: (context) => {
-    const sourceCode = context.getSourceCode();
     const effectsInProviders = new Set<TSESTree.Identifier>();
     const effectsInImports = new Set<string>();
 
@@ -52,7 +51,11 @@ export default createRule<Options, MessageIds>({
             node: effectInProvider,
             messageId,
             fix: (fixer) =>
-              getNodeToCommaRemoveFix(sourceCode, fixer, effectInProvider),
+              getNodeToCommaRemoveFix(
+                context.sourceCode,
+                fixer,
+                effectInProvider
+              ),
           });
         }
 

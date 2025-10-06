@@ -1,34 +1,53 @@
-import { assertUniqueStoreMembers } from './signal-store-assertions';
+import { computed, isSignal, Signal } from '@angular/core';
 import {
-  InnerSignalStore,
-  SignalsDictionary,
   SignalStoreFeature,
   SignalStoreFeatureResult,
   StateSignals,
 } from './signal-store-models';
 import { Prettify } from './ts-helpers';
+import { withProps } from './with-props';
+
+type ComputedResult<
+  ComputedDictionary extends Record<
+    string | symbol,
+    Signal<unknown> | (() => unknown)
+  >,
+> = {
+  [P in keyof ComputedDictionary]: ComputedDictionary[P] extends Signal<unknown>
+    ? ComputedDictionary[P]
+    : ComputedDictionary[P] extends () => infer V
+      ? Signal<V>
+      : never;
+};
 
 export function withComputed<
   Input extends SignalStoreFeatureResult,
-  ComputedSignals extends SignalsDictionary
+  ComputedDictionary extends Record<
+    string | symbol,
+    Signal<unknown> | (() => unknown)
+  >,
 >(
-  signalsFactory: (
-    store: Prettify<StateSignals<Input['state']> & Input['computed']>
-  ) => ComputedSignals
+  computedFactory: (
+    store: Prettify<
+      StateSignals<Input['state']> & Input['props'] & Input['methods']
+    >
+  ) => ComputedDictionary
 ): SignalStoreFeature<
   Input,
-  { state: {}; computed: ComputedSignals; methods: {} }
+  { state: {}; props: ComputedResult<ComputedDictionary>; methods: {} }
 > {
-  return (store) => {
-    const computedSignals = signalsFactory({
-      ...store.stateSignals,
-      ...store.computedSignals,
-    });
-    assertUniqueStoreMembers(store, Object.keys(computedSignals));
+  return withProps((store) => {
+    const computedResult = computedFactory(store);
+    const computedResultKeys = Reflect.ownKeys(computedResult);
 
-    return {
-      ...store,
-      computedSignals: { ...store.computedSignals, ...computedSignals },
-    } as InnerSignalStore<Record<string, unknown>, ComputedSignals>;
-  };
+    return computedResultKeys.reduce((prev, key) => {
+      const signalOrComputation = computedResult[key];
+      return {
+        ...prev,
+        [key]: isSignal(signalOrComputation)
+          ? signalOrComputation
+          : computed(signalOrComputation),
+      };
+    }, {} as ComputedResult<ComputedDictionary>);
+  });
 }

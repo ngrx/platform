@@ -1,15 +1,25 @@
-import { inject, InjectionToken, isSignal, signal } from '@angular/core';
+import {
+  computed,
+  inject,
+  InjectionToken,
+  isSignal,
+  linkedSignal,
+  signal,
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   patchState,
   signalStore,
+  signalStoreFeature,
   withComputed,
   withHooks,
+  withLinkedState,
   withMethods,
+  withProps,
   withState,
 } from '../src';
 import { STATE_SOURCE } from '../src/state-source';
-import { createLocalService } from './helpers';
+import { assertStateSource, createLocalService } from './helpers';
 
 describe('signalStore', () => {
   describe('creation', () => {
@@ -40,16 +50,20 @@ describe('signalStore', () => {
       expect(store1.foo()).toBe('bar');
     });
 
-    it('creates a store with readonly state source by default', () => {
+    it('creates a store with state source as Record holding slices as signals by default', () => {
       const Store = signalStore(withState({ foo: 'bar' }));
       const store = new Store();
       const stateSource = store[STATE_SOURCE];
 
-      expect(isSignal(stateSource)).toBe(true);
-      expect(stateSource()).toEqual({ foo: 'bar' });
+      expect(isSignal(stateSource)).toBe(false);
+      expect(Object.keys(stateSource)).toEqual(['foo']);
+      expect(isSignal(stateSource.foo)).toBe(true);
+      assertStateSource(stateSource, {
+        foo: signal('bar'),
+      });
     });
 
-    it('creates a store with readonly state source when protectedState option is true', () => {
+    it('creates a store with state source as Record holding slices as signals when protectedState option is true', () => {
       const Store = signalStore(
         { protectedState: true },
         withState({ foo: 'bar' })
@@ -57,11 +71,15 @@ describe('signalStore', () => {
       const store = new Store();
       const stateSource = store[STATE_SOURCE];
 
-      expect(isSignal(stateSource)).toBe(true);
-      expect(stateSource()).toEqual({ foo: 'bar' });
+      expect(isSignal(stateSource)).toBe(false);
+      expect(Object.keys(stateSource)).toEqual(['foo']);
+      expect(isSignal(stateSource.foo)).toBe(true);
+      assertStateSource(stateSource, {
+        foo: signal('bar'),
+      });
     });
 
-    it('creates a store with writable state source when protectedState option is false', () => {
+    it('creates a store with state source as Record holding slices as writeable signals when protectedState option is false', () => {
       const Store = signalStore(
         { protectedState: false },
         withState({ foo: 'bar' })
@@ -69,13 +87,19 @@ describe('signalStore', () => {
       const store = new Store();
       const stateSource = store[STATE_SOURCE];
 
-      expect(isSignal(stateSource)).toBe(true);
-      expect(stateSource()).toEqual({ foo: 'bar' });
-      expect(typeof stateSource.update === 'function').toBe(true);
+      expect(isSignal(stateSource)).toBe(false);
+      expect(Object.keys(stateSource)).toEqual(['foo']);
+      expect(isSignal(stateSource.foo)).toBe(true);
+      assertStateSource(stateSource, {
+        foo: signal('bar'),
+      });
+      expect(typeof stateSource.foo.update === 'function').toBe(true);
 
       patchState(store, { foo: 'baz' });
 
-      expect(stateSource()).toEqual({ foo: 'baz' });
+      assertStateSource(stateSource, {
+        foo: signal('baz'),
+      });
     });
   });
 
@@ -90,10 +114,11 @@ describe('signalStore', () => {
 
       const store = new Store();
 
-      expect(store[STATE_SOURCE]()).toEqual({
-        foo: 'foo',
-        x: { y: { z: 10 } },
+      assertStateSource(store[STATE_SOURCE], {
+        foo: signal('foo'),
+        x: signal({ y: { z: 10 } }),
       });
+
       expect(store.foo()).toBe('foo');
       expect(store.x()).toEqual({ y: { z: 10 } });
       expect(store.x.y()).toEqual({ z: 10 });
@@ -144,16 +169,255 @@ describe('signalStore', () => {
 
       expect(store.foo()).toBe('foo');
     });
+
+    it('allows symbols as state keys', () => {
+      const SECRET = Symbol('SECRET');
+      const Store = signalStore(withState({ [SECRET]: 'bar' }));
+      const store = new Store();
+
+      expect(store[SECRET]()).toBe('bar');
+    });
   });
 
-  describe('withComputed', () => {
-    it('provides previously defined state slices and computed signals as input argument', () => {
+  describe('withLinkedState', () => {
+    describe('updates automatically if the source changes', () =>
+      [
+        {
+          name: 'with computed function',
+          linkedStateFeature: signalStoreFeature(
+            withState({ userId: 1 }),
+            withLinkedState(({ userId }) => ({
+              books: () => {
+                userId();
+                return [] as string[];
+              },
+            }))
+          ),
+        },
+        {
+          name: 'with explicit linkedSignal',
+          linkedStateFeature: signalStoreFeature(
+            withState({ userId: 1 }),
+            withLinkedState(({ userId }) => ({
+              books: linkedSignal({
+                source: userId,
+                computation: () => [] as string[],
+              }),
+            }))
+          ),
+        },
+      ].forEach(({ name, linkedStateFeature }) => {
+        it(name, () => {
+          const BookStore = signalStore(
+            { providedIn: 'root', protectedState: false },
+            linkedStateFeature,
+            withState({ version: 1 }),
+            withMethods((store) => ({
+              updateUser() {
+                patchState(store, (value) => value);
+                patchState(store, ({ userId }) => ({ userId: userId + 1 }));
+              },
+              addBook(title: string) {
+                patchState(store, ({ books }) => ({
+                  books: [...books, title],
+                }));
+              },
+              increaseVersion() {
+                patchState(store, ({ version }) => ({ version: version + 1 }));
+              },
+            }))
+          );
+
+          const bookStore = TestBed.inject(BookStore);
+          bookStore.addBook('The Neverending Story');
+          bookStore.increaseVersion();
+          expect(bookStore.books()).toEqual(['The Neverending Story']);
+          expect(bookStore.version()).toEqual(2);
+
+          patchState(bookStore, { userId: 2 });
+          expect(bookStore.books()).toEqual([]);
+          expect(bookStore.version()).toEqual(2);
+        });
+      }));
+
+    describe('can depend on a Signal from another SignalStore', () => {
+      const UserStore = signalStore(
+        { providedIn: 'root', protectedState: false },
+        withState({ userId: 1 })
+      );
+
+      [
+        {
+          name: 'with computation function',
+          linkedStateFeature: signalStoreFeature(
+            withLinkedState((_, userStore = inject(UserStore)) => ({
+              books: () => {
+                userStore.userId();
+                return [] as string[];
+              },
+            }))
+          ),
+        },
+        {
+          name: 'with explicit linkedSignal',
+          linkedStateFeature: signalStoreFeature(
+            withLinkedState(() => {
+              const userStore = inject(UserStore);
+              return {
+                books: linkedSignal({
+                  source: userStore.userId,
+                  computation: () => [] as string[],
+                }),
+              };
+            })
+          ),
+        },
+      ].forEach(({ name, linkedStateFeature }) => {
+        it(name, () => {
+          const BookStore = signalStore(
+            { providedIn: 'root' },
+            linkedStateFeature,
+            withMethods((store) => ({
+              addBook(title: string) {
+                patchState(store, ({ books }) => ({
+                  books: [...books, title],
+                }));
+              },
+            }))
+          );
+
+          const userStore = TestBed.inject(UserStore);
+          const bookStore = TestBed.inject(BookStore);
+
+          bookStore.addBook('The Neverending Story');
+          expect(bookStore.books()).toEqual(['The Neverending Story']);
+
+          patchState(userStore, { userId: 2 });
+
+          expect(bookStore.books()).toEqual([]);
+        });
+      });
+    });
+
+    it('links user-defined writable signals', () => {
+      const user = signal({ name: 'Mark' });
+      const UserStore = signalStore(
+        { providedIn: 'root' },
+        withLinkedState(() => ({ user })),
+        withMethods((store) => ({
+          setUserName(name: string): void {
+            patchState(store, { user: { name } });
+          },
+        }))
+      );
+
+      const userStore = TestBed.inject(UserStore);
+      expect(userStore.user()).toEqual({ name: 'Mark' });
+
+      userStore.setUserName('John');
+      expect(userStore.user()).toEqual({ name: 'John' });
+      expect(user()).toEqual({ name: 'John' });
+
+      user.set({ name: 'Tom' });
+      expect(userStore.user()).toEqual({ name: 'Tom' });
+      expect(user()).toEqual({ name: 'Tom' });
+    });
+
+    it('has access to state signals', () => {
+      const UserStore = signalStore(
+        { providedIn: 'root' },
+        withState({ userId: 1 }),
+        withLinkedState(({ userId }) => ({ value: userId }))
+      );
+
+      const userStore = TestBed.inject(UserStore);
+
+      expect(userStore.value()).toBe(1);
+    });
+
+    it('has access to props', () => {
+      const UserStore = signalStore(
+        { providedIn: 'root' },
+        withProps(() => ({ userId: 1 })),
+        withLinkedState(({ userId }) => ({ value: () => userId }))
+      );
+
+      const userStore = TestBed.inject(UserStore);
+
+      expect(userStore.value()).toBe(1);
+    });
+  });
+
+  describe('withProps', () => {
+    it('provides previously defined state slices and properties as input argument', () => {
       const Store = signalStore(
         withState(() => ({ foo: 'foo' })),
         withComputed(() => ({ bar: signal('bar').asReadonly() })),
-        withComputed(({ foo, bar }) => {
+        withProps(() => ({ num: 10 })),
+        withProps(({ foo, bar, num }) => {
           expect(foo()).toBe('foo');
           expect(bar()).toBe('bar');
+          expect(num).toBe(10);
+
+          return { baz: num + 1 };
+        })
+      );
+
+      const store = new Store();
+
+      assertStateSource(store[STATE_SOURCE], {
+        foo: signal('foo'),
+      });
+      expect(store.foo()).toBe('foo');
+      expect(store.bar()).toBe('bar');
+      expect(store.num).toBe(10);
+      expect(store.baz).toBe(11);
+    });
+
+    it('executes withProps factory in injection context', () => {
+      const TOKEN = new InjectionToken('TOKEN', {
+        providedIn: 'root',
+        factory: () => ({ foo: 'bar' }),
+      });
+      const Store = signalStore(withProps(() => inject(TOKEN)));
+
+      TestBed.configureTestingModule({ providers: [Store] });
+      const store = TestBed.inject(Store);
+
+      expect(store.foo).toBe('bar');
+    });
+
+    it('allows symbols as property keys', () => {
+      const SECRET = Symbol('SECRET');
+
+      const Store = signalStore(withProps(() => ({ [SECRET]: 'secret' })));
+      const store = TestBed.configureTestingModule({
+        providers: [Store],
+      }).inject(Store);
+
+      expect(store[SECRET]).toBe('secret');
+    });
+
+    it('allows numbers as property keys', () => {
+      const Store = signalStore(withProps(() => ({ 1: 'Number One' })));
+      const store = TestBed.configureTestingModule({
+        providers: [Store],
+      }).inject(Store);
+
+      expect(store[1]).toBe('Number One');
+    });
+  });
+
+  describe('withComputed', () => {
+    it('provides previously defined state slices and properties as input argument', () => {
+      const Store = signalStore(
+        withState(() => ({ foo: 'foo' })),
+        withComputed(() => ({ bar: signal('bar').asReadonly() })),
+        withProps(() => ({ num: 10 })),
+        withComputed(({ foo, bar, num }) => {
+          expect(foo()).toBe('foo');
+          expect(bar()).toBe('bar');
+          expect(num).toBe(10);
 
           return { baz: signal('baz').asReadonly() };
         })
@@ -161,9 +425,12 @@ describe('signalStore', () => {
 
       const store = new Store();
 
-      expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo' });
+      assertStateSource(store[STATE_SOURCE], {
+        foo: signal('foo'),
+      });
       expect(store.foo()).toBe('foo');
       expect(store.bar()).toBe('bar');
+      expect(store.num).toBe(10);
       expect(store.baz()).toBe('baz');
     });
 
@@ -179,6 +446,20 @@ describe('signalStore', () => {
 
       expect(store.bar()).toBe('bar');
     });
+
+    it('allows symbols as computed keys', () => {
+      const SECRET = Symbol('SECRET');
+      const SecretStore = signalStore(
+        { providedIn: 'root' },
+        withComputed(() => ({
+          [SECRET]: computed(() => 'secret'),
+        }))
+      );
+
+      const secretStore = TestBed.inject(SecretStore);
+
+      expect(secretStore[SECRET]()).toBe('secret');
+    });
   });
 
   describe('withMethods', () => {
@@ -187,11 +468,15 @@ describe('signalStore', () => {
         withState(() => ({ foo: 'foo' })),
         withComputed(() => ({ bar: signal('bar').asReadonly() })),
         withMethods(() => ({ baz: () => 'baz' })),
+        withProps(() => ({ num: 100 })),
         withMethods((store) => {
-          expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo' });
+          assertStateSource(store[STATE_SOURCE], {
+            foo: signal('foo'),
+          });
           expect(store.foo()).toBe('foo');
           expect(store.bar()).toBe('bar');
           expect(store.baz()).toBe('baz');
+          expect(store.num).toBe(100);
 
           return { m: () => 'm' };
         })
@@ -199,10 +484,13 @@ describe('signalStore', () => {
 
       const store = new Store();
 
-      expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo' });
+      assertStateSource(store[STATE_SOURCE], {
+        foo: signal('foo'),
+      });
       expect(store.foo()).toBe('foo');
       expect(store.bar()).toBe('bar');
       expect(store.baz()).toBe('baz');
+      expect(store.num).toBe(100);
       expect(store.m()).toBe('m');
     });
 
@@ -217,6 +505,19 @@ describe('signalStore', () => {
       const store = TestBed.inject(Store);
 
       expect(store.baz()).toBe('baz');
+    });
+
+    it('allows symbols as method keys', () => {
+      const SECRET = Symbol('SECRET');
+      const SecretStore = signalStore(
+        { providedIn: 'root' },
+        withMethods(() => ({
+          [SECRET]: () => 'my secret',
+        }))
+      );
+      const secretStore = TestBed.inject(SecretStore);
+
+      expect(secretStore[SECRET]()).toBe('my secret');
     });
   });
 
@@ -263,12 +564,16 @@ describe('signalStore', () => {
         withState(() => ({ foo: 'foo' })),
         withComputed(() => ({ bar: signal('bar').asReadonly() })),
         withMethods(() => ({ baz: () => 'baz' })),
+        withProps(() => ({ num: 10 })),
         withHooks({
           onInit(store) {
-            expect(store[STATE_SOURCE]()).toEqual({ foo: 'foo' });
+            assertStateSource(store[STATE_SOURCE], {
+              foo: signal('foo'),
+            });
             expect(store.foo()).toBe('foo');
             expect(store.bar()).toBe('bar');
             expect(store.baz()).toBe('baz');
+            expect(store.num).toBe(10);
             message = 'onInit';
           },
         })
@@ -285,11 +590,13 @@ describe('signalStore', () => {
         withState(() => ({ foo: 'foo' })),
         withComputed(() => ({ bar: signal('bar').asReadonly() })),
         withMethods(() => ({ baz: () => 'baz' })),
+        withProps(() => ({ num: 100 })),
         withHooks({
           onDestroy(store) {
             expect(store.foo()).toBe('foo');
             expect(store.bar()).toBe('bar');
             expect(store.baz()).toBe('baz');
+            expect(store.num).toBe(100);
             message = 'onDestroy';
           },
         })
@@ -365,7 +672,7 @@ describe('signalStore', () => {
         })
       );
       TestBed.inject(Store);
-      TestBed.resetTestEnvironment();
+      TestBed.resetTestingModule();
 
       expect(messages).toEqual(['ending...']);
     });
@@ -386,9 +693,9 @@ describe('signalStore', () => {
         }))
       );
       const warnings: string[][] = [];
-      jest
-        .spyOn(console, 'warn')
-        .mockImplementation((...args: string[]) => warnings.push(args));
+      vi.spyOn(console, 'warn').mockImplementation((...args: string[]) =>
+        warnings.push(args)
+      );
 
       new Store();
 
@@ -405,6 +712,29 @@ describe('signalStore', () => {
           'j, m',
         ],
       ]);
+    });
+
+    it('passes on a symbol key to the features', () => {
+      const SECRET = Symbol('SECRET');
+      const SecretStore = signalStore(
+        withProps(() => ({
+          [SECRET]: 'not your business',
+        })),
+        withComputed((store) => ({
+          secret: computed(() => store[SECRET]),
+        })),
+        withMethods((store) => ({
+          reveil() {
+            return store[SECRET];
+          },
+        }))
+      );
+
+      const secretStore = new SecretStore();
+
+      expect(secretStore.reveil()).toBe('not your business');
+      expect(secretStore.secret()).toBe('not your business');
+      expect(secretStore[SECRET]).toBe('not your business');
     });
   });
 });

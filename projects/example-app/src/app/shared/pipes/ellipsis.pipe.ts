@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'bcEllipsis' })
+@Pipe({ name: 'bcEllipsis', standalone: false })
 export class EllipsisPipe implements PipeTransform {
   transform(str: string, strLength = 250) {
     const withoutHtml = str.replace(/(<([^>]+)>)/gi, '');

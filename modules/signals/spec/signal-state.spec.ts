@@ -1,8 +1,10 @@
-import * as angular from '@angular/core';
-import { effect, isSignal } from '@angular/core';
+import { computed, effect, isSignal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { patchState, signalState } from '../src';
+import { SignalsDictionary } from '../src/signal-store-models';
 import { STATE_SOURCE } from '../src/state-source';
+
+vi.mock('@angular/core', { spy: true });
 
 describe('signalState', () => {
   const initialState = {
@@ -15,21 +17,34 @@ describe('signalState', () => {
     ngrx: 'signals',
   };
 
-  it('has writable state source', () => {
-    const state = signalState({});
-    const stateSource = state[STATE_SOURCE];
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
 
-    expect(isSignal(stateSource)).toBe(true);
-    expect(typeof stateSource.update === 'function').toBe(true);
+  it('creates its properties as Signals', () => {
+    const state = signalState({ foo: 'bar' });
+    const stateSource: SignalsDictionary = state[STATE_SOURCE];
+
+    expect(isSignal(state)).toBe(true);
+    for (const key of Reflect.ownKeys(stateSource)) {
+      expect(isSignal(stateSource[key])).toBe(true);
+      expect(typeof stateSource[key].update === 'function').toBe(true);
+    }
+  });
+
+  it('does not keep the object reference of the initial state', () => {
+    const state = signalState(initialState);
+    expect(state()).not.toBe(initialState);
+    expect(state()).toEqual(initialState);
   });
 
   it('creates signals for nested state slices', () => {
     const state = signalState(initialState);
 
-    expect(state()).toBe(initialState);
+    expect(state()).toEqual(initialState);
     expect(isSignal(state)).toBe(true);
 
-    expect(state.user()).toBe(initialState.user);
+    expect(state.user()).toEqual(initialState.user);
     expect(isSignal(state.user)).toBe(true);
 
     expect(state.user.firstName()).toBe(initialState.user.firstName);
@@ -46,19 +61,17 @@ describe('signalState', () => {
   });
 
   it('caches previously created signals', () => {
-    jest.spyOn(angular, 'computed');
-
     const state = signalState(initialState);
     const user1 = state.user;
     const user2 = state.user;
 
-    expect(angular.computed).toHaveBeenCalledTimes(1);
+    expect(computed).toHaveBeenCalledTimes(1);
 
     const _ = state.user.firstName;
     const __ = user1.firstName;
     const ___ = user2.firstName;
 
-    expect(angular.computed).toHaveBeenCalledTimes(2);
+    expect(computed).toHaveBeenCalledTimes(2);
   });
 
   it('does not modify props that are not state slices', () => {
@@ -76,20 +89,11 @@ describe('signalState', () => {
     expect((state.user.firstName as any).y).toBe(undefined);
   });
 
-  it('does not modify STATE_SOURCE', () => {
-    const state = signalState(initialState);
-
-    expect((state[STATE_SOURCE] as any).user).toBe(undefined);
-    expect((state[STATE_SOURCE] as any).foo).toBe(undefined);
-    expect((state[STATE_SOURCE] as any).numbers).toBe(undefined);
-    expect((state[STATE_SOURCE] as any).ngrx).toBe(undefined);
-  });
-
   it('overrides Function properties if state keys have the same name', () => {
     const initialState = { name: { length: { length: 'ngrx' }, name: 20 } };
     const state = signalState(initialState);
 
-    expect(state()).toBe(initialState);
+    expect(state()).toEqual(initialState);
 
     expect(state.name()).toBe(initialState.name);
     expect(isSignal(state.name)).toBe(true);
@@ -130,14 +134,14 @@ describe('signalState', () => {
       expect(userEmitted).toBe(0);
       expect(firstNameEmitted).toBe(0);
 
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(numbersEmitted).toBe(1);
       expect(userEmitted).toBe(1);
       expect(firstNameEmitted).toBe(1);
 
       patchState(state, { numbers: [1, 2, 3] });
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(numbersEmitted).toBe(2);
       expect(userEmitted).toBe(1);
@@ -146,7 +150,7 @@ describe('signalState', () => {
       patchState(state, (state) => ({
         user: { ...state.user, lastName: 'Schmidt' },
       }));
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(numbersEmitted).toBe(2);
       expect(userEmitted).toBe(2);
@@ -155,7 +159,7 @@ describe('signalState', () => {
       patchState(state, (state) => ({
         user: { ...state.user, firstName: 'Johannes' },
       }));
-      TestBed.flushEffects();
+      TestBed.tick();
 
       expect(numbersEmitted).toBe(2);
       expect(userEmitted).toBe(3);
@@ -180,18 +184,18 @@ describe('signalState', () => {
         userCounter++;
       });
 
-      TestBed.flushEffects();
+      TestBed.tick();
       expect(stateCounter).toBe(1);
       expect(userCounter).toBe(1);
 
       patchState(state, {});
-      TestBed.flushEffects();
-      expect(stateCounter).toBe(2);
+      TestBed.tick();
+      expect(stateCounter).toBe(1);
       expect(userCounter).toBe(1);
 
       patchState(state, (state) => state);
-      TestBed.flushEffects();
-      expect(stateCounter).toBe(3);
+      TestBed.tick();
+      expect(stateCounter).toBe(1);
       expect(userCounter).toBe(1);
     }));
 });

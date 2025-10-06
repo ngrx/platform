@@ -1,0 +1,119 @@
+{
+  "name": "RouterState",
+  "canonicalReference": "@ngrx/router-store!RouterState:enum",
+  "kind": "Enum",
+  "fileUrlPath": "../../dist/modules/router-store/src/router_store_config.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Enum",
+      "canonicalReference": "@ngrx/router-store!RouterState:enum",
+      "docComment": "/**\n * Minimal = Serializes the router event with MinimalRouterStateSerializer Full = Serializes the router event with FullRouterStateSerializer\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare enum RouterState "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/router-store/src/router_store_config.d.ts",
+      "releaseTag": "Public",
+      "name": "RouterState",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/router-store!RouterState.Full:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "Full = "
+            },
+            {
+              "kind": "Content",
+              "text": "0"
+            }
+          ],
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "name": "Full",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "EnumMember",
+          "canonicalReference": "@ngrx/router-store!RouterState.Minimal:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "Minimal = "
+            },
+            {
+              "kind": "Content",
+              "text": "1"
+            }
+          ],
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "name": "Minimal",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Minimal = Serializes the router event with MinimalRouterStateSerializer Full = Serializes the router event with FullRouterStateSerializer\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

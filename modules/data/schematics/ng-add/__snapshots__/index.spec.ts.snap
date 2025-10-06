@@ -1,33 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Data ng-add Schematic Migration of ngrx-data Data ng-add Schematic for standalone application provides data without effects 1`] = `
-"import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+"import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideEntityData } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideEntityData(entityConfig)]
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideEntityData(entityConfig)
+]
 };
 "
 `;
 
 exports[`Data ng-add Schematic Migration of ngrx-data Data ng-add Schematic for standalone application provides data without entityConfig 1`] = `
-"import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+"import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideEntityData, withEffects } from '@ngrx/data';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideEntityData({}, withEffects())]
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideEntityData({}, withEffects())
+]
 };
 "
 `;
 
 exports[`Data ng-add Schematic Migration of ngrx-data Data ng-add Schematic for standalone application provides default data setup 1`] = `
-"import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+"import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideEntityData, withEffects } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideEntityData(entityConfig, withEffects())]
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideEntityData(entityConfig, withEffects())
+]
 };
 "
 `;

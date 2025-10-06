@@ -1,0 +1,125 @@
+{
+  "name": "StoreDevtoolsModule",
+  "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsModule:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/store-devtools/src/instrument.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsModule:class",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class StoreDevtoolsModule "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/store-devtools/src/instrument.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "StoreDevtoolsModule",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsModule.instrument:member(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "static instrument(options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StoreDevtoolsOptions",
+              "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsOptions:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "ModuleWithProviders",
+              "canonicalReference": "@angular/core!ModuleWithProviders:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "StoreDevtoolsModule",
+              "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsModule:class"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": true,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "instrument",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

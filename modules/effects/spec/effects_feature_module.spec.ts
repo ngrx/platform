@@ -127,7 +127,10 @@ const getCreateDataState = createSelector(
 
 @Injectable()
 class FeatureEffects {
-  constructor(private actions: Actions, private store: Store<State>) {}
+  constructor(
+    private actions: Actions,
+    private store: Store<State>
+  ) {}
 
   createEffectWithStore = createEffect(() =>
     this.actions.pipe(

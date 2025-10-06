@@ -1,0 +1,147 @@
+{
+  "name": "MinimalRouterStateSnapshot",
+  "canonicalReference": "@ngrx/router-store!MinimalRouterStateSnapshot:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/router-store/src/serializers/minimal_serializer.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/router-store!MinimalRouterStateSnapshot:interface",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export interface MinimalRouterStateSnapshot extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "BaseRouterStoreState",
+          "canonicalReference": "@ngrx/router-store!BaseRouterStoreState:interface"
+        },
+        {
+          "kind": "Content",
+          "text": " "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/router-store/src/serializers/minimal_serializer.d.ts",
+      "releaseTag": "Public",
+      "name": "MinimalRouterStateSnapshot",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/router-store!MinimalRouterStateSnapshot#root:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "root: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MinimalActivatedRouteSnapshot",
+              "canonicalReference": "@ngrx/router-store!MinimalActivatedRouteSnapshot:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "root",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/router-store!MinimalRouterStateSnapshot#url:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "url: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "url",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [
+        {
+          "startIndex": 1,
+          "endIndex": 2
+        }
+      ],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

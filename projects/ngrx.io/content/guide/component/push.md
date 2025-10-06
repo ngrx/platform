@@ -1,3 +1,10 @@
+<div class="alert is-critical">
+
+The `@ngrx/component` package is in <a href="https://github.com/ngrx/platform/issues/4872" target="_blank">maintenance mode</a>.
+Changes to this package are limited to critical bug fixes.
+
+</div>
+
 # Push Pipe
 
 The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.
@@ -15,7 +22,6 @@ import { PushPipe } from '@ngrx/component';
 
 @Component({
   // ... other metadata
-  standalone: true,
   imports: [
     // ... other imports
     PushPipe,

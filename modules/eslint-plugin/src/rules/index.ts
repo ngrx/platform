@@ -2,6 +2,7 @@
 import avoidCombiningComponentStoreSelectors from './component-store/avoid-combining-component-store-selectors';
 import avoidMappingComponentStoreSelectors from './component-store/avoid-mapping-component-store-selectors';
 import updaterExplicitReturnType from './component-store/updater-explicit-return-type';
+import requireSuperOnDestroy from './component-store/require-super-ondestroy';
 // effects
 import avoidCyclicEffects from './effects/avoid-cyclic-effects';
 import noDispatchInEffects from './effects/no-dispatch-in-effects';
@@ -36,6 +37,7 @@ import signalStateNoArraysAtRootLevel from './signals/signal-state-no-arrays-at-
 import signalStoreFeatureShouldUseGenericType from './signals/signal-store-feature-should-use-generic-type';
 import withStateNoArraysAtRootLevel from './signals/with-state-no-arrays-at-root-level';
 import preferProtectedState from './signals/prefer-protected-state';
+import enforceTypeCall from './signals/enforce-type-call';
 
 export const rules = {
   // component-store
@@ -44,6 +46,7 @@ export const rules = {
   'avoid-mapping-component-store-selectors':
     avoidMappingComponentStoreSelectors,
   'updater-explicit-return-type': updaterExplicitReturnType,
+  'require-super-ondestroy': requireSuperOnDestroy,
   //effects
   'avoid-cyclic-effects': avoidCyclicEffects,
   'no-dispatch-in-effects': noDispatchInEffects,
@@ -82,4 +85,5 @@ export const rules = {
     signalStoreFeatureShouldUseGenericType,
   'prefer-protected-state': preferProtectedState,
   'with-state-no-arrays-at-root-level': withStateNoArraysAtRootLevel,
+  'enforce-type-call': enforceTypeCall,
 };

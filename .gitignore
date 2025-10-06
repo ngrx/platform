@@ -81,3 +81,14 @@ modules/*/schematics-core/testing
 migrations.json
 .env
 .nx/**
+
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
+
+# www reference files
+projects/www/src/app/reference/**/*.json
+projects/www/src/app/examples/**/*.txt
+.nx/cache
+.nx/workspace-data
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md

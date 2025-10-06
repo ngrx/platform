@@ -1,0 +1,50 @@
+{
+  "name": "changeSetItemFactory",
+  "canonicalReference": "@ngrx/data!changeSetItemFactory:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-change-set.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/data!changeSetItemFactory:var",
+      "docComment": "/**\n * Instance of a factory to create a ChangeSetItem for a ChangeSetOperation\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "changeSetItemFactory: "
+        },
+        {
+          "kind": "Reference",
+          "text": "ChangeSetItemFactory",
+          "canonicalReference": "@ngrx/data!ChangeSetItemFactory:class"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-change-set.d.ts",
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "changeSetItemFactory",
+      "variableTypeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 2
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Instance of a factory to create a ChangeSetItem for a ChangeSetOperation\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

@@ -17,7 +17,10 @@ export const PAUSE_RECORDING = 'PAUSE_RECORDING';
 export class PerformAction implements Action {
   readonly type = PERFORM_ACTION;
 
-  constructor(public action: Action, public timestamp: number) {
+  constructor(
+    public action: Action,
+    public timestamp: number
+  ) {
     if (typeof action.type === 'undefined') {
       throw new Error(
         'Actions may not have an undefined "type" property. ' +
@@ -62,7 +65,11 @@ export class ToggleAction implements Action {
 export class SetActionsActive implements Action {
   readonly type = SET_ACTIONS_ACTIVE;
 
-  constructor(public start: number, public end: number, public active = true) {}
+  constructor(
+    public start: number,
+    public end: number,
+    public active = true
+  ) {}
 }
 
 export class JumpToState implements Action {

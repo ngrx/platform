@@ -10,7 +10,7 @@
     "outDir": "../../dist/modules/eslint-plugin",
     "sourceMap": true,
     "inlineSources": true,
-    "lib": ["es2018", "dom"],
+    "lib": ["ES2022", "dom"],
     "skipLibCheck": true,
     "strict": true
   },

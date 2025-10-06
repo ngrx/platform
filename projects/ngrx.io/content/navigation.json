@@ -1,10 +1,6 @@
 {
   "TopBar": [
     {
-      "url": "guide/store",
-      "title": "Getting Started"
-    },
-    {
       "url": "docs",
       "title": "Docs"
     },
@@ -25,10 +21,6 @@
     {
       "title": "About NgRx",
       "children": [
-        {
-          "url": "guide/store",
-          "title": "Getting Started"
-        },
         {
           "url": "docs",
           "title": "Docs"
@@ -226,6 +218,84 @@
           ]
         },
         {
+          "title": "@ngrx/signals",
+          "children": [
+            {
+              "title": "Overview",
+              "url": "guide/signals"
+            },
+            {
+              "title": "Installation",
+              "url": "guide/signals/install"
+            },
+            {
+              "title": "SignalStore",
+              "children": [
+                {
+                  "title": "Core Concepts",
+                  "url": "guide/signals/signal-store"
+                },
+                {
+                  "title": "Lifecycle Hooks",
+                  "url": "guide/signals/signal-store/lifecycle-hooks"
+                },
+                {
+                  "title": "Custom Store Properties",
+                  "url": "guide/signals/signal-store/custom-store-properties"
+                },
+                {
+                  "title": "Linked State",
+                  "url": "guide/signals/signal-store/linked-state"
+                },
+                {
+                  "title": "State Tracking",
+                  "url": "guide/signals/signal-store/state-tracking"
+                },
+                {
+                  "title": "Private Store Members",
+                  "url": "guide/signals/signal-store/private-store-members"
+                },
+                {
+                  "title": "Custom Store Features",
+                  "url": "guide/signals/signal-store/custom-store-features"
+                },
+                {
+                  "title": "Entity Management",
+                  "url": "guide/signals/signal-store/entity-management"
+                },
+                {
+                  "title": "Events",
+                  "url": "guide/signals/signal-store/events"
+                },
+                {
+                  "title": "Testing",
+                  "url": "guide/signals/signal-store/testing"
+                }
+              ]
+            },
+            {
+              "title": "SignalState",
+              "url": "guide/signals/signal-state"
+            },
+            {
+              "title": "DeepComputed",
+              "url": "guide/signals/deep-computed"
+            },
+            {
+              "title": "SignalMethod",
+              "url": "guide/signals/signal-method"
+            },
+            {
+              "title": "RxJS Integration",
+              "url": "guide/signals/rxjs-integration"
+            },
+            {
+              "title": "FAQ",
+              "url": "guide/signals/faq"
+            }
+          ]
+        },
+        {
           "title": "@ngrx/component-store",
           "children": [
             {
@@ -268,68 +338,6 @@
             {
               "title": "Usage",
               "url": "guide/component-store/usage"
-            }
-          ]
-        },
-        {
-          "title": "@ngrx/signals",
-          "children": [
-            {
-              "title": "Overview",
-              "url": "guide/signals"
-            },
-            {
-              "title": "Installation",
-              "url": "guide/signals/install"
-            },
-            {
-              "title": "SignalStore",
-              "children": [
-                {
-                  "title": "Core Concepts",
-                  "url": "guide/signals/signal-store"
-                },
-                {
-                  "title": "Lifecycle Hooks",
-                  "url": "guide/signals/signal-store/lifecycle-hooks"
-                },
-                {
-                  "title": "State Tracking",
-                  "url": "guide/signals/signal-store/state-tracking"
-                },
-                {
-                  "title": "Private Store Members",
-                  "url": "guide/signals/signal-store/private-store-members"
-                },
-                {
-                  "title": "Custom Store Features",
-                  "url": "guide/signals/signal-store/custom-store-features"
-                },
-                {
-                  "title": "Entity Management",
-                  "url": "guide/signals/signal-store/entity-management"
-                },
-                {
-                  "title": "Testing",
-                  "url": "guide/signals/signal-store/testing"
-                }
-              ]
-            },
-            {
-              "title": "SignalState",
-              "url": "guide/signals/signal-state"
-            },
-            {
-              "title": "DeepComputed",
-              "url": "guide/signals/deep-computed"
-            },
-            {
-              "title": "RxJS Integration",
-              "url": "guide/signals/rxjs-integration"
-            },
-            {
-              "title": "FAQ",
-              "url": "guide/signals/faq"
             }
           ]
         },
@@ -569,6 +577,14 @@
       "title": "Migrations",
       "children": [
         {
+          "title": "V20",
+          "url": "guide/migration/v20"
+        },
+        {
+          "title": "V19",
+          "url": "guide/migration/v19"
+        },
+        {
           "title": "V18",
           "url": "guide/migration/v18"
         },
@@ -721,6 +737,22 @@
     }
   ],
   "docVersions": [
+    {
+      "title": "v19",
+      "url": "https://v19.ngrx.io"
+    },
+    {
+      "title": "v19",
+      "url": "https://v19.ngrx.io"
+    },
+    {
+      "title": "v18",
+      "url": "https://v18.ngrx.io"
+    },
+    {
+      "title": "v18",
+      "url": "https://v18.ngrx.io"
+    },
     {
       "title": "v17",
       "url": "https://v17.ngrx.io"

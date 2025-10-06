@@ -16,12 +16,11 @@ import * as fromStore from '../reducers';
 
 @Component({
   selector: 'app-foo',
-  standalone: true,
   imports: [],
-  templateUrl: './foo.component.html',
-  styleUrl: './foo.component.css'
+  templateUrl: './foo.html',
+  styleUrl: './foo.css'
 })
-export class FooComponent {
+export class Foo {
   constructor(private store: Store) {}
 }
 "
@@ -33,12 +32,11 @@ import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-foo',
-  standalone: true,
   imports: [],
-  templateUrl: './foo.component.html',
-  styleUrl: './foo.component.css'
+  templateUrl: './foo.html',
+  styleUrl: './foo.css'
 })
-export class FooComponent {
+export class Foo {
   constructor(private store: Store) {}
 }
 "
@@ -115,18 +113,33 @@ describe('FooComponent', () => {
 "
 `;
 
-exports[`Container Schematic standalone should create a standalone component if true 1`] = `
+exports[`Container Schematic standalone should be standalone by default 1`] = `
 "import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-foo',
-  standalone: true,
   imports: [],
-  templateUrl: './foo.component.html',
-  styleUrl: './foo.component.css'
+  templateUrl: './foo.html',
+  styleUrl: './foo.css'
 })
-export class FooComponent {
+export class Foo {
+  constructor(private store: Store) {}
+}
+"
+`;
+
+exports[`Container Schematic standalone should create a non-standalone component if false 1`] = `
+"import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+@Component({
+  selector: 'app-foo',
+  standalone: false,
+  templateUrl: './foo.html',
+  styleUrl: './foo.css'
+})
+export class Foo {
   constructor(private store: Store) {}
 }
 "

@@ -1,0 +1,2319 @@
+{
+  "name": "EntityChangeTrackerBase",
+  "canonicalReference": "@ngrx/data!EntityChangeTrackerBase:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/reducers/entity-change-tracker-base.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!EntityChangeTrackerBase:class",
+      "docComment": "/**\n * The default implementation of EntityChangeTracker with methods for tracking, committing, and reverting/undoing unsaved entity changes. Used by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection. See EntityChangeTracker docs.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class EntityChangeTrackerBase<T> implements "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityChangeTracker",
+          "canonicalReference": "@ngrx/data!EntityChangeTracker:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<T>"
+        },
+        {
+          "kind": "Content",
+          "text": " "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/reducers/entity-change-tracker-base.d.ts",
+      "releaseTag": "Public",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "isAbstract": false,
+      "name": "EntityChangeTrackerBase",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Constructor",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase:constructor(1)",
+          "docComment": "/**\n * Constructs a new instance of the `EntityChangeTrackerBase` class\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "constructor(adapter: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityAdapter",
+              "canonicalReference": "@ngrx/entity!EntityAdapter:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", selectId: "
+            },
+            {
+              "kind": "Reference",
+              "text": "IdSelector",
+              "canonicalReference": "@ngrx/entity!IdSelector:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ");"
+            }
+          ],
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "adapter",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "selectId",
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 6
+              },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Constructs a new instance of the `EntityChangeTrackerBase` class\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#commitAll:member(1)",
+          "docComment": "/**\n * Commit all changes as when the collection has been completely reloaded from the server. Harmless when there are no entity changes to commit.\n *\n * @param collection - The entity collection\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "commitAll(collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "commitAll",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Commit all changes as when the collection has been completely reloaded from the server. Harmless when there are no entity changes to commit.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "collection",
+                "description": "The entity collection\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#commitMany:member(1)",
+          "docComment": "/**\n * Commit changes for the given entities as when they have been refreshed from the server. Harmless when there are no entity changes to commit.\n *\n * @param entityOrIdList - The entities to clear tracking or their ids.\n *\n * @param collection - The entity collection\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "commitMany(entityOrIdList: "
+            },
+            {
+              "kind": "Content",
+              "text": "(number | string | T)[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityOrIdList",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "commitMany",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Commit changes for the given entities as when they have been refreshed from the server. Harmless when there are no entity changes to commit.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entityOrIdList",
+                "description": "The entities to clear tracking or their ids.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#commitOne:member(1)",
+          "docComment": "/**\n * Commit changes for the given entity as when it have been refreshed from the server. Harmless when no entity changes to commit.\n *\n * @param entityOrId - The entity to clear tracking or its id.\n *\n * @param collection - The entity collection\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "commitOne(entityOrId: "
+            },
+            {
+              "kind": "Content",
+              "text": "number | string | T"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityOrId",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "commitOne",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Commit changes for the given entity as when it have been refreshed from the server. Harmless when no entity changes to commit.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entityOrId",
+                "description": "The entity to clear tracking or its id.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#mergeQueryResults:member(1)",
+          "docComment": "/**\n * Merge query results into the collection, adjusting the ChangeState per the mergeStrategy.\n *\n * @param entities - Entities returned from querying the server.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - How to merge a queried entity when the corresponding entity in the collection has an unsaved change. Defaults to MergeStrategy.PreserveChanges.\n *\n * @returns The merged EntityCollection.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "mergeQueryResults(entities: "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MergeStrategy",
+              "canonicalReference": "@ngrx/data!MergeStrategy:enum"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entities",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mergeStrategy",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "mergeQueryResults",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Merge query results into the collection, adjusting the ChangeState per the mergeStrategy.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " The merged EntityCollection.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "entities",
+                "description": "Entities returned from querying the server.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n\n"
+              },
+              {
+                "name": "mergeStrategy",
+                "description": "How to merge a queried entity when the corresponding entity in the collection has an unsaved change. Defaults to MergeStrategy.PreserveChanges.\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#mergeSaveAdds:member(1)",
+          "docComment": "/**\n * Merge result of saving new entities into the collection, adjusting the ChangeState per the mergeStrategy. The default is MergeStrategy.OverwriteChanges.\n *\n * @param entities - Entities returned from saving new entities to the server.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - How to merge a saved entity when the corresponding entity in the collection has an unsaved change. Defaults to MergeStrategy.OverwriteChanges.\n *\n * @returns The merged EntityCollection.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "mergeSaveAdds(entities: "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MergeStrategy",
+              "canonicalReference": "@ngrx/data!MergeStrategy:enum"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entities",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mergeStrategy",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "mergeSaveAdds",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Merge result of saving new entities into the collection, adjusting the ChangeState per the mergeStrategy. The default is MergeStrategy.OverwriteChanges.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " The merged EntityCollection.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "entities",
+                "description": "Entities returned from saving new entities to the server.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n\n"
+              },
+              {
+                "name": "mergeStrategy",
+                "description": "How to merge a saved entity when the corresponding entity in the collection has an unsaved change. Defaults to MergeStrategy.OverwriteChanges.\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#mergeSaveDeletes:member(1)",
+          "docComment": "/**\n * Merge successful result of deleting entities on the server that have the given primary keys Clears the entity changeState for those keys unless the MergeStrategy is ignoreChanges.\n *\n * @param entities - keys primary keys of the entities to remove/delete.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - How to adjust change tracking when the corresponding entity in the collection has an unsaved change. Defaults to MergeStrategy.OverwriteChanges.\n *\n * @returns The merged EntityCollection.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "mergeSaveDeletes(keys: "
+            },
+            {
+              "kind": "Content",
+              "text": "(number | string)[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MergeStrategy",
+              "canonicalReference": "@ngrx/data!MergeStrategy:enum"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "keys",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mergeStrategy",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "mergeSaveDeletes",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Merge successful result of deleting entities on the server that have the given primary keys Clears the entity changeState for those keys unless the MergeStrategy is ignoreChanges.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " The merged EntityCollection.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "entities",
+                "description": "keys primary keys of the entities to remove/delete.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n\n"
+              },
+              {
+                "name": "mergeStrategy",
+                "description": "How to adjust change tracking when the corresponding entity in the collection has an unsaved change. Defaults to MergeStrategy.OverwriteChanges.\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#mergeSaveUpdates:member(1)",
+          "docComment": "/**\n * Merge result of saving updated entities into the collection, adjusting the ChangeState per the mergeStrategy. The default is MergeStrategy.OverwriteChanges.\n *\n * @param updateResponseData - Entity response data returned from saving updated entities to the server.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - How to merge a saved entity when the corresponding entity in the collection has an unsaved change. Defaults to MergeStrategy.OverwriteChanges.\n *\n * @param skipUnchanged - True means skip update if server didn't change it. False by default. If the update was optimistic and the server didn't make more changes of its own then the updates are already in the collection and shouldn't make them again.\n *\n * @returns The merged EntityCollection.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "mergeSaveUpdates(updateResponseData: "
+            },
+            {
+              "kind": "Reference",
+              "text": "UpdateResponseData",
+              "canonicalReference": "@ngrx/data!UpdateResponseData:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MergeStrategy",
+              "canonicalReference": "@ngrx/data!MergeStrategy:enum"
+            },
+            {
+              "kind": "Content",
+              "text": ", skipUnchanged?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 11,
+            "endIndex": 13
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "updateResponseData",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 6
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mergeStrategy",
+              "parameterTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "skipUnchanged",
+              "parameterTypeTokenRange": {
+                "startIndex": 9,
+                "endIndex": 10
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "mergeSaveUpdates",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Merge result of saving updated entities into the collection, adjusting the ChangeState per the mergeStrategy. The default is MergeStrategy.OverwriteChanges.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " The merged EntityCollection.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "updateResponseData",
+                "description": "Entity response data returned from saving updated entities to the server.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n\n"
+              },
+              {
+                "name": "mergeStrategy",
+                "description": "How to merge a saved entity when the corresponding entity in the collection has an unsaved change. Defaults to MergeStrategy.OverwriteChanges.\n\n"
+              },
+              {
+                "name": "skipUnchanged",
+                "description": "True means skip update if server didn't change it. False by default. If the update was optimistic and the server didn't make more changes of its own then the updates are already in the collection and shouldn't make them again.\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#mergeSaveUpserts:member(1)",
+          "docComment": "/**\n * Merge result of saving upserted entities into the collection, adjusting the ChangeState per the mergeStrategy. The default is MergeStrategy.OverwriteChanges.\n *\n * @param entities - Entities returned from saving upserts to the server.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - How to merge a saved entity when the corresponding entity in the collection has an unsaved change. Defaults to MergeStrategy.OverwriteChanges.\n *\n * @returns The merged EntityCollection.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "mergeSaveUpserts(entities: "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MergeStrategy",
+              "canonicalReference": "@ngrx/data!MergeStrategy:enum"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entities",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mergeStrategy",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "mergeSaveUpserts",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Merge result of saving upserted entities into the collection, adjusting the ChangeState per the mergeStrategy. The default is MergeStrategy.OverwriteChanges.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " The merged EntityCollection.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "entities",
+                "description": "Entities returned from saving upserts to the server.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n\n"
+              },
+              {
+                "name": "mergeStrategy",
+                "description": "How to merge a saved entity when the corresponding entity in the collection has an unsaved change. Defaults to MergeStrategy.OverwriteChanges.\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#trackAddMany:member(1)",
+          "docComment": "/**\n * Track multiple entities before adding them to the collection. Does NOT add to the collection (the reducer's job).\n *\n * @param entities - The entities to add. They must all have their ids.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "trackAddMany(entities: "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MergeStrategy",
+              "canonicalReference": "@ngrx/data!MergeStrategy:enum"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entities",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mergeStrategy",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "trackAddMany",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Track multiple entities before adding them to the collection. Does NOT add to the collection (the reducer's job).\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entities",
+                "description": "The entities to add. They must all have their ids.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n\n"
+              },
+              {
+                "name": "mergeStrategy",
+                "description": "Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#trackAddOne:member(1)",
+          "docComment": "/**\n * Track an entity before adding it to the collection. Does NOT add to the collection (the reducer's job).\n *\n * @param entity - The entity to add. It must have an id.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges. If not specified, implementation supplies a default strategy.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "trackAddOne(entity: "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MergeStrategy",
+              "canonicalReference": "@ngrx/data!MergeStrategy:enum"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entity",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mergeStrategy",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "trackAddOne",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Track an entity before adding it to the collection. Does NOT add to the collection (the reducer's job).\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entity",
+                "description": "The entity to add. It must have an id.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n\n"
+              },
+              {
+                "name": "mergeStrategy",
+                "description": "Track by default. Don't track if is MergeStrategy.IgnoreChanges. If not specified, implementation supplies a default strategy.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#trackDeleteMany:member(1)",
+          "docComment": "/**\n * Track multiple entities before removing them with the intention of deleting them on the server. Does NOT remove from the collection (the reducer's job).\n *\n * @param keys - The primary keys of the entities to delete.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "trackDeleteMany(keys: "
+            },
+            {
+              "kind": "Content",
+              "text": "(number | string)[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MergeStrategy",
+              "canonicalReference": "@ngrx/data!MergeStrategy:enum"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "keys",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mergeStrategy",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "trackDeleteMany",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Track multiple entities before removing them with the intention of deleting them on the server. Does NOT remove from the collection (the reducer's job).\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "keys",
+                "description": "The primary keys of the entities to delete.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n\n"
+              },
+              {
+                "name": "mergeStrategy",
+                "description": "Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#trackDeleteOne:member(1)",
+          "docComment": "/**\n * Track an entity before it is removed with the intention of deleting it on the server. Does NOT remove from the collection (the reducer's job).\n *\n * @param key - The primary key of the entity to delete.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "trackDeleteOne(key: "
+            },
+            {
+              "kind": "Content",
+              "text": "number | string"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MergeStrategy",
+              "canonicalReference": "@ngrx/data!MergeStrategy:enum"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "key",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mergeStrategy",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "trackDeleteOne",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Track an entity before it is removed with the intention of deleting it on the server. Does NOT remove from the collection (the reducer's job).\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "key",
+                "description": "The primary key of the entity to delete.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n\n"
+              },
+              {
+                "name": "mergeStrategy",
+                "description": "Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#trackUpdateMany:member(1)",
+          "docComment": "/**\n * Track multiple entities before updating them in the collection. Does NOT update the collection (the reducer's job).\n *\n * @param updates - The entities to update.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "trackUpdateMany(updates: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Update",
+              "canonicalReference": "@ngrx/entity!Update:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MergeStrategy",
+              "canonicalReference": "@ngrx/data!MergeStrategy:enum"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 9,
+            "endIndex": 11
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "updates",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 6
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mergeStrategy",
+              "parameterTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "trackUpdateMany",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Track multiple entities before updating them in the collection. Does NOT update the collection (the reducer's job).\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "updates",
+                "description": "The entities to update.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n\n"
+              },
+              {
+                "name": "mergeStrategy",
+                "description": "Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#trackUpdateOne:member(1)",
+          "docComment": "/**\n * Track an entity before updating it in the collection. Does NOT update the collection (the reducer's job).\n *\n * @param update - The entity to update.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "trackUpdateOne(update: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Update",
+              "canonicalReference": "@ngrx/entity!Update:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MergeStrategy",
+              "canonicalReference": "@ngrx/data!MergeStrategy:enum"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 9,
+            "endIndex": 11
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "update",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 6
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mergeStrategy",
+              "parameterTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "trackUpdateOne",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Track an entity before updating it in the collection. Does NOT update the collection (the reducer's job).\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "update",
+                "description": "The entity to update.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n\n"
+              },
+              {
+                "name": "mergeStrategy",
+                "description": "Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#trackUpsertMany:member(1)",
+          "docComment": "/**\n * Track multiple entities before upserting (adding and updating) them to the collection. Does NOT update the collection (the reducer's job).\n *\n * @param entities - The entities to add or update. They must be complete entities with ids.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "trackUpsertMany(entities: "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MergeStrategy",
+              "canonicalReference": "@ngrx/data!MergeStrategy:enum"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entities",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mergeStrategy",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "trackUpsertMany",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Track multiple entities before upserting (adding and updating) them to the collection. Does NOT update the collection (the reducer's job).\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entities",
+                "description": "The entities to add or update. They must be complete entities with ids.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n\n"
+              },
+              {
+                "name": "mergeStrategy",
+                "description": "Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#trackUpsertOne:member(1)",
+          "docComment": "/**\n * Track an entity before upsert (adding and updating) it to the collection. Does NOT update the collection (the reducer's job).\n *\n * @param entities - The entity to add or update. It must be a complete entity with its id.\n *\n * @param collection - The entity collection\n *\n * @param mergeStrategy - Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "trackUpsertOne(entity: "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", mergeStrategy?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MergeStrategy",
+              "canonicalReference": "@ngrx/data!MergeStrategy:enum"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entity",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mergeStrategy",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "trackUpsertOne",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Track an entity before upsert (adding and updating) it to the collection. Does NOT update the collection (the reducer's job).\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entities",
+                "description": "The entity to add or update. It must be a complete entity with its id.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n\n"
+              },
+              {
+                "name": "mergeStrategy",
+                "description": "Track by default. Don't track if is MergeStrategy.IgnoreChanges.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#undoAll:member(1)",
+          "docComment": "/**\n * Revert the unsaved changes for all collection. Harmless when there are no entity changes to undo.\n *\n * @param collection - The entity collection\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "undoAll(collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "undoAll",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Revert the unsaved changes for all collection. Harmless when there are no entity changes to undo.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "collection",
+                "description": "The entity collection\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#undoMany:member(1)",
+          "docComment": "/**\n * Revert the unsaved changes for the given entities. Harmless when there are no entity changes to undo.\n *\n * @param entityOrIdList - The entities to revert or their ids.\n *\n * @param collection - The entity collection\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "undoMany(entityOrIdList: "
+            },
+            {
+              "kind": "Content",
+              "text": "(number | string | T)[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityOrIdList",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "undoMany",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Revert the unsaved changes for the given entities. Harmless when there are no entity changes to undo.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entityOrIdList",
+                "description": "The entities to revert or their ids.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityChangeTrackerBase#undoOne:member(1)",
+          "docComment": "/**\n * Revert the unsaved changes for the given entity. Harmless when there are no entity changes to undo.\n *\n * @param entityOrId - The entity to revert or its id.\n *\n * @param collection - The entity collection\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "undoOne(entityOrId: "
+            },
+            {
+              "kind": "Content",
+              "text": "number | string | T"
+            },
+            {
+              "kind": "Content",
+              "text": ", collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollection",
+              "canonicalReference": "@ngrx/data!EntityCollection:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityOrId",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "undoOne",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Revert the unsaved changes for the given entity. Harmless when there are no entity changes to undo.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entityOrId",
+                "description": "The entity to revert or its id.\n\n"
+              },
+              {
+                "name": "collection",
+                "description": "The entity collection\n"
+              }
+            ]
+          }
+        }
+      ],
+      "implementsTokenRanges": [
+        {
+          "startIndex": 1,
+          "endIndex": 3
+        }
+      ],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "The default implementation of EntityChangeTracker with methods for tracking, committing, and reverting/undoing unsaved entity changes. Used by EntityCollectionReducerMethods which should call tracker methods BEFORE modifying the collection. See EntityChangeTracker docs.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

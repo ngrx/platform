@@ -1,0 +1,202 @@
+{
+  "name": "ChangeSet",
+  "canonicalReference": "@ngrx/data!ChangeSet:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-change-set.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/data!ChangeSet:interface",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export interface ChangeSet<T = "
+        },
+        {
+          "kind": "Content",
+          "text": "any"
+        },
+        {
+          "kind": "Content",
+          "text": "> "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-change-set.d.ts",
+      "releaseTag": "Public",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        }
+      ],
+      "name": "ChangeSet",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!ChangeSet#changes:member",
+          "docComment": "/**\n * An array of ChangeSetItems to be processed in the array order\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "changes: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ChangeSetItem",
+              "canonicalReference": "@ngrx/data!ChangeSetItem:type"
+            },
+            {
+              "kind": "Content",
+              "text": "[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "changes",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "An array of ChangeSetItems to be processed in the array order\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!ChangeSet#extras:member",
+          "docComment": "/**\n * An arbitrary, serializable object that should travel with the ChangeSet. Meaningful to the ChangeSet producer and consumer. Ignored by @ngrx/data.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "extras?: "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "extras",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "An arbitrary, serializable object that should travel with the ChangeSet. Meaningful to the ChangeSet producer and consumer. Ignored by @ngrx/data.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/data!ChangeSet#tag:member",
+          "docComment": "/**\n * An arbitrary string, identifying the ChangeSet and perhaps its purpose\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "tag?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": true,
+          "releaseTag": "Public",
+          "name": "tag",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "An arbitrary string, identifying the ChangeSet and perhaps its purpose\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

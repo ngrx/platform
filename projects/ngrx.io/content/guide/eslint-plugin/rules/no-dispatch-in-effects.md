@@ -22,7 +22,7 @@ Examples of **incorrect** code for this rule:
 ```ts
 export class Effects {
   loadData$ = createEffect(() =>
-    this.actions.pipe(
+    this.actions$.pipe(
       ofType(loadData),
       exhaustMap(() =>
         this.dataService.getData().pipe(
@@ -33,7 +33,7 @@ export class Effects {
             }
           }),
           map((response) => loadDataSuccess(response)),
-          catchError((error) => loadDataError(error))
+          catchError((error) => of(loadDataError(error)))
         )
       )
     )
@@ -51,26 +51,26 @@ Examples of **correct** code for this rule:
 ```ts
 export class Effects {
   loadData$ = createEffect(() =>
-    this.actions.pipe(
+    this.actions$.pipe(
       ofType(loadData),
       exhaustMap(() =>
         this.dataService.getData().pipe(
           map((response) => loadDataSuccess(response)),
-          catchError((error) => loadDataError(error))
+          catchError((error) => of(loadDataError(error)))
         )
       )
     )
   );
 
   handleCondition$ = createEffect(() =>
-    this.action.pipe(
+    this.actions$.pipe(
       ofType(loadDataSuccess),
       filter((response) => response.condition),
       exhaustMap(() =>
-        this.dataService
-          .getOtherData
-          // handle response from a consequent request
-          ()
+        this.dataService.getOtherData().pipe(
+          map((data) => anotherAction(data)),
+          catchError((error) => of(handleConditionError(error)))
+        )
       )
     )
   );

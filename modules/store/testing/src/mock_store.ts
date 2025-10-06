@@ -17,8 +17,8 @@ import { MOCK_SELECTORS } from './tokens';
 type OnlyMemoized<T, Result> = T extends string | MemoizedSelector<any, any>
   ? MemoizedSelector<any, Result>
   : T extends MemoizedSelectorWithProps<any, any, any>
-  ? MemoizedSelectorWithProps<any, any, Result>
-  : never;
+    ? MemoizedSelectorWithProps<any, any, Result>
+    : never;
 
 type Memoized<Result> =
   | MemoizedSelector<any, Result>
@@ -58,8 +58,8 @@ export class MockStore<T = object> extends Store<T> {
     Result = Selector extends MemoizedSelector<any, infer T>
       ? T
       : Selector extends MemoizedSelectorWithProps<any, any, infer U>
-      ? U
-      : Value
+        ? U
+        : Value,
   >(
     selector: Selector | string,
     value: Value

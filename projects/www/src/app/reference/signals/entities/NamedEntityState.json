@@ -1,0 +1,111 @@
+{
+  "name": "NamedEntityState",
+  "canonicalReference": "@ngrx/signals/entities!NamedEntityState:type",
+  "kind": "TypeAlias",
+  "fileUrlPath": "../../dist/modules/signals/entities/src/models.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "TypeAlias",
+      "canonicalReference": "@ngrx/signals/entities!NamedEntityState:type",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export type NamedEntityState<Entity, Collection extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string"
+        },
+        {
+          "kind": "Content",
+          "text": "> = "
+        },
+        {
+          "kind": "Content",
+          "text": "{\n    [K in keyof "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityState",
+          "canonicalReference": "@ngrx/signals/entities!EntityState:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<Entity> as `${Collection}${"
+        },
+        {
+          "kind": "Reference",
+          "text": "Capitalize",
+          "canonicalReference": "!Capitalize:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<K>}`]: "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityState",
+          "canonicalReference": "@ngrx/signals/entities!EntityState:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<Entity>[K];\n}"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/signals/entities/src/models.d.ts",
+      "releaseTag": "Public",
+      "name": "NamedEntityState",
+      "typeParameters": [
+        {
+          "typeParameterName": "Entity",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "typeParameterName": "Collection",
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "typeTokenRange": {
+        "startIndex": 3,
+        "endIndex": 10
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

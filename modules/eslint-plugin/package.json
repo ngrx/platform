@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/eslint-plugin",
-  "version": "18.1.1",
+  "version": "20.0.1",
   "description": "NgRx ESLint Plugin",
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/ngrx/platform#readme",
   "schematics": "./schematics/collection.json",
   "ng-update": {
+    "packageGroupName": "@ngrx/store",
     "packageGroup": [
       "@ngrx/store",
       "@ngrx/effects",
@@ -41,12 +42,12 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "semver": "^7.3.5",
     "strip-json-comments": "3.1.1"
   },
   "peerDependencies": {
     "eslint": "^8.57.0 || ^9.0.0",
-    "@typescript-eslint/utils": "^7.11.0 || ^8.0.0-alpha.20",
-    "typescript": "*"
+    "typescript": "*",
+    "typescript-eslint": "^8.0.0",
+    "@typescript-eslint/utils": "^8.0.0"
   }
 }

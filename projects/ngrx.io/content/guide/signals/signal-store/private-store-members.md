@@ -1,17 +1,19 @@
 # Private Store Members
 
 SignalStore allows defining private members that cannot be accessed from outside the store by using the `_` prefix.
-This includes root-level state slices, computed signals, and methods.
+This includes root-level state slices, properties, and methods.
 
 <code-tabs linenums="false">
-<code-pane header="counter.store.ts">
+<code-pane header="counter-store.ts">
 
 import { computed } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import {
   patchState,
   signalStore,
   withComputed,
   withMethods,
+  withProps,
   withState,
 } from '@ngrx/signals';
 
@@ -26,6 +28,11 @@ export const CounterStore = signalStore(
     _doubleCount1: computed(() => count1() * 2),
     doubleCount2: computed(() => _count2() * 2),
   })),
+  withProps(({ count2, _doubleCount1 }) => ({
+    // 👇 private property
+    _count2$: toObservable(count2),
+    doubleCount1$: toObservable(_doubleCount1),
+  })),
   withMethods((store) => ({
     increment1(): void {
       patchState(store, { count1: store.count1() + 1 });
@@ -39,16 +46,16 @@ export const CounterStore = signalStore(
 
 </code-pane>
 
-<code-pane header="counter.component.ts">
+<code-pane header="counter.ts">
 
 import { Component, inject, OnInit } from '@angular/core';
-import { CounterStore } from './counter.store';
+import { CounterStore } from './counter-store';
 
 @Component({
   /* ... */
   providers: [CounterStore],
 })
-export class CounterComponent implements OnInit {
+export class Counter implements OnInit {
   readonly store = inject(CounterStore);
 
   ngOnInit(): void {
@@ -57,6 +64,9 @@ export class CounterComponent implements OnInit {
 
     console.log(this.store._doubleCount1()); // ❌
     console.log(this.store.doubleCount2()); // ✅
+
+    this.store._count2$.subscribe(console.log); // ❌
+    this.store.doubleCount1$.subscribe(console.log); // ✅
 
     this.store.increment1(); // ✅
     this.store._increment2(); // ❌

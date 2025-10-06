@@ -20,9 +20,9 @@ export default createRule<Options, MessageIds>({
   meta: {
     type: 'suggestion',
     hasSuggestions: true,
-    ngrxModule: 'store',
     docs: {
       description: 'The global store should not be typed.',
+      ngrxModule: 'store',
     },
     schema: [],
     messages: {

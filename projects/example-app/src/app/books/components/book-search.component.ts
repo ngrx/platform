@@ -60,14 +60,15 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
       }
     `,
   ],
+  standalone: false,
 })
 export class BookSearchComponent {
   @Input() query = '';
   @Input() searching = false;
   @Input() error = '';
-  @Output() search = new EventEmitter<string>();
+  @Output() searchBooks = new EventEmitter<string>();
 
   onSearch(event: KeyboardEvent): void {
-    this.search.emit((event.target as HTMLInputElement).value);
+    this.searchBooks.emit((event.target as HTMLInputElement).value);
   }
 }

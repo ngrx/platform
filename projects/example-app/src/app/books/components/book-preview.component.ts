@@ -14,9 +14,9 @@ import { Book } from '@example-app/books/models';
             [src]="thumbnail"
             [alt]="title"
           />
-          <mat-card-title>{{ title | bcEllipsis : 35 }}</mat-card-title>
+          <mat-card-title>{{ title | bcEllipsis: 35 }}</mat-card-title>
           <mat-card-subtitle *ngIf="subtitle">{{
-            subtitle | bcEllipsis : 40
+            subtitle | bcEllipsis: 40
           }}</mat-card-subtitle>
         </mat-card-title-group>
         <mat-card-content>
@@ -76,6 +76,7 @@ import { Book } from '@example-app/books/models';
       }
     `,
   ],
+  standalone: false,
 })
 export class BookPreviewComponent {
   @Input() book!: Book;

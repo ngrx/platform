@@ -1,0 +1,88 @@
+{
+  "name": "OnStateInit",
+  "canonicalReference": "@ngrx/component-store!OnStateInit:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/component-store/src/lifecycle_hooks.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/component-store!OnStateInit:interface",
+      "docComment": "/**\n * The interface for the lifecycle hook called only once after the ComponentStore state is first initialized.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export interface OnStateInit "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/component-store/src/lifecycle_hooks.d.ts",
+      "releaseTag": "Public",
+      "name": "OnStateInit",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/component-store!OnStateInit#ngrxOnStateInit:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "readonly ngrxOnStateInit: "
+            },
+            {
+              "kind": "Content",
+              "text": "() => void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "ngrxOnStateInit",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "The interface for the lifecycle hook called only once after the ComponentStore state is first initialized.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

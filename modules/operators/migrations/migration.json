@@ -1,4 +1,10 @@
 {
   "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
-  "schematics": {}
+  "schematics": {
+    "20.0.0-rc_0-tap-response": {
+      "description": "Replace deprecated tapResponse signature",
+      "version": "20.0.0-rc.0",
+      "factory": "./20_0_0-rc_0-tap-response/index"
+    }
+  }
 }

@@ -1,0 +1,49 @@
+{
+  "name": "UPDATE",
+  "canonicalReference": "@ngrx/store!UPDATE:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/store/src/reducer_manager.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/store!UPDATE:var",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "UPDATE: "
+        },
+        {
+          "kind": "Content",
+          "text": "\"@ngrx/store/update-reducers\""
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/reducer_manager.d.ts",
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "UPDATE",
+      "variableTypeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 2
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

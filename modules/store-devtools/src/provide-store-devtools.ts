@@ -2,7 +2,6 @@ import {
   EnvironmentProviders,
   InjectionToken,
   makeEnvironmentProviders,
-  Provider,
 } from '@angular/core';
 import {
   DevtoolsExtension,
@@ -19,7 +18,6 @@ import {
   StoreDevtoolsOptions,
 } from './config';
 import { ReducerManagerDispatcher, StateObservable } from '@ngrx/store';
-import { createStateObservable } from './instrument';
 import { StoreDevtools } from './devtools';
 
 export const IS_EXTENSION_OR_MONITOR_PRESENT = new InjectionToken<boolean>(
@@ -44,6 +42,12 @@ export function createReduxDevtoolsExtension() {
   } else {
     return null;
   }
+}
+
+export function createStateObservable(
+  devtools: StoreDevtools
+): StateObservable {
+  return devtools.state;
 }
 
 /**

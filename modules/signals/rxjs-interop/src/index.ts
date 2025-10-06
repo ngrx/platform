@@ -1,1 +1,1 @@
-export { rxMethod } from './rx-method';
+export { rxMethod, RxMethod } from './rx-method';

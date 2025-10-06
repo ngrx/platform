@@ -1,0 +1,3149 @@
+{
+  "name": "EntityDispatcherBase",
+  "canonicalReference": "@ngrx/data!EntityDispatcherBase:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/dispatchers/entity-dispatcher-base.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!EntityDispatcherBase:class",
+      "docComment": "/**\n * Dispatches EntityCollection actions to their reducers and effects (default implementation). All save commands rely on an Ngrx Effect such as `EntityEffects.persist$`.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class EntityDispatcherBase<T> implements "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityDispatcher",
+          "canonicalReference": "@ngrx/data!EntityDispatcher:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<T>"
+        },
+        {
+          "kind": "Content",
+          "text": " "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/dispatchers/entity-dispatcher-base.d.ts",
+      "releaseTag": "Public",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "isAbstract": false,
+      "name": "EntityDispatcherBase",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Constructor",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase:constructor(1)",
+          "docComment": "/**\n * Constructs a new instance of the `EntityDispatcherBase` class\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "constructor(\n    entityName: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", \n    entityActionFactory: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionFactory",
+              "canonicalReference": "@ngrx/data!EntityActionFactory:class"
+            },
+            {
+              "kind": "Content",
+              "text": ", \n    store: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Store",
+              "canonicalReference": "@ngrx/store!Store:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCache",
+              "canonicalReference": "@ngrx/data!EntityCache:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ", \n    selectId: "
+            },
+            {
+              "kind": "Reference",
+              "text": "IdSelector",
+              "canonicalReference": "@ngrx/entity!IdSelector:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", \n    defaultDispatcherOptions: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityDispatcherDefaultOptions",
+              "canonicalReference": "@ngrx/data!EntityDispatcherDefaultOptions:class"
+            },
+            {
+              "kind": "Content",
+              "text": ", \n    reducedActions$: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ", \n    entityCacheSelector: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCacheSelector",
+              "canonicalReference": "@ngrx/data!EntityCacheSelector:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", \n    correlationIdGenerator: "
+            },
+            {
+              "kind": "Reference",
+              "text": "CorrelationIdGenerator",
+              "canonicalReference": "@ngrx/data!CorrelationIdGenerator:class"
+            },
+            {
+              "kind": "Content",
+              "text": ");"
+            }
+          ],
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityName",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "entityActionFactory",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "store",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 9
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "selectId",
+              "parameterTypeTokenRange": {
+                "startIndex": 10,
+                "endIndex": 12
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "defaultDispatcherOptions",
+              "parameterTypeTokenRange": {
+                "startIndex": 13,
+                "endIndex": 14
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "reducedActions$",
+              "parameterTypeTokenRange": {
+                "startIndex": 15,
+                "endIndex": 19
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "entityCacheSelector",
+              "parameterTypeTokenRange": {
+                "startIndex": 20,
+                "endIndex": 21
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "correlationIdGenerator",
+              "parameterTypeTokenRange": {
+                "startIndex": 22,
+                "endIndex": 23
+              },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Constructs a new instance of the `EntityDispatcherBase` class\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#add:member(1)",
+          "docComment": "/**\n * Dispatch action to save a new entity to remote storage.\n *\n * @param entity - entity to add, which may omit its key if pessimistic and the server creates the key; must have a key if optimistic save.\n *\n * @returns A terminating Observable of the entity after server reports successful save or the save error.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "add(entity: "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entity",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "add",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch action to save a new entity to remote storage.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " A terminating Observable of the entity after server reports successful save or the save error.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "entity",
+                "description": "entity to add, which may omit its key if pessimistic and the server creates the key; must have a key if optimistic save.\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#addAllToCache:member(1)",
+          "docComment": "/**\n * Replace all entities in the cached collection. Does not save to remote storage.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "addAllToCache(entities: "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entities",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "addAllToCache",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Replace all entities in the cached collection. Does not save to remote storage.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#addManyToCache:member(1)",
+          "docComment": "/**\n * Add multiple new entities directly to the cache. Does not save to remote storage. Entities with primary keys already in cache are ignored.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "addManyToCache(entities: "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entities",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "addManyToCache",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Add multiple new entities directly to the cache. Does not save to remote storage. Entities with primary keys already in cache are ignored.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#addOneToCache:member(1)",
+          "docComment": "/**\n * Add a new entity directly to the cache. Does not save to remote storage. Ignored if an entity with the same primary key is already in cache.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "addOneToCache(entity: "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entity",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "addOneToCache",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Add a new entity directly to the cache. Does not save to remote storage. Ignored if an entity with the same primary key is already in cache.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#cancel:member(1)",
+          "docComment": "/**\n * Dispatch action to cancel the persistence operation (query or save). Will cause save observable to error with a PersistenceCancel error. Caller is responsible for undoing changes in cache from pending optimistic save\n *\n * @param correlationId - The correlation id for the corresponding EntityAction\n *\n * @param reason - explains why canceled and by whom.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "cancel(correlationId: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", reason?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 7,
+            "endIndex": 8
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "correlationId",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "reason",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "cancel",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch action to cancel the persistence operation (query or save). Will cause save observable to error with a PersistenceCancel error. Caller is responsible for undoing changes in cache from pending optimistic save\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "correlationId",
+                "description": "The correlation id for the corresponding EntityAction\n\n"
+              },
+              {
+                "name": "reason",
+                "description": "explains why canceled and by whom.\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#clearCache:member(1)",
+          "docComment": "/**\n * Clear the cached entity collection\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "clearCache(options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "clearCache",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Clear the cached entity collection\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#createAndDispatch:member(1)",
+          "docComment": "/**\n * Create an {EntityAction} for this entity type and dispatch it immediately to the store.\n *\n * @param op - the entity operation\n *\n * @param data - the action data\n *\n * @param options - additional options\n *\n * @returns the dispatched EntityAction\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "createAndDispatch<P = "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ">(op: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityOp",
+              "canonicalReference": "@ngrx/data!EntityOp:enum"
+            },
+            {
+              "kind": "Content",
+              "text": ", data?: "
+            },
+            {
+              "kind": "Content",
+              "text": "P"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<P>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "P",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 9,
+            "endIndex": 11
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "op",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "data",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "createAndDispatch",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Create an {EntityAction} for this entity type and dispatch it immediately to the store.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " the dispatched EntityAction\n",
+            "see": [],
+            "params": [
+              {
+                "name": "op",
+                "description": "the entity operation\n\n"
+              },
+              {
+                "name": "data",
+                "description": "the action data\n\n"
+              },
+              {
+                "name": "options",
+                "description": "additional options\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#createEntityAction:member(1)",
+          "docComment": "/**\n * Create an {EntityAction} for this entity type.\n *\n * @param entityOp - the entity operation\n *\n * @param data - the action data\n *\n * @param options - additional options\n *\n * @returns the EntityAction\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "createEntityAction<P = "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ">(entityOp: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityOp",
+              "canonicalReference": "@ngrx/data!EntityOp:enum"
+            },
+            {
+              "kind": "Content",
+              "text": ", data?: "
+            },
+            {
+              "kind": "Content",
+              "text": "P"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityAction",
+              "canonicalReference": "@ngrx/data!EntityAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<P>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "P",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 9,
+            "endIndex": 11
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityOp",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "data",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "createEntityAction",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Create an {EntityAction} for this entity type.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " the EntityAction\n",
+            "see": [],
+            "params": [
+              {
+                "name": "entityOp",
+                "description": "the entity operation\n\n"
+              },
+              {
+                "name": "data",
+                "description": "the action data\n\n"
+              },
+              {
+                "name": "options",
+                "description": "additional options\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#delete:member(1)",
+          "docComment": "/**\n * Dispatch action to delete entity from remote storage by key.\n *\n * @param key - The primary key of the entity to remove\n *\n * @returns A terminating Observable of the deleted key after server reports successful save or the save error.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "delete(entity: "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<number | string>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entity",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "delete",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch action to delete entity from remote storage by key.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " A terminating Observable of the deleted key after server reports successful save or the save error.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "key",
+                "description": "The primary key of the entity to remove\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#delete:member(2)",
+          "docComment": "/**\n * Dispatch action to delete entity from remote storage by key.\n *\n * @param key - The entity to delete\n *\n * @returns A terminating Observable of the deleted key after server reports successful save or the save error.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "delete(key: "
+            },
+            {
+              "kind": "Content",
+              "text": "number | string"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<number | string>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 2,
+          "parameters": [
+            {
+              "parameterName": "key",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "delete",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch action to delete entity from remote storage by key.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " A terminating Observable of the deleted key after server reports successful save or the save error.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "key",
+                "description": "The entity to delete\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#dispatch:member(1)",
+          "docComment": "/**\n * Dispatch an Action to the store.\n *\n * @param action - the Action\n *\n * @returns the dispatched Action\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "dispatch(action: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "action",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "dispatch",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch an Action to the store.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " the dispatched Action\n",
+            "see": [],
+            "params": [
+              {
+                "name": "action",
+                "description": "the Action\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#entityActionFactory:member",
+          "docComment": "/**\n * Creates an {EntityAction}\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "entityActionFactory: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionFactory",
+              "canonicalReference": "@ngrx/data!EntityActionFactory:class"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "entityActionFactory",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Creates an {EntityAction}\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#entityName:member",
+          "docComment": "/**\n * Name of the entity type for which entities are dispatched\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "entityName: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "entityName",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Name of the entity type for which entities are dispatched\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#getAll:member(1)",
+          "docComment": "/**\n * Dispatch action to query remote storage for all entities and merge the queried entities into the cached collection.\n *\n * @returns A terminating Observable of the queried entities that are in the collection after server reports success query or the query error.\n *\n * @see\n *\n * load()\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "getAll(options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<T[]>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "getAll",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch action to query remote storage for all entities and merge the queried entities into the cached collection.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " A terminating Observable of the queried entities that are in the collection after server reports success query or the query error.\n\n",
+            "see": ["\n\nload()\n"],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#getByKey:member(1)",
+          "docComment": "/**\n * Dispatch action to query remote storage for the entity with this primary key. If the server returns an entity, merge it into the cached collection.\n *\n * @returns A terminating Observable of the collection after server reports successful query or the query error.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "getByKey(key: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "key",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "getByKey",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch action to query remote storage for the entity with this primary key. If the server returns an entity, merge it into the cached collection.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " A terminating Observable of the collection after server reports successful query or the query error.\n",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#getWithQuery:member(1)",
+          "docComment": "/**\n * Dispatch action to query remote storage for the entities that satisfy a query expressed with either a query parameter map or an HTTP URL query string, and merge the results into the cached collection.\n *\n * @param queryParams - the query in a form understood by the server\n *\n * @returns A terminating Observable of the queried entities after server reports successful query or the query error.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "getWithQuery(queryParams: "
+            },
+            {
+              "kind": "Reference",
+              "text": "QueryParams",
+              "canonicalReference": "@ngrx/data!QueryParams:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | string"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<T[]>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "queryParams",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "getWithQuery",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch action to query remote storage for the entities that satisfy a query expressed with either a query parameter map or an HTTP URL query string, and merge the results into the cached collection.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " A terminating Observable of the queried entities after server reports successful query or the query error.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "queryParams",
+                "description": "the query in a form understood by the server\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#guard:member",
+          "docComment": "/**\n * Utility class with methods to validate EntityAction payloads.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "guard: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionGuard",
+              "canonicalReference": "@ngrx/data!EntityActionGuard:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "guard",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Utility class with methods to validate EntityAction payloads.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#load:member(1)",
+          "docComment": "/**\n * Dispatch action to query remote storage for all entities and completely replace the cached collection with the queried entities.\n *\n * @returns A terminating Observable of the entities in the collection after server reports successful query or the query error.\n *\n * @see\n *\n * getAll\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "load(options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<T[]>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "load",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch action to query remote storage for all entities and completely replace the cached collection with the queried entities.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " A terminating Observable of the entities in the collection after server reports successful query or the query error.\n\n",
+            "see": ["\n\ngetAll\n"],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#loadWithQuery:member(1)",
+          "docComment": "/**\n * Dispatch action to query remote storage for the entities that satisfy a query expressed with either a query parameter map or an HTTP URL query string, and completely replace the cached collection with the queried entities.\n *\n * @param queryParams - the query in a form understood by the server\n *\n * @param options - options that influence load behavior\n *\n * @returns A terminating Observable of the queried entities after server reports successful query or the query error.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "loadWithQuery(queryParams: "
+            },
+            {
+              "kind": "Reference",
+              "text": "QueryParams",
+              "canonicalReference": "@ngrx/data!QueryParams:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | string"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<T[]>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "queryParams",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "loadWithQuery",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch action to query remote storage for the entities that satisfy a query expressed with either a query parameter map or an HTTP URL query string, and completely replace the cached collection with the queried entities.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " A terminating Observable of the queried entities after server reports successful query or the query error.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "queryParams",
+                "description": "the query in a form understood by the server\n\n"
+              },
+              {
+                "name": "options",
+                "description": "options that influence load behavior\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#removeManyFromCache:member(1)",
+          "docComment": "/**\n * Remove multiple entities directly from the cache. Does not delete these entities from remote storage.\n *\n * @param entity - The entities to remove\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "removeManyFromCache(entities: "
+            },
+            {
+              "kind": "Content",
+              "text": "T[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entities",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "removeManyFromCache",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Remove multiple entities directly from the cache. Does not delete these entities from remote storage.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entity",
+                "description": "The entities to remove\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#removeManyFromCache:member(2)",
+          "docComment": "/**\n * Remove multiple entities directly from the cache. Does not delete these entities from remote storage.\n *\n * @param keys - The primary keys of the entities to remove\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "removeManyFromCache(keys: "
+            },
+            {
+              "kind": "Content",
+              "text": "(number | string)[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 2,
+          "parameters": [
+            {
+              "parameterName": "keys",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "removeManyFromCache",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Remove multiple entities directly from the cache. Does not delete these entities from remote storage.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "keys",
+                "description": "The primary keys of the entities to remove\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#removeOneFromCache:member(1)",
+          "docComment": "/**\n * Remove an entity directly from the cache. Does not delete that entity from remote storage.\n *\n * @param entity - The entity to remove\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "removeOneFromCache(entity: "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entity",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "removeOneFromCache",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Remove an entity directly from the cache. Does not delete that entity from remote storage.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entity",
+                "description": "The entity to remove\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#removeOneFromCache:member(2)",
+          "docComment": "/**\n * Remove an entity directly from the cache. Does not delete that entity from remote storage.\n *\n * @param key - The primary key of the entity to remove\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "removeOneFromCache(key: "
+            },
+            {
+              "kind": "Content",
+              "text": "number | string"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 2,
+          "parameters": [
+            {
+              "parameterName": "key",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "removeOneFromCache",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Remove an entity directly from the cache. Does not delete that entity from remote storage.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "key",
+                "description": "The primary key of the entity to remove\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#selectId:member",
+          "docComment": "/**\n * Returns the primary key (id) of this entity\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "selectId: "
+            },
+            {
+              "kind": "Reference",
+              "text": "IdSelector",
+              "canonicalReference": "@ngrx/entity!IdSelector:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "selectId",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Returns the primary key (id) of this entity\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#setFilter:member(1)",
+          "docComment": "/**\n * Set the pattern that the collection's filter applies when using the `filteredEntities` selector.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "setFilter(pattern: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "pattern",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "setFilter",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Set the pattern that the collection's filter applies when using the `filteredEntities` selector.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#setLoaded:member(1)",
+          "docComment": "/**\n * Set the loaded flag\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "setLoaded(isLoaded: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "isLoaded",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "setLoaded",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Set the loaded flag\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#setLoading:member(1)",
+          "docComment": "/**\n * Set the loading flag\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "setLoading(isLoading: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "isLoading",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "setLoading",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Set the loading flag\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#store:member",
+          "docComment": "/**\n * The store, scoped to the EntityCache\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "store: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Store",
+              "canonicalReference": "@ngrx/store!Store:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCache",
+              "canonicalReference": "@ngrx/data!EntityCache:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "store",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "The store, scoped to the EntityCache\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#toUpdate:member",
+          "docComment": "/**\n * Convert an entity (or partial entity) into the `Update<T>` object `update...` and `upsert...` methods take `Update<T>` args\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "toUpdate: "
+            },
+            {
+              "kind": "Content",
+              "text": "(entity: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Update",
+              "canonicalReference": "@ngrx/entity!Update:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "toUpdate",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 6
+          },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Convert an entity (or partial entity) into the `Update<T>` object `update...` and `upsert...` methods take `Update<T>` args\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#update:member(1)",
+          "docComment": "/**\n * Dispatch action to save the updated entity (or partial entity) in remote storage. The update entity may be partial (but must have its key) in which case it patches the existing entity.\n *\n * @param entity - update entity, which might be a partial of T but must at least have its key.\n *\n * @returns A terminating Observable of the updated entity after server reports successful save or the save error.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "update(entity: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entity",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "update",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch action to save the updated entity (or partial entity) in remote storage. The update entity may be partial (but must have its key) in which case it patches the existing entity.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " A terminating Observable of the updated entity after server reports successful save or the save error.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "entity",
+                "description": "update entity, which might be a partial of T but must at least have its key.\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#updateManyInCache:member(1)",
+          "docComment": "/**\n * Update multiple cached entities directly. Does not update these entities in remote storage. Entities whose primary keys are not in cache are ignored. Update entities may be partial but must at least have their keys. such partial entities patch their cached counterparts.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "updateManyInCache(entities: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entities",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "updateManyInCache",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Update multiple cached entities directly. Does not update these entities in remote storage. Entities whose primary keys are not in cache are ignored. Update entities may be partial but must at least have their keys. such partial entities patch their cached counterparts.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#updateOneInCache:member(1)",
+          "docComment": "/**\n * Update a cached entity directly. Does not update that entity in remote storage. Ignored if an entity with matching primary key is not in cache. The update entity may be partial (but must have its key) in which case it patches the existing entity.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "updateOneInCache(entity: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entity",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "updateOneInCache",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Update a cached entity directly. Does not update that entity in remote storage. Ignored if an entity with matching primary key is not in cache. The update entity may be partial (but must have its key) in which case it patches the existing entity.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#upsert:member(1)",
+          "docComment": "/**\n * Dispatch action to save a new or existing entity to remote storage. Only dispatch this action if your server supports upsert.\n *\n * @param entity - entity to add, which may omit its key if pessimistic and the server creates the key; must have a key if optimistic save.\n *\n * @returns A terminating Observable of the entity after server reports successful save or the save error.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "upsert(entity: "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Observable",
+              "canonicalReference": "rxjs!Observable:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entity",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "upsert",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Dispatch action to save a new or existing entity to remote storage. Only dispatch this action if your server supports upsert.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": " A terminating Observable of the entity after server reports successful save or the save error.\n",
+            "see": [],
+            "params": [
+              {
+                "name": "entity",
+                "description": "entity to add, which may omit its key if pessimistic and the server creates the key; must have a key if optimistic save.\n\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#upsertManyInCache:member(1)",
+          "docComment": "/**\n * Add or update multiple cached entities directly. Does not save to remote storage.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "upsertManyInCache(entities: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entities",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "upsertManyInCache",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Add or update multiple cached entities directly. Does not save to remote storage.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDispatcherBase#upsertOneInCache:member(1)",
+          "docComment": "/**\n * Add or update a new entity directly to the cache. Does not save to remote storage. Upsert entity might be a partial of T but must at least have its key. Pass the Update<T> structure as the payload\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "upsertOneInCache(entity: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityActionOptions",
+              "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entity",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "upsertOneInCache",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Add or update a new entity directly to the cache. Does not save to remote storage. Upsert entity might be a partial of T but must at least have its key. Pass the Update<T> structure as the payload\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "implementsTokenRanges": [
+        {
+          "startIndex": 1,
+          "endIndex": 3
+        }
+      ],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Dispatches EntityCollection actions to their reducers and effects (default implementation). All save commands rely on an Ngrx Effect such as `EntityEffects.persist$`.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

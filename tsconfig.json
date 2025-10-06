@@ -18,6 +18,7 @@
     "strict": true,
     "paths": {
       "@example-app/*": ["./projects/example-app/src/app/*"],
+      "@ngrx-io/*": ["./projects/www/src/*"],
       "@ngrx/component": ["./modules/component"],
       "@ngrx/component-store": ["./modules/component-store"],
       "@ngrx/component-store/schematics-core": [
@@ -45,8 +46,10 @@
       ],
       "@ngrx/signals": ["./modules/signals"],
       "@ngrx/signals/entities": ["./modules/signals/entities"],
+      "@ngrx/signals/events": ["./modules/signals/events"],
       "@ngrx/signals/rxjs-interop": ["./modules/signals/rxjs-interop"],
       "@ngrx/signals/schematics-core": ["./modules/signals/schematics-core"],
+      "@ngrx/signals/testing": ["./modules/signals/testing"],
       "@ngrx/store": ["./modules/store"],
       "@ngrx/store-devtools": ["./modules/store-devtools"],
       "@ngrx/store-devtools/schematics-core": [
@@ -67,8 +70,5 @@
   "buildOnSave": false,
   "atom": {
     "rewriteTsconfig": false
-  },
-  "bazelOptions": {
-    "suppressTsconfigOverrideWarnings": true
   }
 }

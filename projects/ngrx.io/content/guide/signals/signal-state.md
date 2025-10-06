@@ -9,7 +9,7 @@ SignalState is instantiated using the `signalState` function, which accepts an i
 
 ```ts
 import { signalState } from '@ngrx/signals';
-import { User } from './user.model';
+import { User } from './user';
 
 type UserState = { user: User; isAdmin: boolean };
 
@@ -121,14 +121,13 @@ patchState(userState, setFirstName('Stevie'), setAdmin());
 
 ### Example 1: SignalState in a Component
 
-<code-example header="counter.component.ts" linenums="true">
+<code-example header="counter.ts" linenums="true">
 
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { signalState, patchState } from '@ngrx/signals';
 
 @Component({
   selector: 'ngrx-counter',
-  standalone: true,
   template: `
     &lt;p&gt;Count: {{ state.count() }}&lt;/p&gt;
 
@@ -138,7 +137,7 @@ import { signalState, patchState } from '@ngrx/signals';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CounterComponent {
+export class Counter {
   readonly state = signalState({ count: 0 });
 
   increment(): void {
@@ -160,25 +159,25 @@ export class CounterComponent {
 ### Example 2: SignalState in a Service
 
 <code-tabs linenums="true">
-<code-pane header="books.store.ts">
+<code-pane header="book-list-store.ts">
 
 import { inject, Injectable } from '@angular/core';
 import { exhaustMap, pipe, tap } from 'rxjs';
 import { signalState, patchState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
-import { BooksService } from './books.service';
-import { Book } from './book.model';
+import { BooksService } from './books-service';
+import { Book } from './book';
 
-type BooksState = { books: Book[]; isLoading: boolean };
+type BookListState = { books: Book[]; isLoading: boolean };
 
-const initialState: BooksState = {
+const initialState: BookListState = {
   books: [],
   isLoading: false,
 };
 
 @Injectable()
-export class BooksStore {
+export class BookListStore {
   readonly #booksService = inject(BooksService);
   readonly #state = signalState(initialState);
 
@@ -203,14 +202,13 @@ export class BooksStore {
 
 </code-pane>
 
-<code-pane header="books.component.ts">
+<code-pane header="book-list.ts">
 
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { BooksStore } from './books.store';
+import { BookListStore } from './book-list-store';
 
 @Component({
-  selector: 'ngrx-books',
-  standalone: true,
+  selector: 'ngrx-book-list',
   template: `
     &lth1&gt;Books&lt;/h1&gt;
   
@@ -224,13 +222,13 @@ import { BooksStore } from './books.store';
       &lt;/ul&gt;
     }
   `,
-  providers: [BooksStore],
+  providers: [BookListStore],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BooksComponent implements OnInit {
-  readonly store = inject(BooksStore);
+export class BookList {
+  readonly store = inject(BookListStore);
 
-  ngOnInit(): void {
+  constructor() {
     this.store.loadBooks();
   }
 }

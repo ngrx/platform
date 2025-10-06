@@ -192,7 +192,7 @@ describe('Feature Schematic', () => {
       appTree
     );
     const moduleFileContent = tree.readContent(
-      `${projectPath}/src/app/app.module.ts`
+      `${projectPath}/src/app/app-module.ts`
     );
 
     expect(moduleFileContent).toMatchSnapshot();

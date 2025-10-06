@@ -75,12 +75,10 @@ features: {
 
 ## Example Object as provided in module imports
 
-<code-example header="app.module.ts">
-@NgModule({
-  ...
-  imports: [
-    ...
-    StoreDevtoolsModule.instrument({
+<code-example header="app.config.ts">
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideStoreDevtools({
       maxAge: 25,
       logOnly: false,
       autoPause: true,
@@ -91,6 +89,11 @@ features: {
       }
     })
   ],
-  ...
-})
+}
 </code-example>
+
+<div class="alert is-helpful">
+
+An example of the `@ngrx/store-devtools` setup in module-based applications is available at the [following link](https://v17.ngrx.io/guide/store-devtools).
+
+</div>

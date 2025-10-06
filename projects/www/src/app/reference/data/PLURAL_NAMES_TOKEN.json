@@ -1,0 +1,63 @@
+{
+  "name": "PLURAL_NAMES_TOKEN",
+  "canonicalReference": "@ngrx/data!PLURAL_NAMES_TOKEN:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/data/src/utils/interfaces.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/data!PLURAL_NAMES_TOKEN:var",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "PLURAL_NAMES_TOKEN: "
+        },
+        {
+          "kind": "Reference",
+          "text": "InjectionToken",
+          "canonicalReference": "@angular/core!InjectionToken:class"
+        },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityPluralNames",
+          "canonicalReference": "@ngrx/data!EntityPluralNames:interface"
+        },
+        {
+          "kind": "Content",
+          "text": ">"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/utils/interfaces.d.ts",
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "PLURAL_NAMES_TOKEN",
+      "variableTypeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 5
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

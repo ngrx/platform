@@ -32,6 +32,7 @@ import * as fromBooks from '@example-app/books/reducers';
       }
     `,
   ],
+  standalone: false,
 })
 export class CollectionPageComponent implements OnInit {
   books$: Observable<Book[]>;

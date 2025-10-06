@@ -1,0 +1,508 @@
+{
+  "name": "EntityDefinitionService",
+  "canonicalReference": "@ngrx/data!EntityDefinitionService:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/entity-metadata/entity-definition.service.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!EntityDefinitionService:class",
+      "docComment": "/**\n * Registry of EntityDefinitions for all cached entity types\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class EntityDefinitionService "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/entity-metadata/entity-definition.service.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "EntityDefinitionService",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Constructor",
+          "canonicalReference": "@ngrx/data!EntityDefinitionService:constructor(1)",
+          "docComment": "/**\n * Constructs a new instance of the `EntityDefinitionService` class\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "constructor(entityMetadataMaps: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityMetadataMap",
+              "canonicalReference": "@ngrx/data!EntityMetadataMap:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "[]"
+            },
+            {
+              "kind": "Content",
+              "text": ");"
+            }
+          ],
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityMetadataMaps",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Constructs a new instance of the `EntityDefinitionService` class\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDefinitionService#getDefinition:member(1)",
+          "docComment": "/**\n * Get (or create) a data service for entity type\n *\n * @param entityName - the name of the type\n *\n * Examples: getDefinition('Hero'); // definition for Heroes, untyped getDefinition<Hero>(`Hero`); // definition for Heroes, typed with Hero interface\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "getDefinition<T>(entityName: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", shouldThrow?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityDefinition",
+              "canonicalReference": "@ngrx/data!EntityDefinition:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entityName",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "shouldThrow",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "getDefinition",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Get (or create) a data service for entity type\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "entityName",
+                "description": "the name of the type\n\nExamples: getDefinition('Hero'); // definition for Heroes, untyped getDefinition<Hero>(`Hero`); // definition for Heroes, typed with Hero interface\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDefinitionService#registerDefinition:member(1)",
+          "docComment": "/**\n * Register an {EntityDefinition} for an entity type\n *\n * @param definition - EntityDefinition of a collection for that entity type\n *\n * Examples: registerDefinition('Hero', myHeroEntityDefinition);\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "registerDefinition<T>(definition: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityDefinition",
+              "canonicalReference": "@ngrx/data!EntityDefinition:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "definition",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "registerDefinition",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Register an {EntityDefinition} for an entity type\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "definition",
+                "description": "EntityDefinition of a collection for that entity type\n\nExamples: registerDefinition('Hero', myHeroEntityDefinition);\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDefinitionService#registerDefinitions:member(1)",
+          "docComment": "/**\n * Register a batch of EntityDefinitions.\n *\n * @param definitions - map of entityType name and associated EntityDefinitions to merge.\n *\n * Examples: registerDefinitions({ 'Hero': myHeroEntityDefinition, Villain: myVillainEntityDefinition });\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "registerDefinitions(definitions: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityDefinitions",
+              "canonicalReference": "@ngrx/data!EntityDefinitions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "definitions",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "registerDefinitions",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Register a batch of EntityDefinitions.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "definitions",
+                "description": "map of entityType name and associated EntityDefinitions to merge.\n\nExamples: registerDefinitions({ 'Hero': myHeroEntityDefinition, Villain: myVillainEntityDefinition });\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDefinitionService#registerMetadata:member(1)",
+          "docComment": "/**\n * Create and register the {EntityDefinition} for the {EntityMetadata} of an entity type\n *\n * @param name - the name of the entity type\n *\n * @param definition - for a collection for that entity type\n *\n * Examples: registerMetadata(myHeroEntityDefinition);\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "registerMetadata(metadata: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityMetadata",
+              "canonicalReference": "@ngrx/data!EntityMetadata:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "metadata",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "registerMetadata",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Create and register the {EntityDefinition} for the {EntityMetadata} of an entity type\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "name",
+                "description": "the name of the entity type\n\n"
+              },
+              {
+                "name": "definition",
+                "description": "for a collection for that entity type\n\nExamples: registerMetadata(myHeroEntityDefinition);\n"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Method",
+          "canonicalReference": "@ngrx/data!EntityDefinitionService#registerMetadataMap:member(1)",
+          "docComment": "/**\n * Register an EntityMetadataMap.\n *\n * @param metadataMap - a map of entityType names to entity metadata\n *\n * Examples: registerMetadataMap({ 'Hero': myHeroMetadata, Villain: myVillainMetadata });\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "registerMetadataMap(metadataMap?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityMetadataMap",
+              "canonicalReference": "@ngrx/data!EntityMetadataMap:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isStatic": false,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "metadataMap",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": true
+            }
+          ],
+          "isOptional": false,
+          "isAbstract": false,
+          "name": "registerMetadataMap",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Register an EntityMetadataMap.\n\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": [
+              {
+                "name": "metadataMap",
+                "description": "a map of entityType names to entity metadata\n\nExamples: registerMetadataMap({ 'Hero': myHeroMetadata, Villain: myVillainMetadata });\n"
+              }
+            ]
+          }
+        }
+      ],
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Registry of EntityDefinitions for all cached entity types\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "name": "OnInitEffects",
+  "canonicalReference": "@ngrx/effects!OnInitEffects:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/effects/src/lifecycle_hooks.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/effects!OnInitEffects:interface",
+      "docComment": "/**\n * @description Interface to dispatch an action after effect registration.\n *\n * Implement this interface to dispatch a custom action after the effect has been added. You can listen to this action in the rest of the application to execute something after the effect is registered.\n *\n * @usageNotes\n *\n * ### Set an identifier for an Effects class\n * ```ts\n * class EffectWithInitAction implements OnInitEffects {\n *  ngrxOnInitEffects() {\n *    return { type: '[EffectWithInitAction] Init' };\n *  }\n * ```\n *\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare interface OnInitEffects "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/effects/src/lifecycle_hooks.d.ts",
+      "releaseTag": "Public",
+      "name": "OnInitEffects",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "MethodSignature",
+          "canonicalReference": "@ngrx/effects!OnInitEffects#ngrxOnInitEffects:member(1)",
+          "docComment": "/**\n * @description Action to be dispatched after the effect is registered.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "ngrxOnInitEffects(): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Action",
+              "canonicalReference": "@ngrx/store!Action:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isOptional": false,
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [],
+          "name": "ngrxOnInitEffects",
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": " Action to be dispatched after the effect is registered.\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": " Interface to dispatch an action after effect registration.\n\nImplement this interface to dispatch a custom action after the effect has been added. You can listen to this action in the rest of the application to execute something after the effect is registered.\n\n",
+        "usageNotes": "\n\n### Set an identifier for an Effects class\n```ts\nclass EffectWithInitAction implements OnInitEffects {\n ngrxOnInitEffects() {\n   return { type: '[EffectWithInitAction] Init' };\n }\n```\n\n",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

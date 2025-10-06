@@ -1,0 +1,88 @@
+{
+  "name": "OnStoreInit",
+  "canonicalReference": "@ngrx/component-store!OnStoreInit:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/component-store/src/lifecycle_hooks.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/component-store!OnStoreInit:interface",
+      "docComment": "/**\n * The interface for the lifecycle hook called after the ComponentStore is instantiated.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export interface OnStoreInit "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/component-store/src/lifecycle_hooks.d.ts",
+      "releaseTag": "Public",
+      "name": "OnStoreInit",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "PropertySignature",
+          "canonicalReference": "@ngrx/component-store!OnStoreInit#ngrxOnStoreInit:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "readonly ngrxOnStoreInit: "
+            },
+            {
+              "kind": "Content",
+              "text": "() => void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": true,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "ngrxOnStoreInit",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "The interface for the lifecycle hook called after the ComponentStore is instantiated.\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

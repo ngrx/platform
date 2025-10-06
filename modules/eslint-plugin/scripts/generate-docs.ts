@@ -3,23 +3,26 @@ import * as path from 'path';
 import { format, resolveConfig } from 'prettier';
 import { rulesForGenerate } from '../src/utils/helper-functions/rules';
 
-const prettierConfig = resolveConfig.sync(__dirname);
-const PLACEHOLDER = '<!-- MANUAL-DOC:START -->';
-const RULES_PATH = './projects/ngrx.io/content/guide/eslint-plugin/rules';
+(async () => {
+  const prettierConfig = await resolveConfig(__dirname);
+  const PLACEHOLDER = '<!-- MANUAL-DOC:START -->';
+  const RULES_PATHS = [
+    './projects/ngrx.io/content/guide/eslint-plugin/rules',
+    './projects/www/src/app/pages/guide/eslint-plugin/rules',
+  ];
 
-for (const [ruleName, { meta }] of Object.entries(rulesForGenerate)) {
-  const docPath = path.join(RULES_PATH, `${ruleName}.md`);
-  if (!existsSync(docPath)) {
-    writeFileSync(docPath, ``);
-  }
-  const doc = readFileSync(docPath, 'utf-8');
-  const docContent = doc.substring(
-    doc.indexOf(PLACEHOLDER) + PLACEHOLDER.length
-  );
-  const newDoc = format(
-    `# ${ruleName}
-
-${meta.version ? '> Required NgRx Version Range: ${meta.version}' : ''} 
+  for (const rules of RULES_PATHS) {
+    for (const [ruleName, { meta }] of Object.entries(rulesForGenerate)) {
+      const docPath = path.join(rules, `${ruleName}.md`);
+      if (!existsSync(docPath)) {
+        writeFileSync(docPath, ``);
+      }
+      const doc = readFileSync(docPath, 'utf-8');
+      const docContent = doc.substring(
+        doc.indexOf(PLACEHOLDER) + PLACEHOLDER.length
+      );
+      const newDoc = await format(
+        `# ${ruleName}
 
 ${meta.docs?.description}
 
@@ -28,18 +31,20 @@ ${meta.docs?.description}
 - **Suggestion**: ${meta.hasSuggestions ? 'Yes' : 'No'}
 - **Requires type checking**: ${meta.docs?.requiresTypeChecking ? 'Yes' : 'No'}
 - **Configurable**: ${
-      Array.isArray(meta.schema) && meta.schema.length ? 'Yes' : 'No'
-    }
+          Array.isArray(meta.schema) && meta.schema.length ? 'Yes' : 'No'
+        }
 
 <!-- Everything above this generated, do not edit -->
 <!-- MANUAL-DOC:START -->
 
 ${docContent}`,
-    {
-      parser: 'markdown',
-      ...prettierConfig,
-    }
-  );
+        {
+          parser: 'markdown',
+          ...prettierConfig,
+        }
+      );
 
-  writeFileSync(docPath, newDoc);
-}
+      writeFileSync(docPath, newDoc);
+    }
+  }
+})();

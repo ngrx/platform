@@ -12,25 +12,27 @@ import { Prettify } from './ts-helpers';
 
 export function withMethods<
   Input extends SignalStoreFeatureResult,
-  Methods extends MethodsDictionary
+  Methods extends MethodsDictionary,
 >(
   methodsFactory: (
     store: Prettify<
       StateSignals<Input['state']> &
-        Input['computed'] &
+        Input['props'] &
         Input['methods'] &
-        WritableStateSource<Prettify<Input['state']>>
+        WritableStateSource<Input['state']>
     >
   ) => Methods
-): SignalStoreFeature<Input, { state: {}; computed: {}; methods: Methods }> {
+): SignalStoreFeature<Input, { state: {}; props: {}; methods: Methods }> {
   return (store) => {
     const methods = methodsFactory({
       [STATE_SOURCE]: store[STATE_SOURCE],
       ...store.stateSignals,
-      ...store.computedSignals,
+      ...store.props,
       ...store.methods,
     });
-    assertUniqueStoreMembers(store, Object.keys(methods));
+    if (typeof ngDevMode !== 'undefined' && ngDevMode) {
+      assertUniqueStoreMembers(store, Reflect.ownKeys(methods));
+    }
 
     return {
       ...store,

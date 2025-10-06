@@ -1,21 +1,15 @@
 import { InnerSignalStore } from './signal-store-models';
 
-declare const ngDevMode: unknown;
-
 export function assertUniqueStoreMembers(
   store: InnerSignalStore,
-  newMemberKeys: string[]
+  newMemberKeys: Array<string | symbol>
 ): void {
-  if (!ngDevMode) {
-    return;
-  }
-
   const storeMembers = {
     ...store.stateSignals,
-    ...store.computedSignals,
+    ...store.props,
     ...store.methods,
   };
-  const overriddenKeys = Object.keys(storeMembers).filter((memberKey) =>
+  const overriddenKeys = Reflect.ownKeys(storeMembers).filter((memberKey) =>
     newMemberKeys.includes(memberKey)
   );
 
@@ -23,7 +17,7 @@ export function assertUniqueStoreMembers(
     console.warn(
       '@ngrx/signals: SignalStore members cannot be overridden.',
       'Trying to override:',
-      overriddenKeys.join(', ')
+      overriddenKeys.map((key) => String(key)).join(', ')
     );
   }
 }

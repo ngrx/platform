@@ -17,7 +17,7 @@ import {
 export function updateEntity<
   Collection extends string,
   State extends NamedEntityState<any, Collection>,
-  Entity = State extends NamedEntityState<infer E, Collection> ? E : never
+  Entity = State extends NamedEntityState<infer E, Collection> ? E : never,
 >(
   update: {
     id: EntityId;
@@ -36,7 +36,7 @@ export function updateEntity<
     Collection
   >
     ? E
-    : never
+    : never,
 >(
   update: {
     id: EntityId;

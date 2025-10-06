@@ -1,0 +1,54 @@
+{
+  "name": "persistOps",
+  "canonicalReference": "@ngrx/data!persistOps:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/data/src/effects/entity-effects.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/data!persistOps:var",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "persistOps: "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityOp",
+          "canonicalReference": "@ngrx/data!EntityOp:enum"
+        },
+        {
+          "kind": "Content",
+          "text": "[]"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/effects/entity-effects.d.ts",
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "persistOps",
+      "variableTypeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 3
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

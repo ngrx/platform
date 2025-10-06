@@ -97,11 +97,12 @@ module.exports = tseslint.config({
 
 ### component-store
 
-| Name                                                                                                                    | Description                                       | Category   | Fixable | Has suggestions | Configurable | Requires type information |
-| ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | ---------- | ------- | --------------- | ------------ | ------------------------- |
-| [@ngrx/avoid-combining-component-store-selectors](/guide/eslint-plugin/rules/avoid-combining-component-store-selectors) | Prefer combining selectors at the selector level. | suggestion | No      | No              | No           | No                        |
-| [@ngrx/avoid-mapping-component-store-selectors](/guide/eslint-plugin/rules/avoid-mapping-component-store-selectors)     | Avoid mapping logic outside the selector level.   | problem    | No      | No              | No           | No                        |
-| [@ngrx/updater-explicit-return-type](/guide/eslint-plugin/rules/updater-explicit-return-type)                           | `Updater` should have an explicit return type.    | problem    | No      | No              | No           | No                        |
+| Name                                                                                                                    | Description                                                                             | Category   | Fixable | Has suggestions | Configurable | Requires type information |
+| ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ---------- | ------- | --------------- | ------------ | ------------------------- |
+| [@ngrx/avoid-combining-component-store-selectors](/guide/eslint-plugin/rules/avoid-combining-component-store-selectors) | Prefer combining selectors at the selector level.                                       | suggestion | No      | No              | No           | No                        |
+| [@ngrx/avoid-mapping-component-store-selectors](/guide/eslint-plugin/rules/avoid-mapping-component-store-selectors)     | Avoid mapping logic outside the selector level.                                         | problem    | No      | No              | No           | No                        |
+| [@ngrx/require-super-ondestroy](/guide/eslint-plugin/rules/require-super-ondestroy)                                     | Overriden ngOnDestroy method in component stores require a call to super.ngOnDestroy(). | problem    | No      | No              | No           | No                        |
+| [@ngrx/updater-explicit-return-type](/guide/eslint-plugin/rules/updater-explicit-return-type)                           | `Updater` should have an explicit return type.                                          | problem    | No      | No              | No           | No                        |
 
 ### effects
 
@@ -123,12 +124,13 @@ module.exports = tseslint.config({
 
 ### signals
 
-| Name                                                                                                                         | Description                                                                       | Category   | Fixable | Has suggestions | Configurable | Requires type information |
-|------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------| ---------- |---------| --------------- | ------------ |--------------------------|
-| [@ngrx/signal-state-no-arrays-at-root-level](/guide/eslint-plugin/rules/signal-state-no-arrays-at-root-level)                | signalState should accept a record or dictionary as an input argument.            | problem    | No      | No              | No           | No                       |
-| [@ngrx/signal-store-feature-should-use-generic-type](/guide/eslint-plugin/rules/signal-store-feature-should-use-generic-type) | A custom Signal Store feature that accepts an input should define a generic type. | problem    | Yes     | No              | No           | No                       |
-| [@ngrx/prefer-protected-state](/guide/eslint-plugin/rules/prefer-protected-state)                                            | A Signal Store prefers protected state.                                           | suggestion | No      | Yes             | No           | No                       |
-| [@ngrx/with-state-no-arrays-at-root-level](/guide/eslint-plugin/rules/with-state-no-arrays-at-root-level)                    | withState should accept a record or dictionary as an input argument.              | problem    | No      | No              | No           | Yes                      |
+| Name                                                                                                                          | Description                                                                       | Category   | Fixable | Has suggestions | Configurable | Requires type information |
+| ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ---------- | ------- | --------------- | ------------ | ------------------------- |
+| [@ngrx/enforce-type-call](/guide/eslint-plugin/rules/enforce-type-call)                                                       | The `type` function must be called.                                               | problem    | Yes     | No              | No           | No                        |
+| [@ngrx/prefer-protected-state](/guide/eslint-plugin/rules/prefer-protected-state)                                             | A Signal Store prefers protected state                                            | suggestion | No      | Yes             | No           | No                        |
+| [@ngrx/signal-state-no-arrays-at-root-level](/guide/eslint-plugin/rules/signal-state-no-arrays-at-root-level)                 | signalState should accept a record or dictionary as an input argument.            | problem    | No      | No              | No           | No                        |
+| [@ngrx/signal-store-feature-should-use-generic-type](/guide/eslint-plugin/rules/signal-store-feature-should-use-generic-type) | A custom Signal Store feature that accepts an input should define a generic type. | problem    | Yes     | No              | No           | No                        |
+| [@ngrx/with-state-no-arrays-at-root-level](/guide/eslint-plugin/rules/with-state-no-arrays-at-root-level)                     | withState should accept a record or dictionary as an input argument.              | problem    | No      | No              | No           | Yes                       |
 
 ### store
 

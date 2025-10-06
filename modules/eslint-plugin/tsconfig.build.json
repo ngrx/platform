@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "stripInternal": true,
     "experimentalDecorators": true,
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "nodenext",
     "module": "NodeNext",
     "downlevelIteration": true,
     "esModuleInterop": true,

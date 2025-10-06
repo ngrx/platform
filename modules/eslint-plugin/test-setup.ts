@@ -1,4 +1,4 @@
-import 'jest-preset-angular/setup-jest';
-import { TextEncoder, TextDecoder } from 'util';
+import * as vitest from 'vitest';
+import { RuleTester } from '@typescript-eslint/rule-tester';
 
-Object.assign(global, { TextDecoder, TextEncoder });
+RuleTester.afterAll = vitest.afterAll;

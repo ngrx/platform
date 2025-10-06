@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/schematics",
-  "version": "18.1.1",
+  "version": "20.0.1",
   "description": "NgRx Schematics for Angular",
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
     "save": "devDependencies"
   },
   "ng-update": {
+    "packageGroupName": "@ngrx/store",
     "packageGroup": [
       "@ngrx/store",
       "@ngrx/effects",

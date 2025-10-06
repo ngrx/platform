@@ -46,6 +46,7 @@ import { LayoutActions } from '@example-app/core/actions/layout.actions';
       <router-outlet></router-outlet>
     </bc-layout>
   `,
+  standalone: false,
 })
 export class AppComponent {
   showSidenav$: Observable<boolean>;

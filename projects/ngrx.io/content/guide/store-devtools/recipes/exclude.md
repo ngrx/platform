@@ -13,19 +13,6 @@ If the environment files don't exist in your project you can use the `ng generat
 Given the below example:
 
 <code-example header="environments/environment.ts">
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-
-export const environment = {
-    production: false,
-    imports: [
-        StoreDevtoolsModule.instrument({ maxAge: 25 })
-    ],
-};
-</code-example>
-
-When using the standalone API, use the `providers` array instead of `imports`:
-
-<code-example header="environments/environment.ts">
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 export const environment = {
@@ -36,32 +23,9 @@ export const environment = {
 };
 </code-example>
 
-Now, let's add an empty `imports` property to the production environment file:
-
-<code-example header="environments/environment.prod.ts">
-export const environment = {
-    production: true,
-    imports: [],
-};
-</code-example>
-
 ## Step 2: Import Environment File
 
-Modify `app.module.ts` to include `environment.imports` in the `imports` array.
-
-<code-example header="app.module.ts">
-import { environment } from '../environments/environment';
-
-@NgModule({
-    imports: [
-        StoreModule.forRoot(reducers),
-        // Instrumentation must be imported after importing StoreModule
-        environment.imports,
-    ],
-})
-</code-example>
-
-When using the standalone API, modify the `app.config.ts` file, where your application configuration resides, to specify `environment.providers`:
+Modify the `app.config.ts` file, where your application configuration resides, to specify `environment.providers`:
 
 <code-example header="app.config.ts">
 import { environment } from '../environments/environment';

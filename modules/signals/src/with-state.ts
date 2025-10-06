@@ -1,7 +1,6 @@
-import { computed } from '@angular/core';
-import { assertUniqueStoreMembers } from './signal-store-assertions';
+import { Signal, signal } from '@angular/core';
 import { toDeepSignal } from './deep-signal';
-import { STATE_SOURCE } from './state-source';
+import { assertUniqueStoreMembers } from './signal-store-assertions';
 import {
   EmptyFeatureResult,
   InnerSignalStore,
@@ -9,43 +8,46 @@ import {
   SignalStoreFeature,
   SignalStoreFeatureResult,
 } from './signal-store-models';
+import { STATE_SOURCE } from './state-source';
 
 export function withState<State extends object>(
   stateFactory: () => State
 ): SignalStoreFeature<
   EmptyFeatureResult,
-  { state: State; computed: {}; methods: {} }
+  { state: State; props: {}; methods: {} }
 >;
 export function withState<State extends object>(
   state: State
 ): SignalStoreFeature<
   EmptyFeatureResult,
-  { state: State; computed: {}; methods: {} }
+  { state: State; props: {}; methods: {} }
 >;
 export function withState<State extends object>(
   stateOrFactory: State | (() => State)
 ): SignalStoreFeature<
   SignalStoreFeatureResult,
-  { state: State; computed: {}; methods: {} }
+  { state: State; props: {}; methods: {} }
 > {
   return (store) => {
-    const state =
-      typeof stateOrFactory === 'function' ? stateOrFactory() : stateOrFactory;
-    const stateKeys = Object.keys(state);
+    const state = (
+      typeof stateOrFactory === 'function' ? stateOrFactory() : stateOrFactory
+    ) as Record<string | symbol, unknown>;
+    const stateKeys = Reflect.ownKeys(state);
 
-    assertUniqueStoreMembers(store, stateKeys);
+    if (typeof ngDevMode !== 'undefined' && ngDevMode) {
+      assertUniqueStoreMembers(store, stateKeys);
+    }
 
-    store[STATE_SOURCE].update((currentState) => ({
-      ...currentState,
-      ...state,
-    }));
+    const stateSource = store[STATE_SOURCE] as Record<
+      string | symbol,
+      Signal<unknown>
+    >;
+    const stateSignals: SignalsDictionary = {};
 
-    const stateSignals = stateKeys.reduce((acc, key) => {
-      const sliceSignal = computed(
-        () => (store[STATE_SOURCE]() as Record<string, unknown>)[key]
-      );
-      return { ...acc, [key]: toDeepSignal(sliceSignal) };
-    }, {} as SignalsDictionary);
+    for (const key of stateKeys) {
+      stateSource[key] = signal(state[key]);
+      stateSignals[key] = toDeepSignal(stateSource[key]);
+    }
 
     return {
       ...store,
