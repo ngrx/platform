@@ -4,7 +4,7 @@ import { Dispatcher, event, EventInstance, Events } from '../src';
 import { SOURCE_TYPE } from '../src/events-service';
 
 describe('Events', () => {
-  it('is provided at the root level', () => {
+  it('is provided globally', () => {
     const events = TestBed.inject(Events);
     expect(events).toBeDefined();
   });

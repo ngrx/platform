@@ -57,10 +57,10 @@ abstract class BaseEvents {
  * }
  * ```
  */
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'platform' })
 export class Events extends BaseEvents {}
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'platform' })
 export class ReducerEvents extends BaseEvents {}
 
 function filterByType<T extends EventInstance<string, unknown>>(
