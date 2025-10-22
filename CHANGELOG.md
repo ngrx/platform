@@ -1,3 +1,18 @@
+<a name="20.1.0"></a>
+
+# [20.1.0](https://github.com/ngrx/platform/compare/20.0.1...20.1.0) (2025-10-22)
+
+### Bug Fixes
+
+- **signals:** drop `assertInInjectionContext` in production ([#4954](https://github.com/ngrx/platform/issues/4954)) ([37e6fa1](https://github.com/ngrx/platform/commit/37e6fa1))
+- **signals:** drop `assertUniqueStoreMembers` in production ([#4953](https://github.com/ngrx/platform/issues/4953)) ([b4edd95](https://github.com/ngrx/platform/commit/b4edd95))
+
+### Features
+
+- **eslint-plugin:** enhance prefix-selectors-with-select to handle destructuring ([#4926](https://github.com/ngrx/platform/issues/4926)) ([bc89544](https://github.com/ngrx/platform/commit/bc89544))
+- **signals:** add ability to provide SignalStore at the platform level ([#4964](https://github.com/ngrx/platform/issues/4964)) ([835014b](https://github.com/ngrx/platform/commit/835014b)), closes [#4963](https://github.com/ngrx/platform/issues/4963)
+- **signals:** provide Dispatcher and Events at the platform level ([#4978](https://github.com/ngrx/platform/issues/4978)) ([0722ddb](https://github.com/ngrx/platform/commit/0722ddb))
+
 <a name="20.0.1"></a>
 
 ## [20.0.1](https://github.com/ngrx/platform/compare/20.0.0...20.0.1) (2025-08-25)
