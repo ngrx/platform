@@ -1,7 +1,9 @@
 import { computed, isSignal, Signal, untracked } from '@angular/core';
 import { IsKnownRecord } from './ts-helpers';
 
-const DEEP_SIGNAL = Symbol('DEEP_SIGNAL');
+const DEEP_SIGNAL = Symbol(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'DEEP_SIGNAL' : ''
+);
 
 export type DeepSignal<T> = Signal<T> &
   (IsKnownRecord<T> extends true
