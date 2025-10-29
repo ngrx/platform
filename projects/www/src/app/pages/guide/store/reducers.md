@@ -339,7 +339,7 @@ Whether your feature states are loaded eagerly or lazily depends on the needs of
 
 If you have a module-based Angular application, you can still use standalone components. NgRx standalone APIs support this workflow as well.
 
-For module-based apps, you have the `StoreModule.forRoot({...})` included in the `imports` array of your `AppModule`, which registers the root store for dependency injection. Standalone components look for a different injection token that can only be provided by the `provideStore({...})` function detailed above. In order to use NgRx in a standalone component, you must first add the `provideStore({...})` function the `providers` array in your `AppModule` with the same configuration you have inside of your `forRoot({...})`. For module-based apps with standalone components, you will simply have both.
+For module-based apps, you have the `StoreModule.forRoot({...})` included in the `imports` array of your `AppModule`, which registers the root store for dependency injection. Standalone components look for a different injection token that can only be provided by the `provideStore({...})` function detailed above. In order to use NgRx in a standalone component, you must first add the `provideStore({...})` function to the `providers` array in your `AppModule` with the same configuration you have inside of your `forRoot({...})`. For module-based apps with standalone components, you will simply have both.
 
 <ngrx-code-example header="app.module.ts">
 
