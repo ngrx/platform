@@ -2,8 +2,7 @@ import { Component, input, signal } from '@angular/core';
 import { Contributor } from '../services/contributors.service';
 
 @Component({
-  selector: 'contributor-card',
-  standalone: true,
+  selector: 'ngrx-contributor-card',
   template: `
     <div class="contributor">
       <div class="contributor-photo">

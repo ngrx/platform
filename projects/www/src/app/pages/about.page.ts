@@ -16,13 +16,13 @@ import { map, shareReplay, startWith } from 'rxjs';
     <div class="page">
       <h1>NgRx Team</h1>
 
-      <contributor-navigation
+      <ngrx-contributor-navigation
         [groupNames]="groupNames()"
         [selectedGroup]="filterTerm()"
         (groupSelected)="setGroup($event)"
       />
 
-      <contributor-list [contributors]="selectedGroup()" />
+      <ngrx-contributor-list [contributors]="selectedGroup()" />
     </div>
   `,
   styles: [

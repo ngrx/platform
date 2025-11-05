@@ -2,7 +2,7 @@ import { Component, input, output } from '@angular/core';
 import { GroupNav } from '../services/contributors.service';
 
 @Component({
-  selector: 'contributor-navigation',
+  selector: 'ngrx-contributor-navigation',
   template: `
     <div class="groups-navigation">
       @for (group of groupNames(); track group.name) {

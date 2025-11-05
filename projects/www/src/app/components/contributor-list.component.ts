@@ -1,16 +1,17 @@
-import { Component, input, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ContributorCardComponent } from './contributor-card.component';
 import { Contributor } from '../services/contributors.service';
 
 @Component({
-  selector: 'contributor-list',
-  standalone: true,
+  selector: 'ngrx-contributor-list',
   imports: [ContributorCardComponent],
   template: `
     @if (contributors() && contributors().length > 0) {
     <div class="contributor-list">
       @for (contributor of contributors(); track contributor.name) {
-      <contributor-card [contributor]="contributor"></contributor-card>
+      <ngrx-contributor-card
+        [contributor]="contributor"
+      ></ngrx-contributor-card>
       }
     </div>
     } @else {
