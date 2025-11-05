@@ -21,11 +21,11 @@ import { Contributor } from '../services/contributors.service';
             [href]="'https://twitter.com/' + contributor().twitter"
             target="_blank"
           >
-            <img src="/images/bios/icons/twitter.svg" alt="Twitter" />
+            <img src="/images/bios/card-icons/twitter.svg" alt="Twitter" />
           </a>
           } @if (contributor().website) {
           <a [href]="contributor().website" target="_blank">
-            <img src="/images/bios/icons/link.svg" alt="Website" />
+            <img src="/images/bios/card-icons/link.svg" alt="Website" />
           </a>
           }
         </div>
@@ -120,7 +120,7 @@ import { Contributor } from '../services/contributors.service';
         pointer-events: none;
         z-index: 2;
         cursor: pointer;
-        background-image: url('/images/bios/icons/back.svg');
+        background-image: url('/images/bios/card-icons/back.svg');
         background-repeat: no-repeat;
         background-position: right 12px bottom 12px;
       }
