@@ -23,10 +23,21 @@ import { Contributor } from '../services/contributors.service';
       .contributor-list {
         margin-top: 30px;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-columns: repeat(4, 1fr);
         gap: 24px;
         margin-bottom: 50px;
         justify-items: center;
+        width: 900px;
+        max-width: 100%;
+        @media only screen and (max-width: 900px) {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        @media only screen and (max-width: 600px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        @media only screen and (max-width: 480px) {
+          grid-template-columns: repeat(1, 1fr);
+        }
       }
     `,
   ],
