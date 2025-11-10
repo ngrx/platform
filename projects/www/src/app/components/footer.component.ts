@@ -19,6 +19,7 @@ import { RouterLink } from '@angular/router';
       <a routerLink="/workshops">Workshops</a>
       <a routerLink="/api">API Reference</a>
       <a href="https://github.com/sponsors/ngrx" target="_blank">Sponsor</a>
+      <a routerLink="/about">About</a>
     </nav>
 
     <nav class="packages">
