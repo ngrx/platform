@@ -66,8 +66,8 @@
     ]
   },
   "dependencies": {
-    "@analogjs/content": "1.15.1",
-    "@analogjs/router": "1.15.1",
+    "@analogjs/content": "2.0.3",
+    "@analogjs/router": "2.0.3",
     "@angular/animations": "20.0.0",
     "@angular/cdk": "20.0.0",
     "@angular/common": "20.0.0",
@@ -102,9 +102,9 @@
     "zone.js": "0.15.0"
   },
   "devDependencies": {
-    "@analogjs/platform": "1.15.1",
-    "@analogjs/vite-plugin-angular": "^1.15.1",
-    "@analogjs/vitest-angular": "^1.15.1",
+    "@analogjs/platform": "2.0.3",
+    "@analogjs/vite-plugin-angular": "^2.0.3",
+    "@analogjs/vitest-angular": "^2.0.3",
     "@angular-devkit/build-angular": "20.0.0",
     "@angular-devkit/core": "20.0.0",
     "@angular-devkit/schematics": "20.0.0",
@@ -187,7 +187,7 @@
     "typescript-eslint": "8.41.0",
     "vite": "^6.3.0",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^3.0.0",
+    "vitest": "^4.0.0",
     "yaml": "^2.4.5"
   },
   "collective": {
