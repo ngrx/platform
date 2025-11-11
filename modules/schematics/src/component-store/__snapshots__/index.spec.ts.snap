@@ -60,7 +60,7 @@ export class AppModule { }
 `;
 
 exports[`component-store should register the component store in the provided component 1`] = `
-"import { Component } from '@angular/core';
+"import { Component, signal } from '@angular/core';
 import { FooStore } from './foo/foo.store';
 
 @Component({
@@ -71,7 +71,7 @@ import { FooStore } from './foo/foo.store';
   providers: [FooStore]
 })
 export class App {
-  protected title = 'bar';
+    protected readonly title = signal('bar');
 }
 "
 `;

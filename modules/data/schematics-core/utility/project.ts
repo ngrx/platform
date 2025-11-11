@@ -1,4 +1,4 @@
-import { TargetDefinition } from '@angular-devkit/core/src/workspace';
+import { TargetDefinition } from '@angular-devkit/core/src/workspace/definitions';
 import { getWorkspace } from './config';
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
 

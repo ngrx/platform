@@ -5,7 +5,7 @@ import {
 import { createWorkspace } from '@ngrx/schematics-core/testing';
 import { tags } from '@angular-devkit/core';
 import * as path from 'path';
-import { LogEntry } from '@angular-devkit/core/src/logger';
+import { LogEntry } from '@angular-devkit/core/src/logger/logger';
 
 describe('18_0_0-rc_3-writablestatesource', () => {
   const collectionPath = path.join(
