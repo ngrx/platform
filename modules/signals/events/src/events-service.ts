@@ -9,8 +9,12 @@ import {
 import { EventInstance } from './event-instance';
 import { EventCreator } from './event-creator';
 
-export const EVENTS = Symbol();
-export const SOURCE_TYPE = Symbol();
+export const EVENTS = Symbol(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'EVENTS' : ''
+);
+export const SOURCE_TYPE = Symbol(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'SOURCE_TYPE' : ''
+);
 
 abstract class BaseEvents {
   /**

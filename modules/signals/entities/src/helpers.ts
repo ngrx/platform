@@ -7,7 +7,6 @@ import {
   SelectEntityId,
 } from './models';
 
-declare const ngDevMode: unknown;
 const defaultSelectId: SelectEntityId<{ id: EntityId }> = (entity) => entity.id;
 
 export function getEntityIdSelector(config?: {
