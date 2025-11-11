@@ -1,4 +1,4 @@
-import { isSignal, signal } from '@angular/core';
+import { isSignal, signal, WritableSignal } from '@angular/core';
 import { getState, withComputed, withMethods, withState } from '../src';
 import { getInitialInnerStore } from '../src/signal-store';
 
@@ -36,6 +36,19 @@ describe('withState', () => {
 
     expect(store.stateSignals.x.y()).toBe('z');
     expect(isSignal(store.stateSignals.x.y)).toBe(true);
+  });
+
+  it('does not expose state slices as writable signals', () => {
+    const initialStore = getInitialInnerStore();
+
+    const store = withState({
+      foo: 'bar',
+      x: { y: 'z' },
+    })(initialStore);
+
+    expect(() =>
+      (store.stateSignals.foo as WritableSignal<string>).set('baz')
+    ).toThrow('set is not a function');
   });
 
   it('patches state source and creates deep signals for state slices provided via factory', () => {
