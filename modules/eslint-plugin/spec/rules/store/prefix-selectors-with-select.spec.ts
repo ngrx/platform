@@ -45,6 +45,26 @@ const valid: () => (string | ValidTestCase<Options>)[] = () => [
   `
     const { selectItems, ...rest } = getSelectors(adapter);
   `,
+  // Issue #4447: Should not flag custom types that end with 'Selector' but are not NgRx selectors
+  `type RowSelector<T> = { row: T };
+interface ItemData {
+  id: number;
+  name: string;
+  active: boolean;
+}
+const item: RowSelector<ItemData> = {
+  row: {
+    id: 1,
+    name: 'Test',
+    active: false,
+  },
+};`,
+  `
+    interface CustomSelector {
+      data: string;
+    }
+    const config: CustomSelector = { data: 'test' };
+  `,
 ];
 
 const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
