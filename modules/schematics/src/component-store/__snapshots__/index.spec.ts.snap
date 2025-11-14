@@ -71,7 +71,7 @@ import { FooStore } from './foo/foo.store';
   providers: [FooStore]
 })
 export class App {
-    protected readonly title = signal('bar');
+  protected readonly title = signal('bar');
 }
 "
 `;
