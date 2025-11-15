@@ -3,9 +3,8 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import { createWorkspace } from '@ngrx/schematics-core/testing';
-import { tags } from '@angular-devkit/core';
+import { tags, logging } from '@angular-devkit/core';
 import * as path from 'path';
-import { LogEntry } from '@angular-devkit/core/src/logger/logger';
 
 describe('18_0_0-rc_3-writablestatesource', () => {
   const collectionPath = path.join(
@@ -23,10 +22,10 @@ describe('18_0_0-rc_3-writablestatesource', () => {
   const verifySchematic = async (
     input: string,
     output: string
-  ): Promise<LogEntry[]> => {
+  ): Promise<logging.LogEntry[]> => {
     appTree.create('main.ts', input);
 
-    const logEntries: LogEntry[] = [];
+    const logEntries: logging.LogEntry[] = [];
     schematicRunner.logger.subscribe((logEntry) => logEntries.push(logEntry));
 
     const tree = await schematicRunner.runSchematic(

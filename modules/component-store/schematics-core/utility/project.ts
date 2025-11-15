@@ -1,4 +1,4 @@
-import { TargetDefinition } from '@angular-devkit/core/src/workspace/definitions';
+import { workspaces } from '@angular-devkit/core';
 import { getWorkspace } from './config';
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
 
@@ -6,7 +6,7 @@ export interface WorkspaceProject {
   root: string;
   projectType: string;
   architect: {
-    [key: string]: TargetDefinition;
+    [key: string]: workspaces.TargetDefinition;
   };
 }
 
