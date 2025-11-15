@@ -4,7 +4,8 @@
     "rootDir": ".",
     "stripInternal": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "downlevelIteration": true,
     "outDir": "../../dist/modules/store-devtools",
     "paths": {

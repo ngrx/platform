@@ -53,6 +53,11 @@ const setupPushPipeComponent = () => {
   pushPipe = TestBed.inject(PushPipe);
 };
 
+function markAndDetect() {
+  fixturePushPipeTestComponent.componentRef.changeDetectorRef.markForCheck();
+  fixturePushPipeTestComponent.detectChanges();
+}
+
 describe('PushPipe', () => {
   describe('used as a Service', () => {
     beforeEach(waitForAsync(setupPushPipeComponent));
@@ -378,7 +383,7 @@ describe('PushPipe', () => {
         fixturePushPipeTestComponent.detectChanges();
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('42'));
         pushPipeTestComponent.value$ = NEVER;
-        fixturePushPipeTestComponent.detectChanges();
+        markAndDetect();
         expect(componentNativeElement.textContent).toBe(
           wrapWithSpace('undefined')
         );
@@ -399,7 +404,7 @@ describe('PushPipe', () => {
         fixturePushPipeTestComponent.detectChanges();
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('10'));
         pushPipeTestComponent.value$ = throwError(() => 'ERROR!');
-        fixturePushPipeTestComponent.detectChanges();
+        markAndDetect();
         expect(componentNativeElement.textContent).toBe(
           wrapWithSpace('undefined')
         );
@@ -412,7 +417,7 @@ describe('PushPipe', () => {
           wrapWithSpace('"ngrx"')
         );
         pushPipeTestComponent.value$ = 'component';
-        fixturePushPipeTestComponent.detectChanges();
+        markAndDetect();
         expect(componentNativeElement.textContent).toBe(
           wrapWithSpace('"component"')
         );
@@ -423,7 +428,7 @@ describe('PushPipe', () => {
         fixturePushPipeTestComponent.detectChanges();
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('10'));
         pushPipeTestComponent.value$ = 100;
-        fixturePushPipeTestComponent.detectChanges();
+        markAndDetect();
         expect(componentNativeElement.textContent).toBe(wrapWithSpace('100'));
       });
     });

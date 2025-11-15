@@ -2,10 +2,10 @@ import {
   Change,
   createReplaceChange,
   visitTSSourceFiles,
+  commitChanges,
 } from '../../schematics-core';
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import { commitChanges } from '../../schematics-core';
 import { visitImportDeclaration } from '../../schematics-core/utility/visitors';
 
 export default function migrateWritableStateSource(): Rule {

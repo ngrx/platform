@@ -3,9 +3,8 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import { createWorkspace } from '@ngrx/schematics-core/testing';
-import { tags } from '@angular-devkit/core';
+import { tags, logging } from '@angular-devkit/core';
 import * as path from 'path';
-import { LogEntry } from '@angular-devkit/core/src/logger';
 
 describe('Effects Migration to 18.0.0-beta', () => {
   const collectionPath = path.join(__dirname, '../migration.json');
@@ -194,7 +193,7 @@ class SomeEffects {}
       `;
 
     appTree.create('main.ts', input);
-    const logEntries: LogEntry[] = [];
+    const logEntries: logging.LogEntry[] = [];
     schematicRunner.logger.subscribe((logEntry) => logEntries.push(logEntry));
     await schematicRunner.runSchematic(
       `ngrx-effects-migration-18-beta`,
