@@ -4,8 +4,6 @@ import {
   effect,
   inject,
   Injector,
-  isSignal,
-  Signal,
   untracked,
 } from '@angular/core';
 import { isObservable, noop, Observable, Subject } from 'rxjs';
@@ -17,7 +15,7 @@ type RxMethodRef = {
 };
 
 export type RxMethod<Input> = ((
-  input: Input | Signal<Input> | Observable<Input>,
+  input: Input | (() => Input) | Observable<Input>,
   config?: { injector?: Injector }
 ) => RxMethodRef) &
   RxMethodRef;
@@ -36,7 +34,7 @@ export function rxMethod<Input>(
   sourceInjector.get(DestroyRef).onDestroy(() => sourceSub.unsubscribe());
 
   const rxMethodFn = (
-    input: Input | Signal<Input> | Observable<Input>,
+    input: Input | (() => Input) | Observable<Input>,
     config?: { injector?: Injector }
   ): RxMethodRef => {
     if (isStatic(input)) {
@@ -64,7 +62,7 @@ export function rxMethod<Input>(
     const instanceInjector =
       config?.injector ?? callerInjector ?? sourceInjector;
 
-    if (isSignal(input)) {
+    if (typeof input === 'function') {
       const watcher = effect(
         () => {
           const value = input();
@@ -93,8 +91,8 @@ export function rxMethod<Input>(
   return rxMethodFn;
 }
 
-function isStatic<T>(value: T | Signal<T> | Observable<T>): value is T {
-  return !isSignal(value) && !isObservable(value);
+function isStatic<T>(value: T | (() => T) | Observable<T>): value is T {
+  return typeof value !== 'function' && !isObservable(value);
 }
 
 function getCallerInjector(): Injector | undefined {

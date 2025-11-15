@@ -39,6 +39,28 @@ describe('signalMethod', () => {
     expect(a).toBe(4);
   });
 
+  it('tracks signals within a function input automatically', () => {
+    const a = signal(1);
+    const b = signal(1);
+    const add = () => a() + b();
+    let sum = 0;
+    const adder = createAdder((value) => (sum += value));
+
+    adder(add);
+    expect(sum).toBe(0);
+
+    TestBed.tick();
+    expect(sum).toBe(2);
+
+    a.set(2);
+    b.set(2);
+    TestBed.tick();
+    expect(sum).toBe(6);
+
+    TestBed.tick();
+    expect(sum).toBe(6);
+  });
+
   it('throws if is a not created in an injection context', () => {
     expect(() => signalMethod<void>(() => void true)).toThrowError();
   });
