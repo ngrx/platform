@@ -22,6 +22,12 @@ import { STATE_SOURCE } from '../src/state-source';
 import { assertStateSource, createLocalService } from './helpers';
 
 describe('signalStore', () => {
+  const consoleWarnSpy = vi.spyOn(console, 'warn');
+  consoleWarnSpy.mockImplementation(() => void true);
+
+  beforeEach(() => {
+    consoleWarnSpy.mockClear();
+  });
   describe('creation', () => {
     it('creates a store via new operator', () => {
       const Store = signalStore(withState({ foo: 'bar' }));
@@ -692,15 +698,11 @@ describe('signalStore', () => {
           n: (value: number) => value,
         }))
       );
-      const warnings: string[][] = [];
-      vi.spyOn(console, 'warn').mockImplementation((...args: string[]) =>
-        warnings.push(args)
-      );
 
       new Store();
 
-      expect(console.warn).toHaveBeenCalledTimes(2);
-      expect(warnings).toEqual([
+      expect(consoleWarnSpy).toHaveBeenCalledTimes(2);
+      expect(consoleWarnSpy.mock.calls).toEqual([
         [
           '@ngrx/signals: SignalStore members cannot be overridden.',
           'Trying to override:',

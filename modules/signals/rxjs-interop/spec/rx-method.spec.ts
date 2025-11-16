@@ -351,6 +351,7 @@ describe('rxMethod', () => {
 
   describe('warning on source injector', () => {
     const warnSpy = vitest.spyOn(console, 'warn');
+    warnSpy.mockImplementation(() => void true);
 
     beforeEach(() => {
       warnSpy.mockReset();

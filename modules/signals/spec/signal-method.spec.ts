@@ -219,6 +219,7 @@ describe('signalMethod', () => {
 
   describe('warns on source injector', () => {
     const warnSpy = vi.spyOn(console, 'warn');
+    warnSpy.mockImplementation(() => void true);
     const n = signal(1);
 
     beforeEach(() => {
