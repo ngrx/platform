@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable, Type } from '@angular/core';
 import {
   filter,
   map,
+  merge,
   MonoTypeOperatorFunction,
   Observable,
   Subject,
@@ -17,6 +18,17 @@ abstract class BaseEvents {
    * @internal
    */
   readonly [EVENTS] = new Subject<EventInstance<string, unknown>>();
+  protected readonly events$: Observable<EventInstance<string, unknown>>;
+
+  protected constructor(parentEventsToken: Type<BaseEvents>) {
+    const parentEvents = inject(parentEventsToken, {
+      skipSelf: true,
+      optional: true,
+    });
+    this.events$ = parentEvents
+      ? merge(parentEvents.events$, this[EVENTS])
+      : this[EVENTS].asObservable();
+  }
 
   on(): Observable<EventInstance<string, unknown>>;
   on<EventCreators extends EventCreator<string, any>[]>(
@@ -27,7 +39,7 @@ abstract class BaseEvents {
   on(
     ...events: EventCreator<string, unknown>[]
   ): Observable<EventInstance<string, unknown>> {
-    return this[EVENTS].pipe(filterByType(events), withSourceType());
+    return this.events$.pipe(filterByType(events), withSourceType());
   }
 }
 
@@ -58,10 +70,26 @@ abstract class BaseEvents {
  * ```
  */
 @Injectable({ providedIn: 'platform' })
-export class Events extends BaseEvents {}
+export class Events extends BaseEvents {
+  constructor() {
+    super(Events);
+  }
+}
 
+/**
+ * @experimental
+ * @description
+ *
+ * Globally provided service for listening to dispatched events.
+ * Receives events before the `Events` service and is primarily used for
+ * handling state transitions.
+ */
 @Injectable({ providedIn: 'platform' })
-export class ReducerEvents extends BaseEvents {}
+export class ReducerEvents extends BaseEvents {
+  constructor() {
+    super(ReducerEvents);
+  }
+}
 
 function filterByType<T extends EventInstance<string, unknown>>(
   events: EventCreator<string, unknown>[]
