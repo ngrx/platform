@@ -58,9 +58,16 @@ export function withEffects<Input extends SignalStoreFeatureResult>(
         const effectSources = effectsFactory(store);
         const effects = Object.values(effectSources).map((effectSource$) =>
           effectSource$.pipe(
-            tap((value) => {
-              if (isEventInstance(value) && !(SOURCE_TYPE in value)) {
-                dispatcher.dispatch(value);
+            tap((result) => {
+              const [potentialEvent, config] = Array.isArray(result)
+                ? result
+                : [result];
+
+              if (
+                isEventInstance(potentialEvent) &&
+                !(SOURCE_TYPE in potentialEvent)
+              ) {
+                dispatcher.dispatch(potentialEvent, config);
               }
             })
           )
