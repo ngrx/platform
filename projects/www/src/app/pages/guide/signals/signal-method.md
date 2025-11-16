@@ -1,6 +1,6 @@
 # SignalMethod
 
-`signalMethod` is a standalone factory function used for managing side effects with Angular signals. It accepts a callback and returns a processor function that can handle either a static value or a reactive computation, i.e. either a Signal or a function, which will be tracked automatically. The input type can be specified using a generic type argument:
+`signalMethod` is a standalone factory function used for managing side effects with Angular signals. It accepts a callback and returns a processor function that can handle either a static value, a signal, or a computation function. The input type can be specified using a generic type argument:
 
 <ngrx-code-example>
 
