@@ -340,7 +340,7 @@ describe('Component Store', () => {
           },
         ]);
 
-        // New subsriber gets the latest value only.
+        // New subscriber gets the latest value only.
         m.expect(componentStore.state$).toBeObservable(
           m.hot('s', {
             s: {
