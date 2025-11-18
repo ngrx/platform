@@ -212,6 +212,11 @@ const setupLetDirectiveTestRecursionComponent = (): void => {
   componentNativeElement = fixtureLetDirectiveTestComponent.nativeElement;
 };
 
+function markAndDetect() {
+  fixtureLetDirectiveTestComponent.componentRef.changeDetectorRef.markForCheck();
+  fixtureLetDirectiveTestComponent.detectChanges();
+}
+
 describe('LetDirective', () => {
   describe('when nexting values', () => {
     beforeEach(setupLetDirectiveTestComponent);
@@ -323,7 +328,7 @@ describe('LetDirective', () => {
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('42');
       letDirectiveTestComponent.value$ = NEVER;
-      fixtureLetDirectiveTestComponent.detectChanges();
+      markAndDetect();
       expect(componentNativeElement.textContent).toBe('');
     });
 
@@ -332,7 +337,7 @@ describe('LetDirective', () => {
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('42');
       letDirectiveTestComponent.value$ = of(45);
-      fixtureLetDirectiveTestComponent.detectChanges();
+      markAndDetect();
       expect(componentNativeElement.textContent).toBe('45');
     });
 
@@ -367,7 +372,7 @@ describe('LetDirective', () => {
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('100');
       letDirectiveTestComponent.value$ = 200;
-      fixtureLetDirectiveTestComponent.detectChanges();
+      markAndDetect();
       expect(componentNativeElement.textContent).toBe('200');
     });
 
@@ -376,7 +381,7 @@ describe('LetDirective', () => {
       fixtureLetDirectiveTestComponent.detectChanges();
       expect(componentNativeElement.textContent).toBe('"ngrx"');
       letDirectiveTestComponent.value$ = 'component';
-      fixtureLetDirectiveTestComponent.detectChanges();
+      markAndDetect();
       expect(componentNativeElement.textContent).toBe('"component"');
     });
   });
@@ -437,7 +442,7 @@ describe('LetDirective', () => {
       letDirectiveTestComponent.value$ = of(true);
       fixtureLetDirectiveTestComponent.detectChanges();
       letDirectiveTestComponent.value$ = of(false).pipe(delay(1000));
-      fixtureLetDirectiveTestComponent.detectChanges();
+      markAndDetect();
       expect(componentNativeElement.textContent).toBe('');
       tick(1000);
       fixtureLetDirectiveTestComponent.detectChanges();
@@ -484,10 +489,11 @@ describe('LetDirective', () => {
     it('should render suspense template when next observable is in suspense state', fakeAsync(() => {
       letDirectiveTestComponent.value$ = new BehaviorSubject('ngrx');
       fixtureLetDirectiveTestComponent.detectChanges();
+      expect(componentNativeElement.textContent).toBe('ngrx');
       letDirectiveTestComponent.value$ = timer(100).pipe(
         switchMap(() => throwError(() => 'ERROR!'))
       );
-      fixtureLetDirectiveTestComponent.detectChanges();
+      markAndDetect();
       expect(componentNativeElement.textContent).toBe('Loading...');
       tick(100);
       fixtureLetDirectiveTestComponent.detectChanges();
