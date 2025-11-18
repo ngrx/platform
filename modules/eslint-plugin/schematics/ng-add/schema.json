@@ -10,10 +10,13 @@
       "default": "all",
       "enum": [
         "all",
+        "allTypedChecked",
         "component-store",
         "effects",
+        "effectsTypedChecked",
         "operators",
         "signals",
+        "signalsTypedChecked",
         "store"
       ],
       "x-prompt": {
@@ -25,6 +28,10 @@
             "label": "all"
           },
           {
+            "value": "allTypedChecked",
+            "label": "allTypedChecked"
+          },
+          {
             "value": "component-store",
             "label": "component-store"
           },
@@ -33,12 +40,20 @@
             "label": "effects"
           },
           {
+            "value": "effectsTypedChecked",
+            "label": "effectsTypedChecked"
+          },
+          {
             "value": "operators",
             "label": "operators"
           },
           {
             "value": "signals",
             "label": "signals"
+          },
+          {
+            "value": "signalsTypedChecked",
+            "label": "signalsTypedChecked"
           },
           {
             "value": "store",

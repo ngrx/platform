@@ -43,7 +43,7 @@ class Ok {
   constructor(private customStore: ComponentStore<MoviesState>) {
     const movies = customStore.select((state) => state.movies);
     this.firstMovie$ = customStore.select(movies, (movies) => movies[0]);
-    
+
     this.movies$ = this.customStore.select((state) => state.movies);
     this.firstMovie$ = this.customStore.select(this.movies$, (movies) => movies[0]);
   }
@@ -87,7 +87,7 @@ import { ComponentStore } from '@ngrx/component-store'
 
 class NotOk {
   readonly movies$ = this.customStore.select((state) => state.movies).pipe(
-      filter(Boolean), 
+      filter(Boolean),
       map((movies) => movies)
       ~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
   )
@@ -133,7 +133,11 @@ const invalidInject: () => InvalidTestCase<MessageIds, Options>[] = () => [
   }`),
 ];
 
-ruleTester().run(path.parse(__filename).name, rule, {
-  valid: [...validConstructor(), ...validInject()],
-  invalid: [...invalidConstructor(), ...invalidInject()],
-});
+ruleTester(rule.meta.docs?.requiresTypeChecking).run(
+  path.parse(__filename).name,
+  rule,
+  {
+    valid: [...validConstructor(), ...validInject()],
+    invalid: [...invalidConstructor(), ...invalidInject()],
+  }
+);

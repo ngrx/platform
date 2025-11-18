@@ -151,7 +151,7 @@ import { Store } from '@ngrx/store';
 
 export class NotOk4 {
   store = inject(Store<{}>);
-                      ~~~~ [${noTypedStore} suggest] 
+                      ~~~~ [${noTypedStore} suggest]
 }`,
     {
       suggestions: [
@@ -170,7 +170,11 @@ export class NotOk4 {
   ),
 ];
 
-ruleTester().run(path.parse(__filename).name, rule, {
-  valid: [...validConstructor(), ...validInject()],
-  invalid: [...invalidConstructor(), ...invalidInject()],
-});
+ruleTester(rule.meta.docs?.requiresTypeChecking).run(
+  path.parse(__filename).name,
+  rule,
+  {
+    valid: [...validConstructor(), ...validInject()],
+    invalid: [...invalidConstructor(), ...invalidInject()],
+  }
+);

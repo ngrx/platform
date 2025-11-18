@@ -49,7 +49,7 @@ class Ok {
   constructor(customStore: ComponentStore<MoviesState>) {
     const movies = customStore.select((state) => state.movies);
     const selectedId = this.customStore.select((state) => state.selectedId);
-    
+
     this.movie$ = this.customStore.select(
       this.movies$,
       this.selectedId$,
@@ -208,7 +208,11 @@ class NotOk {
 }`),
 ];
 
-ruleTester().run(path.parse(__filename).name, rule, {
-  valid: [...validConstructor(), ...validInject()],
-  invalid: [...invalidConstructor(), ...invalidInject()],
-});
+ruleTester(rule.meta.docs?.requiresTypeChecking).run(
+  path.parse(__filename).name,
+  rule,
+  {
+    valid: [...validConstructor(), ...validInject()],
+    invalid: [...invalidConstructor(), ...invalidInject()],
+  }
+);
