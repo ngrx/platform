@@ -56,11 +56,11 @@ exports[`Login Page should compile 1`] = `
                 />
               </div>
               <div
+                aria-atomic="true"
+                aria-live="polite"
                 class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"
               >
                 <div
-                  aria-atomic="true"
-                  aria-live="polite"
                   class="mat-mdc-form-field-hint-wrapper"
                 >
                   <div
@@ -104,11 +104,11 @@ exports[`Login Page should compile 1`] = `
                 />
               </div>
               <div
+                aria-atomic="true"
+                aria-live="polite"
                 class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"
               >
                 <div
-                  aria-atomic="true"
-                  aria-live="polite"
                   class="mat-mdc-form-field-hint-wrapper"
                 >
                   <div
