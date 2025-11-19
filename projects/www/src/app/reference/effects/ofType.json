@@ -19,69 +19,126 @@
           "text": "ActionCreator",
           "canonicalReference": "@ngrx/store!ActionCreator:type"
         },
-        { "kind": "Content", "text": "<string, " },
+        {
+          "kind": "Content",
+          "text": "<string, "
+        },
         {
           "kind": "Reference",
           "text": "Creator",
           "canonicalReference": "@ngrx/store!Creator:type"
         },
-        { "kind": "Content", "text": ">[]" },
-        { "kind": "Content", "text": ", U extends " },
+        {
+          "kind": "Content",
+          "text": ">[]"
+        },
+        {
+          "kind": "Content",
+          "text": ", U extends "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": " = " },
+        {
+          "kind": "Content",
+          "text": " = "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": ", V = " },
+        {
+          "kind": "Content",
+          "text": ", V = "
+        },
         {
           "kind": "Reference",
           "text": "ReturnType",
           "canonicalReference": "!ReturnType:type"
         },
-        { "kind": "Content", "text": "<AC[number]>" },
-        { "kind": "Content", "text": ">(...allowedTypes: " },
-        { "kind": "Content", "text": "AC" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "<AC[number]>"
+        },
+        {
+          "kind": "Content",
+          "text": ">(...allowedTypes: "
+        },
+        {
+          "kind": "Content",
+          "text": "AC"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "OperatorFunction",
           "canonicalReference": "rxjs!OperatorFunction:interface"
         },
-        { "kind": "Content", "text": "<U, V>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "<U, V>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
-      "returnTypeTokenRange": { "startIndex": 15, "endIndex": 17 },
+      "returnTypeTokenRange": {
+        "startIndex": 15,
+        "endIndex": 17
+      },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [
         {
           "parameterName": "allowedTypes",
-          "parameterTypeTokenRange": { "startIndex": 13, "endIndex": 14 },
+          "parameterTypeTokenRange": {
+            "startIndex": 13,
+            "endIndex": 14
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "AC",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 5 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "U",
-          "constraintTokenRange": { "startIndex": 6, "endIndex": 7 },
-          "defaultTypeTokenRange": { "startIndex": 8, "endIndex": 9 }
+          "constraintTokenRange": {
+            "startIndex": 6,
+            "endIndex": 7
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 9
+          }
         },
         {
           "typeParameterName": "V",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 10, "endIndex": 12 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 10,
+            "endIndex": 12
+          }
         }
       ],
       "name": "ofType",
@@ -117,95 +174,182 @@
           "text": "Extract",
           "canonicalReference": "!Extract:type"
         },
-        { "kind": "Content", "text": "<U, {\n    type: T1;\n}>" },
-        { "kind": "Content", "text": ", AC extends " },
+        {
+          "kind": "Content",
+          "text": "<U, {\n    type: T1;\n}>"
+        },
+        {
+          "kind": "Content",
+          "text": ", AC extends "
+        },
         {
           "kind": "Reference",
           "text": "ActionCreator",
           "canonicalReference": "@ngrx/store!ActionCreator:type"
         },
-        { "kind": "Content", "text": "<string, " },
+        {
+          "kind": "Content",
+          "text": "<string, "
+        },
         {
           "kind": "Reference",
           "text": "Creator",
           "canonicalReference": "@ngrx/store!Creator:type"
         },
-        { "kind": "Content", "text": ">" },
-        { "kind": "Content", "text": ", T1 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", U extends " },
+        {
+          "kind": "Content",
+          "text": ">"
+        },
+        {
+          "kind": "Content",
+          "text": ", T1 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", U extends "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": " = " },
+        {
+          "kind": "Content",
+          "text": " = "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": ", V = " },
-        { "kind": "Content", "text": "T1 extends string ? E : " },
+        {
+          "kind": "Content",
+          "text": ", V = "
+        },
+        {
+          "kind": "Content",
+          "text": "T1 extends string ? E : "
+        },
         {
           "kind": "Reference",
           "text": "ReturnType",
           "canonicalReference": "!ReturnType:type"
         },
-        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
         {
           "kind": "Reference",
           "text": "Extract",
           "canonicalReference": "!Extract:type"
         },
-        { "kind": "Content", "text": "<T1, AC>>" },
-        { "kind": "Content", "text": ">(t1: " },
-        { "kind": "Content", "text": "T1" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "<T1, AC>>"
+        },
+        {
+          "kind": "Content",
+          "text": ">(t1: "
+        },
+        {
+          "kind": "Content",
+          "text": "T1"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "OperatorFunction",
           "canonicalReference": "rxjs!OperatorFunction:interface"
         },
-        { "kind": "Content", "text": "<U, V>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "<U, V>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
-      "returnTypeTokenRange": { "startIndex": 23, "endIndex": 25 },
+      "returnTypeTokenRange": {
+        "startIndex": 23,
+        "endIndex": 25
+      },
       "releaseTag": "Public",
       "overloadIndex": 2,
       "parameters": [
         {
           "parameterName": "t1",
-          "parameterTypeTokenRange": { "startIndex": 21, "endIndex": 22 },
+          "parameterTypeTokenRange": {
+            "startIndex": 21,
+            "endIndex": 22
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "E",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 3 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "AC",
-          "constraintTokenRange": { "startIndex": 4, "endIndex": 8 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 4,
+            "endIndex": 8
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T1",
-          "constraintTokenRange": { "startIndex": 9, "endIndex": 10 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 9,
+            "endIndex": 10
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "U",
-          "constraintTokenRange": { "startIndex": 11, "endIndex": 12 },
-          "defaultTypeTokenRange": { "startIndex": 13, "endIndex": 14 }
+          "constraintTokenRange": {
+            "startIndex": 11,
+            "endIndex": 12
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 13,
+            "endIndex": 14
+          }
         },
         {
           "typeParameterName": "V",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 15, "endIndex": 20 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 15,
+            "endIndex": 20
+          }
         }
       ],
       "name": "ofType",
@@ -241,102 +385,204 @@
           "text": "Extract",
           "canonicalReference": "!Extract:type"
         },
-        { "kind": "Content", "text": "<U, {\n    type: T1 | T2;\n}>" },
-        { "kind": "Content", "text": ", AC extends " },
+        {
+          "kind": "Content",
+          "text": "<U, {\n    type: T1 | T2;\n}>"
+        },
+        {
+          "kind": "Content",
+          "text": ", AC extends "
+        },
         {
           "kind": "Reference",
           "text": "ActionCreator",
           "canonicalReference": "@ngrx/store!ActionCreator:type"
         },
-        { "kind": "Content", "text": "<string, " },
+        {
+          "kind": "Content",
+          "text": "<string, "
+        },
         {
           "kind": "Reference",
           "text": "Creator",
           "canonicalReference": "@ngrx/store!Creator:type"
         },
-        { "kind": "Content", "text": ">" },
-        { "kind": "Content", "text": ", T1 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", T2 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", U extends " },
+        {
+          "kind": "Content",
+          "text": ">"
+        },
+        {
+          "kind": "Content",
+          "text": ", T1 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", T2 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", U extends "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": " = " },
+        {
+          "kind": "Content",
+          "text": " = "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": ", V = " },
+        {
+          "kind": "Content",
+          "text": ", V = "
+        },
         {
           "kind": "Reference",
           "text": "ActionExtractor",
           "canonicalReference": "@ngrx/effects!~ActionExtractor:type"
         },
-        { "kind": "Content", "text": "<T1 | T2, AC, E>" },
-        { "kind": "Content", "text": ">(t1: " },
-        { "kind": "Content", "text": "T1" },
-        { "kind": "Content", "text": ", t2: " },
-        { "kind": "Content", "text": "T2" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "<T1 | T2, AC, E>"
+        },
+        {
+          "kind": "Content",
+          "text": ">(t1: "
+        },
+        {
+          "kind": "Content",
+          "text": "T1"
+        },
+        {
+          "kind": "Content",
+          "text": ", t2: "
+        },
+        {
+          "kind": "Content",
+          "text": "T2"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "OperatorFunction",
           "canonicalReference": "rxjs!OperatorFunction:interface"
         },
-        { "kind": "Content", "text": "<U, V>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "<U, V>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
-      "returnTypeTokenRange": { "startIndex": 24, "endIndex": 26 },
+      "returnTypeTokenRange": {
+        "startIndex": 24,
+        "endIndex": 26
+      },
       "releaseTag": "Public",
       "overloadIndex": 3,
       "parameters": [
         {
           "parameterName": "t1",
-          "parameterTypeTokenRange": { "startIndex": 20, "endIndex": 21 },
+          "parameterTypeTokenRange": {
+            "startIndex": 20,
+            "endIndex": 21
+          },
           "isOptional": false
         },
         {
           "parameterName": "t2",
-          "parameterTypeTokenRange": { "startIndex": 22, "endIndex": 23 },
+          "parameterTypeTokenRange": {
+            "startIndex": 22,
+            "endIndex": 23
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "E",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 3 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "AC",
-          "constraintTokenRange": { "startIndex": 4, "endIndex": 8 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 4,
+            "endIndex": 8
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T1",
-          "constraintTokenRange": { "startIndex": 9, "endIndex": 10 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 9,
+            "endIndex": 10
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T2",
-          "constraintTokenRange": { "startIndex": 11, "endIndex": 12 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 11,
+            "endIndex": 12
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "U",
-          "constraintTokenRange": { "startIndex": 13, "endIndex": 14 },
-          "defaultTypeTokenRange": { "startIndex": 15, "endIndex": 16 }
+          "constraintTokenRange": {
+            "startIndex": 13,
+            "endIndex": 14
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 15,
+            "endIndex": 16
+          }
         },
         {
           "typeParameterName": "V",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 17, "endIndex": 19 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 17,
+            "endIndex": 19
+          }
         }
       ],
       "name": "ofType",
@@ -372,116 +618,239 @@
           "text": "Extract",
           "canonicalReference": "!Extract:type"
         },
-        { "kind": "Content", "text": "<U, {\n    type: T1 | T2 | T3;\n}>" },
-        { "kind": "Content", "text": ", AC extends " },
+        {
+          "kind": "Content",
+          "text": "<U, {\n    type: T1 | T2 | T3;\n}>"
+        },
+        {
+          "kind": "Content",
+          "text": ", AC extends "
+        },
         {
           "kind": "Reference",
           "text": "ActionCreator",
           "canonicalReference": "@ngrx/store!ActionCreator:type"
         },
-        { "kind": "Content", "text": "<string, " },
+        {
+          "kind": "Content",
+          "text": "<string, "
+        },
         {
           "kind": "Reference",
           "text": "Creator",
           "canonicalReference": "@ngrx/store!Creator:type"
         },
-        { "kind": "Content", "text": ">" },
-        { "kind": "Content", "text": ", T1 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", T2 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", T3 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", U extends " },
+        {
+          "kind": "Content",
+          "text": ">"
+        },
+        {
+          "kind": "Content",
+          "text": ", T1 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", T2 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", T3 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", U extends "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": " = " },
+        {
+          "kind": "Content",
+          "text": " = "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": ", V = " },
+        {
+          "kind": "Content",
+          "text": ", V = "
+        },
         {
           "kind": "Reference",
           "text": "ActionExtractor",
           "canonicalReference": "@ngrx/effects!~ActionExtractor:type"
         },
-        { "kind": "Content", "text": "<T1 | T2 | T3, AC, E>" },
-        { "kind": "Content", "text": ">(t1: " },
-        { "kind": "Content", "text": "T1" },
-        { "kind": "Content", "text": ", t2: " },
-        { "kind": "Content", "text": "T2" },
-        { "kind": "Content", "text": ", t3: " },
-        { "kind": "Content", "text": "T3" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "<T1 | T2 | T3, AC, E>"
+        },
+        {
+          "kind": "Content",
+          "text": ">(t1: "
+        },
+        {
+          "kind": "Content",
+          "text": "T1"
+        },
+        {
+          "kind": "Content",
+          "text": ", t2: "
+        },
+        {
+          "kind": "Content",
+          "text": "T2"
+        },
+        {
+          "kind": "Content",
+          "text": ", t3: "
+        },
+        {
+          "kind": "Content",
+          "text": "T3"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "OperatorFunction",
           "canonicalReference": "rxjs!OperatorFunction:interface"
         },
-        { "kind": "Content", "text": "<U, V>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "<U, V>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
-      "returnTypeTokenRange": { "startIndex": 28, "endIndex": 30 },
+      "returnTypeTokenRange": {
+        "startIndex": 28,
+        "endIndex": 30
+      },
       "releaseTag": "Public",
       "overloadIndex": 4,
       "parameters": [
         {
           "parameterName": "t1",
-          "parameterTypeTokenRange": { "startIndex": 22, "endIndex": 23 },
+          "parameterTypeTokenRange": {
+            "startIndex": 22,
+            "endIndex": 23
+          },
           "isOptional": false
         },
         {
           "parameterName": "t2",
-          "parameterTypeTokenRange": { "startIndex": 24, "endIndex": 25 },
+          "parameterTypeTokenRange": {
+            "startIndex": 24,
+            "endIndex": 25
+          },
           "isOptional": false
         },
         {
           "parameterName": "t3",
-          "parameterTypeTokenRange": { "startIndex": 26, "endIndex": 27 },
+          "parameterTypeTokenRange": {
+            "startIndex": 26,
+            "endIndex": 27
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "E",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 3 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "AC",
-          "constraintTokenRange": { "startIndex": 4, "endIndex": 8 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 4,
+            "endIndex": 8
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T1",
-          "constraintTokenRange": { "startIndex": 9, "endIndex": 10 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 9,
+            "endIndex": 10
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T2",
-          "constraintTokenRange": { "startIndex": 11, "endIndex": 12 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 11,
+            "endIndex": 12
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T3",
-          "constraintTokenRange": { "startIndex": 13, "endIndex": 14 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 13,
+            "endIndex": 14
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "U",
-          "constraintTokenRange": { "startIndex": 15, "endIndex": 16 },
-          "defaultTypeTokenRange": { "startIndex": 17, "endIndex": 18 }
+          "constraintTokenRange": {
+            "startIndex": 15,
+            "endIndex": 16
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 17,
+            "endIndex": 18
+          }
         },
         {
           "typeParameterName": "V",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 19, "endIndex": 21 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 19,
+            "endIndex": 21
+          }
         }
       ],
       "name": "ofType",
@@ -521,129 +890,270 @@
           "kind": "Content",
           "text": "<U, {\n    type: T1 | T2 | T3 | T4;\n}>"
         },
-        { "kind": "Content", "text": ", AC extends " },
+        {
+          "kind": "Content",
+          "text": ", AC extends "
+        },
         {
           "kind": "Reference",
           "text": "ActionCreator",
           "canonicalReference": "@ngrx/store!ActionCreator:type"
         },
-        { "kind": "Content", "text": "<string, " },
+        {
+          "kind": "Content",
+          "text": "<string, "
+        },
         {
           "kind": "Reference",
           "text": "Creator",
           "canonicalReference": "@ngrx/store!Creator:type"
         },
-        { "kind": "Content", "text": ">" },
-        { "kind": "Content", "text": ", T1 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", T2 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", T3 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", T4 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", U extends " },
+        {
+          "kind": "Content",
+          "text": ">"
+        },
+        {
+          "kind": "Content",
+          "text": ", T1 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", T2 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", T3 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", T4 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", U extends "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": " = " },
+        {
+          "kind": "Content",
+          "text": " = "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": ", V = " },
+        {
+          "kind": "Content",
+          "text": ", V = "
+        },
         {
           "kind": "Reference",
           "text": "ActionExtractor",
           "canonicalReference": "@ngrx/effects!~ActionExtractor:type"
         },
-        { "kind": "Content", "text": "<T1 | T2 | T3 | T4, AC, E>" },
-        { "kind": "Content", "text": ">(t1: " },
-        { "kind": "Content", "text": "T1" },
-        { "kind": "Content", "text": ", t2: " },
-        { "kind": "Content", "text": "T2" },
-        { "kind": "Content", "text": ", t3: " },
-        { "kind": "Content", "text": "T3" },
-        { "kind": "Content", "text": ", t4: " },
-        { "kind": "Content", "text": "T4" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "<T1 | T2 | T3 | T4, AC, E>"
+        },
+        {
+          "kind": "Content",
+          "text": ">(t1: "
+        },
+        {
+          "kind": "Content",
+          "text": "T1"
+        },
+        {
+          "kind": "Content",
+          "text": ", t2: "
+        },
+        {
+          "kind": "Content",
+          "text": "T2"
+        },
+        {
+          "kind": "Content",
+          "text": ", t3: "
+        },
+        {
+          "kind": "Content",
+          "text": "T3"
+        },
+        {
+          "kind": "Content",
+          "text": ", t4: "
+        },
+        {
+          "kind": "Content",
+          "text": "T4"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "OperatorFunction",
           "canonicalReference": "rxjs!OperatorFunction:interface"
         },
-        { "kind": "Content", "text": "<U, V>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "<U, V>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
-      "returnTypeTokenRange": { "startIndex": 32, "endIndex": 34 },
+      "returnTypeTokenRange": {
+        "startIndex": 32,
+        "endIndex": 34
+      },
       "releaseTag": "Public",
       "overloadIndex": 5,
       "parameters": [
         {
           "parameterName": "t1",
-          "parameterTypeTokenRange": { "startIndex": 24, "endIndex": 25 },
+          "parameterTypeTokenRange": {
+            "startIndex": 24,
+            "endIndex": 25
+          },
           "isOptional": false
         },
         {
           "parameterName": "t2",
-          "parameterTypeTokenRange": { "startIndex": 26, "endIndex": 27 },
+          "parameterTypeTokenRange": {
+            "startIndex": 26,
+            "endIndex": 27
+          },
           "isOptional": false
         },
         {
           "parameterName": "t3",
-          "parameterTypeTokenRange": { "startIndex": 28, "endIndex": 29 },
+          "parameterTypeTokenRange": {
+            "startIndex": 28,
+            "endIndex": 29
+          },
           "isOptional": false
         },
         {
           "parameterName": "t4",
-          "parameterTypeTokenRange": { "startIndex": 30, "endIndex": 31 },
+          "parameterTypeTokenRange": {
+            "startIndex": 30,
+            "endIndex": 31
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "E",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 3 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "AC",
-          "constraintTokenRange": { "startIndex": 4, "endIndex": 8 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 4,
+            "endIndex": 8
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T1",
-          "constraintTokenRange": { "startIndex": 9, "endIndex": 10 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 9,
+            "endIndex": 10
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T2",
-          "constraintTokenRange": { "startIndex": 11, "endIndex": 12 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 11,
+            "endIndex": 12
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T3",
-          "constraintTokenRange": { "startIndex": 13, "endIndex": 14 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 13,
+            "endIndex": 14
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T4",
-          "constraintTokenRange": { "startIndex": 15, "endIndex": 16 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 15,
+            "endIndex": 16
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "U",
-          "constraintTokenRange": { "startIndex": 17, "endIndex": 18 },
-          "defaultTypeTokenRange": { "startIndex": 19, "endIndex": 20 }
+          "constraintTokenRange": {
+            "startIndex": 17,
+            "endIndex": 18
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 19,
+            "endIndex": 20
+          }
         },
         {
           "typeParameterName": "V",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 21, "endIndex": 23 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 21,
+            "endIndex": 23
+          }
         }
       ],
       "name": "ofType",
@@ -683,143 +1193,305 @@
           "kind": "Content",
           "text": "<U, {\n    type: T1 | T2 | T3 | T4 | T5;\n}>"
         },
-        { "kind": "Content", "text": ", AC extends " },
+        {
+          "kind": "Content",
+          "text": ", AC extends "
+        },
         {
           "kind": "Reference",
           "text": "ActionCreator",
           "canonicalReference": "@ngrx/store!ActionCreator:type"
         },
-        { "kind": "Content", "text": "<string, " },
+        {
+          "kind": "Content",
+          "text": "<string, "
+        },
         {
           "kind": "Reference",
           "text": "Creator",
           "canonicalReference": "@ngrx/store!Creator:type"
         },
-        { "kind": "Content", "text": ">" },
-        { "kind": "Content", "text": ", T1 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", T2 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", T3 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", T4 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", T5 extends " },
-        { "kind": "Content", "text": "string | AC" },
-        { "kind": "Content", "text": ", U extends " },
+        {
+          "kind": "Content",
+          "text": ">"
+        },
+        {
+          "kind": "Content",
+          "text": ", T1 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", T2 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", T3 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", T4 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", T5 extends "
+        },
+        {
+          "kind": "Content",
+          "text": "string | AC"
+        },
+        {
+          "kind": "Content",
+          "text": ", U extends "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": " = " },
+        {
+          "kind": "Content",
+          "text": " = "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": ", V = " },
+        {
+          "kind": "Content",
+          "text": ", V = "
+        },
         {
           "kind": "Reference",
           "text": "ActionExtractor",
           "canonicalReference": "@ngrx/effects!~ActionExtractor:type"
         },
-        { "kind": "Content", "text": "<T1 | T2 | T3 | T4 | T5, AC, E>" },
-        { "kind": "Content", "text": ">(t1: " },
-        { "kind": "Content", "text": "T1" },
-        { "kind": "Content", "text": ", t2: " },
-        { "kind": "Content", "text": "T2" },
-        { "kind": "Content", "text": ", t3: " },
-        { "kind": "Content", "text": "T3" },
-        { "kind": "Content", "text": ", t4: " },
-        { "kind": "Content", "text": "T4" },
-        { "kind": "Content", "text": ", t5: " },
-        { "kind": "Content", "text": "T5" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "<T1 | T2 | T3 | T4 | T5, AC, E>"
+        },
+        {
+          "kind": "Content",
+          "text": ">(t1: "
+        },
+        {
+          "kind": "Content",
+          "text": "T1"
+        },
+        {
+          "kind": "Content",
+          "text": ", t2: "
+        },
+        {
+          "kind": "Content",
+          "text": "T2"
+        },
+        {
+          "kind": "Content",
+          "text": ", t3: "
+        },
+        {
+          "kind": "Content",
+          "text": "T3"
+        },
+        {
+          "kind": "Content",
+          "text": ", t4: "
+        },
+        {
+          "kind": "Content",
+          "text": "T4"
+        },
+        {
+          "kind": "Content",
+          "text": ", t5: "
+        },
+        {
+          "kind": "Content",
+          "text": "T5"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "OperatorFunction",
           "canonicalReference": "rxjs!OperatorFunction:interface"
         },
-        { "kind": "Content", "text": "<U, V>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": "<U, V>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
-      "returnTypeTokenRange": { "startIndex": 36, "endIndex": 38 },
+      "returnTypeTokenRange": {
+        "startIndex": 36,
+        "endIndex": 38
+      },
       "releaseTag": "Public",
       "overloadIndex": 6,
       "parameters": [
         {
           "parameterName": "t1",
-          "parameterTypeTokenRange": { "startIndex": 26, "endIndex": 27 },
+          "parameterTypeTokenRange": {
+            "startIndex": 26,
+            "endIndex": 27
+          },
           "isOptional": false
         },
         {
           "parameterName": "t2",
-          "parameterTypeTokenRange": { "startIndex": 28, "endIndex": 29 },
+          "parameterTypeTokenRange": {
+            "startIndex": 28,
+            "endIndex": 29
+          },
           "isOptional": false
         },
         {
           "parameterName": "t3",
-          "parameterTypeTokenRange": { "startIndex": 30, "endIndex": 31 },
+          "parameterTypeTokenRange": {
+            "startIndex": 30,
+            "endIndex": 31
+          },
           "isOptional": false
         },
         {
           "parameterName": "t4",
-          "parameterTypeTokenRange": { "startIndex": 32, "endIndex": 33 },
+          "parameterTypeTokenRange": {
+            "startIndex": 32,
+            "endIndex": 33
+          },
           "isOptional": false
         },
         {
           "parameterName": "t5",
-          "parameterTypeTokenRange": { "startIndex": 34, "endIndex": 35 },
+          "parameterTypeTokenRange": {
+            "startIndex": 34,
+            "endIndex": 35
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "E",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 3 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "AC",
-          "constraintTokenRange": { "startIndex": 4, "endIndex": 8 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 4,
+            "endIndex": 8
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T1",
-          "constraintTokenRange": { "startIndex": 9, "endIndex": 10 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 9,
+            "endIndex": 10
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T2",
-          "constraintTokenRange": { "startIndex": 11, "endIndex": 12 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 11,
+            "endIndex": 12
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T3",
-          "constraintTokenRange": { "startIndex": 13, "endIndex": 14 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 13,
+            "endIndex": 14
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T4",
-          "constraintTokenRange": { "startIndex": 15, "endIndex": 16 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 15,
+            "endIndex": 16
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "T5",
-          "constraintTokenRange": { "startIndex": 17, "endIndex": 18 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 17,
+            "endIndex": 18
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         },
         {
           "typeParameterName": "U",
-          "constraintTokenRange": { "startIndex": 19, "endIndex": 20 },
-          "defaultTypeTokenRange": { "startIndex": 21, "endIndex": 22 }
+          "constraintTokenRange": {
+            "startIndex": 19,
+            "endIndex": 20
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 21,
+            "endIndex": 22
+          }
         },
         {
           "typeParameterName": "V",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 23, "endIndex": 25 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 23,
+            "endIndex": 25
+          }
         }
       ],
       "name": "ofType",
@@ -855,56 +1527,92 @@
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": ">(...allowedTypes: " },
+        {
+          "kind": "Content",
+          "text": ">(...allowedTypes: "
+        },
         {
           "kind": "Reference",
           "text": "Array",
           "canonicalReference": "!Array:interface"
         },
-        { "kind": "Content", "text": "<string | " },
+        {
+          "kind": "Content",
+          "text": "<string | "
+        },
         {
           "kind": "Reference",
           "text": "ActionCreator",
           "canonicalReference": "@ngrx/store!ActionCreator:type"
         },
-        { "kind": "Content", "text": "<string, " },
+        {
+          "kind": "Content",
+          "text": "<string, "
+        },
         {
           "kind": "Reference",
           "text": "Creator",
           "canonicalReference": "@ngrx/store!Creator:type"
         },
-        { "kind": "Content", "text": ">>" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": ">>"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "OperatorFunction",
           "canonicalReference": "rxjs!OperatorFunction:interface"
         },
-        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": ", V>" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": ", V>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
-      "returnTypeTokenRange": { "startIndex": 10, "endIndex": 14 },
+      "returnTypeTokenRange": {
+        "startIndex": 10,
+        "endIndex": 14
+      },
       "releaseTag": "Public",
       "overloadIndex": 7,
       "parameters": [
         {
           "parameterName": "allowedTypes",
-          "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 9 },
+          "parameterTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 9
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "V",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "name": "ofType",

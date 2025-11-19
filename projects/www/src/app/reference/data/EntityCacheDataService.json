@@ -35,19 +35,28 @@
               "text": "EntityDefinitionService",
               "canonicalReference": "@ngrx/data!EntityDefinitionService:class"
             },
-            { "kind": "Content", "text": ", http: " },
+            {
+              "kind": "Content",
+              "text": ", http: "
+            },
             {
               "kind": "Reference",
               "text": "HttpClient",
               "canonicalReference": "@angular/common!HttpClient:class"
             },
-            { "kind": "Content", "text": ", config?: " },
+            {
+              "kind": "Content",
+              "text": ", config?: "
+            },
             {
               "kind": "Reference",
               "text": "DefaultDataServiceConfig",
               "canonicalReference": "@ngrx/data!DefaultDataServiceConfig:class"
             },
-            { "kind": "Content", "text": ");" }
+            {
+              "kind": "Content",
+              "text": ");"
+            }
           ],
           "releaseTag": "Public",
           "isProtected": false,
@@ -55,17 +64,26 @@
           "parameters": [
             {
               "parameterName": "entityDefinitionService",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "http",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
               "isOptional": false
             },
             {
               "parameterName": "config",
-              "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
               "isOptional": true
             }
           ],
@@ -101,13 +119,19 @@
               "text": "EntityDefinitionService",
               "canonicalReference": "@ngrx/data!EntityDefinitionService:class"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "entityDefinitionService",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": true,
           "isAbstract": false,
@@ -143,23 +167,35 @@
               "text": "ChangeSet",
               "canonicalReference": "@ngrx/data!ChangeSet:interface"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "ChangeSet",
               "canonicalReference": "@ngrx/data!ChangeSet:interface"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": true,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "changeSet",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -203,23 +239,35 @@
               "text": "ChangeSet",
               "canonicalReference": "@ngrx/data!ChangeSet:interface"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "ChangeSet",
               "canonicalReference": "@ngrx/data!ChangeSet:interface"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": true,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "changeSet",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -253,25 +301,43 @@
               "kind": "Content",
               "text": "protected getIdSelector(entityName: "
             },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "IdSelector",
               "canonicalReference": "@ngrx/entity!IdSelector:type"
             },
-            { "kind": "Content", "text": "<any>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<any>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
           "isProtected": true,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entityName",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -306,31 +372,52 @@
           "canonicalReference": "@ngrx/data!EntityCacheDataService#handleError:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "protected handleError(reqData: " },
+            {
+              "kind": "Content",
+              "text": "protected handleError(reqData: "
+            },
             {
               "kind": "Reference",
               "text": "RequestData",
               "canonicalReference": "@ngrx/data!RequestData:interface"
             },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "(err: any) => " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "(err: any) => "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<never>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<never>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 6 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
           "isProtected": true,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "reqData",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -360,19 +447,28 @@
           "canonicalReference": "@ngrx/data!EntityCacheDataService#http:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "protected http: " },
+            {
+              "kind": "Content",
+              "text": "protected http: "
+            },
             {
               "kind": "Reference",
               "text": "HttpClient",
               "canonicalReference": "@angular/common!HttpClient:class"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "http",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": true,
           "isAbstract": false,
@@ -399,21 +495,36 @@
           "canonicalReference": "@ngrx/data!EntityCacheDataService#idSelectors:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "protected idSelectors: " },
-            { "kind": "Content", "text": "{\n        [entityName: string]: " },
+            {
+              "kind": "Content",
+              "text": "protected idSelectors: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n        [entityName: string]: "
+            },
             {
               "kind": "Reference",
               "text": "IdSelector",
               "canonicalReference": "@ngrx/entity!IdSelector:type"
             },
-            { "kind": "Content", "text": "<any>;\n    }" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<any>;\n    }"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "idSelectors",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 4 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          },
           "isStatic": false,
           "isProtected": true,
           "isAbstract": false,
@@ -449,23 +560,35 @@
               "text": "ChangeSet",
               "canonicalReference": "@ngrx/data!ChangeSet:interface"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "ChangeSet",
               "canonicalReference": "@ngrx/data!ChangeSet:interface"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": true,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "changeSet",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -495,15 +618,27 @@
           "canonicalReference": "@ngrx/data!EntityCacheDataService#saveDelay:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "protected saveDelay: " },
-            { "kind": "Content", "text": "number" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "protected saveDelay: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "saveDelay",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": true,
           "isAbstract": false,
@@ -530,43 +665,73 @@
           "canonicalReference": "@ngrx/data!EntityCacheDataService#saveEntities:member(1)",
           "docComment": "/**\n * Save changes to multiple entities across one or more entity collections. Server endpoint must understand the essential SaveEntities protocol, in particular the ChangeSet interface (except for Update<T>). This implementation extracts the entity changes from a ChangeSet Update<T>[] and sends those. It then reconstructs Update<T>[] in the returned observable result.\n *\n * @param changeSet - An array of SaveEntityItems. Each SaveEntityItem describe a change operation for one or more entities of a single collection, known by its 'entityName'.\n *\n * @param url - The server endpoint that receives this request.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "saveEntities(changeSet: " },
+            {
+              "kind": "Content",
+              "text": "saveEntities(changeSet: "
+            },
             {
               "kind": "Reference",
               "text": "ChangeSet",
               "canonicalReference": "@ngrx/data!ChangeSet:interface"
             },
-            { "kind": "Content", "text": ", url: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": ", url: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "ChangeSet",
               "canonicalReference": "@ngrx/data!ChangeSet:interface"
             },
-            { "kind": "Content", "text": ">" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 5, "endIndex": 9 },
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 9
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "changeSet",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "url",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
               "isOptional": false
             }
           ],
@@ -605,15 +770,27 @@
           "canonicalReference": "@ngrx/data!EntityCacheDataService#timeout:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "protected timeout: " },
-            { "kind": "Content", "text": "number" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "protected timeout: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "timeout",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": true,
           "isAbstract": false,

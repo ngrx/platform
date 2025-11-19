@@ -35,43 +35,70 @@
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "(error: " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "(error: "
+            },
             {
               "kind": "Reference",
               "text": "DataServiceError",
               "canonicalReference": "@ngrx/data!DataServiceError:class"
             },
-            { "kind": "Content", "text": " | " },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
             {
               "kind": "Reference",
               "text": "Error",
               "canonicalReference": "!Error:interface"
             },
-            { "kind": "Content", "text": ") => " },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
             {
               "kind": "Reference",
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "EntityActionDataServiceError",
               "canonicalReference": "@ngrx/data!EntityActionDataServiceError:interface"
             },
-            { "kind": "Content", "text": ">" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 12 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 12
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "originalAction",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -110,24 +137,39 @@
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "(data: any) => " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "(data: any) => "
+            },
             {
               "kind": "Reference",
               "text": "Action",
               "canonicalReference": "@ngrx/store!Action:interface"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "originalAction",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],

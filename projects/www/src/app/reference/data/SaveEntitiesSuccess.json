@@ -19,7 +19,10 @@
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": " " }
+        {
+          "kind": "Content",
+          "text": " "
+        }
       ],
       "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-action.d.ts",
       "releaseTag": "Public",
@@ -32,21 +35,36 @@
           "canonicalReference": "@ngrx/data!SaveEntitiesSuccess:constructor(1)",
           "docComment": "/**\n * Constructs a new instance of the `SaveEntitiesSuccess` class\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "constructor(changeSet: " },
+            {
+              "kind": "Content",
+              "text": "constructor(changeSet: "
+            },
             {
               "kind": "Reference",
               "text": "ChangeSet",
               "canonicalReference": "@ngrx/data!ChangeSet:interface"
             },
-            { "kind": "Content", "text": ", url: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": ", options?: " },
+            {
+              "kind": "Content",
+              "text": ", url: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
             {
               "kind": "Reference",
               "text": "EntityActionOptions",
               "canonicalReference": "@ngrx/data!EntityActionOptions:interface"
             },
-            { "kind": "Content", "text": ");" }
+            {
+              "kind": "Content",
+              "text": ");"
+            }
           ],
           "releaseTag": "Public",
           "isProtected": false,
@@ -54,17 +72,26 @@
           "parameters": [
             {
               "parameterName": "changeSet",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "url",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
               "isOptional": false
             },
             {
               "parameterName": "options",
-              "parameterTypeTokenRange": { "startIndex": 5, "endIndex": 6 },
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
               "isOptional": true
             }
           ],
@@ -91,8 +118,14 @@
           "canonicalReference": "@ngrx/data!SaveEntitiesSuccess#payload:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly payload: " },
-            { "kind": "Content", "text": "{\n        readonly changeSet: " },
+            {
+              "kind": "Content",
+              "text": "readonly payload: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n        readonly changeSet: "
+            },
             {
               "kind": "Reference",
               "text": "ChangeSet",
@@ -116,14 +149,23 @@
               "text": "Error",
               "canonicalReference": "!Error:interface"
             },
-            { "kind": "Content", "text": ";\n        skip?: boolean;\n    }" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";\n        skip?: boolean;\n    }"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "payload",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 8 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 8
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -150,20 +192,32 @@
           "canonicalReference": "@ngrx/data!SaveEntitiesSuccess#type:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly type = " },
+            {
+              "kind": "Content",
+              "text": "readonly type = "
+            },
             {
               "kind": "Reference",
               "text": "EntityCacheAction.SAVE_ENTITIES_SUCCESS",
               "canonicalReference": "@ngrx/data!EntityCacheAction.SAVE_ENTITIES_SUCCESS:member"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "type",
-          "propertyTypeTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "initializerTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "initializerTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -186,7 +240,12 @@
           }
         }
       ],
-      "implementsTokenRanges": [{ "startIndex": 1, "endIndex": 2 }],
+      "implementsTokenRanges": [
+        {
+          "startIndex": 1,
+          "endIndex": 2
+        }
+      ],
       "docs": {
         "modifiers": {
           "isInternal": false,

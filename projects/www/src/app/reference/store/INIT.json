@@ -1,1 +1,49 @@
-{"name":"INIT","canonicalReference":"@ngrx/store!INIT:var","kind":"Variable","fileUrlPath":"../../dist/modules/store/src/actions_subject.d.ts","isDeprecated":false,"members":[{"kind":"Variable","canonicalReference":"@ngrx/store!INIT:var","docComment":"","excerptTokens":[{"kind":"Content","text":"INIT: "},{"kind":"Content","text":"\"@ngrx/store/init\""}],"fileUrlPath":"../../dist/modules/store/src/actions_subject.d.ts","isReadonly":true,"releaseTag":"Public","name":"INIT","variableTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "INIT",
+  "canonicalReference": "@ngrx/store!INIT:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/store/src/actions_subject.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/store!INIT:var",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "INIT: "
+        },
+        {
+          "kind": "Content",
+          "text": "\"@ngrx/store/init\""
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/store/src/actions_subject.d.ts",
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "INIT",
+      "variableTypeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 2
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

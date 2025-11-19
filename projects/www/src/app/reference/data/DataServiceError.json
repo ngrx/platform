@@ -1,1 +1,236 @@
-{"name":"DataServiceError","canonicalReference":"@ngrx/data!DataServiceError:class","kind":"Class","fileUrlPath":"../../dist/modules/data/src/dataservices/data-service-error.d.ts","isDeprecated":false,"members":[{"kind":"Class","canonicalReference":"@ngrx/data!DataServiceError:class","docComment":"/**\n * Error from a DataService The source error either comes from a failed HTTP response or was thrown within the service.\n *\n * @param error - the HttpErrorResponse or the error thrown by the service\n *\n * @param requestData - the HTTP request information such as the method and the url.\n */\n","excerptTokens":[{"kind":"Content","text":"export declare class DataServiceError extends "},{"kind":"Reference","text":"Error","canonicalReference":"!Error:interface"},{"kind":"Content","text":" "}],"fileUrlPath":"../../dist/modules/data/src/dataservices/data-service-error.d.ts","releaseTag":"Public","isAbstract":false,"name":"DataServiceError","preserveMemberOrder":false,"members":[{"kind":"Constructor","canonicalReference":"@ngrx/data!DataServiceError:constructor(1)","docComment":"/**\n * Constructs a new instance of the `DataServiceError` class\n */\n","excerptTokens":[{"kind":"Content","text":"constructor(error: "},{"kind":"Content","text":"any"},{"kind":"Content","text":", requestData: "},{"kind":"Reference","text":"RequestData","canonicalReference":"@ngrx/data!RequestData:interface"},{"kind":"Content","text":" | null"},{"kind":"Content","text":");"}],"releaseTag":"Public","isProtected":false,"overloadIndex":1,"parameters":[{"parameterName":"error","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false},{"parameterName":"requestData","parameterTypeTokenRange":{"startIndex":3,"endIndex":5},"isOptional":false}],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Constructs a new instance of the `DataServiceError` class\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Property","canonicalReference":"@ngrx/data!DataServiceError#error:member","docComment":"","excerptTokens":[{"kind":"Content","text":"error: "},{"kind":"Content","text":"any"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"error","propertyTypeTokenRange":{"startIndex":1,"endIndex":2},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}},{"kind":"Property","canonicalReference":"@ngrx/data!DataServiceError#requestData:member","docComment":"","excerptTokens":[{"kind":"Content","text":"requestData: "},{"kind":"Reference","text":"RequestData","canonicalReference":"@ngrx/data!RequestData:interface"},{"kind":"Content","text":" | null"},{"kind":"Content","text":";"}],"isReadonly":false,"isOptional":false,"releaseTag":"Public","name":"requestData","propertyTypeTokenRange":{"startIndex":1,"endIndex":3},"isStatic":false,"isProtected":false,"isAbstract":false,"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"extendsTokenRange":{"startIndex":1,"endIndex":2},"implementsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"Error from a DataService The source error either comes from a failed HTTP response or was thrown within the service.\n\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[{"name":"error","description":"the HttpErrorResponse or the error thrown by the service\n\n"},{"name":"requestData","description":"the HTTP request information such as the method and the url.\n"}]}}]}
+{
+  "name": "DataServiceError",
+  "canonicalReference": "@ngrx/data!DataServiceError:class",
+  "kind": "Class",
+  "fileUrlPath": "../../dist/modules/data/src/dataservices/data-service-error.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Class",
+      "canonicalReference": "@ngrx/data!DataServiceError:class",
+      "docComment": "/**\n * Error from a DataService The source error either comes from a failed HTTP response or was thrown within the service.\n *\n * @param error - the HttpErrorResponse or the error thrown by the service\n *\n * @param requestData - the HTTP request information such as the method and the url.\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare class DataServiceError extends "
+        },
+        {
+          "kind": "Reference",
+          "text": "Error",
+          "canonicalReference": "!Error:interface"
+        },
+        {
+          "kind": "Content",
+          "text": " "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/dataservices/data-service-error.d.ts",
+      "releaseTag": "Public",
+      "isAbstract": false,
+      "name": "DataServiceError",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "Constructor",
+          "canonicalReference": "@ngrx/data!DataServiceError:constructor(1)",
+          "docComment": "/**\n * Constructs a new instance of the `DataServiceError` class\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "constructor(error: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", requestData: "
+            },
+            {
+              "kind": "Reference",
+              "text": "RequestData",
+              "canonicalReference": "@ngrx/data!RequestData:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null"
+            },
+            {
+              "kind": "Content",
+              "text": ");"
+            }
+          ],
+          "releaseTag": "Public",
+          "isProtected": false,
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "error",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "requestData",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "Constructs a new instance of the `DataServiceError` class\n",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!DataServiceError#error:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "error: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "error",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        },
+        {
+          "kind": "Property",
+          "canonicalReference": "@ngrx/data!DataServiceError#requestData:member",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "requestData: "
+            },
+            {
+              "kind": "Reference",
+              "text": "RequestData",
+              "canonicalReference": "@ngrx/data!RequestData:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | null"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "isOptional": false,
+          "releaseTag": "Public",
+          "name": "requestData",
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "isStatic": false,
+          "isProtected": false,
+          "isAbstract": false,
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRange": {
+        "startIndex": 1,
+        "endIndex": 2
+      },
+      "implementsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "Error from a DataService The source error either comes from a failed HTTP response or was thrown within the service.\n\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": [
+          {
+            "name": "error",
+            "description": "the HttpErrorResponse or the error thrown by the service\n\n"
+          },
+          {
+            "name": "requestData",
+            "description": "the HTTP request information such as the method and the url.\n"
+          }
+        ]
+      }
+    }
+  ]
+}

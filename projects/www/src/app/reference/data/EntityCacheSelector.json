@@ -10,31 +10,49 @@
       "canonicalReference": "@ngrx/data!EntityCacheSelector:type",
       "docComment": "",
       "excerptTokens": [
-        { "kind": "Content", "text": "export type EntityCacheSelector = " },
+        {
+          "kind": "Content",
+          "text": "export type EntityCacheSelector = "
+        },
         {
           "kind": "Reference",
           "text": "MemoizedSelector",
           "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
         },
-        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
         {
           "kind": "Reference",
           "text": "Object",
           "canonicalReference": "!Object:interface"
         },
-        { "kind": "Content", "text": ", " },
+        {
+          "kind": "Content",
+          "text": ", "
+        },
         {
           "kind": "Reference",
           "text": "EntityCache",
           "canonicalReference": "@ngrx/data!EntityCache:interface"
         },
-        { "kind": "Content", "text": ">" },
-        { "kind": "Content", "text": ";" }
+        {
+          "kind": "Content",
+          "text": ">"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/data/src/selectors/entity-cache-selector.d.ts",
       "releaseTag": "Public",
       "name": "EntityCacheSelector",
-      "typeTokenRange": { "startIndex": 1, "endIndex": 7 },
+      "typeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 7
+      },
       "docs": {
         "modifiers": {
           "isInternal": false,

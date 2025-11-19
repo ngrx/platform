@@ -10,15 +10,24 @@
       "canonicalReference": "@ngrx/data!EntitySelectors$:interface",
       "docComment": "/**\n * The selector observable functions for entity collection members.\n */\n",
       "excerptTokens": [
-        { "kind": "Content", "text": "export interface EntitySelectors$<T> " }
+        {
+          "kind": "Content",
+          "text": "export interface EntitySelectors$<T> "
+        }
       ],
       "fileUrlPath": "../../dist/modules/data/src/selectors/entity-selectors$.d.ts",
       "releaseTag": "Public",
       "typeParameters": [
         {
           "typeParameterName": "T",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "name": "EntitySelectors$",
@@ -29,31 +38,55 @@
           "canonicalReference": "@ngrx/data!EntitySelectors$:index(1)",
           "docComment": "/**\n * Names from custom selectors from additionalCollectionState fits here, 'any' to avoid conflict with entityName\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly [name: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": "]: " },
+            {
+              "kind": "Content",
+              "text": "readonly [name: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "]: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<any> | " },
+            {
+              "kind": "Content",
+              "text": "<any> | "
+            },
             {
               "kind": "Reference",
               "text": "Store",
               "canonicalReference": "@ngrx/store!Store:class"
             },
-            { "kind": "Content", "text": "<any> | any" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<any> | any"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 7 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 7
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "name",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -80,38 +113,59 @@
           "canonicalReference": "@ngrx/data!EntitySelectors$#changeState$:member",
           "docComment": "/**\n * ChangeState (including original values) of entities with unsaved changes\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly changeState$: " },
+            {
+              "kind": "Content",
+              "text": "readonly changeState$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "ChangeStateMap",
               "canonicalReference": "@ngrx/data!ChangeStateMap:type"
             },
-            { "kind": "Content", "text": "<T>> | " },
+            {
+              "kind": "Content",
+              "text": "<T>> | "
+            },
             {
               "kind": "Reference",
               "text": "Store",
               "canonicalReference": "@ngrx/store!Store:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "ChangeStateMap",
               "canonicalReference": "@ngrx/data!ChangeStateMap:type"
             },
-            { "kind": "Content", "text": "<T>>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "changeState$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 9 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 9
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -135,38 +189,59 @@
           "canonicalReference": "@ngrx/data!EntitySelectors$#collection$:member",
           "docComment": "/**\n * Observable of the collection as a whole\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly collection$: " },
+            {
+              "kind": "Content",
+              "text": "readonly collection$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": "> | " },
+            {
+              "kind": "Content",
+              "text": "> | "
+            },
             {
               "kind": "Reference",
               "text": "Store",
               "canonicalReference": "@ngrx/store!Store:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": ">" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "collection$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 9 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 9
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -190,26 +265,41 @@
           "canonicalReference": "@ngrx/data!EntitySelectors$#count$:member",
           "docComment": "/**\n * Observable of count of entities in the cached collection.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly count$: " },
+            {
+              "kind": "Content",
+              "text": "readonly count$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<number> | " },
+            {
+              "kind": "Content",
+              "text": "<number> | "
+            },
             {
               "kind": "Reference",
               "text": "Store",
               "canonicalReference": "@ngrx/store!Store:class"
             },
-            { "kind": "Content", "text": "<number>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<number>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "count$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -233,26 +323,41 @@
           "canonicalReference": "@ngrx/data!EntitySelectors$#entities$:member",
           "docComment": "/**\n * Observable of all entities in the cached collection.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly entities$: " },
+            {
+              "kind": "Content",
+              "text": "readonly entities$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<T[]> | " },
+            {
+              "kind": "Content",
+              "text": "<T[]> | "
+            },
             {
               "kind": "Reference",
               "text": "Store",
               "canonicalReference": "@ngrx/store!Store:class"
             },
-            { "kind": "Content", "text": "<T[]>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T[]>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "entities$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -276,26 +381,41 @@
           "canonicalReference": "@ngrx/data!EntitySelectors$#entityActions$:member",
           "docComment": "/**\n * Observable of actions related to this entity type.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly entityActions$: " },
+            {
+              "kind": "Content",
+              "text": "readonly entityActions$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": ">" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "entityActions$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -319,38 +439,59 @@
           "canonicalReference": "@ngrx/data!EntitySelectors$#entityMap$:member",
           "docComment": "/**\n * Observable of the map of entity keys to entities\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly entityMap$: " },
+            {
+              "kind": "Content",
+              "text": "readonly entityMap$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "Dictionary",
               "canonicalReference": "@ngrx/entity!Dictionary:class"
             },
-            { "kind": "Content", "text": "<T>> | " },
+            {
+              "kind": "Content",
+              "text": "<T>> | "
+            },
             {
               "kind": "Reference",
               "text": "Store",
               "canonicalReference": "@ngrx/store!Store:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "Dictionary",
               "canonicalReference": "@ngrx/entity!Dictionary:class"
             },
-            { "kind": "Content", "text": "<T>>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "entityMap$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 9 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 9
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -374,15 +515,27 @@
           "canonicalReference": "@ngrx/data!EntitySelectors$#entityName:member",
           "docComment": "/**\n * Name of the entity collection for these selectors$\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly entityName: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "readonly entityName: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "entityName",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -406,26 +559,41 @@
           "canonicalReference": "@ngrx/data!EntitySelectors$#errors$:member",
           "docComment": "/**\n * Observable of error actions related to this entity type.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly errors$: " },
+            {
+              "kind": "Content",
+              "text": "readonly errors$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": ">" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "errors$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -449,26 +617,41 @@
           "canonicalReference": "@ngrx/data!EntitySelectors$#filter$:member",
           "docComment": "/**\n * Observable of the filter pattern applied by the entity collection's filter function\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly filter$: " },
+            {
+              "kind": "Content",
+              "text": "readonly filter$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<string> | " },
+            {
+              "kind": "Content",
+              "text": "<string> | "
+            },
             {
               "kind": "Reference",
               "text": "Store",
               "canonicalReference": "@ngrx/store!Store:class"
             },
-            { "kind": "Content", "text": "<string>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<string>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "filter$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -492,26 +675,41 @@
           "canonicalReference": "@ngrx/data!EntitySelectors$#filteredEntities$:member",
           "docComment": "/**\n * Observable of entities in the cached collection that pass the filter function\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly filteredEntities$: " },
+            {
+              "kind": "Content",
+              "text": "readonly filteredEntities$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<T[]> | " },
+            {
+              "kind": "Content",
+              "text": "<T[]> | "
+            },
             {
               "kind": "Reference",
               "text": "Store",
               "canonicalReference": "@ngrx/store!Store:class"
             },
-            { "kind": "Content", "text": "<T[]>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T[]>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "filteredEntities$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -535,26 +733,41 @@
           "canonicalReference": "@ngrx/data!EntitySelectors$#keys$:member",
           "docComment": "/**\n * Observable of the keys of the cached collection, in the collection's native sort order\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly keys$: " },
+            {
+              "kind": "Content",
+              "text": "readonly keys$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<string[] | number[]> | " },
+            {
+              "kind": "Content",
+              "text": "<string[] | number[]> | "
+            },
             {
               "kind": "Reference",
               "text": "Store",
               "canonicalReference": "@ngrx/store!Store:class"
             },
-            { "kind": "Content", "text": "<string[] | number[]>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<string[] | number[]>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "keys$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -578,26 +791,41 @@
           "canonicalReference": "@ngrx/data!EntitySelectors$#loaded$:member",
           "docComment": "/**\n * Observable true when the collection has been loaded\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly loaded$: " },
+            {
+              "kind": "Content",
+              "text": "readonly loaded$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<boolean> | " },
+            {
+              "kind": "Content",
+              "text": "<boolean> | "
+            },
             {
               "kind": "Reference",
               "text": "Store",
               "canonicalReference": "@ngrx/store!Store:class"
             },
-            { "kind": "Content", "text": "<boolean>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<boolean>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "loaded$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -621,26 +849,41 @@
           "canonicalReference": "@ngrx/data!EntitySelectors$#loading$:member",
           "docComment": "/**\n * Observable true when a multi-entity query command is in progress.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly loading$: " },
+            {
+              "kind": "Content",
+              "text": "readonly loading$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<boolean> | " },
+            {
+              "kind": "Content",
+              "text": "<boolean> | "
+            },
             {
               "kind": "Reference",
               "text": "Store",
               "canonicalReference": "@ngrx/store!Store:class"
             },
-            { "kind": "Content", "text": "<boolean>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<boolean>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "loading$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,

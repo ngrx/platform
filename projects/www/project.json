@@ -2,6 +2,8 @@
   "name": "www",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
+  "sourceRoot": "projects/www/src",
+  "tags": [],
   "targets": {
     "build": {
       "dependsOn": [
@@ -89,7 +91,5 @@
         "script": "prepare-examples"
       }
     }
-  },
-  "tags": [],
-  "sourceRoot": "projects/www/src"
+  }
 }

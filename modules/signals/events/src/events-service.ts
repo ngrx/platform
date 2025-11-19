@@ -9,8 +9,12 @@ import {
 import { EventInstance } from './event-instance';
 import { EventCreator } from './event-creator';
 
-export const EVENTS = Symbol();
-export const SOURCE_TYPE = Symbol();
+export const EVENTS = Symbol(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'EVENTS' : ''
+);
+export const SOURCE_TYPE = Symbol(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'SOURCE_TYPE' : ''
+);
 
 abstract class BaseEvents {
   /**
@@ -57,10 +61,10 @@ abstract class BaseEvents {
  * }
  * ```
  */
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'platform' })
 export class Events extends BaseEvents {}
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'platform' })
 export class ReducerEvents extends BaseEvents {}
 
 function filterByType<T extends EventInstance<string, unknown>>(

@@ -10,24 +10,45 @@
       "canonicalReference": "@ngrx/data!EntityCollection:interface",
       "docComment": "/**\n * Data and information about a collection of entities of a single type. EntityCollections are maintained in the EntityCache within the ngrx store.\n */\n",
       "excerptTokens": [
-        { "kind": "Content", "text": "export interface EntityCollection<T = " },
-        { "kind": "Content", "text": "any" },
-        { "kind": "Content", "text": "> extends " },
+        {
+          "kind": "Content",
+          "text": "export interface EntityCollection<T = "
+        },
+        {
+          "kind": "Content",
+          "text": "any"
+        },
+        {
+          "kind": "Content",
+          "text": "> extends "
+        },
         {
           "kind": "Reference",
           "text": "EntityState",
           "canonicalReference": "@ngrx/entity!EntityState:interface"
         },
-        { "kind": "Content", "text": "<T>" },
-        { "kind": "Content", "text": " " }
+        {
+          "kind": "Content",
+          "text": "<T>"
+        },
+        {
+          "kind": "Content",
+          "text": " "
+        }
       ],
       "fileUrlPath": "../../dist/modules/data/src/reducers/entity-collection.d.ts",
       "releaseTag": "Public",
       "typeParameters": [
         {
           "typeParameterName": "T",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 1, "endIndex": 2 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
         }
       ],
       "name": "EntityCollection",
@@ -38,20 +59,32 @@
           "canonicalReference": "@ngrx/data!EntityCollection#changeState:member",
           "docComment": "/**\n * A map of ChangeStates, keyed by id, for entities with unsaved changes\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "changeState: " },
+            {
+              "kind": "Content",
+              "text": "changeState: "
+            },
             {
               "kind": "Reference",
               "text": "ChangeStateMap",
               "canonicalReference": "@ngrx/data!ChangeStateMap:type"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "changeState",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -75,15 +108,27 @@
           "canonicalReference": "@ngrx/data!EntityCollection#entityName:member",
           "docComment": "/**\n * Name of the entity type for this collection\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "entityName: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "entityName: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "entityName",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -107,15 +152,27 @@
           "canonicalReference": "@ngrx/data!EntityCollection#filter:member",
           "docComment": "/**\n * The user's current collection filter pattern\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "filter?: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "filter?: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": true,
           "releaseTag": "Public",
           "name": "filter",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -139,15 +196,27 @@
           "canonicalReference": "@ngrx/data!EntityCollection#loaded:member",
           "docComment": "/**\n * true if collection was ever filled by QueryAll; forced false if cleared\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "loaded: " },
-            { "kind": "Content", "text": "boolean" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "loaded: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "loaded",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -171,15 +240,27 @@
           "canonicalReference": "@ngrx/data!EntityCollection#loading:member",
           "docComment": "/**\n * true when a query or save operation is in progress\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "loading: " },
-            { "kind": "Content", "text": "boolean" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "loading: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "loading",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -199,7 +280,12 @@
           }
         }
       ],
-      "extendsTokenRanges": [{ "startIndex": 3, "endIndex": 5 }],
+      "extendsTokenRanges": [
+        {
+          "startIndex": 3,
+          "endIndex": 5
+        }
+      ],
       "docs": {
         "modifiers": {
           "isInternal": false,

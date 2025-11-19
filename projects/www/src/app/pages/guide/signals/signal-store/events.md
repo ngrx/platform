@@ -286,12 +286,12 @@ import { BookSearchStore } from './book-search-store';
     <input type="text" [ngModel]="store.query()" />
 
     @if (store.isLoading()) {
-    <p>Loading...</p>
+      <p>Loading...</p>
     }
 
     <ul>
       @for (book of store.books(); track book.id) {
-      <li>{{ book.title }}</li>
+        <li>{{ book.title }}</li>
       }
     </ul>
   `,

@@ -19,7 +19,10 @@
           "text": "OnDestroy",
           "canonicalReference": "@angular/core!OnDestroy:interface"
         },
-        { "kind": "Content", "text": " " }
+        {
+          "kind": "Content",
+          "text": " "
+        }
       ],
       "fileUrlPath": "../../dist/modules/data/src/dispatchers/entity-dispatcher-factory.d.ts",
       "releaseTag": "Public",
@@ -32,57 +35,90 @@
           "canonicalReference": "@ngrx/data!EntityDispatcherFactory:constructor(1)",
           "docComment": "/**\n * Constructs a new instance of the `EntityDispatcherFactory` class\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "constructor(entityActionFactory: " },
+            {
+              "kind": "Content",
+              "text": "constructor(entityActionFactory: "
+            },
             {
               "kind": "Reference",
               "text": "EntityActionFactory",
               "canonicalReference": "@ngrx/data!EntityActionFactory:class"
             },
-            { "kind": "Content", "text": ", store: " },
+            {
+              "kind": "Content",
+              "text": ", store: "
+            },
             {
               "kind": "Reference",
               "text": "Store",
               "canonicalReference": "@ngrx/store!Store:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "EntityCache",
               "canonicalReference": "@ngrx/data!EntityCache:interface"
             },
-            { "kind": "Content", "text": ">" },
-            { "kind": "Content", "text": ", entityDispatcherDefaultOptions: " },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ", entityDispatcherDefaultOptions: "
+            },
             {
               "kind": "Reference",
               "text": "EntityDispatcherDefaultOptions",
               "canonicalReference": "@ngrx/data!EntityDispatcherDefaultOptions:class"
             },
-            { "kind": "Content", "text": ", scannedActions$: " },
+            {
+              "kind": "Content",
+              "text": ", scannedActions$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "Action",
               "canonicalReference": "@ngrx/store!Action:interface"
             },
-            { "kind": "Content", "text": ">" },
-            { "kind": "Content", "text": ", entityCacheSelector: " },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ", entityCacheSelector: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCacheSelector",
               "canonicalReference": "@ngrx/data!EntityCacheSelector:type"
             },
-            { "kind": "Content", "text": ", correlationIdGenerator: " },
+            {
+              "kind": "Content",
+              "text": ", correlationIdGenerator: "
+            },
             {
               "kind": "Reference",
               "text": "CorrelationIdGenerator",
               "canonicalReference": "@ngrx/data!CorrelationIdGenerator:class"
             },
-            { "kind": "Content", "text": ");" }
+            {
+              "kind": "Content",
+              "text": ");"
+            }
           ],
           "releaseTag": "Public",
           "isProtected": false,
@@ -90,32 +126,50 @@
           "parameters": [
             {
               "parameterName": "entityActionFactory",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "store",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 7 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              },
               "isOptional": false
             },
             {
               "parameterName": "entityDispatcherDefaultOptions",
-              "parameterTypeTokenRange": { "startIndex": 8, "endIndex": 9 },
+              "parameterTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 9
+              },
               "isOptional": false
             },
             {
               "parameterName": "scannedActions$",
-              "parameterTypeTokenRange": { "startIndex": 10, "endIndex": 14 },
+              "parameterTypeTokenRange": {
+                "startIndex": 10,
+                "endIndex": 14
+              },
               "isOptional": false
             },
             {
               "parameterName": "entityCacheSelector",
-              "parameterTypeTokenRange": { "startIndex": 15, "endIndex": 16 },
+              "parameterTypeTokenRange": {
+                "startIndex": 15,
+                "endIndex": 16
+              },
               "isOptional": false
             },
             {
               "parameterName": "correlationIdGenerator",
-              "parameterTypeTokenRange": { "startIndex": 17, "endIndex": 18 },
+              "parameterTypeTokenRange": {
+                "startIndex": 17,
+                "endIndex": 18
+              },
               "isOptional": false
             }
           ],
@@ -142,63 +196,111 @@
           "canonicalReference": "@ngrx/data!EntityDispatcherFactory#create:member(1)",
           "docComment": "/**\n * Create an `EntityDispatcher` for an entity type `T` and store.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "create<T>(\n    entityName: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": ", \n    selectId?: " },
+            {
+              "kind": "Content",
+              "text": "create<T>(\n    entityName: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", \n    selectId?: "
+            },
             {
               "kind": "Reference",
               "text": "IdSelector",
               "canonicalReference": "@ngrx/entity!IdSelector:type"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", \n    defaultOptions?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", \n    defaultOptions?: "
+            },
             {
               "kind": "Reference",
               "text": "Partial",
               "canonicalReference": "!Partial:type"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "EntityDispatcherDefaultOptions",
               "canonicalReference": "@ngrx/data!EntityDispatcherDefaultOptions:class"
             },
-            { "kind": "Content", "text": ">" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityDispatcher",
               "canonicalReference": "@ngrx/data!EntityDispatcher:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "typeParameters": [
             {
               "typeParameterName": "T",
-              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
             }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 11, "endIndex": 13 },
+          "returnTypeTokenRange": {
+            "startIndex": 11,
+            "endIndex": 13
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entityName",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "selectId",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": true
             },
             {
               "parameterName": "defaultOptions",
-              "parameterTypeTokenRange": { "startIndex": 6, "endIndex": 10 },
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 10
+              },
               "isOptional": true
             }
           ],
@@ -228,12 +330,24 @@
           "canonicalReference": "@ngrx/data!EntityDispatcherFactory#ngOnDestroy:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "ngOnDestroy(): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "ngOnDestroy(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
@@ -264,26 +378,41 @@
           "canonicalReference": "@ngrx/data!EntityDispatcherFactory#reducedActions$:member",
           "docComment": "/**\n * Actions scanned by the store after it processed them with reducers. A replay observable of the most recent action reduced by the store.\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "reducedActions$: " },
+            {
+              "kind": "Content",
+              "text": "reducedActions$: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "Action",
               "canonicalReference": "@ngrx/store!Action:interface"
             },
-            { "kind": "Content", "text": ">" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "reducedActions$",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "isStatic": false,
           "isProtected": false,
           "isAbstract": false,
@@ -306,7 +435,12 @@
           }
         }
       ],
-      "implementsTokenRanges": [{ "startIndex": 1, "endIndex": 2 }],
+      "implementsTokenRanges": [
+        {
+          "startIndex": 1,
+          "endIndex": 2
+        }
+      ],
       "docs": {
         "modifiers": {
           "isInternal": false,

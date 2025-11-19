@@ -16,7 +16,10 @@ import { NgRxRule } from '../src/rule-creator';
     'component-store',
     (rule) => rule.meta.docs?.ngrxModule === 'component-store'
   );
-  writeConfig('operators', (rule) => rule.meta.docs?.ngrxModule === 'operators');
+  writeConfig(
+    'operators',
+    (rule) => rule.meta.docs?.ngrxModule === 'operators'
+  );
   writeConfig('signals', (rule) => rule.meta.docs?.ngrxModule === 'signals');
 
   async function writeConfig(

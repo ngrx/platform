@@ -1,1 +1,140 @@
-{"name":"mapResponse","canonicalReference":"@ngrx/operators!mapResponse:function","kind":"Function","fileUrlPath":"../../dist/modules/operators/src/map-response.d.ts","isDeprecated":false,"members":[{"kind":"Function","canonicalReference":"@ngrx/operators!mapResponse:function(1)","docComment":"/**\n * `mapResponse` is a map operator with included error handling. It is similar to `tapResponse`, but allows to map the response as well.\n *\n * The main use case is for NgRx Effects which requires an action to be dispatched.\n *\n * @usageNotes\n * ```ts\n * export const loadAllUsers = createEffect((\n *   actions$ = inject(Actions),\n *   usersService = inject(UsersService)\n * ) => {\n *   return actions$.pipe(\n *     ofType(UsersPageActions.opened),\n *     exhaustMap(() => {\n *       return usersService.getAll().pipe(\n *         mapResponse({\n *           next: (users) => UsersApiActions.usersLoadedSuccess({ users }),\n *           error: (error) => UsersApiActions.usersLoadedFailure({ error }),\n *         })\n *       );\n *     })\n *   );\n * });\n * ```\n *\n */\n","excerptTokens":[{"kind":"Content","text":"export declare function mapResponse<T, E, R1, R2>(observer: "},{"kind":"Reference","text":"MapResponseObserver","canonicalReference":"@ngrx/operators!~MapResponseObserver:type"},{"kind":"Content","text":"<T, E, R1, R2>"},{"kind":"Content","text":"): "},{"kind":"Content","text":"(source$: "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<T>) => "},{"kind":"Reference","text":"Observable","canonicalReference":"rxjs!Observable:class"},{"kind":"Content","text":"<R1 | R2>"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/operators/src/map-response.d.ts","returnTypeTokenRange":{"startIndex":4,"endIndex":9},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"observer","parameterTypeTokenRange":{"startIndex":1,"endIndex":3},"isOptional":false}],"typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"E","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"R1","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}},{"typeParameterName":"R2","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"name":"mapResponse","docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"`mapResponse` is a map operator with included error handling. It is similar to `tapResponse`, but allows to map the response as well.\n\nThe main use case is for NgRx Effects which requires an action to be dispatched.\n\n","usageNotes":"\n```ts\nexport const loadAllUsers = createEffect((\n  actions$ = inject(Actions),\n  usersService = inject(UsersService)\n) => {\n  return actions$.pipe(\n    ofType(UsersPageActions.opened),\n    exhaustMap(() => {\n      return usersService.getAll().pipe(\n        mapResponse({\n          next: (users) => UsersApiActions.usersLoadedSuccess({ users }),\n          error: (error) => UsersApiActions.usersLoadedFailure({ error }),\n        })\n      );\n    })\n  );\n});\n```\n\n","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "mapResponse",
+  "canonicalReference": "@ngrx/operators!mapResponse:function",
+  "kind": "Function",
+  "fileUrlPath": "../../dist/modules/operators/src/map-response.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/operators!mapResponse:function(1)",
+      "docComment": "/**\n * `mapResponse` is a map operator with included error handling. It is similar to `tapResponse`, but allows to map the response as well.\n *\n * The main use case is for NgRx Effects which requires an action to be dispatched.\n *\n * @usageNotes\n * ```ts\n * export const loadAllUsers = createEffect((\n *   actions$ = inject(Actions),\n *   usersService = inject(UsersService)\n * ) => {\n *   return actions$.pipe(\n *     ofType(UsersPageActions.opened),\n *     exhaustMap(() => {\n *       return usersService.getAll().pipe(\n *         mapResponse({\n *           next: (users) => UsersApiActions.usersLoadedSuccess({ users }),\n *           error: (error) => UsersApiActions.usersLoadedFailure({ error }),\n *         })\n *       );\n *     })\n *   );\n * });\n * ```\n *\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export declare function mapResponse<T, E, R1, R2>(observer: "
+        },
+        {
+          "kind": "Reference",
+          "text": "MapResponseObserver",
+          "canonicalReference": "@ngrx/operators!~MapResponseObserver:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<T, E, R1, R2>"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
+        {
+          "kind": "Content",
+          "text": "(source$: "
+        },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        {
+          "kind": "Content",
+          "text": "<T>) => "
+        },
+        {
+          "kind": "Reference",
+          "text": "Observable",
+          "canonicalReference": "rxjs!Observable:class"
+        },
+        {
+          "kind": "Content",
+          "text": "<R1 | R2>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/operators/src/map-response.d.ts",
+      "returnTypeTokenRange": {
+        "startIndex": 4,
+        "endIndex": 9
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "observer",
+          "parameterTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "typeParameterName": "E",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "typeParameterName": "R1",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "typeParameterName": "R2",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "name": "mapResponse",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "`mapResponse` is a map operator with included error handling. It is similar to `tapResponse`, but allows to map the response as well.\n\nThe main use case is for NgRx Effects which requires an action to be dispatched.\n\n",
+        "usageNotes": "\n```ts\nexport const loadAllUsers = createEffect((\n  actions$ = inject(Actions),\n  usersService = inject(UsersService)\n) => {\n  return actions$.pipe(\n    ofType(UsersPageActions.opened),\n    exhaustMap(() => {\n      return usersService.getAll().pipe(\n        mapResponse({\n          next: (users) => UsersApiActions.usersLoadedSuccess({ users }),\n          error: (error) => UsersApiActions.usersLoadedFailure({ error }),\n        })\n      );\n    })\n  );\n});\n```\n\n",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

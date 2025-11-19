@@ -19,16 +19,28 @@
           "text": "EntityStateAdapter",
           "canonicalReference": "@ngrx/entity!~EntityStateAdapter:interface"
         },
-        { "kind": "Content", "text": "<T>" },
-        { "kind": "Content", "text": " " }
+        {
+          "kind": "Content",
+          "text": "<T>"
+        },
+        {
+          "kind": "Content",
+          "text": " "
+        }
       ],
       "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
       "releaseTag": "Public",
       "typeParameters": [
         {
           "typeParameterName": "T",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "name": "EntityAdapter",
@@ -39,17 +51,29 @@
           "canonicalReference": "@ngrx/entity!EntityAdapter#getInitialState:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "getInitialState(): " },
+            {
+              "kind": "Content",
+              "text": "getInitialState(): "
+            },
             {
               "kind": "Reference",
               "text": "EntityState",
               "canonicalReference": "@ngrx/entity!EntityState:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [],
@@ -77,46 +101,82 @@
           "canonicalReference": "@ngrx/entity!EntityAdapter#getInitialState:member(2)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "getInitialState<S extends " },
+            {
+              "kind": "Content",
+              "text": "getInitialState<S extends "
+            },
             {
               "kind": "Reference",
               "text": "EntityState",
               "canonicalReference": "@ngrx/entity!EntityState:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ">(state: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ">(state: "
+            },
             {
               "kind": "Reference",
               "text": "Omit",
               "canonicalReference": "!Omit:type"
             },
-            { "kind": "Content", "text": "<S, keyof " },
+            {
+              "kind": "Content",
+              "text": "<S, keyof "
+            },
             {
               "kind": "Reference",
               "text": "EntityState",
               "canonicalReference": "@ngrx/entity!EntityState:interface"
             },
-            { "kind": "Content", "text": "<T>>" },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "S" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "S"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 9, "endIndex": 10 },
+          "returnTypeTokenRange": {
+            "startIndex": 9,
+            "endIndex": 10
+          },
           "releaseTag": "Public",
           "overloadIndex": 2,
           "parameters": [
             {
               "parameterName": "state",
-              "parameterTypeTokenRange": { "startIndex": 4, "endIndex": 8 },
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 8
+              },
               "isOptional": false
             }
           ],
           "typeParameters": [
             {
               "typeParameterName": "S",
-              "constraintTokenRange": { "startIndex": 1, "endIndex": 3 },
-              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
             }
           ],
           "name": "getInitialState",
@@ -143,23 +203,38 @@
           "canonicalReference": "@ngrx/entity!EntityAdapter#getSelectors:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "getSelectors(): " },
+            {
+              "kind": "Content",
+              "text": "getSelectors(): "
+            },
             {
               "kind": "Reference",
               "text": "EntitySelectors",
               "canonicalReference": "@ngrx/entity!~EntitySelectors:type"
             },
-            { "kind": "Content", "text": "<T, " },
+            {
+              "kind": "Content",
+              "text": "<T, "
+            },
             {
               "kind": "Reference",
               "text": "EntityState",
               "canonicalReference": "@ngrx/entity!EntityState:interface"
             },
-            { "kind": "Content", "text": "<T>>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 1, "endIndex": 5 },
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [],
@@ -187,39 +262,69 @@
           "canonicalReference": "@ngrx/entity!EntityAdapter#getSelectors:member(2)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "getSelectors<V>(selectState: " },
-            { "kind": "Content", "text": "(state: V) => " },
+            {
+              "kind": "Content",
+              "text": "getSelectors<V>(selectState: "
+            },
+            {
+              "kind": "Content",
+              "text": "(state: V) => "
+            },
             {
               "kind": "Reference",
               "text": "EntityState",
               "canonicalReference": "@ngrx/entity!EntityState:interface"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "MemoizedEntitySelectors",
               "canonicalReference": "@ngrx/entity!~MemoizedEntitySelectors:type"
             },
-            { "kind": "Content", "text": "<T, V>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T, V>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 5, "endIndex": 7 },
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
           "releaseTag": "Public",
           "overloadIndex": 2,
           "parameters": [
             {
               "parameterName": "selectState",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 4 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 4
+              },
               "isOptional": false
             }
           ],
           "typeParameters": [
             {
               "typeParameterName": "V",
-              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
             }
           ],
           "name": "getSelectors",
@@ -246,20 +351,32 @@
           "canonicalReference": "@ngrx/entity!EntityAdapter#selectId:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "selectId: " },
+            {
+              "kind": "Content",
+              "text": "selectId: "
+            },
             {
               "kind": "Reference",
               "text": "IdSelector",
               "canonicalReference": "@ngrx/entity!IdSelector:type"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "selectId",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -283,21 +400,36 @@
           "canonicalReference": "@ngrx/entity!EntityAdapter#sortComparer:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "sortComparer: " },
-            { "kind": "Content", "text": "false | " },
+            {
+              "kind": "Content",
+              "text": "sortComparer: "
+            },
+            {
+              "kind": "Content",
+              "text": "false | "
+            },
             {
               "kind": "Reference",
               "text": "Comparer",
               "canonicalReference": "@ngrx/entity!Comparer:type"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "sortComparer",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 4 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -317,7 +449,12 @@
           }
         }
       ],
-      "extendsTokenRanges": [{ "startIndex": 1, "endIndex": 3 }],
+      "extendsTokenRanges": [
+        {
+          "startIndex": 1,
+          "endIndex": 3
+        }
+      ],
       "docs": {
         "modifiers": {
           "isInternal": false,

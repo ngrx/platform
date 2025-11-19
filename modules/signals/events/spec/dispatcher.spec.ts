@@ -5,7 +5,7 @@ import { Dispatcher, event, Events } from '../src';
 import { ReducerEvents } from '../src/events-service';
 
 describe('Dispatcher', () => {
-  it('is provided at the root level', () => {
+  it('is provided globally', () => {
     const dispatcher = TestBed.inject(Dispatcher);
     expect(dispatcher).toBeDefined();
   });

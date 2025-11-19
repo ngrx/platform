@@ -14,49 +14,73 @@
           "kind": "Content",
           "text": "export declare function withState<State extends "
         },
-        { "kind": "Content", "text": "object" },
-        { "kind": "Content", "text": ">(stateFactory: " },
-        { "kind": "Content", "text": "() => State" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "object"
+        },
+        {
+          "kind": "Content",
+          "text": ">(stateFactory: "
+        },
+        {
+          "kind": "Content",
+          "text": "() => State"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "SignalStoreFeature",
           "canonicalReference": "@ngrx/signals!SignalStoreFeature:type"
         },
-        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
         {
           "kind": "Reference",
           "text": "EmptyFeatureResult",
           "canonicalReference": "@ngrx/signals!EmptyFeatureResult:type"
         },
-        { "kind": "Content", "text": ", {\n    state: " },
         {
-          "kind": "Reference",
-          "text": "StateResult",
-          "canonicalReference": "@ngrx/signals!~StateResult:type"
+          "kind": "Content",
+          "text": ", {\n    state: State;\n    props: {};\n    methods: {};\n}>"
         },
         {
           "kind": "Content",
-          "text": "<State>;\n    props: {};\n    methods: {};\n}>"
-        },
-        { "kind": "Content", "text": ";" }
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/signals/src/with-state.d.ts",
-      "returnTypeTokenRange": { "startIndex": 5, "endIndex": 11 },
+      "returnTypeTokenRange": {
+        "startIndex": 5,
+        "endIndex": 9
+      },
       "releaseTag": "Public",
       "overloadIndex": 1,
       "parameters": [
         {
           "parameterName": "stateFactory",
-          "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "parameterTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "State",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "name": "withState",
@@ -87,49 +111,73 @@
           "kind": "Content",
           "text": "export declare function withState<State extends "
         },
-        { "kind": "Content", "text": "object" },
-        { "kind": "Content", "text": ">(state: " },
-        { "kind": "Content", "text": "State" },
-        { "kind": "Content", "text": "): " },
+        {
+          "kind": "Content",
+          "text": "object"
+        },
+        {
+          "kind": "Content",
+          "text": ">(state: "
+        },
+        {
+          "kind": "Content",
+          "text": "State"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
         {
           "kind": "Reference",
           "text": "SignalStoreFeature",
           "canonicalReference": "@ngrx/signals!SignalStoreFeature:type"
         },
-        { "kind": "Content", "text": "<" },
+        {
+          "kind": "Content",
+          "text": "<"
+        },
         {
           "kind": "Reference",
           "text": "EmptyFeatureResult",
           "canonicalReference": "@ngrx/signals!EmptyFeatureResult:type"
         },
-        { "kind": "Content", "text": ", {\n    state: " },
         {
-          "kind": "Reference",
-          "text": "StateResult",
-          "canonicalReference": "@ngrx/signals!~StateResult:type"
+          "kind": "Content",
+          "text": ", {\n    state: State;\n    props: {};\n    methods: {};\n}>"
         },
         {
           "kind": "Content",
-          "text": "<State>;\n    props: {};\n    methods: {};\n}>"
-        },
-        { "kind": "Content", "text": ";" }
+          "text": ";"
+        }
       ],
       "fileUrlPath": "../../dist/modules/signals/src/with-state.d.ts",
-      "returnTypeTokenRange": { "startIndex": 5, "endIndex": 11 },
+      "returnTypeTokenRange": {
+        "startIndex": 5,
+        "endIndex": 9
+      },
       "releaseTag": "Public",
       "overloadIndex": 2,
       "parameters": [
         {
           "parameterName": "state",
-          "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "parameterTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "isOptional": false
         }
       ],
       "typeParameters": [
         {
           "typeParameterName": "State",
-          "constraintTokenRange": { "startIndex": 1, "endIndex": 2 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "name": "withState",

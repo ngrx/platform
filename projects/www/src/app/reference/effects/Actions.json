@@ -10,28 +10,46 @@
       "canonicalReference": "@ngrx/effects!Actions:class",
       "docComment": "",
       "excerptTokens": [
-        { "kind": "Content", "text": "export declare class Actions<V = " },
+        {
+          "kind": "Content",
+          "text": "export declare class Actions<V = "
+        },
         {
           "kind": "Reference",
           "text": "Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
-        { "kind": "Content", "text": "> extends " },
+        {
+          "kind": "Content",
+          "text": "> extends "
+        },
         {
           "kind": "Reference",
           "text": "Observable",
           "canonicalReference": "rxjs!Observable:class"
         },
-        { "kind": "Content", "text": "<V>" },
-        { "kind": "Content", "text": " " }
+        {
+          "kind": "Content",
+          "text": "<V>"
+        },
+        {
+          "kind": "Content",
+          "text": " "
+        }
       ],
       "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
       "releaseTag": "Public",
       "typeParameters": [
         {
           "typeParameterName": "V",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 1, "endIndex": 2 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
         }
       ],
       "isAbstract": false,
@@ -43,14 +61,23 @@
           "canonicalReference": "@ngrx/effects!Actions:constructor(1)",
           "docComment": "/**\n * Constructs a new instance of the `Actions` class\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "constructor(source?: " },
+            {
+              "kind": "Content",
+              "text": "constructor(source?: "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<V>" },
-            { "kind": "Content", "text": ");" }
+            {
+              "kind": "Content",
+              "text": "<V>"
+            },
+            {
+              "kind": "Content",
+              "text": ");"
+            }
           ],
           "releaseTag": "Public",
           "isProtected": false,
@@ -58,7 +85,10 @@
           "parameters": [
             {
               "parameterName": "source",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": true
             }
           ],
@@ -85,38 +115,65 @@
           "canonicalReference": "@ngrx/effects!Actions#lift:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "lift<R>(operator: " },
+            {
+              "kind": "Content",
+              "text": "lift<R>(operator: "
+            },
             {
               "kind": "Reference",
               "text": "Operator",
               "canonicalReference": "rxjs!Operator:interface"
             },
-            { "kind": "Content", "text": "<V, R>" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "<V, R>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<R>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<R>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "typeParameters": [
             {
               "typeParameterName": "R",
-              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
             }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 4, "endIndex": 6 },
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 6
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "operator",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             }
           ],
@@ -142,7 +199,10 @@
           }
         }
       ],
-      "extendsTokenRange": { "startIndex": 3, "endIndex": 5 },
+      "extendsTokenRange": {
+        "startIndex": 3,
+        "endIndex": 5
+      },
       "implementsTokenRanges": [],
       "docs": {
         "modifiers": {

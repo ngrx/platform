@@ -1,1 +1,65 @@
-{"name":"Predicate","canonicalReference":"@ngrx/entity!Predicate:type","kind":"TypeAlias","fileUrlPath":"../../dist/modules/entity/src/models.d.ts","isDeprecated":false,"members":[{"kind":"TypeAlias","canonicalReference":"@ngrx/entity!Predicate:type","docComment":"","excerptTokens":[{"kind":"Content","text":"export type Predicate<T> = "},{"kind":"Content","text":"(entity: T) => boolean"},{"kind":"Content","text":";"}],"fileUrlPath":"../../dist/modules/entity/src/models.d.ts","releaseTag":"Public","name":"Predicate","typeParameters":[{"typeParameterName":"T","constraintTokenRange":{"startIndex":0,"endIndex":0},"defaultTypeTokenRange":{"startIndex":0,"endIndex":0}}],"typeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "Predicate",
+  "canonicalReference": "@ngrx/entity!Predicate:type",
+  "kind": "TypeAlias",
+  "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "TypeAlias",
+      "canonicalReference": "@ngrx/entity!Predicate:type",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export type Predicate<T> = "
+        },
+        {
+          "kind": "Content",
+          "text": "(entity: T) => boolean"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+      "releaseTag": "Public",
+      "name": "Predicate",
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "typeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 2
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

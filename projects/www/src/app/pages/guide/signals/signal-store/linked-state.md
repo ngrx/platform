@@ -24,20 +24,20 @@ import {
 } from '@ngrx/signals';
 
 export const OptionsStore = signalStore(
-    withState({ options: [1, 2, 3] }),
-    withLinkedState(({ options }) => ({
-        // 👇 Defining a linked state slice.
-        selectedOption: () => options()[0] ?? undefined,
-    })),
-    withMethods((store) => ({
-        setOptions(options: number[]): void {
-            patchState(store, { options });
-        },
-        setSelectedOption(selectedOption: number): void {
-            // 👇 Updating a linked state slice.
-            patchState(store, { selectedOption });
-        },
-    })),
+  withState({ options: [1, 2, 3] }),
+  withLinkedState(({ options }) => ({
+    // 👇 Defining a linked state slice.
+    selectedOption: () => options()[0] ?? undefined,
+  })),
+  withMethods((store) => ({
+    setOptions(options: number[]): void {
+      patchState(store, { options });
+    },
+    setSelectedOption(selectedOption: number): void {
+      // 👇 Updating a linked state slice.
+      patchState(store, { selectedOption });
+    },
+  }))
 );
 ```
 

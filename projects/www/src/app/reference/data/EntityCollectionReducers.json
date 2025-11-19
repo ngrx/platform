@@ -1,1 +1,110 @@
-{"name":"EntityCollectionReducers","canonicalReference":"@ngrx/data!EntityCollectionReducers:interface","kind":"Interface","fileUrlPath":"../../dist/modules/data/src/reducers/entity-collection-reducer-registry.d.ts","isDeprecated":false,"members":[{"kind":"Interface","canonicalReference":"@ngrx/data!EntityCollectionReducers:interface","docComment":"/**\n * A hash of EntityCollectionReducers\n */\n","excerptTokens":[{"kind":"Content","text":"export interface EntityCollectionReducers "}],"fileUrlPath":"../../dist/modules/data/src/reducers/entity-collection-reducer-registry.d.ts","releaseTag":"Public","name":"EntityCollectionReducers","preserveMemberOrder":false,"members":[{"kind":"IndexSignature","canonicalReference":"@ngrx/data!EntityCollectionReducers:index(1)","docComment":"","excerptTokens":[{"kind":"Content","text":"[entity: "},{"kind":"Content","text":"string"},{"kind":"Content","text":"]: "},{"kind":"Reference","text":"EntityCollectionReducer","canonicalReference":"@ngrx/data!EntityCollectionReducer:type"},{"kind":"Content","text":"<any>"},{"kind":"Content","text":";"}],"isReadonly":false,"returnTypeTokenRange":{"startIndex":3,"endIndex":5},"releaseTag":"Public","overloadIndex":1,"parameters":[{"parameterName":"entity","parameterTypeTokenRange":{"startIndex":1,"endIndex":2},"isOptional":false}],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}],"extendsTokenRanges":[],"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"A hash of EntityCollectionReducers\n","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "EntityCollectionReducers",
+  "canonicalReference": "@ngrx/data!EntityCollectionReducers:interface",
+  "kind": "Interface",
+  "fileUrlPath": "../../dist/modules/data/src/reducers/entity-collection-reducer-registry.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Interface",
+      "canonicalReference": "@ngrx/data!EntityCollectionReducers:interface",
+      "docComment": "/**\n * A hash of EntityCollectionReducers\n */\n",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "export interface EntityCollectionReducers "
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/data/src/reducers/entity-collection-reducer-registry.d.ts",
+      "releaseTag": "Public",
+      "name": "EntityCollectionReducers",
+      "preserveMemberOrder": false,
+      "members": [
+        {
+          "kind": "IndexSignature",
+          "canonicalReference": "@ngrx/data!EntityCollectionReducers:index(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "[entity: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "]: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityCollectionReducer",
+              "canonicalReference": "@ngrx/data!EntityCollectionReducer:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<any>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "isReadonly": false,
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entity",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "docs": {
+            "modifiers": {
+              "isInternal": false,
+              "isPublic": false,
+              "isAlpha": false,
+              "isBeta": false,
+              "isOverride": false,
+              "isExperimental": false
+            },
+            "summary": "",
+            "usageNotes": "",
+            "remarks": "",
+            "deprecated": "",
+            "returns": "",
+            "see": [],
+            "params": []
+          }
+        }
+      ],
+      "extendsTokenRanges": [],
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "A hash of EntityCollectionReducers\n",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

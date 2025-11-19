@@ -35,26 +35,41 @@
               "text": "EntityCollectionReducerFactory",
               "canonicalReference": "@ngrx/data!EntityCollectionReducerFactory:class"
             },
-            { "kind": "Content", "text": ", entityCollectionMetaReducers?: " },
+            {
+              "kind": "Content",
+              "text": ", entityCollectionMetaReducers?: "
+            },
             {
               "kind": "Reference",
               "text": "MetaReducer",
               "canonicalReference": "@ngrx/store!MetaReducer:type"
             },
-            { "kind": "Content", "text": "<" },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
             {
               "kind": "Reference",
               "text": "EntityCollection",
               "canonicalReference": "@ngrx/data!EntityCollection:interface"
             },
-            { "kind": "Content", "text": ", " },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
             {
               "kind": "Reference",
               "text": "EntityAction",
               "canonicalReference": "@ngrx/data!EntityAction:interface"
             },
-            { "kind": "Content", "text": ">[]" },
-            { "kind": "Content", "text": ");" }
+            {
+              "kind": "Content",
+              "text": ">[]"
+            },
+            {
+              "kind": "Content",
+              "text": ");"
+            }
           ],
           "releaseTag": "Public",
           "isProtected": false,
@@ -62,12 +77,18 @@
           "parameters": [
             {
               "parameterName": "entityCollectionReducerFactory",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "entityCollectionMetaReducers",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 9 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 9
+              },
               "isOptional": true
             }
           ],
@@ -103,13 +124,19 @@
               "text": "EntityCollectionReducers",
               "canonicalReference": "@ngrx/data!EntityCollectionReducers:interface"
             },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": false,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "entityCollectionReducers",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "isStatic": false,
           "isProtected": true,
           "isAbstract": false,
@@ -136,33 +163,60 @@
           "canonicalReference": "@ngrx/data!EntityCollectionReducerRegistry#getOrCreateReducer:member(1)",
           "docComment": "/**\n * Get the registered EntityCollectionReducer<T> for this entity type or create one and register it.\n *\n * @param entityName - Name of the entity type for this reducer\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "getOrCreateReducer<T>(entityName: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "getOrCreateReducer<T>(entityName: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollectionReducer",
               "canonicalReference": "@ngrx/data!EntityCollectionReducer:type"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "typeParameters": [
             {
               "typeParameterName": "T",
-              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
             }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entityName",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],
@@ -197,45 +251,81 @@
           "canonicalReference": "@ngrx/data!EntityCollectionReducerRegistry#registerReducer:member(1)",
           "docComment": "/**\n * Register an EntityCollectionReducer for an entity type\n *\n * @param entityName - the name of the entity type\n *\n * @param reducer - reducer for that entity type\n *\n * Examples: registerReducer('Hero', myHeroReducer); registerReducer('Villain', myVillainReducer);\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "registerReducer<T>(entityName: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": ", reducer: " },
+            {
+              "kind": "Content",
+              "text": "registerReducer<T>(entityName: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", reducer: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollectionReducer",
               "canonicalReference": "@ngrx/data!EntityCollectionReducer:type"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollectionReducer",
               "canonicalReference": "@ngrx/data!EntityCollectionReducer:type"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "typeParameters": [
             {
               "typeParameterName": "T",
-              "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-              "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
             }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entityName",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "reducer",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
               "isOptional": false
             }
           ],
@@ -274,25 +364,43 @@
           "canonicalReference": "@ngrx/data!EntityCollectionReducerRegistry#registerReducers:member(1)",
           "docComment": "/**\n * Register a batch of EntityCollectionReducers.\n *\n * @param reducers - reducers to merge into existing reducers\n *\n * Examples: registerReducers({ Hero: myHeroReducer, Villain: myVillainReducer });\n */\n",
           "excerptTokens": [
-            { "kind": "Content", "text": "registerReducers(reducers: " },
+            {
+              "kind": "Content",
+              "text": "registerReducers(reducers: "
+            },
             {
               "kind": "Reference",
               "text": "EntityCollectionReducers",
               "canonicalReference": "@ngrx/data!EntityCollectionReducers:interface"
             },
-            { "kind": "Content", "text": "): " },
-            { "kind": "Content", "text": "void" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isStatic": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
           "releaseTag": "Public",
           "isProtected": false,
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "reducers",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             }
           ],

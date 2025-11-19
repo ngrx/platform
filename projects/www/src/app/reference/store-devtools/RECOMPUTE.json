@@ -1,1 +1,49 @@
-{"name":"RECOMPUTE","canonicalReference":"@ngrx/store-devtools!RECOMPUTE:var","kind":"Variable","fileUrlPath":"../../dist/modules/store-devtools/src/reducer.d.ts","isDeprecated":false,"members":[{"kind":"Variable","canonicalReference":"@ngrx/store-devtools!RECOMPUTE:var","docComment":"","excerptTokens":[{"kind":"Content","text":"RECOMPUTE: "},{"kind":"Content","text":"\"@ngrx/store-devtools/recompute\""}],"fileUrlPath":"../../dist/modules/store-devtools/src/reducer.d.ts","isReadonly":true,"releaseTag":"Public","name":"RECOMPUTE","variableTypeTokenRange":{"startIndex":1,"endIndex":2},"docs":{"modifiers":{"isInternal":false,"isPublic":false,"isAlpha":false,"isBeta":false,"isOverride":false,"isExperimental":false},"summary":"","usageNotes":"","remarks":"","deprecated":"","returns":"","see":[],"params":[]}}]}
+{
+  "name": "RECOMPUTE",
+  "canonicalReference": "@ngrx/store-devtools!RECOMPUTE:var",
+  "kind": "Variable",
+  "fileUrlPath": "../../dist/modules/store-devtools/src/reducer.d.ts",
+  "isDeprecated": false,
+  "members": [
+    {
+      "kind": "Variable",
+      "canonicalReference": "@ngrx/store-devtools!RECOMPUTE:var",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "RECOMPUTE: "
+        },
+        {
+          "kind": "Content",
+          "text": "\"@ngrx/store-devtools/recompute\""
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/store-devtools/src/reducer.d.ts",
+      "isReadonly": true,
+      "releaseTag": "Public",
+      "name": "RECOMPUTE",
+      "variableTypeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 2
+      },
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    }
+  ]
+}

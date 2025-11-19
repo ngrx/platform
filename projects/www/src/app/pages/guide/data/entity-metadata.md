@@ -155,7 +155,7 @@ export function nameAndSayingFilter(
   entities: Villain[],
   pattern: string
 ) {
-  return PropsFilterFnFactory<Villain>[('name', 'saying')](
+  return (PropsFilterFnFactory<Villain>)[('name', 'saying')](
     entities,
     pattern
   );
@@ -276,7 +276,7 @@ Following the prior step, we have added the additional property to the `action.p
 
 ```typescript
 export class AdditionalEntityCollectionReducerMethods<
-  T
+  T,
 > extends EntityCollectionReducerMethods<T> {
   constructor(
     public entityName: string,

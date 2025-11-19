@@ -20,8 +20,14 @@
       "typeParameters": [
         {
           "typeParameterName": "T",
-          "constraintTokenRange": { "startIndex": 0, "endIndex": 0 },
-          "defaultTypeTokenRange": { "startIndex": 0, "endIndex": 0 }
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
         }
       ],
       "name": "EntityCollectionDataService",
@@ -32,36 +38,63 @@
           "canonicalReference": "@ngrx/data!EntityCollectionDataService#add:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "add(entity: " },
-            { "kind": "Content", "text": "T" },
-            { "kind": "Content", "text": ", httpOptions?: " },
+            {
+              "kind": "Content",
+              "text": "add(entity: "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": ", httpOptions?: "
+            },
             {
               "kind": "Reference",
               "text": "HttpOptions",
               "canonicalReference": "@ngrx/data!HttpOptions:interface"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 5, "endIndex": 7 },
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entity",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "httpOptions",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
               "isOptional": true
             }
           ],
@@ -89,36 +122,63 @@
           "canonicalReference": "@ngrx/data!EntityCollectionDataService#delete:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "delete(id: " },
-            { "kind": "Content", "text": "number | string" },
-            { "kind": "Content", "text": ", httpOptions?: " },
+            {
+              "kind": "Content",
+              "text": "delete(id: "
+            },
+            {
+              "kind": "Content",
+              "text": "number | string"
+            },
+            {
+              "kind": "Content",
+              "text": ", httpOptions?: "
+            },
             {
               "kind": "Reference",
               "text": "HttpOptions",
               "canonicalReference": "@ngrx/data!HttpOptions:interface"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<number | string>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<number | string>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 5, "endIndex": 7 },
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "id",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "httpOptions",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
               "isOptional": true
             }
           ],
@@ -146,29 +206,47 @@
           "canonicalReference": "@ngrx/data!EntityCollectionDataService#getAll:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "getAll(httpOptions?: " },
+            {
+              "kind": "Content",
+              "text": "getAll(httpOptions?: "
+            },
             {
               "kind": "Reference",
               "text": "HttpOptions",
               "canonicalReference": "@ngrx/data!HttpOptions:interface"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<T[]>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T[]>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 3, "endIndex": 5 },
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 5
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "httpOptions",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": true
             }
           ],
@@ -196,36 +274,63 @@
           "canonicalReference": "@ngrx/data!EntityCollectionDataService#getById:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "getById(id: " },
-            { "kind": "Content", "text": "any" },
-            { "kind": "Content", "text": ", httpOptions?: " },
+            {
+              "kind": "Content",
+              "text": "getById(id: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": ", httpOptions?: "
+            },
             {
               "kind": "Reference",
               "text": "HttpOptions",
               "canonicalReference": "@ngrx/data!HttpOptions:interface"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 5, "endIndex": 7 },
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "id",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "httpOptions",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
               "isOptional": true
             }
           ],
@@ -253,41 +358,68 @@
           "canonicalReference": "@ngrx/data!EntityCollectionDataService#getWithQuery:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "getWithQuery(params: " },
+            {
+              "kind": "Content",
+              "text": "getWithQuery(params: "
+            },
             {
               "kind": "Reference",
               "text": "QueryParams",
               "canonicalReference": "@ngrx/data!QueryParams:interface"
             },
-            { "kind": "Content", "text": " | string" },
-            { "kind": "Content", "text": ", httpOptions?: " },
+            {
+              "kind": "Content",
+              "text": " | string"
+            },
+            {
+              "kind": "Content",
+              "text": ", httpOptions?: "
+            },
             {
               "kind": "Reference",
               "text": "HttpOptions",
               "canonicalReference": "@ngrx/data!HttpOptions:interface"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<T[]>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T[]>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "params",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             },
             {
               "parameterName": "httpOptions",
-              "parameterTypeTokenRange": { "startIndex": 4, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              },
               "isOptional": true
             }
           ],
@@ -315,15 +447,27 @@
           "canonicalReference": "@ngrx/data!EntityCollectionDataService#name:member",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "readonly name: " },
-            { "kind": "Content", "text": "string" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "readonly name: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isReadonly": true,
           "isOptional": false,
           "releaseTag": "Public",
           "name": "name",
-          "propertyTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+          "propertyTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
           "docs": {
             "modifiers": {
               "isInternal": false,
@@ -347,41 +491,68 @@
           "canonicalReference": "@ngrx/data!EntityCollectionDataService#update:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "update(update: " },
+            {
+              "kind": "Content",
+              "text": "update(update: "
+            },
             {
               "kind": "Reference",
               "text": "Update",
               "canonicalReference": "@ngrx/entity!Update:type"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ", httpOptions?: " },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", httpOptions?: "
+            },
             {
               "kind": "Reference",
               "text": "HttpOptions",
               "canonicalReference": "@ngrx/data!HttpOptions:interface"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 6, "endIndex": 8 },
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "update",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 3 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
               "isOptional": false
             },
             {
               "parameterName": "httpOptions",
-              "parameterTypeTokenRange": { "startIndex": 4, "endIndex": 5 },
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              },
               "isOptional": true
             }
           ],
@@ -409,36 +580,63 @@
           "canonicalReference": "@ngrx/data!EntityCollectionDataService#upsert:member(1)",
           "docComment": "",
           "excerptTokens": [
-            { "kind": "Content", "text": "upsert(entity: " },
-            { "kind": "Content", "text": "T" },
-            { "kind": "Content", "text": ", httpOptions?: " },
+            {
+              "kind": "Content",
+              "text": "upsert(entity: "
+            },
+            {
+              "kind": "Content",
+              "text": "T"
+            },
+            {
+              "kind": "Content",
+              "text": ", httpOptions?: "
+            },
             {
               "kind": "Reference",
               "text": "HttpOptions",
               "canonicalReference": "@ngrx/data!HttpOptions:interface"
             },
-            { "kind": "Content", "text": "): " },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
             {
               "kind": "Reference",
               "text": "Observable",
               "canonicalReference": "rxjs!Observable:class"
             },
-            { "kind": "Content", "text": "<T>" },
-            { "kind": "Content", "text": ";" }
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
           ],
           "isOptional": false,
-          "returnTypeTokenRange": { "startIndex": 5, "endIndex": 7 },
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
           "releaseTag": "Public",
           "overloadIndex": 1,
           "parameters": [
             {
               "parameterName": "entity",
-              "parameterTypeTokenRange": { "startIndex": 1, "endIndex": 2 },
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
               "isOptional": false
             },
             {
               "parameterName": "httpOptions",
-              "parameterTypeTokenRange": { "startIndex": 3, "endIndex": 4 },
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
               "isOptional": true
             }
           ],

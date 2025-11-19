@@ -26,7 +26,7 @@ import { Events, EVENTS, ReducerEvents } from './events-service';
  * }
  * ```
  */
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'platform' })
 export class Dispatcher {
   protected readonly reducerEvents = inject(ReducerEvents);
   protected readonly events = inject(Events);
