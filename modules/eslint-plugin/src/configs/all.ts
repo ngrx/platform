@@ -13,7 +13,6 @@ export default (
     name: 'ngrx/base',
     languageOptions: {
       parser,
-      sourceType: 'module',
     },
     plugins: {
       '@ngrx': plugin,
@@ -23,21 +22,14 @@ export default (
     name: 'ngrx/all',
     languageOptions: {
       parser,
-      parserOptions: {
-        ecmaVersion: 2020,
-        sourceType: 'module',
-        project: './tsconfig.json',
-      },
     },
     rules: {
       '@ngrx/avoid-combining-component-store-selectors': 'error',
       '@ngrx/avoid-mapping-component-store-selectors': 'error',
       '@ngrx/require-super-ondestroy': 'error',
       '@ngrx/updater-explicit-return-type': 'error',
-      '@ngrx/avoid-cyclic-effects': 'error',
       '@ngrx/no-dispatch-in-effects': 'error',
       '@ngrx/no-effects-in-providers': 'error',
-      '@ngrx/no-multiple-actions-in-effects': 'error',
       '@ngrx/prefer-action-creator-in-of-type': 'error',
       '@ngrx/prefer-effect-callback-in-block-statement': 'error',
       '@ngrx/use-effects-lifecycle-interface': 'error',
@@ -46,7 +38,6 @@ export default (
       '@ngrx/prefer-protected-state': 'error',
       '@ngrx/signal-state-no-arrays-at-root-level': 'error',
       '@ngrx/signal-store-feature-should-use-generic-type': 'error',
-      '@ngrx/with-state-no-arrays-at-root-level': 'error',
       '@ngrx/avoid-combining-selectors': 'error',
       '@ngrx/avoid-dispatching-multiple-actions-sequentially': 'error',
       '@ngrx/avoid-duplicate-actions-in-reducer': 'error',

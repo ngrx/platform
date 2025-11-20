@@ -115,7 +115,11 @@ class BooksStore extends ComponentStore<BooksState> implements OnDestroy {
 }`),
 ];
 
-ruleTester().run(path.parse(__filename).name, rule, {
-  valid: valid(),
-  invalid: invalid(),
-});
+ruleTester(rule.meta.docs?.requiresTypeChecking).run(
+  path.parse(__filename).name,
+  rule,
+  {
+    valid: valid(),
+    invalid: invalid(),
+  }
+);
