@@ -18,7 +18,7 @@ import * as fromStore from '../reducers';
   selector: 'app-foo',
   imports: [],
   templateUrl: './foo.html',
-  styleUrl: './foo.css'
+  styleUrl: './foo.css',
 })
 export class Foo {
   constructor(private store: Store) {}
@@ -34,7 +34,7 @@ import { Store } from '@ngrx/store';
   selector: 'app-foo',
   imports: [],
   templateUrl: './foo.html',
-  styleUrl: './foo.css'
+  styleUrl: './foo.css',
 })
 export class Foo {
   constructor(private store: Store) {}
@@ -121,7 +121,7 @@ import { Store } from '@ngrx/store';
   selector: 'app-foo',
   imports: [],
   templateUrl: './foo.html',
-  styleUrl: './foo.css'
+  styleUrl: './foo.css',
 })
 export class Foo {
   constructor(private store: Store) {}
@@ -137,7 +137,7 @@ import { Store } from '@ngrx/store';
   selector: 'app-foo',
   standalone: false,
   templateUrl: './foo.html',
-  styleUrl: './foo.css'
+  styleUrl: './foo.css',
 })
 export class Foo {
   constructor(private store: Store) {}
