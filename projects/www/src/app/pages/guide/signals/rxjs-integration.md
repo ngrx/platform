@@ -63,7 +63,7 @@ export class Numbers {
 }
 ```
 
-When a reactive method is called with a reactive computation - like a Signal - the reactive chain is executed every time the signal value changes.
+When a reactive method is called with a reactive computation (like a Signal) the reactive chain is executed every time the signal value changes.
 
 ```ts
 import { Component, signal } from '@angular/core';
