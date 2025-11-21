@@ -115,7 +115,7 @@ export class Numbers {
     const b = signal(2);
 
     this.logDoubledNumber(() => a() + b());
-    // console output: 20
+    // console output: 14
 
     setTimeout(() => b.set(10), 3_000);
     // console output after 3 seconds: 40
