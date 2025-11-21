@@ -49,7 +49,7 @@ export class Numbers {
 }
 ```
 
-Finally, a reactive computation example shows an automaticaly tracked computation, built from multiple Signals.
+Finally, a reactive computation example shows an automatically tracked computation, built from multiple Signals.
 
 ```ts
 @Component({
