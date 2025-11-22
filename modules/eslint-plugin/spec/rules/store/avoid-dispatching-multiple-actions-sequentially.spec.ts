@@ -15,7 +15,7 @@ type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
 const validConstructor: () => (string | ValidTestCase<Options>)[] = () => [
   `
   import { Store } from '@ngrx/store'
-  
+
   class Ok {
   ngOnInit() {
     this.dispatch(UserActions.add())
@@ -23,10 +23,10 @@ const validConstructor: () => (string | ValidTestCase<Options>)[] = () => [
   }`,
   `
   import { Store } from '@ngrx/store'
-  
+
   class Ok1 {
   constructor(private store: Store) {}
-  
+
   ping() {
     this.store.dispatch(GameActions.ping())
   }
@@ -34,10 +34,10 @@ const validConstructor: () => (string | ValidTestCase<Options>)[] = () => [
   // https://github.com/timdeschryver/eslint-plugin-ngrx/issues/47
   `
   import { Store } from '@ngrx/store'
-  
+
   class Ok2 {
   constructor(private store: Store) {}
-  
+
   pingPong() {
     if (condition) {
       this.store.dispatch(GameActions.ping())
@@ -49,10 +49,10 @@ const validConstructor: () => (string | ValidTestCase<Options>)[] = () => [
   // https://github.com/timdeschryver/eslint-plugin-ngrx/issues/86
   `
   import { Store } from '@ngrx/store'
-  
+
   class Ok3 {
   constructor(private store: Store) {}
-  
+
   ngOnInit() {
     this.store.subscribe(() => {
       this.store.dispatch(one());
@@ -65,13 +65,13 @@ const validConstructor: () => (string | ValidTestCase<Options>)[] = () => [
   // https://github.com/ngrx/platform/issues/3513
   `
   import { Store } from '@ngrx/store'
-  
+
   class Ok4 {
   constructor(private store: Store) {}
-  
+
   ngOnInit() {
     this.store.dispatch(one());
-  
+
     this.store.subscribe(() => {
       this.store.dispatch(anotherOne());
     });
@@ -80,13 +80,13 @@ const validConstructor: () => (string | ValidTestCase<Options>)[] = () => [
   // https://github.com/ngrx/platform/issues/3513
   `
   import { Store } from '@ngrx/store'
-  
+
   class Ok5 {
   constructor(private store: Store) {}
-  
+
   ngOnInit() {
     this.store.dispatch(anotherOne());
-  
+
     this.store.subscribe(() => {
       this.store.dispatch(one());
     });
@@ -172,10 +172,10 @@ ngOnInit() {
 const invalidConstructor: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(`
   import { Store } from '@ngrx/store'
-  
+
   class NotOk {
   constructor(private store: Store) {}
-  
+
   pingPong() {
     this.store.dispatch(GameActions.ping())
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
@@ -185,7 +185,7 @@ const invalidConstructor: () => InvalidTestCase<MessageIds, Options>[] = () => [
   }`),
   fromFixture(`
   import { Store } from '@ngrx/store'
-  
+
   class NotOk1 {
   constructor(store: Store, private readonly store$: Store) {
     store.dispatch(GameActions.ping())
@@ -198,10 +198,10 @@ const invalidConstructor: () => InvalidTestCase<MessageIds, Options>[] = () => [
   }`),
   fromFixture(`
   import { Store } from '@ngrx/store'
-  
+
   class NotOk2 {
   constructor(private store: Store) {}
-  
+
   pingPongPong() {
     this.store.dispatch(GameActions.ping())
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
@@ -214,14 +214,14 @@ const invalidConstructor: () => InvalidTestCase<MessageIds, Options>[] = () => [
   // https://github.com/timdeschryver/eslint-plugin-ngrx/issues/44
   fromFixture(`
   import { Store } from '@ngrx/store'
-  
+
   class NotOk3 {
   constructor(private customName: Store) {}
-  
+
   ngOnInit() {
     customName.dispatch()
   }
-  
+
   pingPong() {
     this.customName.dispatch(GameActions.ping())
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId}]
@@ -298,7 +298,11 @@ pingPong() {
 }`),
 ];
 
-ruleTester().run(path.parse(__filename).name, rule, {
-  valid: [...validConstructor(), ...validInject()],
-  invalid: [...invalidConstructor(), ...invalidInject()],
-});
+ruleTester(rule.meta.docs?.requiresTypeChecking).run(
+  path.parse(__filename).name,
+  rule,
+  {
+    valid: [...validConstructor(), ...validInject()],
+    invalid: [...invalidConstructor(), ...invalidInject()],
+  }
+);

@@ -9,11 +9,11 @@ import {
   WritableSignal,
 } from '@angular/core';
 
-declare const ngDevMode: unknown;
-
 const STATE_WATCHERS = new WeakMap<object, Array<StateWatcher<any>>>();
 
-export const STATE_SOURCE = Symbol('STATE_SOURCE');
+export const STATE_SOURCE = Symbol(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'STATE_SOURCE' : ''
+);
 
 export type WritableStateSource<State extends object> = {
   [STATE_SOURCE]: { [K in keyof State]: WritableSignal<State[K]> };

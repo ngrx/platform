@@ -1,5 +1,6 @@
 export const compilerOptions = () => ({
-  moduleResolution: 'node',
+  module: 'preserve',
+  moduleResolution: 'bundler',
   target: 'ES2022',
   baseUrl: '.',
   experimentalDecorators: true,

@@ -455,7 +455,11 @@ class Effect {
 }`),
 ];
 
-ruleTester().run(path.parse(__filename).name, rule, {
-  valid: [...validConstructor(), ...validInject()],
-  invalid: [...invalidConstructor(), ...invalidInject()],
-});
+ruleTester(rule.meta.docs?.requiresTypeChecking).run(
+  path.parse(__filename).name,
+  rule,
+  {
+    valid: [...validConstructor(), ...validInject()],
+    invalid: [...invalidConstructor(), ...invalidInject()],
+  }
+);

@@ -8,8 +8,6 @@ import {
   untracked,
 } from '@angular/core';
 
-declare const ngDevMode: unknown;
-
 export type SignalMethod<Input> = ((
   input: Input | (() => Input),
   config?: { injector?: Injector }

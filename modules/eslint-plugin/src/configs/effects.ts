@@ -13,7 +13,6 @@ export default (
     name: 'ngrx/base',
     languageOptions: {
       parser,
-      sourceType: 'module',
     },
     plugins: {
       '@ngrx': plugin,
@@ -23,17 +22,10 @@ export default (
     name: 'ngrx/effects',
     languageOptions: {
       parser,
-      parserOptions: {
-        ecmaVersion: 2020,
-        sourceType: 'module',
-        project: './tsconfig.json',
-      },
     },
     rules: {
-      '@ngrx/avoid-cyclic-effects': 'error',
       '@ngrx/no-dispatch-in-effects': 'error',
       '@ngrx/no-effects-in-providers': 'error',
-      '@ngrx/no-multiple-actions-in-effects': 'error',
       '@ngrx/prefer-action-creator-in-of-type': 'error',
       '@ngrx/prefer-effect-callback-in-block-statement': 'error',
       '@ngrx/use-effects-lifecycle-interface': 'error',

@@ -8,8 +8,6 @@ import {
 } from '@angular/core';
 import { isObservable, noop, Observable, Subject } from 'rxjs';
 
-declare const ngDevMode: unknown;
-
 type RxMethodRef = {
   destroy: () => void;
 };

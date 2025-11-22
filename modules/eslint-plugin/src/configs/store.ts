@@ -13,7 +13,6 @@ export default (
     name: 'ngrx/base',
     languageOptions: {
       parser,
-      sourceType: 'module',
     },
     plugins: {
       '@ngrx': plugin,
