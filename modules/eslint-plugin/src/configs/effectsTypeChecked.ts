@@ -19,15 +19,18 @@ export default (
     },
   },
   {
-    name: 'ngrx/signals',
+    name: 'ngrx/effectsTypeChecked',
     languageOptions: {
       parser,
     },
     rules: {
-      '@ngrx/enforce-type-call': 'error',
-      '@ngrx/prefer-protected-state': 'error',
-      '@ngrx/signal-state-no-arrays-at-root-level': 'error',
-      '@ngrx/signal-store-feature-should-use-generic-type': 'error',
+      '@ngrx/avoid-cyclic-effects': 'error',
+      '@ngrx/no-dispatch-in-effects': 'error',
+      '@ngrx/no-effects-in-providers': 'error',
+      '@ngrx/no-multiple-actions-in-effects': 'error',
+      '@ngrx/prefer-action-creator-in-of-type': 'error',
+      '@ngrx/prefer-effect-callback-in-block-statement': 'error',
+      '@ngrx/use-effects-lifecycle-interface': 'error',
     },
   },
 ];

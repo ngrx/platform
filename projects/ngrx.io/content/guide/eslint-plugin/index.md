@@ -162,13 +162,16 @@ module.exports = tseslint.config({
 <!-- DO NOT EDIT, this table is automatically generated-->
 <!-- CONFIGURATIONS-CONFIG:START -->
 
-| Name                                                                                                                 |
-| -------------------------------------------------------------------------------------------------------------------- |
-| [all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all.json)                         |
-| [component-store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/component-store.json) |
-| [effects](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects.json)                 |
-| [operators](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/operators.json)             |
-| [signals](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/signals.json)                 |
-| [store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/store.json)                     |
+| Name                                                                                                                       |
+| -------------------------------------------------------------------------------------------------------------------------- |
+| [all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all.json)                               |
+| [allTypeChecked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/allTypeChecked.json)         |
+| [component-store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/component-store.json)       |
+| [effects](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects.json)                       |
+| [effectsTypeChecked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effectsTypeChecked.json) |
+| [operators](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/operators.json)                   |
+| [signals](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/signals.json)                       |
+| [signalsTypeChecked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/signalsTypeChecked.json) |
+| [store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/store.json)                           |
 
-  <!-- CONFIGURATIONS-CONFIG:END -->
+<!-- CONFIGURATIONS-CONFIG:END -->

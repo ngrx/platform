@@ -19,7 +19,7 @@ export default (
     },
   },
   {
-    name: 'ngrx/signals',
+    name: 'ngrx/signalsTypeChecked',
     languageOptions: {
       parser,
     },
@@ -28,6 +28,7 @@ export default (
       '@ngrx/prefer-protected-state': 'error',
       '@ngrx/signal-state-no-arrays-at-root-level': 'error',
       '@ngrx/signal-store-feature-should-use-generic-type': 'error',
+      '@ngrx/with-state-no-arrays-at-root-level': 'error',
     },
   },
 ];

@@ -11,6 +11,9 @@ import effects from '../src/configs/effects';
 import componentStore from '../src/configs/component-store';
 import operators from '../src/configs/operators';
 import signals from '../src/configs/signals';
+import allTypeChecked from '../src/configs/allTypeChecked';
+import effectsTypeChecked from '../src/configs/effectsTypeChecked';
+import signalsTypeChecked from '../src/configs/signalsTypeChecked';
 
 const meta = { name: packageName, version: packageVersion };
 
@@ -20,16 +23,19 @@ const tsPlugin: TSESLint.FlatConfig.Plugin = {
 
 const configs = {
   all: all(tsPlugin, parser),
+  allTypeChecked: allTypeChecked(tsPlugin, parser),
   store: store(tsPlugin, parser),
   effects: effects(tsPlugin, parser),
+  effectsTypeChecked: effectsTypeChecked(tsPlugin, parser),
   componentStore: componentStore(tsPlugin, parser),
   operators: operators(tsPlugin, parser),
   signals: signals(tsPlugin, parser),
+  signalsTypeChecked: signalsTypeChecked(tsPlugin, parser),
 };
 
 /*
 As the angular-eslint plugin we do both a default and named exports to allow people to use this package from
-both CJS and ESM in very natural ways. 
+both CJS and ESM in very natural ways.
 */
 export default {
   meta,
