@@ -127,6 +127,33 @@ describe('withEffects', () => {
     ]);
   });
 
+  it('handles observables returned as an array', () => {
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withEffects((_, events = inject(Events)) => [
+        events.on(event1, event2).pipe(map(({ type }) => event3(type))),
+        events.on(event3).pipe(tap(() => {})),
+      ])
+    );
+
+    const events = TestBed.inject(Events);
+    const dispatcher = TestBed.inject(Dispatcher);
+    const emittedEvents: EventInstance<string, unknown>[] = [];
+
+    events.on().subscribe((event) => emittedEvents.push(event));
+    TestBed.inject(Store);
+
+    dispatcher.dispatch(event1());
+    dispatcher.dispatch(event2());
+
+    expect(emittedEvents).toEqual([
+      { type: 'event1' },
+      { type: 'event3', payload: 'event1' },
+      { type: 'event2' },
+      { type: 'event3', payload: 'event2' },
+    ]);
+  });
+
   it('unsubscribes from effects when the store is destroyed', () => {
     let executionCount = 0;
 
