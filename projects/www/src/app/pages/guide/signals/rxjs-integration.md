@@ -6,7 +6,7 @@ RxJS is still a major part of NgRx and the Angular ecosystem, and the `@ngrx/sig
 
 The `rxMethod` is a standalone factory function designed for managing side effects by utilizing RxJS APIs.
 It takes a chain of RxJS operators as input and returns a reactive method.
-The reactive method can accept a static value, a reactive computation (like a Signal), or observable as an input argument.
+The reactive method can accept a static value, a signal, a computation function, or an observable as an input argument.
 Input can be typed by providing a generic argument to the `rxMethod` function.
 
 <ngrx-code-example>
@@ -63,7 +63,7 @@ export class Numbers {
 }
 ```
 
-When a reactive method is called with a reactive computation (like a Signal) the reactive chain is executed every time the signal value changes.
+When a reactive method is called with a signal the reactive chain is executed every time the signal value changes.
 
 ```ts
 import { Component, signal } from '@angular/core';
@@ -92,7 +92,7 @@ export class Numbers {
 }
 ```
 
-And here the same example with a more generic reactive computation.
+In addition to providing a signal, it is also possible to provide a computation function and combine multiple signals within it.
 
 ```ts
 import { Component, signal } from '@angular/core';
@@ -103,22 +103,22 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
   /* ... */
 })
 export class Numbers {
-  readonly logDoubledNumber = rxMethod<number>(
+  readonly logSum = rxMethod<{ a: number; b: number }>(
     pipe(
-      map((num) => num * 2),
+      map(({ a, b }) => a + b),
       tap(console.log)
     )
   );
 
   constructor() {
-    const a = signal(5);
-    const b = signal(2);
+    const num1 = signal(10);
+    const num2 = signal(20);
 
-    this.logDoubledNumber(() => a() + b());
-    // console output: 14
+    this.logSum(() => ({ a: num1(), b: num2() }));
+    // console output: 30
 
-    setTimeout(() => b.set(10), 3_000);
-    // console output after 3 seconds: 30
+    setTimeout(() => b.set(30), 3_000);
+    // console output after 3 seconds: 50
   }
 }
 ```
@@ -299,7 +299,7 @@ export class Numbers implements OnInit {
 
 <ngrx-docs-alert type="inform">
 
-If the injector is not provided when calling the reactive method with a reactive computation or observable outside the injection context, a warning message about a potential memory leak is displayed in development mode.
+If the injector is not provided when calling the reactive method with a signal, a computation function, or an observable outside the injection context, a warning message about a potential memory leak is displayed in development mode.
 
 </ngrx-docs-alert>
 

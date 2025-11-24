@@ -39,7 +39,7 @@ describe('signalMethod', () => {
     expect(a).toBe(4);
   });
 
-  it('tracks signals within a function input automatically', () => {
+  it('processes a computation function', () => {
     const a = signal(1);
     const b = signal(1);
     const add = () => a() + b();

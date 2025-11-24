@@ -65,7 +65,7 @@ describe('rxMethod', () => {
       expect(results[1]).toBe(10);
     }));
 
-  it('runs and tracks a function', () => {
+  it('runs with a computation function', () => {
     TestBed.runInInjectionContext(() => {
       const results: number[] = [];
       const method = rxMethod<number>(
@@ -74,9 +74,9 @@ describe('rxMethod', () => {
 
       const a = signal(1);
       const b = signal(1);
-      const multplier = () => a() * b();
+      const multiplier = () => a() * b();
 
-      method(multplier);
+      method(multiplier);
       expect(results.length).toBe(0);
 
       TestBed.tick();
