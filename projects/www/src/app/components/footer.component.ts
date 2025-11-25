@@ -16,7 +16,7 @@ import { RouterLink } from '@angular/router';
 
     <nav class="learn-ngrx">
       <h4>Learn NgRx</h4>
-      <a routerLink="/workshops">Workshops</a>
+      <!--      <a routerLink="/workshops">Workshops</a>-->
       <a routerLink="/api">API Reference</a>
       <a href="https://github.com/sponsors/ngrx" target="_blank">Sponsor</a>
       <a routerLink="/about">About</a>

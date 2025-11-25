@@ -65,6 +65,35 @@ describe('rxMethod', () => {
       expect(results[1]).toBe(10);
     }));
 
+  it('runs with a computation function', () => {
+    TestBed.runInInjectionContext(() => {
+      const results: number[] = [];
+      const method = rxMethod<number>(
+        pipe(tap((value) => results.push(value)))
+      );
+
+      const a = signal(1);
+      const b = signal(1);
+      const multiplier = () => a() * b();
+
+      method(multiplier);
+      expect(results.length).toBe(0);
+
+      TestBed.tick();
+      expect(results[0]).toBe(1);
+
+      a.set(5);
+      expect(results.length).toBe(1);
+
+      TestBed.tick();
+      expect(results[1]).toBe(5);
+
+      b.set(2);
+      TestBed.tick();
+      expect(results[2]).toBe(10);
+    });
+  });
+
   it('runs with void input', () => {
     const results: number[] = [];
     const subject$ = new Subject<void>();
