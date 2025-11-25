@@ -215,7 +215,7 @@ function incrementSecond(): PartialStateUpdater<{ count2: number }> {
 ## Performing Side Effects
 
 Side effects are handled using the `withEffects` feature.
-This feature accepts a function that receives the store instance as an argument and returns a dictionary of effects.
+This feature accepts a function that receives the store instance as an argument and returns either a dictionary of effects or an array of effects.
 Each effect is defined as an observable that reacts to specific events using the `Events` service.
 This service provides the `on` method that returns an observable of dispatched events filtered by the specified event types.
 If an effect returns a new event, that event is automatically dispatched.
@@ -259,6 +259,41 @@ export const BookSearchStore = signalStore(
 ```
 
 </ngrx-code-example>
+
+<ngrx-docs-alert type="help">
+
+In addition to the `Events` service, effects can be defined by listening to any other observable source.
+It's also possible to return an array of effects from the `withEffects` feature.
+
+```ts
+// ... other imports
+import { exhaustMap, tap, timer } from 'rxjs';
+import { withEffects } from '@ngrx/signals/events';
+import { mapResponse } from '@ngrx/operators';
+import { BooksService } from './books-service';
+
+export const BookSearchStore = signalStore(
+  // ... other features
+  withEffects((store, booksService = inject(BooksService)) => [
+    timer(0, 30_000).pipe(
+      exhaustMap(() =>
+        booksService.getAll().pipe(
+          mapResponse({
+            next: (books) => booksApiEvents.loadedSuccess(books),
+            error: (error: { message: string }) =>
+              booksApiEvents.loadedFailure(error.message),
+          })
+        )
+      )
+    ),
+    events
+      .on(booksApiEvents.loadedFailure)
+      .pipe(tap(({ payload }) => console.error(payload))),
+  ])
+);
+```
+
+</ngrx-docs-alert>
 
 ## Reading State
 

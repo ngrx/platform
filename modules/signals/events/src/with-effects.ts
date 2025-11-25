@@ -49,7 +49,7 @@ export function withEffects<Input extends SignalStoreFeatureResult>(
         Input['methods'] &
         WritableStateSource<Prettify<Input['state']>>
     >
-  ) => Record<string, Observable<unknown>>
+  ) => Record<string, Observable<unknown>> | Observable<unknown>[]
 ): SignalStoreFeature<Input, EmptyFeatureResult> {
   return signalStoreFeature(
     type<Input>(),
