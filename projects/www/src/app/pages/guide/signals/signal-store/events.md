@@ -18,7 +18,7 @@ The application architecture with the Events plugin is composed of the following
 
 1. **Event:** Describes an occurrence within the system. Events are dispatched to trigger state changes and/or side effects.
 2. **Dispatcher:** An event bus that forwards events to their corresponding handlers in the stores.
-3. **Store:** Contains reducers and effects that manage state and handle side effects, maintaining a clean and predictable application flow.
+3. **Store:** Contains event handlers that manage state transitions and handle side effects, maintaining a clean and predictable application flow.
 4. **View:** Reflects state changes and dispatches new events, enabling continuous interaction between the user interface and the underlying system.
 
 By dispatching events and reacting to them, the _what_ (the event that occurred) is decoupled from the _how_ (the state changes or side effects that result), leading to predictable data flow and more maintainable code.
@@ -136,9 +136,9 @@ export const booksApiEvents = eventGroup({
 Event types are automatically formatted as "[Source] EventName".
 For example, calling `bookSearchEvents.opened()` yields `{ type: '[Book Search Page] opened' }`, and `booksApiEvents.loadedSuccess([book1, book2])` yields `{ type: '[Books API] loadedSuccess', payload: [book1, book2] }`.
 
-## Performing State Changes
+## Defining State Transitions
 
-To handle state changes in response to events, the Events plugin provides the `withReducer` feature.
+To handle state transitions in response to events, the Events plugin provides the `withReducer` feature.
 Case reducers are defined using the `on` function, which maps one or more events to a case reducer handler.
 A handler is a function that receives the dispatched event as the first and the current state as the second argument.
 The return value of a case reducer handler can be a partial state object, a partial state updater, or an array of partial state objects and/or updaters.
@@ -212,26 +212,26 @@ function incrementSecond(): PartialStateUpdater<{ count2: number }> {
 
 </ngrx-docs-alert>
 
-## Performing Side Effects
+## Defining Event Handlers
 
-Side effects are handled using the `withEffects` feature.
-This feature accepts a function that receives the store instance as an argument and returns either a dictionary of effects or an array of effects.
-Each effect is defined as an observable that reacts to specific events using the `Events` service.
+Event handlers, such as those that perform asynchronous side effects, can be defined using the `withEventHandlers` feature.
+This feature accepts a function that receives the store instance as an argument and returns either a dictionary or an array of event handlers.
+Each event handler is defined as an observable that reacts to specific events using the `Events` service.
 This service provides the `on` method that returns an observable of dispatched events filtered by the specified event types.
-If an effect returns a new event, that event is automatically dispatched.
+If an event handler returns a new event, that event is automatically dispatched.
 
 <ngrx-code-example header="book-search-store.ts">
 
 ```ts
 // ... other imports
 import { switchMap, tap } from 'rxjs';
-import { Events, withEffects } from '@ngrx/signals/events';
+import { Events, withEventHandlers } from '@ngrx/signals/events';
 import { mapResponse } from '@ngrx/operators';
 import { BooksService } from './books-service';
 
 export const BookSearchStore = signalStore(
   // ... other features
-  withEffects(
+  withEventHandlers(
     (
       store,
       events = inject(Events),
@@ -262,19 +262,19 @@ export const BookSearchStore = signalStore(
 
 <ngrx-docs-alert type="help">
 
-In addition to the `Events` service, effects can be defined by listening to any other observable source.
-It's also possible to return an array of effects from the `withEffects` feature.
+In addition to the `Events` service, event handlers can be defined by listening to any other observable source.
+It's also possible to return an array of handlers from the `withEventHandlers` feature.
 
 ```ts
 // ... other imports
 import { exhaustMap, tap, timer } from 'rxjs';
-import { withEffects } from '@ngrx/signals/events';
+import { withEventHandlers } from '@ngrx/signals/events';
 import { mapResponse } from '@ngrx/operators';
 import { BooksService } from './books-service';
 
 export const BookSearchStore = signalStore(
   // ... other features
-  withEffects((store, booksService = inject(BooksService)) => [
+  withEventHandlers((store, booksService = inject(BooksService)) => [
     timer(0, 30_000).pipe(
       exhaustMap(() =>
         booksService.getAll().pipe(
@@ -289,6 +289,46 @@ export const BookSearchStore = signalStore(
     events
       .on(booksApiEvents.loadedFailure)
       .pipe(tap(({ payload }) => console.error(payload))),
+  ])
+);
+```
+
+</ngrx-docs-alert>
+
+<ngrx-docs-alert type="inform">
+
+The `withEventHandlers` feature can also serve as a way to implement custom state transitions in cases where `withReducer` does not fully address the requirements.
+For this purpose, the `ReducerEvents` service is recommended, as it receives dispatched events before the `Events` service.
+This ensures that state transitions are applied before other event handlers react.
+
+```ts
+// ... other imports
+import {
+  ReducerEvents,
+  withEventHandlers,
+} from '@ngrx/signals/events';
+
+const counterPageEvents = eventGroup({
+  source: 'Counter Page',
+  events: {
+    increment: type<void>(),
+    set: type<number>(),
+  },
+});
+
+export const CounterStore = signalStore(
+  withState({ count: 0 }),
+  withEventHandlers((store, events = inject(ReducerEvents)) => [
+    events
+      .on(counterPageEvents.increment)
+      .pipe(
+        tap(() => patchState(store, { count: store.count() + 1 }))
+      ),
+    events
+      .on(counterPageEvents.set)
+      .pipe(
+        tap(({ payload }) => patchState(store, { count: payload }))
+      ),
   ])
 );
 ```
@@ -343,7 +383,7 @@ export class BookSearch {
 ## Dispatching Events
 
 Once events and their corresponding handlers have been defined, the remaining step is to dispatch events in response to user interactions or other triggers.
-Dispatching an event allows any matching reducers or effects to process it accordingly.
+Dispatching an event allows any matching reducers or event handlers to process it accordingly.
 
 ### Using `Dispatcher` Service
 

@@ -11,5 +11,5 @@ export {
 } from './event-scope';
 export { Events, ReducerEvents } from './events-service';
 export { injectDispatch } from './inject-dispatch';
-export { withEffects } from './with-effects';
+export { withEventHandlers } from './with-event-handlers';
 export { withReducer } from './with-reducer';
