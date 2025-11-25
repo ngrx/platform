@@ -1,6 +1,6 @@
 # SignalMethod
 
-`signalMethod` is a standalone factory function used for managing side effects with Angular signals. It accepts a callback and returns a processor function that can handle either a static value or a signal. The input type can be specified using a generic type argument:
+`signalMethod` is a standalone factory function used for managing side effects with Angular signals. It accepts a callback and returns a processor function that can handle either a static value, a signal, or a computation function. The input type can be specified using a generic type argument:
 
 <ngrx-code-example>
 
@@ -13,7 +13,7 @@ import { signalMethod } from '@ngrx/signals';
 })
 export class Numbers {
   // 👇 This method will have an input argument
-  // of type `number | Signal<number>`.
+  // of type `number | (() => number)`.
   readonly logDoubledNumber = signalMethod<number>((num) => {
     const double = num * 2;
     console.log(double);
@@ -23,7 +23,7 @@ export class Numbers {
 
 </ngrx-code-example>
 
-`logDoubledNumber` can be called with a static value of type `number`, or a Signal of type `number`:
+`logDoubledNumber` can be called with a static value of type `number` or a `Signal<number>`.
 
 ```ts
 @Component({
@@ -45,6 +45,29 @@ export class Numbers {
 
     setTimeout(() => num.set(3), 3_000);
     // console output after 3 seconds: 6
+  }
+}
+```
+
+In addition to providing a Signal, it is also possible to provide a computation function and combine multiple Signals within it.
+
+```ts
+@Component({
+  /* ... */
+})
+export class Numbers {
+  readonly logSum = signalMethod<{ a: number; b: number }>(
+    ({ a, b }) => console.log(a + b)
+  );
+
+  constructor() {
+    const num1 = signal(1);
+    const num2 = signal(2);
+    this.logSum(() => ({ a: num1(), b: num2() }));
+    // console output: 3
+
+    setTimeout(() => num1.set(3), 3_000);
+    // console output after 3 seconds: 5
   }
 }
 ```
@@ -184,9 +207,9 @@ export class Numbers {
 
 However, `signalMethod` offers three distinctive advantages over `effect`:
 
-- **Flexible Input**: The input argument can be a static value, not just a signal. Additionally, the processor function can be called multiple times with different inputs.
+- **Flexible Input**: The input argument can be a static value, not just a Signal or a computation function. Additionally, the processor function can be called multiple times with different inputs.
 - **No Injection Context Required**: Unlike an `effect`, which requires an injection context or an Injector, `signalMethod`'s "processor function" can be called without an injection context.
-- **Explicit Tracking**: Only the Signal of the parameter is tracked, while Signals within the "processor function" stay untracked.
+- **Explicit Tracking**: Only the provided Signal or Signals used inside the computation function are tracked, while Signals within the "processor function" stay untracked.
 
 ## `signalMethod` compared to `rxMethod`
 
