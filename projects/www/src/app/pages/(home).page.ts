@@ -44,16 +44,16 @@ import { MatIconModule } from '@angular/material/icon';
           >Learn SignalStore</a
         >
       </ngrx-styled-box>
-      <ngrx-styled-box>
-        <mat-icon inline>co_present</mat-icon>
-        <h3>Workshops</h3>
-        <p>
-          Attend an NgRx workshop from the creators of NgRx. Our three day
-          workshops cover the entire NgRx reactive state framework, from Store
-          to Effects to SignalStore.
-        </p>
-        <a routerLink="/workshops" mat-flat-button>Attend a Workshop</a>
-      </ngrx-styled-box>
+      <!--      <ngrx-styled-box>-->
+      <!--        <mat-icon inline>co_present</mat-icon>-->
+      <!--        <h3>Workshops</h3>-->
+      <!--        <p>-->
+      <!--          Attend an NgRx workshop from the creators of NgRx. Our three day-->
+      <!--          workshops cover the entire NgRx reactive state framework, from Store-->
+      <!--          to Effects to SignalStore.-->
+      <!--        </p>-->
+      <!--        <a routerLink="/workshops" mat-flat-button>Attend a Workshop</a>-->
+      <!--      </ngrx-styled-box>-->
       <ngrx-styled-box>
         <mat-icon inline>volunteer_activism</mat-icon>
         <h3>Support the team</h3>
@@ -130,7 +130,11 @@ import { MatIconModule } from '@angular/material/icon';
       .content {
         display: grid;
         width: 100%;
-        grid-template-columns: repeat(3, minmax(300px, 1fr));
+        /*grid-template-columns: repeat(3, minmax(300px, 1fr));*/
+        /* (===) TODO: remove after reintroducing Workshops page */
+        grid-template-columns: repeat(2, minmax(0, 500px));
+        justify-content: center;
+        /* (===) */
         gap: 24px;
         padding: 32px 32px;
         @media only screen and (max-width: 1280px) {

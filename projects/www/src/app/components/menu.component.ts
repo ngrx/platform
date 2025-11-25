@@ -33,15 +33,15 @@ import { DOCUMENT } from '@angular/common';
         NgRx
       </a>
       <hr />
-      <a
-        routerLink="/workshops"
-        routerLinkActive="active"
-        class="menu-link"
-        (click)="closeMenu()"
-      >
-        <mat-icon>co_present</mat-icon>
-        Workshops
-      </a>
+      <!--      <a-->
+      <!--        routerLink="/workshops"-->
+      <!--        routerLinkActive="active"-->
+      <!--        class="menu-link"-->
+      <!--        (click)="closeMenu()"-->
+      <!--      >-->
+      <!--        <mat-icon>co_present</mat-icon>-->
+      <!--        Workshops-->
+      <!--      </a>-->
       <a
         routerLink="/api"
         routerLinkActive="active"

@@ -10,7 +10,15 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
-import { Dispatcher, event, EventInstance, Events, withEffects } from '../src';
+import {
+  Dispatcher,
+  event,
+  EventInstance,
+  Events,
+  mapToScope,
+  toScope,
+  withEffects,
+} from '../src';
 import { createLocalService } from '../../spec/helpers';
 
 describe('withEffects', () => {
@@ -152,6 +160,47 @@ describe('withEffects', () => {
       { type: 'event2' },
       { type: 'event3', payload: 'event2' },
     ]);
+  });
+
+  it('dispatches an event with provided scope via toScope', () => {
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withEffects((_, events = inject(Events)) => ({
+        $: events.on(event1).pipe(map(() => [event2(), toScope('parent')])),
+      }))
+    );
+
+    const dispatcher = TestBed.inject(Dispatcher);
+    vitest.spyOn(dispatcher, 'dispatch');
+
+    TestBed.inject(Store);
+
+    dispatcher.dispatch(event1());
+    expect(dispatcher.dispatch).toHaveBeenCalledWith(event2(), {
+      scope: 'parent',
+    });
+  });
+
+  it('dispatches an event with provided scope via mapToScope', () => {
+    const Store = signalStore(
+      { providedIn: 'root' },
+      withEffects((_, events = inject(Events)) => ({
+        $: events.on(event1).pipe(
+          map(() => event3('ngrx')),
+          mapToScope('global')
+        ),
+      }))
+    );
+
+    const dispatcher = TestBed.inject(Dispatcher);
+    vitest.spyOn(dispatcher, 'dispatch');
+
+    TestBed.inject(Store);
+
+    dispatcher.dispatch(event1());
+    expect(dispatcher.dispatch).toHaveBeenCalledWith(event3('ngrx'), {
+      scope: 'global',
+    });
   });
 
   it('unsubscribes from effects when the store is destroyed', () => {

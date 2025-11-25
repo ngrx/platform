@@ -1,6 +1,13 @@
+import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { type } from '@ngrx/signals';
-import { Dispatcher, event, EventInstance, Events } from '../src';
+import {
+  Dispatcher,
+  event,
+  EventInstance,
+  Events,
+  provideDispatcher,
+} from '../src';
 import { SOURCE_TYPE } from '../src/events-service';
 
 describe('Events', () => {
@@ -67,5 +74,45 @@ describe('Events', () => {
 
       expect(sourceTypes).toEqual(['foo', 'bar']);
     });
+  });
+
+  it('receives dispatched events from ancestor Events services', () => {
+    const parentInjector = Injector.create({
+      providers: [provideDispatcher()],
+      parent: TestBed.inject(Injector),
+    });
+    const childInjector = Injector.create({
+      providers: [provideDispatcher()],
+      parent: parentInjector,
+    });
+
+    const globalEvents = TestBed.inject(Events);
+    const parentEvents = parentInjector.get(Events);
+    const childEvents = childInjector.get(Events);
+    const childDispatcher = childInjector.get(Dispatcher);
+
+    const foo = event('foo', type<string>());
+
+    const globalResult: string[] = [];
+    const parentResult: string[] = [];
+    const childResult: string[] = [];
+
+    globalEvents.on(foo).subscribe(({ payload }) => globalResult.push(payload));
+    parentEvents.on(foo).subscribe(({ payload }) => parentResult.push(payload));
+    childEvents.on(foo).subscribe(({ payload }) => childResult.push(payload));
+
+    childDispatcher.dispatch(foo('self by default'));
+    childDispatcher.dispatch(foo('explicit self'), { scope: 'self' });
+    childDispatcher.dispatch(foo('parent'), { scope: 'parent' });
+    childDispatcher.dispatch(foo('global'), { scope: 'global' });
+
+    expect(globalResult).toEqual(['global']);
+    expect(parentResult).toEqual(['parent', 'global']);
+    expect(childResult).toEqual([
+      'self by default',
+      'explicit self',
+      'parent',
+      'global',
+    ]);
   });
 });

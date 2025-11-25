@@ -7,13 +7,14 @@ import {
 import { Prettify } from '@ngrx/signals';
 import { Dispatcher } from './dispatcher';
 import { EventCreator } from './event-creator';
+import { EventScope, EventScopeConfig } from './event-scope';
 
-type InjectDispatchResult<
+type SelfDispatchingEvents<
   EventGroup extends Record<string, EventCreator<string, any>>,
 > = {
-  [EventName in keyof EventGroup]: Parameters<EventGroup[EventName]> extends [
-    infer Payload,
-  ]
+  readonly [EventName in keyof EventGroup]: Parameters<
+    EventGroup[EventName]
+  > extends [infer Payload]
     ? (payload: Payload) => void
     : () => void;
 };
@@ -38,7 +39,7 @@ type InjectDispatchResult<
  *   },
  * });
  *
- * \@Component({ \/* ... *\/ })
+ * \@Component({ /* ... *\/ })
  * class Counter {
  *   readonly dispatch = injectDispatch(counterPageEvents);
  *
@@ -57,7 +58,8 @@ export function injectDispatch<
 >(
   events: EventGroup,
   config?: { injector?: Injector }
-): Prettify<InjectDispatchResult<EventGroup>> {
+): ((config: EventScopeConfig) => Prettify<SelfDispatchingEvents<EventGroup>>) &
+  Prettify<SelfDispatchingEvents<EventGroup>> {
   if (typeof ngDevMode !== 'undefined' && ngDevMode && !config?.injector) {
     assertInInjectionContext(injectDispatch);
   }
@@ -65,12 +67,38 @@ export function injectDispatch<
   const injector = config?.injector ?? inject(Injector);
   const dispatcher = injector.get(Dispatcher);
 
-  return Object.entries(events).reduce(
-    (acc, [eventName, eventCreator]) => ({
+  const eventsCache = {} as Record<
+    EventScope,
+    SelfDispatchingEvents<EventGroup>
+  >;
+
+  const dispatch = (config: EventScopeConfig) => {
+    if (!eventsCache[config.scope]) {
+      eventsCache[config.scope] = Object.entries(events).reduce(
+        (acc, [eventName, eventCreator]) => ({
+          ...acc,
+          [eventName]: (payload?: unknown) =>
+            untracked(() => dispatcher.dispatch(eventCreator(payload), config)),
+        }),
+        {} as SelfDispatchingEvents<EventGroup>
+      );
+    }
+
+    return eventsCache[config.scope];
+  };
+
+  const defaultEventGroup = dispatch({ scope: 'self' });
+  const defaultEventGroupProps = Object.keys(defaultEventGroup).reduce(
+    (acc, eventName) => ({
       ...acc,
-      [eventName]: (payload?: unknown) =>
-        untracked(() => dispatcher.dispatch(eventCreator(payload))),
+      [eventName]: {
+        value: defaultEventGroup[eventName],
+        enumerable: true,
+      },
     }),
-    {} as InjectDispatchResult<EventGroup>
+    {} as PropertyDescriptorMap
   );
+  Object.defineProperties(dispatch, defaultEventGroupProps);
+
+  return dispatch as ReturnType<typeof injectDispatch<EventGroup>>;
 }
