@@ -14,7 +14,6 @@ import { ReducerEvents } from './events-service';
 import { withEventHandlers } from './with-event-handlers';
 
 /**
- * @experimental
  * @description
  *
  * SignalStore feature for defining state transitions based on dispatched events.

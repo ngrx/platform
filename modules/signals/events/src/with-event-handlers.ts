@@ -17,7 +17,6 @@ import { isEventInstance } from './event-instance';
 import { SOURCE_TYPE } from './events-service';
 
 /**
- * @experimental
  * @description
  *
  * SignalStore feature for defining event handlers.

@@ -1,8 +1,5 @@
 import { EventInstance } from './event-instance';
 
-/**
- * @experimental
- */
 export type EventCreator<Type extends string, Payload> = ((
   payload: Payload
 ) => EventInstance<Type, Payload>) & { type: Type };
@@ -15,7 +12,6 @@ export function event<Type extends string, Payload>(
   payload: Payload
 ): EventCreator<Type, Payload>;
 /**
- * @experimental
  * @description
  *
  * Creates an event creator.

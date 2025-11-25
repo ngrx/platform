@@ -1,18 +1,11 @@
 import { map, OperatorFunction } from 'rxjs';
 import { EventInstance } from './event-instance';
 
-/**
- * @experimental
- */
 export type EventScope = 'self' | 'parent' | 'global';
 
-/**
- * @experimental
- */
 export type EventScopeConfig = { scope: EventScope };
 
 /**
- * @experimental
  * @description
  *
  * Marks a single event to be dispatched in the specified scope.
@@ -57,7 +50,6 @@ export function toScope(scope: EventScope): EventScopeConfig {
 }
 
 /**
- * @experimental
  * @description
  *
  * RxJS operator that maps all emitted events in the stream to be dispatched

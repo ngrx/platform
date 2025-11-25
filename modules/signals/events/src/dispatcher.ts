@@ -5,7 +5,6 @@ import { EventScope, EventScopeConfig } from './event-scope';
 import { Events, EVENTS, ReducerEvents } from './events-service';
 
 /**
- * @experimental
  * @description
  *
  * Globally provided service for dispatching events.
@@ -53,7 +52,6 @@ export class Dispatcher {
 }
 
 /**
- * @experimental
  * @description
  *
  * Provides scoped instances of Dispatcher and Events services.

@@ -21,7 +21,6 @@ type CaseReducer<
   | Array<Partial<State> | PartialStateUpdater<State>>;
 
 /**
- * @experimental
  * @description
  *
  * Creates a case reducer that can be used with the `withReducer` feature.

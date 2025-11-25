@@ -16,7 +16,6 @@ type EventCreatorGroup<
 };
 
 /**
- * @experimental
  * @description
  *
  * Creates a group of event creators.

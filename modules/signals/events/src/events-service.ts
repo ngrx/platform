@@ -48,7 +48,6 @@ abstract class BaseEvents {
 }
 
 /**
- * @experimental
  * @description
  *
  * Globally provided service for listening to dispatched events.
@@ -81,7 +80,6 @@ export class Events extends BaseEvents {
 }
 
 /**
- * @experimental
  * @description
  *
  * Globally provided service for listening to dispatched events.
