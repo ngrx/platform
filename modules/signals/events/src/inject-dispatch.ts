@@ -20,7 +20,6 @@ type SelfDispatchingEvents<
 };
 
 /**
- * @experimental
  * @description
  *
  * Creates self-dispatching events for a given event group.

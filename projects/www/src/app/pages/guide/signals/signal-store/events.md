@@ -1,10 +1,3 @@
-<ngrx-docs-alert type="inform">
-
-The Events plugin is currently marked as experimental.
-This means its APIs are subject to change, and modifications may occur in future versions without standard breaking change announcements until it is deemed stable.
-
-</ngrx-docs-alert>
-
 # Events
 
 The Events plugin extends SignalStore with an event-based state management layer.
