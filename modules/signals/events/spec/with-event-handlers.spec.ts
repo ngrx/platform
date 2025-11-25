@@ -17,11 +17,11 @@ import {
   Events,
   mapToScope,
   toScope,
-  withEffects,
+  withEventHandlers,
 } from '../src';
 import { createLocalService } from '../../spec/helpers';
 
-describe('withEffects', () => {
+describe('withEventHandlers', () => {
   const event1 = event('event1');
   const event2 = event('event2');
   const event3 = event('event3', type<string>());
@@ -42,7 +42,7 @@ describe('withEffects', () => {
           return 'n';
         },
       })),
-      withEffects(({ k, l, m, n, ...store }) => {
+      withEventHandlers(({ k, l, m, n, ...store }) => {
         values.push(k(), l(), m, n(), getState(store).k);
         return {};
       })
@@ -53,10 +53,10 @@ describe('withEffects', () => {
     expect(values).toEqual(['k', 'k l', 'm', 'n', 'k']);
   });
 
-  it('dispatches events returned by effects', () => {
+  it('dispatches events returned by event handlers', () => {
     const Store = signalStore(
       { providedIn: 'root' },
-      withEffects((_, events = inject(Events)) => ({
+      withEventHandlers((_, events = inject(Events)) => ({
         $: events.on(event1, event2).pipe(map(({ type }) => event3(type))),
         $$: events
           .on(event3)
@@ -84,10 +84,10 @@ describe('withEffects', () => {
     ]);
   });
 
-  it('does not re-dispatch the same event when an effect does not return a new event', () => {
+  it('does not re-dispatch the same event when an event handler does not return a new event', () => {
     const Store = signalStore(
       { providedIn: 'root' },
-      withEffects((_, events = inject(Events)) => ({
+      withEventHandlers((_, events = inject(Events)) => ({
         $: events.on(event1).pipe(tap(() => {})),
         $$: events.on(event2).pipe(tap(() => {})),
       }))
@@ -106,12 +106,12 @@ describe('withEffects', () => {
     expect(emittedEvents).toEqual([{ type: 'event1' }, { type: 'event2' }]);
   });
 
-  it('re-dispatches the same event when it is explicitly returned from an effect', () => {
+  it('re-dispatches the same event when it is explicitly returned from an event handler', () => {
     let executionCount = 0;
 
     const Store = signalStore(
       { providedIn: 'root' },
-      withEffects((_, events = inject(Events)) => ({
+      withEventHandlers((_, events = inject(Events)) => ({
         $: events.on(event1).pipe(
           map(() => (executionCount < 2 ? event1() : null)),
           tap(() => executionCount++)
@@ -138,7 +138,7 @@ describe('withEffects', () => {
   it('handles observables returned as an array', () => {
     const Store = signalStore(
       { providedIn: 'root' },
-      withEffects((_, events = inject(Events)) => [
+      withEventHandlers((_, events = inject(Events)) => [
         events.on(event1, event2).pipe(map(({ type }) => event3(type))),
         events.on(event3).pipe(tap(() => {})),
       ])
@@ -165,7 +165,7 @@ describe('withEffects', () => {
   it('dispatches an event with provided scope via toScope', () => {
     const Store = signalStore(
       { providedIn: 'root' },
-      withEffects((_, events = inject(Events)) => ({
+      withEventHandlers((_, events = inject(Events)) => ({
         $: events.on(event1).pipe(map(() => [event2(), toScope('parent')])),
       }))
     );
@@ -184,7 +184,7 @@ describe('withEffects', () => {
   it('dispatches an event with provided scope via mapToScope', () => {
     const Store = signalStore(
       { providedIn: 'root' },
-      withEffects((_, events = inject(Events)) => ({
+      withEventHandlers((_, events = inject(Events)) => ({
         $: events.on(event1).pipe(
           map(() => event3('ngrx')),
           mapToScope('global')
@@ -203,11 +203,11 @@ describe('withEffects', () => {
     });
   });
 
-  it('unsubscribes from effects when the store is destroyed', () => {
+  it('unsubscribes from event handlers when the store is destroyed', () => {
     let executionCount = 0;
 
     const Store = signalStore(
-      withEffects((_, events = inject(Events)) => ({
+      withEventHandlers((_, events = inject(Events)) => ({
         $: events.on(event1).pipe(tap(() => executionCount++)),
       }))
     );

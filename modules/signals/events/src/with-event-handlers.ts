@@ -20,20 +20,20 @@ import { SOURCE_TYPE } from './events-service';
  * @experimental
  * @description
  *
- * SignalStore feature for defining side effects.
+ * SignalStore feature for defining event handlers.
  *
  * @usageNotes
  *
  * ```ts
  * import { signalStore, withState } from '@ngrx/signals';
- * import { event, Events, withEffects } from '@ngrx/signals/events';
+ * import { event, Events, withEventHandlers } from '@ngrx/signals/events';
  *
  * const increment = event('[Counter Page] Increment');
  * const decrement = event('[Counter Page] Decrement');
  *
  * const CounterStore = signalStore(
  *   withState({ count: 0 }),
- *   withEffects(({ count }, events = inject(Events)) => ({
+ *   withEventHandlers(({ count }, events = inject(Events)) => ({
  *     logCount$: events.on(increment, decrement).pipe(
  *       tap(({ type }) => console.log(type, count())),
  *     ),
@@ -41,8 +41,8 @@ import { SOURCE_TYPE } from './events-service';
  * );
  * ```
  */
-export function withEffects<Input extends SignalStoreFeatureResult>(
-  effectsFactory: (
+export function withEventHandlers<Input extends SignalStoreFeatureResult>(
+  handlersFactory: (
     store: Prettify<
       StateSignals<Input['state']> &
         Input['props'] &
@@ -55,9 +55,9 @@ export function withEffects<Input extends SignalStoreFeatureResult>(
     type<Input>(),
     withHooks({
       onInit(store, dispatcher = inject(Dispatcher)) {
-        const effectSources = effectsFactory(store);
-        const effects = Object.values(effectSources).map((effectSource$) =>
-          effectSource$.pipe(
+        const handlerSources = handlersFactory(store);
+        const handlers = Object.values(handlerSources).map((handlerSource$) =>
+          handlerSource$.pipe(
             tap((result) => {
               const [potentialEvent, config] = Array.isArray(result)
                 ? result
@@ -73,7 +73,7 @@ export function withEffects<Input extends SignalStoreFeatureResult>(
           )
         );
 
-        merge(...effects)
+        merge(...handlers)
           .pipe(takeUntilDestroyed())
           .subscribe();
       },

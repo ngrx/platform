@@ -32,7 +32,7 @@ import {
   Events,
   injectDispatch,
   on,
-  withEffects,
+  withEventHandlers,
   withReducer,
 } from '../src';
 
@@ -92,7 +92,7 @@ describe('Integration Tests', () => {
     return { requestStatus: { error } };
   }
 
-  describe('withReducer and withEffects', () => {
+  describe('withReducer and withEventHandlers', () => {
     const booksPageEvents = eventGroup({
       source: 'Books Page',
       events: {
@@ -113,7 +113,7 @@ describe('Integration Tests', () => {
         ]),
         on(booksApiEvents.loadedFailure, ({ payload }) => setError(payload))
       ),
-      withEffects(
+      withEventHandlers(
         (_, events = inject(Events), booksService = inject(BooksService)) => ({
           loadUsers$: events
             .on(booksPageEvents.opened, booksPageEvents.refreshed)
@@ -242,15 +242,15 @@ describe('Integration Tests', () => {
       const Store = signalStore(
         { providedIn: 'root' },
         withState({ savedEvents: [] as string[] }),
-        withEffects((_, events = inject(Events)) => ({
+        withEventHandlers((_, events = inject(Events)) => ({
           emitSecond$: events.on(first).pipe(
             tap(({ type }) =>
-              handledEventsLog.push(`emitSecond$ effect: ${type}`)
+              handledEventsLog.push(`emitSecond$ handler: ${type}`)
             ),
             map(() => second())
           ),
           save$: events.on(first, second).pipe(
-            tap(({ type }) => handledEventsLog.push(`save$ effect: ${type}`)),
+            tap(({ type }) => handledEventsLog.push(`save$ handler: ${type}`)),
             map(({ type }) => save(type))
           ),
         })),
@@ -272,17 +272,17 @@ describe('Integration Tests', () => {
       expect(store.savedEvents()).toEqual(['first', 'second']);
       expect(handledEventsLog).toEqual([
         'reducer: first',
-        'emitSecond$ effect: first',
+        'emitSecond$ handler: first',
         'reducer: second',
-        'save$ effect: first',
+        'save$ handler: first',
         'reducer: savefirst',
-        'save$ effect: second',
+        'save$ handler: second',
         'reducer: savesecond',
       ]);
     });
   });
 
-  describe('custom withReducer and withEffects', () => {
+  describe('custom withReducer and withEventHandlers', () => {
     const booksPageEvents = eventGroup({
       source: 'Books Page',
       events: {
@@ -312,10 +312,10 @@ describe('Integration Tests', () => {
       );
     }
 
-    function withBooksEffects() {
+    function withBooksEventHandlers() {
       return signalStoreFeature(
         { state: type<QueryState>() },
-        withEffects(
+        withEventHandlers(
           (
             { query },
             events = inject(Events),
@@ -348,7 +348,7 @@ describe('Integration Tests', () => {
       withEntities<Book>(),
       withRequestStatus(),
       withBooksReducer(),
-      withBooksEffects()
+      withBooksEventHandlers()
     );
 
     it('loads entities when queryChanged and refreshed events are dispatched', fakeAsync(() => {
