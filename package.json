@@ -66,8 +66,8 @@
     ]
   },
   "dependencies": {
-    "@analogjs/content": "2.0.3",
-    "@analogjs/router": "2.0.3",
+    "@analogjs/content": "2.1.1",
+    "@analogjs/router": "2.1.1",
     "@angular/animations": "21.0.0-rc.1",
     "@angular/cdk": "21.0.0-rc.1",
     "@angular/common": "21.0.0-rc.1",
@@ -80,7 +80,7 @@
     "@angular/platform-browser-dynamic": "21.0.0-rc.1",
     "@angular/platform-server": "21.0.0-rc.1",
     "@angular/router": "21.0.0-rc.1",
-    "@microsoft/api-extractor": "^7.52.4",
+    "@microsoft/api-extractor": "^7.55.1",
     "@microsoft/tsdoc": "^0.15.1",
     "@nx/angular": "22.0.3",
     "firebase-admin": "^12.1.1",
@@ -97,14 +97,14 @@
     "semver": "^7.7.2",
     "shiki": "~1.6.1",
     "strip-json-comments": "5.0.3",
-    "tslib": "^2.3.1",
+    "tslib": "^2.7.0",
     "tsx": "^4.11.2",
     "zone.js": "0.15.0"
   },
   "devDependencies": {
-    "@analogjs/platform": "2.0.3",
-    "@analogjs/vite-plugin-angular": "^2.0.3",
-    "@analogjs/vitest-angular": "^2.0.3",
+    "@analogjs/platform": "2.1.1",
+    "@analogjs/vite-plugin-angular": "^2.1.1",
+    "@analogjs/vitest-angular": "^2.1.1",
     "@angular-devkit/build-angular": "21.0.0-rc.1",
     "@angular-devkit/core": "21.0.0-rc.1",
     "@angular-devkit/schematics": "21.0.0-rc.1",
@@ -185,7 +185,7 @@
     "tsconfig-paths": "^3.1.3",
     "typescript": "5.9.3",
     "typescript-eslint": "8.41.0",
-    "vite": "^6.3.0",
+    "vite": "^7.0.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^4.0.0",
     "yaml": "^2.4.5"

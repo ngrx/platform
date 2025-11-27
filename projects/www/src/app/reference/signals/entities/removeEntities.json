@@ -2,7 +2,7 @@
   "name": "removeEntities",
   "canonicalReference": "@ngrx/signals/entities!removeEntities:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/remove-entities.d.ts",
+  "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function removeEntities(ids: "
+          "text": "declare function removeEntities(ids: "
         },
         {
           "kind": "Reference",
@@ -50,7 +50,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/remove-entities.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 4,
         "endIndex": 8
@@ -93,7 +93,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function removeEntities<Entity>(predicate: "
+          "text": "declare function removeEntities<Entity>(predicate: "
         },
         {
           "kind": "Reference",
@@ -131,7 +131,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/remove-entities.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 4,
         "endIndex": 8
@@ -187,7 +187,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function removeEntities<Collection extends "
+          "text": "declare function removeEntities<Collection extends "
         },
         {
           "kind": "Content",
@@ -241,7 +241,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/remove-entities.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 8,
         "endIndex": 12
@@ -305,7 +305,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function removeEntities<Collection extends "
+          "text": "declare function removeEntities<Collection extends "
         },
         {
           "kind": "Content",
@@ -380,7 +380,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/remove-entities.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 15,
         "endIndex": 17

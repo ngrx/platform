@@ -2,7 +2,7 @@
   "name": "Dictionary",
   "canonicalReference": "@ngrx/entity!Dictionary:class",
   "kind": "Class",
-  "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare abstract class Dictionary<T> implements "
+          "text": "declare abstract class Dictionary<T> implements "
         },
         {
           "kind": "Reference",
@@ -28,7 +28,7 @@
           "text": " "
         }
       ],
-      "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
       "releaseTag": "Public",
       "typeParameters": [
         {

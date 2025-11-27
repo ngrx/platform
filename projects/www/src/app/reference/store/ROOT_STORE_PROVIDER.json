@@ -2,7 +2,7 @@
   "name": "ROOT_STORE_PROVIDER",
   "canonicalReference": "@ngrx/store!ROOT_STORE_PROVIDER:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/store/src/tokens.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -24,7 +24,7 @@
           "text": "<void>"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/tokens.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "ROOT_STORE_PROVIDER",

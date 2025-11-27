@@ -2,7 +2,7 @@
   "name": "withState",
   "canonicalReference": "@ngrx/signals!withState:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/signals/src/with-state.d.ts",
+  "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function withState<State extends "
+          "text": "declare function withState<State extends "
         },
         {
           "kind": "Content",
@@ -53,7 +53,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/with-state.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 5,
         "endIndex": 9
@@ -109,7 +109,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function withState<State extends "
+          "text": "declare function withState<State extends "
         },
         {
           "kind": "Content",
@@ -150,7 +150,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/with-state.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 5,
         "endIndex": 9

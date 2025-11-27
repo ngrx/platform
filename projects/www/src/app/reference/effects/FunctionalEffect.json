@@ -2,7 +2,7 @@
   "name": "FunctionalEffect",
   "canonicalReference": "@ngrx/effects!FunctionalEffect:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/effects/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type FunctionalEffect<Source extends "
+          "text": "type FunctionalEffect<Source extends "
         },
         {
           "kind": "Content",
@@ -62,7 +62,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "releaseTag": "Public",
       "name": "FunctionalEffect",
       "typeParameters": [

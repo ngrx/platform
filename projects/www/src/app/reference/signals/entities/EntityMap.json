@@ -2,7 +2,7 @@
   "name": "EntityMap",
   "canonicalReference": "@ngrx/signals/entities!EntityMap:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/signals/entities/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type EntityMap<Entity> = "
+          "text": "type EntityMap<Entity> = "
         },
         {
           "kind": "Reference",
@@ -37,7 +37,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "releaseTag": "Public",
       "name": "EntityMap",
       "typeParameters": [

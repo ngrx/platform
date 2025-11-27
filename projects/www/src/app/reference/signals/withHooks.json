@@ -2,7 +2,7 @@
   "name": "withHooks",
   "canonicalReference": "@ngrx/signals!withHooks:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/signals/src/with-hooks.d.ts",
+  "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function withHooks<Input extends "
+          "text": "declare function withHooks<Input extends "
         },
         {
           "kind": "Reference",
@@ -72,7 +72,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/with-hooks.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 9,
         "endIndex": 13
@@ -128,7 +128,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function withHooks<Input extends "
+          "text": "declare function withHooks<Input extends "
         },
         {
           "kind": "Reference",
@@ -175,7 +175,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/with-hooks.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 6,
         "endIndex": 10

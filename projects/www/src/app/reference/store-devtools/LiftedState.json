@@ -2,7 +2,7 @@
   "name": "LiftedState",
   "canonicalReference": "@ngrx/store-devtools!LiftedState:interface",
   "kind": "Interface",
-  "fileUrlPath": "../../dist/modules/store-devtools/src/reducer.d.ts",
+  "fileUrlPath": "../../dist/modules/store-devtools/types/ngrx-store-devtools.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,10 +12,10 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export interface LiftedState "
+          "text": "interface LiftedState "
         }
       ],
-      "fileUrlPath": "../../dist/modules/store-devtools/src/reducer.d.ts",
+      "fileUrlPath": "../../dist/modules/store-devtools/types/ngrx-store-devtools.d.ts",
       "releaseTag": "Public",
       "name": "LiftedState",
       "preserveMemberOrder": false,

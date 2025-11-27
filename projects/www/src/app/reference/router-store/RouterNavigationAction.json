@@ -2,7 +2,7 @@
   "name": "routerNavigationAction",
   "canonicalReference": "@ngrx/router-store!routerNavigationAction:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+  "fileUrlPath": "../../dist/modules/router-store/types/ngrx-router-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -15,12 +15,8 @@
           "text": "routerNavigationAction: "
         },
         {
-          "kind": "Content",
-          "text": "import(\"@ngrx/store\")."
-        },
-        {
           "kind": "Reference",
-          "text": "ActionCreator",
+          "text": "_ngrx_store.ActionCreator",
           "canonicalReference": "@ngrx/store!ActionCreator:type"
         },
         {
@@ -61,11 +57,11 @@
         },
         {
           "kind": "Content",
-          "text": ">;\n} & import(\"@ngrx/store\")."
+          "text": ">;\n} & "
         },
         {
           "kind": "Reference",
-          "text": "Action",
+          "text": "_ngrx_store.Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
         {
@@ -73,13 +69,13 @@
           "text": "<\"@ngrx/router-store/navigation\">>"
         }
       ],
-      "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+      "fileUrlPath": "../../dist/modules/router-store/types/ngrx-router-store.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "routerNavigationAction",
       "variableTypeTokenRange": {
         "startIndex": 1,
-        "endIndex": 14
+        "endIndex": 13
       },
       "docs": {
         "modifiers": {

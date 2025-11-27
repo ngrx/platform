@@ -2,7 +2,7 @@
   "name": "EntityMapOne",
   "canonicalReference": "@ngrx/entity!EntityMapOne:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type EntityMapOne<T> = "
+          "text": "type EntityMapOne<T> = "
         },
         {
           "kind": "Reference",
@@ -37,7 +37,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
       "releaseTag": "Public",
       "name": "EntityMapOne",
       "typeParameters": [

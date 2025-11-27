@@ -2,7 +2,7 @@
   "name": "createEffect",
   "canonicalReference": "@ngrx/effects!createEffect:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/effects/src/effect_creator.d.ts",
+  "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createEffect<C extends "
+          "text": "declare function createEffect<C extends "
         },
         {
           "kind": "Reference",
@@ -105,7 +105,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/effect_creator.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 19,
         "endIndex": 21
@@ -213,7 +213,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createEffect<Source extends "
+          "text": "declare function createEffect<Source extends "
         },
         {
           "kind": "Content",
@@ -267,7 +267,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/effect_creator.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 10,
         "endIndex": 12
@@ -331,7 +331,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createEffect<Source extends "
+          "text": "declare function createEffect<Source extends "
         },
         {
           "kind": "Content",
@@ -412,7 +412,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/effect_creator.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 16,
         "endIndex": 18

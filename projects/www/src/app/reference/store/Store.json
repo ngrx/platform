@@ -2,7 +2,7 @@
   "name": "Store",
   "canonicalReference": "@ngrx/store!Store:class",
   "kind": "Class",
-  "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare class Store<T = "
+          "text": "declare class Store<T = "
         },
         {
           "kind": "Content",
@@ -58,7 +58,7 @@
           "text": " "
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "releaseTag": "Public",
       "typeParameters": [
         {

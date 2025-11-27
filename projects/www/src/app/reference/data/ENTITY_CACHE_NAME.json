@@ -2,7 +2,7 @@
   "name": "ENTITY_CACHE_NAME",
   "canonicalReference": "@ngrx/data!ENTITY_CACHE_NAME:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/data/src/reducers/constants.d.ts",
+  "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -19,7 +19,7 @@
           "text": "\"entityCache\""
         }
       ],
-      "fileUrlPath": "../../dist/modules/data/src/reducers/constants.d.ts",
+      "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
       "initializerTokenRange": {
         "startIndex": 1,
         "endIndex": 2

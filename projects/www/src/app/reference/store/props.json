@@ -2,7 +2,7 @@
   "name": "props",
   "canonicalReference": "@ngrx/store!props:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/store/src/action_creator.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function props<P extends "
+          "text": "declare function props<P extends "
         },
         {
           "kind": "Content",
@@ -49,7 +49,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/action_creator.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 6,
         "endIndex": 8

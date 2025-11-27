@@ -2,7 +2,7 @@
   "name": "EntityState",
   "canonicalReference": "@ngrx/signals/entities!EntityState:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/signals/entities/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type EntityState<Entity> = "
+          "text": "type EntityState<Entity> = "
         },
         {
           "kind": "Content",
@@ -41,7 +41,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "releaseTag": "Public",
       "name": "EntityState",
       "typeParameters": [

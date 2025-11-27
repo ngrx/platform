@@ -2,7 +2,7 @@
   "name": "select",
   "canonicalReference": "@ngrx/store!select:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function select<T, K>(mapFn: "
+          "text": "declare function select<T, K>(mapFn: "
         },
         {
           "kind": "Content",
@@ -49,7 +49,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 3,
         "endIndex": 8
@@ -116,7 +116,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function select<T, Props, K>(mapFn: "
+          "text": "declare function select<T, Props, K>(mapFn: "
         },
         {
           "kind": "Content",
@@ -161,7 +161,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 5,
         "endIndex": 10
@@ -247,7 +247,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function select<T, a extends "
+          "text": "declare function select<T, a extends "
         },
         {
           "kind": "Content",
@@ -292,7 +292,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 5,
         "endIndex": 10
@@ -359,7 +359,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function select<T, a extends "
+          "text": "declare function select<T, a extends "
         },
         {
           "kind": "Content",
@@ -420,7 +420,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 9,
         "endIndex": 14
@@ -506,7 +506,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function select<T, a extends "
+          "text": "declare function select<T, a extends "
         },
         {
           "kind": "Content",
@@ -583,7 +583,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 13,
         "endIndex": 18
@@ -688,7 +688,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function select<T, a extends "
+          "text": "declare function select<T, a extends "
         },
         {
           "kind": "Content",
@@ -781,7 +781,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 17,
         "endIndex": 22
@@ -905,7 +905,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function select<T, a extends "
+          "text": "declare function select<T, a extends "
         },
         {
           "kind": "Content",
@@ -1014,7 +1014,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 21,
         "endIndex": 26
@@ -1157,7 +1157,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function select<T, a extends "
+          "text": "declare function select<T, a extends "
         },
         {
           "kind": "Content",
@@ -1282,7 +1282,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 25,
         "endIndex": 30
@@ -1444,7 +1444,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function select<T, a extends "
+          "text": "declare function select<T, a extends "
         },
         {
           "kind": "Content",
@@ -1585,7 +1585,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/store.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 29,
         "endIndex": 34

@@ -2,7 +2,7 @@
   "name": "INITIAL_OPTIONS",
   "canonicalReference": "@ngrx/store-devtools!INITIAL_OPTIONS:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/store-devtools/src/config.d.ts",
+  "fileUrlPath": "../../dist/modules/store-devtools/types/ngrx-store-devtools.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -33,7 +33,7 @@
           "text": ">"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store-devtools/src/config.d.ts",
+      "fileUrlPath": "../../dist/modules/store-devtools/types/ngrx-store-devtools.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "INITIAL_OPTIONS",

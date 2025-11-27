@@ -2,7 +2,7 @@
   "name": "provideEffects",
   "canonicalReference": "@ngrx/effects!provideEffects:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/effects/src/provide_effects.d.ts",
+  "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function provideEffects(effects: "
+          "text": "declare function provideEffects(effects: "
         },
         {
           "kind": "Reference",
@@ -64,7 +64,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/provide_effects.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 10,
         "endIndex": 11
@@ -107,7 +107,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function provideEffects(...effects: "
+          "text": "declare function provideEffects(...effects: "
         },
         {
           "kind": "Reference",
@@ -159,7 +159,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/provide_effects.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 10,
         "endIndex": 11

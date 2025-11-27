@@ -2,7 +2,7 @@
   "name": "USER_RUNTIME_CHECKS",
   "canonicalReference": "@ngrx/store!USER_RUNTIME_CHECKS:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/store/src/tokens.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -33,7 +33,7 @@
           "text": ">"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/tokens.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "USER_RUNTIME_CHECKS",

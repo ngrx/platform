@@ -2,7 +2,7 @@
   "name": "toUpdateFactory",
   "canonicalReference": "@ngrx/data!toUpdateFactory:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/data/src/utils/utilities.d.ts",
+  "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function toUpdateFactory<T>(selectId?: "
+          "text": "declare function toUpdateFactory<T>(selectId?: "
         },
         {
           "kind": "Reference",
@@ -54,7 +54,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/data/src/utils/utilities.d.ts",
+      "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 4,
         "endIndex": 9
