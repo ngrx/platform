@@ -16,6 +16,7 @@ export { upsertEntities } from './updaters/upsert-entities';
 
 export { entityConfig } from './entity-config';
 export {
+  EntityChanges,
   EntityId,
   EntityMap,
   EntityProps,
