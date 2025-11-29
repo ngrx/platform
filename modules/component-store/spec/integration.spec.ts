@@ -201,7 +201,9 @@ describe('ComponentStore integration', () => {
 
   @Component({
     selector: 'body',
-    template: '<child *ngIf="isChildVisible"></child>',
+    template: ` @if (isChildVisible) {
+      <child></child>
+    }`,
     standalone: false,
   })
   class ParentComponent implements Parent {
