@@ -39,27 +39,79 @@ The following tutorial shows you how to manage the state of a counter, and how t
 
 2.  Right click on the `app` folder in StackBlitz and create a new file named `counter.actions.ts` to describe the counter actions to increment, decrement, and reset its value.
 
-<code-example header="src/app/counter.actions.ts" path="store/src/app/counter.actions.ts">
+<code-example header="src/app/counter.actions.ts">
+
+```ts
+import { createAction } from '@ngrx/store';
+
+export const increment = createAction('[Counter Component] Increment');
+export const decrement = createAction('[Counter Component] Decrement');
+export const reset = createAction('[Counter Component] Reset');
+```
+
 </code-example>
 
 3.  Define a reducer function to handle changes in the counter value based on the provided actions.
 
-<code-example header="src/app/counter.reducer.ts" path="store/src/app/counter.reducer.ts">
+<code-example header="src/app/counter.reducer.ts">
+
+```ts
+import { createReducer, on } from '@ngrx/store';
+import { increment, decrement, reset } from './counter.actions';
+
+export const initialState = 0;
+
+export const counterReducer = createReducer(
+  initialState,
+  on(increment, (state) => state + 1),
+  on(decrement, (state) => state - 1),
+  on(reset, (state) => 0)
+);
+```
+
 </code-example>
 
 4.  Import the `StoreModule` from `@ngrx/store` and the `counter.reducer` file.
 
-<code-example header="src/app/app.module.ts (imports)" path="store/src/app/app.module.ts" region="imports">
+<code-example header="src/app/app.module.ts (imports)">
+
+```ts
+import { StoreModule } from '@ngrx/store';
+import { counterReducer } from './counter.reducer';
+```
+
 </code-example>
 
 5.  Add the `StoreModule.forRoot` function in the `imports` array of your `AppModule` with an object containing the `count` and the `counterReducer` that manages the state of the counter. The `StoreModule.forRoot()` method registers the global providers needed to access the `Store` throughout your application.
 
-<code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.1.ts">
+<code-example header="src/app/app.module.ts (StoreModule)">
+
+```ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+
+import { StoreModule } from '@ngrx/store';
+import { counterReducer } from './counter.reducer';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, StoreModule.forRoot({ count: counterReducer })],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
 </code-example>
 
 6.  Create a new file called `my-counter.component.ts` in a folder named `my-counter` within the `app` folder that will define a new component called `MyCounterComponent`. This component will render buttons that allow the user to change the count state. Also, create the `my-counter.component.html` file within this same folder.
 
-<code-example header="src/app/my-counter/my-counter.component.ts" >
+<code-example header="src/app/my-counter/my-counter.component.ts">
+
+```ts
+
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -86,30 +138,92 @@ export class MyCounterComponent {
     // TODO: Dispatch a reset action
   }
 }
+```
+
 </code-example>
 
 <code-example header="src/app/my-counter/my-counter.component.html" >
-    &lt;button (click)="increment()"&gt;Increment&lt;/button&gt;
 
-    &lt;div&gt;Current Count: {{ count$ | async }}&lt;/div&gt;
+```html
+<button (click)="increment()">Increment</button>
 
-    &lt;button (click)="decrement()"&gt;Decrement&lt;/button&gt;
+<div>Current Count: {{ count$ | async }}</div>
 
-    &lt;button (click)="reset()"&gt;Reset Counter&lt;/button&gt;
+<button (click)="decrement()">Decrement</button>
+
+<button (click)="reset()">Reset Counter</button>
+```
+
 </code-example>
-
 
 7.  Add the new component to your AppModule's declarations and declare it in the template:
 
-<code-example header="src/app/app.component.html" path="store/src/app/app.component.html" region="counter">
+<code-example header="src/app/app.component.html">
+
+```html
+<app-my-counter></app-my-counter>
+```
+
 </code-example>
 
-<code-example header="src/app/app.module.ts" path="store/src/app/app.module.ts">
+<code-example header="src/app/app.module.ts">
+
+```ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+
+import { StoreModule } from '@ngrx/store';
+import { counterReducer } from './counter.reducer';
+import { MyCounterComponent } from './my-counter/my-counter.component';
+
+@NgModule({
+  declarations: [AppComponent, MyCounterComponent],
+  imports: [BrowserModule, StoreModule.forRoot({ count: counterReducer })],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
 </code-example>
 
 8.  Inject the store into `MyCounterComponent` and connect the `count$` stream to the store's `count` state. Implement the `increment`, `decrement`, and `reset` methods by dispatching actions to the store.
 
-<code-example header="src/app/my-counter/my-counter.component.ts" path="store/src/app/my-counter/my-counter.component.ts">
+<code-example header="src/app/my-counter/my-counter.component.ts">
+
+```ts
+import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { increment, decrement, reset } from '../counter.actions';
+
+@Component({
+  selector: 'app-my-counter',
+  templateUrl: './my-counter.component.html',
+})
+export class MyCounterComponent {
+  count$: Observable<number>;
+
+  constructor(private store: Store<{ count: number }>) {
+    this.count$ = store.select('count');
+  }
+
+  increment() {
+    this.store.dispatch(increment());
+  }
+
+  decrement() {
+    this.store.dispatch(decrement());
+  }
+
+  reset() {
+    this.store.dispatch(reset());
+  }
+}
+```
+
 </code-example>
 
 And that's it! Click the increment, decrement, and reset buttons to change the state of the counter.
