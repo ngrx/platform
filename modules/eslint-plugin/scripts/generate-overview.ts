@@ -8,7 +8,7 @@ import {
 
 (async () => {
   const prettierConfig = await resolveConfig(__dirname);
-  const OVERVIEW = './projects/ngrx.io/content/guide/eslint-plugin/index.md';
+  const OVERVIEW = './projects/www/src/app/pages/guide/eslint-plugin/index.md';
   const GH_CONFIGS =
     'https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs';
 
