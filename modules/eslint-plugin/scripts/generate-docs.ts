@@ -7,7 +7,6 @@ import { rulesForGenerate } from '../src/utils/helper-functions/rules';
   const prettierConfig = await resolveConfig(__dirname);
   const PLACEHOLDER = '<!-- MANUAL-DOC:START -->';
   const RULES_PATHS = [
-    './projects/ngrx.io/content/guide/eslint-plugin/rules',
     './projects/www/src/app/pages/guide/eslint-plugin/rules',
   ];
 
