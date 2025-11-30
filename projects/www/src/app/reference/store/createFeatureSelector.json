@@ -2,7 +2,7 @@
   "name": "createFeatureSelector",
   "canonicalReference": "@ngrx/store!createFeatureSelector:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createFeatureSelector<T>(featureName: "
+          "text": "declare function createFeatureSelector<T>(featureName: "
         },
         {
           "kind": "Content",
@@ -36,7 +36,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 3,
         "endIndex": 5
@@ -92,7 +92,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createFeatureSelector<T, V>(featureName: "
+          "text": "declare function createFeatureSelector<T, V>(featureName: "
         },
         {
           "kind": "Content",
@@ -116,7 +116,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 3,
         "endIndex": 5

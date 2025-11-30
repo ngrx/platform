@@ -2,7 +2,7 @@
   "name": "PLURAL_NAMES_TOKEN",
   "canonicalReference": "@ngrx/data!PLURAL_NAMES_TOKEN:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/data/src/utils/interfaces.d.ts",
+  "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -33,7 +33,7 @@
           "text": ">"
         }
       ],
-      "fileUrlPath": "../../dist/modules/data/src/utils/interfaces.d.ts",
+      "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "PLURAL_NAMES_TOKEN",

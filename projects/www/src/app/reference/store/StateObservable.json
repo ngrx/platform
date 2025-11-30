@@ -2,7 +2,7 @@
   "name": "StateObservable",
   "canonicalReference": "@ngrx/store!StateObservable:class",
   "kind": "Class",
-  "fileUrlPath": "../../dist/modules/store/src/state.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare abstract class StateObservable extends "
+          "text": "declare abstract class StateObservable extends "
         },
         {
           "kind": "Reference",
@@ -28,7 +28,7 @@
           "text": " "
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/state.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "releaseTag": "Public",
       "isAbstract": true,
       "name": "StateObservable",

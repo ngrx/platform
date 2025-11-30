@@ -2,7 +2,7 @@
   "name": "PartialStateUpdater",
   "canonicalReference": "@ngrx/signals!PartialStateUpdater:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/signals/src/state-source.d.ts",
+  "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type PartialStateUpdater<State extends "
+          "text": "type PartialStateUpdater<State extends "
         },
         {
           "kind": "Content",
@@ -40,7 +40,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/state-source.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "releaseTag": "Public",
       "name": "PartialStateUpdater",
       "typeParameters": [

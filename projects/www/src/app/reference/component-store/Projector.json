@@ -2,7 +2,7 @@
   "name": "Projector",
   "canonicalReference": "@ngrx/component-store!Projector:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/component-store/src/component-store.d.ts",
+  "fileUrlPath": "../../dist/modules/component-store/types/ngrx-component-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type Projector<Selectors extends "
+          "text": "type Projector<Selectors extends "
         },
         {
           "kind": "Reference",
@@ -45,7 +45,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/component-store/src/component-store.d.ts",
+      "fileUrlPath": "../../dist/modules/component-store/types/ngrx-component-store.d.ts",
       "releaseTag": "Public",
       "name": "Projector",
       "typeParameters": [

@@ -2,7 +2,7 @@
   "name": "SignalState",
   "canonicalReference": "@ngrx/signals!SignalState:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/signals/src/signal-state.d.ts",
+  "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type SignalState<State extends "
+          "text": "type SignalState<State extends "
         },
         {
           "kind": "Content",
@@ -45,7 +45,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-state.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "releaseTag": "Public",
       "name": "SignalState",
       "typeParameters": [

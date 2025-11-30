@@ -2,7 +2,7 @@
   "name": "USER_PROVIDED_EFFECTS",
   "canonicalReference": "@ngrx/effects!USER_PROVIDED_EFFECTS:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/effects/src/tokens.d.ts",
+  "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -42,7 +42,7 @@
           "text": "<unknown>)[][]>"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/tokens.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "USER_PROVIDED_EFFECTS",

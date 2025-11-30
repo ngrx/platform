@@ -2,7 +2,7 @@
   "name": "rootEffectsInit",
   "canonicalReference": "@ngrx/effects!rootEffectsInit:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/effects/src/effects_actions.d.ts",
+  "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -15,21 +15,17 @@
           "text": "rootEffectsInit: "
         },
         {
-          "kind": "Content",
-          "text": "import(\"@ngrx/store\")."
-        },
-        {
           "kind": "Reference",
-          "text": "ActionCreator",
+          "text": "_ngrx_store.ActionCreator",
           "canonicalReference": "@ngrx/store!ActionCreator:type"
         },
         {
           "kind": "Content",
-          "text": "<\"@ngrx/effects/init\", () => import(\"@ngrx/store\")."
+          "text": "<\"@ngrx/effects/init\", () => "
         },
         {
           "kind": "Reference",
-          "text": "Action",
+          "text": "_ngrx_store.Action",
           "canonicalReference": "@ngrx/store!Action:interface"
         },
         {
@@ -37,13 +33,13 @@
           "text": "<\"@ngrx/effects/init\">>"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/effects_actions.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "rootEffectsInit",
       "variableTypeTokenRange": {
         "startIndex": 1,
-        "endIndex": 6
+        "endIndex": 5
       },
       "docs": {
         "modifiers": {

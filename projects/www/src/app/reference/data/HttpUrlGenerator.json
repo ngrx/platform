@@ -2,7 +2,7 @@
   "name": "HttpUrlGenerator",
   "canonicalReference": "@ngrx/data!HttpUrlGenerator:class",
   "kind": "Class",
-  "fileUrlPath": "../../dist/modules/data/src/dataservices/http-url-generator.d.ts",
+  "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,10 +12,10 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare abstract class HttpUrlGenerator "
+          "text": "declare abstract class HttpUrlGenerator "
         }
       ],
-      "fileUrlPath": "../../dist/modules/data/src/dataservices/http-url-generator.d.ts",
+      "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
       "releaseTag": "Public",
       "isAbstract": true,
       "name": "HttpUrlGenerator",

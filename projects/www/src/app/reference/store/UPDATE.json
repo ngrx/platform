@@ -2,7 +2,7 @@
   "name": "UPDATE",
   "canonicalReference": "@ngrx/store!UPDATE:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/store/src/reducer_manager.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -19,7 +19,7 @@
           "text": "\"@ngrx/store/update-reducers\""
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/reducer_manager.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "UPDATE",

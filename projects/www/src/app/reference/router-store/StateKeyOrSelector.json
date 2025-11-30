@@ -2,7 +2,7 @@
   "name": "StateKeyOrSelector",
   "canonicalReference": "@ngrx/router-store!StateKeyOrSelector:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/router-store/src/router_store_config.d.ts",
+  "fileUrlPath": "../../dist/modules/router-store/types/ngrx-router-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type StateKeyOrSelector<T extends "
+          "text": "type StateKeyOrSelector<T extends "
         },
         {
           "kind": "Reference",
@@ -59,7 +59,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/router-store/src/router_store_config.d.ts",
+      "fileUrlPath": "../../dist/modules/router-store/types/ngrx-router-store.d.ts",
       "releaseTag": "Public",
       "name": "StateKeyOrSelector",
       "typeParameters": [

@@ -2,7 +2,7 @@
   "name": "provideMockActions",
   "canonicalReference": "@ngrx/effects/testing!provideMockActions:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/effects/testing/testing.d.ts",
+  "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects-testing.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function provideMockActions(source: "
+          "text": "declare function provideMockActions(source: "
         },
         {
           "kind": "Reference",
@@ -37,7 +37,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/testing/testing.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects-testing.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 4,
         "endIndex": 5
@@ -80,7 +80,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function provideMockActions(factory: "
+          "text": "declare function provideMockActions(factory: "
         },
         {
           "kind": "Content",
@@ -109,7 +109,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/testing/testing.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects-testing.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 5,
         "endIndex": 6

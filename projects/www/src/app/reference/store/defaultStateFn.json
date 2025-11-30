@@ -2,7 +2,7 @@
   "name": "defaultStateFn",
   "canonicalReference": "@ngrx/store!defaultStateFn:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function defaultStateFn(state: "
+          "text": "declare function defaultStateFn(state: "
         },
         {
           "kind": "Content",
@@ -70,7 +70,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 12,
         "endIndex": 13

@@ -2,7 +2,7 @@
   "name": "createSelector",
   "canonicalReference": "@ngrx/store!createSelector:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, S1, Result>(s1: "
+          "text": "declare function createSelector<State, S1, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -58,7 +58,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 6,
         "endIndex": 10
@@ -144,7 +144,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Slices extends "
+          "text": "declare function createSelector<State, Slices extends "
         },
         {
           "kind": "Content",
@@ -194,7 +194,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 9,
         "endIndex": 11
@@ -272,7 +272,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, Result>(s1: "
+          "text": "declare function createSelector<State, Props, S1, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -318,7 +318,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 6,
         "endIndex": 10
@@ -415,7 +415,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, S2, Result>(s1: "
+          "text": "declare function createSelector<State, Props, S1, S2, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -474,7 +474,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 9,
         "endIndex": 13
@@ -590,7 +590,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, S2, S3, Result>(s1: "
+          "text": "declare function createSelector<State, Props, S1, S2, S3, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -662,7 +662,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 12,
         "endIndex": 16
@@ -797,7 +797,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, S2, S3, S4, Result>(s1: "
+          "text": "declare function createSelector<State, Props, S1, S2, S3, S4, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -882,7 +882,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 15,
         "endIndex": 19
@@ -1036,7 +1036,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, S2, S3, S4, S5, Result>(s1: "
+          "text": "declare function createSelector<State, Props, S1, S2, S3, S4, S5, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -1134,7 +1134,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 18,
         "endIndex": 22
@@ -1307,7 +1307,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, S2, S3, S4, S5, S6, Result>(s1: "
+          "text": "declare function createSelector<State, Props, S1, S2, S3, S4, S5, S6, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -1418,7 +1418,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 21,
         "endIndex": 25
@@ -1610,7 +1610,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, Result>(s1: "
+          "text": "declare function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -1734,7 +1734,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 24,
         "endIndex": 28
@@ -1945,7 +1945,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, S8, Result>(s1: "
+          "text": "declare function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, S8, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -2082,7 +2082,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 27,
         "endIndex": 31
@@ -2312,7 +2312,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Slices extends "
+          "text": "declare function createSelector<State, Slices extends "
         },
         {
           "kind": "Content",
@@ -2366,7 +2366,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 10,
         "endIndex": 12
@@ -2452,7 +2452,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, S1, S2, Result>(s1: "
+          "text": "declare function createSelector<State, S1, S2, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -2511,7 +2511,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 9,
         "endIndex": 13
@@ -2616,7 +2616,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, Result>(selectors: "
+          "text": "declare function createSelector<State, Props, S1, Result>(selectors: "
         },
         {
           "kind": "Content",
@@ -2666,7 +2666,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 7,
         "endIndex": 11
@@ -2763,7 +2763,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, S2, Result>(selectors: "
+          "text": "declare function createSelector<State, Props, S1, S2, Result>(selectors: "
         },
         {
           "kind": "Content",
@@ -2822,7 +2822,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 9,
         "endIndex": 13
@@ -2930,7 +2930,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, S2, S3, Result>(selectors: "
+          "text": "declare function createSelector<State, Props, S1, S2, S3, Result>(selectors: "
         },
         {
           "kind": "Content",
@@ -2998,7 +2998,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 11,
         "endIndex": 15
@@ -3117,7 +3117,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, S2, S3, S4, Result>(selectors: "
+          "text": "declare function createSelector<State, Props, S1, S2, S3, S4, Result>(selectors: "
         },
         {
           "kind": "Content",
@@ -3194,7 +3194,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 13,
         "endIndex": 17
@@ -3324,7 +3324,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, S2, S3, S4, S5, Result>(selectors: "
+          "text": "declare function createSelector<State, Props, S1, S2, S3, S4, S5, Result>(selectors: "
         },
         {
           "kind": "Content",
@@ -3410,7 +3410,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 15,
         "endIndex": 19
@@ -3551,7 +3551,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, S2, S3, S4, S5, S6, Result>(selectors: "
+          "text": "declare function createSelector<State, Props, S1, S2, S3, S4, S5, S6, Result>(selectors: "
         },
         {
           "kind": "Content",
@@ -3646,7 +3646,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 17,
         "endIndex": 21
@@ -3798,7 +3798,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, Result>(selectors: "
+          "text": "declare function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, Result>(selectors: "
         },
         {
           "kind": "Content",
@@ -3902,7 +3902,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 19,
         "endIndex": 23
@@ -4065,7 +4065,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, S8, Result>(selectors: "
+          "text": "declare function createSelector<State, Props, S1, S2, S3, S4, S5, S6, S7, S8, Result>(selectors: "
         },
         {
           "kind": "Content",
@@ -4178,7 +4178,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 21,
         "endIndex": 25
@@ -4352,7 +4352,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, S1, S2, S3, Result>(s1: "
+          "text": "declare function createSelector<State, S1, S2, S3, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -4424,7 +4424,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 12,
         "endIndex": 16
@@ -4548,7 +4548,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, S1, S2, S3, S4, Result>(s1: "
+          "text": "declare function createSelector<State, S1, S2, S3, S4, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -4633,7 +4633,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 15,
         "endIndex": 19
@@ -4776,7 +4776,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, S1, S2, S3, S4, S5, Result>(s1: "
+          "text": "declare function createSelector<State, S1, S2, S3, S4, S5, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -4874,7 +4874,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 18,
         "endIndex": 22
@@ -5036,7 +5036,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, S1, S2, S3, S4, S5, S6, Result>(s1: "
+          "text": "declare function createSelector<State, S1, S2, S3, S4, S5, S6, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -5147,7 +5147,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 21,
         "endIndex": 25
@@ -5328,7 +5328,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, S1, S2, S3, S4, S5, S6, S7, Result>(s1: "
+          "text": "declare function createSelector<State, S1, S2, S3, S4, S5, S6, S7, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -5452,7 +5452,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 24,
         "endIndex": 28
@@ -5652,7 +5652,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<State, S1, S2, S3, S4, S5, S6, S7, S8, Result>(s1: "
+          "text": "declare function createSelector<State, S1, S2, S3, S4, S5, S6, S7, S8, Result>(s1: "
         },
         {
           "kind": "Reference",
@@ -5789,7 +5789,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 27,
         "endIndex": 31
@@ -6008,7 +6008,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelector<Selectors extends "
+          "text": "declare function createSelector<Selectors extends "
         },
         {
           "kind": "Reference",
@@ -6110,7 +6110,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 21,
         "endIndex": 23

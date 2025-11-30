@@ -2,7 +2,7 @@
   "name": "INIT",
   "canonicalReference": "@ngrx/store!INIT:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/store/src/actions_subject.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -19,7 +19,7 @@
           "text": "\"@ngrx/store/init\""
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/actions_subject.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "INIT",

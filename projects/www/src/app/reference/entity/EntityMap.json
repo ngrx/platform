@@ -2,7 +2,7 @@
   "name": "EntityMap",
   "canonicalReference": "@ngrx/entity!EntityMap:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type EntityMap<T> = "
+          "text": "type EntityMap<T> = "
         },
         {
           "kind": "Content",
@@ -23,7 +23,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
       "releaseTag": "Public",
       "name": "EntityMap",
       "typeParameters": [

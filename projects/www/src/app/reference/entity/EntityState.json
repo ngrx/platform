@@ -2,7 +2,7 @@
   "name": "EntityState",
   "canonicalReference": "@ngrx/entity!EntityState:interface",
   "kind": "Interface",
-  "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,10 +12,10 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export interface EntityState<T> "
+          "text": "interface EntityState<T> "
         }
       ],
-      "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
       "releaseTag": "Public",
       "typeParameters": [
         {

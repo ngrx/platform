@@ -2,7 +2,7 @@
   "name": "OnRunEffects",
   "canonicalReference": "@ngrx/effects!OnRunEffects:interface",
   "kind": "Interface",
-  "fileUrlPath": "../../dist/modules/effects/src/lifecycle_hooks.d.ts",
+  "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,10 +12,10 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare interface OnRunEffects "
+          "text": "declare interface OnRunEffects "
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/lifecycle_hooks.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "releaseTag": "Public",
       "name": "OnRunEffects",
       "preserveMemberOrder": false,

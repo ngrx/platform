@@ -2,7 +2,7 @@
   "name": "CreateEffectMetadata",
   "canonicalReference": "@ngrx/effects!CreateEffectMetadata:interface",
   "kind": "Interface",
-  "fileUrlPath": "../../dist/modules/effects/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,10 +12,10 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export interface CreateEffectMetadata "
+          "text": "interface CreateEffectMetadata "
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "releaseTag": "Public",
       "name": "CreateEffectMetadata",
       "preserveMemberOrder": false,

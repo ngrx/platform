@@ -2,7 +2,7 @@
   "name": "OnStoreInit",
   "canonicalReference": "@ngrx/component-store!OnStoreInit:interface",
   "kind": "Interface",
-  "fileUrlPath": "../../dist/modules/component-store/src/lifecycle_hooks.d.ts",
+  "fileUrlPath": "../../dist/modules/component-store/types/ngrx-component-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,10 +12,10 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export interface OnStoreInit "
+          "text": "interface OnStoreInit "
         }
       ],
-      "fileUrlPath": "../../dist/modules/component-store/src/lifecycle_hooks.d.ts",
+      "fileUrlPath": "../../dist/modules/component-store/types/ngrx-component-store.d.ts",
       "releaseTag": "Public",
       "name": "OnStoreInit",
       "preserveMemberOrder": false,

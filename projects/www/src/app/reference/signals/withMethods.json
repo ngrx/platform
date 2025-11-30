@@ -2,7 +2,7 @@
   "name": "withMethods",
   "canonicalReference": "@ngrx/signals!withMethods:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/signals/src/with-methods.d.ts",
+  "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function withMethods<Input extends "
+          "text": "declare function withMethods<Input extends "
         },
         {
           "kind": "Reference",
@@ -81,7 +81,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/with-methods.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 13,
         "endIndex": 15

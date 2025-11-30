@@ -2,7 +2,7 @@
   "name": "MockSelector",
   "canonicalReference": "@ngrx/store/testing!MockSelector:interface",
   "kind": "Interface",
-  "fileUrlPath": "../../dist/modules/store/testing/mock_selector.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store-testing.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,10 +12,10 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export interface MockSelector "
+          "text": "interface MockSelector "
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/testing/mock_selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store-testing.d.ts",
       "releaseTag": "Public",
       "name": "MockSelector",
       "preserveMemberOrder": false,
