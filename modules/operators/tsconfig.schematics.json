@@ -4,12 +4,14 @@
     "rootDir": ".",
     "stripInternal": true,
     "experimentalDecorators": true,
-    "module": "preserve",
-    "moduleResolution": "bundler",
+    "module": "nodenext",
+    "target": "es2022",
+    "moduleResolution": "nodenext",
     "downlevelIteration": true,
     "outDir": "../../dist/modules/operators",
     "paths": {
-      "@ngrx/operators/schematics-core": ["./schematics-core"]
+      "@ngrx/operators/schematics-core": ["./schematics-core"],
+      "@ngrx/operators": ["./src"]
     },
     "sourceMap": true,
     "inlineSources": true,
