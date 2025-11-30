@@ -36,6 +36,7 @@ describe('StateSource', () => {
   };
 
   const consoleWarnSpy = vi.spyOn(console, 'warn');
+  consoleWarnSpy.mockImplementation(() => void true);
 
   beforeEach(() => {
     consoleWarnSpy.mockClear();
