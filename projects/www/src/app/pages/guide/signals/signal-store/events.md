@@ -470,7 +470,7 @@ To support this, the Events plugin provides a built-in mechanism for scoped even
 A new event scope can be created at a feature or component level by using the `provideDispatcher()` function.
 Any events dispatched inside this boundary will belong to the local scope unless explicitly forwarded.
 
-When dispatching an event, the scope can be explicitly selected using dispatch configuration:
+When dispatching an event, the scope can be explicitly selected using the dispatch configuration:
 
 - `self` (default): An event dispatched and handled only within the local scope.
 - `parent`: An event is forwarded to the parent dispatcher.
