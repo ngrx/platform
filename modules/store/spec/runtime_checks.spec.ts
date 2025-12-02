@@ -5,6 +5,8 @@ import { createActiveRuntimeChecks } from '../src/runtime_checks';
 import { RuntimeChecks, Action } from '../src/models';
 import { resetRegisteredActionTypes } from '../src/globals';
 
+vi.mock('@angular/core', { spy: true });
+
 describe('Runtime checks:', () => {
   describe('createActiveRuntimeChecks:', () => {
     it('should enable immutability checks by default', () => {
@@ -39,7 +41,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should disable runtime checks in production by default', () => {
-      const spy = vi.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
+      const spy = vi.mocked(ngCore.isDevMode).mockReturnValue(false);
 
       expect(createActiveRuntimeChecks()).toEqual({
         strictStateSerializability: false,
@@ -55,7 +57,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should disable runtime checks in production even if opted in to enable', () => {
-      const spy = vi.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
+      const spy = vi.mocked(ngCore.isDevMode).mockReturnValue(false);
 
       expect(
         createActiveRuntimeChecks({

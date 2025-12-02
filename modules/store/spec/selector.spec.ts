@@ -13,6 +13,8 @@ import { setNgrxMockEnvironment } from '../src';
 
 import { type Mock, vi } from 'vitest';
 
+vi.mock('@angular/core', { spy: true });
+
 describe('Selectors', () => {
   let countOne: number;
   let countTwo: number;
@@ -81,11 +83,9 @@ describe('Selectors', () => {
     it('should call the projector function only when the value of a dependent selector change', () => {
       const firstState = { first: 'state', unchanged: 'state' };
       const secondState = { second: 'state', unchanged: 'state' };
-      const neverChangingSelector = jasmine
-        .createSpy('unchangedSelector')
-        .and.callFake((state: any) => {
-          return state.unchanged;
-        });
+      const neverChangingSelector = vi.fn((state: any) => {
+        return state.unchanged;
+      });
       const projectFn = vi.fn();
       const selector = createSelector(neverChangingSelector, projectFn);
 
@@ -521,7 +521,7 @@ describe('Selectors', () => {
     describe('Warning', () => {
       describe('should not log when: ', () => {
         it('the feature does exist', () => {
-          const ngSpy = vi.spyOn(ngCore, 'isDevMode').mockReturnValue(true);
+          const ngSpy = vi.mocked(ngCore.isDevMode).mockReturnValue(true);
           const selector = createFeatureSelector('featureA');
 
           selector({ featureA: {} });
@@ -533,7 +533,7 @@ describe('Selectors', () => {
         });
 
         it('the feature key exist but is falsy', () => {
-          const ngSpy = vi.spyOn(ngCore, 'isDevMode').mockReturnValue(true);
+          const ngSpy = vi.mocked(ngCore.isDevMode).mockReturnValue(true);
           const selector = createFeatureSelector('featureB');
 
           selector({ featureA: {}, featureB: undefined });
@@ -545,7 +545,7 @@ describe('Selectors', () => {
         });
 
         it('not in development mode', () => {
-          const ngSpy = vi.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
+          const ngSpy = vi.mocked(ngCore.isDevMode).mockReturnValue(false);
           const selector = createFeatureSelector('featureB');
 
           selector({ featureA: {} });
@@ -559,13 +559,13 @@ describe('Selectors', () => {
 
       describe('warning will ', () => {
         it('be logged when not in mock environment', () => {
-          const ngSpy = vi.spyOn(ngCore, 'isDevMode').mockReturnValue(true);
+          const ngSpy = vi.mocked(ngCore.isDevMode).mockReturnValue(true);
           const selector = createFeatureSelector('featureB');
 
           selector({ featureA: {} });
 
           expect(warnSpy).toHaveBeenCalled();
-          expect(warnSpy.calls.mostRecent().args[0]).toMatch(
+          expect(warnSpy.mock.calls[warnSpy.mock.calls.length - 1][0]).toMatch(
             /The feature name "featureB" does not exist/
           );
 
@@ -607,7 +607,7 @@ describe('Selectors', () => {
       selector(1);
       selector(2);
 
-      expect(anyFn.calls.count()).toEqual(1);
+      expect(anyFn.mock.calls.length).toEqual(1);
     });
 
     it('should allow a custom state memoization function', () => {
@@ -630,7 +630,7 @@ describe('Selectors', () => {
       memoizer.memoized(1, 2, 3);
       memoizer.memoized(1, 2);
 
-      expect(anyFn.calls.count()).toEqual(1);
+      expect(anyFn.mock.calls.length).toEqual(1);
     });
   });
 
