@@ -47,14 +47,10 @@ describe(`Store Modules`, () => {
     const rootInitial = { fruit: 'orange' };
 
     beforeEach(() => {
-      featureAReducerFactory = jasmine
-        .createSpy('featureAReducerFactory')
-        .and.callFake((rm: any, initialState?: any) => {
-          return (state: any, action: any) => 4;
-        });
-      rootReducerFactory = jasmine
-        .createSpy('rootReducerFactory')
-        .and.callFake(combineReducers);
+      featureAReducerFactory = vi.fn((rm: any, initialState?: any) => {
+        return (state: any, action: any) => 4;
+      });
+      rootReducerFactory = vi.fn(combineReducers);
 
       @NgModule({
         imports: [

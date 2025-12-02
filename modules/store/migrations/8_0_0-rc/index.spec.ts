@@ -231,6 +231,7 @@ describe('Migration to version 8.0.0 rc', () => {
           },
         }),
       },
+      // TODO this throws when migrated to vitest
       {
         description: 'does not throw when ngrx-store-freeze is not installed',
         input: JSON.stringify({
