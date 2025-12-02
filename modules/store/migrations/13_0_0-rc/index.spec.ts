@@ -6,7 +6,10 @@ import {
 import * as path from 'path';
 
 describe('Store Migration 13_0_1', () => {
-  const collectionPath = path.join(__dirname, '../migration.json');
+  const collectionPath = path.join(
+    process.cwd(),
+    'dist/modules/store/migrations/migration.json'
+  );
   const pkgName = 'store';
 
   it(`should replace createSelector with explicit generics usages with explicit generics using Slices tuple`, async () => {

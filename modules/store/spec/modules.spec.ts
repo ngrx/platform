@@ -104,18 +104,19 @@ describe(`Store Modules`, () => {
       });
     });
 
-    it(`should use config.reducerFactory`, (done) => {
-      store.dispatch({ type: 'fruit', payload: 'banana' });
-      store.dispatch({ type: 'a', payload: 42 });
+    it(`should use config.reducerFactory`, () =>
+      new Promise<void>((done) => {
+        store.dispatch({ type: 'fruit', payload: 'banana' });
+        store.dispatch({ type: 'a', payload: 42 });
 
-      store.pipe(take(1)).subscribe((s: any) => {
-        expect(s).toEqual({
-          fruit: 'banana',
-          a: 4,
+        store.pipe(take(1)).subscribe((s: any) => {
+          expect(s).toEqual({
+            fruit: 'banana',
+            a: 4,
+          });
+          done();
         });
-        done();
-      });
-    });
+      }));
   });
 
   describe(`: With initial state`, () => {
@@ -136,12 +137,13 @@ describe(`Store Modules`, () => {
         store = TestBed.inject(Store);
       });
 
-      it('should have initial state', (done) => {
-        store.pipe(take(1)).subscribe((s: any) => {
-          expect(s).toEqual(initialState);
-          done();
-        });
-      });
+      it('should have initial state', () =>
+        new Promise<void>((done) => {
+          store.pipe(take(1)).subscribe((s: any) => {
+            expect(s).toEqual(initialState);
+            done();
+          });
+        }));
     };
 
     describe(
@@ -201,23 +203,24 @@ describe(`Store Modules`, () => {
       store = TestBed.inject(Store);
     });
 
-    it('should nest the child module in the root store object', (done) => {
-      store.pipe(take(1)).subscribe((state: State) => {
-        expect(state).toEqual({
-          fruit: 'apple',
-          a: 5,
-          b: {
-            list: [1, 2, 3],
-            index: 2,
-          },
-          c: {
-            list: [1, 2, 3],
-            index: 2,
-          },
-        } as State);
-        done();
-      });
-    });
+    it('should nest the child module in the root store object', () =>
+      new Promise<void>((done) => {
+        store.pipe(take(1)).subscribe((state: State) => {
+          expect(state).toEqual({
+            fruit: 'apple',
+            a: 5,
+            b: {
+              list: [1, 2, 3],
+              index: 2,
+            },
+            c: {
+              list: [1, 2, 3],
+              index: 2,
+            },
+          } as State);
+          done();
+        });
+      }));
   });
 
   describe(`: With slice object`, () => {
@@ -241,13 +244,14 @@ describe(`Store Modules`, () => {
       store = TestBed.inject(Store);
     });
 
-    it('should set up a feature state', (done) => {
-      store.pipe(take(1)).subscribe((state: State) => {
-        expect(state).toEqual({
-          a: 5,
-        } as State);
-        done();
-      });
-    });
+    it('should set up a feature state', () =>
+      new Promise<void>((done) => {
+        store.pipe(take(1)).subscribe((state: State) => {
+          expect(state).toEqual({
+            a: 5,
+          } as State);
+          done();
+        });
+      }));
   });
 });
