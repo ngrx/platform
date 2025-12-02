@@ -26,6 +26,9 @@ describe('USER_RUNTIME_CHECKS Token', () => {
 
     const _store = TestBed.inject(Store);
     expect(serializationCheckMetaReducerSpy).toHaveBeenCalled();
+
+    // Needs to reset or else the test fails
+    serializationCheckMetaReducerSpy.mockReset();
   });
 
   it('should not create a meta reducer if not desired', () => {
@@ -54,6 +57,10 @@ describe('USER_RUNTIME_CHECKS Token', () => {
     const _store = TestBed.inject(Store);
     expect(serializationCheckMetaReducerSpy).not.toHaveBeenCalled();
     expect(inNgZoneAssertMetaReducerSpy).not.toHaveBeenCalled();
+
+    // Needs to reset or else the test fails
+    serializationCheckMetaReducerSpy.mockReset();
+    inNgZoneAssertMetaReducerSpy.mockReset();
   });
 
   it('should create immutability meta reducer without config', () => {
@@ -79,5 +86,9 @@ describe('USER_RUNTIME_CHECKS Token', () => {
     const _store = TestBed.inject(Store);
     expect(serializationCheckMetaReducerSpy).not.toHaveBeenCalled();
     expect(immutabilityCheckMetaReducerSpy).toHaveBeenCalled();
+
+    // Needs to reset or else the test fails
+    serializationCheckMetaReducerSpy.mockReset();
+    immutabilityCheckMetaReducerSpy.mockReset();
   });
 });
