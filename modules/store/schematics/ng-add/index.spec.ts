@@ -12,7 +12,7 @@ import {
 describe('Store ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/store',
-    path.join(__dirname, '../collection.json')
+    path.join(process.cwd(), 'dist/modules/store/schematics/collection.json')
   );
   const defaultOptions: RootStoreOptions = {
     skipPackageJson: false,
