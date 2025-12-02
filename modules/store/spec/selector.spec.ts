@@ -567,7 +567,7 @@ describe('Selectors', () => {
           selector({ featureA: {} });
 
           expect(warnSpy).toHaveBeenCalled();
-          expect(warnSpy.mock.calls[warnSpy.mock.calls.length - 1][0]).toMatch(
+          expect(warnSpy.mock.lastCall?.[0]).toMatch(
             /The feature name "featureB" does not exist/
           );
 
