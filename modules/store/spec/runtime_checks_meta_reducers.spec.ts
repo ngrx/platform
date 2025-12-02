@@ -3,14 +3,14 @@ import { Store, StoreModule, USER_RUNTIME_CHECKS } from '..';
 import * as metaReducers from '../src/meta-reducers';
 
 // mock to be able to spy on meta reducer methods
-jest.mock('../src/meta-reducers');
+vi.mock('../src/meta-reducers');
 
 describe('USER_RUNTIME_CHECKS Token', () => {
   it('should be possible to toggle runtime reducers via the Injection Token', () => {
-    const serializationCheckMetaReducerSpy = spyOn(
+    const serializationCheckMetaReducerSpy = vi.spyOn(
       metaReducers,
       'serializationCheckMetaReducer'
-    ).and.callThrough();
+    );
 
     TestBed.configureTestingModule({
       imports: [StoreModule.forRoot({})],
@@ -29,14 +29,14 @@ describe('USER_RUNTIME_CHECKS Token', () => {
   });
 
   it('should not create a meta reducer if not desired', () => {
-    const serializationCheckMetaReducerSpy = spyOn(
+    const serializationCheckMetaReducerSpy = vi.spyOn(
       metaReducers,
       'serializationCheckMetaReducer'
-    ).and.callThrough();
-    const inNgZoneAssertMetaReducerSpy = spyOn(
+    );
+    const inNgZoneAssertMetaReducerSpy = vi.spyOn(
       metaReducers,
       'inNgZoneAssertMetaReducer'
-    ).and.callThrough();
+    );
 
     TestBed.configureTestingModule({
       imports: [StoreModule.forRoot({})],
@@ -57,14 +57,14 @@ describe('USER_RUNTIME_CHECKS Token', () => {
   });
 
   it('should create immutability meta reducer without config', () => {
-    const serializationCheckMetaReducerSpy = spyOn(
+    const serializationCheckMetaReducerSpy = vi.spyOn(
       metaReducers,
       'serializationCheckMetaReducer'
-    ).and.callThrough();
-    const immutabilityCheckMetaReducerSpy = spyOn(
+    );
+    const immutabilityCheckMetaReducerSpy = vi.spyOn(
       metaReducers,
       'immutabilityCheckMetaReducer'
-    ).and.callThrough();
+    );
 
     TestBed.configureTestingModule({
       imports: [StoreModule.forRoot({})],
