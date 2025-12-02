@@ -499,6 +499,8 @@ describe('Selectors', () => {
       warnSpy = vi.spyOn(console, 'warn');
     });
 
+    afterEach(() => warnSpy.mockReset());
+
     it('should memoize the result', () => {
       const firstValue = { first: 'value' };
       const firstState = { [featureName]: firstValue };
