@@ -7,8 +7,8 @@ import { packages } from './config';
 import { join } from 'path';
 
 const CONFIG = {
-  navigationFile: './projects/ngrx.io/content/navigation.json',
-  migrationDirectory: './projects/ngrx.io/content/guide/migration',
+  navigationFile: './projects/www/src/app/services/guide-menu.service.ts',
+  migrationDirectory: './projects/www/src/app/pages/guide/migration',
   currentVersion: JSON.parse(readFileSync('./package.json', 'utf-8')).version,
 };
 
@@ -147,21 +147,28 @@ function createMigrationDocs(version: string) {
     }
 
     const navigationContent = readFileSync(CONFIG.navigationFile, 'utf-8');
-    const navigation = JSON.parse(navigationContent);
-    const migrationsNav = navigation['SideNav'].find(
-      (nav: any) => nav.title === 'Migrations'
-    );
-    if (migrationsNav) {
-      migrationsNav.children = [
-        {
-          title: `V${newMajor}`,
-          url: `guide/migration/v${newMajor}`,
-        },
-        ...migrationsNav.children,
-      ];
-      writeAsJson(CONFIG.navigationFile, navigation);
+    const migrationLinkPattern = /section\('Migrations',\s*\[([\s\S]*?)\]\)/;
+    const match = navigationContent.match(migrationLinkPattern);
+
+    if (match) {
+      const newMigrationLink = `link('V${newMajor}', '/guide/migration/v${newMajor}'),\n        `;
+      const migrationsLineMatch = navigationContent.match(
+        /section\('Migrations',\s*\[\s*\n/
+      );
+
+      if (migrationsLineMatch?.index) {
+        const insertPosition =
+          migrationsLineMatch.index + migrationsLineMatch[0].length;
+        const updatedContent =
+          navigationContent.slice(0, insertPosition) +
+          newMigrationLink +
+          navigationContent.slice(insertPosition);
+        writeFileSync(CONFIG.navigationFile, updatedContent);
+      }
     } else {
-      console.log('\r\n ⚠ Not able to find Migrations in SideNav');
+      console.log(
+        '\r\n ⚠ Not able to find Migrations in guide-menu.service.ts'
+      );
     }
 
     const migrationDocPath = join(CONFIG.migrationDirectory, `v${newMajor}.md`);
