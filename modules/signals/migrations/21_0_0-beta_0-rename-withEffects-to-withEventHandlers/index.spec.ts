@@ -6,7 +6,7 @@ import { createWorkspace } from '@ngrx/schematics-core/testing';
 import { tags, logging } from '@angular-devkit/core';
 import * as path from 'path';
 
-describe('21_0_0-rc_0-rename-withEffects-to-withEventHandlers', () => {
+describe('21_0_0-beta_0-rename-withEffects-to-withEventHandlers', () => {
   const collectionPath = path.join(
     process.cwd(),
     'dist/modules/signals/migrations/migration.json'
@@ -26,7 +26,7 @@ describe('21_0_0-rc_0-rename-withEffects-to-withEventHandlers', () => {
     schematicRunner.logger.subscribe((e) => logs.push(e));
 
     const tree = await schematicRunner.runSchematic(
-      `21_0_0-rc_0-rename-withEffects-to-withEventHandlers`,
+      `21_0_0-beta_0-rename-withEffects-to-withEventHandlers`,
       {},
       appTree
     );

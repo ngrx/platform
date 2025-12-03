@@ -16,10 +16,10 @@
       "version": "19.0.0-rc.0",
       "factory": "./19_0_0-rc_0-props/index"
     },
-    "21_0_0-rc_0-rename-withEffects-to-withEventHandlers": {
-      "description": "Rename withEffects usage with withEventHandlers",
-      "version": "21.0.0-rc.0",
-      "factory": "./21_0_0-rc_0-rename-withEffects-to-withEventHandlers/index"
+    "21_0_0-beta_0-rename-withEffects-to-withEventHandlers": {
+      "description": "Rename withEffects to withEventHandlers",
+      "version": "21.0.0-beta.0",
+      "factory": "./21_0_0-beta_0-rename-withEffects-to-withEventHandlers/index"
     }
   }
 }
