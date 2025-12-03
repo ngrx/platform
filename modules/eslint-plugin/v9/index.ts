@@ -11,9 +11,9 @@ import effects from '../src/configs/effects';
 import componentStore from '../src/configs/component-store';
 import operators from '../src/configs/operators';
 import signals from '../src/configs/signals';
-import allTypeChecked from '../src/configs/allTypeChecked';
-import effectsTypeChecked from '../src/configs/effectsTypeChecked';
-import signalsTypeChecked from '../src/configs/signalsTypeChecked';
+import allTypeChecked from '../src/configs/all-type-checked';
+import effectsTypeChecked from '../src/configs/effects-type-checked';
+import signalsTypeChecked from '../src/configs/signals-type-checked';
 
 const meta = { name: packageName, version: packageVersion };
 
