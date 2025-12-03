@@ -19,7 +19,7 @@ export default (
     },
   },
   {
-    name: 'ngrx/allTypeChecked',
+    name: 'ngrx/all-type-checked',
     languageOptions: {
       parser,
     },

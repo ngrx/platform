@@ -19,7 +19,7 @@ export default (
     },
   },
   {
-    name: 'ngrx/signalsTypeChecked',
+    name: 'ngrx/signals-type-checked',
     languageOptions: {
       parser,
     },

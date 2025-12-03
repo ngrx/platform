@@ -19,7 +19,7 @@ export default (
     },
   },
   {
-    name: 'ngrx/effectsTypeChecked',
+    name: 'ngrx/effects-type-checked',
     languageOptions: {
       parser,
     },

@@ -10,7 +10,7 @@ Some rules also include a recommendation or an automatic fix using `ng lint --fi
 
 ## Configuration and Usage
 
-### ESLint v9
+### ESLint v9 (Flat Config)
 
 To use the NgRx ESLint Plugin with ESLint v9, include the desired configurations within your ESLint configuration file (e.g. `eslint.config.js`).
 Optionally override some rules via the `rules` property.
@@ -72,7 +72,7 @@ module.exports = tseslint.config({
 });
 ```
 
-### ESLint v8
+### ESLint v8 (Legacy Config)
 
 To use the NgRx ESLint Plugin with ESLint v8, add it to your ESLint file (e.g. `.eslintrc.json`).
 Add the `@ngrx` plugin to the `plugins` section and add the rules you want to use within your project to the `rules` section.
@@ -194,16 +194,16 @@ This is useful if you only use a specific package, as it only includes the rules
 <!-- DO NOT EDIT, this table is automatically generated-->
 <!-- CONFIGURATIONS-CONFIG:START -->
 
-| Name                                                                                                                       |
-| -------------------------------------------------------------------------------------------------------------------------- |
-| [all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all.json)                               |
-| [allTypeChecked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/allTypeChecked.json)         |
-| [component-store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/component-store.json)       |
-| [effects](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects.json)                       |
-| [effectsTypeChecked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effectsTypeChecked.json) |
-| [operators](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/operators.json)                   |
-| [signals](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/signals.json)                       |
-| [signalsTypeChecked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/signalsTypeChecked.json) |
-| [store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/store.json)                           |
+| Name                                                                                                                           |
+| ------------------------------------------------------------------------------------------------------------------------------ |
+| [all-type-checked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all-type-checked.json)         |
+| [all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all.json)                                   |
+| [component-store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/component-store.json)           |
+| [effects-type-checked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects-type-checked.json) |
+| [effects](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects.json)                           |
+| [operators](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/operators.json)                       |
+| [signals-type-checked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/signals-type-checked.json) |
+| [signals](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/signals.json)                           |
+| [store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/store.json)                               |
 
 <!-- CONFIGURATIONS-CONFIG:END -->

@@ -15,7 +15,7 @@ import { NgRxRule } from '../src/rule-creator';
     rule.meta.docs?.requiresTypeChecking === true;
 
   writeConfig('all', (rule) => !isTypeChecked(rule));
-  writeConfig('allTypeChecked', (_rule) => true);
+  writeConfig('all-type-checked', (_rule) => true);
 
   writeConfig(
     'store',
@@ -26,7 +26,7 @@ import { NgRxRule } from '../src/rule-creator';
     'effects',
     (rule) => isModule(rule, 'effects') && !isTypeChecked(rule)
   );
-  writeConfig('effectsTypeChecked', (rule) => isModule(rule, 'effects'));
+  writeConfig('effects-type-checked', (rule) => isModule(rule, 'effects'));
 
   writeConfig(
     'component-store',
@@ -42,19 +42,19 @@ import { NgRxRule } from '../src/rule-creator';
     'signals',
     (rule) => isModule(rule, 'signals') && !isTypeChecked(rule)
   );
-  writeConfig('signalsTypeChecked', (rule) => isModule(rule, 'signals'));
+  writeConfig('signals-type-checked', (rule) => isModule(rule, 'signals'));
 
   async function writeConfig(
     configName:
       | 'all'
-      | 'allTypeChecked'
+      | 'all-type-checked'
       | 'store'
       | 'effects'
-      | 'effectsTypeChecked'
+      | 'effects-type-checked'
       | 'component-store'
       | 'operators'
       | 'signals'
-      | 'signalsTypeChecked',
+      | 'signals-type-checked',
     predicate: (rule: NgRxRule) => boolean
   ) {
     const rulesForConfig = Object.entries(rulesForGenerate).filter(
