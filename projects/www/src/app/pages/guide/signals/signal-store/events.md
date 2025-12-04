@@ -515,7 +515,7 @@ export class BookSearch {
 
 </ngrx-code-example>
 
-Event flow within scopes follows a hierarchical visibility rule which means that `Events` service receives events dispatched in their own scope and events dispatched in any parent scope, including the global scope.
+Event flow within scopes follows a hierarchical visibility rule, which means that `Events` service receives events dispatched in their own scope and events dispatched in any parent scope, including the global scope.
 On the other hand, events dispatched locally are not visible to ancestor scopes.
 
 <ngrx-docs-alert type="help">
