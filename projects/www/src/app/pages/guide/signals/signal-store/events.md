@@ -463,6 +463,7 @@ export class BookSearch {
 
 By default, the `Dispatcher` and `Events` services operate in a global scope where all dispatched events are handled application-wide.
 In some cases, event handling should be isolated to a particular feature or component subtree.
+Typical examples include local state management scenarios where events should stay within a specific feature, or micro-frontend architectures where each remote module needs its own isolated event scope.
 To support this, the Events plugin provides a built-in mechanism for scoped events.
 
 ### Creating Local Scope
