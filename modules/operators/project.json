@@ -26,11 +26,23 @@
             "command": "pnpm exec tsc -p modules/operators/tsconfig.schematics.json"
           },
           {
+            "command": "pnpm exec rimraf node_modules/@ngrx/operators"
+          },
+          {
+            "command": "pnpm exec mkdirp node_modules/@ngrx/operators"
+          },
+          {
+            "command": "ncp dist/modules/operators node_modules/@ngrx/operators"
+          },
+          {
             "command": "cpy LICENSE dist/modules/operators"
           }
         ]
       },
-      "outputs": ["{workspaceRoot}/dist/modules/operators"]
+      "outputs": [
+        "{workspaceRoot}/dist/modules/operators",
+        "{workspaceRoot}/node_modules/@ngrx/operators"
+      ]
     },
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -43,12 +55,8 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "options": {
-        "jestConfig": "modules/operators/jest.config.ts",
-        "runInBand": true,
-        "passWithNoTests": false
-      },
+      "executor": "@analogjs/vitest-angular:test",
+      "dependsOn": ["build"],
       "outputs": ["{workspaceRoot}/coverage/modules/operators"]
     }
   }
