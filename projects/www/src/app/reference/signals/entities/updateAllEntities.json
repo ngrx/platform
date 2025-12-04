@@ -55,7 +55,7 @@
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         {
           "kind": "Content",
@@ -252,7 +252,7 @@
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         {
           "kind": "Content",
@@ -384,7 +384,7 @@
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         {
           "kind": "Content",
@@ -538,7 +538,7 @@
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         {
           "kind": "Content",

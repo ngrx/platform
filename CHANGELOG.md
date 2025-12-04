@@ -1,3 +1,57 @@
+<a name="21.0.0-beta.0"></a>
+
+# [21.0.0-beta.0](https://github.com/ngrx/platform/compare/20.0.1...21.0.0-beta.0) (2025-12-04)
+
+### Bug Fixes
+
+- **eslint-plugin:** only lint NgRx selectors in prefix-selectors-with-select ([#4995](https://github.com/ngrx/platform/issues/4995)) ([568dbe3](https://github.com/ngrx/platform/commit/568dbe3)), closes [#4447](https://github.com/ngrx/platform/issues/4447)
+- **signals:** drop `assertInInjectionContext` in production ([#4954](https://github.com/ngrx/platform/issues/4954)) ([37e6fa1](https://github.com/ngrx/platform/commit/37e6fa1))
+- **signals:** drop `assertUniqueStoreMembers` in production ([#4953](https://github.com/ngrx/platform/issues/4953)) ([b4edd95](https://github.com/ngrx/platform/commit/b4edd95))
+- **signals:** remove symbol descriptions from prod bundle ([#4979](https://github.com/ngrx/platform/issues/4979)) ([05cfb03](https://github.com/ngrx/platform/commit/05cfb03))
+
+### Features
+
+- **eslint-plugin:** enhance prefix-selectors-with-select to handle destructuring ([#4926](https://github.com/ngrx/platform/issues/4926)) ([bc89544](https://github.com/ngrx/platform/commit/bc89544))
+- **eslint-plugin:** split required typechecking configs ([#5002](https://github.com/ngrx/platform/issues/5002)) ([c1f4fc5](https://github.com/ngrx/platform/commit/c1f4fc5))
+- **signals:** add ability to provide SignalStore at the platform level ([#4964](https://github.com/ngrx/platform/issues/4964)) ([835014b](https://github.com/ngrx/platform/commit/835014b)), closes [#4963](https://github.com/ngrx/platform/issues/4963)
+- **signals:** add EntityChanges type to public API ([#5014](https://github.com/ngrx/platform/issues/5014)) ([76e4dc6](https://github.com/ngrx/platform/commit/76e4dc6)), closes [#5012](https://github.com/ngrx/platform/issues/5012)
+- **signals:** add migration schematic to rename withEffects to withEventHandlers ([#5032](https://github.com/ngrx/platform/issues/5032)) ([d6a2c56](https://github.com/ngrx/platform/commit/d6a2c56)), closes [#5010](https://github.com/ngrx/platform/issues/5010)
+- **signals:** allow computation fn to be provided to `signalMethod` and `rxMethod` ([#4996](https://github.com/ngrx/platform/issues/4996)) ([eea69d7](https://github.com/ngrx/platform/commit/eea69d7)), closes [#4986](https://github.com/ngrx/platform/issues/4986)
+- **signals:** allow returning an array of observables from withEffects ([#5008](https://github.com/ngrx/platform/issues/5008)) ([8994d92](https://github.com/ngrx/platform/commit/8994d92))
+- **signals:** provide Dispatcher and Events at the platform level ([#4978](https://github.com/ngrx/platform/issues/4978)) ([0722ddb](https://github.com/ngrx/platform/commit/0722ddb))
+- **signals:** provide support for scoped events ([#4997](https://github.com/ngrx/platform/issues/4997)) ([c719d19](https://github.com/ngrx/platform/commit/c719d19)), closes [#4776](https://github.com/ngrx/platform/issues/4776)
+- **signals:** rename withEffects to withEventHandlers ([#5009](https://github.com/ngrx/platform/issues/5009)) ([3aa64ae](https://github.com/ngrx/platform/commit/3aa64ae))
+
+### BREAKING CHANGES
+
+- **signals:** The withEffects feature from @ngrx/signals/events plugin is renamed to withEventHandlers.
+
+BEFORE:
+
+import { withEffects } from '@ngrx/signals/events';
+
+export const CounterStore = signalStore(
+withState({ count: 0 }),
+withEffects((store, events = inject(Events)) => ({
+logCount$: events.on(increment).pipe(
+tap(() => console.log(store.count()))
+),
+}))
+);
+
+AFTER:
+
+import { withEventHandlers } from '@ngrx/signals/events';
+
+export const CounterStore = signalStore(
+withState({ count: 0 }),
+withEventHandlers((store, events = inject(Events)) => ({
+logCount$: events.on(increment).pipe(
+tap(() => console.log(store.count()))
+),
+}))
+);
+
 <a name="20.1.0"></a>
 
 # [20.1.0](https://github.com/ngrx/platform/compare/20.0.1...20.1.0) (2025-10-22)
