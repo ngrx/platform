@@ -33,7 +33,7 @@ describe('ESLint V9', () => {
       rules.length
     );
   });
-  test('there is a difference between typed checke rules ', () => {
+  test('there is a difference between typed checked rules ', () => {
     expect(
       Object.keys((configs.allTypeChecked[1] as any).rules).length
     ).toBeGreaterThan(Object.keys((configs.all[1] as any).rules).length);

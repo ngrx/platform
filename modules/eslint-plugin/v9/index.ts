@@ -6,14 +6,14 @@ import {
   version as packageVersion,
 } from '../package.json';
 import all from '../src/configs/all';
+import allTypeChecked from '../src/configs/all-type-checked';
 import store from '../src/configs/store';
 import effects from '../src/configs/effects';
+import effectsTypeChecked from '../src/configs/effects-type-checked';
 import componentStore from '../src/configs/component-store';
 import operators from '../src/configs/operators';
 import signals from '../src/configs/signals';
-import allTypeChecked from '../src/configs/allTypeChecked';
-import effectsTypeChecked from '../src/configs/effectsTypeChecked';
-import signalsTypeChecked from '../src/configs/signalsTypeChecked';
+import signalsTypeChecked from '../src/configs/signals-type-checked';
 
 const meta = { name: packageName, version: packageVersion };
 
