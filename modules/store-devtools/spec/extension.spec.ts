@@ -84,16 +84,16 @@ function createState(
 
 const testSetup = (options: { config: StoreDevtoolsConfig }) => {
   const reduxDevtoolsExtension = {
-    send: vi.fn(() => {}),
-    connect: vi.fn(() => {}),
+    send: vi.fn(),
+    connect: vi.fn(),
   };
 
   const extensionConnection = {
-    init: vi.fn(() => {}),
-    subscribe: vi.fn(() => {}),
-    unsubscribe: vi.fn(() => {}),
-    send: vi.fn(() => {}),
-    error: vi.fn(() => {}),
+    init: vi.fn(),
+    subscribe: vi.fn(),
+    unsubscribe: vi.fn(),
+    send: vi.fn(),
+    error: vi.fn(),
   };
 
   reduxDevtoolsExtension.connect.mockReturnValue(extensionConnection);
