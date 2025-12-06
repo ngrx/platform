@@ -47,32 +47,29 @@ describe('Router Store Module', () => {
       expect((<any>storeRouterConnectingService).stateKey).toBe(customStateKey);
     });
 
-    it('should call navigateIfNeeded with args selected by custom state key', (done: any) => {
-      let logs: any[] = [];
-      store
-        .pipe(select(customStateKey), withLatestFrom(store))
-        .subscribe(([routerStoreState, storeState]) => {
-          logs.push([routerStoreState, storeState]);
+    it('should call navigateIfNeeded with args selected by custom state key', () =>
+      new Promise<void>((done) => {
+        let logs: any[] = [];
+        store
+          .pipe(select(customStateKey), withLatestFrom(store))
+          .subscribe(([routerStoreState, storeState]) => {
+            logs.push([routerStoreState, storeState]);
+          });
+
+        vi.spyOn(storeRouterConnectingService, 'navigateIfNeeded' as never);
+        logs = [];
+
+        // this dispatches `@ngrx/router-store/navigation` action
+        // and store emits its payload.
+        router.navigateByUrl('/').then(() => {
+          const actual = (<any>storeRouterConnectingService).navigateIfNeeded
+            .mock.calls;
+
+          expect(actual.length).toBe(1);
+          expect(actual[0]).toEqual(logs[0]);
+          done();
         });
-
-      spyOn(
-        storeRouterConnectingService,
-        'navigateIfNeeded' as never
-      ).and.callThrough();
-      logs = [];
-
-      // this dispatches `@ngrx/router-store/navigation` action
-      // and store emits its payload.
-      router.navigateByUrl('/').then(() => {
-        const actual = (<any>(
-          storeRouterConnectingService
-        )).navigateIfNeeded.calls.allArgs();
-
-        expect(actual.length).toBe(1);
-        expect(actual[0]).toEqual(logs[0]);
-        done();
-      });
-    });
+      }));
   });
 
   describe('with defining state selector', () => {
@@ -110,32 +107,29 @@ describe('Router Store Module', () => {
       );
     });
 
-    it('should call navigateIfNeeded with args selected by custom state selector', (done: any) => {
-      let logs: any[] = [];
-      store
-        .pipe(select(customStateSelector), withLatestFrom(store))
-        .subscribe(([routerStoreState, storeState]) => {
-          logs.push([routerStoreState, storeState]);
+    it('should call navigateIfNeeded with args selected by custom state selector', () =>
+      new Promise<void>((done) => {
+        let logs: any[] = [];
+        store
+          .pipe(select(customStateSelector), withLatestFrom(store))
+          .subscribe(([routerStoreState, storeState]) => {
+            logs.push([routerStoreState, storeState]);
+          });
+
+        vi.spyOn(storeRouterConnectingService, 'navigateIfNeeded' as never);
+        logs = [];
+
+        // this dispatches `@ngrx/router-store/navigation` action
+        // and store emits its payload.
+        router.navigateByUrl('/').then(() => {
+          const actual = (<any>storeRouterConnectingService).navigateIfNeeded
+            .mock.calls;
+
+          expect(actual.length).toBe(1);
+          expect(actual[0]).toEqual(logs[0]);
+          done();
         });
-
-      spyOn(
-        storeRouterConnectingService,
-        'navigateIfNeeded' as never
-      ).and.callThrough();
-      logs = [];
-
-      // this dispatches `@ngrx/router-store/navigation` action
-      // and store emits its payload.
-      router.navigateByUrl('/').then(() => {
-        const actual = (<any>(
-          storeRouterConnectingService
-        )).navigateIfNeeded.calls.allArgs();
-
-        expect(actual.length).toBe(1);
-        expect(actual[0]).toEqual(logs[0]);
-        done();
-      });
-    });
+      }));
   });
 
   describe('routerState', () => {
@@ -159,15 +153,16 @@ describe('Router Store Module', () => {
       a.payload && a.payload.event;
 
     describe('Full', () => {
-      it('should dispatch the full event', (done: any) => {
-        const { actions, router } = setup(RouterState.Full);
-        actions.pipe(filter(onlyRouterActions)).subscribe(({ payload }) => {
-          expect(payload.event instanceof RouterEvent).toBe(true);
-          done();
-        });
+      it('should dispatch the full event', () =>
+        new Promise<void>((done) => {
+          const { actions, router } = setup(RouterState.Full);
+          actions.pipe(filter(onlyRouterActions)).subscribe(({ payload }) => {
+            expect(payload.event instanceof RouterEvent).toBe(true);
+            done();
+          });
 
-        router.navigateByUrl('/');
-      });
+          router.navigateByUrl('/');
+        }));
 
       it('should use the default router serializer by default', () => {
         const { serializer } = setup();
@@ -194,42 +189,44 @@ describe('Router Store Module', () => {
     });
 
     describe('Minimal', () => {
-      it('should dispatch the navigation id with url', (done: any) => {
-        const { actions, router } = setup(RouterState.Minimal);
-        actions
-          .pipe(filter(onlyRouterActions))
-          .subscribe(({ payload }: any) => {
-            expect(payload.event instanceof RouterEvent).toBe(false);
-            expect(payload.event).toEqual({ id: 1, url: '/' });
-            done();
-          });
-
-        router.navigateByUrl('/');
-      });
-
-      it('should dispatch the navigation with urlAfterRedirects', (done: any) => {
-        const { actions, router } = setup(RouterState.Minimal);
-        actions
-          .pipe(
-            filter(onlyRouterActions),
-            // wait until NavigationEnd router event
-            filter(
-              ({ payload }) =>
-                !!(payload.event as NavigationEnd).urlAfterRedirects
-            )
-          )
-          .subscribe(({ payload }: any) => {
-            expect(payload.event instanceof RouterEvent).toBe(false);
-            expect(payload.event).toEqual({
-              id: 1,
-              url: '/redirect',
-              urlAfterRedirects: '/next',
+      it('should dispatch the navigation id with url', () =>
+        new Promise<void>((done) => {
+          const { actions, router } = setup(RouterState.Minimal);
+          actions
+            .pipe(filter(onlyRouterActions))
+            .subscribe(({ payload }: any) => {
+              expect(payload.event instanceof RouterEvent).toBe(false);
+              expect(payload.event).toEqual({ id: 1, url: '/' });
+              done();
             });
-            done();
-          });
 
-        router.navigateByUrl('/redirect');
-      });
+          router.navigateByUrl('/');
+        }));
+
+      it('should dispatch the navigation with urlAfterRedirects', () =>
+        new Promise<void>((done) => {
+          const { actions, router } = setup(RouterState.Minimal);
+          actions
+            .pipe(
+              filter(onlyRouterActions),
+              // wait until NavigationEnd router event
+              filter(
+                ({ payload }) =>
+                  !!(payload.event as NavigationEnd).urlAfterRedirects
+              )
+            )
+            .subscribe(({ payload }: any) => {
+              expect(payload.event instanceof RouterEvent).toBe(false);
+              expect(payload.event).toEqual({
+                id: 1,
+                url: '/redirect',
+                urlAfterRedirects: '/next',
+              });
+              done();
+            });
+
+          router.navigateByUrl('/redirect');
+        }));
 
       it('should use the minimal router serializer', () => {
         const { serializer } = setup(RouterState.Minimal);

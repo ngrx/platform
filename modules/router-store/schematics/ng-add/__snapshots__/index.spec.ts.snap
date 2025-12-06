@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Router Store ng-add Schematic Router Store ng-add Schematic for standalone application provides initial setup 1`] = `
+exports[`Router Store ng-add Schematic > Router Store ng-add Schematic for standalone application > provides initial setup 1`] = `
 "import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouterStore } from '@ngrx/router-store';
 

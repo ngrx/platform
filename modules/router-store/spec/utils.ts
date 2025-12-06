@@ -5,6 +5,7 @@ import { StoreModule } from '@ngrx/store';
 
 import { StoreRouterConfig, StoreRouterConnectingModule } from '../src';
 import { RouterOutlet } from '@angular/router';
+import { vi } from 'vitest';
 
 export function createTestModule(
   opts: {
@@ -63,8 +64,8 @@ export function createTestModule(
       {
         provide: Console,
         useValue: {
-          log: jasmine.createSpy('Console.log'),
-          warn: jasmine.createSpy('Console.warn'),
+          log: vi.fn(),
+          warn: vi.fn(),
         },
       },
       opts.providers || [],

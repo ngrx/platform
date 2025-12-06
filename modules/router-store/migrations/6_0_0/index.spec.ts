@@ -13,7 +13,10 @@ import {
   versionPrefixes,
 } from '@ngrx/schematics-core/testing/update';
 
-const collectionPath = path.join(__dirname, '../migration.json');
+const collectionPath = path.join(
+  process.cwd(),
+  'dist/modules/router-store/migrations/migration.json'
+);
 
 describe('Router Store Migration 6_0_0', () => {
   let appTree;

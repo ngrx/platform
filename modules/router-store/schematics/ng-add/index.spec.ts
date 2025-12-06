@@ -12,7 +12,10 @@ import {
 describe('Router Store ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/router-store',
-    path.join(__dirname, '../collection.json')
+    path.join(
+      process.cwd(),
+      'dist/modules/router-store/schematics/collection.json'
+    )
   );
   const defaultOptions: RouterStoreOptions = {
     skipPackageJson: false,

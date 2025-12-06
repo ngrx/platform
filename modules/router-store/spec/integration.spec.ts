@@ -28,147 +28,154 @@ import {
 import { createTestModule } from './utils';
 
 describe('integration spec', () => {
-  it('should work', (done: any) => {
-    const reducer = (state = '', action: RouterAction<any>) => {
-      if (action.type === ROUTER_NAVIGATION) {
-        return action.payload.routerState.url.toString();
-      } else {
-        return state;
-      }
-    };
-
-    createTestModule({ reducers: { reducer } });
-
-    const router = TestBed.inject(Router);
-    const log = logOfRouterAndActionsAndStore();
-
-    router
-      .navigateByUrl('/')
-      .then(() => {
-        expect(log).toEqual([
-          { type: 'store', state: '' }, // init event. has nothing to do with the router
-          { type: 'store', state: '' }, // ROUTER_REQUEST event in the store
-          { type: 'action', action: ROUTER_REQUEST },
-          { type: 'router', event: 'NavigationStart', url: '/' },
-          { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
-          { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'RoutesRecognized', url: '/' },
-          /* new Router Lifecycle in Angular 4.3 */
-          { type: 'router', event: 'GuardsCheckStart', url: '/' },
-          { type: 'router', event: 'GuardsCheckEnd', url: '/' },
-          { type: 'router', event: 'ResolveStart', url: '/' },
-          { type: 'router', event: 'ResolveEnd', url: '/' },
-          { type: 'store', state: '/' }, // ROUTER_NAVIGATED event in the store
-          { type: 'action', action: ROUTER_NAVIGATED },
-          { type: 'router', event: 'NavigationEnd', url: '/' },
-        ]);
-      })
-      .then(() => {
-        log.splice(0);
-        return router.navigateByUrl('next');
-      })
-      .then(() => {
-        expect(log).toEqual([
-          { type: 'store', state: '/' }, // ROUTER_REQUEST event in the store
-          { type: 'action', action: ROUTER_REQUEST },
-          { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'store', state: '/next' },
-          { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
-
-          /* new Router Lifecycle in Angular 4.3 */
-          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
-          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
-          { type: 'router', event: 'ResolveStart', url: '/next' },
-          { type: 'router', event: 'ResolveEnd', url: '/next' },
-          { type: 'store', state: '/next' }, // ROUTER_NAVIGATED event in the store
-          { type: 'action', action: ROUTER_NAVIGATED },
-          { type: 'router', event: 'NavigationEnd', url: '/next' },
-        ]);
-
-        done();
-      });
-  });
-
-  it('should have the routerState in the payload', (done: any) => {
-    const actionLog: RouterAction<any>[] = [];
-    const reducer = (state = '', action: RouterAction<any>) => {
-      switch (action.type) {
-        case ROUTER_CANCEL:
-        case ROUTER_ERROR:
-        case ROUTER_NAVIGATED:
-        case ROUTER_NAVIGATION:
-        case ROUTER_REQUEST:
-          actionLog.push(action);
+  it('should work', () =>
+    new Promise<void>((done) => {
+      const reducer = (state = '', action: RouterAction<any>) => {
+        if (action.type === ROUTER_NAVIGATION) {
+          return action.payload.routerState.url.toString();
+        } else {
           return state;
-        default:
+        }
+      };
+
+      createTestModule({ reducers: { reducer } });
+
+      const router = TestBed.inject(Router);
+      const log = logOfRouterAndActionsAndStore();
+
+      router
+        .navigateByUrl('/')
+        .then(() => {
+          expect(log).toEqual([
+            { type: 'store', state: '' }, // init event. has nothing to do with the router
+            { type: 'store', state: '' }, // ROUTER_REQUEST event in the store
+            { type: 'action', action: ROUTER_REQUEST },
+            { type: 'router', event: 'NavigationStart', url: '/' },
+            { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
+            { type: 'action', action: ROUTER_NAVIGATION },
+            { type: 'router', event: 'RoutesRecognized', url: '/' },
+            /* new Router Lifecycle in Angular 4.3 */
+            { type: 'router', event: 'GuardsCheckStart', url: '/' },
+            { type: 'router', event: 'GuardsCheckEnd', url: '/' },
+            { type: 'router', event: 'ResolveStart', url: '/' },
+            { type: 'router', event: 'ResolveEnd', url: '/' },
+            { type: 'store', state: '/' }, // ROUTER_NAVIGATED event in the store
+            { type: 'action', action: ROUTER_NAVIGATED },
+            { type: 'router', event: 'NavigationEnd', url: '/' },
+          ]);
+        })
+        .then(() => {
+          log.splice(0);
+          return router.navigateByUrl('next');
+        })
+        .then(() => {
+          expect(log).toEqual([
+            { type: 'store', state: '/' }, // ROUTER_REQUEST event in the store
+            { type: 'action', action: ROUTER_REQUEST },
+            { type: 'router', event: 'NavigationStart', url: '/next' },
+            { type: 'store', state: '/next' },
+            { type: 'action', action: ROUTER_NAVIGATION },
+            { type: 'router', event: 'RoutesRecognized', url: '/next' },
+
+            /* new Router Lifecycle in Angular 4.3 */
+            { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+            { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+            { type: 'router', event: 'ResolveStart', url: '/next' },
+            { type: 'router', event: 'ResolveEnd', url: '/next' },
+            { type: 'store', state: '/next' }, // ROUTER_NAVIGATED event in the store
+            { type: 'action', action: ROUTER_NAVIGATED },
+            { type: 'router', event: 'NavigationEnd', url: '/next' },
+          ]);
+
+          done();
+        });
+    }));
+
+  it('should have the routerState in the payload', () =>
+    new Promise<void>((done) => {
+      const actionLog: RouterAction<any>[] = [];
+      const reducer = (state = '', action: RouterAction<any>) => {
+        switch (action.type) {
+          case ROUTER_CANCEL:
+          case ROUTER_ERROR:
+          case ROUTER_NAVIGATED:
+          case ROUTER_NAVIGATION:
+          case ROUTER_REQUEST:
+            actionLog.push(action);
+            return state;
+          default:
+            return state;
+        }
+      };
+
+      createTestModule({
+        reducers: { reducer },
+        canActivate: (
+          route: ActivatedRouteSnapshot,
+          state: RouterStateSnapshot
+        ) => state.url !== 'next',
+      });
+
+      const router = TestBed.inject(Router);
+      const log = logOfRouterAndActionsAndStore();
+
+      const hasRouterState = (action: RouterAction<any>) =>
+        !!action.payload.routerState;
+
+      router
+        .navigateByUrl('/')
+        .then(() => {
+          expect(actionLog.filter(hasRouterState).length).toBe(
+            actionLog.length
+          );
+        })
+        .then(() => {
+          actionLog.splice(0);
+          return router.navigateByUrl('next');
+        })
+        .then(() => {
+          expect(actionLog.filter(hasRouterState).length).toBe(
+            actionLog.length
+          );
+          done();
+        });
+    }));
+
+  test.skip('should support preventing navigation', () =>
+    new Promise<void>((done) => {
+      const reducer = (state = '', action: RouterAction<any>) => {
+        if (
+          action.type === ROUTER_NAVIGATION &&
+          action.payload.routerState.url.toString() === '/next'
+        ) {
+          throw new Error('You shall not pass!');
+        } else {
           return state;
-      }
-    };
+        }
+      };
 
-    createTestModule({
-      reducers: { reducer },
-      canActivate: (
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-      ) => state.url !== 'next',
-    });
+      createTestModule({ reducers: { reducer } });
 
-    const router = TestBed.inject(Router);
-    const log = logOfRouterAndActionsAndStore();
+      const router = TestBed.inject(Router);
+      const log = logOfRouterAndActionsAndStore();
 
-    const hasRouterState = (action: RouterAction<any>) =>
-      !!action.payload.routerState;
+      router
+        .navigateByUrl('/')
+        .then(() => {
+          log.splice(0);
+          return router.navigateByUrl('next');
+        })
+        .catch((e) => {
+          expect(e.message).toEqual('You shall not pass!');
+          expect(log).toEqual([
+            { type: 'router', event: 'NavigationStart', url: '/next' },
+            { type: 'router', event: 'RoutesRecognized', url: '/next' },
+            { type: 'router', event: 'NavigationError', url: '/next' },
+          ]);
 
-    router
-      .navigateByUrl('/')
-      .then(() => {
-        expect(actionLog.filter(hasRouterState).length).toBe(actionLog.length);
-      })
-      .then(() => {
-        actionLog.splice(0);
-        return router.navigateByUrl('next');
-      })
-      .then(() => {
-        expect(actionLog.filter(hasRouterState).length).toBe(actionLog.length);
-        done();
-      });
-  });
-
-  xit('should support preventing navigation', (done: any) => {
-    const reducer = (state = '', action: RouterAction<any>) => {
-      if (
-        action.type === ROUTER_NAVIGATION &&
-        action.payload.routerState.url.toString() === '/next'
-      ) {
-        throw new Error('You shall not pass!');
-      } else {
-        return state;
-      }
-    };
-
-    createTestModule({ reducers: { reducer } });
-
-    const router = TestBed.inject(Router);
-    const log = logOfRouterAndActionsAndStore();
-
-    router
-      .navigateByUrl('/')
-      .then(() => {
-        log.splice(0);
-        return router.navigateByUrl('next');
-      })
-      .catch((e) => {
-        expect(e.message).toEqual('You shall not pass!');
-        expect(log).toEqual([
-          { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
-          { type: 'router', event: 'NavigationError', url: '/next' },
-        ]);
-
-        done();
-      });
-  });
+          done();
+        });
+    }));
 
   it('should ignore routing actions for the URL that is currently open', async () => {
     createTestModule({
@@ -177,7 +184,7 @@ describe('integration spec', () => {
 
     const router = TestBed.inject(Router);
     const store = TestBed.inject(Store);
-    const navigateByUrlSpy = jest.spyOn(router, 'navigateByUrl');
+    const navigateByUrlSpy = vi.spyOn(router, 'navigateByUrl');
 
     await router.navigateByUrl('/');
 
@@ -196,458 +203,465 @@ describe('integration spec', () => {
     expect(navigateByUrlSpy.mock.calls.length).toBe(1);
   });
 
-  it('should support rolling back if navigation gets canceled (navigation initialized through router)', (done: any) => {
-    const reducer = (state = '', action: RouterAction<any>): any => {
-      if (action.type === ROUTER_NAVIGATION) {
-        return {
-          url: action.payload.routerState.url.toString(),
-          lastAction: ROUTER_NAVIGATION,
-        };
-      } else if (action.type === ROUTER_CANCEL) {
-        return {
-          url: action.payload.routerState.url.toString(),
-          storeState: action.payload.storeState.reducer,
-          lastAction: ROUTER_CANCEL,
-        };
-      } else {
-        return state;
-      }
-    };
-
-    createTestModule({
-      reducers: { reducer, routerReducer },
-      canActivate: () => false,
-    });
-
-    const router = TestBed.inject(Router);
-    const log = logOfRouterAndActionsAndStore();
-
-    router
-      .navigateByUrl('/')
-      .then(() => {
-        log.splice(0);
-        return router.navigateByUrl('next');
-      })
-      .then((r) => {
-        expect(r).toEqual(false);
-
-        expect(log).toEqual([
-          {
-            type: 'store',
-            state: { url: '/', lastAction: ROUTER_NAVIGATION },
-          }, // ROUTER_REQUEST event in the store
-          { type: 'action', action: ROUTER_REQUEST },
-          { type: 'router', event: 'NavigationStart', url: '/next' },
-          {
-            type: 'store',
-            state: { url: '/next', lastAction: ROUTER_NAVIGATION },
-          },
-          { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
-
-          /* new Router Lifecycle in Angular 4.3 - m */
-          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
-          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
-          // { type: 'router', event: 'ResolveStart', url: '/next' },
-          // { type: 'router', event: 'ResolveEnd', url: '/next' },
-          {
-            type: 'store',
-            state: {
-              url: '/',
-              lastAction: ROUTER_CANCEL,
-              storeState: { url: '/', lastAction: ROUTER_NAVIGATION },
-            },
-          },
-          { type: 'action', action: ROUTER_CANCEL },
-          { type: 'router', event: 'NavigationCancel', url: '/next' },
-        ]);
-
-        done();
-      });
-  });
-
-  it('should support rolling back if navigation gets canceled (navigation initialized through store)', (done: any) => {
-    const CHANGE_ROUTE = 'CHANGE_ROUTE';
-    const reducer = (
-      state: RouterReducerState,
-      action: any
-    ): RouterReducerState => {
-      if (action.type === CHANGE_ROUTE) {
-        return {
-          state: { url: '/next', root: <any>{} },
-          navigationId: 123,
-        };
-      } else {
-        const nextState = routerReducer(state, action);
-        if (nextState && nextState.state) {
+  it('should support rolling back if navigation gets canceled (navigation initialized through router)', () =>
+    new Promise<void>((done) => {
+      const reducer = (state = '', action: RouterAction<any>): any => {
+        if (action.type === ROUTER_NAVIGATION) {
           return {
-            ...nextState,
-            state: {
-              ...nextState.state,
-              root: {} as any,
-            },
+            url: action.payload.routerState.url.toString(),
+            lastAction: ROUTER_NAVIGATION,
           };
-        }
-        return nextState;
-      }
-    };
-
-    createTestModule({
-      reducers: { reducer },
-      canActivate: () => false,
-      config: { stateKey: 'reducer' },
-    });
-
-    const router = TestBed.inject(Router);
-    const store = TestBed.inject(Store);
-    const log = logOfRouterAndActionsAndStore();
-
-    router
-      .navigateByUrl('/')
-      .then(() => {
-        log.splice(0);
-        store.dispatch({ type: CHANGE_ROUTE });
-        return waitForNavigation(router, NavigationCancel);
-      })
-      .then(() => {
-        expect(log).toEqual([
-          { type: 'router', event: 'NavigationStart', url: '/next' },
-          {
-            type: 'store',
-            state: { state: { url: '/next', root: {} }, navigationId: 123 },
-          },
-          { type: 'action', action: CHANGE_ROUTE },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
-          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
-          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
-          {
-            type: 'store',
-            state: { state: { url: '/', root: {} }, navigationId: 2 },
-          },
-          { type: 'action', action: ROUTER_CANCEL },
-          { type: 'router', event: 'NavigationCancel', url: '/next' },
-        ]);
-
-        done();
-      });
-  });
-
-  it('should support rolling back if navigation errors (navigation initialized through router)', (done: any) => {
-    const reducer = (state = '', action: RouterAction<any>): any => {
-      if (action.type === ROUTER_NAVIGATION) {
-        return {
-          url: action.payload.routerState.url.toString(),
-          lastAction: ROUTER_NAVIGATION,
-        };
-      } else if (action.type === ROUTER_ERROR) {
-        return {
-          url: action.payload.routerState.url.toString(),
-          storeState: action.payload.storeState.reducer,
-          lastAction: ROUTER_ERROR,
-        };
-      } else {
-        return state;
-      }
-    };
-
-    createTestModule({
-      reducers: { reducer, routerReducer },
-      canActivate: () => {
-        throw new Error('BOOM!');
-      },
-    });
-
-    const router = TestBed.inject(Router);
-    const log = logOfRouterAndActionsAndStore();
-
-    router
-      .navigateByUrl('/')
-      .then(() => {
-        log.splice(0);
-        return router.navigateByUrl('next');
-      })
-      .catch((e) => {
-        expect(e.message).toEqual('BOOM!');
-
-        expect(log).toEqual([
-          {
-            type: 'store',
-            state: { url: '/', lastAction: ROUTER_NAVIGATION },
-          }, // ROUTER_REQUEST event in the store
-          { type: 'action', action: ROUTER_REQUEST },
-          { type: 'router', event: 'NavigationStart', url: '/next' },
-          {
-            type: 'store',
-            state: { url: '/next', lastAction: ROUTER_NAVIGATION },
-          },
-          { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
-
-          /* new Router Lifecycle in Angular 4.3 */
-          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
-
-          {
-            type: 'store',
-            state: {
-              url: '/',
-              lastAction: ROUTER_ERROR,
-              storeState: { url: '/', lastAction: ROUTER_NAVIGATION },
-            },
-          },
-          { type: 'action', action: ROUTER_ERROR },
-          { type: 'router', event: 'NavigationError', url: '/next' },
-        ]);
-
-        done();
-      });
-  });
-
-  it('should support rolling back if navigation errors and hand error to error handler (navigation initialized through store)', (done: any) => {
-    const CHANGE_ROUTE = 'CHANGE_ROUTE';
-    const reducer = (
-      state: RouterReducerState,
-      action: any
-    ): RouterReducerState => {
-      if (action.type === CHANGE_ROUTE) {
-        return {
-          state: { url: '/next', root: <any>{} },
-          navigationId: 123,
-        };
-      } else {
-        const nextState = routerReducer(state, action);
-        if (nextState && nextState.state) {
+        } else if (action.type === ROUTER_CANCEL) {
           return {
-            ...nextState,
-            state: {
-              ...nextState.state,
-              root: {} as any,
-            },
+            url: action.payload.routerState.url.toString(),
+            storeState: action.payload.storeState.reducer,
+            lastAction: ROUTER_CANCEL,
           };
+        } else {
+          return state;
         }
-        return nextState;
-      }
-    };
+      };
 
-    const routerError = new Error('BOOM!');
-    class SilentErrorHandler implements ErrorHandler {
-      handleError(error: any) {
-        expect(error).toBe(routerError);
-      }
-    }
-
-    createTestModule({
-      reducers: { reducer },
-      canActivate: () => {
-        throw routerError;
-      },
-      providers: [{ provide: ErrorHandler, useClass: SilentErrorHandler }],
-      config: { stateKey: 'reducer' },
-    });
-
-    const router = TestBed.inject(Router);
-    const store = TestBed.inject(Store);
-    const log = logOfRouterAndActionsAndStore();
-
-    router
-      .navigateByUrl('/')
-      .then(() => {
-        log.splice(0);
-        store.dispatch({ type: CHANGE_ROUTE });
-        return waitForNavigation(router, NavigationError);
-      })
-      .then(() => {
-        expect(log).toEqual([
-          { type: 'router', event: 'NavigationStart', url: '/next' },
-          {
-            type: 'store',
-            state: { state: { url: '/next', root: {} }, navigationId: 123 },
-          },
-          { type: 'action', action: CHANGE_ROUTE },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
-          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
-          {
-            type: 'store',
-            state: { state: { url: '/', root: {} }, navigationId: 2 },
-          },
-          { type: 'action', action: ROUTER_ERROR },
-          { type: 'router', event: 'NavigationError', url: '/next' },
-        ]);
-
-        done();
+      createTestModule({
+        reducers: { reducer, routerReducer },
+        canActivate: () => false,
       });
-  });
 
-  it('should call navigateByUrl when resetting state of the routerReducer', (done: any) => {
-    const reducer = (state: any, action: RouterAction<any>) => {
-      const r = routerReducer(state, action);
-      return r && r.state
-        ? { url: r.state.url, navigationId: r.navigationId }
-        : null;
-    };
+      const router = TestBed.inject(Router);
+      const log = logOfRouterAndActionsAndStore();
 
-    createTestModule({ reducers: { router: routerReducer, reducer } });
+      router
+        .navigateByUrl('/')
+        .then(() => {
+          log.splice(0);
+          return router.navigateByUrl('next');
+        })
+        .then((r) => {
+          expect(r).toEqual(false);
 
-    const router = TestBed.inject(Router);
-    const store = TestBed.inject(Store);
-    const log = logOfRouterAndActionsAndStore();
+          expect(log).toEqual([
+            {
+              type: 'store',
+              state: { url: '/', lastAction: ROUTER_NAVIGATION },
+            }, // ROUTER_REQUEST event in the store
+            { type: 'action', action: ROUTER_REQUEST },
+            { type: 'router', event: 'NavigationStart', url: '/next' },
+            {
+              type: 'store',
+              state: { url: '/next', lastAction: ROUTER_NAVIGATION },
+            },
+            { type: 'action', action: ROUTER_NAVIGATION },
+            { type: 'router', event: 'RoutesRecognized', url: '/next' },
 
-    const routerReducerStates: any[] = [];
-    store.subscribe((state: any) => {
-      if (state.router) {
-        routerReducerStates.push(state.router);
-      }
-    });
+            /* new Router Lifecycle in Angular 4.3 - m */
+            { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+            { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+            // { type: 'router', event: 'ResolveStart', url: '/next' },
+            // { type: 'router', event: 'ResolveEnd', url: '/next' },
+            {
+              type: 'store',
+              state: {
+                url: '/',
+                lastAction: ROUTER_CANCEL,
+                storeState: { url: '/', lastAction: ROUTER_NAVIGATION },
+              },
+            },
+            { type: 'action', action: ROUTER_CANCEL },
+            { type: 'router', event: 'NavigationCancel', url: '/next' },
+          ]);
 
-    router
-      .navigateByUrl('/')
-      .then(() => {
-        log.splice(0);
-        return router.navigateByUrl('next');
-      })
-      .then(() => {
-        expect(log).toEqual([
-          { type: 'store', state: null }, // ROUTER_REQUEST event in the store
-          { type: 'action', action: ROUTER_REQUEST },
-          { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'store', state: { url: '/next', navigationId: 2 } },
-          { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
-
-          /* new Router Lifecycle in Angular 4.3 */
-          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
-          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
-          { type: 'router', event: 'ResolveStart', url: '/next' },
-          { type: 'router', event: 'ResolveEnd', url: '/next' },
-          { type: 'store', state: null }, // ROUTER_NAVIGATED event in the store
-          { type: 'action', action: ROUTER_NAVIGATED },
-          { type: 'router', event: 'NavigationEnd', url: '/next' },
-        ]);
-        log.splice(0);
-
-        store.dispatch({
-          type: ROUTER_NAVIGATION,
-          payload: {
-            routerState: routerReducerStates[0].state,
-            event: { id: routerReducerStates[0].navigationId },
-          },
+          done();
         });
-        return waitForNavigation(router);
-      })
-      .then(() => {
-        expect(log).toEqual([
-          { type: 'router', event: 'NavigationStart', url: '/' },
-          { type: 'store', state: { url: '/', navigationId: 1 } }, // restored
-          { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'RoutesRecognized', url: '/' },
+    }));
 
-          /* new Router Lifecycle in Angular 4.3 */
-          { type: 'router', event: 'GuardsCheckStart', url: '/' },
-          { type: 'router', event: 'GuardsCheckEnd', url: '/' },
-          { type: 'router', event: 'ResolveStart', url: '/' },
-          { type: 'router', event: 'ResolveEnd', url: '/' },
+  it('should support rolling back if navigation gets canceled (navigation initialized through store)', () =>
+    new Promise<void>((done) => {
+      const CHANGE_ROUTE = 'CHANGE_ROUTE';
+      const reducer = (
+        state: RouterReducerState,
+        action: any
+      ): RouterReducerState => {
+        if (action.type === CHANGE_ROUTE) {
+          return {
+            state: { url: '/next', root: <any>{} },
+            navigationId: 123,
+          };
+        } else {
+          const nextState = routerReducer(state, action);
+          if (nextState && nextState.state) {
+            return {
+              ...nextState,
+              state: {
+                ...nextState.state,
+                root: {} as any,
+              },
+            };
+          }
+          return nextState;
+        }
+      };
 
-          { type: 'router', event: 'NavigationEnd', url: '/' },
-        ]);
-        log.splice(0);
-      })
-      .then(() => {
-        store.dispatch({
-          type: ROUTER_NAVIGATION,
-          payload: {
-            routerState: routerReducerStates[3].state,
-            event: { id: routerReducerStates[3].navigationId },
-          },
-        });
-        return waitForNavigation(router);
-      })
-      .then(() => {
-        expect(log).toEqual([
-          { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'store', state: { url: '/next', navigationId: 2 } }, // restored
-          { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
-
-          /* new Router Lifecycle in Angular 4.3 */
-          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
-          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
-          { type: 'router', event: 'ResolveStart', url: '/next' },
-          { type: 'router', event: 'ResolveEnd', url: '/next' },
-
-          { type: 'router', event: 'NavigationEnd', url: '/next' },
-        ]);
-        done();
+      createTestModule({
+        reducers: { reducer },
+        canActivate: () => false,
+        config: { stateKey: 'reducer' },
       });
-  });
 
-  it('should support cancellation of initial navigation using canLoad guard', (done: any) => {
-    const reducer = (state: any, action: RouterAction<any>) => {
-      const r = routerReducer(state, action);
-      return r && r.state
-        ? { url: r.state.url, navigationId: r.navigationId }
-        : null;
-    };
+      const router = TestBed.inject(Router);
+      const store = TestBed.inject(Store);
+      const log = logOfRouterAndActionsAndStore();
 
-    createTestModule({
-      reducers: { routerReducer, reducer },
-      canLoad: () => false,
-    });
+      router
+        .navigateByUrl('/')
+        .then(() => {
+          log.splice(0);
+          store.dispatch({ type: CHANGE_ROUTE });
+          return waitForNavigation(router, NavigationCancel);
+        })
+        .then(() => {
+          expect(log).toEqual([
+            { type: 'router', event: 'NavigationStart', url: '/next' },
+            {
+              type: 'store',
+              state: { state: { url: '/next', root: {} }, navigationId: 123 },
+            },
+            { type: 'action', action: CHANGE_ROUTE },
+            { type: 'router', event: 'RoutesRecognized', url: '/next' },
+            { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+            { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+            {
+              type: 'store',
+              state: { state: { url: '/', root: {} }, navigationId: 2 },
+            },
+            { type: 'action', action: ROUTER_CANCEL },
+            { type: 'router', event: 'NavigationCancel', url: '/next' },
+          ]);
 
-    const router = TestBed.inject(Router);
-    const log = logOfRouterAndActionsAndStore();
+          done();
+        });
+    }));
 
-    router.navigateByUrl('/load').then((r: boolean) => {
-      expect(r).toBe(false);
+  it('should support rolling back if navigation errors (navigation initialized through router)', () =>
+    new Promise<void>((done) => {
+      const reducer = (state = '', action: RouterAction<any>): any => {
+        if (action.type === ROUTER_NAVIGATION) {
+          return {
+            url: action.payload.routerState.url.toString(),
+            lastAction: ROUTER_NAVIGATION,
+          };
+        } else if (action.type === ROUTER_ERROR) {
+          return {
+            url: action.payload.routerState.url.toString(),
+            storeState: action.payload.storeState.reducer,
+            lastAction: ROUTER_ERROR,
+          };
+        } else {
+          return state;
+        }
+      };
 
-      expect(log).toEqual([
-        { type: 'store', state: null }, // initial state
-        { type: 'store', state: null }, // ROUTER_REQUEST event in the store
-        { type: 'action', action: ROUTER_REQUEST },
-        { type: 'router', event: 'NavigationStart', url: '/load' },
-        { type: 'store', state: { url: '', navigationId: 1 } },
-        { type: 'action', action: ROUTER_CANCEL },
-        { type: 'router', event: 'NavigationCancel', url: '/load' },
-      ]);
-      done();
-    });
-  });
+      createTestModule({
+        reducers: { reducer, routerReducer },
+        canActivate: () => {
+          throw new Error('BOOM!');
+        },
+      });
 
-  it('should support cancellation of initial navigation when canLoad guard rejects', (done: any) => {
-    const reducer = (state: any, action: RouterAction<any>) => {
-      const r = routerReducer(state, action);
-      return r && r.state
-        ? { url: r.state.url, navigationId: r.navigationId }
-        : null;
-    };
+      const router = TestBed.inject(Router);
+      const log = logOfRouterAndActionsAndStore();
 
-    createTestModule({
-      reducers: { routerReducer, reducer },
-      canLoad: () => Promise.reject('boom'),
-    });
+      router
+        .navigateByUrl('/')
+        .then(() => {
+          log.splice(0);
+          return router.navigateByUrl('next');
+        })
+        .catch((e) => {
+          expect(e.message).toEqual('BOOM!');
 
-    const router = TestBed.inject(Router);
-    const log = logOfRouterAndActionsAndStore();
+          expect(log).toEqual([
+            {
+              type: 'store',
+              state: { url: '/', lastAction: ROUTER_NAVIGATION },
+            }, // ROUTER_REQUEST event in the store
+            { type: 'action', action: ROUTER_REQUEST },
+            { type: 'router', event: 'NavigationStart', url: '/next' },
+            {
+              type: 'store',
+              state: { url: '/next', lastAction: ROUTER_NAVIGATION },
+            },
+            { type: 'action', action: ROUTER_NAVIGATION },
+            { type: 'router', event: 'RoutesRecognized', url: '/next' },
 
-    router
-      .navigateByUrl('/load')
-      .then(() => {
-        fail(`Shouldn't be called`);
-      })
-      .catch((err) => {
-        expect(err).toBe('boom');
+            /* new Router Lifecycle in Angular 4.3 */
+            { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+
+            {
+              type: 'store',
+              state: {
+                url: '/',
+                lastAction: ROUTER_ERROR,
+                storeState: { url: '/', lastAction: ROUTER_NAVIGATION },
+              },
+            },
+            { type: 'action', action: ROUTER_ERROR },
+            { type: 'router', event: 'NavigationError', url: '/next' },
+          ]);
+
+          done();
+        });
+    }));
+
+  it('should support rolling back if navigation errors and hand error to error handler (navigation initialized through store)', () =>
+    new Promise<void>((done) => {
+      const CHANGE_ROUTE = 'CHANGE_ROUTE';
+      const reducer = (
+        state: RouterReducerState,
+        action: any
+      ): RouterReducerState => {
+        if (action.type === CHANGE_ROUTE) {
+          return {
+            state: { url: '/next', root: <any>{} },
+            navigationId: 123,
+          };
+        } else {
+          const nextState = routerReducer(state, action);
+          if (nextState && nextState.state) {
+            return {
+              ...nextState,
+              state: {
+                ...nextState.state,
+                root: {} as any,
+              },
+            };
+          }
+          return nextState;
+        }
+      };
+
+      const routerError = new Error('BOOM!');
+      class SilentErrorHandler implements ErrorHandler {
+        handleError(error: any) {
+          expect(error).toBe(routerError);
+        }
+      }
+
+      createTestModule({
+        reducers: { reducer },
+        canActivate: () => {
+          throw routerError;
+        },
+        providers: [{ provide: ErrorHandler, useClass: SilentErrorHandler }],
+        config: { stateKey: 'reducer' },
+      });
+
+      const router = TestBed.inject(Router);
+      const store = TestBed.inject(Store);
+      const log = logOfRouterAndActionsAndStore();
+
+      router
+        .navigateByUrl('/')
+        .then(() => {
+          log.splice(0);
+          store.dispatch({ type: CHANGE_ROUTE });
+          return waitForNavigation(router, NavigationError);
+        })
+        .then(() => {
+          expect(log).toEqual([
+            { type: 'router', event: 'NavigationStart', url: '/next' },
+            {
+              type: 'store',
+              state: { state: { url: '/next', root: {} }, navigationId: 123 },
+            },
+            { type: 'action', action: CHANGE_ROUTE },
+            { type: 'router', event: 'RoutesRecognized', url: '/next' },
+            { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+            {
+              type: 'store',
+              state: { state: { url: '/', root: {} }, navigationId: 2 },
+            },
+            { type: 'action', action: ROUTER_ERROR },
+            { type: 'router', event: 'NavigationError', url: '/next' },
+          ]);
+
+          done();
+        });
+    }));
+
+  it('should call navigateByUrl when resetting state of the routerReducer', () =>
+    new Promise<void>((done) => {
+      const reducer = (state: any, action: RouterAction<any>) => {
+        const r = routerReducer(state, action);
+        return r && r.state
+          ? { url: r.state.url, navigationId: r.navigationId }
+          : null;
+      };
+
+      createTestModule({ reducers: { router: routerReducer, reducer } });
+
+      const router = TestBed.inject(Router);
+      const store = TestBed.inject(Store);
+      const log = logOfRouterAndActionsAndStore();
+
+      const routerReducerStates: any[] = [];
+      store.subscribe((state: any) => {
+        if (state.router) {
+          routerReducerStates.push(state.router);
+        }
+      });
+
+      router
+        .navigateByUrl('/')
+        .then(() => {
+          log.splice(0);
+          return router.navigateByUrl('next');
+        })
+        .then(() => {
+          expect(log).toEqual([
+            { type: 'store', state: null }, // ROUTER_REQUEST event in the store
+            { type: 'action', action: ROUTER_REQUEST },
+            { type: 'router', event: 'NavigationStart', url: '/next' },
+            { type: 'store', state: { url: '/next', navigationId: 2 } },
+            { type: 'action', action: ROUTER_NAVIGATION },
+            { type: 'router', event: 'RoutesRecognized', url: '/next' },
+
+            /* new Router Lifecycle in Angular 4.3 */
+            { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+            { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+            { type: 'router', event: 'ResolveStart', url: '/next' },
+            { type: 'router', event: 'ResolveEnd', url: '/next' },
+            { type: 'store', state: null }, // ROUTER_NAVIGATED event in the store
+            { type: 'action', action: ROUTER_NAVIGATED },
+            { type: 'router', event: 'NavigationEnd', url: '/next' },
+          ]);
+          log.splice(0);
+
+          store.dispatch({
+            type: ROUTER_NAVIGATION,
+            payload: {
+              routerState: routerReducerStates[0].state,
+              event: { id: routerReducerStates[0].navigationId },
+            },
+          });
+          return waitForNavigation(router);
+        })
+        .then(() => {
+          expect(log).toEqual([
+            { type: 'router', event: 'NavigationStart', url: '/' },
+            { type: 'store', state: { url: '/', navigationId: 1 } }, // restored
+            { type: 'action', action: ROUTER_NAVIGATION },
+            { type: 'router', event: 'RoutesRecognized', url: '/' },
+
+            /* new Router Lifecycle in Angular 4.3 */
+            { type: 'router', event: 'GuardsCheckStart', url: '/' },
+            { type: 'router', event: 'GuardsCheckEnd', url: '/' },
+            { type: 'router', event: 'ResolveStart', url: '/' },
+            { type: 'router', event: 'ResolveEnd', url: '/' },
+
+            { type: 'router', event: 'NavigationEnd', url: '/' },
+          ]);
+          log.splice(0);
+        })
+        .then(() => {
+          store.dispatch({
+            type: ROUTER_NAVIGATION,
+            payload: {
+              routerState: routerReducerStates[3].state,
+              event: { id: routerReducerStates[3].navigationId },
+            },
+          });
+          return waitForNavigation(router);
+        })
+        .then(() => {
+          expect(log).toEqual([
+            { type: 'router', event: 'NavigationStart', url: '/next' },
+            { type: 'store', state: { url: '/next', navigationId: 2 } }, // restored
+            { type: 'action', action: ROUTER_NAVIGATION },
+            { type: 'router', event: 'RoutesRecognized', url: '/next' },
+
+            /* new Router Lifecycle in Angular 4.3 */
+            { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+            { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+            { type: 'router', event: 'ResolveStart', url: '/next' },
+            { type: 'router', event: 'ResolveEnd', url: '/next' },
+
+            { type: 'router', event: 'NavigationEnd', url: '/next' },
+          ]);
+          done();
+        });
+    }));
+
+  it('should support cancellation of initial navigation using canLoad guard', () =>
+    new Promise<void>((done) => {
+      const reducer = (state: any, action: RouterAction<any>) => {
+        const r = routerReducer(state, action);
+        return r && r.state
+          ? { url: r.state.url, navigationId: r.navigationId }
+          : null;
+      };
+
+      createTestModule({
+        reducers: { routerReducer, reducer },
+        canLoad: () => false,
+      });
+
+      const router = TestBed.inject(Router);
+      const log = logOfRouterAndActionsAndStore();
+
+      router.navigateByUrl('/load').then((r: boolean) => {
+        expect(r).toBe(false);
 
         expect(log).toEqual([
           { type: 'store', state: null }, // initial state
-          { type: 'store', state: null }, // ROUTER_REQEST event in the store
+          { type: 'store', state: null }, // ROUTER_REQUEST event in the store
           { type: 'action', action: ROUTER_REQUEST },
           { type: 'router', event: 'NavigationStart', url: '/load' },
           { type: 'store', state: { url: '', navigationId: 1 } },
-          { type: 'action', action: ROUTER_ERROR },
-          { type: 'router', event: 'NavigationError', url: '/load' },
+          { type: 'action', action: ROUTER_CANCEL },
+          { type: 'router', event: 'NavigationCancel', url: '/load' },
         ]);
-
         done();
       });
-  });
+    }));
+
+  it('should support cancellation of initial navigation when canLoad guard rejects', () =>
+    new Promise<void>((done) => {
+      const reducer = (state: any, action: RouterAction<any>) => {
+        const r = routerReducer(state, action);
+        return r && r.state
+          ? { url: r.state.url, navigationId: r.navigationId }
+          : null;
+      };
+
+      createTestModule({
+        reducers: { routerReducer, reducer },
+        canLoad: () => Promise.reject('boom'),
+      });
+
+      const router = TestBed.inject(Router);
+      const log = logOfRouterAndActionsAndStore();
+
+      router
+        .navigateByUrl('/load')
+        .then(() => {
+          fail(`Shouldn't be called`);
+        })
+        .catch((err) => {
+          expect(err).toBe('boom');
+
+          expect(log).toEqual([
+            { type: 'store', state: null }, // initial state
+            { type: 'store', state: null }, // ROUTER_REQEST event in the store
+            { type: 'action', action: ROUTER_REQUEST },
+            { type: 'router', event: 'NavigationStart', url: '/load' },
+            { type: 'store', state: { url: '', navigationId: 1 } },
+            { type: 'action', action: ROUTER_ERROR },
+            { type: 'router', event: 'NavigationError', url: '/load' },
+          ]);
+
+          done();
+        });
+    }));
 
   function shouldSupportCustomSerializer(
     serializerThroughConfig: boolean,
@@ -735,280 +749,290 @@ describe('integration spec', () => {
       });
   }
 
-  it('should support a custom RouterStateSnapshot serializer via provider', (done: any) => {
-    shouldSupportCustomSerializer(false, done);
-  });
+  it('should support a custom RouterStateSnapshot serializer via provider', () =>
+    new Promise<void>((done) => {
+      shouldSupportCustomSerializer(false, done);
+    }));
 
-  it('should support a custom RouterStateSnapshot serializer via config', (done: any) => {
-    shouldSupportCustomSerializer(true, done);
-  });
+  it('should support a custom RouterStateSnapshot serializer via config', () =>
+    new Promise<void>((done) => {
+      shouldSupportCustomSerializer(true, done);
+    }));
 
-  it('should support event during an async canActivate guard', (done: any) => {
-    createTestModule({
-      reducers: { routerReducer },
-      canActivate: () => {
-        store.dispatch({ type: 'USER_EVENT' });
-        return store.pipe(
-          take(1),
-          map(() => true)
-        );
-      },
-    });
+  it('should support event during an async canActivate guard', () =>
+    new Promise<void>((done) => {
+      createTestModule({
+        reducers: { routerReducer },
+        canActivate: () => {
+          store.dispatch({ type: 'USER_EVENT' });
+          return store.pipe(
+            take(1),
+            map(() => true)
+          );
+        },
+      });
 
-    const router = TestBed.inject(Router);
-    const store = TestBed.inject(Store);
-    const log = logOfRouterAndActionsAndStore();
+      const router = TestBed.inject(Router);
+      const store = TestBed.inject(Store);
+      const log = logOfRouterAndActionsAndStore();
 
-    router
-      .navigateByUrl('/')
-      .then(() => {
-        log.splice(0);
-        return router.navigateByUrl('next');
-      })
-      .then(() => {
+      router
+        .navigateByUrl('/')
+        .then(() => {
+          log.splice(0);
+          return router.navigateByUrl('next');
+        })
+        .then(() => {
+          expect(log).toEqual([
+            { type: 'store', state: undefined }, // after ROUTER_REQUEST
+            { type: 'action', action: ROUTER_REQUEST },
+            { type: 'router', event: 'NavigationStart', url: '/next' },
+            { type: 'store', state: undefined }, // after ROUTER_NAVIGATION
+            { type: 'action', action: ROUTER_NAVIGATION },
+            { type: 'router', event: 'RoutesRecognized', url: '/next' },
+            /* new Router Lifecycle in Angular 4.3 */
+            { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+            { type: 'store', state: undefined }, // after USER_EVENT
+            { type: 'action', action: 'USER_EVENT' },
+            { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+            { type: 'router', event: 'ResolveStart', url: '/next' },
+            { type: 'router', event: 'ResolveEnd', url: '/next' },
+            { type: 'store', state: undefined }, // after ROUTER_NAVIGATED
+            { type: 'action', action: ROUTER_NAVIGATED },
+            { type: 'router', event: 'NavigationEnd', url: '/next' },
+          ]);
+
+          done();
+        });
+    }));
+
+  it('should work when defining state key', () =>
+    new Promise<void>((done) => {
+      const reducer = (state = '', action: RouterAction<any>) => {
+        if (action.type === ROUTER_NAVIGATION) {
+          return action.payload.routerState.url.toString();
+        } else {
+          return state;
+        }
+      };
+
+      createTestModule({
+        reducers: { 'router-reducer': reducer },
+        config: { stateKey: 'router-reducer' },
+      });
+
+      const router = TestBed.inject(Router);
+      const log = logOfRouterAndActionsAndStore({ stateKey: 'router-reducer' });
+
+      router
+        .navigateByUrl('/')
+        .then(() => {
+          expect(log).toEqual([
+            { type: 'store', state: '' }, // init event. has nothing to do with the router
+            { type: 'store', state: '' }, // ROUTER_REQUEST event in the store
+            { type: 'action', action: ROUTER_REQUEST },
+            { type: 'router', event: 'NavigationStart', url: '/' },
+            { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
+            { type: 'action', action: ROUTER_NAVIGATION },
+            { type: 'router', event: 'RoutesRecognized', url: '/' },
+            { type: 'router', event: 'GuardsCheckStart', url: '/' },
+            { type: 'router', event: 'GuardsCheckEnd', url: '/' },
+            { type: 'router', event: 'ResolveStart', url: '/' },
+            { type: 'router', event: 'ResolveEnd', url: '/' },
+            { type: 'store', state: '/' }, // ROUTER_NAVIGATED event in the store
+            { type: 'action', action: ROUTER_NAVIGATED },
+            { type: 'router', event: 'NavigationEnd', url: '/' },
+          ]);
+        })
+        .then(() => {
+          log.splice(0);
+          return router.navigateByUrl('next');
+        })
+        .then(() => {
+          expect(log).toEqual([
+            { type: 'store', state: '/' },
+            { type: 'action', action: ROUTER_REQUEST },
+            { type: 'router', event: 'NavigationStart', url: '/next' },
+            { type: 'store', state: '/next' },
+            { type: 'action', action: ROUTER_NAVIGATION },
+            { type: 'router', event: 'RoutesRecognized', url: '/next' },
+            { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+            { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+            { type: 'router', event: 'ResolveStart', url: '/next' },
+            { type: 'router', event: 'ResolveEnd', url: '/next' },
+            { type: 'store', state: '/next' },
+            { type: 'action', action: ROUTER_NAVIGATED },
+            { type: 'router', event: 'NavigationEnd', url: '/next' },
+          ]);
+
+          done();
+        });
+    }));
+
+  it('should work when defining state selector', () =>
+    new Promise<void>((done) => {
+      const reducer = (state = '', action: RouterAction<any>) => {
+        if (action.type === ROUTER_NAVIGATION) {
+          return action.payload.routerState.url.toString();
+        } else {
+          return state;
+        }
+      };
+
+      createTestModule({
+        reducers: { routerReducer: reducer },
+        config: { stateKey: (state: any) => state.routerReducer },
+      });
+
+      const router = TestBed.inject(Router);
+      const log = logOfRouterAndActionsAndStore({
+        stateKey: (state: any) => state.routerReducer,
+      });
+
+      router
+        .navigateByUrl('/')
+        .then(() => {
+          expect(log).toEqual([
+            { type: 'store', state: '' }, // init event. has nothing to do with the router
+            { type: 'store', state: '' }, // ROUTER_REQUEST event in the store
+            { type: 'action', action: ROUTER_REQUEST },
+            { type: 'router', event: 'NavigationStart', url: '/' },
+            { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
+            { type: 'action', action: ROUTER_NAVIGATION },
+            { type: 'router', event: 'RoutesRecognized', url: '/' },
+            { type: 'router', event: 'GuardsCheckStart', url: '/' },
+            { type: 'router', event: 'GuardsCheckEnd', url: '/' },
+            { type: 'router', event: 'ResolveStart', url: '/' },
+            { type: 'router', event: 'ResolveEnd', url: '/' },
+            { type: 'store', state: '/' }, // ROUTER_NAVIGATED event in the store
+            { type: 'action', action: ROUTER_NAVIGATED },
+            { type: 'router', event: 'NavigationEnd', url: '/' },
+          ]);
+        })
+        .then(() => {
+          log.splice(0);
+          return router.navigateByUrl('next');
+        })
+        .then(() => {
+          expect(log).toEqual([
+            { type: 'store', state: '/' },
+            { type: 'action', action: ROUTER_REQUEST },
+            { type: 'router', event: 'NavigationStart', url: '/next' },
+            { type: 'store', state: '/next' },
+            { type: 'action', action: ROUTER_NAVIGATION },
+            { type: 'router', event: 'RoutesRecognized', url: '/next' },
+            { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+            { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+            { type: 'router', event: 'ResolveStart', url: '/next' },
+            { type: 'router', event: 'ResolveEnd', url: '/next' },
+            { type: 'store', state: '/next' },
+            { type: 'action', action: ROUTER_NAVIGATED },
+            { type: 'router', event: 'NavigationEnd', url: '/next' },
+          ]);
+
+          done();
+        });
+    }));
+
+  it('should continue to react to navigation after state initiates router change', () =>
+    new Promise<void>((done) => {
+      const reducer = (state: any = { state: { url: '/' } }, action: any) => {
+        if (action.type === ROUTER_NAVIGATION) {
+          return { state: { url: action.payload.routerState.url.toString() } };
+        } else {
+          return state;
+        }
+      };
+
+      createTestModule({
+        reducers: { reducer },
+        config: { stateKey: 'reducer' },
+      });
+
+      const router = TestBed.inject(Router);
+      const store = TestBed.inject(Store);
+      const log = logOfRouterAndActionsAndStore();
+
+      store.dispatch({
+        type: ROUTER_NAVIGATION,
+        payload: { routerState: { url: '/next' } },
+      });
+      waitForNavigation(router)
+        .then(() => {
+          router.navigate(['/']);
+          return waitForNavigation(router);
+        })
+        .then(() => {
+          expect(log).toEqual([
+            { type: 'store', state: { state: { url: '/' } } },
+            { type: 'router', event: 'NavigationStart', url: '/next' },
+            { type: 'store', state: { state: { url: '/next' } } },
+            { type: 'action', action: ROUTER_NAVIGATION },
+            { type: 'router', event: 'RoutesRecognized', url: '/next' },
+            { type: 'router', event: 'GuardsCheckStart', url: '/next' },
+            { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
+            { type: 'router', event: 'ResolveStart', url: '/next' },
+            { type: 'router', event: 'ResolveEnd', url: '/next' },
+            { type: 'router', event: 'NavigationEnd', url: '/next' },
+            { type: 'store', state: { state: { url: '/next' } } },
+            { type: 'action', action: ROUTER_REQUEST },
+            { type: 'router', event: 'NavigationStart', url: '/' },
+            { type: 'store', state: { state: { url: '/' } } },
+            { type: 'action', action: ROUTER_NAVIGATION },
+            { type: 'router', event: 'RoutesRecognized', url: '/' },
+            { type: 'router', event: 'GuardsCheckStart', url: '/' },
+            { type: 'router', event: 'GuardsCheckEnd', url: '/' },
+            { type: 'router', event: 'ResolveStart', url: '/' },
+            { type: 'router', event: 'ResolveEnd', url: '/' },
+            { type: 'store', state: { state: { url: '/' } } },
+            { type: 'action', action: ROUTER_NAVIGATED },
+            { type: 'router', event: 'NavigationEnd', url: '/' },
+          ]);
+          done();
+        });
+    }));
+
+  it('should dispatch ROUTER_NAVIGATION later when config options set to true', () =>
+    new Promise<void>((done) => {
+      const reducer = (state = '', action: RouterAction<any>) => {
+        if (action.type === ROUTER_NAVIGATION) {
+          return action.payload.routerState.url.toString();
+        } else {
+          return state;
+        }
+      };
+
+      createTestModule({
+        reducers: { reducer },
+        config: {
+          navigationActionTiming: NavigationActionTiming.PostActivation,
+        },
+      });
+
+      const router = TestBed.inject(Router);
+      const log = logOfRouterAndActionsAndStore();
+
+      router.navigateByUrl('/').then(() => {
         expect(log).toEqual([
-          { type: 'store', state: undefined }, // after ROUTER_REQUEST
+          { type: 'store', state: '' }, // init event. has nothing to do with the router
+          { type: 'store', state: '' }, // ROUTER_REQUEST event in the store
           { type: 'action', action: ROUTER_REQUEST },
-          { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'store', state: undefined }, // after ROUTER_NAVIGATION
-          { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
+          { type: 'router', event: 'NavigationStart', url: '/' },
+          { type: 'router', event: 'RoutesRecognized', url: '/' },
           /* new Router Lifecycle in Angular 4.3 */
-          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
-          { type: 'store', state: undefined }, // after USER_EVENT
-          { type: 'action', action: 'USER_EVENT' },
-          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
-          { type: 'router', event: 'ResolveStart', url: '/next' },
-          { type: 'router', event: 'ResolveEnd', url: '/next' },
-          { type: 'store', state: undefined }, // after ROUTER_NAVIGATED
-          { type: 'action', action: ROUTER_NAVIGATED },
-          { type: 'router', event: 'NavigationEnd', url: '/next' },
-        ]);
-
-        done();
-      });
-  });
-
-  it('should work when defining state key', (done: any) => {
-    const reducer = (state = '', action: RouterAction<any>) => {
-      if (action.type === ROUTER_NAVIGATION) {
-        return action.payload.routerState.url.toString();
-      } else {
-        return state;
-      }
-    };
-
-    createTestModule({
-      reducers: { 'router-reducer': reducer },
-      config: { stateKey: 'router-reducer' },
-    });
-
-    const router = TestBed.inject(Router);
-    const log = logOfRouterAndActionsAndStore({ stateKey: 'router-reducer' });
-
-    router
-      .navigateByUrl('/')
-      .then(() => {
-        expect(log).toEqual([
-          { type: 'store', state: '' }, // init event. has nothing to do with the router
-          { type: 'store', state: '' }, // ROUTER_REQUEST event in the store
-          { type: 'action', action: ROUTER_REQUEST },
-          { type: 'router', event: 'NavigationStart', url: '/' },
-          { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
-          { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'RoutesRecognized', url: '/' },
           { type: 'router', event: 'GuardsCheckStart', url: '/' },
           { type: 'router', event: 'GuardsCheckEnd', url: '/' },
           { type: 'router', event: 'ResolveStart', url: '/' },
           { type: 'router', event: 'ResolveEnd', url: '/' },
+          { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
+          { type: 'action', action: ROUTER_NAVIGATION },
           { type: 'store', state: '/' }, // ROUTER_NAVIGATED event in the store
           { type: 'action', action: ROUTER_NAVIGATED },
           { type: 'router', event: 'NavigationEnd', url: '/' },
         ]);
-      })
-      .then(() => {
-        log.splice(0);
-        return router.navigateByUrl('next');
-      })
-      .then(() => {
-        expect(log).toEqual([
-          { type: 'store', state: '/' },
-          { type: 'action', action: ROUTER_REQUEST },
-          { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'store', state: '/next' },
-          { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
-          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
-          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
-          { type: 'router', event: 'ResolveStart', url: '/next' },
-          { type: 'router', event: 'ResolveEnd', url: '/next' },
-          { type: 'store', state: '/next' },
-          { type: 'action', action: ROUTER_NAVIGATED },
-          { type: 'router', event: 'NavigationEnd', url: '/next' },
-        ]);
-
         done();
       });
-  });
-
-  it('should work when defining state selector', (done: any) => {
-    const reducer = (state = '', action: RouterAction<any>) => {
-      if (action.type === ROUTER_NAVIGATION) {
-        return action.payload.routerState.url.toString();
-      } else {
-        return state;
-      }
-    };
-
-    createTestModule({
-      reducers: { routerReducer: reducer },
-      config: { stateKey: (state: any) => state.routerReducer },
-    });
-
-    const router = TestBed.inject(Router);
-    const log = logOfRouterAndActionsAndStore({
-      stateKey: (state: any) => state.routerReducer,
-    });
-
-    router
-      .navigateByUrl('/')
-      .then(() => {
-        expect(log).toEqual([
-          { type: 'store', state: '' }, // init event. has nothing to do with the router
-          { type: 'store', state: '' }, // ROUTER_REQUEST event in the store
-          { type: 'action', action: ROUTER_REQUEST },
-          { type: 'router', event: 'NavigationStart', url: '/' },
-          { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
-          { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'RoutesRecognized', url: '/' },
-          { type: 'router', event: 'GuardsCheckStart', url: '/' },
-          { type: 'router', event: 'GuardsCheckEnd', url: '/' },
-          { type: 'router', event: 'ResolveStart', url: '/' },
-          { type: 'router', event: 'ResolveEnd', url: '/' },
-          { type: 'store', state: '/' }, // ROUTER_NAVIGATED event in the store
-          { type: 'action', action: ROUTER_NAVIGATED },
-          { type: 'router', event: 'NavigationEnd', url: '/' },
-        ]);
-      })
-      .then(() => {
-        log.splice(0);
-        return router.navigateByUrl('next');
-      })
-      .then(() => {
-        expect(log).toEqual([
-          { type: 'store', state: '/' },
-          { type: 'action', action: ROUTER_REQUEST },
-          { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'store', state: '/next' },
-          { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
-          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
-          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
-          { type: 'router', event: 'ResolveStart', url: '/next' },
-          { type: 'router', event: 'ResolveEnd', url: '/next' },
-          { type: 'store', state: '/next' },
-          { type: 'action', action: ROUTER_NAVIGATED },
-          { type: 'router', event: 'NavigationEnd', url: '/next' },
-        ]);
-
-        done();
-      });
-  });
-
-  it('should continue to react to navigation after state initiates router change', (done: Function) => {
-    const reducer = (state: any = { state: { url: '/' } }, action: any) => {
-      if (action.type === ROUTER_NAVIGATION) {
-        return { state: { url: action.payload.routerState.url.toString() } };
-      } else {
-        return state;
-      }
-    };
-
-    createTestModule({
-      reducers: { reducer },
-      config: { stateKey: 'reducer' },
-    });
-
-    const router = TestBed.inject(Router);
-    const store = TestBed.inject(Store);
-    const log = logOfRouterAndActionsAndStore();
-
-    store.dispatch({
-      type: ROUTER_NAVIGATION,
-      payload: { routerState: { url: '/next' } },
-    });
-    waitForNavigation(router)
-      .then(() => {
-        router.navigate(['/']);
-        return waitForNavigation(router);
-      })
-      .then(() => {
-        expect(log).toEqual([
-          { type: 'store', state: { state: { url: '/' } } },
-          { type: 'router', event: 'NavigationStart', url: '/next' },
-          { type: 'store', state: { state: { url: '/next' } } },
-          { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'RoutesRecognized', url: '/next' },
-          { type: 'router', event: 'GuardsCheckStart', url: '/next' },
-          { type: 'router', event: 'GuardsCheckEnd', url: '/next' },
-          { type: 'router', event: 'ResolveStart', url: '/next' },
-          { type: 'router', event: 'ResolveEnd', url: '/next' },
-          { type: 'router', event: 'NavigationEnd', url: '/next' },
-          { type: 'store', state: { state: { url: '/next' } } },
-          { type: 'action', action: ROUTER_REQUEST },
-          { type: 'router', event: 'NavigationStart', url: '/' },
-          { type: 'store', state: { state: { url: '/' } } },
-          { type: 'action', action: ROUTER_NAVIGATION },
-          { type: 'router', event: 'RoutesRecognized', url: '/' },
-          { type: 'router', event: 'GuardsCheckStart', url: '/' },
-          { type: 'router', event: 'GuardsCheckEnd', url: '/' },
-          { type: 'router', event: 'ResolveStart', url: '/' },
-          { type: 'router', event: 'ResolveEnd', url: '/' },
-          { type: 'store', state: { state: { url: '/' } } },
-          { type: 'action', action: ROUTER_NAVIGATED },
-          { type: 'router', event: 'NavigationEnd', url: '/' },
-        ]);
-        done();
-      });
-  });
-
-  it('should dispatch ROUTER_NAVIGATION later when config options set to true', () => {
-    const reducer = (state = '', action: RouterAction<any>) => {
-      if (action.type === ROUTER_NAVIGATION) {
-        return action.payload.routerState.url.toString();
-      } else {
-        return state;
-      }
-    };
-
-    createTestModule({
-      reducers: { reducer },
-      config: { navigationActionTiming: NavigationActionTiming.PostActivation },
-    });
-
-    const router = TestBed.inject(Router);
-    const log = logOfRouterAndActionsAndStore();
-
-    router.navigateByUrl('/').then(() => {
-      expect(log).toEqual([
-        { type: 'store', state: '' }, // init event. has nothing to do with the router
-        { type: 'store', state: '' }, // ROUTER_REQUEST event in the store
-        { type: 'action', action: ROUTER_REQUEST },
-        { type: 'router', event: 'NavigationStart', url: '/' },
-        { type: 'router', event: 'RoutesRecognized', url: '/' },
-        /* new Router Lifecycle in Angular 4.3 */
-        { type: 'router', event: 'GuardsCheckStart', url: '/' },
-        { type: 'router', event: 'GuardsCheckEnd', url: '/' },
-        { type: 'router', event: 'ResolveStart', url: '/' },
-        { type: 'router', event: 'ResolveEnd', url: '/' },
-        { type: 'store', state: '/' }, // ROUTER_NAVIGATION event in the store
-        { type: 'action', action: ROUTER_NAVIGATION },
-        { type: 'store', state: '/' }, // ROUTER_NAVIGATED event in the store
-        { type: 'action', action: ROUTER_NAVIGATED },
-        { type: 'router', event: 'NavigationEnd', url: '/' },
-      ]);
-    });
-  });
+    }));
 });
 
 function waitForNavigation(router: Router, event: any = NavigationEnd) {
