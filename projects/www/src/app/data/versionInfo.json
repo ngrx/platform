@@ -2,6 +2,10 @@
   "currentVersion": "21",
   "docVersions": [
     {
+      "title": "v20",
+      "url": "https://v20.ngrx.io"
+    },
+    {
       "title": "v19",
       "url": "https://v19.ngrx.io"
     },
