@@ -1,4 +1,4 @@
-import { forkJoin, of } from 'rxjs';
+import { forkJoin, of, firstValueFrom } from 'rxjs';
 import { createEffect, getCreateEffectMetadata } from '../src/effect_creator';
 
 describe('createEffect()', () => {
@@ -76,17 +76,18 @@ describe('createEffect()', () => {
     );
   });
 
-  it('should be possible to invoke functional effect as function', (done) => {
+  it('should be possible to invoke functional effect as function', async () => {
     const sum = createEffect((x = 10, y = 20) => of(x + y), {
       functional: true,
       dispatch: false,
     });
 
-    forkJoin([sum(), sum(100, 200)]).subscribe(([defaultResult, result]) => {
-      expect(defaultResult).toBe(30);
-      expect(result).toBe(300);
-      done();
-    });
+    const [defaultResult, result] = await firstValueFrom(
+      forkJoin([sum(), sum(100, 200)])
+    );
+
+    expect(defaultResult).toBe(30);
+    expect(result).toBe(300);
   });
 
   it('should use effects error handler by default', () => {

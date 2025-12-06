@@ -51,9 +51,7 @@ describe('Effects metadata', () => {
         },
       ];
 
-      expect(getSourceMetadata(mock)).toEqual(
-        jasmine.arrayContaining(expected)
-      );
+      expect(getSourceMetadata(mock)).toEqual(expect.arrayContaining(expected));
       expect(getSourceMetadata(mock).length).toEqual(expected.length);
     });
   });

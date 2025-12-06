@@ -1,3 +1,4 @@
+import { vi, type MockInstance } from 'vitest';
 import { ErrorHandler, Provider, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Action, Store } from '@ngrx/store';
@@ -8,8 +9,8 @@ import * as effectsSrc from '../src/effects_error_handler';
 
 describe('Effects Error Handler', () => {
   let subscriptionCount: number;
-  let globalErrorHandler: jasmine.Spy;
-  let storeNext: jasmine.Spy;
+  let globalErrorHandler: MockInstance;
+  let storeNext: MockInstance;
 
   function makeEffectTestBed(effect: Type<any>, ...providers: Provider[]) {
     subscriptionCount = 0;
@@ -20,14 +21,14 @@ describe('Effects Error Handler', () => {
         {
           provide: Store,
           useValue: {
-            next: jasmine.createSpy('storeNext'),
-            dispatch: jasmine.createSpy('dispatch'),
+            next: vi.fn(),
+            dispatch: vi.fn(),
           },
         },
         {
           provide: ErrorHandler,
           useValue: {
-            handleError: jasmine.createSpy('globalErrorHandler'),
+            handleError: vi.fn(),
           },
         },
         ...providers,
@@ -35,15 +36,15 @@ describe('Effects Error Handler', () => {
     });
 
     globalErrorHandler = TestBed.inject(ErrorHandler)
-      .handleError as jasmine.Spy;
+      .handleError as MockInstance;
     const store = TestBed.inject(Store);
-    storeNext = store.next as jasmine.Spy;
+    storeNext = store.next as MockInstance;
   }
 
   it('should retry on infinite error up to 10 times', () => {
     makeEffectTestBed(AlwaysErrorEffect);
 
-    expect(globalErrorHandler.calls.count()).toBe(10);
+    expect(globalErrorHandler).toHaveBeenCalledTimes(10);
   });
 
   it('should retry and notify error handler when effect error handler is not provided', () => {
@@ -57,18 +58,20 @@ describe('Effects Error Handler', () => {
   });
 
   it('should use custom error behavior when EFFECTS_ERROR_HANDLER is provided', () => {
-    const effectsErrorHandlerSpy = jasmine
-      .createSpy()
-      .and.callFake((effect$: Observable<any>, errorHandler: ErrorHandler) => {
-        return effect$.pipe(
-          catchError((err) => {
-            errorHandler.handleError(
-              new Error('inside custom handler: ' + err.message)
-            );
-            return of({ type: 'custom action' });
-          })
-        );
-      });
+    const effectsErrorHandlerSpy = vi
+      .fn()
+      .mockImplementation(
+        (effect$: Observable<any>, errorHandler: ErrorHandler) => {
+          return effect$.pipe(
+            catchError((err) => {
+              errorHandler.handleError(
+                new Error('inside custom handler: ' + err.message)
+              );
+              return of({ type: 'custom action' });
+            })
+          );
+        }
+      );
 
     makeEffectTestBed(ErrorEffect, {
       provide: EFFECTS_ERROR_HANDLER,
@@ -76,7 +79,7 @@ describe('Effects Error Handler', () => {
     });
 
     expect(effectsErrorHandlerSpy).toHaveBeenCalledWith(
-      jasmine.any(Observable),
+      expect.any(Observable),
       TestBed.inject(ErrorHandler)
     );
     expect(globalErrorHandler).toHaveBeenCalledWith(

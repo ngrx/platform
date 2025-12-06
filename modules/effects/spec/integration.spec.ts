@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { NgModule, Injectable, InjectionToken } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -16,7 +17,7 @@ import {
 import { ofType, createEffect, OnRunEffects, EffectNotification } from '../src';
 
 describe('NgRx Effects Integration spec', () => {
-  it('throws if forRoot() with Effects is used more than once', (done: any) => {
+  it('throws if forRoot() with Effects is used more than once', async () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({}),
@@ -33,15 +34,12 @@ describe('NgRx Effects Integration spec', () => {
       },
     ]);
 
-    router.navigateByUrl('/feature-path').catch((err: TypeError) => {
-      expect(err.message).toBe(
-        'EffectsModule.forRoot() called twice. Feature modules should use EffectsModule.forFeature() instead.'
-      );
-      done();
-    });
+    await expect(router.navigateByUrl('/feature-path')).rejects.toThrow(
+      'EffectsModule.forRoot() called twice. Feature modules should use EffectsModule.forFeature() instead.'
+    );
   });
 
-  it('does not throw if forRoot() is used more than once with empty effects', (done: any) => {
+  it('does not throw if forRoot() is used more than once with empty effects', async () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({}),
@@ -51,7 +49,6 @@ describe('NgRx Effects Integration spec', () => {
     });
 
     const router: Router = TestBed.inject(Router);
-    //                       empty forRoot([]) 👇
     router.resetConfig([
       {
         path: 'feature-path',
@@ -59,16 +56,13 @@ describe('NgRx Effects Integration spec', () => {
       },
     ]);
 
-    router.navigateByUrl('/feature-path').then(() => {
-      // success
-      done();
-    });
+    await expect(router.navigateByUrl('/feature-path')).resolves.toBeTruthy();
   });
 
   it('runs provided class and functional effects', () => {
     const obs$ = concat(of('ngrx'), NEVER);
-    const classEffectRun = jest.fn<void, []>();
-    const functionalEffectRun = jest.fn<void, []>();
+    const classEffectRun = vi.fn();
+    const functionalEffectRun = vi.fn();
     const classEffect$ = createEffect(() => obs$.pipe(tap(classEffectRun)), {
       dispatch: false,
     });
@@ -114,7 +108,7 @@ describe('NgRx Effects Integration spec', () => {
   });
 
   it('runs user provided effects defined as injection token', () => {
-    const userProvidedEffectRun = jest.fn<void, []>();
+    const userProvidedEffectRun = vi.fn();
 
     const TOKEN_EFFECTS = new InjectionToken('Token Effects', {
       providedIn: 'root',

@@ -1,10 +1,19 @@
+import { vi } from 'vitest';
 import {
   inject,
   Injectable,
   provideEnvironmentInitializer,
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { forkJoin, map, Observable, of, switchMap, take } from 'rxjs';
+import {
+  firstValueFrom,
+  forkJoin,
+  map,
+  Observable,
+  of,
+  switchMap,
+  take,
+} from 'rxjs';
 import {
   createAction,
   createFeatureSelector,
@@ -29,7 +38,7 @@ describe('provideEffects', () => {
     TestBed.configureTestingModule({
       providers: [
         provideEnvironmentInitializer(() =>
-          jest.spyOn(inject(EffectsRunner), 'start')
+          vi.spyOn(inject(EffectsRunner), 'start')
         ),
         provideStore(),
         // provide effects twice
@@ -46,7 +55,7 @@ describe('provideEffects', () => {
     TestBed.configureTestingModule({
       providers: [
         provideEnvironmentInitializer(() =>
-          jest.spyOn(inject(Store), 'dispatch')
+          vi.spyOn(inject(Store), 'dispatch')
         ),
         provideStore(),
         // provide effects twice
@@ -69,7 +78,7 @@ describe('provideEffects', () => {
     expect(() => TestBed.inject(TestEffects)).toThrowError();
   });
 
-  it('runs provided class effects', (done) => {
+  it('runs provided class effects', async () => {
     TestBed.configureTestingModule({
       providers: [provideStore(), provideEffects(TestEffects)],
     });
@@ -77,15 +86,15 @@ describe('provideEffects', () => {
     const store = TestBed.inject(Store);
     const effects = TestBed.inject(TestEffects);
 
-    effects.simpleEffect$.subscribe((action) => {
-      expect(action).toEqual(simpleEffectDone());
-      done();
-    });
+    const actionPromise = firstValueFrom(effects.simpleEffect$.pipe(take(1)));
 
     store.dispatch(simpleEffectTest());
+
+    const action = await actionPromise;
+    expect(action).toEqual(simpleEffectDone());
   });
 
-  it('runs provided functional effects', (done) => {
+  it('runs provided functional effects', async () => {
     TestBed.configureTestingModule({
       providers: [TestService, provideStore(), provideEffects(testEffects)],
     });
@@ -93,19 +102,21 @@ describe('provideEffects', () => {
     const store = TestBed.inject(Store);
     const actions$ = TestBed.inject(Actions);
 
-    forkJoin([
-      actions$.pipe(ofType(simpleFnEffectDone), take(1)),
-      actions$.pipe(ofType(fnEffectWithServiceDone), take(1)),
-    ]).subscribe(([, { numbers }]) => {
-      expect(numbers).toEqual([1, 2, 3]);
-      done();
-    });
+    const resultPromise = firstValueFrom(
+      forkJoin([
+        actions$.pipe(ofType(simpleFnEffectDone), take(1)),
+        actions$.pipe(ofType(fnEffectWithServiceDone), take(1)),
+      ])
+    );
 
     store.dispatch(simpleFnEffectTest());
     store.dispatch(fnEffectWithServiceTest());
+
+    const [, { numbers }] = await resultPromise;
+    expect(numbers).toEqual([1, 2, 3]);
   });
 
-  it('runs provided class and functional effects', (done) => {
+  it('runs provided class and functional effects', async () => {
     TestBed.configureTestingModule({
       providers: [
         TestService,
@@ -117,16 +128,20 @@ describe('provideEffects', () => {
     const store = TestBed.inject(Store);
     const actions$ = TestBed.inject(Actions);
 
-    forkJoin([
-      actions$.pipe(ofType(simpleEffectDone), take(1)),
-      actions$.pipe(ofType(simpleFnEffectDone), take(1)),
-    ]).subscribe(() => done());
+    const resultPromise = firstValueFrom(
+      forkJoin([
+        actions$.pipe(ofType(simpleEffectDone), take(1)),
+        actions$.pipe(ofType(simpleFnEffectDone), take(1)),
+      ])
+    );
 
     store.dispatch(simpleEffectTest());
     store.dispatch(simpleFnEffectTest());
+
+    await resultPromise;
   });
 
-  it('runs provided effects after root state registration', (done) => {
+  it('runs provided effects after root state registration', async () => {
     TestBed.configureTestingModule({
       providers: [
         provideEffects(TestEffects),
@@ -138,17 +153,17 @@ describe('provideEffects', () => {
     const store = TestBed.inject(Store);
     const effects = TestBed.inject(TestEffects);
 
-    effects.effectWithRootState$.subscribe((action) => {
-      expect(action).toEqual(
-        effectWithRootStateDone({ [rootSliceKey]: 'ngrx' })
-      );
-      done();
-    });
+    const actionPromise = firstValueFrom(
+      effects.effectWithRootState$.pipe(take(1))
+    );
 
     store.dispatch(effectWithRootStateTest());
+
+    const action = await actionPromise;
+    expect(action).toEqual(effectWithRootStateDone({ [rootSliceKey]: 'ngrx' }));
   });
 
-  it('runs provided effects after feature state registration', (done) => {
+  it('runs provided effects after feature state registration', async () => {
     TestBed.configureTestingModule({
       providers: [
         provideStore(),
@@ -161,14 +176,16 @@ describe('provideEffects', () => {
     const store = TestBed.inject(Store);
     const effects = TestBed.inject(TestEffects);
 
-    effects.effectWithFeatureState$.subscribe((action) => {
-      expect(action).toEqual(
-        effectWithFeatureStateDone({ [featureSliceKey]: 'effects' })
-      );
-      done();
-    });
+    const actionPromise = firstValueFrom(
+      effects.effectWithFeatureState$.pipe(take(1))
+    );
 
     store.dispatch(effectWithFeatureStateTest());
+
+    const action = await actionPromise;
+    expect(action).toEqual(
+      effectWithFeatureStateDone({ [featureSliceKey]: 'effects' })
+    );
   });
 });
 

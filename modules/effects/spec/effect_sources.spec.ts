@@ -1,6 +1,7 @@
+import { vi } from 'vitest';
 import { ErrorHandler } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { cold, hot, getTestScheduler } from 'jasmine-marbles';
+import { TestScheduler } from 'rxjs/testing';
 import {
   concat,
   NEVER,
@@ -30,8 +31,13 @@ describe('EffectSources', () => {
   let mockErrorReporter: ErrorHandler;
   let effectSources: EffectSources;
   let effectsErrorHandler: EffectsErrorHandler;
+  let testScheduler: TestScheduler;
 
   beforeEach(() => {
+    testScheduler = new TestScheduler((actual, expected) => {
+      expect(actual).toEqual(expected);
+    });
+
     TestBed.configureTestingModule({
       providers: [
         {
@@ -43,7 +49,7 @@ describe('EffectSources', () => {
         {
           provide: Store,
           useValue: {
-            dispatch: jasmine.createSpy('dispatch'),
+            dispatch: vi.fn(),
           },
         },
       ],
@@ -56,12 +62,12 @@ describe('EffectSources', () => {
     effectSources = TestBed.inject(EffectSources);
     effectsErrorHandler = TestBed.inject(EFFECTS_ERROR_HANDLER);
 
-    spyOn(mockErrorReporter, 'handleError');
+    vi.spyOn(mockErrorReporter, 'handleError');
   });
 
   it('should have an "addEffects" method to push new source instances', () => {
     const effectSource = {};
-    spyOn(effectSources, 'next');
+    vi.spyOn(effectSources, 'next');
 
     effectSources.addEffects(effectSource);
 
@@ -105,26 +111,18 @@ describe('EffectSources', () => {
       }
 
       class SourceD {
-        // typed as `any` because otherwise there would be compile errors
-        // createEffect is typed that it always has to return an action
         d$ = createEffect(() => alwaysOf(d) as any);
       }
 
       class SourceE {
-        // typed as `any` because otherwise there would be compile errors
-        // createEffect is typed that it always has to return an action
         e$ = createEffect(() => alwaysOf(e) as any);
       }
 
       class SourceF {
-        // typed as `any` because otherwise there would be compile errors
-        // createEffect is typed that it always has to return an action
         f$ = createEffect(() => alwaysOf(f) as any);
       }
 
       class SourceG {
-        // typed as `any` because otherwise there would be compile errors
-        // createEffect is typed that it always has to return an action
         g$ = createEffect(() => alwaysOf(g) as any);
       }
 
@@ -133,16 +131,9 @@ describe('EffectSources', () => {
       }
 
       class SourceH {
-        // typed as `any` because otherwise there would be compile errors
-        // createEffect is typed that it always has to return an action
         empty = createEffect(() => of('value') as any);
         never = createEffect(
-          () =>
-            // typed as `any` because otherwise there would be compile errors
-            // createEffect is typed that it always has to return an action
-            timer(50, getTestScheduler() as any).pipe(
-              map(() => 'update')
-            ) as any
+          () => timer(50, testScheduler).pipe(map(() => 'update')) as any
         );
       }
 
@@ -224,137 +215,148 @@ describe('EffectSources', () => {
       });
 
       it('should resolve effects from class instances', () => {
-        const sources$ = cold('--a--b--', {
-          a: new SourceA(),
-          b: new SourceB(),
+        testScheduler.run(({ cold, expectObservable }) => {
+          const sources$ = cold('--a--b--', {
+            a: new SourceA(),
+            b: new SourceB(),
+          });
+
+          const output = toActions(sources$);
+
+          expectObservable(output).toBe('--a--b--', { a, b });
         });
-        const expected = cold('--a--b--', { a, b });
-
-        const output = toActions(sources$);
-
-        expect(output).toBeObservable(expected);
       });
 
       it('should resolve effects from records', () => {
-        const sources$ = cold('--a--b--c--', {
-          a: recordA,
-          b: recordB,
-          c: recordC,
+        testScheduler.run(({ cold, expectObservable }) => {
+          const sources$ = cold('--a--b--c--', {
+            a: recordA,
+            b: recordB,
+            c: recordC,
+          });
+
+          const output = toActions(sources$);
+
+          expectObservable(output).toBe('--a--b--c--', { a, b, c });
         });
-        const expected = cold('--a--b--c--', { a, b, c });
-
-        const output = toActions(sources$);
-
-        expect(output).toBeObservable(expected);
       });
 
       it('should ignore duplicate class instances', () => {
-        const sources$ = cold('--a--a--a--', {
-          a: new SourceA(),
+        testScheduler.run(({ cold, expectObservable }) => {
+          const sources$ = cold('--a--a--a--', {
+            a: new SourceA(),
+          });
+
+          const output = toActions(sources$);
+
+          expectObservable(output).toBe('--a--------', { a });
         });
-        const expected = cold('--a--------', { a });
-
-        const output = toActions(sources$);
-
-        expect(output).toBeObservable(expected);
       });
 
       it('should ignore different instances of the same class', () => {
-        const sources$ = cold('--a--b--', {
-          a: new SourceA(),
-          b: new SourceA(),
+        testScheduler.run(({ cold, expectObservable }) => {
+          const sources$ = cold('--a--b--', {
+            a: new SourceA(),
+            b: new SourceA(),
+          });
+
+          const output = toActions(sources$);
+
+          expectObservable(output).toBe('--a-----', { a });
         });
-        const expected = cold('--a-----', { a });
-
-        const output = toActions(sources$);
-
-        expect(output).toBeObservable(expected);
       });
 
       it('should ignore duplicate records', () => {
-        const sources$ = cold('--a--b--', { a: recordA, b: recordA });
-        const expected = cold('--a-----', { a });
+        testScheduler.run(({ cold, expectObservable }) => {
+          const sources$ = cold('--a--b--', { a: recordA, b: recordA });
 
-        const output = toActions(sources$);
+          const output = toActions(sources$);
 
-        expect(output).toBeObservable(expected);
+          expectObservable(output).toBe('--a-----', { a });
+        });
       });
 
       it('should resolve effects with different identifiers', () => {
-        const sources$ = cold('--a--b--c--', {
-          a: new SourceWithIdentifier('a'),
-          b: new SourceWithIdentifier('b'),
-          c: new SourceWithIdentifier('c'),
+        testScheduler.run(({ cold, expectObservable }) => {
+          const sources$ = cold('--a--b--c--', {
+            a: new SourceWithIdentifier('a'),
+            b: new SourceWithIdentifier('b'),
+            c: new SourceWithIdentifier('c'),
+          });
+
+          const output = toActions(sources$);
+
+          expectObservable(output).toBe('--i--i--i--', { i });
         });
-        const expected = cold('--i--i--i--', { i });
-
-        const output = toActions(sources$);
-
-        expect(output).toBeObservable(expected);
       });
 
       it('should ignore effects with the same identifier', () => {
-        const sources$ = cold('--a--b--c--', {
-          a: new SourceWithIdentifier('a'),
-          b: new SourceWithIdentifier('a'),
-          c: new SourceWithIdentifier('a'),
+        testScheduler.run(({ cold, expectObservable }) => {
+          const sources$ = cold('--a--b--c--', {
+            a: new SourceWithIdentifier('a'),
+            b: new SourceWithIdentifier('a'),
+            c: new SourceWithIdentifier('a'),
+          });
+
+          const output = toActions(sources$);
+
+          expectObservable(output).toBe('--i--------', { i });
         });
-        const expected = cold('--i--------', { i });
-
-        const output = toActions(sources$);
-
-        expect(output).toBeObservable(expected);
       });
 
       it('should resolve effects with same identifiers but different classes', () => {
-        const sources$ = cold('--a--b--c--d--', {
-          a: new SourceWithIdentifier('a'),
-          b: new SourceWithIdentifier2('a'),
-          c: new SourceWithIdentifier('b'),
-          d: new SourceWithIdentifier2('b'),
-        });
-        const expected = cold('--a--b--a--b--', {
-          a: i,
-          b: i2,
-        });
+        testScheduler.run(({ cold, expectObservable }) => {
+          const sources$ = cold('--a--b--c--d--', {
+            a: new SourceWithIdentifier('a'),
+            b: new SourceWithIdentifier2('a'),
+            c: new SourceWithIdentifier('b'),
+            d: new SourceWithIdentifier2('b'),
+          });
 
-        const output = toActions(sources$);
+          const output = toActions(sources$);
 
-        expect(output).toBeObservable(expected);
+          expectObservable(output).toBe('--a--b--a--b--', {
+            a: i,
+            b: i2,
+          });
+        });
       });
 
       it('should start with an action after being registered with OnInitEffects', () => {
-        const sources$ = cold('--a--', {
-          a: new SourceWithInitAction(new Subject()),
+        testScheduler.run(({ cold, expectObservable }) => {
+          const sources$ = cold('--a--', {
+            a: new SourceWithInitAction(new Subject()),
+          });
+
+          const output = toActions(sources$);
+
+          expectObservable(output).toBe('--a--', { a: initAction });
         });
-        const expected = cold('--a--', { a: initAction });
-
-        const output = toActions(sources$);
-
-        expect(output).toBeObservable(expected);
       });
 
       it('should not start twice for the same instance', () => {
-        const sources$ = cold('--a--a--', {
-          a: new SourceWithInitAction(new Subject()),
+        testScheduler.run(({ cold, expectObservable }) => {
+          const sources$ = cold('--a--a--', {
+            a: new SourceWithInitAction(new Subject()),
+          });
+
+          const output = toActions(sources$);
+
+          expectObservable(output).toBe('--a-----', { a: initAction });
         });
-        const expected = cold('--a--', { a: initAction });
-
-        const output = toActions(sources$);
-
-        expect(output).toBeObservable(expected);
       });
 
       it('should start twice for the same instance with a different key', () => {
-        const sources$ = cold('--a--b--', {
-          a: new SourceWithInitAction(new Subject(), 'a'),
-          b: new SourceWithInitAction(new Subject(), 'b'),
+        testScheduler.run(({ cold, expectObservable }) => {
+          const sources$ = cold('--a--b--', {
+            a: new SourceWithInitAction(new Subject(), 'a'),
+            b: new SourceWithInitAction(new Subject(), 'b'),
+          });
+
+          const output = toActions(sources$);
+
+          expectObservable(output).toBe('--a--a--', { a: initAction });
         });
-        const expected = cold('--a--a--', { a: initAction });
-
-        const output = toActions(sources$);
-
-        expect(output).toBeObservable(expected);
       });
 
       it('should report an error if a class-based effect dispatches an invalid action', () => {
@@ -414,65 +416,68 @@ describe('EffectSources', () => {
       });
 
       it('should resubscribe on error by default', () => {
-        const sources$ = of(
-          new (class {
-            b$ = createEffect(() =>
-              hot('a--e--b--e--c--e--d').pipe(
-                map((v) => {
-                  if (v == 'e') throw new Error('An Error');
-                  return v;
-                })
-              )
-            );
-          })()
-        );
+        testScheduler.run(({ hot, expectObservable }) => {
+          const sources$ = of(
+            new (class {
+              b$ = createEffect(() =>
+                hot('a--e--b--e--c--e--d').pipe(
+                  map((v) => {
+                    if (v == 'e') throw new Error('An Error');
+                    return v;
+                  })
+                )
+              );
+            })()
+          );
 
-        //                       👇 'e' is ignored.
-        const expected = cold('a-----b-----c-----d');
-
-        expect(toActions(sources$)).toBeObservable(expected);
+          expectObservable(toActions(sources$)).toBe('a-----b-----c-----d');
+        });
       });
 
       it('should resubscribe on error by default when dispatch is false', () => {
-        const sources$ = of(
-          new (class {
-            b$ = createEffect(
-              () =>
-                hot('a--b--c--d').pipe(
-                  map((v) => {
-                    if (v == 'b') throw new Error('An Error');
-                    return v;
-                  })
-                ),
-              { dispatch: false }
-            );
-          })()
-        );
-        //                    👇 doesn't complete and doesn't dispatch
-        const expected = cold('----------');
+        testScheduler.run(({ hot, expectObservable }) => {
+          const sources$ = of(
+            new (class {
+              b$ = createEffect(
+                () =>
+                  hot('a--b--c--d').pipe(
+                    map((v) => {
+                      if (v == 'b') throw new Error('An Error');
+                      return v;
+                    })
+                  ),
+                { dispatch: false }
+              );
+            })()
+          );
 
-        expect(toActions(sources$)).toBeObservable(expected);
+          expectObservable(toActions(sources$)).toBe('----------');
+        });
       });
 
       it('should not resubscribe on error when useEffectsErrorHandler is false', () => {
-        const sources$ = of(
-          new (class {
-            b$ = createEffect(
-              () =>
-                hot('a--b--c--d').pipe(
-                  map((v) => {
-                    if (v == 'b') throw new Error('An Error');
-                    return v;
-                  })
-                ),
-              { dispatch: false, useEffectsErrorHandler: false }
-            );
-          })()
-        );
-        //                       👇 errors with dispatch false
-        const expected = cold('---#', undefined, new Error('An Error'));
+        testScheduler.run(({ hot, expectObservable }) => {
+          const sources$ = of(
+            new (class {
+              b$ = createEffect(
+                () =>
+                  hot('a--b--c--d').pipe(
+                    map((v) => {
+                      if (v == 'b') throw new Error('An Error');
+                      return v;
+                    })
+                  ),
+                { dispatch: false, useEffectsErrorHandler: false }
+              );
+            })()
+          );
 
-        expect(toActions(sources$)).toBeObservable(expected);
+          expectObservable(toActions(sources$)).toBe(
+            '---#',
+            undefined,
+            new Error('An Error')
+          );
+        });
       });
 
       it(`should not break when the action in the error message can't be stringified`, () => {
@@ -488,14 +493,25 @@ describe('EffectSources', () => {
       });
 
       it('should not complete the group if just one effect completes', () => {
-        const sources$ = cold('g', {
-          g: new SourceH(),
+        testScheduler.run(({ cold, expectObservable, scheduler }) => {
+          class SourceH {
+            empty = createEffect(() => of('value') as any);
+            never = createEffect(
+              () => timer(5, scheduler).pipe(map(() => 'update')) as any
+            );
+          }
+
+          const sources$ = cold('g', {
+            g: new SourceH(),
+          });
+
+          const output = toActions(sources$);
+
+          expectObservable(output).toBe('a----b-----', {
+            a: 'value',
+            b: 'update',
+          });
         });
-        const expected = cold('a----b-----', { a: 'value', b: 'update' });
-
-        const output = toActions(sources$);
-
-        expect(output).toBeObservable(expected);
       });
     });
   });
