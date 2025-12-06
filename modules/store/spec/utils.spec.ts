@@ -76,9 +76,7 @@ describe(`Store utils`, () => {
 
   describe('createFeatureReducerFactory()', () => {
     it('should compose a reducer factory from the provided meta reducers', () => {
-      const metaReducer = jasmine
-        .createSpy('metaReducer')
-        .and.callFake((red) => (s: any, a: any) => red(s, a));
+      const metaReducer = vi.fn((red) => (s: any, a: any) => red(s, a));
       const reducer = (state: any, action: any) => state;
 
       const featureReducerFactory = createFeatureReducerFactory([metaReducer]);

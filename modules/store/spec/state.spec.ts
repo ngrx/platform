@@ -4,7 +4,7 @@ import { INIT, Store, StoreModule, Action } from '..';
 describe('ngRx State', () => {
   it('should call the reducer to scan over the dispatcher', () => {
     const initialState = 123;
-    const reducer = jasmine.createSpy('reducer').and.returnValue(initialState);
+    const reducer = vi.fn(() => initialState);
 
     TestBed.configureTestingModule({
       imports: [
