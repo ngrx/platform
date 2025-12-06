@@ -12,11 +12,18 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { GuideSectionComponent } from './guide-section.component';
 import { GuideMenuService } from '../services/guide-menu.service';
 import { DOCUMENT } from '@angular/common';
+import { VersionNavigationComponent } from './version-navigation.component';
 
 @Component({
   selector: 'ngrx-menu',
   standalone: true,
-  imports: [MatIconModule, RouterLink, RouterLinkActive, GuideSectionComponent],
+  imports: [
+    MatIconModule,
+    RouterLink,
+    RouterLinkActive,
+    GuideSectionComponent,
+    VersionNavigationComponent,
+  ],
   template: `
     <div class="mobile-nav-bar">
       <button class="menu-toggle" #toggleBtnRef (click)="toggleMenu()">
@@ -32,6 +39,7 @@ import { DOCUMENT } from '@angular/common';
         <img src="/ngrx-logo-pink.svg" alt="ngrx logo" />
         NgRx
       </a>
+      <ngrx-version-navigation />
       <hr />
       <!--      <a-->
       <!--        routerLink="/workshops"-->

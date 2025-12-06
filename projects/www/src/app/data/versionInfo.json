@@ -1,0 +1,69 @@
+{
+  "currentVersion": "21",
+  "docVersions": [
+    {
+      "title": "v19",
+      "url": "https://v19.ngrx.io"
+    },
+    {
+      "title": "v18",
+      "url": "https://v18.ngrx.io"
+    },
+    {
+      "title": "v17",
+      "url": "https://v17.ngrx.io"
+    },
+    {
+      "title": "v16",
+      "url": "https://v16.ngrx.io"
+    },
+    {
+      "title": "v15",
+      "url": "https://v15.ngrx.io"
+    },
+    {
+      "title": "v14",
+      "url": "https://v14.ngrx.io"
+    },
+    {
+      "title": "v13",
+      "url": "https://v13.ngrx.io"
+    },
+    {
+      "title": "v12",
+      "url": "https://v12.ngrx.io"
+    },
+    {
+      "title": "v11",
+      "url": "https://v11.ngrx.io"
+    },
+    {
+      "title": "v10",
+      "url": "https://v10.ngrx.io"
+    },
+    {
+      "title": "v9",
+      "url": "https://v9.ngrx.io"
+    },
+    {
+      "title": "v8",
+      "url": "https://v8.ngrx.io"
+    },
+    {
+      "title": "v7",
+      "url": "https://v7.ngrx.io"
+    },
+    {
+      "title": "v6",
+      "url": "https://github.com/ngrx/platform/tree/6.1.2/docs"
+    },
+    {
+      "title": "v5",
+      "url": "https://github.com/ngrx/platform/tree/v5.2.0/docs"
+    },
+    {
+      "title": "v4",
+      "url": "https://github.com/ngrx/platform/tree/v4.1.1/docs"
+    }
+  ]
+}
