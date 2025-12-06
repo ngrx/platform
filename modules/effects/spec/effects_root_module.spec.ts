@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { INIT, Store, StoreModule } from '@ngrx/store';
 
@@ -6,10 +7,10 @@ import { ROOT_EFFECTS_INIT } from '../src/effects_actions';
 
 describe('Effects Root Module', () => {
   const foo = 'foo';
-  const reducer = jasmine.createSpy('reducer').and.returnValue(foo);
+  const reducer = vi.fn().mockReturnValue(foo);
 
   beforeEach(() => {
-    reducer.calls.reset();
+    reducer.mockClear();
   });
 
   it('dispatches the root effects init action', () => {

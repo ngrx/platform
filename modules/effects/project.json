@@ -55,12 +55,8 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "options": {
-        "jestConfig": "modules/effects/jest.config.ts",
-        "runInBand": true,
-        "passWithNoTests": false
-      },
+      "executor": "@analogjs/vitest-angular:test",
+      "dependsOn": ["build"],
       "outputs": ["{workspaceRoot}/coverage/modules/effects"]
     }
   }
