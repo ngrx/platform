@@ -9,7 +9,10 @@ import { waitForAsync } from '@angular/core/testing';
 
 describe('DevTools Migration 17_0_0-beta', () => {
   let appTree: UnitTestTree;
-  const collectionPath = path.join(__dirname, '../migration.json');
+  const collectionPath = path.join(
+    process.cwd(),
+    'dist/modules/store-devtools/migrations/migration.json'
+  );
   const pkgName = 'store-devtools';
   const migrationname = `ngrx-${pkgName}-migration-17-0-0-beta`;
 

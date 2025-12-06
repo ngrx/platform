@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Store-Devtools ng-add Schematic Store Devtools ng-add Schematic for standalone application provides initial setup 1`] = `
+exports[`Store-Devtools ng-add Schematic > Store Devtools ng-add Schematic for standalone application > provides initial setup 1`] = `
 "import { ApplicationConfig, provideBrowserGlobalErrorListeners, isDevMode } from '@angular/core';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
