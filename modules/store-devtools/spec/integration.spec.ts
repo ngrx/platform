@@ -48,45 +48,48 @@ describe('Devtools Integration', () => {
     expect(error).toBeFalsy();
   });
 
-  it('should not throw if actions are ignored', (done: any) => {
-    const { store, devtools } = setup({
-      predicate: (_, { type }: Action) => type !== 'FOO',
-    });
-    store.subscribe();
-    devtools.dispatcher.subscribe((action: Action) => {
-      if (action.type === 'REFRESH') {
-        done();
-      }
-    });
-    store.dispatch({ type: 'FOO' });
-    devtools.refresh();
-  });
+  it('should not throw if actions are ignored', () =>
+    new Promise<void>((done) => {
+      const { store, devtools } = setup({
+        predicate: (_, { type }: Action) => type !== 'FOO',
+      });
+      store.subscribe();
+      devtools.dispatcher.subscribe((action: Action) => {
+        if (action.type === 'REFRESH') {
+          done();
+        }
+      });
+      store.dispatch({ type: 'FOO' });
+      devtools.refresh();
+    }));
 
-  it('should not throw if actions are blocked', (done: any) => {
-    const { store, devtools } = setup({
-      actionsBlocklist: ['FOO'],
-    });
-    store.subscribe();
-    devtools.dispatcher.subscribe((action: Action) => {
-      if (action.type === 'REFRESH') {
-        done();
-      }
-    });
-    store.dispatch({ type: 'FOO' });
-    devtools.refresh();
-  });
+  it('should not throw if actions are blocked', () =>
+    new Promise<void>((done: any) => {
+      const { store, devtools } = setup({
+        actionsBlocklist: ['FOO'],
+      });
+      store.subscribe();
+      devtools.dispatcher.subscribe((action: Action) => {
+        if (action.type === 'REFRESH') {
+          done();
+        }
+      });
+      store.dispatch({ type: 'FOO' });
+      devtools.refresh();
+    }));
 
-  it('should not throw if actions are safe', (done: any) => {
-    const { store, devtools } = setup({
-      actionsSafelist: ['BAR'],
-    });
-    store.subscribe();
-    devtools.dispatcher.subscribe((action: Action) => {
-      if (action.type === 'REFRESH') {
-        done();
-      }
-    });
-    store.dispatch({ type: 'FOO' });
-    devtools.refresh();
-  });
+  it('should not throw if actions are safe', () =>
+    new Promise<void>((done: any) => {
+      const { store, devtools } = setup({
+        actionsSafelist: ['BAR'],
+      });
+      store.subscribe();
+      devtools.dispatcher.subscribe((action: Action) => {
+        if (action.type === 'REFRESH') {
+          done();
+        }
+      });
+      store.dispatch({ type: 'FOO' });
+      devtools.refresh();
+    }));
 });
