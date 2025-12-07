@@ -28,6 +28,7 @@ describe('signalStore', () => {
   beforeEach(() => {
     consoleWarnSpy.mockClear();
   });
+
   describe('creation', () => {
     it('creates a store via new operator', () => {
       const Store = signalStore(withState({ foo: 'bar' }));

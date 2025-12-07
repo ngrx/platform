@@ -383,7 +383,7 @@ describe('rxMethod', () => {
     warnSpy.mockImplementation(() => void true);
 
     beforeEach(() => {
-      warnSpy.mockReset();
+      warnSpy.mockClear();
     });
 
     const createAdder = (callback: (value: number) => void) =>

@@ -245,7 +245,7 @@ describe('signalMethod', () => {
     const n = signal(1);
 
     beforeEach(() => {
-      warnSpy.mockReset();
+      warnSpy.mockClear();
     });
 
     it('warns when source injector is used for a signal', () => {
