@@ -4,12 +4,14 @@
     "rootDir": ".",
     "stripInternal": true,
     "experimentalDecorators": true,
-    "module": "preserve",
-    "moduleResolution": "bundler",
+    "module": "nodenext",
+    "target": "es2022",
+    "moduleResolution": "nodenext",
     "downlevelIteration": true,
     "outDir": "../../dist/modules/store-devtools",
     "paths": {
-      "@ngrx/store-devtools/schematics-core": ["./schematics-core"]
+      "@ngrx/store-devtools/schematics-core": ["./schematics-core"],
+      "@ngrx/store-devtools": ["./src"]
     },
     "sourceMap": true,
     "inlineSources": true,
