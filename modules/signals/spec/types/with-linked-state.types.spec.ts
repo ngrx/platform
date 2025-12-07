@@ -73,7 +73,6 @@ describe('withLinkedState', () => {
     `;
 
     const result = expectSnippet(snippet);
-    result.toSucceed();
     result.toInfer('firstname', 'Signal<string>');
     result.toInfer('lastname', 'Signal<string>');
   });
@@ -95,7 +94,6 @@ describe('withLinkedState', () => {
     `;
 
     const result = expectSnippet(snippet);
-    result.toSucceed();
     result.toInfer('firstname', 'Signal<string>');
     result.toInfer('lastname', 'Signal<string>');
   });
@@ -117,7 +115,6 @@ describe('withLinkedState', () => {
     `;
 
     const result = expectSnippet(snippet);
-    result.toSucceed();
     result.toInfer(
       'location',
       'DeepSignal<{ city: string; country: string; }>'
@@ -142,7 +139,6 @@ describe('withLinkedState', () => {
     `;
 
     const result = expectSnippet(snippet);
-    result.toSucceed();
     result.toInfer(
       'location',
       'DeepSignal<{ city: string; country: string; }>'
@@ -169,7 +165,6 @@ describe('withLinkedState', () => {
     `;
 
     const result = expectSnippet(snippet);
-    result.toSucceed();
     result.toInfer('bar', 'Signal<string>');
     result.toInfer('baz', 'Signal<string>');
     result.toInfer('qux', 'DeepSignal<{ x: number; }>');

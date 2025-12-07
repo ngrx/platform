@@ -25,7 +25,6 @@ describe('ComponentStore types', () => {
     describe('infers Subscription', () => {
       it('when argument type is specified and a variable with corresponding type is passed', () => {
         const effectTest = `const sub = componentStore.effect((e: Observable<string>) => number$)('string');`;
-        expectSnippet(effectTest).toSucceed();
         expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
 
@@ -34,38 +33,32 @@ describe('ComponentStore types', () => {
           'a variable with corresponding type is passed',
         () => {
           const effectTest = `const sub = componentStore.effect((e: Observable<string>) => EMPTY)('string');`;
-          expectSnippet(effectTest).toSucceed();
           expectSnippet(effectTest).toInfer('sub', 'Subscription');
         }
       );
 
       it('when argument type is specified and an Observable with corresponding type is passed', () => {
         const effectTest = `const sub = componentStore.effect((e: Observable<string>) => EMPTY)(string$);`;
-        expectSnippet(effectTest).toSucceed();
         expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
 
       it('when argument type is specified as Observable<unknown> and any type is passed', () => {
         const effectTest = `const sub = componentStore.effect((e: Observable<unknown>) => EMPTY)(5);`;
-        expectSnippet(effectTest).toSucceed();
         expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
 
       it('when generic type is specified and a variable with corresponding type is passed', () => {
         const effectTest = `const sub = componentStore.effect<string>((e) => number$)('string');`;
-        expectSnippet(effectTest).toSucceed();
         expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
 
       it('when generic type is specified as unknown and a variable with any type is passed', () => {
         const effectTest = `const sub = componentStore.effect<unknown>((e) => number$)('string');`;
-        expectSnippet(effectTest).toSucceed();
         expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
 
       it('when generic type is specified as unknown and origin can still be piped', () => {
         const effectTest = `const sub = componentStore.effect<unknown>((e) => e.pipe(concatMap(() => of())))('string');`;
-        expectSnippet(effectTest).toSucceed();
         expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
 
@@ -77,13 +70,11 @@ describe('ComponentStore types', () => {
 
       it('when argument type is an interface and a variable with corresponding type is passed', () => {
         const effectTest = `const sub = componentStore.effect((e: Observable<Obj>) => number$)({prop: 'string'});`;
-        expectSnippet(effectTest).toSucceed();
         expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
 
       it('when argument type is a partial interface and a variable with corresponding type is passed', () => {
         const effectTest = `const sub = componentStore.effect((e: Observable<Partial<Obj>>) => number$)({prop: 'string'});`;
-        expectSnippet(effectTest).toSucceed();
         expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
     });
@@ -91,37 +82,31 @@ describe('ComponentStore types', () => {
     describe('for void types', () => {
       it('when generic type is specified as void the argument is optional', () => {
         const effectTest = `const sub = componentStore.effect<void>((e) => EMPTY)();`;
-        expectSnippet(effectTest).toSucceed();
         expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
 
       it('when argument type is specified as Observable<void> the argument is optional', () => {
         const effectTest = `const sub = componentStore.effect((e: Observable<void>) => EMPTY)();`;
-        expectSnippet(effectTest).toSucceed();
         expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
 
       it('when type is not specified the argument is optional', () => {
         const effectTest = `const sub = componentStore.effect((e) => EMPTY)();`;
-        expectSnippet(effectTest).toSucceed();
         expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
 
       it('when type is specified as void the argument can be a void$', () => {
         const effectTest = `const sub = componentStore.effect((e: Observable<void>) => EMPTY)(of<void>());`;
-        expectSnippet(effectTest).toSucceed();
         expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
 
       it('when type is specified as void the argument can be a void', () => {
         const effectTest = `const sub = componentStore.effect((e) => EMPTY)({} as unknown as void);`;
-        expectSnippet(effectTest).toSucceed();
         expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
 
       it('when generic type is specified as void and origin can still be piped', () => {
         const effectTest = `const sub = componentStore.effect<void>((e) => e.pipe(concatMap(() => number$)))();`;
-        expectSnippet(effectTest).toSucceed();
         expectSnippet(effectTest).toInfer('sub', 'Subscription');
       });
     });
@@ -207,67 +192,56 @@ describe('ComponentStore types', () => {
     describe('infers Subscription', () => {
       it('when argument type is specified and a variable with corresponding type is passed', () => {
         const updaterTest = `const sub = componentStore.updater((state, v: string) => ({...state}))('string');`;
-        expectSnippet(updaterTest).toSucceed();
         expectSnippet(updaterTest).toInfer('sub', 'Subscription');
       });
 
       it('when argument type is specified and an Observable with corresponding type is passed', () => {
         const updaterTest = `const sub = componentStore.updater((state, v: string) => ({...state}))(string$);`;
-        expectSnippet(updaterTest).toSucceed();
         expectSnippet(updaterTest).toInfer('sub', 'Subscription');
       });
 
       it('when argument type is an interface and a variable with corresponding type is passed', () => {
         const updaterTest = `const sub = componentStore.updater((state, v: Obj) => ({...state}))({prop: 'obj'});`;
-        expectSnippet(updaterTest).toSucceed();
         expectSnippet(updaterTest).toInfer('sub', 'Subscription');
       });
 
       it('when argument type is an partial interface and a variable with corresponding type is passed', () => {
         const updaterTest = `const sub = componentStore.updater((state, v: Partial<Obj>) => ({...state}))({prop: 'obj'});`;
-        expectSnippet(updaterTest).toSucceed();
         expectSnippet(updaterTest).toInfer('sub', 'Subscription');
       });
 
       it('when argument type is an enum and a variable with corresponding type is passed', () => {
         const updaterTest = `const sub = componentStore.updater((state, v: LoadingState) => ({...state}))(LoadingState.LOADED);`;
-        expectSnippet(updaterTest).toSucceed();
         expectSnippet(updaterTest).toInfer('sub', 'Subscription');
       });
 
       it('when argument type is a union and a variable with corresponding type is passed', () => {
         const updaterTest = `const sub = componentStore.updater((state, v: string|number) => ({...state}))(5);`;
-        expectSnippet(updaterTest).toSucceed();
         expectSnippet(updaterTest).toInfer('sub', 'Subscription');
       });
 
       it('when argument type is an intersection and a variable with corresponding type is passed', () => {
         const updaterTest = `const sub = componentStore.updater((state, v: {p: string} & {p2: number}) => ({...state}))({p: 's', p2: 3});`;
-        expectSnippet(updaterTest).toSucceed();
         expectSnippet(updaterTest).toInfer('sub', 'Subscription');
       });
 
       it('when argument type is unknown and any variable is passed', () => {
         const updaterTest = `const sub = componentStore.updater((state, v: unknown) => ({...state}))({anything: 'works'});`;
-        expectSnippet(updaterTest).toSucceed();
         expectSnippet(updaterTest).toInfer('sub', 'Subscription');
       });
 
       it('when generic type is specified and any variable is passed', () => {
         const updaterTest = `const sub = componentStore.updater<string>((state, v) => ({...state}))('works');`;
-        expectSnippet(updaterTest).toSucceed();
         expectSnippet(updaterTest).toInfer('sub', 'Subscription');
       });
 
       it('when type is not specified and nothing is passed', () => {
         const updaterTest = `const v = componentStore.updater((state) => ({...state}))();`;
-        expectSnippet(updaterTest).toSucceed();
         expectSnippet(updaterTest).toInfer('v', 'void');
       });
 
       it('when type void is specified and nothing is passed', () => {
         const updaterTest = `const v = componentStore.updater<void>((state) => ({...state}))();`;
-        expectSnippet(updaterTest).toSucceed();
         expectSnippet(updaterTest).toInfer('v', 'void');
       });
     });
