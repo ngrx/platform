@@ -1,10 +1,10 @@
-import { LiftedActions, ComputedState, LiftedAction } from './../src/reducer';
-import { PerformAction, PERFORM_ACTION } from './../src/actions';
+import { ComputedState, LiftedAction, LiftedActions } from './../src/reducer';
+import { PERFORM_ACTION, PerformAction } from './../src/actions';
 import {
-  ReduxDevtoolsExtensionConnection,
-  ReduxDevtoolsExtensionConfig,
-  REDUX_DEVTOOLS_EXTENSION,
   ExtensionActionTypes,
+  REDUX_DEVTOOLS_EXTENSION,
+  ReduxDevtoolsExtensionConfig,
+  ReduxDevtoolsExtensionConnection,
 } from './../src/extension';
 import { Action } from '@ngrx/store';
 
@@ -18,7 +18,7 @@ import {
 import { unliftState } from '../src/utils';
 import { TestBed } from '@angular/core/testing';
 import { DevtoolsDispatcher } from '../src/devtools-dispatcher';
-import { inject } from '@angular/core';
+import { Mock, vi } from 'vitest';
 
 function createOptions(
   name = 'NgRx Store DevTools',
@@ -84,21 +84,19 @@ function createState(
 
 const testSetup = (options: { config: StoreDevtoolsConfig }) => {
   const reduxDevtoolsExtension = {
-    send: jasmine.createSpy('send'),
-    connect: jasmine.createSpy('connect'),
+    send: vi.fn(),
+    connect: vi.fn(),
   };
 
   const extensionConnection = {
-    init: jasmine.createSpy('init'),
-    subscribe: jasmine.createSpy('subscribe'),
-    unsubscribe: jasmine.createSpy('unsubscribe'),
-    send: jasmine.createSpy('send'),
-    error: jasmine.createSpy('error'),
+    init: vi.fn(),
+    subscribe: vi.fn(),
+    unsubscribe: vi.fn(),
+    send: vi.fn(),
+    error: vi.fn(),
   };
 
-  (reduxDevtoolsExtension.connect as jasmine.Spy).and.returnValue(
-    extensionConnection
-  );
+  reduxDevtoolsExtension.connect.mockReturnValue(extensionConnection);
 
   TestBed.configureTestingModule({
     // Provide both the service-to-test and its (spy) dependency
@@ -179,7 +177,7 @@ describe('DevtoolsExtension', () => {
     // Subscription needed or else extension connection will not be established.
     devtoolsExtension.actions$.subscribe(() => null);
     expect(reduxDevtoolsExtension.connect).toHaveBeenCalledWith(
-      jasmine.objectContaining({ serialize: customSerializer })
+      expect.objectContaining({ serialize: customSerializer })
     );
   });
 
@@ -202,7 +200,7 @@ describe('DevtoolsExtension', () => {
         return (unwrappedAction = action);
       });
 
-      const [callback] = extensionConnection.subscribe.calls.mostRecent().args;
+      const [callback] = extensionConnection.subscribe.mock.lastCall;
       callback({ type: ExtensionActionTypes.START });
       callback({ type: ExtensionActionTypes.ACTION, payload });
       expect(unwrappedAction).toEqual({
@@ -541,14 +539,12 @@ describe('DevtoolsExtension', () => {
       const NORMAL_ACTION = 'NORMAL_ACTION';
       const RANDOM_ACTION = 'RANDOM_ACTION';
 
-      const predicate = jasmine
-        .createSpy('predicate', (state: any, action: Action) => {
-          if (action.type === RANDOM_ACTION) {
-            return false;
-          }
-          return true;
-        })
-        .and.callThrough();
+      const predicate = vi.fn((state: any, action: Action) => {
+        if (action.type === RANDOM_ACTION) {
+          return false;
+        }
+        return true;
+      });
 
       let devtoolsExtension: DevtoolsExtension;
       let extensionConnection: ReduxDevtoolsExtensionConnection;
@@ -669,7 +665,7 @@ describe('DevtoolsExtension', () => {
   });
 
   describe('error handling', () => {
-    let consoleSpy: jasmine.Spy;
+    let consoleSpy: Mock;
 
     let devtoolsExtension: DevtoolsExtension;
     let extensionConnection: ReduxDevtoolsExtensionConnection;
@@ -682,11 +678,11 @@ describe('DevtoolsExtension', () => {
         }));
       // Subscription needed or else extension connection will not be established.
       devtoolsExtension.actions$.subscribe();
-      consoleSpy = spyOn(console, 'warn');
+      consoleSpy = vi.spyOn(console, 'warn');
     });
 
     it('for normal action', () => {
-      (extensionConnection.send as jasmine.Spy).and.callFake(() => {
+      (extensionConnection.send as Mock).mockImplementation(() => {
         throw new Error('uh-oh something went wrong');
       });
 
@@ -698,7 +694,7 @@ describe('DevtoolsExtension', () => {
     });
 
     it('for action that requires full state update', () => {
-      (reduxDevtoolsExtension.send as jasmine.Spy).and.callFake(() => {
+      (reduxDevtoolsExtension.send as Mock).mockImplementation(() => {
         throw new Error('uh-oh something went wrong');
       });
 
