@@ -26,6 +26,15 @@
             "command": "pnpm exec tsc -p modules/router-store/tsconfig.schematics.json"
           },
           {
+            "command": "pnpm exec rimraf node_modules/@ngrx/router-store"
+          },
+          {
+            "command": "pnpm exec mkdirp node_modules/@ngrx/router-store"
+          },
+          {
+            "command": "ncp dist/modules/router-store node_modules/@ngrx/router-store"
+          },
+          {
             "command": "cpy LICENSE dist/modules/router-store"
           }
         ]
@@ -43,12 +52,8 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "options": {
-        "jestConfig": "modules/router-store/jest.config.ts",
-        "runInBand": true,
-        "passWithNoTests": false
-      },
+      "executor": "@analogjs/vitest-angular:test",
+      "dependsOn": ["build"],
       "outputs": ["{workspaceRoot}/coverage/modules/router-store"]
     }
   }

@@ -9,7 +9,10 @@ import { waitForAsync } from '@angular/core/testing';
 
 describe('Router Store Migration 15_2_0', () => {
   let appTree: UnitTestTree;
-  const collectionPath = path.join(__dirname, '../migration.json');
+  const collectionPath = path.join(
+    process.cwd(),
+    'dist/modules/router-store/migrations/migration.json'
+  );
   const pkgName = 'router-store';
 
   beforeEach(() => {
