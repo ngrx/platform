@@ -1,3 +1,4 @@
+import { vi, type MockInstance } from 'vitest';
 import { Injectable, NgModule } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
@@ -8,7 +9,8 @@ import {
   Store,
   StoreModule,
 } from '@ngrx/store';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { firstValueFrom } from 'rxjs';
+import { map, take, withLatestFrom } from 'rxjs/operators';
 import { Actions, EffectsModule, ofType, createEffect } from '../';
 import { EffectsFeatureModule } from '../src/effects_feature_module';
 import { EffectsRootModule } from '../src/effects_root_module';
@@ -21,7 +23,7 @@ describe('Effects Feature Module', () => {
     const sourceC = 'sourceC';
     const effectSourceGroups = [[sourceA], [sourceB], [sourceC]];
 
-    let mockEffectSources: { addEffects: jasmine.Spy };
+    let mockEffectSources: { addEffects: MockInstance };
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -29,7 +31,7 @@ describe('Effects Feature Module', () => {
           {
             provide: EffectsRootModule,
             useValue: {
-              addEffects: jasmine.createSpy('addEffects'),
+              addEffects: vi.fn(),
             },
           },
           {
@@ -41,7 +43,7 @@ describe('Effects Feature Module', () => {
       });
 
       mockEffectSources = TestBed.inject<unknown>(EffectsRootModule) as {
-        addEffects: jasmine.Spy;
+        addEffects: MockInstance;
       };
     });
 
@@ -67,20 +69,23 @@ describe('Effects Feature Module', () => {
       store = TestBed.inject(Store);
     });
 
-    it('should have the feature state defined to select from the createEffect', (done: any) => {
+    it('should have the feature state defined to select from the createEffect', async () => {
       const action = { type: 'CREATE_INCREMENT' };
       const result = { type: 'CREATE_INCREASE' };
 
-      effects.createEffectWithStore.subscribe((res) => {
-        expect(res).toEqual(result);
-      });
+      const effectPromise = firstValueFrom(
+        effects.createEffectWithStore.pipe(take(1))
+      );
 
       store.dispatch(action);
 
-      store.pipe(select(getCreateDataState)).subscribe((data) => {
-        expect(data).toBe(220);
-        done();
-      });
+      const res = await effectPromise;
+      expect(res).toEqual(result);
+
+      const data = await firstValueFrom(
+        store.pipe(select(getCreateDataState), take(1))
+      );
+      expect(data).toBe(220);
     });
   });
 });
