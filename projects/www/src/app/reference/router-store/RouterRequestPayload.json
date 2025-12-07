@@ -2,7 +2,7 @@
   "name": "RouterRequestPayload",
   "canonicalReference": "@ngrx/router-store!RouterRequestPayload:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+  "fileUrlPath": "../../dist/modules/router-store/types/ngrx-router-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type RouterRequestPayload<T extends "
+          "text": "type RouterRequestPayload<T extends "
         },
         {
           "kind": "Reference",
@@ -50,7 +50,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+      "fileUrlPath": "../../dist/modules/router-store/types/ngrx-router-store.d.ts",
       "releaseTag": "Public",
       "name": "RouterRequestPayload",
       "typeParameters": [

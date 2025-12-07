@@ -6,7 +6,10 @@ import {
 import { createWorkspace } from '@ngrx/schematics-core/testing';
 
 describe('migrate tapResponse', () => {
-  const collectionPath = path.join(__dirname, '../migration.json');
+  const collectionPath = path.join(
+    process.cwd(),
+    'dist/modules/operators/migrations/migration.json'
+  );
   const schematicRunner = new SchematicTestRunner('schematics', collectionPath);
   let appTree: UnitTestTree;
 

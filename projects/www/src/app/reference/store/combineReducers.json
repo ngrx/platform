@@ -2,7 +2,7 @@
   "name": "combineReducers",
   "canonicalReference": "@ngrx/store!combineReducers:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/store/src/utils.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function combineReducers<T, V extends "
+          "text": "declare function combineReducers<T, V extends "
         },
         {
           "kind": "Reference",
@@ -72,7 +72,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/utils.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 11,
         "endIndex": 13

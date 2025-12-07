@@ -2,7 +2,7 @@
   "name": "createSelectorFactory",
   "canonicalReference": "@ngrx/store!createSelectorFactory:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelectorFactory<T = "
+          "text": "declare function createSelectorFactory<T = "
         },
         {
           "kind": "Content",
@@ -57,7 +57,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 7,
         "endIndex": 10
@@ -124,7 +124,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelectorFactory<T = "
+          "text": "declare function createSelectorFactory<T = "
         },
         {
           "kind": "Content",
@@ -182,7 +182,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 10,
         "endIndex": 13
@@ -257,7 +257,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelectorFactory<T = "
+          "text": "declare function createSelectorFactory<T = "
         },
         {
           "kind": "Content",
@@ -310,7 +310,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 9,
         "endIndex": 12
@@ -388,7 +388,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createSelectorFactory<T = "
+          "text": "declare function createSelectorFactory<T = "
         },
         {
           "kind": "Content",
@@ -454,7 +454,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/selector.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 12,
         "endIndex": 15

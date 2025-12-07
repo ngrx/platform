@@ -2,7 +2,7 @@
   "name": "ENTITY_CACHE_META_REDUCERS",
   "canonicalReference": "@ngrx/data!ENTITY_CACHE_META_REDUCERS:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/data/src/reducers/constants.d.ts",
+  "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -33,7 +33,7 @@
           "text": "<any, any>[]>"
         }
       ],
-      "fileUrlPath": "../../dist/modules/data/src/reducers/constants.d.ts",
+      "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "ENTITY_CACHE_META_REDUCERS",

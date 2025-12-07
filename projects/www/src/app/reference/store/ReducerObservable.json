@@ -2,7 +2,7 @@
   "name": "ReducerObservable",
   "canonicalReference": "@ngrx/store!ReducerObservable:class",
   "kind": "Class",
-  "fileUrlPath": "../../dist/modules/store/src/reducer_manager.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare abstract class ReducerObservable extends "
+          "text": "declare abstract class ReducerObservable extends "
         },
         {
           "kind": "Reference",
@@ -37,7 +37,7 @@
           "text": " "
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/reducer_manager.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "releaseTag": "Public",
       "isAbstract": true,
       "name": "ReducerObservable",

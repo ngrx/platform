@@ -2,7 +2,7 @@
   "name": "PersistanceCanceled",
   "canonicalReference": "@ngrx/data!PersistanceCanceled:class",
   "kind": "Class",
-  "fileUrlPath": "../../dist/modules/data/src/dispatchers/entity-dispatcher.d.ts",
+  "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,10 +12,10 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare class PersistanceCanceled "
+          "text": "declare class PersistanceCanceled "
         }
       ],
-      "fileUrlPath": "../../dist/modules/data/src/dispatchers/entity-dispatcher.d.ts",
+      "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
       "releaseTag": "Public",
       "isAbstract": false,
       "name": "PersistanceCanceled",

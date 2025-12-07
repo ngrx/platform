@@ -2,7 +2,7 @@
   "name": "createAction",
   "canonicalReference": "@ngrx/store!createAction:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/store/src/action_creator.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createAction<T extends "
+          "text": "declare function createAction<T extends "
         },
         {
           "kind": "Content",
@@ -53,7 +53,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/action_creator.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 5,
         "endIndex": 9
@@ -114,7 +114,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createAction<T extends "
+          "text": "declare function createAction<T extends "
         },
         {
           "kind": "Content",
@@ -194,7 +194,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/action_creator.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 12,
         "endIndex": 18
@@ -274,7 +274,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createAction<T extends "
+          "text": "declare function createAction<T extends "
         },
         {
           "kind": "Content",
@@ -362,7 +362,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/action_creator.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 14,
         "endIndex": 20

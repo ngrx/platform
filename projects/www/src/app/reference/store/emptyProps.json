@@ -2,7 +2,7 @@
   "name": "emptyProps",
   "canonicalReference": "@ngrx/store!emptyProps:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/store/src/action_group_creator.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function emptyProps(): "
+          "text": "declare function emptyProps(): "
         },
         {
           "kind": "Reference",
@@ -28,7 +28,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/action_group_creator.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 1,
         "endIndex": 3

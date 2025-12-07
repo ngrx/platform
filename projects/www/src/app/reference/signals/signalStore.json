@@ -2,7 +2,7 @@
   "name": "signalStore",
   "canonicalReference": "@ngrx/signals!signalStore:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+  "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -95,7 +95,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 8,
         "endIndex": 18
@@ -151,7 +151,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -449,7 +449,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 57,
         "endIndex": 67
@@ -687,7 +687,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -1007,7 +1007,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 62,
         "endIndex": 72
@@ -1264,7 +1264,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -1606,7 +1606,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 67,
         "endIndex": 77
@@ -1882,7 +1882,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -2246,7 +2246,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 72,
         "endIndex": 82
@@ -2541,7 +2541,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -2927,7 +2927,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 77,
         "endIndex": 87
@@ -3241,7 +3241,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -3649,7 +3649,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 82,
         "endIndex": 92
@@ -3982,7 +3982,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -3994,8 +3994,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -4073,10 +4078,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 10,
-        "endIndex": 20
+        "startIndex": 11,
+        "endIndex": 21
       },
       "releaseTag": "Public",
       "overloadIndex": 16,
@@ -4085,15 +4090,15 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 3,
-            "endIndex": 4
+            "endIndex": 5
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 5,
-            "endIndex": 9
+            "startIndex": 6,
+            "endIndex": 10
           },
           "isOptional": false
         }
@@ -4137,7 +4142,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -4175,8 +4180,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -4267,10 +4277,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 19,
-        "endIndex": 29
+        "startIndex": 20,
+        "endIndex": 30
       },
       "releaseTag": "Public",
       "overloadIndex": 17,
@@ -4279,23 +4289,23 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 9,
-            "endIndex": 10
+            "endIndex": 11
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 11,
-            "endIndex": 15
+            "startIndex": 12,
+            "endIndex": 16
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 16,
-            "endIndex": 18
+            "startIndex": 17,
+            "endIndex": 19
           },
           "isOptional": false
         }
@@ -4361,7 +4371,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -4408,8 +4418,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -4513,10 +4528,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 24,
-        "endIndex": 34
+        "startIndex": 25,
+        "endIndex": 35
       },
       "releaseTag": "Public",
       "overloadIndex": 18,
@@ -4525,31 +4540,31 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 11,
-            "endIndex": 12
+            "endIndex": 13
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 13,
-            "endIndex": 17
+            "startIndex": 14,
+            "endIndex": 18
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 18,
-            "endIndex": 20
+            "startIndex": 19,
+            "endIndex": 21
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 21,
-            "endIndex": 23
+            "startIndex": 22,
+            "endIndex": 24
           },
           "isOptional": false
         }
@@ -4626,7 +4641,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -4682,8 +4697,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -4800,10 +4820,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 29,
-        "endIndex": 39
+        "startIndex": 30,
+        "endIndex": 40
       },
       "releaseTag": "Public",
       "overloadIndex": 19,
@@ -4812,39 +4832,39 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 13,
-            "endIndex": 14
+            "endIndex": 15
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 15,
-            "endIndex": 19
+            "startIndex": 16,
+            "endIndex": 20
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 20,
-            "endIndex": 22
+            "startIndex": 21,
+            "endIndex": 23
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 23,
-            "endIndex": 25
+            "startIndex": 24,
+            "endIndex": 26
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 26,
-            "endIndex": 28
+            "startIndex": 27,
+            "endIndex": 29
           },
           "isOptional": false
         }
@@ -4932,7 +4952,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -5054,7 +5074,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 17,
         "endIndex": 27
@@ -5140,7 +5160,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -5205,8 +5225,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -5336,10 +5361,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 34,
-        "endIndex": 44
+        "startIndex": 35,
+        "endIndex": 45
       },
       "releaseTag": "Public",
       "overloadIndex": 20,
@@ -5348,47 +5373,47 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 15,
-            "endIndex": 16
+            "endIndex": 17
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 17,
-            "endIndex": 21
+            "startIndex": 18,
+            "endIndex": 22
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 22,
-            "endIndex": 24
+            "startIndex": 23,
+            "endIndex": 25
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 25,
-            "endIndex": 27
+            "startIndex": 26,
+            "endIndex": 28
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 28,
-            "endIndex": 30
+            "startIndex": 29,
+            "endIndex": 31
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 31,
-            "endIndex": 33
+            "startIndex": 32,
+            "endIndex": 34
           },
           "isOptional": false
         }
@@ -5487,7 +5512,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -5561,8 +5586,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -5705,10 +5735,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 39,
-        "endIndex": 49
+        "startIndex": 40,
+        "endIndex": 50
       },
       "releaseTag": "Public",
       "overloadIndex": 21,
@@ -5717,55 +5747,55 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 17,
-            "endIndex": 18
+            "endIndex": 19
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 19,
-            "endIndex": 23
+            "startIndex": 20,
+            "endIndex": 24
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 24,
-            "endIndex": 26
+            "startIndex": 25,
+            "endIndex": 27
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 27,
-            "endIndex": 29
+            "startIndex": 28,
+            "endIndex": 30
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 30,
-            "endIndex": 32
+            "startIndex": 31,
+            "endIndex": 33
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 33,
-            "endIndex": 35
+            "startIndex": 34,
+            "endIndex": 36
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 36,
-            "endIndex": 38
+            "startIndex": 37,
+            "endIndex": 39
           },
           "isOptional": false
         }
@@ -5875,7 +5905,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -5958,8 +5988,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -6115,10 +6150,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 44,
-        "endIndex": 54
+        "startIndex": 45,
+        "endIndex": 55
       },
       "releaseTag": "Public",
       "overloadIndex": 22,
@@ -6127,63 +6162,63 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 19,
-            "endIndex": 20
+            "endIndex": 21
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 21,
-            "endIndex": 25
+            "startIndex": 22,
+            "endIndex": 26
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 26,
-            "endIndex": 28
+            "startIndex": 27,
+            "endIndex": 29
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 29,
-            "endIndex": 31
+            "startIndex": 30,
+            "endIndex": 32
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 32,
-            "endIndex": 34
+            "startIndex": 33,
+            "endIndex": 35
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 35,
-            "endIndex": 37
+            "startIndex": 36,
+            "endIndex": 38
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 38,
-            "endIndex": 40
+            "startIndex": 39,
+            "endIndex": 41
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 41,
-            "endIndex": 43
+            "startIndex": 42,
+            "endIndex": 44
           },
           "isOptional": false
         }
@@ -6304,7 +6339,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -6396,8 +6431,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -6566,10 +6606,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 49,
-        "endIndex": 59
+        "startIndex": 50,
+        "endIndex": 60
       },
       "releaseTag": "Public",
       "overloadIndex": 23,
@@ -6578,71 +6618,71 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 21,
-            "endIndex": 22
+            "endIndex": 23
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 23,
-            "endIndex": 27
+            "startIndex": 24,
+            "endIndex": 28
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 28,
-            "endIndex": 30
+            "startIndex": 29,
+            "endIndex": 31
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 31,
-            "endIndex": 33
+            "startIndex": 32,
+            "endIndex": 34
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 34,
-            "endIndex": 36
+            "startIndex": 35,
+            "endIndex": 37
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 37,
-            "endIndex": 39
+            "startIndex": 38,
+            "endIndex": 40
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 40,
-            "endIndex": 42
+            "startIndex": 41,
+            "endIndex": 43
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 43,
-            "endIndex": 45
+            "startIndex": 44,
+            "endIndex": 46
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 46,
-            "endIndex": 48
+            "startIndex": 47,
+            "endIndex": 49
           },
           "isOptional": false
         }
@@ -6774,7 +6814,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -6875,8 +6915,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -7058,10 +7103,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 54,
-        "endIndex": 64
+        "startIndex": 55,
+        "endIndex": 65
       },
       "releaseTag": "Public",
       "overloadIndex": 24,
@@ -7070,79 +7115,79 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 23,
-            "endIndex": 24
+            "endIndex": 25
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 25,
-            "endIndex": 29
+            "startIndex": 26,
+            "endIndex": 30
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 30,
-            "endIndex": 32
+            "startIndex": 31,
+            "endIndex": 33
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 33,
-            "endIndex": 35
+            "startIndex": 34,
+            "endIndex": 36
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 36,
-            "endIndex": 38
+            "startIndex": 37,
+            "endIndex": 39
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 39,
-            "endIndex": 41
+            "startIndex": 40,
+            "endIndex": 42
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 42,
-            "endIndex": 44
+            "startIndex": 43,
+            "endIndex": 45
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 45,
-            "endIndex": 47
+            "startIndex": 46,
+            "endIndex": 48
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 48,
-            "endIndex": 50
+            "startIndex": 49,
+            "endIndex": 51
           },
           "isOptional": false
         },
         {
           "parameterName": "f9",
           "parameterTypeTokenRange": {
-            "startIndex": 51,
-            "endIndex": 53
+            "startIndex": 52,
+            "endIndex": 54
           },
           "isOptional": false
         }
@@ -7285,7 +7330,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -7395,8 +7440,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -7591,10 +7641,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 59,
-        "endIndex": 69
+        "startIndex": 60,
+        "endIndex": 70
       },
       "releaseTag": "Public",
       "overloadIndex": 25,
@@ -7603,87 +7653,87 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 25,
-            "endIndex": 26
+            "endIndex": 27
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 27,
-            "endIndex": 31
+            "startIndex": 28,
+            "endIndex": 32
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 32,
-            "endIndex": 34
+            "startIndex": 33,
+            "endIndex": 35
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 35,
-            "endIndex": 37
+            "startIndex": 36,
+            "endIndex": 38
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 38,
-            "endIndex": 40
+            "startIndex": 39,
+            "endIndex": 41
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 41,
-            "endIndex": 43
+            "startIndex": 42,
+            "endIndex": 44
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 44,
-            "endIndex": 46
+            "startIndex": 45,
+            "endIndex": 47
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 47,
-            "endIndex": 49
+            "startIndex": 48,
+            "endIndex": 50
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 50,
-            "endIndex": 52
+            "startIndex": 51,
+            "endIndex": 53
           },
           "isOptional": false
         },
         {
           "parameterName": "f9",
           "parameterTypeTokenRange": {
-            "startIndex": 53,
-            "endIndex": 55
+            "startIndex": 54,
+            "endIndex": 56
           },
           "isOptional": false
         },
         {
           "parameterName": "f10",
           "parameterTypeTokenRange": {
-            "startIndex": 56,
-            "endIndex": 58
+            "startIndex": 57,
+            "endIndex": 59
           },
           "isOptional": false
         }
@@ -7837,7 +7887,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -7956,8 +8006,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -8165,10 +8220,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 64,
-        "endIndex": 74
+        "startIndex": 65,
+        "endIndex": 75
       },
       "releaseTag": "Public",
       "overloadIndex": 26,
@@ -8177,95 +8232,95 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 27,
-            "endIndex": 28
+            "endIndex": 29
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 29,
-            "endIndex": 33
+            "startIndex": 30,
+            "endIndex": 34
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 34,
-            "endIndex": 36
+            "startIndex": 35,
+            "endIndex": 37
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 37,
-            "endIndex": 39
+            "startIndex": 38,
+            "endIndex": 40
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 40,
-            "endIndex": 42
+            "startIndex": 41,
+            "endIndex": 43
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 43,
-            "endIndex": 45
+            "startIndex": 44,
+            "endIndex": 46
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 46,
-            "endIndex": 48
+            "startIndex": 47,
+            "endIndex": 49
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 49,
-            "endIndex": 51
+            "startIndex": 50,
+            "endIndex": 52
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 52,
-            "endIndex": 54
+            "startIndex": 53,
+            "endIndex": 55
           },
           "isOptional": false
         },
         {
           "parameterName": "f9",
           "parameterTypeTokenRange": {
-            "startIndex": 55,
-            "endIndex": 57
+            "startIndex": 56,
+            "endIndex": 58
           },
           "isOptional": false
         },
         {
           "parameterName": "f10",
           "parameterTypeTokenRange": {
-            "startIndex": 58,
-            "endIndex": 60
+            "startIndex": 59,
+            "endIndex": 61
           },
           "isOptional": false
         },
         {
           "parameterName": "f11",
           "parameterTypeTokenRange": {
-            "startIndex": 61,
-            "endIndex": 63
+            "startIndex": 62,
+            "endIndex": 64
           },
           "isOptional": false
         }
@@ -8430,7 +8485,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -8558,8 +8613,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -8780,10 +8840,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 69,
-        "endIndex": 79
+        "startIndex": 70,
+        "endIndex": 80
       },
       "releaseTag": "Public",
       "overloadIndex": 27,
@@ -8792,103 +8852,103 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 29,
-            "endIndex": 30
+            "endIndex": 31
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 31,
-            "endIndex": 35
+            "startIndex": 32,
+            "endIndex": 36
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 36,
-            "endIndex": 38
+            "startIndex": 37,
+            "endIndex": 39
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 39,
-            "endIndex": 41
+            "startIndex": 40,
+            "endIndex": 42
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 42,
-            "endIndex": 44
+            "startIndex": 43,
+            "endIndex": 45
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 45,
-            "endIndex": 47
+            "startIndex": 46,
+            "endIndex": 48
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 48,
-            "endIndex": 50
+            "startIndex": 49,
+            "endIndex": 51
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 51,
-            "endIndex": 53
+            "startIndex": 52,
+            "endIndex": 54
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 54,
-            "endIndex": 56
+            "startIndex": 55,
+            "endIndex": 57
           },
           "isOptional": false
         },
         {
           "parameterName": "f9",
           "parameterTypeTokenRange": {
-            "startIndex": 57,
-            "endIndex": 59
+            "startIndex": 58,
+            "endIndex": 60
           },
           "isOptional": false
         },
         {
           "parameterName": "f10",
           "parameterTypeTokenRange": {
-            "startIndex": 60,
-            "endIndex": 62
+            "startIndex": 61,
+            "endIndex": 63
           },
           "isOptional": false
         },
         {
           "parameterName": "f11",
           "parameterTypeTokenRange": {
-            "startIndex": 63,
-            "endIndex": 65
+            "startIndex": 64,
+            "endIndex": 66
           },
           "isOptional": false
         },
         {
           "parameterName": "f12",
           "parameterTypeTokenRange": {
-            "startIndex": 66,
-            "endIndex": 68
+            "startIndex": 67,
+            "endIndex": 69
           },
           "isOptional": false
         }
@@ -9064,7 +9124,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -9201,8 +9261,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -9436,10 +9501,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 74,
-        "endIndex": 84
+        "startIndex": 75,
+        "endIndex": 85
       },
       "releaseTag": "Public",
       "overloadIndex": 28,
@@ -9448,111 +9513,111 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 31,
-            "endIndex": 32
+            "endIndex": 33
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 33,
-            "endIndex": 37
+            "startIndex": 34,
+            "endIndex": 38
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 38,
-            "endIndex": 40
+            "startIndex": 39,
+            "endIndex": 41
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 41,
-            "endIndex": 43
+            "startIndex": 42,
+            "endIndex": 44
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 44,
-            "endIndex": 46
+            "startIndex": 45,
+            "endIndex": 47
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 47,
-            "endIndex": 49
+            "startIndex": 48,
+            "endIndex": 50
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 50,
-            "endIndex": 52
+            "startIndex": 51,
+            "endIndex": 53
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 53,
-            "endIndex": 55
+            "startIndex": 54,
+            "endIndex": 56
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 56,
-            "endIndex": 58
+            "startIndex": 57,
+            "endIndex": 59
           },
           "isOptional": false
         },
         {
           "parameterName": "f9",
           "parameterTypeTokenRange": {
-            "startIndex": 59,
-            "endIndex": 61
+            "startIndex": 60,
+            "endIndex": 62
           },
           "isOptional": false
         },
         {
           "parameterName": "f10",
           "parameterTypeTokenRange": {
-            "startIndex": 62,
-            "endIndex": 64
+            "startIndex": 63,
+            "endIndex": 65
           },
           "isOptional": false
         },
         {
           "parameterName": "f11",
           "parameterTypeTokenRange": {
-            "startIndex": 65,
-            "endIndex": 67
+            "startIndex": 66,
+            "endIndex": 68
           },
           "isOptional": false
         },
         {
           "parameterName": "f12",
           "parameterTypeTokenRange": {
-            "startIndex": 68,
-            "endIndex": 70
+            "startIndex": 69,
+            "endIndex": 71
           },
           "isOptional": false
         },
         {
           "parameterName": "f13",
           "parameterTypeTokenRange": {
-            "startIndex": 71,
-            "endIndex": 73
+            "startIndex": 72,
+            "endIndex": 74
           },
           "isOptional": false
         }
@@ -9739,7 +9804,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -9885,8 +9950,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -10133,10 +10203,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 79,
-        "endIndex": 89
+        "startIndex": 80,
+        "endIndex": 90
       },
       "releaseTag": "Public",
       "overloadIndex": 29,
@@ -10145,119 +10215,119 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 33,
-            "endIndex": 34
+            "endIndex": 35
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 35,
-            "endIndex": 39
+            "startIndex": 36,
+            "endIndex": 40
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 40,
-            "endIndex": 42
+            "startIndex": 41,
+            "endIndex": 43
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 43,
-            "endIndex": 45
+            "startIndex": 44,
+            "endIndex": 46
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 46,
-            "endIndex": 48
+            "startIndex": 47,
+            "endIndex": 49
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 49,
-            "endIndex": 51
+            "startIndex": 50,
+            "endIndex": 52
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 52,
-            "endIndex": 54
+            "startIndex": 53,
+            "endIndex": 55
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 55,
-            "endIndex": 57
+            "startIndex": 56,
+            "endIndex": 58
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 58,
-            "endIndex": 60
+            "startIndex": 59,
+            "endIndex": 61
           },
           "isOptional": false
         },
         {
           "parameterName": "f9",
           "parameterTypeTokenRange": {
-            "startIndex": 61,
-            "endIndex": 63
+            "startIndex": 62,
+            "endIndex": 64
           },
           "isOptional": false
         },
         {
           "parameterName": "f10",
           "parameterTypeTokenRange": {
-            "startIndex": 64,
-            "endIndex": 66
+            "startIndex": 65,
+            "endIndex": 67
           },
           "isOptional": false
         },
         {
           "parameterName": "f11",
           "parameterTypeTokenRange": {
-            "startIndex": 67,
-            "endIndex": 69
+            "startIndex": 68,
+            "endIndex": 70
           },
           "isOptional": false
         },
         {
           "parameterName": "f12",
           "parameterTypeTokenRange": {
-            "startIndex": 70,
-            "endIndex": 72
+            "startIndex": 71,
+            "endIndex": 73
           },
           "isOptional": false
         },
         {
           "parameterName": "f13",
           "parameterTypeTokenRange": {
-            "startIndex": 73,
-            "endIndex": 75
+            "startIndex": 74,
+            "endIndex": 76
           },
           "isOptional": false
         },
         {
           "parameterName": "f14",
           "parameterTypeTokenRange": {
-            "startIndex": 76,
-            "endIndex": 78
+            "startIndex": 77,
+            "endIndex": 79
           },
           "isOptional": false
         }
@@ -10455,7 +10525,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -10599,7 +10669,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 22,
         "endIndex": 32
@@ -10704,7 +10774,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -10859,8 +10929,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState?: true;\n}"
+          "text": " & {\n    protectedState?: true;\n}"
         },
         {
           "kind": "Content",
@@ -11120,10 +11195,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 84,
-        "endIndex": 94
+        "startIndex": 85,
+        "endIndex": 95
       },
       "releaseTag": "Public",
       "overloadIndex": 30,
@@ -11132,127 +11207,127 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 35,
-            "endIndex": 36
+            "endIndex": 37
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 37,
-            "endIndex": 41
+            "startIndex": 38,
+            "endIndex": 42
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 42,
-            "endIndex": 44
+            "startIndex": 43,
+            "endIndex": 45
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 45,
-            "endIndex": 47
+            "startIndex": 46,
+            "endIndex": 48
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 48,
-            "endIndex": 50
+            "startIndex": 49,
+            "endIndex": 51
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 51,
-            "endIndex": 53
+            "startIndex": 52,
+            "endIndex": 54
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 54,
-            "endIndex": 56
+            "startIndex": 55,
+            "endIndex": 57
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 57,
-            "endIndex": 59
+            "startIndex": 58,
+            "endIndex": 60
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 60,
-            "endIndex": 62
+            "startIndex": 61,
+            "endIndex": 63
           },
           "isOptional": false
         },
         {
           "parameterName": "f9",
           "parameterTypeTokenRange": {
-            "startIndex": 63,
-            "endIndex": 65
+            "startIndex": 64,
+            "endIndex": 66
           },
           "isOptional": false
         },
         {
           "parameterName": "f10",
           "parameterTypeTokenRange": {
-            "startIndex": 66,
-            "endIndex": 68
+            "startIndex": 67,
+            "endIndex": 69
           },
           "isOptional": false
         },
         {
           "parameterName": "f11",
           "parameterTypeTokenRange": {
-            "startIndex": 69,
-            "endIndex": 71
+            "startIndex": 70,
+            "endIndex": 72
           },
           "isOptional": false
         },
         {
           "parameterName": "f12",
           "parameterTypeTokenRange": {
-            "startIndex": 72,
-            "endIndex": 74
+            "startIndex": 73,
+            "endIndex": 75
           },
           "isOptional": false
         },
         {
           "parameterName": "f13",
           "parameterTypeTokenRange": {
-            "startIndex": 75,
-            "endIndex": 77
+            "startIndex": 76,
+            "endIndex": 78
           },
           "isOptional": false
         },
         {
           "parameterName": "f14",
           "parameterTypeTokenRange": {
-            "startIndex": 78,
-            "endIndex": 80
+            "startIndex": 79,
+            "endIndex": 81
           },
           "isOptional": false
         },
         {
           "parameterName": "f15",
           "parameterTypeTokenRange": {
-            "startIndex": 81,
-            "endIndex": 83
+            "startIndex": 82,
+            "endIndex": 84
           },
           "isOptional": false
         }
@@ -11461,7 +11536,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -11473,8 +11548,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -11552,10 +11632,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 10,
-        "endIndex": 20
+        "startIndex": 11,
+        "endIndex": 21
       },
       "releaseTag": "Public",
       "overloadIndex": 31,
@@ -11564,15 +11644,15 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 3,
-            "endIndex": 4
+            "endIndex": 5
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 5,
-            "endIndex": 9
+            "startIndex": 6,
+            "endIndex": 10
           },
           "isOptional": false
         }
@@ -11616,7 +11696,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -11654,8 +11734,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -11746,10 +11831,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 19,
-        "endIndex": 29
+        "startIndex": 20,
+        "endIndex": 30
       },
       "releaseTag": "Public",
       "overloadIndex": 32,
@@ -11758,23 +11843,23 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 9,
-            "endIndex": 10
+            "endIndex": 11
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 11,
-            "endIndex": 15
+            "startIndex": 12,
+            "endIndex": 16
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 16,
-            "endIndex": 18
+            "startIndex": 17,
+            "endIndex": 19
           },
           "isOptional": false
         }
@@ -11840,7 +11925,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -11887,8 +11972,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -11992,10 +12082,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 24,
-        "endIndex": 34
+        "startIndex": 25,
+        "endIndex": 35
       },
       "releaseTag": "Public",
       "overloadIndex": 33,
@@ -12004,31 +12094,31 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 11,
-            "endIndex": 12
+            "endIndex": 13
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 13,
-            "endIndex": 17
+            "startIndex": 14,
+            "endIndex": 18
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 18,
-            "endIndex": 20
+            "startIndex": 19,
+            "endIndex": 21
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 21,
-            "endIndex": 23
+            "startIndex": 22,
+            "endIndex": 24
           },
           "isOptional": false
         }
@@ -12105,7 +12195,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -12161,8 +12251,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -12279,10 +12374,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 29,
-        "endIndex": 39
+        "startIndex": 30,
+        "endIndex": 40
       },
       "releaseTag": "Public",
       "overloadIndex": 34,
@@ -12291,39 +12386,39 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 13,
-            "endIndex": 14
+            "endIndex": 15
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 15,
-            "endIndex": 19
+            "startIndex": 16,
+            "endIndex": 20
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 20,
-            "endIndex": 22
+            "startIndex": 21,
+            "endIndex": 23
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 23,
-            "endIndex": 25
+            "startIndex": 24,
+            "endIndex": 26
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 26,
-            "endIndex": 28
+            "startIndex": 27,
+            "endIndex": 29
           },
           "isOptional": false
         }
@@ -12411,7 +12506,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -12476,8 +12571,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -12607,10 +12707,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 34,
-        "endIndex": 44
+        "startIndex": 35,
+        "endIndex": 45
       },
       "releaseTag": "Public",
       "overloadIndex": 35,
@@ -12619,47 +12719,47 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 15,
-            "endIndex": 16
+            "endIndex": 17
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 17,
-            "endIndex": 21
+            "startIndex": 18,
+            "endIndex": 22
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 22,
-            "endIndex": 24
+            "startIndex": 23,
+            "endIndex": 25
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 25,
-            "endIndex": 27
+            "startIndex": 26,
+            "endIndex": 28
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 28,
-            "endIndex": 30
+            "startIndex": 29,
+            "endIndex": 31
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 31,
-            "endIndex": 33
+            "startIndex": 32,
+            "endIndex": 34
           },
           "isOptional": false
         }
@@ -12758,7 +12858,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -12832,8 +12932,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -12976,10 +13081,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 39,
-        "endIndex": 49
+        "startIndex": 40,
+        "endIndex": 50
       },
       "releaseTag": "Public",
       "overloadIndex": 36,
@@ -12988,55 +13093,55 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 17,
-            "endIndex": 18
+            "endIndex": 19
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 19,
-            "endIndex": 23
+            "startIndex": 20,
+            "endIndex": 24
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 24,
-            "endIndex": 26
+            "startIndex": 25,
+            "endIndex": 27
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 27,
-            "endIndex": 29
+            "startIndex": 28,
+            "endIndex": 30
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 30,
-            "endIndex": 32
+            "startIndex": 31,
+            "endIndex": 33
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 33,
-            "endIndex": 35
+            "startIndex": 34,
+            "endIndex": 36
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 36,
-            "endIndex": 38
+            "startIndex": 37,
+            "endIndex": 39
           },
           "isOptional": false
         }
@@ -13146,7 +13251,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -13229,8 +13334,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -13386,10 +13496,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 44,
-        "endIndex": 54
+        "startIndex": 45,
+        "endIndex": 55
       },
       "releaseTag": "Public",
       "overloadIndex": 37,
@@ -13398,63 +13508,63 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 19,
-            "endIndex": 20
+            "endIndex": 21
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 21,
-            "endIndex": 25
+            "startIndex": 22,
+            "endIndex": 26
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 26,
-            "endIndex": 28
+            "startIndex": 27,
+            "endIndex": 29
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 29,
-            "endIndex": 31
+            "startIndex": 30,
+            "endIndex": 32
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 32,
-            "endIndex": 34
+            "startIndex": 33,
+            "endIndex": 35
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 35,
-            "endIndex": 37
+            "startIndex": 36,
+            "endIndex": 38
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 38,
-            "endIndex": 40
+            "startIndex": 39,
+            "endIndex": 41
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 41,
-            "endIndex": 43
+            "startIndex": 42,
+            "endIndex": 44
           },
           "isOptional": false
         }
@@ -13575,7 +13685,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -13667,8 +13777,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -13837,10 +13952,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 49,
-        "endIndex": 59
+        "startIndex": 50,
+        "endIndex": 60
       },
       "releaseTag": "Public",
       "overloadIndex": 38,
@@ -13849,71 +13964,71 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 21,
-            "endIndex": 22
+            "endIndex": 23
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 23,
-            "endIndex": 27
+            "startIndex": 24,
+            "endIndex": 28
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 28,
-            "endIndex": 30
+            "startIndex": 29,
+            "endIndex": 31
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 31,
-            "endIndex": 33
+            "startIndex": 32,
+            "endIndex": 34
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 34,
-            "endIndex": 36
+            "startIndex": 35,
+            "endIndex": 37
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 37,
-            "endIndex": 39
+            "startIndex": 38,
+            "endIndex": 40
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 40,
-            "endIndex": 42
+            "startIndex": 41,
+            "endIndex": 43
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 43,
-            "endIndex": 45
+            "startIndex": 44,
+            "endIndex": 46
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 46,
-            "endIndex": 48
+            "startIndex": 47,
+            "endIndex": 49
           },
           "isOptional": false
         }
@@ -14045,7 +14160,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -14146,8 +14261,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -14329,10 +14449,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 54,
-        "endIndex": 64
+        "startIndex": 55,
+        "endIndex": 65
       },
       "releaseTag": "Public",
       "overloadIndex": 39,
@@ -14341,79 +14461,79 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 23,
-            "endIndex": 24
+            "endIndex": 25
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 25,
-            "endIndex": 29
+            "startIndex": 26,
+            "endIndex": 30
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 30,
-            "endIndex": 32
+            "startIndex": 31,
+            "endIndex": 33
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 33,
-            "endIndex": 35
+            "startIndex": 34,
+            "endIndex": 36
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 36,
-            "endIndex": 38
+            "startIndex": 37,
+            "endIndex": 39
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 39,
-            "endIndex": 41
+            "startIndex": 40,
+            "endIndex": 42
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 42,
-            "endIndex": 44
+            "startIndex": 43,
+            "endIndex": 45
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 45,
-            "endIndex": 47
+            "startIndex": 46,
+            "endIndex": 48
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 48,
-            "endIndex": 50
+            "startIndex": 49,
+            "endIndex": 51
           },
           "isOptional": false
         },
         {
           "parameterName": "f9",
           "parameterTypeTokenRange": {
-            "startIndex": 51,
-            "endIndex": 53
+            "startIndex": 52,
+            "endIndex": 54
           },
           "isOptional": false
         }
@@ -14556,7 +14676,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -14722,7 +14842,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 27,
         "endIndex": 37
@@ -14846,7 +14966,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -14956,8 +15076,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -15152,10 +15277,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 59,
-        "endIndex": 69
+        "startIndex": 60,
+        "endIndex": 70
       },
       "releaseTag": "Public",
       "overloadIndex": 40,
@@ -15164,87 +15289,87 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 25,
-            "endIndex": 26
+            "endIndex": 27
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 27,
-            "endIndex": 31
+            "startIndex": 28,
+            "endIndex": 32
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 32,
-            "endIndex": 34
+            "startIndex": 33,
+            "endIndex": 35
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 35,
-            "endIndex": 37
+            "startIndex": 36,
+            "endIndex": 38
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 38,
-            "endIndex": 40
+            "startIndex": 39,
+            "endIndex": 41
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 41,
-            "endIndex": 43
+            "startIndex": 42,
+            "endIndex": 44
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 44,
-            "endIndex": 46
+            "startIndex": 45,
+            "endIndex": 47
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 47,
-            "endIndex": 49
+            "startIndex": 48,
+            "endIndex": 50
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 50,
-            "endIndex": 52
+            "startIndex": 51,
+            "endIndex": 53
           },
           "isOptional": false
         },
         {
           "parameterName": "f9",
           "parameterTypeTokenRange": {
-            "startIndex": 53,
-            "endIndex": 55
+            "startIndex": 54,
+            "endIndex": 56
           },
           "isOptional": false
         },
         {
           "parameterName": "f10",
           "parameterTypeTokenRange": {
-            "startIndex": 56,
-            "endIndex": 58
+            "startIndex": 57,
+            "endIndex": 59
           },
           "isOptional": false
         }
@@ -15398,7 +15523,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -15517,8 +15642,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -15726,10 +15856,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 64,
-        "endIndex": 74
+        "startIndex": 65,
+        "endIndex": 75
       },
       "releaseTag": "Public",
       "overloadIndex": 41,
@@ -15738,95 +15868,95 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 27,
-            "endIndex": 28
+            "endIndex": 29
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 29,
-            "endIndex": 33
+            "startIndex": 30,
+            "endIndex": 34
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 34,
-            "endIndex": 36
+            "startIndex": 35,
+            "endIndex": 37
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 37,
-            "endIndex": 39
+            "startIndex": 38,
+            "endIndex": 40
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 40,
-            "endIndex": 42
+            "startIndex": 41,
+            "endIndex": 43
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 43,
-            "endIndex": 45
+            "startIndex": 44,
+            "endIndex": 46
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 46,
-            "endIndex": 48
+            "startIndex": 47,
+            "endIndex": 49
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 49,
-            "endIndex": 51
+            "startIndex": 50,
+            "endIndex": 52
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 52,
-            "endIndex": 54
+            "startIndex": 53,
+            "endIndex": 55
           },
           "isOptional": false
         },
         {
           "parameterName": "f9",
           "parameterTypeTokenRange": {
-            "startIndex": 55,
-            "endIndex": 57
+            "startIndex": 56,
+            "endIndex": 58
           },
           "isOptional": false
         },
         {
           "parameterName": "f10",
           "parameterTypeTokenRange": {
-            "startIndex": 58,
-            "endIndex": 60
+            "startIndex": 59,
+            "endIndex": 61
           },
           "isOptional": false
         },
         {
           "parameterName": "f11",
           "parameterTypeTokenRange": {
-            "startIndex": 61,
-            "endIndex": 63
+            "startIndex": 62,
+            "endIndex": 64
           },
           "isOptional": false
         }
@@ -15991,7 +16121,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -16119,8 +16249,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -16341,10 +16476,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 69,
-        "endIndex": 79
+        "startIndex": 70,
+        "endIndex": 80
       },
       "releaseTag": "Public",
       "overloadIndex": 42,
@@ -16353,103 +16488,103 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 29,
-            "endIndex": 30
+            "endIndex": 31
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 31,
-            "endIndex": 35
+            "startIndex": 32,
+            "endIndex": 36
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 36,
-            "endIndex": 38
+            "startIndex": 37,
+            "endIndex": 39
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 39,
-            "endIndex": 41
+            "startIndex": 40,
+            "endIndex": 42
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 42,
-            "endIndex": 44
+            "startIndex": 43,
+            "endIndex": 45
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 45,
-            "endIndex": 47
+            "startIndex": 46,
+            "endIndex": 48
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 48,
-            "endIndex": 50
+            "startIndex": 49,
+            "endIndex": 51
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 51,
-            "endIndex": 53
+            "startIndex": 52,
+            "endIndex": 54
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 54,
-            "endIndex": 56
+            "startIndex": 55,
+            "endIndex": 57
           },
           "isOptional": false
         },
         {
           "parameterName": "f9",
           "parameterTypeTokenRange": {
-            "startIndex": 57,
-            "endIndex": 59
+            "startIndex": 58,
+            "endIndex": 60
           },
           "isOptional": false
         },
         {
           "parameterName": "f10",
           "parameterTypeTokenRange": {
-            "startIndex": 60,
-            "endIndex": 62
+            "startIndex": 61,
+            "endIndex": 63
           },
           "isOptional": false
         },
         {
           "parameterName": "f11",
           "parameterTypeTokenRange": {
-            "startIndex": 63,
-            "endIndex": 65
+            "startIndex": 64,
+            "endIndex": 66
           },
           "isOptional": false
         },
         {
           "parameterName": "f12",
           "parameterTypeTokenRange": {
-            "startIndex": 66,
-            "endIndex": 68
+            "startIndex": 67,
+            "endIndex": 69
           },
           "isOptional": false
         }
@@ -16625,7 +16760,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -16762,8 +16897,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -16997,10 +17137,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 74,
-        "endIndex": 84
+        "startIndex": 75,
+        "endIndex": 85
       },
       "releaseTag": "Public",
       "overloadIndex": 43,
@@ -17009,111 +17149,111 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 31,
-            "endIndex": 32
+            "endIndex": 33
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 33,
-            "endIndex": 37
+            "startIndex": 34,
+            "endIndex": 38
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 38,
-            "endIndex": 40
+            "startIndex": 39,
+            "endIndex": 41
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 41,
-            "endIndex": 43
+            "startIndex": 42,
+            "endIndex": 44
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 44,
-            "endIndex": 46
+            "startIndex": 45,
+            "endIndex": 47
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 47,
-            "endIndex": 49
+            "startIndex": 48,
+            "endIndex": 50
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 50,
-            "endIndex": 52
+            "startIndex": 51,
+            "endIndex": 53
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 53,
-            "endIndex": 55
+            "startIndex": 54,
+            "endIndex": 56
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 56,
-            "endIndex": 58
+            "startIndex": 57,
+            "endIndex": 59
           },
           "isOptional": false
         },
         {
           "parameterName": "f9",
           "parameterTypeTokenRange": {
-            "startIndex": 59,
-            "endIndex": 61
+            "startIndex": 60,
+            "endIndex": 62
           },
           "isOptional": false
         },
         {
           "parameterName": "f10",
           "parameterTypeTokenRange": {
-            "startIndex": 62,
-            "endIndex": 64
+            "startIndex": 63,
+            "endIndex": 65
           },
           "isOptional": false
         },
         {
           "parameterName": "f11",
           "parameterTypeTokenRange": {
-            "startIndex": 65,
-            "endIndex": 67
+            "startIndex": 66,
+            "endIndex": 68
           },
           "isOptional": false
         },
         {
           "parameterName": "f12",
           "parameterTypeTokenRange": {
-            "startIndex": 68,
-            "endIndex": 70
+            "startIndex": 69,
+            "endIndex": 71
           },
           "isOptional": false
         },
         {
           "parameterName": "f13",
           "parameterTypeTokenRange": {
-            "startIndex": 71,
-            "endIndex": 73
+            "startIndex": 72,
+            "endIndex": 74
           },
           "isOptional": false
         }
@@ -17300,7 +17440,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -17446,8 +17586,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -17694,10 +17839,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 79,
-        "endIndex": 89
+        "startIndex": 80,
+        "endIndex": 90
       },
       "releaseTag": "Public",
       "overloadIndex": 44,
@@ -17706,119 +17851,119 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 33,
-            "endIndex": 34
+            "endIndex": 35
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 35,
-            "endIndex": 39
+            "startIndex": 36,
+            "endIndex": 40
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 40,
-            "endIndex": 42
+            "startIndex": 41,
+            "endIndex": 43
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 43,
-            "endIndex": 45
+            "startIndex": 44,
+            "endIndex": 46
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 46,
-            "endIndex": 48
+            "startIndex": 47,
+            "endIndex": 49
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 49,
-            "endIndex": 51
+            "startIndex": 50,
+            "endIndex": 52
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 52,
-            "endIndex": 54
+            "startIndex": 53,
+            "endIndex": 55
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 55,
-            "endIndex": 57
+            "startIndex": 56,
+            "endIndex": 58
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 58,
-            "endIndex": 60
+            "startIndex": 59,
+            "endIndex": 61
           },
           "isOptional": false
         },
         {
           "parameterName": "f9",
           "parameterTypeTokenRange": {
-            "startIndex": 61,
-            "endIndex": 63
+            "startIndex": 62,
+            "endIndex": 64
           },
           "isOptional": false
         },
         {
           "parameterName": "f10",
           "parameterTypeTokenRange": {
-            "startIndex": 64,
-            "endIndex": 66
+            "startIndex": 65,
+            "endIndex": 67
           },
           "isOptional": false
         },
         {
           "parameterName": "f11",
           "parameterTypeTokenRange": {
-            "startIndex": 67,
-            "endIndex": 69
+            "startIndex": 68,
+            "endIndex": 70
           },
           "isOptional": false
         },
         {
           "parameterName": "f12",
           "parameterTypeTokenRange": {
-            "startIndex": 70,
-            "endIndex": 72
+            "startIndex": 71,
+            "endIndex": 73
           },
           "isOptional": false
         },
         {
           "parameterName": "f13",
           "parameterTypeTokenRange": {
-            "startIndex": 73,
-            "endIndex": 75
+            "startIndex": 74,
+            "endIndex": 76
           },
           "isOptional": false
         },
         {
           "parameterName": "f14",
           "parameterTypeTokenRange": {
-            "startIndex": 76,
-            "endIndex": 78
+            "startIndex": 77,
+            "endIndex": 79
           },
           "isOptional": false
         }
@@ -18016,7 +18161,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -18171,8 +18316,13 @@
           "text": ">(config: "
         },
         {
+          "kind": "Reference",
+          "text": "ProvidedInConfig",
+          "canonicalReference": "@ngrx/signals!~ProvidedInConfig:type"
+        },
+        {
           "kind": "Content",
-          "text": "{\n    providedIn?: 'root';\n    protectedState: false;\n}"
+          "text": " & {\n    protectedState: false;\n}"
         },
         {
           "kind": "Content",
@@ -18432,10 +18582,10 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 84,
-        "endIndex": 94
+        "startIndex": 85,
+        "endIndex": 95
       },
       "releaseTag": "Public",
       "overloadIndex": 45,
@@ -18444,127 +18594,127 @@
           "parameterName": "config",
           "parameterTypeTokenRange": {
             "startIndex": 35,
-            "endIndex": 36
+            "endIndex": 37
           },
           "isOptional": false
         },
         {
           "parameterName": "f1",
           "parameterTypeTokenRange": {
-            "startIndex": 37,
-            "endIndex": 41
+            "startIndex": 38,
+            "endIndex": 42
           },
           "isOptional": false
         },
         {
           "parameterName": "f2",
           "parameterTypeTokenRange": {
-            "startIndex": 42,
-            "endIndex": 44
+            "startIndex": 43,
+            "endIndex": 45
           },
           "isOptional": false
         },
         {
           "parameterName": "f3",
           "parameterTypeTokenRange": {
-            "startIndex": 45,
-            "endIndex": 47
+            "startIndex": 46,
+            "endIndex": 48
           },
           "isOptional": false
         },
         {
           "parameterName": "f4",
           "parameterTypeTokenRange": {
-            "startIndex": 48,
-            "endIndex": 50
+            "startIndex": 49,
+            "endIndex": 51
           },
           "isOptional": false
         },
         {
           "parameterName": "f5",
           "parameterTypeTokenRange": {
-            "startIndex": 51,
-            "endIndex": 53
+            "startIndex": 52,
+            "endIndex": 54
           },
           "isOptional": false
         },
         {
           "parameterName": "f6",
           "parameterTypeTokenRange": {
-            "startIndex": 54,
-            "endIndex": 56
+            "startIndex": 55,
+            "endIndex": 57
           },
           "isOptional": false
         },
         {
           "parameterName": "f7",
           "parameterTypeTokenRange": {
-            "startIndex": 57,
-            "endIndex": 59
+            "startIndex": 58,
+            "endIndex": 60
           },
           "isOptional": false
         },
         {
           "parameterName": "f8",
           "parameterTypeTokenRange": {
-            "startIndex": 60,
-            "endIndex": 62
+            "startIndex": 61,
+            "endIndex": 63
           },
           "isOptional": false
         },
         {
           "parameterName": "f9",
           "parameterTypeTokenRange": {
-            "startIndex": 63,
-            "endIndex": 65
+            "startIndex": 64,
+            "endIndex": 66
           },
           "isOptional": false
         },
         {
           "parameterName": "f10",
           "parameterTypeTokenRange": {
-            "startIndex": 66,
-            "endIndex": 68
+            "startIndex": 67,
+            "endIndex": 69
           },
           "isOptional": false
         },
         {
           "parameterName": "f11",
           "parameterTypeTokenRange": {
-            "startIndex": 69,
-            "endIndex": 71
+            "startIndex": 70,
+            "endIndex": 72
           },
           "isOptional": false
         },
         {
           "parameterName": "f12",
           "parameterTypeTokenRange": {
-            "startIndex": 72,
-            "endIndex": 74
+            "startIndex": 73,
+            "endIndex": 75
           },
           "isOptional": false
         },
         {
           "parameterName": "f13",
           "parameterTypeTokenRange": {
-            "startIndex": 75,
-            "endIndex": 77
+            "startIndex": 76,
+            "endIndex": 78
           },
           "isOptional": false
         },
         {
           "parameterName": "f14",
           "parameterTypeTokenRange": {
-            "startIndex": 78,
-            "endIndex": 80
+            "startIndex": 79,
+            "endIndex": 81
           },
           "isOptional": false
         },
         {
           "parameterName": "f15",
           "parameterTypeTokenRange": {
-            "startIndex": 81,
-            "endIndex": 83
+            "startIndex": 82,
+            "endIndex": 84
           },
           "isOptional": false
         }
@@ -18773,7 +18923,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -18961,7 +19111,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 32,
         "endIndex": 42
@@ -19104,7 +19254,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -19314,7 +19464,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 37,
         "endIndex": 47
@@ -19476,7 +19626,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -19708,7 +19858,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 42,
         "endIndex": 52
@@ -19889,7 +20039,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -20143,7 +20293,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 47,
         "endIndex": 57
@@ -20343,7 +20493,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function signalStore<F1 extends "
+          "text": "declare function signalStore<F1 extends "
         },
         {
           "kind": "Reference",
@@ -20619,7 +20769,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 52,
         "endIndex": 62

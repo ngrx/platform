@@ -2,7 +2,7 @@
   "name": "Action",
   "canonicalReference": "@ngrx/store!Action:interface",
   "kind": "Interface",
-  "fileUrlPath": "../../dist/modules/store/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export interface Action<Type extends "
+          "text": "interface Action<Type extends "
         },
         {
           "kind": "Content",
@@ -31,7 +31,7 @@
           "text": "> "
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "releaseTag": "Public",
       "typeParameters": [
         {

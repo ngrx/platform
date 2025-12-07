@@ -2,7 +2,7 @@
   "name": "SignalStoreFeature",
   "canonicalReference": "@ngrx/signals!SignalStoreFeature:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/signals/src/signal-store-models.d.ts",
+  "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type SignalStoreFeature<Input extends "
+          "text": "type SignalStoreFeature<Input extends "
         },
         {
           "kind": "Reference",
@@ -77,7 +77,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/src/signal-store-models.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals.d.ts",
       "releaseTag": "Public",
       "name": "SignalStoreFeature",
       "typeParameters": [

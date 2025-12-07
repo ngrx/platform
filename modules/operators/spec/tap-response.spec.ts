@@ -1,10 +1,11 @@
 import { EMPTY, noop, Observable, of, throwError } from 'rxjs';
 import { tapResponse } from '..';
 import { concatMap, finalize } from 'rxjs/operators';
+import { vi } from 'vitest';
 
 describe('tapResponse', () => {
   it('should invoke next callback on next', () => {
-    const nextCallback = jest.fn<void, [number]>();
+    const nextCallback = vi.fn<(value: [number]) => void>();
 
     of(1, 2, 3).pipe(tapResponse(nextCallback, noop)).subscribe();
 
@@ -12,7 +13,7 @@ describe('tapResponse', () => {
   });
 
   it('should invoke error callback on error', () => {
-    const errorCallback = jest.fn<void, [{ message: string }]>();
+    const errorCallback = vi.fn<() => [{ message: string }]>();
     const error = { message: 'error' };
 
     throwError(() => error)
@@ -23,7 +24,7 @@ describe('tapResponse', () => {
   });
 
   it('should invoke error callback on the exception thrown in next', () => {
-    const errorCallback = jest.fn<void, [{ message: string }]>();
+    const errorCallback = vi.fn<() => [{ message: string }]>();
     const error = { message: 'error' };
 
     function producesError() {
@@ -36,7 +37,7 @@ describe('tapResponse', () => {
   });
 
   it('should invoke complete callback on complete', () => {
-    const completeCallback = jest.fn<void, []>();
+    const completeCallback = vi.fn<() => void>();
 
     EMPTY.pipe(tapResponse(noop, noop, completeCallback)).subscribe();
 
@@ -97,8 +98,8 @@ describe('tapResponse', () => {
   });
 
   it('should not unsubscribe from outer observable on inner observable error', () => {
-    const innerCompleteCallback = jest.fn<void, []>();
-    const outerCompleteCallback = jest.fn<void, []>();
+    const innerCompleteCallback = vi.fn<() => void>();
+    const outerCompleteCallback = vi.fn<() => void>();
 
     new Observable((subscriber) => subscriber.next(1))
       .pipe(

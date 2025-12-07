@@ -2,7 +2,7 @@
   "name": "reduceState",
   "canonicalReference": "@ngrx/store!reduceState:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/store/src/state.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function reduceState<T, V extends "
+          "text": "declare function reduceState<T, V extends "
         },
         {
           "kind": "Reference",
@@ -76,7 +76,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/state.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 12,
         "endIndex": 14

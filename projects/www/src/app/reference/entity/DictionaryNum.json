@@ -2,7 +2,7 @@
   "name": "DictionaryNum",
   "canonicalReference": "@ngrx/entity!DictionaryNum:interface",
   "kind": "Interface",
-  "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,10 +12,10 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export interface DictionaryNum<T> "
+          "text": "interface DictionaryNum<T> "
         }
       ],
-      "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
       "releaseTag": "Public",
       "typeParameters": [
         {

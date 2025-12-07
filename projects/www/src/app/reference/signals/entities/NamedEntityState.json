@@ -2,7 +2,7 @@
   "name": "NamedEntityState",
   "canonicalReference": "@ngrx/signals/entities!NamedEntityState:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/signals/entities/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type NamedEntityState<Entity, Collection extends "
+          "text": "type NamedEntityState<Entity, Collection extends "
         },
         {
           "kind": "Content",
@@ -58,7 +58,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "releaseTag": "Public",
       "name": "NamedEntityState",
       "typeParameters": [

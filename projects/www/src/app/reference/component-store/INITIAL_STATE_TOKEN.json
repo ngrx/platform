@@ -2,7 +2,7 @@
   "name": "INITIAL_STATE_TOKEN",
   "canonicalReference": "@ngrx/component-store!INITIAL_STATE_TOKEN:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/component-store/src/component-store.d.ts",
+  "fileUrlPath": "../../dist/modules/component-store/types/ngrx-component-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -24,7 +24,7 @@
           "text": "<unknown>"
         }
       ],
-      "fileUrlPath": "../../dist/modules/component-store/src/component-store.d.ts",
+      "fileUrlPath": "../../dist/modules/component-store/types/ngrx-component-store.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "INITIAL_STATE_TOKEN",

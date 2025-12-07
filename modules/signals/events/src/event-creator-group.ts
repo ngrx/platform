@@ -10,13 +10,12 @@ type EventCreatorGroup<
   Source extends string,
   Events extends Record<string, any>,
 > = {
-  [EventName in keyof Events]: EventName extends string
+  readonly [EventName in keyof Events]: EventName extends string
     ? EventCreator<EventType<Source, EventName>, Events[EventName]>
     : never;
 };
 
 /**
- * @experimental
  * @description
  *
  * Creates a group of event creators.

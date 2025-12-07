@@ -1,6 +1,5 @@
 import { inject, untracked } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { merge, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import {
   EmptyFeatureResult,
   getState,
@@ -8,17 +7,16 @@ import {
   SignalStoreFeature,
   signalStoreFeature,
   type,
-  withHooks,
 } from '@ngrx/signals';
 import { CaseReducerResult } from './case-reducer';
 import { EventCreator } from './event-creator';
 import { ReducerEvents } from './events-service';
+import { withEventHandlers } from './with-event-handlers';
 
 /**
- * @experimental
  * @description
  *
- * SignalStore feature for defining state changes based on dispatched events.
+ * SignalStore feature for defining state transitions based on dispatched events.
  *
  * @usageNotes
  *
@@ -44,24 +42,18 @@ export function withReducer<State extends object>(
 > {
   return signalStoreFeature(
     { state: type<State>() },
-    withHooks({
-      onInit(store, events = inject(ReducerEvents)) {
-        const updates = caseReducers.map((caseReducer) =>
-          events.on(...caseReducer.events).pipe(
-            tap((event) => {
-              const state = untracked(() => getState(store));
-              const result = caseReducer.reducer(event, state);
-              const updaters = Array.isArray(result) ? result : [result];
+    withEventHandlers((store, events = inject(ReducerEvents)) =>
+      caseReducers.map((caseReducer) =>
+        events.on(...caseReducer.events).pipe(
+          tap((event) => {
+            const state = untracked(() => getState(store));
+            const result = caseReducer.reducer(event, state);
+            const updaters = Array.isArray(result) ? result : [result];
 
-              patchState(store, ...updaters);
-            })
-          )
-        );
-
-        merge(...updates)
-          .pipe(takeUntilDestroyed())
-          .subscribe();
-      },
-    })
+            patchState(store, ...updaters);
+          })
+        )
+      )
+    )
   );
 }

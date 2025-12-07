@@ -2,7 +2,7 @@
   "name": "OnStateInit",
   "canonicalReference": "@ngrx/component-store!OnStateInit:interface",
   "kind": "Interface",
-  "fileUrlPath": "../../dist/modules/component-store/src/lifecycle_hooks.d.ts",
+  "fileUrlPath": "../../dist/modules/component-store/types/ngrx-component-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,10 +12,10 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export interface OnStateInit "
+          "text": "interface OnStateInit "
         }
       ],
-      "fileUrlPath": "../../dist/modules/component-store/src/lifecycle_hooks.d.ts",
+      "fileUrlPath": "../../dist/modules/component-store/types/ngrx-component-store.d.ts",
       "releaseTag": "Public",
       "name": "OnStateInit",
       "preserveMemberOrder": false,

@@ -2,7 +2,7 @@
   "name": "MockStore",
   "canonicalReference": "@ngrx/store/testing!MockStore:class",
   "kind": "Class",
-  "fileUrlPath": "../../dist/modules/store/testing/mock_store.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store-testing.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare class MockStore<T = "
+          "text": "declare class MockStore<T = "
         },
         {
           "kind": "Content",
@@ -36,7 +36,7 @@
           "text": " "
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/testing/mock_store.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store-testing.d.ts",
       "releaseTag": "Public",
       "typeParameters": [
         {

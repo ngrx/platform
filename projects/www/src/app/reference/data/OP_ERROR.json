@@ -2,7 +2,7 @@
   "name": "OP_ERROR",
   "canonicalReference": "@ngrx/data!OP_ERROR:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/data/src/actions/entity-op.d.ts",
+  "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -19,7 +19,7 @@
           "text": "\"/error\""
         }
       ],
-      "fileUrlPath": "../../dist/modules/data/src/actions/entity-op.d.ts",
+      "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
       "initializerTokenRange": {
         "startIndex": 1,
         "endIndex": 2

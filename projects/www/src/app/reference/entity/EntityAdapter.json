@@ -2,7 +2,7 @@
   "name": "EntityAdapter",
   "canonicalReference": "@ngrx/entity!EntityAdapter:interface",
   "kind": "Interface",
-  "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export interface EntityAdapter<T> extends "
+          "text": "interface EntityAdapter<T> extends "
         },
         {
           "kind": "Reference",
@@ -28,7 +28,7 @@
           "text": " "
         }
       ],
-      "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
       "releaseTag": "Public",
       "typeParameters": [
         {

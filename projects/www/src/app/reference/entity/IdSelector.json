@@ -2,7 +2,7 @@
   "name": "IdSelector",
   "canonicalReference": "@ngrx/entity!IdSelector:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type IdSelector<T> = "
+          "text": "type IdSelector<T> = "
         },
         {
           "kind": "Reference",
@@ -37,7 +37,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
       "releaseTag": "Public",
       "name": "IdSelector",
       "typeParameters": [

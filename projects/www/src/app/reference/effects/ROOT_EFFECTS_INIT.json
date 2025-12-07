@@ -2,7 +2,7 @@
   "name": "ROOT_EFFECTS_INIT",
   "canonicalReference": "@ngrx/effects!ROOT_EFFECTS_INIT:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/effects/src/effects_actions.d.ts",
+  "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -19,7 +19,7 @@
           "text": "\"@ngrx/effects/init\""
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/effects_actions.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "initializerTokenRange": {
         "startIndex": 1,
         "endIndex": 2

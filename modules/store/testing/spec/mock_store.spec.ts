@@ -24,7 +24,7 @@ import { INCREMENT } from '../../spec/fixtures/counter';
 import { Component, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { AsyncPipe, NgForOf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 interface TestAppSchema {
   counter1: number;
@@ -453,16 +453,18 @@ describe('Refreshing state', () => {
     selector: 'ngrx-app-todos',
     template: `
       <ul>
-        <li *ngFor="let todo of todos | async">
-          {{ todo.name }} <input type="checkbox" [checked]="todo.done" />
-        </li>
+        @for (todo of todos | async; track todo.name) {
+          <li>
+            {{ todo.name }} <input type="checkbox" [checked]="todo.done" />
+          </li>
+        }
 
-        <p *ngFor="let todo of todosSelect | async">
-          {{ todo.name }} <input type="checkbox" [checked]="todo.done" />
-        </p>
+        @for (todo of todosSelect | async; track todo.name) {
+          <p>{{ todo.name }} <input type="checkbox" [checked]="todo.done" /></p>
+        }
       </ul>
     `,
-    imports: [AsyncPipe, NgForOf],
+    imports: [AsyncPipe],
   })
   class TodosComponent {
     todos: Observable<any[]> = this.store.pipe(select(todos));

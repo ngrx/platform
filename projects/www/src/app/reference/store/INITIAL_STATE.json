@@ -2,7 +2,7 @@
   "name": "INITIAL_STATE",
   "canonicalReference": "@ngrx/store!INITIAL_STATE:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/store/src/tokens.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -24,7 +24,7 @@
           "text": "<unknown>"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/tokens.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "INITIAL_STATE",

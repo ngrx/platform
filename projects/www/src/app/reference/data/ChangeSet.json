@@ -2,7 +2,7 @@
   "name": "ChangeSet",
   "canonicalReference": "@ngrx/data!ChangeSet:interface",
   "kind": "Interface",
-  "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-change-set.d.ts",
+  "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export interface ChangeSet<T = "
+          "text": "interface ChangeSet<T = "
         },
         {
           "kind": "Content",
@@ -23,7 +23,7 @@
           "text": "> "
         }
       ],
-      "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-change-set.d.ts",
+      "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
       "releaseTag": "Public",
       "typeParameters": [
         {

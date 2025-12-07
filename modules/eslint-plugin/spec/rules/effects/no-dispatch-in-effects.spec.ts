@@ -16,27 +16,27 @@ type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
 const validConstructor: () => (string | ValidTestCase<Options>)[] = () => [
   `
   import { Store } from '@ngrx/store'
-  
+
   class Ok {
     readonly effect = somethingOutside();
   }`,
   `
   import { Store } from '@ngrx/store'
-  
+
   class Ok1 {
     effect = createEffect(() => this.actions.pipe(
       ofType('PING'),
       tap(() => ({ type: 'PONG' }))
     ))
-  
+
     constructor(private actions: Actions, private store: Store) {}
   }`,
   `
   import { Store } from '@ngrx/store'
-  
+
   class Ok2 {
     readonly effect: CreateEffectMetadata
-  
+
     constructor(private actions: Actions, private store$: Store) {
         this.effect = createEffect(
         () => ({ scheduler = asyncScheduler } = {}) =>
@@ -591,7 +591,11 @@ class NotOk7 {
   ),
 ];
 
-ruleTester().run(path.parse(__filename).name, rule, {
-  valid: [...validConstructor(), ...validInject()],
-  invalid: [...invalidConstructor(), ...invalidInject()],
-});
+ruleTester(rule.meta.docs?.requiresTypeChecking).run(
+  path.parse(__filename).name,
+  rule,
+  {
+    valid: [...validConstructor(), ...validInject()],
+    invalid: [...invalidConstructor(), ...invalidInject()],
+  }
+);

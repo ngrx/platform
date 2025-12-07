@@ -2,7 +2,7 @@
   "name": "StoreDevtoolsModule",
   "canonicalReference": "@ngrx/store-devtools!StoreDevtoolsModule:class",
   "kind": "Class",
-  "fileUrlPath": "../../dist/modules/store-devtools/src/instrument.d.ts",
+  "fileUrlPath": "../../dist/modules/store-devtools/types/ngrx-store-devtools.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,10 +12,10 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare class StoreDevtoolsModule "
+          "text": "declare class StoreDevtoolsModule "
         }
       ],
-      "fileUrlPath": "../../dist/modules/store-devtools/src/instrument.d.ts",
+      "fileUrlPath": "../../dist/modules/store-devtools/types/ngrx-store-devtools.d.ts",
       "releaseTag": "Public",
       "isAbstract": false,
       "name": "StoreDevtoolsModule",

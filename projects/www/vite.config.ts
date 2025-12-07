@@ -29,20 +29,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: '../../dist/projects/www/client',
     reportCompressedSize: true,
-    target: 'es2016',
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            const parts = id.split('node_modules/')[1].split('/');
-            return parts[0].startsWith('@')
-              ? `${parts[0]}/${parts[1]}`
-              : parts[0];
-          }
-          return undefined;
-        },
-      },
-    },
+    target: 'es2020',
   },
 
   server: {

@@ -82,6 +82,7 @@ export default [
       files: ['**/*.html'],
       rules: {
         ...config.rules,
+        '@angular-eslint/template/prefer-control-flow': 'off',
       },
     })),
   {

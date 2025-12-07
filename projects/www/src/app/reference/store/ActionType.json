@@ -2,7 +2,7 @@
   "name": "ActionType",
   "canonicalReference": "@ngrx/store!ActionType:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/store/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type ActionType<A> = "
+          "text": "type ActionType<A> = "
         },
         {
           "kind": "Content",
@@ -41,7 +41,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "releaseTag": "Public",
       "name": "ActionType",
       "typeParameters": [

@@ -2,7 +2,7 @@
   "name": "Update",
   "canonicalReference": "@ngrx/entity!Update:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type Update<T> = "
+          "text": "type Update<T> = "
         },
         {
           "kind": "Reference",
@@ -37,7 +37,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/entity/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
       "releaseTag": "Public",
       "name": "Update",
       "typeParameters": [

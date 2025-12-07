@@ -9,27 +9,52 @@ import { NgRxRule } from '../src/rule-creator';
   const RULE_MODULE = '@ngrx';
   const CONFIG_DIRECTORY = './modules/eslint-plugin/src/configs/';
 
-  writeConfig('all', (_rule) => true);
-  writeConfig('store', (rule) => rule.meta.docs?.ngrxModule === 'store');
-  writeConfig('effects', (rule) => rule.meta.docs?.ngrxModule === 'effects');
+  const isModule = (rule: NgRxRule, moduleName: string) =>
+    rule.meta.docs?.ngrxModule === moduleName;
+  const isTypeChecked = (rule: NgRxRule) =>
+    rule.meta.docs?.requiresTypeChecking === true;
+
+  writeConfig('all', (rule) => !isTypeChecked(rule));
+  writeConfig('all-type-checked', (_rule) => true);
+
+  writeConfig(
+    'store',
+    (rule) => isModule(rule, 'store') && !isTypeChecked(rule)
+  );
+
+  writeConfig(
+    'effects',
+    (rule) => isModule(rule, 'effects') && !isTypeChecked(rule)
+  );
+  writeConfig('effects-type-checked', (rule) => isModule(rule, 'effects'));
+
   writeConfig(
     'component-store',
-    (rule) => rule.meta.docs?.ngrxModule === 'component-store'
+    (rule) => isModule(rule, 'component-store') && !isTypeChecked(rule)
   );
+
   writeConfig(
     'operators',
-    (rule) => rule.meta.docs?.ngrxModule === 'operators'
+    (rule) => isModule(rule, 'operators') && !isTypeChecked(rule)
   );
-  writeConfig('signals', (rule) => rule.meta.docs?.ngrxModule === 'signals');
+
+  writeConfig(
+    'signals',
+    (rule) => isModule(rule, 'signals') && !isTypeChecked(rule)
+  );
+  writeConfig('signals-type-checked', (rule) => isModule(rule, 'signals'));
 
   async function writeConfig(
     configName:
       | 'all'
+      | 'all-type-checked'
       | 'store'
       | 'effects'
+      | 'effects-type-checked'
       | 'component-store'
       | 'operators'
-      | 'signals',
+      | 'signals'
+      | 'signals-type-checked',
     predicate: (rule: NgRxRule) => boolean
   ) {
     const rulesForConfig = Object.entries(rulesForGenerate).filter(
@@ -42,14 +67,6 @@ import { NgRxRule } from '../src/rule-creator';
       },
       {}
     );
-    const requireParserOptions: null | Record<string, string | number> =
-      rulesForConfig.some(([_, rule]) => rule.meta.docs?.requiresTypeChecking)
-        ? {
-            ecmaVersion: 2020,
-            sourceType: 'module',
-            project: './tsconfig.json',
-          }
-        : null;
 
     const tsCode = `
       /**
@@ -67,7 +84,6 @@ import { NgRxRule } from '../src/rule-creator';
           name: 'ngrx/base',
           languageOptions: {
             parser,
-            sourceType: 'module',
           },
           plugins: {
             '@ngrx': plugin,
@@ -77,15 +93,6 @@ import { NgRxRule } from '../src/rule-creator';
           name: 'ngrx/${configName}',
           languageOptions: {
             parser,
-            ${
-              requireParserOptions
-                ? `parserOptions: ${JSON.stringify(
-                    requireParserOptions,
-                    null,
-                    2
-                  )},`
-                : ''
-            }
           },
           rules: ${JSON.stringify(configRules, null, 2)}
         },
@@ -104,13 +111,6 @@ import { NgRxRule } from '../src/rule-creator';
       plugins: ['@ngrx'],
       rules: configRules,
     };
-    if (requireParserOptions) {
-      jsonConfig.parserOptions = {
-        ecmaVersion: 2020,
-        sourceType: 'module',
-        project: './tsconfig.json',
-      };
-    }
     const jsonConfigFormatted = await format(
       JSON.stringify(jsonConfig, null, 2),
       {

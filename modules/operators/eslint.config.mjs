@@ -47,4 +47,11 @@ export default [
         ...config.rules,
       },
     })),
+  {
+    ignores: [
+      'schematics-core',
+      '**/vite.config.*.timestamp*',
+      '**/vitest.config.*.timestamp*',
+    ],
+  },
 ];

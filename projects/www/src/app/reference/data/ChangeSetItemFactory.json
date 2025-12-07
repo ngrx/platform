@@ -2,7 +2,7 @@
   "name": "changeSetItemFactory",
   "canonicalReference": "@ngrx/data!changeSetItemFactory:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-change-set.d.ts",
+  "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -20,7 +20,7 @@
           "canonicalReference": "@ngrx/data!ChangeSetItemFactory:class"
         }
       ],
-      "fileUrlPath": "../../dist/modules/data/src/actions/entity-cache-change-set.d.ts",
+      "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "changeSetItemFactory",

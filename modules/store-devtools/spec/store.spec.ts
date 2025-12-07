@@ -1,4 +1,6 @@
 import { getTestBed, TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
+
 import {
   Action,
   ActionReducer,
@@ -8,7 +10,6 @@ import {
   StoreModule,
   UPDATE,
 } from '@ngrx/store';
-
 import {
   LiftedState,
   StoreDevtools,
@@ -18,10 +19,7 @@ import {
 import { RECOMPUTE } from '../src/reducer';
 import { IS_EXTENSION_OR_MONITOR_PRESENT } from '../src/provide-store-devtools';
 
-const counter = jasmine.createSpy('counter').and.callFake(function (
-  state = 0,
-  action: Action
-) {
+const counter = vi.fn(function (state = 0, action: Action) {
   switch (action.type) {
     case 'INCREMENT':
       return state + 1;
@@ -133,10 +131,10 @@ describe('Store Devtools', () => {
   describe('reducer', () => {
     it('should call @ngrx/store-devtools/recompute action', () => {
       const fixture = createStore(doubleCounter);
-      counter.calls.reset();
+      counter.mockClear();
       fixture.replaceReducer(counter);
 
-      const allArgs = counter.calls.allArgs();
+      const allArgs = counter.mock.calls;
       expect(allArgs.length).toEqual(3);
       expect(allArgs[0][1].type).toEqual(UPDATE);
       expect(allArgs[1][1].type).toEqual(RECOMPUTE);
@@ -331,7 +329,7 @@ describe('Store Devtools', () => {
     });
 
     it('should catch and record errors', () => {
-      spyOn(console, 'error');
+      vi.spyOn(console, 'error');
       fixture.replaceReducer(counterWithBug);
 
       store.dispatch({ type: 'INCREMENT' });
@@ -354,7 +352,7 @@ describe('Store Devtools', () => {
     });
 
     it('should not recompute old states when toggling an action', () => {
-      counter.calls.reset();
+      counter.mockClear();
 
       store.dispatch({ type: 'INCREMENT' });
       store.dispatch({ type: 'INCREMENT' });
@@ -394,7 +392,7 @@ describe('Store Devtools', () => {
     });
 
     it('should not recompute states when jumping to state', () => {
-      counter.calls.reset();
+      counter.mockClear();
 
       store.dispatch({ type: 'INCREMENT' });
       store.dispatch({ type: 'INCREMENT' });
@@ -420,7 +418,7 @@ describe('Store Devtools', () => {
     });
 
     it('should not recompute states on monitor actions', () => {
-      counter.calls.reset();
+      counter.mockClear();
 
       store.dispatch({ type: 'INCREMENT' });
       store.dispatch({ type: 'INCREMENT' });
@@ -602,7 +600,7 @@ describe('Store Devtools', () => {
     });
 
     it('should not auto-commit errors', () => {
-      spyOn(console, 'error');
+      vi.spyOn(console, 'error');
       const fixture = createStore(counterWithBug, { maxAge: 3 });
 
       fixture.store.dispatch({ type: 'DECREMENT' });
@@ -616,7 +614,7 @@ describe('Store Devtools', () => {
     });
 
     it('should auto-commit actions after hot reload fixes error', () => {
-      spyOn(console, 'error');
+      vi.spyOn(console, 'error');
       const fixture = createStore(counterWithBug, { maxAge: 3 });
 
       fixture.store.dispatch({ type: 'DECREMENT' });
@@ -659,7 +657,7 @@ describe('Store Devtools', () => {
     });
 
     it('should continue to increment currentStateIndex while error blocks commit', () => {
-      spyOn(console, 'error');
+      vi.spyOn(console, 'error');
       const fixture = createStore(counterWithBug, { maxAge: 3 });
 
       fixture.store.dispatch({ type: 'DECREMENT' });
@@ -678,7 +676,7 @@ describe('Store Devtools', () => {
     });
 
     it('should adjust currentStateIndex correctly when multiple actions are committed', () => {
-      spyOn(console, 'error');
+      vi.spyOn(console, 'error');
       const fixture = createStore(counterWithBug, { maxAge: 3 });
 
       fixture.store.dispatch({ type: 'DECREMENT' });
@@ -698,7 +696,7 @@ describe('Store Devtools', () => {
     });
 
     it('should not allow currentStateIndex to drop below 0', () => {
-      spyOn(console, 'error');
+      vi.spyOn(console, 'error');
       const fixture = createStore(counterWithBug, { maxAge: 3 });
 
       fixture.store.dispatch({ type: 'DECREMENT' });

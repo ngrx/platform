@@ -2,7 +2,7 @@
   "name": "provideStoreDevtools",
   "canonicalReference": "@ngrx/store-devtools!provideStoreDevtools:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/store-devtools/src/provide-store-devtools.d.ts",
+  "fileUrlPath": "../../dist/modules/store-devtools/types/ngrx-store-devtools.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function provideStoreDevtools(options?: "
+          "text": "declare function provideStoreDevtools(options?: "
         },
         {
           "kind": "Reference",
@@ -33,7 +33,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store-devtools/src/provide-store-devtools.d.ts",
+      "fileUrlPath": "../../dist/modules/store-devtools/types/ngrx-store-devtools.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 3,
         "endIndex": 4

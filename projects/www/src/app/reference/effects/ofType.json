@@ -2,7 +2,7 @@
   "name": "ofType",
   "canonicalReference": "@ngrx/effects!ofType:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
+  "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function ofType<AC extends "
+          "text": "declare function ofType<AC extends "
         },
         {
           "kind": "Reference",
@@ -89,7 +89,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 15,
         "endIndex": 17
@@ -167,7 +167,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function ofType<E extends "
+          "text": "declare function ofType<E extends "
         },
         {
           "kind": "Reference",
@@ -278,7 +278,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 23,
         "endIndex": 25
@@ -378,7 +378,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function ofType<E extends "
+          "text": "declare function ofType<E extends "
         },
         {
           "kind": "Reference",
@@ -492,7 +492,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 24,
         "endIndex": 26
@@ -611,7 +611,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function ofType<E extends "
+          "text": "declare function ofType<E extends "
         },
         {
           "kind": "Reference",
@@ -741,7 +741,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 28,
         "endIndex": 30
@@ -879,7 +879,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function ofType<E extends "
+          "text": "declare function ofType<E extends "
         },
         {
           "kind": "Reference",
@@ -1025,7 +1025,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 32,
         "endIndex": 34
@@ -1182,7 +1182,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function ofType<E extends "
+          "text": "declare function ofType<E extends "
         },
         {
           "kind": "Reference",
@@ -1344,7 +1344,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 36,
         "endIndex": 38
@@ -1520,7 +1520,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function ofType<V extends "
+          "text": "declare function ofType<V extends "
         },
         {
           "kind": "Reference",
@@ -1585,7 +1585,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/actions.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 10,
         "endIndex": 14

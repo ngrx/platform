@@ -105,7 +105,8 @@ describe('ComponentStore integration', () => {
       expect(state.prop2Changes).toEqual([undefined, 0, 1, 2, 3]);
 
       state.parent.isChildVisible = false;
-      state.fixture.detectChanges();
+      state.fixture.changeDetectorRef.markForCheck();
+      state.fixture.changeDetectorRef.detectChanges();
 
       tick(20);
       // Still at the same values, so effect stopped running
@@ -116,7 +117,8 @@ describe('ComponentStore integration', () => {
       state.child.init();
 
       state.parent.isChildVisible = false;
-      state.fixture.detectChanges();
+      state.fixture.changeDetectorRef.markForCheck();
+      state.fixture.changeDetectorRef.detectChanges();
 
       state.destroy();
 
@@ -199,7 +201,9 @@ describe('ComponentStore integration', () => {
 
   @Component({
     selector: 'body',
-    template: '<child *ngIf="isChildVisible"></child>',
+    template: ` @if (isChildVisible) {
+      <child></child>
+    }`,
     standalone: false,
   })
   class ParentComponent implements Parent {

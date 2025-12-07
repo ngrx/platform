@@ -2,7 +2,7 @@
   "name": "createFeature",
   "canonicalReference": "@ngrx/store!createFeature:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/store/src/feature_creator.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createFeature<FeatureName extends "
+          "text": "declare function createFeature<FeatureName extends "
         },
         {
           "kind": "Content",
@@ -85,7 +85,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/feature_creator.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 12,
         "endIndex": 16
@@ -168,7 +168,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function createFeature<FeatureName extends "
+          "text": "declare function createFeature<FeatureName extends "
         },
         {
           "kind": "Content",
@@ -223,7 +223,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/feature_creator.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 8,
         "endIndex": 12

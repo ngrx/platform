@@ -22,18 +22,23 @@ describe('ESLint V8', () => {
   });
   test('exports all configurations', () => {
     const configs = getAllConfigs();
-    expect(configs.length).toBe(6);
+    expect(configs.length).toBe(9);
   });
 });
 
 describe('ESLint V9', () => {
   test('exports all rules ', () => {
     const rules = getAllRules();
-    expect(Object.keys((configs.all[1] as any).rules).length).toBe(
+    expect(Object.keys((configs.allTypeChecked[1] as any).rules).length).toBe(
       rules.length
     );
   });
+  test('there is a difference between typed checked rules ', () => {
+    expect(
+      Object.keys((configs.allTypeChecked[1] as any).rules).length
+    ).toBeGreaterThan(Object.keys((configs.all[1] as any).rules).length);
+  });
   test('exports all configurations', () => {
-    expect(Object.keys(configs).length).toBe(6);
+    expect(Object.keys(configs).length).toBe(9);
   });
 });

@@ -17,23 +17,22 @@ import { isEventInstance } from './event-instance';
 import { SOURCE_TYPE } from './events-service';
 
 /**
- * @experimental
  * @description
  *
- * SignalStore feature for defining side effects.
+ * SignalStore feature for defining event handlers.
  *
  * @usageNotes
  *
  * ```ts
  * import { signalStore, withState } from '@ngrx/signals';
- * import { event, Events, withEffects } from '@ngrx/signals/events';
+ * import { event, Events, withEventHandlers } from '@ngrx/signals/events';
  *
  * const increment = event('[Counter Page] Increment');
  * const decrement = event('[Counter Page] Decrement');
  *
  * const CounterStore = signalStore(
  *   withState({ count: 0 }),
- *   withEffects(({ count }, events = inject(Events)) => ({
+ *   withEventHandlers(({ count }, events = inject(Events)) => ({
  *     logCount$: events.on(increment, decrement).pipe(
  *       tap(({ type }) => console.log(type, count())),
  *     ),
@@ -41,32 +40,39 @@ import { SOURCE_TYPE } from './events-service';
  * );
  * ```
  */
-export function withEffects<Input extends SignalStoreFeatureResult>(
-  effectsFactory: (
+export function withEventHandlers<Input extends SignalStoreFeatureResult>(
+  handlersFactory: (
     store: Prettify<
       StateSignals<Input['state']> &
         Input['props'] &
         Input['methods'] &
         WritableStateSource<Prettify<Input['state']>>
     >
-  ) => Record<string, Observable<unknown>>
+  ) => Record<string, Observable<unknown>> | Observable<unknown>[]
 ): SignalStoreFeature<Input, EmptyFeatureResult> {
   return signalStoreFeature(
     type<Input>(),
     withHooks({
       onInit(store, dispatcher = inject(Dispatcher)) {
-        const effectSources = effectsFactory(store);
-        const effects = Object.values(effectSources).map((effectSource$) =>
-          effectSource$.pipe(
-            tap((value) => {
-              if (isEventInstance(value) && !(SOURCE_TYPE in value)) {
-                dispatcher.dispatch(value);
+        const handlerSources = handlersFactory(store);
+        const handlers = Object.values(handlerSources).map((handlerSource$) =>
+          handlerSource$.pipe(
+            tap((result) => {
+              const [potentialEvent, config] = Array.isArray(result)
+                ? result
+                : [result];
+
+              if (
+                isEventInstance(potentialEvent) &&
+                !(SOURCE_TYPE in potentialEvent)
+              ) {
+                dispatcher.dispatch(potentialEvent, config);
               }
             })
           )
         );
 
-        merge(...effects)
+        merge(...handlers)
           .pipe(takeUntilDestroyed())
           .subscribe();
       },

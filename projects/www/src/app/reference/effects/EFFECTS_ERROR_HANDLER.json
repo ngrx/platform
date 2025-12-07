@@ -2,7 +2,7 @@
   "name": "EFFECTS_ERROR_HANDLER",
   "canonicalReference": "@ngrx/effects!EFFECTS_ERROR_HANDLER:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/effects/src/tokens.d.ts",
+  "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -33,7 +33,7 @@
           "text": ">"
         }
       ],
-      "fileUrlPath": "../../dist/modules/effects/src/tokens.d.ts",
+      "fileUrlPath": "../../dist/modules/effects/types/ngrx-effects.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "EFFECTS_ERROR_HANDLER",

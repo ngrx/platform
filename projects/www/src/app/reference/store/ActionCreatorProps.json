@@ -2,7 +2,7 @@
   "name": "ActionCreatorProps",
   "canonicalReference": "@ngrx/store!ActionCreatorProps:interface",
   "kind": "Interface",
-  "fileUrlPath": "../../dist/modules/store/src/models.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,10 +12,10 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export interface ActionCreatorProps<T> "
+          "text": "interface ActionCreatorProps<T> "
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/src/models.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "releaseTag": "Public",
       "typeParameters": [
         {

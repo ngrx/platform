@@ -2,7 +2,7 @@
   "name": "MockReducerManager",
   "canonicalReference": "@ngrx/store/testing!MockReducerManager:class",
   "kind": "Class",
-  "fileUrlPath": "../../dist/modules/store/testing/mock_reducer_manager.d.ts",
+  "fileUrlPath": "../../dist/modules/store/types/ngrx-store-testing.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare class MockReducerManager extends "
+          "text": "declare class MockReducerManager extends "
         },
         {
           "kind": "Reference",
@@ -37,7 +37,7 @@
           "text": " "
         }
       ],
-      "fileUrlPath": "../../dist/modules/store/testing/mock_reducer_manager.d.ts",
+      "fileUrlPath": "../../dist/modules/store/types/ngrx-store-testing.d.ts",
       "releaseTag": "Public",
       "isAbstract": false,
       "name": "MockReducerManager",

@@ -2,7 +2,7 @@
   "name": "ROUTER_ERROR",
   "canonicalReference": "@ngrx/router-store!ROUTER_ERROR:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+  "fileUrlPath": "../../dist/modules/router-store/types/ngrx-router-store.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -19,7 +19,7 @@
           "text": "\"@ngrx/router-store/error\""
         }
       ],
-      "fileUrlPath": "../../dist/modules/router-store/src/actions.d.ts",
+      "fileUrlPath": "../../dist/modules/router-store/types/ngrx-router-store.d.ts",
       "initializerTokenRange": {
         "startIndex": 1,
         "endIndex": 2

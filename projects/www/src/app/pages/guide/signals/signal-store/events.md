@@ -1,10 +1,3 @@
-<ngrx-docs-alert type="inform">
-
-The Events plugin is currently marked as experimental.
-This means its APIs are subject to change, and modifications may occur in future versions without standard breaking change announcements until it is deemed stable.
-
-</ngrx-docs-alert>
-
 # Events
 
 The Events plugin extends SignalStore with an event-based state management layer.
@@ -18,7 +11,7 @@ The application architecture with the Events plugin is composed of the following
 
 1. **Event:** Describes an occurrence within the system. Events are dispatched to trigger state changes and/or side effects.
 2. **Dispatcher:** An event bus that forwards events to their corresponding handlers in the stores.
-3. **Store:** Contains reducers and effects that manage state and handle side effects, maintaining a clean and predictable application flow.
+3. **Store:** Contains event handlers that manage state transitions and handle side effects, maintaining a clean and predictable application flow.
 4. **View:** Reflects state changes and dispatches new events, enabling continuous interaction between the user interface and the underlying system.
 
 By dispatching events and reacting to them, the _what_ (the event that occurred) is decoupled from the _how_ (the state changes or side effects that result), leading to predictable data flow and more maintainable code.
@@ -136,9 +129,9 @@ export const booksApiEvents = eventGroup({
 Event types are automatically formatted as "[Source] EventName".
 For example, calling `bookSearchEvents.opened()` yields `{ type: '[Book Search Page] opened' }`, and `booksApiEvents.loadedSuccess([book1, book2])` yields `{ type: '[Books API] loadedSuccess', payload: [book1, book2] }`.
 
-## Performing State Changes
+## Defining State Transitions
 
-To handle state changes in response to events, the Events plugin provides the `withReducer` feature.
+To handle state transitions in response to events, the Events plugin provides the `withReducer` feature.
 Case reducers are defined using the `on` function, which maps one or more events to a case reducer handler.
 A handler is a function that receives the dispatched event as the first and the current state as the second argument.
 The return value of a case reducer handler can be a partial state object, a partial state updater, or an array of partial state objects and/or updaters.
@@ -212,26 +205,26 @@ function incrementSecond(): PartialStateUpdater<{ count2: number }> {
 
 </ngrx-docs-alert>
 
-## Performing Side Effects
+## Defining Event Handlers
 
-Side effects are handled using the `withEffects` feature.
-This feature accepts a function that receives the store instance as an argument and returns a dictionary of effects.
-Each effect is defined as an observable that reacts to specific events using the `Events` service.
+Event handlers, such as those that perform asynchronous side effects, can be defined using the `withEventHandlers` feature.
+This feature accepts a function that receives the store instance as an argument and returns either a dictionary or an array of event handlers.
+Each event handler is defined as an observable that reacts to specific events using the `Events` service.
 This service provides the `on` method that returns an observable of dispatched events filtered by the specified event types.
-If an effect returns a new event, that event is automatically dispatched.
+If an event handler returns a new event, that event is automatically dispatched.
 
 <ngrx-code-example header="book-search-store.ts">
 
 ```ts
 // ... other imports
 import { switchMap, tap } from 'rxjs';
-import { Events, withEffects } from '@ngrx/signals/events';
+import { Events, withEventHandlers } from '@ngrx/signals/events';
 import { mapResponse } from '@ngrx/operators';
 import { BooksService } from './books-service';
 
 export const BookSearchStore = signalStore(
   // ... other features
-  withEffects(
+  withEventHandlers(
     (
       store,
       events = inject(Events),
@@ -259,6 +252,81 @@ export const BookSearchStore = signalStore(
 ```
 
 </ngrx-code-example>
+
+<ngrx-docs-alert type="help">
+
+In addition to the `Events` service, event handlers can be defined by listening to any other observable source.
+It's also possible to return an array of handlers from the `withEventHandlers` feature.
+
+```ts
+// ... other imports
+import { exhaustMap, tap, timer } from 'rxjs';
+import { withEventHandlers } from '@ngrx/signals/events';
+import { mapResponse } from '@ngrx/operators';
+import { BooksService } from './books-service';
+
+export const BookSearchStore = signalStore(
+  // ... other features
+  withEventHandlers((store, booksService = inject(BooksService)) => [
+    timer(0, 30_000).pipe(
+      exhaustMap(() =>
+        booksService.getAll().pipe(
+          mapResponse({
+            next: (books) => booksApiEvents.loadedSuccess(books),
+            error: (error: { message: string }) =>
+              booksApiEvents.loadedFailure(error.message),
+          })
+        )
+      )
+    ),
+    events
+      .on(booksApiEvents.loadedFailure)
+      .pipe(tap(({ payload }) => console.error(payload))),
+  ])
+);
+```
+
+</ngrx-docs-alert>
+
+<ngrx-docs-alert type="inform">
+
+The `withEventHandlers` feature can also serve as a way to implement custom state transitions in cases where `withReducer` does not fully address the requirements.
+For this purpose, the `ReducerEvents` service is recommended, as it receives dispatched events before the `Events` service.
+This ensures that state transitions are applied before other event handlers react.
+
+```ts
+// ... other imports
+import {
+  ReducerEvents,
+  withEventHandlers,
+} from '@ngrx/signals/events';
+
+const counterPageEvents = eventGroup({
+  source: 'Counter Page',
+  events: {
+    increment: type<void>(),
+    set: type<number>(),
+  },
+});
+
+export const CounterStore = signalStore(
+  withState({ count: 0 }),
+  withEventHandlers((store, events = inject(ReducerEvents)) => [
+    events
+      .on(counterPageEvents.increment)
+      .pipe(
+        tap(() => patchState(store, { count: store.count() + 1 }))
+      ),
+    events
+      .on(counterPageEvents.set)
+      .pipe(
+        tap(({ payload }) => patchState(store, { count: payload }))
+      ),
+  ])
+);
+```
+
+</ngrx-docs-alert>
 
 ## Reading State
 
@@ -308,7 +376,7 @@ export class BookSearch {
 ## Dispatching Events
 
 Once events and their corresponding handlers have been defined, the remaining step is to dispatch events in response to user interactions or other triggers.
-Dispatching an event allows any matching reducers or effects to process it accordingly.
+Dispatching an event allows any matching reducers or event handlers to process it accordingly.
 
 ### Using `Dispatcher` Service
 
@@ -387,6 +455,151 @@ export class BookSearch {
     this.dispatch.opened();
   }
 }
+```
+
+</ngrx-code-example>
+
+## Scoped Events
+
+By default, the `Dispatcher` and `Events` services operate in a global scope where all dispatched events are handled application-wide.
+In some cases, event handling should be isolated to a particular feature or component subtree.
+Typical examples include local state management scenarios where events should stay within a specific feature, or micro-frontend architectures where each remote module needs its own isolated event scope.
+To support this, the Events plugin provides a built-in mechanism for scoped events.
+
+### Creating Local Scope
+
+A new event scope can be created at a feature or component level by using the `provideDispatcher()` function.
+Any events dispatched inside this boundary will belong to the local scope unless explicitly forwarded.
+
+When dispatching an event, the scope can be explicitly selected using the dispatch configuration:
+
+- `self` (default): An event dispatched and handled only within the local scope.
+- `parent`: An event is forwarded to the parent dispatcher.
+- `global`: An event is forwarded to the global dispatcher.
+
+<ngrx-code-example header="book-search.ts">
+
+```ts
+// ... other imports
+import { provideDispatcher } from '@ngrx/signals/events';
+
+@Component({
+  // ... component config
+  providers: [
+    // 👇 Provide local `Dispatcher` and `Events` services
+    // at the `BookSearch` injector level.
+    provideDispatcher(),
+    BookSearchStore,
+  ],
+})
+export class BookSearch {
+  readonly store = inject(BookSearchStore);
+  readonly dispatch = injectDispatch(bookSearchEvents);
+
+  constructor() {
+    // 👇 Dispatch event to the local scope.
+    this.dispatch.opened();
+  }
+
+  changeQuery(query: string): void {
+    // 👇 Dispatch event to the parent scope.
+    this.dispatch({ scope: 'parent' }).queryChanged(query);
+  }
+
+  triggerRefresh(): void {
+    // 👇 Dispatch event to the global scope.
+    this.dispatch({ scope: 'global' }).refreshTriggered();
+  }
+}
+```
+
+</ngrx-code-example>
+
+Event flow within scopes follows a hierarchical visibility rule, which means that `Events` service receives events dispatched in their own scope and events dispatched in any parent scope, including the global scope.
+On the other hand, events dispatched locally are not visible to ancestor scopes.
+
+<ngrx-docs-alert type="help">
+
+When using `Dispatcher`, the scope can be provided as a second argument of the `dispatch` method.
+
+```ts
+@Component({
+  // ... component config
+  providers: [provideDispatcher(), CounterStore],
+})
+export class Counter {
+  readonly dispatcher = inject(Dispatcher);
+
+  increment(): void {
+    this.dispatcher.dispatch(counterPageEvents.increment(), {
+      scope: 'parent',
+    });
+  }
+
+  incrementBy(count: number): void {
+    this.dispatcher.dispatch(counterPageEvents.incrementBy(count), {
+      scope: 'global',
+    });
+  }
+}
+```
+
+</ngrx-docs-alert>
+
+### Scoped Events in Event Handlers
+
+Scoped events can also be dispatched from event handlers. The Events plugin provides:
+
+- `toScope`: Forwards a returned event to the specified scope.
+- `mapToScope`: RxJS operator that applies scope forwarding to all returned events within a handler.
+
+<ngrx-code-example header="book-search-store.ts">
+
+```ts
+// ... other imports
+import { mapToScope, toScope } from '@ngrx/signals/events';
+
+export const BookSearchStore = signalStore(
+  // ... other features
+  withEventHandlers(
+    (
+      store,
+      events = inject(Events),
+      booksService = inject(BooksService)
+    ) => ({
+      loadBooksByQuery$: events
+        .on(bookSearchEvents.queryChanged)
+        .pipe(
+          switchMap(({ payload: query }) =>
+            booksService.getByQuery(query).pipe(
+              mapResponse({
+                // 👇 Dispatch `loadedSuccess` to the current scope.
+                next: (books) => booksApiEvents.loadedSuccess(books),
+                // 👇 Dispatch `loadedFailure` to the global scope.
+                error: (error: { message: string }) => [
+                  booksApiEvents.loadedFailure(error.message),
+                  toScope('global'),
+                ],
+              })
+            )
+          )
+        ),
+      loadBookById$: events.on(bookSearchEvents.bookSelected).pipe(
+        exhaustMap(({ payload: bookId }) =>
+          booksService.getById(bookId).pipe(
+            mapResponse({
+              next: (book) => booksApiEvents.loadedByIdSuccess(book),
+              error: (error: { message: string }) =>
+                booksApiEvents.loadedByIdFailure(error.message),
+            }),
+            // 👇 Dispatch all returned events to the parent scope.
+            mapToScope('parent')
+          )
+        )
+      ),
+    })
+  )
+);
 ```
 
 </ngrx-code-example>

@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/signals",
-  "version": "20.1.0",
+  "version": "21.0.0-beta.0",
   "description": "Reactive Store and Set of Utilities for Angular Signals",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/core": "^20.0.0",
+    "@angular/core": "^21.0.0",
     "rxjs": "^6.5.3 || ^7.4.0"
   },
   "peerDependenciesMeta": {

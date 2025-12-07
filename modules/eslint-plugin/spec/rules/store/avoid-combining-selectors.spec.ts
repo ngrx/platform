@@ -15,43 +15,43 @@ type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
 const validConstructor: () => (string | ValidTestCase<Options>)[] = () => [
   `
   import { Store } from '@ngrx/store'
-  
+
   class Ok {
     readonly test$ = somethingOutside();
   }`,
   `
   import { Store } from '@ngrx/store'
-  
+
   class Ok1 {
     readonly vm$: Observable<unknown>
-  
+
     constructor(store: Store) {
       this.vm$ = store.select(selectItems)
     }
   }`,
   `
   import { Store, select } from '@ngrx/store'
-  
+
   class Ok2 {
     vm$ = this.store.pipe(select(selectItems))
-  
+
     constructor(private store: Store) {}
   }`,
   `
   import { Store } from '@ngrx/store'
-  
+
   class Ok3 {
     vm$ = combineLatest(this.store$.select(selectItems), this.somethingElse())
-  
+
     constructor(private store$: Store) {}
   }`,
   `
   import { Store } from '@ngrx/store'
-  
+
   @Pipe()
   class Ok4 {
     vm$ = combineLatest(this.somethingElse(), this.store.select(selectItems))
-  
+
     constructor(private readonly store: Store) {}
   }`,
 ];
@@ -359,7 +359,11 @@ class NotOk11 {
   ),
 ];
 
-ruleTester().run(path.parse(__filename).name, rule, {
-  valid: [...validConstructor(), ...validInject()],
-  invalid: [...invalidConstructor(), ...invalidInject()],
-});
+ruleTester(rule.meta.docs?.requiresTypeChecking).run(
+  path.parse(__filename).name,
+  rule,
+  {
+    valid: [...validConstructor(), ...validInject()],
+    invalid: [...invalidConstructor(), ...invalidInject()],
+  }
+);

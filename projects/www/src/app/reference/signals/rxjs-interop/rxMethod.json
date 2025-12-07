@@ -2,7 +2,7 @@
   "name": "RxMethod",
   "canonicalReference": "@ngrx/signals/rxjs-interop!RxMethod:type",
   "kind": "TypeAlias",
-  "fileUrlPath": "../../dist/modules/signals/rxjs-interop/src/rx-method.d.ts",
+  "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-rxjs-interop.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,20 +12,11 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export type RxMethod<Input> = "
+          "text": "type RxMethod<Input> = "
         },
         {
           "kind": "Content",
-          "text": "((input: Input | "
-        },
-        {
-          "kind": "Reference",
-          "text": "Signal",
-          "canonicalReference": "@angular/core!Signal:type"
-        },
-        {
-          "kind": "Content",
-          "text": "<Input> | "
+          "text": "((input: Input | (() => Input) | "
         },
         {
           "kind": "Reference",
@@ -64,7 +55,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/rxjs-interop/src/rx-method.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-rxjs-interop.d.ts",
       "releaseTag": "Public",
       "name": "RxMethod",
       "typeParameters": [
@@ -82,7 +73,7 @@
       ],
       "typeTokenRange": {
         "startIndex": 1,
-        "endIndex": 11
+        "endIndex": 9
       },
       "docs": {
         "modifiers": {

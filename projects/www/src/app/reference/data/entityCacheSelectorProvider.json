@@ -2,7 +2,7 @@
   "name": "entityCacheSelectorProvider",
   "canonicalReference": "@ngrx/data!entityCacheSelectorProvider:var",
   "kind": "Variable",
-  "fileUrlPath": "../../dist/modules/data/src/selectors/entity-cache-selector.d.ts",
+  "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -20,7 +20,7 @@
           "canonicalReference": "@angular/core!FactoryProvider:interface"
         }
       ],
-      "fileUrlPath": "../../dist/modules/data/src/selectors/entity-cache-selector.d.ts",
+      "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
       "isReadonly": true,
       "releaseTag": "Public",
       "name": "entityCacheSelectorProvider",

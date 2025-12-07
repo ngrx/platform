@@ -2,7 +2,7 @@
   "name": "addEntities",
   "canonicalReference": "@ngrx/signals/entities!addEntities:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/add-entities.d.ts",
+  "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function addEntities<Entity extends "
+          "text": "declare function addEntities<Entity extends "
         },
         {
           "kind": "Content",
@@ -62,7 +62,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/add-entities.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 7,
         "endIndex": 11
@@ -118,7 +118,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function addEntities<Entity, Collection extends "
+          "text": "declare function addEntities<Entity, Collection extends "
         },
         {
           "kind": "Content",
@@ -185,7 +185,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/add-entities.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 11,
         "endIndex": 15
@@ -260,7 +260,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function addEntities<Entity extends "
+          "text": "declare function addEntities<Entity extends "
         },
         {
           "kind": "Content",
@@ -326,7 +326,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/add-entities.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 11,
         "endIndex": 15
@@ -401,7 +401,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function addEntities<Entity>(entities: "
+          "text": "declare function addEntities<Entity>(entities: "
         },
         {
           "kind": "Content",
@@ -460,7 +460,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/add-entities.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 9,
         "endIndex": 13

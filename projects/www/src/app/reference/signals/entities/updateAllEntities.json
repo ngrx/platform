@@ -2,7 +2,7 @@
   "name": "updateAllEntities",
   "canonicalReference": "@ngrx/signals/entities!updateAllEntities:function",
   "kind": "Function",
-  "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/update-all-entities.d.ts",
+  "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,7 +12,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function updateAllEntities<Collection extends "
+          "text": "declare function updateAllEntities<Collection extends "
         },
         {
           "kind": "Content",
@@ -55,7 +55,7 @@
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         {
           "kind": "Content",
@@ -114,7 +114,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/update-all-entities.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 21,
         "endIndex": 23
@@ -200,7 +200,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function updateAllEntities<Collection extends "
+          "text": "declare function updateAllEntities<Collection extends "
         },
         {
           "kind": "Content",
@@ -252,7 +252,7 @@
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         {
           "kind": "Content",
@@ -293,7 +293,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/update-all-entities.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 19,
         "endIndex": 21
@@ -379,12 +379,12 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function updateAllEntities<Entity>(changes: "
+          "text": "declare function updateAllEntities<Entity>(changes: "
         },
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         {
           "kind": "Content",
@@ -452,7 +452,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/update-all-entities.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 12,
         "endIndex": 16
@@ -516,7 +516,7 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export declare function updateAllEntities<Entity extends "
+          "text": "declare function updateAllEntities<Entity extends "
         },
         {
           "kind": "Content",
@@ -538,7 +538,7 @@
         {
           "kind": "Reference",
           "text": "EntityChanges",
-          "canonicalReference": "@ngrx/signals/entities!~EntityChanges:type"
+          "canonicalReference": "@ngrx/signals/entities!EntityChanges:type"
         },
         {
           "kind": "Content",
@@ -580,7 +580,7 @@
           "text": ";"
         }
       ],
-      "fileUrlPath": "../../dist/modules/signals/entities/src/updaters/update-all-entities.d.ts",
+      "fileUrlPath": "../../dist/modules/signals/types/ngrx-signals-entities.d.ts",
       "returnTypeTokenRange": {
         "startIndex": 10,
         "endIndex": 14

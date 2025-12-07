@@ -2,7 +2,7 @@
   "name": "RequestData",
   "canonicalReference": "@ngrx/data!RequestData:interface",
   "kind": "Interface",
-  "fileUrlPath": "../../dist/modules/data/src/dataservices/interfaces.d.ts",
+  "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
   "isDeprecated": false,
   "members": [
     {
@@ -12,10 +12,10 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "export interface RequestData "
+          "text": "interface RequestData "
         }
       ],
-      "fileUrlPath": "../../dist/modules/data/src/dataservices/interfaces.d.ts",
+      "fileUrlPath": "../../dist/modules/data/types/ngrx-data.d.ts",
       "releaseTag": "Public",
       "name": "RequestData",
       "preserveMemberOrder": false,
