@@ -14,11 +14,13 @@ describe('createEffect()', () => {
   );
 
   describe('dispatch: true', () => {
-    it('should enforce an Action return value', () => {
+    it('accepts Action return value', () => {
       expectSnippet(`
         const effect = createEffect(() => of({ type: 'a' }));
       `).toSucceed();
+    });
 
+    it('rejects non-Action return value', () => {
       expectSnippet(`
         const effect = createEffect(() => of({ foo: 'a' }));
       `).toFail(
@@ -26,14 +28,14 @@ describe('createEffect()', () => {
       );
     });
 
-    it('should help with action creator that is not called', () => {
-      // Action creator is called with parentheses.
+    it('accepts called action creator', () => {
       expectSnippet(`
       const action = createAction('action without props');
       const effect = createEffect(() => of(action()));
       `).toSucceed();
+    });
 
-      // Action creator is not called (no parentheses).
+    it('rejects uncalled action creator', () => {
       expectSnippet(`
       const action = createAction('action without props');
       const effect = createEffect(() => of(action));
@@ -42,11 +44,13 @@ describe('createEffect()', () => {
       );
     });
 
-    it('should enforce an Action return value when dispatch is provided', () => {
+    it('accepts Action return value when dispatch is provided', () => {
       expectSnippet(`
         const effect = createEffect(() => of({ type: 'a' }), { dispatch: true });
       `).toSucceed();
+    });
 
+    it('rejects non-Action return value when dispatch is provided', () => {
       expectSnippet(`
         const effect = createEffect(() => of({ foo: 'a' }), { dispatch: true });
       `).toFail(
@@ -54,7 +58,7 @@ describe('createEffect()', () => {
       );
     });
 
-    it('should create non-functional effect when functional is set to false', () => {
+    it('creates non-functional effect when functional is false', () => {
       const snippet = expectSnippet(`
         const effect1 = createEffect(
           () => of({ type: 'a' }),
@@ -80,11 +84,13 @@ describe('createEffect()', () => {
   });
 
   describe('dispatch: false', () => {
-    it('should enforce an Observable return value', () => {
+    it('accepts Observable return value', () => {
       expectSnippet(`
         const effect = createEffect(() => of({ foo: 'a' }), { dispatch: false });
       `).toSucceed();
+    });
 
+    it('rejects non-Observable return value', () => {
       expectSnippet(`
         const effect = createEffect(() => ({ foo: 'a' }), { dispatch: false });
       `).toFail(
@@ -92,15 +98,14 @@ describe('createEffect()', () => {
       );
     });
 
-    it('should allow action creator even if it is not called', () => {
-      // Action creator is not called (no parentheses), but we have no-dispatch.
+    it('allows uncalled action creator', () => {
       expectSnippet(`
       const action = createAction('action without props');
       const effect = createEffect(() => of(action), { dispatch: false });
       `).toSucceed();
     });
 
-    it('should create non-functional effect when functional is set to false', () => {
+    it('creates non-functional effect when functional is false', () => {
       expectSnippet(`
         const effect = createEffect(
           () => of('a'),
@@ -111,7 +116,7 @@ describe('createEffect()', () => {
   });
 
   describe('functional: true', () => {
-    it('should create dispatching effect without args', () => {
+    it('creates dispatching effect without args', () => {
       expectSnippet(`
         const effect = createEffect(
           () => of({ type: 'a' }),
@@ -123,7 +128,7 @@ describe('createEffect()', () => {
       );
     });
 
-    it('should create dispatching effect with args', () => {
+    it('creates dispatching effect with args', () => {
       expectSnippet(`
         const effect = createEffect(
           (type = 'a', x = 1, y = 2) => of({ type, x, y }),
@@ -135,7 +140,7 @@ describe('createEffect()', () => {
       );
     });
 
-    it('should create dispatching effect when dispatch is set to true', () => {
+    it('creates dispatching effect when dispatch is true', () => {
       expectSnippet(`
         const effect = createEffect(
           ({ type = 'a' } = {}) => of({ type }),
@@ -147,7 +152,7 @@ describe('createEffect()', () => {
       );
     });
 
-    it('should create non-dispatching effect that returns action', () => {
+    it('creates non-dispatching effect that returns action', () => {
       expectSnippet(`
         const effect = createEffect(
           (type = 'a') => of({ type }),
@@ -159,7 +164,7 @@ describe('createEffect()', () => {
       );
     });
 
-    it('should create non-dispatching effect that returns any observable', () => {
+    it('creates non-dispatching effect that returns any observable', () => {
       expectSnippet(`
         const effect = createEffect(
           () => of('ngrx'),
@@ -168,7 +173,7 @@ describe('createEffect()', () => {
       `).toInfer('effect', 'FunctionalEffect<() => Observable<string>>');
     });
 
-    it('should create non-dispatching effect that returns action creator', () => {
+    it('creates non-dispatching effect that returns action creator', () => {
       expectSnippet(`
         const effect = createEffect(
           () => of(createAction('a')),
@@ -180,7 +185,7 @@ describe('createEffect()', () => {
       );
     });
 
-    it('should be possible to invoke dispatching effect without args as function', () => {
+    it('invokes dispatching effect without args as function', () => {
       expectSnippet(`
         const effect = createEffect(
           () => of({ type: 'a' }),
@@ -192,7 +197,7 @@ describe('createEffect()', () => {
       `).toInfer('effectArgs', '[]');
     });
 
-    it('should be possible to invoke dispatching effect with args as function', () => {
+    it('invokes dispatching effect with args as function', () => {
       expectSnippet(`
         const effect = createEffect(
           (type = 'a', payload = 'b') => of({ type, payload }),
@@ -206,7 +211,7 @@ describe('createEffect()', () => {
       `).toInfer('effectArgs', '[type?: string, payload?: string]');
     });
 
-    it('should be possible to invoke non-dispatching effect without args as function', () => {
+    it('invokes non-dispatching effect without args as function', () => {
       expectSnippet(`
         const effect = createEffect(
           () => of('a'),
@@ -218,7 +223,7 @@ describe('createEffect()', () => {
       `).toInfer('effectArgs', '[]');
     });
 
-    it('should be possible to invoke non-dispatching effect with args as function', () => {
+    it('invokes non-dispatching effect with args as function', () => {
       expectSnippet(`
         const effect = createEffect(
           ({ a = 1, b = 2 } = {}) => of([a, b]),
@@ -234,7 +239,7 @@ describe('createEffect()', () => {
       `).toInfer('effectArgs', '[{ a?: number; b?: number; }?]');
     });
 
-    it('should fail when dispatching effect arguments do not have default values', () => {
+    it('fails when dispatching effect arguments do not have default values', () => {
       expectSnippet(`
         const effect = createEffect(
           (type: string) => of({ type }),
@@ -243,7 +248,7 @@ describe('createEffect()', () => {
       `).toFail();
     });
 
-    it('should fail when non-dispatching effect arguments do not have default values', () => {
+    it('fails when non-dispatching effect arguments do not have default values', () => {
       expectSnippet(`
         const effect = createEffect(
           (x: number, y: number) => of([x, y]),
@@ -252,7 +257,7 @@ describe('createEffect()', () => {
       `).toFail();
     });
 
-    it('should fail when additional properties are added to the effect config', () => {
+    it('fails when additional properties are added to effect config', () => {
       expectSnippet(`
         const effect = createEffect(
           () => of({ type: 'a' }),
@@ -261,21 +266,25 @@ describe('createEffect()', () => {
       `).toFail();
     });
 
-    it('should fail when Observable<Action> is not returned as dispatching effect result', () => {
+    it('fails when Observable<Action> is not returned with type as number', () => {
       expectSnippet(`
         const effect = createEffect(
           () => of({ type: 123 }),
           { functional: true }
         );
       `).toFail();
+    });
 
+    it('fails when Observable<Action> is not returned with number value', () => {
       expectSnippet(`
         const effect = createEffect(
           () => of(123),
           { functional: true, dispatch: true }
         );
       `).toFail();
+    });
 
+    it('fails when non-Observable is returned', () => {
       expectSnippet(`
         const effect = createEffect(
           () => 123,
@@ -284,7 +293,7 @@ describe('createEffect()', () => {
       `).toFail();
     });
 
-    it('should fail when action creator is returned as dispatching effect result', () => {
+    it('fails when action creator is returned without dispatch config', () => {
       expectSnippet(`
         const effect = createEffect(
           () => of(createAction('a')),
@@ -293,7 +302,9 @@ describe('createEffect()', () => {
       `).toFail(
         /ActionCreator cannot be dispatched. Did you forget to call the action creator function/
       );
+    });
 
+    it('fails when action creator is returned with dispatch true', () => {
       expectSnippet(`
         const effect = createEffect(
           () => of(createAction('a')),
