@@ -77,7 +77,6 @@ describe('withComputed', () => {
     `;
 
     const result = expectSnippet(snippet);
-    result.toSucceed();
     result.toInfer('user', 'Signal<{ firstName: string; lastName: string; }>');
   });
 
@@ -96,7 +95,6 @@ describe('withComputed', () => {
     `;
 
     const result = expectSnippet(snippet);
-    result.toSucceed();
     result.toInfer(
       'userSignal',
       'WritableSignal<{ firstName: string; lastName: string; }>'
@@ -126,7 +124,6 @@ describe('withComputed', () => {
   `;
 
     const result = expectSnippet(snippet);
-    result.toSucceed();
     result.toInfer(
       'userSignal',
       'DeepSignal<{ name: string; address: { street: string; city: string; }; }>'

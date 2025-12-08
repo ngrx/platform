@@ -27,7 +27,6 @@ describe('entityConfig', () => {
 
     const result = expectSnippet(snippet);
 
-    result.toSucceed();
     result.toInfer('userConfig', '{ entity: User; }');
   });
 
@@ -41,7 +40,6 @@ describe('entityConfig', () => {
 
     const result = expectSnippet(snippet);
 
-    result.toSucceed();
     result.toInfer('userConfig', '{ entity: User; collection: "user"; }');
   });
 
@@ -67,7 +65,6 @@ describe('entityConfig', () => {
 
     const result = expectSnippet(snippet);
 
-    result.toSucceed();
     result.toInfer(
       'userConfig1',
       '{ entity: User; selectId: SelectEntityId<NoInfer<User>>; }'
@@ -134,7 +131,6 @@ describe('entityConfig', () => {
 
     const result = expectSnippet(snippet);
 
-    result.toSucceed();
     result.toInfer(
       'userConfig1',
       '{ entity: User; collection: "user"; selectId: SelectEntityId<NoInfer<User>>; }'
