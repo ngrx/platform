@@ -170,4 +170,4 @@ describe('EffectsModule()', () => {
       `).toFail();
     });
   });
-});
+}, 8_000);

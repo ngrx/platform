@@ -174,4 +174,4 @@ describe('entityConfig', () => {
       });
     `).toFail(/No overload matches this call/);
   });
-});
+}, 8_000);

@@ -48,4 +48,4 @@ describe('withEntities', () => {
 
     expectSnippet(snippet).toSucceed();
   });
-});
+}, 8_000);

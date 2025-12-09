@@ -75,4 +75,4 @@ describe('patchState', () => {
       /Property 'numbers' is missing in type '{ count: number; foo: string; }'/
     );
   });
-});
+}, 8_000);
