@@ -1,8 +1,6 @@
 import { Component, inject, signal, ElementRef } from '@angular/core';
 import { VersionInfoService } from '../services/versionInfo.service';
 
-import { toSignal } from '@angular/core/rxjs-interop';
-
 @Component({
   selector: 'ngrx-version-navigation',
   template: `
