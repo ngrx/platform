@@ -34,7 +34,8 @@ export default createRule<Options, MessageIds>({
     },
     schema: [],
     messages: {
-      [messageId]: `signalState should accept a record or dictionary as an input argument.`,
+      [messageId]:
+        'The property type `{{ property }}` is forbidden as the initial state argument, wrap the property in a record or dictionary.',
     },
   },
   defaultOptions: [],
@@ -48,6 +49,7 @@ export default createRule<Options, MessageIds>({
           context.report({
             node: argument,
             messageId,
+            data: { property: 'Array' },
           });
         } else if (argument) {
           const services = ESLintUtils.getParserServices(context);
@@ -58,6 +60,7 @@ export default createRule<Options, MessageIds>({
             context.report({
               node: argument,
               messageId,
+              data: { property: 'Array' },
             });
             return;
           }
@@ -67,6 +70,7 @@ export default createRule<Options, MessageIds>({
             context.report({
               node: argument,
               messageId,
+              data: { property: symbol.getName() },
             });
             return;
           }
@@ -76,15 +80,20 @@ export default createRule<Options, MessageIds>({
             context.report({
               node: argument,
               messageId,
+              data: { property: 'Function' },
             });
             return;
           }
 
           const typeString = typeChecker.typeToString(type);
-          if (NON_RECORD_TYPES.some((t) => typeString.startsWith(`${t}<`))) {
+          const matchedType = NON_RECORD_TYPES.find((t) =>
+            typeString.startsWith(`${t}<`)
+          );
+          if (matchedType) {
             context.report({
               node: argument,
               messageId,
+              data: { property: matchedType },
             });
           }
         }

@@ -27,74 +27,74 @@ const valid: () => (string | ValidTestCase<Options>)[] = () => [
 const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(`
 const store = withState([1, 2, 3]);
-                        ~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~ [${messageId} { "property": "Array" }]`),
   fromFixture(`
 class Fixture {
   store = withState([{ foo: 'bar' }]);
-                    ~~~~~~~~~~~~~~~~ [${messageId}]
+                    ~~~~~~~~~~~~~~~~ [${messageId} { "property": "Array" }]
 }`),
   fromFixture(`
 const store = withState<string[]>([]);
-                                  ~~ [${messageId}]`),
+                                  ~~ [${messageId} { "property": "Array" }]`),
   fromFixture(`
 const initialState = [];
 const store = withState(initialState);
-                        ~~~~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~~~~ [${messageId} { "property": "Array" }]`),
   fromFixture(`
 const store = withState(new Set());
-                        ~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~ [${messageId} { "property": "Set" }]`),
   fromFixture(`
 const initialState = new Set<string>();
 const store = withState(initialState);
-                        ~~~~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~~~~ [${messageId} { "property": "Set" }]`),
   fromFixture(`
 const store = withState(new Map());
-                        ~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~ [${messageId} { "property": "Map" }]`),
   fromFixture(`
 const initialState = new Map<string, number>();
 const store = withState(initialState);
-                        ~~~~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~~~~ [${messageId} { "property": "Map" }]`),
   fromFixture(`
 const store = withState(new WeakSet());
-                        ~~~~~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~~~~~ [${messageId} { "property": "WeakSet" }]`),
   fromFixture(`
 const store = withState(new WeakMap());
-                        ~~~~~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~~~~~ [${messageId} { "property": "WeakMap" }]`),
   fromFixture(`
 const store = withState(new Date());
-                        ~~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~~ [${messageId} { "property": "Date" }]`),
   fromFixture(`
 const initialState = new Date();
 const store = withState(initialState);
-                        ~~~~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~~~~ [${messageId} { "property": "Date" }]`),
   fromFixture(`
 const store = withState(new Error());
-                        ~~~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~~~ [${messageId} { "property": "Error" }]`),
   fromFixture(`
 const store = withState(new RegExp('test'));
-                        ~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~~~~~~~~~~ [${messageId} { "property": "RegExp" }]`),
   fromFixture(`
 const store = withState(/test/);
-                        ~~~~~~ [${messageId}]`),
+                        ~~~~~~ [${messageId} { "property": "RegExp" }]`),
   fromFixture(`
 const store = withState(new ArrayBuffer(8));
-                        ~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~~~~~~~~~~ [${messageId} { "property": "ArrayBuffer" }]`),
   fromFixture(`
 const buffer = new ArrayBuffer(8);
 const store = withState(new DataView(buffer));
-                        ~~~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~~~~~~~~~~~~ [${messageId} { "property": "DataView" }]`),
   fromFixture(`
 const store = withState(new Promise(() => {}));
-                        ~~~~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~~~~~~~~~~~~~ [${messageId} { "property": "Promise" }]`),
   fromFixture(`
 const store = withState(Promise.resolve({}));
-                        ~~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~~~~~~~~~~~ [${messageId} { "property": "Promise" }]`),
   fromFixture(`
 const store = withState(function() {});
-                        ~~~~~~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~~~~~~ [${messageId} { "property": "Function" }]`),
   fromFixture(`
 const store = withState(() => {});
-                        ~~~~~~~~ [${messageId}]`),
+                        ~~~~~~~~ [${messageId} { "property": "Function" }]`),
 ];
 
 ruleTester(rule.meta.docs?.requiresTypeChecking).run(

@@ -23,74 +23,74 @@ const valid: () => (string | ValidTestCase<Options>)[] = () => [
 const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(`
 const state = signalState([1, 2, 3]);
-                          ~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~ [${messageId} { "property": "Array" }]`),
   fromFixture(`
 class Fixture {
   state = signalState([{ foo: 'bar' }]);
-                      ~~~~~~~~~~~~~~~~ [${messageId}]
+                      ~~~~~~~~~~~~~~~~ [${messageId} { "property": "Array" }]
 }`),
   fromFixture(`
 const state = signalState<string[]>([]);
-                                    ~~ [${messageId}]`),
+                                    ~~ [${messageId} { "property": "Array" }]`),
   fromFixture(`
 const initialState: string[] = [];
 const state = signalState(initialState);
-                          ~~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~~ [${messageId} { "property": "Array" }]`),
   fromFixture(`
 const state = signalState(new Set());
-                          ~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~ [${messageId} { "property": "Set" }]`),
   fromFixture(`
 const initialState = new Set<string>();
 const state = signalState(initialState);
-                          ~~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~~ [${messageId} { "property": "Set" }]`),
   fromFixture(`
 const state = signalState(new Map());
-                          ~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~ [${messageId} { "property": "Map" }]`),
   fromFixture(`
 const initialState = new Map<string, number>();
 const state = signalState(initialState);
-                          ~~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~~ [${messageId} { "property": "Map" }]`),
   fromFixture(`
 const state = signalState(new WeakSet());
-                          ~~~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~~~ [${messageId} { "property": "WeakSet" }]`),
   fromFixture(`
 const state = signalState(new WeakMap());
-                          ~~~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~~~ [${messageId} { "property": "WeakMap" }]`),
   fromFixture(`
 const state = signalState(new Date());
-                          ~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~ [${messageId} { "property": "Date" }]`),
   fromFixture(`
 const initialState = new Date();
 const state = signalState(initialState);
-                          ~~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~~ [${messageId} { "property": "Date" }]`),
   fromFixture(`
 const state = signalState(new Error());
-                          ~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~ [${messageId} { "property": "Error" }]`),
   fromFixture(`
 const state = signalState(new RegExp('test'));
-                          ~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~~~~~~~~ [${messageId} { "property": "RegExp" }]`),
   fromFixture(`
 const state = signalState(/test/);
-                          ~~~~~~ [${messageId}]`),
+                          ~~~~~~ [${messageId} { "property": "RegExp" }]`),
   fromFixture(`
 const state = signalState(new ArrayBuffer(8));
-                          ~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~~~~~~~~ [${messageId} { "property": "ArrayBuffer" }]`),
   fromFixture(`
 const buffer = new ArrayBuffer(8);
 const state = signalState(new DataView(buffer));
-                          ~~~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~~~~~~~~~~ [${messageId} { "property": "DataView" }]`),
   fromFixture(`
 const state = signalState(new Promise(() => {}));
-                          ~~~~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~~~~~~~~~~~ [${messageId} { "property": "Promise" }]`),
   fromFixture(`
 const state = signalState(Promise.resolve({}));
-                          ~~~~~~~~~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~~~~~~~~~ [${messageId} { "property": "Promise" }]`),
   fromFixture(`
 const state = signalState(function() {});
-                          ~~~~~~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~~~~~~ [${messageId} { "property": "Function" }]`),
   fromFixture(`
 const state = signalState(() => {});
-                          ~~~~~~~~ [${messageId}]`),
+                          ~~~~~~~~ [${messageId} { "property": "Function" }]`),
 ];
 
 ruleTester(rule.meta.docs?.requiresTypeChecking).run(
