@@ -1,26 +1,19 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
 import versionInfoData from '../data/versionInfo.json';
 
-export interface NavigationNode {
+interface PreviousVersion {
   url: string;
   title: string;
 }
 
-export interface VersionInfo {
+interface VersionInfo {
   currentVersion: string;
-  docVersions: NavigationNode[];
+  docVersions: PreviousVersion[];
 }
 
 @Injectable({ providedIn: 'root' })
 export class VersionInfoService {
-  private readonly versionInfo = versionInfoData as VersionInfo;
-
-  getVersions() {
-    return of(this.versionInfo.docVersions);
-  }
-
-  getCurrentVersion(): string {
-    return this.versionInfo.currentVersion;
-  }
+  readonly #versionInfo = versionInfoData as VersionInfo;
+  readonly currentVersion = this.#versionInfo.currentVersion;
+  readonly previousVersions = this.#versionInfo.docVersions;
 }

@@ -1,34 +1,25 @@
-import {
-  Component,
-  inject,
-  signal,
-  ElementRef,
-  HostListener,
-} from '@angular/core';
-import {
-  NavigationNode,
-  VersionInfoService,
-} from '../services/versionInfo.service';
+import { Component, inject, signal, ElementRef } from '@angular/core';
+import { VersionInfoService } from '../services/versionInfo.service';
 
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'ngrx-version-navigation',
   template: `
-    @if (versions() && versions().length > 0) {
+    @if (previousVersions && previousVersions.length > 0) {
     <div class="version-navigation">
       <button
-        (click)="toggleVisibility()"
+        (click)="toggleDropdown()"
         class="version-toggle-btn"
         type="button"
       >
         <span>v{{ currentVersion }}</span>
-        <span class="arrow-icon" [class.rotated]="isVisible()">▼</span>
+        <span class="arrow-icon" [class.rotated]="isDropdownVisible()">▼</span>
       </button>
 
-      <div class="version-list" [class.hidden]="!isVisible()">
+      <div class="version-list" [class.hidden]="!isDropdownVisible()">
         <ul>
-          @for (version of versions(); track version.title) {
+          @for (version of previousVersions; track version.title) {
           <li>
             <a [href]="version.url">
               {{ version.title }}
@@ -106,26 +97,24 @@ import { toSignal } from '@angular/core/rxjs-interop';
       }
     `,
   ],
+  host: {
+    '(document:click)': 'closeDropdownOnOutsideClick($event)',
+  },
 })
 export class VersionNavigationComponent {
-  private versionInfoService = inject(VersionInfoService);
-  private elementRef = inject(ElementRef);
+  readonly #versionInfoService = inject(VersionInfoService);
+  readonly #elementRef = inject(ElementRef);
+  readonly isDropdownVisible = signal(false);
+  readonly currentVersion = this.#versionInfoService.currentVersion;
+  readonly previousVersions = this.#versionInfoService.previousVersions;
 
-  public versions = toSignal(this.versionInfoService.getVersions(), {
-    initialValue: [] as NavigationNode[],
-  });
-
-  public currentVersion = this.versionInfoService.getCurrentVersion();
-  public isVisible = signal(false);
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: Event): void {
-    if (!this.elementRef.nativeElement.contains(event.target as Node)) {
-      this.isVisible.set(false);
+  closeDropdownOnOutsideClick(event: Event): void {
+    if (!this.#elementRef.nativeElement.contains(event.target as Node)) {
+      this.isDropdownVisible.set(false);
     }
   }
 
-  public toggleVisibility(): void {
-    this.isVisible.update((visible) => !visible);
+  toggleDropdown(): void {
+    this.isDropdownVisible.update((visible) => !visible);
   }
 }
