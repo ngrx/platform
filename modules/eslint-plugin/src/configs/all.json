@@ -14,7 +14,6 @@
     "@ngrx/prefer-concat-latest-from": "error",
     "@ngrx/enforce-type-call": "error",
     "@ngrx/prefer-protected-state": "error",
-    "@ngrx/signal-state-no-arrays-at-root-level": "error",
     "@ngrx/signal-store-feature-should-use-generic-type": "error",
     "@ngrx/avoid-combining-selectors": "error",
     "@ngrx/avoid-dispatching-multiple-actions-sequentially": "error",
