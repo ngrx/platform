@@ -62,7 +62,7 @@ describe('EffectSources', () => {
     effectSources = TestBed.inject(EffectSources);
     effectsErrorHandler = TestBed.inject(EFFECTS_ERROR_HANDLER);
 
-    vi.spyOn(mockErrorReporter, 'handleError');
+    vi.spyOn(mockErrorReporter, 'handleError').mockImplementation(() => void 0);
   });
 
   it('should have an "addEffects" method to push new source instances', () => {

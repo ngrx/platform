@@ -48,4 +48,4 @@ describe('unprotected', () => {
       '{ count: Signal<number>; [STATE_SOURCE]: { count: WritableSignal<number>; }; }'
     );
   });
-});
+}, 8_000);

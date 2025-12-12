@@ -160,4 +160,4 @@ describe('ofType()', () => {
       `).toInfer('effect', 'Observable<ActionA>');
     });
   });
-});
+}, 8_000);

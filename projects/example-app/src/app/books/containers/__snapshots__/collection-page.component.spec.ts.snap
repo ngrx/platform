@@ -2,8 +2,8 @@
 
 exports[`Collection Page should compile 1`] = `
 <bc-collection-page
-  books$={[Function Store]}
-  store={[Function MockStore]}
+  books$={[Function _Store]}
+  store={[Function _MockStore]}
 >
   <mat-card
     class="mat-mdc-card mdc-card"

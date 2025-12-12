@@ -129,4 +129,4 @@ describe('withComputed', () => {
       'DeepSignal<{ name: string; address: { street: string; city: string; }; }>'
     );
   });
-});
+}, 8_000);

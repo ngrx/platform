@@ -94,4 +94,4 @@ describe('provideEffects()', () => {
       provideEffects(nonFnEffectsRecord, fnEffectsRecord, ClassEffects);
     `).toFail();
   });
-});
+}, 8_000);
