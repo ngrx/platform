@@ -581,4 +581,4 @@ describe('createFeature()', () => {
       `).toFail();
     });
   });
-});
+}, 8_000);

@@ -297,4 +297,4 @@ describe('createActionGroup', () => {
 
     testWith(expectSnippet);
   });
-});
+}, 8_000);

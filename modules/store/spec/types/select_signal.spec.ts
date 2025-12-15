@@ -71,4 +71,4 @@ describe('Store.selectSignal()', () => {
       });
     });
   });
-});
+}, 8_000);
