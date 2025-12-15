@@ -280,8 +280,8 @@ describe('ngRx Store', () => {
     });
 
     it('should implement the observer interface forwarding actions and errors to the dispatcher', () => {
-      vi.spyOn(dispatcher, 'next');
-      vi.spyOn(dispatcher, 'error');
+      vi.spyOn(dispatcher, 'next').mockImplementationOnce(() => void 0);
+      vi.spyOn(dispatcher, 'error').mockImplementationOnce(() => void 0);
 
       store.next(<any>1);
       store.error(2);

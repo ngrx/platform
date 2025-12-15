@@ -2,9 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule, USER_RUNTIME_CHECKS } from '..';
 import * as metaReducers from '../src/meta-reducers';
 
-// mock to be able to spy on meta reducer methods
-vi.mock('../src/meta-reducers');
-
 describe('USER_RUNTIME_CHECKS Token', () => {
   it('should be possible to toggle runtime reducers via the Injection Token', () => {
     const serializationCheckMetaReducerSpy = vi.spyOn(
