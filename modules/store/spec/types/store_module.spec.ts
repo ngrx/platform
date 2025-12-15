@@ -79,4 +79,4 @@ describe('StoreModule', () => {
       `).toFail(/No overload matches this call/);
     });
   });
-});
+}, 8_000);

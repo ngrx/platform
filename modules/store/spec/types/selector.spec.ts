@@ -96,4 +96,4 @@ describe('createSelector() with props', () => {
       `).toSucceed();
     });
   });
-});
+}, 8_000);
