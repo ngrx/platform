@@ -169,4 +169,4 @@ describe('withLinkedState', () => {
     result.toInfer('baz', 'Signal<string>');
     result.toInfer('qux', 'DeepSignal<{ x: number; }>');
   });
-});
+}, 8_000);

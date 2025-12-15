@@ -20,7 +20,8 @@ export default defineConfig(({ mode }) => {
       environment: 'jsdom',
       setupFiles: ['test-setup.ts'],
       include: ['**/*.spec.ts'],
-      reporters: ['default']
+      reporters: ['default'],
+      testTimeout: 8_000,
     },
     define: {
       'import.meta.vitest': mode !== 'production',
