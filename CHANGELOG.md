@@ -1,3 +1,15 @@
+<a name="21.0.0-rc.0"></a>
+
+# [21.0.0-rc.0](https://github.com/ngrx/platform/compare/21.0.0-beta.0...21.0.0-rc.0) (2025-12-16)
+
+### Bug Fixes
+
+- **eslint-plugin:** add type-checked configs to legacy config ([#5038](https://github.com/ngrx/platform/issues/5038)) ([faf6491](https://github.com/ngrx/platform/commit/faf6491))
+
+### Features
+
+- **eslint-plugin:** extend NonRecord type checks in state rules ([#5045](https://github.com/ngrx/platform/issues/5045)) ([bab4d12](https://github.com/ngrx/platform/commit/bab4d12)), closes [#4615](https://github.com/ngrx/platform/issues/4615)
+
 <a name="21.0.0-beta.0"></a>
 
 # [21.0.0-beta.0](https://github.com/ngrx/platform/compare/20.0.1...21.0.0-beta.0) (2025-12-04)
@@ -27,18 +39,20 @@
 - **signals:** The withEffects feature from @ngrx/signals/events plugin is renamed to withEventHandlers.
 
 BEFORE:
+
 ```ts
 import { withEffects } from '@ngrx/signals/events';
 
 export const CounterStore = signalStore(
   withState({ count: 0 }),
   withEffects((store, events = inject(Events)) => ({
-    logCount$: events.on(increment).pipe(
-      tap(() => console.log(store.count()))
-    ),
+    logCount$: events
+      .on(increment)
+      .pipe(tap(() => console.log(store.count()))),
   }))
 );
 ```
+
 AFTER:
 
 ```ts
@@ -47,9 +61,9 @@ import { withEventHandlers } from '@ngrx/signals/events';
 export const CounterStore = signalStore(
   withState({ count: 0 }),
   withEventHandlers((store, events = inject(Events)) => ({
-    logCount$: events.on(increment).pipe(
-      tap(() => console.log(store.count()))
-    ),
+    logCount$: events
+      .on(increment)
+      .pipe(tap(() => console.log(store.count()))),
   }))
 );
 ```
