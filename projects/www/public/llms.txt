@@ -7,7 +7,7 @@
 [co_present Workshops](https://ngrx-site-v19.netlify.app/workshops): This section provides information about workshops that focus on NgRx, offering hands-on experience and practical knowledge for developers looking to enhance their skills in state management with NgRx.
 
 ## API Reference
-[description API Reference](https://ngrx-site-v19.netlify.app/api): The API Reference documentation details the various components and functionalities of NgRx, including the Store, Effects, and other essential features. It serves as a comprehensive guide for developers to understand how to implement and utilize NgRx in their applications.
+[description API Reference](https://ngrx.io/api): The API Reference documentation details the various components and functionalities of NgRx, including the Store, Effects, and other essential features. It serves as a comprehensive guide for developers to understand how to implement and utilize NgRx in their applications.
 
 ## Support
 [help Support](https://ngrx-site-v19.netlify.app/support): This section offers support resources for NgRx users, including FAQs, troubleshooting tips, and links to community forums where developers can seek help and share knowledge.
