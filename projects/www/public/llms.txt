@@ -3,8 +3,6 @@
 ## Overview
 [NgRx](https://ngrx.io/): NgRx is a set of reactive libraries for Angular that helps manage state and side effects in applications. It leverages the power of RxJS to provide a robust framework for building scalable applications.
 
-## Workshops
-[co_present Workshops](https://ngrx-site-v19.netlify.app/workshops): This section provides information about workshops that focus on NgRx, offering hands-on experience and practical knowledge for developers looking to enhance their skills in state management with NgRx.
 
 ## API Reference
 [description API Reference](https://ngrx.io/api): The API Reference documentation details the various components and functionalities of NgRx, including the Store, Effects, and other essential features. It serves as a comprehensive guide for developers to understand how to implement and utilize NgRx in their applications.
