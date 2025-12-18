@@ -13,7 +13,7 @@
 
 ## Core Concepts
 ### Store
-[Store](https://ngrx-site-v19.netlify.app/guide/store): The Store is a central feature of NgRx that holds the application state. It provides a single source of truth and allows for state management through actions and reducers.
+[Store](https://ngrx.io/guide/store): The Store is a central feature of NgRx that holds the application state. It provides a single source of truth and allows for state management through actions and reducers.
 
 ### Effects
 [Effects](https://ngrx-site-v19.netlify.app/guide/effects): Effects are used in NgRx to handle side effects, such as API calls or other asynchronous operations. They allow developers to manage complex interactions outside of the Store.
