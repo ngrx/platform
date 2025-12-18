@@ -35,7 +35,7 @@ function updateVersions(version: string) {
   const publishNext = createBuilder([
     ['Update package.json', createPackageJsonBuilder(version)],
     ['Update ng-add schematic', createUpdateAddSchematicBuilder(version)],
-    ['Update docs version picker', createArchivePreviousDocsBuilder(version)],
+    // ['Update docs version picker', createArchivePreviousDocsBuilder(version)],
     ['Create migration docs', createMigrationDocs(version)],
     ['Update GitHub MIGRATION.MD', createMigrationMD(version)],
   ]);
