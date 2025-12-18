@@ -16,7 +16,7 @@
 [Store](https://ngrx.io/guide/store): The Store is a central feature of NgRx that holds the application state. It provides a single source of truth and allows for state management through actions and reducers.
 
 ### Effects
-[Effects](https://ngrx-site-v19.netlify.app/guide/effects): Effects are used in NgRx to handle side effects, such as API calls or other asynchronous operations. They allow developers to manage complex interactions outside of the Store.
+[Effects](https://ngrx.io/guide/effects): Effects are used in NgRx to handle side effects, such as API calls or other asynchronous operations. They allow developers to manage complex interactions outside of the Store.
 
 ### Signals
 [Signals](https://ngrx-site-v19.netlify.app/guide/signals): Signals in NgRx provide a way to react to changes in state or actions, enabling developers to create more dynamic and responsive applications.
