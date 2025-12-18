@@ -1,3 +1,7 @@
+<a name="21.0.0"></a>
+
+# [21.0.0](https://github.com/ngrx/platform/compare/21.0.0-rc.0...21.0.0) (2025-12-18)
+
 <a name="21.0.0-rc.0"></a>
 
 # [21.0.0-rc.0](https://github.com/ngrx/platform/compare/21.0.0-beta.0...21.0.0-rc.0) (2025-12-16)
