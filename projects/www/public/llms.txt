@@ -9,8 +9,6 @@
 ## API Reference
 [description API Reference](https://ngrx.io/api): The API Reference documentation details the various components and functionalities of NgRx, including the Store, Effects, and other essential features. It serves as a comprehensive guide for developers to understand how to implement and utilize NgRx in their applications.
 
-## Support
-[help Support](https://ngrx-site-v19.netlify.app/support): This section offers support resources for NgRx users, including FAQs, troubleshooting tips, and links to community forums where developers can seek help and share knowledge.
 
 ## Code Repository
 [code GitHub](https://github.com/ngrx/platform): The GitHub repository for NgRx contains the source code, issue tracking, and contribution guidelines. Developers can access the latest updates, report bugs, and contribute to the NgRx project.
