@@ -19,7 +19,7 @@
 [Effects](https://ngrx.io/guide/effects): Effects are used in NgRx to handle side effects, such as API calls or other asynchronous operations. They allow developers to manage complex interactions outside of the Store.
 
 ### Signals
-[Signals](https://ngrx-site-v19.netlify.app/guide/signals): Signals in NgRx provide a way to react to changes in state or actions, enabling developers to create more dynamic and responsive applications.
+[Signals](https://ngrx.io/guide/signals): Signals in NgRx provide a way to react to changes in state or actions, enabling developers to create more dynamic and responsive applications.
 
 ### Operators
 [Operators](https://ngrx.io/guide/operators): NgRx utilizes various RxJS operators to manipulate streams of data, allowing for powerful and flexible data handling within the application. This section covers the most commonly used operators in NgRx.
