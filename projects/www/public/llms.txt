@@ -22,4 +22,4 @@
 [Signals](https://ngrx-site-v19.netlify.app/guide/signals): Signals in NgRx provide a way to react to changes in state or actions, enabling developers to create more dynamic and responsive applications.
 
 ### Operators
-[Operators](https://ngrx-site-v19.netlify.app/guide/operators): NgRx utilizes various RxJS operators to manipulate streams of data, allowing for powerful and flexible data handling within the application. This section covers the most commonly used operators in NgRx.
+[Operators](https://ngrx.io/guide/operators): NgRx utilizes various RxJS operators to manipulate streams of data, allowing for powerful and flexible data handling within the application. This section covers the most commonly used operators in NgRx.
