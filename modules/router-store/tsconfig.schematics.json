@@ -4,8 +4,9 @@
     "rootDir": ".",
     "stripInternal": true,
     "experimentalDecorators": true,
+    "module": "nodenext",
     "target": "es2022",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "downlevelIteration": true,
     "outDir": "../../dist/modules/router-store",
     "paths": {
