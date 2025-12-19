@@ -4,7 +4,8 @@
     "rootDir": ".",
     "stripInternal": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "downlevelIteration": true,
     "outDir": "../../dist/modules/schematics",
     "paths": {

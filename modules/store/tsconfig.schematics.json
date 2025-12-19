@@ -4,8 +4,8 @@
     "rootDir": ".",
     "stripInternal": true,
     "experimentalDecorators": true,
-    "module": "preserve",
-    "moduleResolution": "bundler",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "downlevelIteration": true,
     "outDir": "../../dist/modules/store",
     "paths": {
