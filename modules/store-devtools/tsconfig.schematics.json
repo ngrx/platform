@@ -4,9 +4,8 @@
     "rootDir": ".",
     "stripInternal": true,
     "experimentalDecorators": true,
-    "module": "nodenext",
     "target": "es2022",
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
     "downlevelIteration": true,
     "outDir": "../../dist/modules/store-devtools",
     "paths": {

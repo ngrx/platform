@@ -4,8 +4,7 @@
     "rootDir": ".",
     "stripInternal": true,
     "experimentalDecorators": true,
-    "module": "preserve",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "downlevelIteration": true,
     "outDir": "../../dist/modules/entity",
     "paths": {
