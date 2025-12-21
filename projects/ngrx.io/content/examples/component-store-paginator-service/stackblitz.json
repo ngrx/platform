@@ -1,4 +1,0 @@
-{
-  "description": "ComponentStore - PaginatorComponent with PaginatorStore Service",
-  "files": ["!**/*.d.ts", "!**/*.js", "!**/*.[0-9].*"]
-}
