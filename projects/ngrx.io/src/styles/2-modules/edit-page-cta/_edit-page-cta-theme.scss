@@ -1,8 +1,0 @@
-@use '../../constants';
-@use '@angular/material' as mat;
-
-@mixin theme($theme) {
-  .edit-page-cta {
-    color: constants.$purple;
-  }
-}

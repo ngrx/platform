@@ -72,7 +72,7 @@ jobs:
           git tag ${{ inputs.release_version }}
           git push https://x-access-token:${{ steps.generate_token.outputs.token }}@github.com/ngrx/platform.git --follow-tags $(${{ inputs.dry_run == true }} && echo '--dry-run' || echo '')
       - name: Build Packages
-        run: pnpm run build --exclude=docs-app,standalone-app,example-app,www --skip-nx-cache
+        run: pnpm run build --exclude=standalone-app,example-app,www --skip-nx-cache
       - name: Release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

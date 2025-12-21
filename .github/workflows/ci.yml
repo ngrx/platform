@@ -61,7 +61,7 @@ jobs:
           cache-dependency-path: '**/pnpm-lock.yaml'
       - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v4
-      - run: pnpm exec nx affected -t test --exclude=docs-app --skip-nx-cache --parallel=3
+      - run: pnpm exec nx affected -t test --skip-nx-cache --parallel=3
 
   e2e-affected:
     runs-on: ubuntu-latest
@@ -80,7 +80,7 @@ jobs:
       - run: pnpm install --frozen-lockfile --prefer-offline
       - run: pnpm exec cypress install
       - uses: nrwl/nx-set-shas@v4
-      - run: pnpm exec nx affected -t e2e --exclude=docs-app,www --parallel=1
+      - run: pnpm exec nx affected -t e2e --exclude=www --parallel=1
 
   build-affected:
     runs-on: ubuntu-latest
@@ -98,7 +98,7 @@ jobs:
           cache-dependency-path: '**/pnpm-lock.yaml'
       - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v4
-      - run: pnpm exec nx affected -t build --exclude=docs-app,www --skip-nx-cache --parallel=3
+      - run: pnpm exec nx affected -t build --exclude=www --skip-nx-cache --parallel=3
 
   schematics-core-check:
     runs-on: ubuntu-latest

@@ -22,7 +22,7 @@ Sponsorships aid in the continued development and maintenance of NgRx libraries,
 ### Gold Sponsors
 
 <a href="https://nx.dev" target="_blank">
-  <img src="https://github.com/ngrx/platform/blob/main/projects/ngrx.io/src/assets/images/sponsors/nx.svg" width="200px" height="200px" alt="NxDevTools logo">
+  <img src="https://github.com/ngrx/platform/blob/main/projects/www/public/images/sponsors/nx.svg" width="200px" height="200px" alt="NxDevTools logo">
 </a>
 
 Become a gold sponsor and get your logo on our README on GitHub and the front page of [ngrx.io](https://ngrx.io).
@@ -34,7 +34,7 @@ Become a silver sponsor and get your logo on our README on GitHub.
 ### Bronze Sponsors
 
 <a href="https://houseofangular.io" target="_blank">
-  <img src="https://github.com/ngrx/platform/blob/main/projects/ngrx.io/src/assets/images/sponsors/house-of-angular.png" width="50px" height="50px" alt="House of Angular" />
+  <img src="https://github.com/ngrx/platform/blob/main/projects/www/public/images/sponsors/house-of-angular.png" width="50px" height="50px" alt="House of Angular" />
 </a>
 
 Become a bronze sponsor and get your logo on our README on GitHub.

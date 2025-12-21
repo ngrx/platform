@@ -51,18 +51,6 @@ export async function publishToRepo(config: Config) {
   }
 }
 
-/**
- * Deploy docs build artifacts
- */
-export async function publishDocs() {
-  const SOURCE_DIR = `./dist/ngrx.io`;
-  const REPO_URL = 'git@github.com:ngrx/ngrx-io-builds.git';
-  const REPO_DIR = `./tmp/docs`;
-
-  console.log(`Preparing and deploying docs to ${REPO_URL}`);
-  await prepareAndPublish(SOURCE_DIR, REPO_URL, REPO_DIR);
-}
-
 export async function prepareAndPublish(
   sourceDir: string,
   repoUrl: string,
