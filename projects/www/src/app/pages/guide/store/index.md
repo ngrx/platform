@@ -39,149 +39,39 @@ The following tutorial shows you how to manage the state of a counter, and how t
 
 1.  Generate a new project using the <ngrx-docs-stackblitz name="ngrx-start"></ngrx-docs-stackblitz>.
 
-2.  Right click on the `app` folder in StackBlitz and create a new file named `counter.actions.ts` to describe the counter actions to increment, decrement, and reset its value.
+2.  Right click on the `src` folder in StackBlitz and create a new file named `counter.actions.ts` to describe the counter actions to increment, decrement, and reset its value.
 
-<ngrx-code-example header="src/app/counter.actions.ts" path="store/src/app/counter.actions.ts">
+<ngrx-code-example header="src/counter.actions.ts" path="store/src/counter.actions.ts">
 
 </ngrx-code-example>
 
 3.  Define a reducer function to handle changes in the counter value based on the provided actions.
 
-<ngrx-code-example header="src/app/counter.reducer.ts" path="store/src/app/counter.reducer.ts">
+<ngrx-code-example header="src/counter.reducer.ts" path="store/src/counter.reducer.ts">
 
 </ngrx-code-example>
 
-4.  Import the `StoreModule` from `@ngrx/store` and the `counter.reducer` file.
+4.  Add the `provideStore` function in the `providers` array of your `ApplicationConfig` (within `app.config.ts`) with an object containing the `count` and the `counterReducer` that manages the state of the counter. The `provideStore` method registers the global providers needed to access the `Store` throughout your application.
 
-<ngrx-code-example header="src/app/app.module.ts (imports)" path="store/src/app/app.module.ts" region="imports">
-
-</ngrx-code-example>
-
-5.  Add the `StoreModule.forRoot` function in the `imports` array of your `AppModule` with an object containing the `count` and the `counterReducer` that manages the state of the counter. The `StoreModule.forRoot()` method registers the global providers needed to access the `Store` throughout your application.
-
-<ngrx-code-example header="src/app/app.module.ts (StoreModule)" path="store/src/app/app.module.1.ts">
+<ngrx-code-example header="src/app.config.ts" path="store/src/app.config.ts">
 
 </ngrx-code-example>
 
-6.  Create a new file called `my-counter.component.ts` in a folder named `my-counter` within the `app` folder that will define a new component called `MyCounterComponent`. This component will render buttons that allow the user to change the count state. Also, create the `my-counter.component.html` file within this same folder.
+5.  Create a new file called `my-counter.component.ts` in a folder named `my-counter` within the `app` folder that defines a new component called `MyCounterComponent`. This component renders buttons that allow the user to change the count state. Also add the component's HTML template to the component using the `template` property. If you prefer to use an external HTML file for the template, create a file named `my-counter.component.html` in the same folder and move the template code there, then update the `templateUrl` property of the component accordingly.
 
-<ngrx-code-example header="src/app/my-counter/my-counter.component.ts" >
-
-```ts
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-
-@Component({
-  selector: 'ngrx-my-counter',
-  templateUrl: './my-counter.component.html',
-})
-export class MyCounterComponent {
-  count$: Observable<number>;
-
-  constructor() {
-    // TODO: Connect `this.count$` stream to the current store `count` state
-  }
-
-  increment() {
-    // TODO: Dispatch an increment action
-  }
-
-  decrement() {
-    // TODO: Dispatch a decrement action
-  }
-
-  reset() {
-    // TODO: Dispatch a reset action
-  }
-}
-```
+<ngrx-code-example header="src/my-counter/my-counter.component.todo.ts" path="store/src/my-counter/my-counter.component.todo.ts">
 
 </ngrx-code-example>
 
-<ngrx-code-example header="src/app/my-counter/my-counter.component.html" >
+6.  Add the new component to your AppComponent's imports and declare it in the template:
 
-```html
-<button (click)="increment()">Increment</button>
-
-<div>Current Count: {{ count$ | async }}</div>
-
-<button (click)="decrement()">Decrement</button>
-
-<button (click)="reset()">Reset Counter</button>
-```
+<ngrx-code-example header="src/app.component.ts" path="store/src/app.component.ts">
 
 </ngrx-code-example>
 
-7.  Add the new component to your AppModule's declarations and declare it in the template:
+7.  Inject the store into `MyCounterComponent` and connect the `count$` stream to the store's `count` state. Implement the `increment`, `decrement`, and `reset` methods by dispatching actions to the store.
 
-<ngrx-code-example header="src/app/app.component.html" path="store/src/app/app.component.html" region="counter">
-
-```html
-<ngrx-my-counter></ngrx-my-counter>
-```
-
-</ngrx-code-example>
-
-<ngrx-code-example header="src/app/app.module.ts" path="store/src/app/app.module.ts">
-
-```ts
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-
-import { StoreModule } from '@ngrx/store';
-import { counterReducer } from './counter.reducer';
-import { MyCounterComponent } from './my-counter/my-counter.component';
-
-@NgModule({
-  declarations: [AppComponent, MyCounterComponent],
-  imports: [
-    BrowserModule,
-    StoreModule.forRoot({ count: counterReducer }),
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
-})
-export class AppModule {}
-```
-
-</ngrx-code-example>
-
-8.  Inject the store into `MyCounterComponent` and connect the `count$` stream to the store's `count` state. Implement the `increment`, `decrement`, and `reset` methods by dispatching actions to the store.
-
-<ngrx-code-example header="src/app/my-counter/my-counter.component.ts" path="store/src/app/my-counter/my-counter.component.ts">
-
-```ts
-import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { increment, decrement, reset } from '../counter.actions';
-
-@Component({
-  selector: 'ngrx-my-counter',
-  templateUrl: './my-counter.component.html',
-})
-export class MyCounterComponent {
-  count$: Observable<number>;
-
-  constructor(private store: Store<{ count: number }>) {
-    this.count$ = store.select('count');
-  }
-
-  increment() {
-    this.store.dispatch(increment());
-  }
-
-  decrement() {
-    this.store.dispatch(decrement());
-  }
-
-  reset() {
-    this.store.dispatch(reset());
-  }
-}
-```
+<ngrx-code-example header="src/my-counter/my-counter.component.ts" path="store/src/my-counter/my-counter.component.ts">
 
 </ngrx-code-example>
 

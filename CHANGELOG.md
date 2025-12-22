@@ -1,3 +1,11 @@
+<a name="21.0.1"></a>
+
+## [21.0.1](https://github.com/ngrx/platform/compare/21.0.0...21.0.1) (2025-12-22)
+
+### Bug Fixes
+
+- **schematics:** restore CommonJS module output for Node.js ([#5051](https://github.com/ngrx/platform/issues/5051)) ([7819972](https://github.com/ngrx/platform/commit/7819972)), closes [#5050](https://github.com/ngrx/platform/issues/5050)
+
 <a name="21.0.0"></a>
 
 # [21.0.0](https://github.com/ngrx/platform/compare/21.0.0-rc.0...21.0.0) (2025-12-18)
