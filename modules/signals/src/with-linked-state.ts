@@ -7,6 +7,7 @@ import {
   SignalStoreFeature,
   SignalStoreFeatureResult,
   StateSignals,
+  WritableSignalsDictionary,
 } from './signal-store-models';
 import { isWritableSignal, STATE_SOURCE } from './state-source';
 import { Prettify } from './ts-helpers';
@@ -89,7 +90,7 @@ export function withLinkedState<
     if (typeof ngDevMode !== 'undefined' && ngDevMode) {
       assertUniqueStoreMembers(store, stateKeys);
     }
-    const stateSource = store[STATE_SOURCE] as SignalsDictionary;
+    const stateSource = store[STATE_SOURCE] as WritableSignalsDictionary;
     const stateSignals = {} as SignalsDictionary;
 
     for (const key of stateKeys) {
@@ -97,7 +98,7 @@ export function withLinkedState<
       stateSource[key] = isWritableSignal(signalOrComputationFn)
         ? signalOrComputationFn
         : linkedSignal(signalOrComputationFn);
-      stateSignals[key] = toDeepSignal(stateSource[key]);
+      stateSignals[key] = toDeepSignal(stateSource[key].asReadonly());
     }
 
     return {
