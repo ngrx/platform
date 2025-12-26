@@ -1,3 +1,4 @@
+import * as path from 'node:path';
 import { normalize } from '@angular-devkit/core';
 import { EmptyTree } from '@angular-devkit/schematics';
 import {
@@ -262,7 +263,7 @@ describe('Migration to version 8.0.0 rc', () => {
 function createSchematicsRunner() {
   const schematicRunner = new SchematicTestRunner(
     'migrations',
-    require.resolve('../migration.json')
+    path.join(process.cwd(), 'dist/modules/store/migrations/migration.json')
   );
 
   return schematicRunner;

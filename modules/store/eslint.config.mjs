@@ -13,7 +13,6 @@ export default [
   {
     ignores: [
       '**/dist',
-      '**/jest.config.ts',
       '**/schematics-core/**/*.ts',
     ],
   },
