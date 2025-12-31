@@ -284,7 +284,7 @@ type Todo = {
   completed: boolean;
 };
 
-const selectId: SelectEntityId<Todo&gt = (todo) => todo.key;
+const selectId: SelectEntityId<Todo&gt; = (todo) => todo.key;
 
 export const TodosStore = signalStore(
   withEntities<Todo>(),
