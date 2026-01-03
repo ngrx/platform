@@ -29,8 +29,8 @@ import {
   RESET,
   counterReducer2,
 } from './fixtures/counter';
-import Spy = jasmine.Spy;
 import { take } from 'rxjs/operators';
+import type { Mock } from 'vitest';
 
 interface TestAppSchema {
   counter1: number;
@@ -62,44 +62,47 @@ describe('ngRx Store', () => {
   }
 
   describe('initial state', () => {
-    it('should handle an initial state object', (done: any) => {
-      setup();
-      testStoreValue({ counter1: 0, counter2: 1, counter3: 0 }, done);
-    });
+    it('should handle an initial state object', () =>
+      new Promise<void>((done) => {
+        setup();
+        testStoreValue({ counter1: 0, counter2: 1, counter3: 0 }, done);
+      }));
 
-    it('should handle an initial state function', (done: any) => {
-      setup(() => ({ counter1: 0, counter2: 5 }));
-      testStoreValue({ counter1: 0, counter2: 5, counter3: 0 }, done);
-    });
+    it('should handle an initial state function', () =>
+      new Promise<void>((done) => {
+        setup(() => ({ counter1: 0, counter2: 5 }));
+        testStoreValue({ counter1: 0, counter2: 5, counter3: 0 }, done);
+      }));
 
-    it('should keep initial state values when state is partially initialized', (done: any) => {
-      TestBed.configureTestingModule({
-        imports: [
-          StoreModule.forRoot({} as any, {
-            initialState: {
-              feature1: {
-                counter1: 1,
+    it('should keep initial state values when state is partially initialized', () =>
+      new Promise<void>((done) => {
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot({} as any, {
+              initialState: {
+                feature1: {
+                  counter1: 1,
+                },
+                feature3: {
+                  counter3: 3,
+                },
               },
-              feature3: {
-                counter3: 3,
-              },
-            },
-          }),
-          StoreModule.forFeature('feature1', { counter1: counterReducer }),
-          StoreModule.forFeature('feature2', { counter2: counterReducer }),
-          StoreModule.forFeature('feature3', { counter3: counterReducer }),
-        ],
-      });
+            }),
+            StoreModule.forFeature('feature1', { counter1: counterReducer }),
+            StoreModule.forFeature('feature2', { counter2: counterReducer }),
+            StoreModule.forFeature('feature3', { counter3: counterReducer }),
+          ],
+        });
 
-      testStoreValue(
-        {
-          feature1: { counter1: 1 },
-          feature2: { counter2: 0 },
-          feature3: { counter3: 3 },
-        },
-        done
-      );
-    });
+        testStoreValue(
+          {
+            feature1: { counter1: 1 },
+            feature2: { counter2: 0 },
+            feature3: { counter3: 3 },
+          },
+          done
+        );
+      }));
 
     it('should reset to initial state when undefined (root ActionReducerMap)', () => {
       TestBed.configureTestingModule({
@@ -277,8 +280,8 @@ describe('ngRx Store', () => {
     });
 
     it('should implement the observer interface forwarding actions and errors to the dispatcher', () => {
-      spyOn(dispatcher, 'next');
-      spyOn(dispatcher, 'error');
+      vi.spyOn(dispatcher, 'next').mockImplementationOnce(() => void 0);
+      vi.spyOn(dispatcher, 'error').mockImplementationOnce(() => void 0);
 
       store.next(<any>1);
       store.error(2);
@@ -309,21 +312,18 @@ describe('ngRx Store', () => {
   });
 
   describe(`add/remove reducers`, () => {
-    let addReducerSpy: Spy;
-    let removeReducerSpy: Spy;
-    let reducerManagerDispatcherSpy: Spy;
+    let addReducerSpy: Mock;
+    let removeReducerSpy: Mock;
+    let reducerManagerDispatcherSpy: Mock;
     const key = 'counter4';
 
     beforeEach(() => {
       setup();
       const reducerManager = TestBed.inject(ReducerManager);
       const dispatcher = TestBed.inject(ReducerManagerDispatcher);
-      addReducerSpy = spyOn(reducerManager, 'addReducer').and.callThrough();
-      removeReducerSpy = spyOn(
-        reducerManager,
-        'removeReducer'
-      ).and.callThrough();
-      reducerManagerDispatcherSpy = spyOn(dispatcher, 'next').and.callThrough();
+      addReducerSpy = vi.spyOn(reducerManager, 'addReducer');
+      removeReducerSpy = vi.spyOn(reducerManager, 'removeReducer');
+      reducerManagerDispatcherSpy = vi.spyOn(dispatcher, 'next');
     });
 
     it(`should delegate add/remove to ReducerManager`, () => {
@@ -334,19 +334,20 @@ describe('ngRx Store', () => {
       expect(removeReducerSpy).toHaveBeenCalledWith(key);
     });
 
-    it(`should work with added / removed reducers`, (done) => {
-      store.addReducer(key, counterReducer);
-      store.pipe(take(1)).subscribe((val) => {
-        expect(val.counter4).toBe(0);
-      });
+    it(`should work with added / removed reducers`, () =>
+      new Promise<void>((done) => {
+        store.addReducer(key, counterReducer);
+        store.pipe(take(1)).subscribe((val) => {
+          expect(val.counter4).toBe(0);
+        });
 
-      store.removeReducer(key);
-      store.dispatch({ type: INCREMENT });
-      store.pipe(take(1)).subscribe((val) => {
-        expect(val.counter4).toBeUndefined();
-        done();
-      });
-    });
+        store.removeReducer(key);
+        store.dispatch({ type: INCREMENT });
+        store.pipe(take(1)).subscribe((val) => {
+          expect(val.counter4).toBeUndefined();
+          done();
+        });
+      }));
 
     it('should dispatch an update reducers action when a reducer is added', () => {
       store.addReducer(key, counterReducer);
@@ -367,7 +368,7 @@ describe('ngRx Store', () => {
 
   describe('add/remove features', () => {
     let reducerManager: ReducerManager;
-    let reducerManagerDispatcherSpy: Spy;
+    let reducerManagerDispatcherSpy: Mock;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -376,7 +377,7 @@ describe('ngRx Store', () => {
 
       reducerManager = TestBed.inject(ReducerManager);
       const dispatcher = TestBed.inject(ReducerManagerDispatcher);
-      reducerManagerDispatcherSpy = spyOn(dispatcher, 'next').and.callThrough();
+      reducerManagerDispatcherSpy = vi.spyOn(dispatcher, 'next');
     });
 
     it('should dispatch an update reducers action when a feature is added', () => {
@@ -447,15 +448,15 @@ describe('ngRx Store', () => {
       return {
         key,
         reducers: {},
-        reducerFactory: jasmine.createSpy(`reducerFactory_${key}`),
+        reducerFactory: vi.fn(),
       };
     }
   });
 
   describe('Meta Reducers', () => {
     let metaReducerContainer: any;
-    let metaReducerSpy1: Spy;
-    let metaReducerSpy2: Spy;
+    let metaReducerSpy1: Mock;
+    let metaReducerSpy2: Mock;
 
     beforeEach(() => {
       metaReducerContainer = (function () {
@@ -477,15 +478,9 @@ describe('ngRx Store', () => {
         };
       })();
 
-      metaReducerSpy1 = spyOn(
-        metaReducerContainer,
-        'metaReducer1'
-      ).and.callThrough();
+      metaReducerSpy1 = vi.spyOn(metaReducerContainer, 'metaReducer1');
 
-      metaReducerSpy2 = spyOn(
-        metaReducerContainer,
-        'metaReducer2'
-      ).and.callThrough();
+      metaReducerSpy2 = vi.spyOn(metaReducerContainer, 'metaReducer2');
     });
 
     it('should create a meta reducer for root and call it through', () => {
@@ -529,32 +524,33 @@ describe('ngRx Store', () => {
       expect(metaReducerSpy2).toHaveBeenCalledWith(counterReducer2);
     });
 
-    it('should initial state with value', (done: any) => {
-      const counterInitialState = 2;
-      TestBed.configureTestingModule({
-        imports: [
-          StoreModule.forRoot({}),
-          StoreModule.forFeature(
-            'counterState',
-            { counter: counterReducer },
-            {
-              initialState: { counter: counterInitialState },
-              metaReducers: [metaReducerContainer.metaReducer1],
-            }
-          ),
-        ],
-      });
+    it('should initial state with value', () =>
+      new Promise<void>((done) => {
+        const counterInitialState = 2;
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot({}),
+            StoreModule.forFeature(
+              'counterState',
+              { counter: counterReducer },
+              {
+                initialState: { counter: counterInitialState },
+                metaReducers: [metaReducerContainer.metaReducer1],
+              }
+            ),
+          ],
+        });
 
-      const mockStore = TestBed.inject(Store);
+        const mockStore = TestBed.inject(Store);
 
-      mockStore.pipe(take(1)).subscribe({
-        next(val: any) {
-          expect(val['counterState'].counter).toEqual(counterInitialState);
-        },
-        error: done,
-        complete: done,
-      });
-    });
+        mockStore.pipe(take(1)).subscribe({
+          next(val: any) {
+            expect(val['counterState'].counter).toEqual(counterInitialState);
+          },
+          error: done,
+          complete: done,
+        });
+      }));
   });
 
   describe('Feature config token', () => {
@@ -566,87 +562,89 @@ describe('ngRx Store', () => {
       FEATURE_CONFIG2_TOKEN = new InjectionToken('Feature Config2');
     });
 
-    it('should initial state with value', (done: any) => {
-      const initialState = { counter1: 1 };
-      const featureKey = 'counter';
+    it('should initial state with value', () =>
+      new Promise<void>((done) => {
+        const initialState = { counter1: 1 };
+        const featureKey = 'counter';
 
-      TestBed.configureTestingModule({
-        imports: [
-          StoreModule.forRoot({}),
-          StoreModule.forFeature(
-            featureKey,
-            counterReducer,
-            FEATURE_CONFIG_TOKEN
-          ),
-        ],
-        providers: [
-          {
-            provide: FEATURE_CONFIG_TOKEN,
-            useValue: { initialState: initialState },
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot({}),
+            StoreModule.forFeature(
+              featureKey,
+              counterReducer,
+              FEATURE_CONFIG_TOKEN
+            ),
+          ],
+          providers: [
+            {
+              provide: FEATURE_CONFIG_TOKEN,
+              useValue: { initialState: initialState },
+            },
+          ],
+        });
+
+        const mockStore = TestBed.inject(Store);
+
+        mockStore.pipe(take(1)).subscribe({
+          next(val: any) {
+            expect(val[featureKey]).toEqual(initialState);
           },
-        ],
-      });
+          error: done,
+          complete: done,
+        });
+      }));
 
-      const mockStore = TestBed.inject(Store);
+    it('should initial state with value for multi features', () =>
+      new Promise<void>((done) => {
+        const initialState = 1;
+        const initialState2 = 2;
+        const initialState3 = 3;
+        const featureKey = 'counter';
+        const featureKey2 = 'counter2';
+        const featureKey3 = 'counter3';
 
-      mockStore.pipe(take(1)).subscribe({
-        next(val: any) {
-          expect(val[featureKey]).toEqual(initialState);
-        },
-        error: done,
-        complete: done,
-      });
-    });
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot({}),
+            StoreModule.forFeature(
+              featureKey,
+              counterReducer,
+              FEATURE_CONFIG_TOKEN
+            ),
+            StoreModule.forFeature(
+              featureKey2,
+              counterReducer,
+              FEATURE_CONFIG2_TOKEN
+            ),
+            StoreModule.forFeature(featureKey3, counterReducer, {
+              initialState: initialState3,
+            }),
+          ],
+          providers: [
+            {
+              provide: FEATURE_CONFIG_TOKEN,
+              useValue: { initialState: initialState },
+            },
+            {
+              provide: FEATURE_CONFIG2_TOKEN,
+              useValue: { initialState: initialState2 },
+            },
+          ],
+        });
 
-    it('should initial state with value for multi features', (done: any) => {
-      const initialState = 1;
-      const initialState2 = 2;
-      const initialState3 = 3;
-      const featureKey = 'counter';
-      const featureKey2 = 'counter2';
-      const featureKey3 = 'counter3';
+        const mockStore = TestBed.inject(Store);
 
-      TestBed.configureTestingModule({
-        imports: [
-          StoreModule.forRoot({}),
-          StoreModule.forFeature(
-            featureKey,
-            counterReducer,
-            FEATURE_CONFIG_TOKEN
-          ),
-          StoreModule.forFeature(
-            featureKey2,
-            counterReducer,
-            FEATURE_CONFIG2_TOKEN
-          ),
-          StoreModule.forFeature(featureKey3, counterReducer, {
-            initialState: initialState3,
-          }),
-        ],
-        providers: [
-          {
-            provide: FEATURE_CONFIG_TOKEN,
-            useValue: { initialState: initialState },
+        mockStore.pipe(take(1)).subscribe({
+          next(val: any) {
+            expect(val[featureKey]).toEqual(initialState);
+            expect(val[featureKey2]).toEqual(initialState2);
+            expect(val[featureKey3]).toEqual(initialState3);
           },
-          {
-            provide: FEATURE_CONFIG2_TOKEN,
-            useValue: { initialState: initialState2 },
-          },
-        ],
-      });
-
-      const mockStore = TestBed.inject(Store);
-
-      mockStore.pipe(take(1)).subscribe({
-        next(val: any) {
-          expect(val[featureKey]).toEqual(initialState);
-          expect(val[featureKey2]).toEqual(initialState2);
-          expect(val[featureKey3]).toEqual(initialState3);
-        },
-        error: done,
-        complete: done,
-      });
-    });
+          error: done,
+          complete: done,
+        });
+      }));
 
     it('should create a meta reducer with config injection token and call it with the expected reducer', () => {
       const metaReducerContainer = (function () {
@@ -668,15 +666,9 @@ describe('ngRx Store', () => {
         };
       })();
 
-      const metaReducerSpy1 = spyOn(
-        metaReducerContainer,
-        'metaReducer1'
-      ).and.callThrough();
+      const metaReducerSpy1 = vi.spyOn(metaReducerContainer, 'metaReducer1');
 
-      const metaReducerSpy2 = spyOn(
-        metaReducerContainer,
-        'metaReducer2'
-      ).and.callThrough();
+      const metaReducerSpy2 = vi.spyOn(metaReducerContainer, 'metaReducer2');
 
       TestBed.configureTestingModule({
         imports: [

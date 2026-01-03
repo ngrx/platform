@@ -53,7 +53,7 @@ describe('ngRx Integration spec', () => {
 
     beforeEach(() => {
       resetId();
-      spyOn(reducers, 'todos').and.callThrough();
+      vi.spyOn(reducers, 'todos');
 
       TestBed.configureTestingModule({
         imports: [StoreModule.forRoot(reducers, { initialState })],
@@ -67,20 +67,21 @@ describe('ngRx Integration spec', () => {
       expect(store).toBeDefined();
     });
 
-    it('should combine reducers automatically if a key/value map is provided', (done) => {
-      const action = { type: 'Test Action' };
-      const reducer$ = TestBed.inject(ReducerManager);
+    it('should combine reducers automatically if a key/value map is provided', () =>
+      new Promise<void>((done) => {
+        const action = { type: 'Test Action' };
+        const reducer$ = TestBed.inject(ReducerManager);
 
-      reducer$.pipe(first()).subscribe((reducer: ActionReducer<any, any>) => {
-        expect(reducer).toBeDefined();
-        expect(typeof reducer === 'function').toBe(true);
+        reducer$.pipe(first()).subscribe((reducer: ActionReducer<any, any>) => {
+          expect(reducer).toBeDefined();
+          expect(typeof reducer === 'function').toBe(true);
 
-        reducer({ todos: [] }, action);
+          reducer({ todos: [] }, action);
 
-        expect(reducers.todos).toHaveBeenCalledWith([], action);
-        done();
-      });
-    });
+          expect(reducers.todos).toHaveBeenCalledWith([], action);
+          done();
+        });
+      }));
 
     it('should use a provided initial state', () => {
       const resolvedInitialState = TestBed.inject(INITIAL_STATE);
@@ -184,68 +185,70 @@ describe('ngRx Integration spec', () => {
         expect(currentlyVisibleTodos.length).toBe(0);
       });
 
-      it('should use props to get a todo', (done: any) => {
-        const getTodosById = createSelector(
-          (state: TodoAppSchema) => state.todos,
-          (todos: Todo[], id: number) => {
-            return todos.find((p) => p.id === id);
-          }
-        );
+      it('should use props to get a todo', () =>
+        new Promise<void>((done) => {
+          const getTodosById = createSelector(
+            (state: TodoAppSchema) => state.todos,
+            (todos: Todo[], id: number) => {
+              return todos.find((p) => p.id === id);
+            }
+          );
 
-        const todo$ = store.select(getTodosById, 2);
-        todo$.pipe(take(3), toArray()).subscribe((res) => {
-          expect(res).toEqual([
-            undefined,
-            {
-              id: 2,
-              text: 'second todo',
-              completed: false,
-            },
-            {
-              id: 2,
-              text: 'second todo',
-              completed: true,
-            },
-          ]);
-          done();
-        });
+          const todo$ = store.select(getTodosById, 2);
+          todo$.pipe(take(3), toArray()).subscribe((res) => {
+            expect(res).toEqual([
+              undefined,
+              {
+                id: 2,
+                text: 'second todo',
+                completed: false,
+              },
+              {
+                id: 2,
+                text: 'second todo',
+                completed: true,
+              },
+            ]);
+            done();
+          });
 
-        store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
-        store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
-        store.dispatch({
-          type: COMPLETE_TODO,
-          payload: { id: 2 },
-        });
-      });
+          store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
+          store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
+          store.dispatch({
+            type: COMPLETE_TODO,
+            payload: { id: 2 },
+          });
+        }));
 
-      it('should use the selector and props to get a todo', (done: any) => {
-        const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
-          'todos'
-        );
-        const getTodos = createSelector(getTodosState, (todos) => todos);
-        const getTodosById = createSelector(
-          getTodos,
-          (state: TodoAppSchema, id: number) => id,
-          (todos, id) => todos.find((todo) => todo.id === id)
-        );
+      it('should use the selector and props to get a todo', () =>
+        new Promise<void>((done) => {
+          const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
+            'todos'
+          );
+          const getTodos = createSelector(getTodosState, (todos) => todos);
+          const getTodosById = createSelector(
+            getTodos,
+            (state: TodoAppSchema, id: number) => id,
+            (todos, id) => todos.find((todo) => todo.id === id)
+          );
 
-        const todo$ = store.select(getTodosById, 2);
-        todo$.pipe(take(3), toArray()).subscribe((res) => {
-          expect(res).toEqual([
-            undefined,
-            { id: 2, text: 'second todo', completed: false },
-            { id: 2, text: 'second todo', completed: true },
-          ]);
-          done();
-        });
+          const todo$ = store.select(getTodosById, 2);
+          todo$.pipe(take(3), toArray()).subscribe((res) => {
+            expect(res).toEqual([
+              undefined,
+              { id: 2, text: 'second todo', completed: false },
+              { id: 2, text: 'second todo', completed: true },
+            ]);
+            done();
+          });
 
-        store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
-        store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
-        store.dispatch({
-          type: COMPLETE_TODO,
-          payload: { id: 2 },
-        });
-      });
+          store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
+          store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
+          store.dispatch({
+            type: COMPLETE_TODO,
+            payload: { id: 2 },
+          });
+        }));
     });
 
     describe('using the select operator', () => {
@@ -315,71 +318,73 @@ describe('ngRx Integration spec', () => {
         expect(currentlyVisibleTodos.length).toBe(0);
       });
 
-      it('should use the selector and props to get a todo', (done: any) => {
-        const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
-          'todos'
-        );
-        const getTodos = createSelector(getTodosState, (todos) => todos);
-        const getTodosById = createSelector(
-          getTodos,
-          (state: TodoAppSchema, id: number) => id,
-          (todos, id) => todos.find((todo) => todo.id === id)
-        );
+      it('should use the selector and props to get a todo', () =>
+        new Promise<void>((done) => {
+          const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
+            'todos'
+          );
+          const getTodos = createSelector(getTodosState, (todos) => todos);
+          const getTodosById = createSelector(
+            getTodos,
+            (state: TodoAppSchema, id: number) => id,
+            (todos, id) => todos.find((todo) => todo.id === id)
+          );
 
-        const todo$ = store.pipe(select(getTodosById, 2));
-        todo$.pipe(take(3), toArray()).subscribe((res) => {
-          expect(res).toEqual([
-            undefined,
-            { id: 2, text: 'second todo', completed: false },
-            { id: 2, text: 'second todo', completed: true },
-          ]);
-          done();
-        });
+          const todo$ = store.pipe(select(getTodosById, 2));
+          todo$.pipe(take(3), toArray()).subscribe((res) => {
+            expect(res).toEqual([
+              undefined,
+              { id: 2, text: 'second todo', completed: false },
+              { id: 2, text: 'second todo', completed: true },
+            ]);
+            done();
+          });
 
-        store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
-        store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
-        store.dispatch({
-          type: COMPLETE_TODO,
-          payload: { id: 2 },
-        });
-      });
+          store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
+          store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
+          store.dispatch({
+            type: COMPLETE_TODO,
+            payload: { id: 2 },
+          });
+        }));
 
-      it('should use the props in the projector to get a todo', (done: any) => {
-        const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
-          'todos'
-        );
+      it('should use the props in the projector to get a todo', () =>
+        new Promise<void>((done) => {
+          const getTodosState = createFeatureSelector<TodoAppSchema, Todo[]>(
+            'todos'
+          );
 
-        const getTodosById = createSelector(
-          getTodosState,
-          (todos: Todo[], { id }: { id: number }) =>
-            todos.find((todo) => todo.id === id)
-        );
+          const getTodosById = createSelector(
+            getTodosState,
+            (todos: Todo[], { id }: { id: number }) =>
+              todos.find((todo) => todo.id === id)
+          );
 
-        const todo$ = store.pipe(select(getTodosById, { id: 2 }));
-        todo$.pipe(take(3), toArray()).subscribe((res) => {
-          expect(res).toEqual([
-            undefined,
-            {
-              id: 2,
-              text: 'second todo',
-              completed: false,
-            },
-            {
-              id: 2,
-              text: 'second todo',
-              completed: true,
-            },
-          ]);
-          done();
-        });
+          const todo$ = store.pipe(select(getTodosById, { id: 2 }));
+          todo$.pipe(take(3), toArray()).subscribe((res) => {
+            expect(res).toEqual([
+              undefined,
+              {
+                id: 2,
+                text: 'second todo',
+                completed: false,
+              },
+              {
+                id: 2,
+                text: 'second todo',
+                completed: true,
+              },
+            ]);
+            done();
+          });
 
-        store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
-        store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
-        store.dispatch({
-          type: COMPLETE_TODO,
-          payload: { id: 2 },
-        });
-      });
+          store.dispatch({ type: ADD_TODO, payload: { text: 'first todo' } });
+          store.dispatch({ type: ADD_TODO, payload: { text: 'second todo' } });
+          store.dispatch({
+            type: COMPLETE_TODO,
+            payload: { id: 2 },
+          });
+        }));
     });
   });
 
@@ -462,31 +467,35 @@ describe('ngRx Integration spec', () => {
       });
     });
 
-    it('throws if forRoot() is used more than once', (done: any) => {
-      @NgModule({
-        imports: [StoreModule.forRoot({})],
-      })
-      class FeatureModule {}
+    it('throws if forRoot() is used more than once', () =>
+      new Promise<void>((done) => {
+        @NgModule({
+          imports: [StoreModule.forRoot({})],
+        })
+        class FeatureModule {}
 
-      TestBed.configureTestingModule({
-        imports: [StoreModule.forRoot({}), RouterTestingModule.withRoutes([])],
-      });
+        TestBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot({}),
+            RouterTestingModule.withRoutes([]),
+          ],
+        });
 
-      const router = TestBed.inject(Router);
+        const router = TestBed.inject(Router);
 
-      router.resetConfig([
-        {
-          path: 'feature-path',
-          loadChildren: () => Promise.resolve(FeatureModule),
-        },
-      ]);
+        router.resetConfig([
+          {
+            path: 'feature-path',
+            loadChildren: () => Promise.resolve(FeatureModule),
+          },
+        ]);
 
-      router.navigateByUrl('/feature-path').catch((err: TypeError) => {
-        expect(err.message).toBe(
-          'The root Store has been provided more than once. Feature modules should provide feature states instead.'
-        );
-        done();
-      });
-    });
+        router.navigateByUrl('/feature-path').catch((err: TypeError) => {
+          expect(err.message).toBe(
+            'The root Store has been provided more than once. Feature modules should provide feature states instead.'
+          );
+          done();
+        });
+      }));
   });
 });

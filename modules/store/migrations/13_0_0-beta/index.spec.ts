@@ -6,7 +6,10 @@ import {
 import * as path from 'path';
 
 describe('Store Migration 13_0_0 beta', () => {
-  const collectionPath = path.join(__dirname, '../migration.json');
+  const collectionPath = path.join(
+    process.cwd(),
+    'dist/modules/store/migrations/migration.json'
+  );
   const pkgName = 'store';
 
   it(`should replace createFeatureSelector usages with 2 generics`, async () => {

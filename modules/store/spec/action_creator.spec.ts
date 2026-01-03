@@ -1,17 +1,6 @@
 import { createAction, props, union } from '..';
 
 describe('Action Creators', () => {
-  let originalTimeout: number;
-
-  beforeEach(() => {
-    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000;
-  });
-
-  afterEach(() => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-  });
-
   describe('createAction', () => {
     it('should create an action', () => {
       const foo = createAction('FOO', (foo: number) => ({ foo }));
