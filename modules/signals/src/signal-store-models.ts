@@ -1,4 +1,4 @@
-import { Signal } from '@angular/core';
+import { Signal, WritableSignal } from '@angular/core';
 import { DeepSignal } from './deep-signal';
 import { WritableStateSource } from './state-source';
 import { IsKnownRecord, Prettify } from './ts-helpers';
@@ -13,6 +13,11 @@ export type StateSignals<State> =
     : {};
 
 export type SignalsDictionary = Record<string | symbol, Signal<unknown>>;
+
+export type WritableSignalsDictionary = Record<
+  string | symbol,
+  WritableSignal<unknown>
+>;
 
 export type MethodsDictionary = Record<string, Function>;
 
