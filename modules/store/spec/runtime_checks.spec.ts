@@ -5,6 +5,8 @@ import { createActiveRuntimeChecks } from '../src/runtime_checks';
 import { RuntimeChecks, Action } from '../src/models';
 import { resetRegisteredActionTypes } from '../src/globals';
 
+vi.mock('@angular/core', { spy: true });
+
 describe('Runtime checks:', () => {
   describe('createActiveRuntimeChecks:', () => {
     it('should enable immutability checks by default', () => {
@@ -39,7 +41,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should disable runtime checks in production by default', () => {
-      const spy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
+      const spy = vi.mocked(ngCore.isDevMode).mockReturnValue(false);
 
       expect(createActiveRuntimeChecks()).toEqual({
         strictStateSerializability: false,
@@ -55,7 +57,7 @@ describe('Runtime checks:', () => {
     });
 
     it('should disable runtime checks in production even if opted in to enable', () => {
-      const spy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
+      const spy = vi.mocked(ngCore.isDevMode).mockReturnValue(false);
 
       expect(
         createActiveRuntimeChecks({
@@ -242,9 +244,7 @@ describe('Runtime checks:', () => {
     const invalidAction = () => ({ type: ErrorTypes.OutOfNgZoneAction });
 
     it('should throw when running outside ngZone', fakeAsync(() => {
-      ngCore.NgZone.isInAngularZone = jasmine
-        .createSpy('isInAngularZone')
-        .and.returnValue(false);
+      ngCore.NgZone.isInAngularZone = vi.fn().mockReturnValue(false);
       const store = setupStore({ strictActionWithinNgZone: true });
       expect(() => {
         store.dispatch(invalidAction());
@@ -255,9 +255,7 @@ describe('Runtime checks:', () => {
     }));
 
     it('should not throw when running in ngZone', fakeAsync(() => {
-      ngCore.NgZone.isInAngularZone = jasmine
-        .createSpy('isInAngularZone')
-        .and.returnValue(true);
+      ngCore.NgZone.isInAngularZone = vi.fn().mockReturnValue(true);
       const store = setupStore({ strictActionWithinNgZone: true });
       expect(() => {
         store.dispatch(invalidAction());
@@ -269,7 +267,7 @@ describe('Runtime checks:', () => {
 
     it('should not be called when disabled', fakeAsync(() => {
       const store = setupStore({ strictActionWithinNgZone: false });
-      ngCore.NgZone.isInAngularZone = jasmine.createSpy('isInAngularZone');
+      ngCore.NgZone.isInAngularZone = vi.fn();
       expect(() => {
         store.dispatch(invalidAction());
         flush();

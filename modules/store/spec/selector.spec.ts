@@ -11,36 +11,40 @@ import {
 import { map, distinctUntilChanged } from 'rxjs/operators';
 import { setNgrxMockEnvironment } from '../src';
 
+import { type Mock, vi } from 'vitest';
+
+vi.mock('@angular/core', { spy: true });
+
 describe('Selectors', () => {
   let countOne: number;
   let countTwo: number;
   let countThree: number;
 
-  let incrementOne: jasmine.Spy;
-  let incrementTwo: jasmine.Spy;
-  let incrementThree: jasmine.Spy;
+  let incrementOne: Mock;
+  let incrementTwo: Mock;
+  let incrementThree: Mock;
 
   beforeEach(() => {
     countOne = 0;
     countTwo = 0;
     countThree = 0;
 
-    incrementOne = jasmine.createSpy('incrementOne').and.callFake(() => {
+    incrementOne = vi.fn(() => {
       return ++countOne;
     });
 
-    incrementTwo = jasmine.createSpy('incrementTwo').and.callFake(() => {
+    incrementTwo = vi.fn(() => {
       return ++countTwo;
     });
 
-    incrementThree = jasmine.createSpy('incrementThree').and.callFake(() => {
+    incrementThree = vi.fn(() => {
       return ++countThree;
     });
   });
 
   describe('createSelector', () => {
     it('should deliver the value of selectors to the projection function', () => {
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
 
       const selector = createSelector(
         incrementOne,
@@ -52,7 +56,7 @@ describe('Selectors', () => {
     });
 
     it('should allow an override of the selector return', () => {
-      const projectFn = jasmine.createSpy('projectionFn').and.returnValue(2);
+      const projectFn = vi.fn().mockReturnValue(2);
 
       const selector = createSelector(incrementOne, incrementTwo, projectFn);
 
@@ -66,7 +70,7 @@ describe('Selectors', () => {
     });
 
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector(incrementOne, incrementTwo, projectFn);
 
       selector.projector('', '');
@@ -79,12 +83,10 @@ describe('Selectors', () => {
     it('should call the projector function only when the value of a dependent selector change', () => {
       const firstState = { first: 'state', unchanged: 'state' };
       const secondState = { second: 'state', unchanged: 'state' };
-      const neverChangingSelector = jasmine
-        .createSpy('unchangedSelector')
-        .and.callFake((state: any) => {
-          return state.unchanged;
-        });
-      const projectFn = jasmine.createSpy('projectionFn');
+      const neverChangingSelector = vi.fn((state: any) => {
+        return state.unchanged;
+      });
+      const projectFn = vi.fn();
       const selector = createSelector(neverChangingSelector, projectFn);
 
       selector(firstState);
@@ -96,7 +98,7 @@ describe('Selectors', () => {
     it('should memoize the function', () => {
       const firstState = { first: 'state' };
       const secondState = { second: 'state' };
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector(
         incrementOne,
         incrementTwo,
@@ -122,15 +124,10 @@ describe('Selectors', () => {
       const fail = () => {
         throw new Error();
       };
-      const projectorFn = jasmine
-        .createSpy('projectorFn', (s: any) => (s.ok ? s.ok : fail()))
-        .and.callThrough();
-      const selectorFn = jasmine
-        .createSpy(
-          'selectorFn',
-          createSelector((state: any) => state, projectorFn)
-        )
-        .and.callThrough();
+      const projectorFn = vi.fn((s: any) => (s.ok ? s.ok : fail()));
+      const selectorFn = vi.fn(
+        createSelector((state: any) => state, projectorFn)
+      );
 
       selectorFn(firstState);
 
@@ -144,7 +141,7 @@ describe('Selectors', () => {
 
     it('should allow you to release memoized arguments', () => {
       const state = { first: 'state' };
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector(incrementOne, projectFn);
 
       selector(state);
@@ -160,8 +157,9 @@ describe('Selectors', () => {
       const grandparent = createSelector(incrementOne, (a) => a);
       const parent = createSelector(grandparent, (a) => a);
       const child = createSelector(parent, (a) => a);
-      spyOn(grandparent, 'release').and.callThrough();
-      spyOn(parent, 'release').and.callThrough();
+
+      vi.spyOn(grandparent, 'release');
+      vi.spyOn(parent, 'release');
 
       child.release();
 
@@ -203,7 +201,7 @@ describe('Selectors', () => {
 
   describe('createSelector with props', () => {
     it('should deliver the value of selectors to the projection function', () => {
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
 
       const selector = createSelector(
         incrementOne,
@@ -219,7 +217,7 @@ describe('Selectors', () => {
     });
 
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector(
         incrementOne,
         incrementTwo,
@@ -237,7 +235,7 @@ describe('Selectors', () => {
     });
 
     it('should call the projector function when the state changes', () => {
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector(
         incrementOne,
         (state: any, props: any) => props.value,
@@ -262,7 +260,7 @@ describe('Selectors', () => {
       const secondState = { second: 'state' };
       const props = { foo: 'props' };
 
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector(
         incrementOne,
         incrementTwo,
@@ -286,7 +284,7 @@ describe('Selectors', () => {
     it('should allow you to release memoized arguments', () => {
       const state = { first: 'state' };
       const props = { foo: 'props' };
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector(
         incrementOne,
         (state: any, props: any) => props,
@@ -305,7 +303,7 @@ describe('Selectors', () => {
 
   describe('createSelector with arrays', () => {
     it('should deliver the value of selectors to the projection function', () => {
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector(
         [incrementOne, incrementTwo],
         projectFn
@@ -315,7 +313,7 @@ describe('Selectors', () => {
     });
 
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector([incrementOne, incrementTwo], projectFn);
 
       selector.projector('', '');
@@ -328,12 +326,10 @@ describe('Selectors', () => {
     it('should call the projector function only when the value of a dependent selector change', () => {
       const firstState = { first: 'state', unchanged: 'state' };
       const secondState = { second: 'state', unchanged: 'state' };
-      const neverChangingSelector = jasmine
-        .createSpy('unchangedSelector')
-        .and.callFake((state: any) => {
-          return state.unchanged;
-        });
-      const projectFn = jasmine.createSpy('projectionFn');
+      const neverChangingSelector = vi.fn((state: any) => {
+        return state.unchanged;
+      });
+      const projectFn = vi.fn();
       const selector = createSelector([neverChangingSelector], projectFn);
 
       selector(firstState);
@@ -345,7 +341,7 @@ describe('Selectors', () => {
     it('should memoize the function', () => {
       const firstState = { first: 'state' };
       const secondState = { second: 'state' };
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector(
         [incrementOne, incrementTwo, incrementThree],
         projectFn
@@ -365,7 +361,7 @@ describe('Selectors', () => {
 
     it('should allow you to release memoized arguments', () => {
       const state = { first: 'state' };
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector([incrementOne], projectFn);
 
       selector(state);
@@ -381,8 +377,9 @@ describe('Selectors', () => {
       const grandparent = createSelector([incrementOne], (a) => a);
       const parent = createSelector([grandparent], (a) => a);
       const child = createSelector([parent], (a) => a);
-      spyOn(grandparent, 'release').and.callThrough();
-      spyOn(parent, 'release').and.callThrough();
+
+      vi.spyOn(grandparent, 'release');
+      vi.spyOn(parent, 'release');
 
       child.release();
 
@@ -393,7 +390,7 @@ describe('Selectors', () => {
 
   describe('createSelector with arrays and props', () => {
     it('should deliver the value of selectors to the projection function', () => {
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector(
         [incrementOne, incrementTwo, (state: any, props: any) => props.value],
         projectFn
@@ -405,7 +402,7 @@ describe('Selectors', () => {
     });
 
     it('should be possible to test a projector fn independent from the selectors it is composed of', () => {
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector(
         [
           incrementOne,
@@ -426,7 +423,7 @@ describe('Selectors', () => {
     });
 
     it('should call the projector function when the state changes', () => {
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector(
         [incrementOne, (state: any, props: any) => props.value],
         projectFn
@@ -450,7 +447,7 @@ describe('Selectors', () => {
       const secondState = { second: 'state' };
       const props = { foo: 'props' };
 
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector(
         [
           incrementOne,
@@ -476,7 +473,7 @@ describe('Selectors', () => {
     it('should allow you to release memoized arguments', () => {
       const state = { first: 'state' };
       const props = { foo: 'props' };
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selector = createSelector(
         [incrementOne, (state: any, props: any) => props],
         projectFn
@@ -495,12 +492,14 @@ describe('Selectors', () => {
   describe('createFeatureSelector', () => {
     const featureName = 'featureA';
     let featureSelector: (state: any) => number;
-    let warnSpy: jasmine.Spy;
+    let warnSpy: Mock;
 
     beforeEach(() => {
       featureSelector = createFeatureSelector<number>(featureName);
-      warnSpy = spyOn(console, 'warn');
+      warnSpy = vi.spyOn(console, 'warn');
     });
+
+    afterEach(() => warnSpy.mockReset());
 
     it('should memoize the result', () => {
       const firstValue = { first: 'value' };
@@ -524,7 +523,7 @@ describe('Selectors', () => {
     describe('Warning', () => {
       describe('should not log when: ', () => {
         it('the feature does exist', () => {
-          const ngSpy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(true);
+          const ngSpy = vi.mocked(ngCore.isDevMode).mockReturnValue(true);
           const selector = createFeatureSelector('featureA');
 
           selector({ featureA: {} });
@@ -536,7 +535,7 @@ describe('Selectors', () => {
         });
 
         it('the feature key exist but is falsy', () => {
-          const ngSpy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(true);
+          const ngSpy = vi.mocked(ngCore.isDevMode).mockReturnValue(true);
           const selector = createFeatureSelector('featureB');
 
           selector({ featureA: {}, featureB: undefined });
@@ -548,7 +547,7 @@ describe('Selectors', () => {
         });
 
         it('not in development mode', () => {
-          const ngSpy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(false);
+          const ngSpy = vi.mocked(ngCore.isDevMode).mockReturnValue(false);
           const selector = createFeatureSelector('featureB');
 
           selector({ featureA: {} });
@@ -562,13 +561,13 @@ describe('Selectors', () => {
 
       describe('warning will ', () => {
         it('be logged when not in mock environment', () => {
-          const ngSpy = jest.spyOn(ngCore, 'isDevMode').mockReturnValue(true);
+          const ngSpy = vi.mocked(ngCore.isDevMode).mockReturnValue(true);
           const selector = createFeatureSelector('featureB');
 
           selector({ featureA: {} });
 
           expect(warnSpy).toHaveBeenCalled();
-          expect(warnSpy.calls.mostRecent().args[0]).toMatch(
+          expect(warnSpy.mock.lastCall?.[0]).toMatch(
             /The feature name "featureB" does not exist/
           );
 
@@ -590,7 +589,7 @@ describe('Selectors', () => {
 
   describe('createSelectorFactory', () => {
     it('should return a selector creator function', () => {
-      const projectFn = jasmine.createSpy('projectionFn');
+      const projectFn = vi.fn();
       const selectorFunc = createSelectorFactory(defaultMemoize);
 
       const selector = selectorFunc(incrementOne, incrementTwo, projectFn)({});
@@ -599,9 +598,9 @@ describe('Selectors', () => {
     });
 
     it('should allow a custom memoization function', () => {
-      const projectFn = jasmine.createSpy('projectionFn');
-      const anyFn = jasmine.createSpy('t').and.callFake(() => true);
-      const equalFn = jasmine.createSpy('isEqual').and.callFake(() => true);
+      const projectFn = vi.fn();
+      const anyFn = vi.fn(() => true);
+      const equalFn = vi.fn(() => true);
       const customMemoizer = (aFn: any = anyFn, eFn: any = equalFn) =>
         defaultMemoize(anyFn, equalFn);
       const customSelector = createSelectorFactory(customMemoizer);
@@ -610,12 +609,12 @@ describe('Selectors', () => {
       selector(1);
       selector(2);
 
-      expect(anyFn.calls.count()).toEqual(1);
+      expect(anyFn.mock.calls.length).toEqual(1);
     });
 
     it('should allow a custom state memoization function', () => {
-      const projectFn = jasmine.createSpy('projectionFn');
-      const stateFn = jasmine.createSpy('stateFn');
+      const projectFn = vi.fn();
+      const stateFn = vi.fn();
       const selectorFunc = createSelectorFactory(defaultMemoize, { stateFn });
 
       const selector = selectorFunc(incrementOne, incrementTwo, projectFn)({});
@@ -626,19 +625,19 @@ describe('Selectors', () => {
 
   describe('defaultMemoize', () => {
     it('should allow a custom equality function', () => {
-      const anyFn = jasmine.createSpy('t').and.callFake(() => true);
-      const equalFn = jasmine.createSpy('isEqual').and.callFake(() => true);
+      const anyFn = vi.fn(() => true);
+      const equalFn = vi.fn(() => true);
       const memoizer = defaultMemoize(anyFn, equalFn);
 
       memoizer.memoized(1, 2, 3);
       memoizer.memoized(1, 2);
 
-      expect(anyFn.calls.count()).toEqual(1);
+      expect(anyFn.mock.calls.length).toEqual(1);
     });
   });
 
   describe('resultMemoize', () => {
-    let projectionFnSpy: jasmine.Spy;
+    let projectionFnSpy: Mock;
     const ARRAY = ['a', 'ab', 'b'];
     const ARRAY_CHANGED = [...ARRAY, 'bc'];
     const A_FILTER: { by: string } = { by: 'a' };
@@ -657,11 +656,9 @@ describe('Selectors', () => {
     }
 
     beforeEach(() => {
-      projectionFnSpy = jasmine
-        .createSpy('projectionFn')
-        .and.callFake((arr: string[], filter: { by: string }) =>
-          arr.filter((item) => item.startsWith(filter.by))
-        );
+      projectionFnSpy = vi.fn((arr: string[], filter: { by: string }) =>
+        arr.filter((item) => item.startsWith(filter.by))
+      );
 
       arrayMemoizer = resultMemoize(projectionFnSpy, isResultEqual);
     });
@@ -670,14 +667,14 @@ describe('Selectors', () => {
       arrayMemoizer.memoized(ARRAY, A_FILTER);
       arrayMemoizer.memoized(ARRAY, A_FILTER);
 
-      expect(projectionFnSpy.calls.count()).toBe(1);
+      expect(projectionFnSpy.mock.calls.length).toBe(1);
     });
 
     it('should rerun projector function when arguments changed', () => {
       arrayMemoizer.memoized(ARRAY, A_FILTER);
       arrayMemoizer.memoized(ARRAY_CHANGED, A_FILTER);
 
-      expect(projectionFnSpy.calls.count()).toBe(2);
+      expect(projectionFnSpy.mock.calls.length).toBe(2);
     });
 
     it('should return the same instance of results when projector function produces the same results array', () => {

@@ -3,17 +3,13 @@ import { inNgZoneAssertMetaReducer } from '../../src/meta-reducers';
 
 describe('inNgZoneAssertMetaReducer:', () => {
   it('should not throw if in NgZone', () => {
-    ngCore.NgZone.isInAngularZone = jasmine
-      .createSpy('isInAngularZone')
-      .and.returnValue(true);
+    ngCore.NgZone.isInAngularZone = vi.fn(() => true);
     expect(() => invokeActionReducer((state: any) => state)).not.toThrow();
     expect(ngCore.NgZone.isInAngularZone).toHaveBeenCalled();
   });
 
   it('should throw when not in NgZone', () => {
-    ngCore.NgZone.isInAngularZone = jasmine
-      .createSpy('isInAngularZone')
-      .and.returnValue(false);
+    ngCore.NgZone.isInAngularZone = vi.fn(() => false);
     expect(() => invokeActionReducer((state: any) => state)).toThrowError(
       `Action 'invoke' running outside NgZone. https://ngrx.io/guide/store/configuration/runtime-checks#strictactionwithinngzone`
     );
@@ -21,7 +17,7 @@ describe('inNgZoneAssertMetaReducer:', () => {
   });
 
   it('should not call isInAngularZone when check is off', () => {
-    ngCore.NgZone.isInAngularZone = jasmine.createSpy('isInAngularZone');
+    ngCore.NgZone.isInAngularZone = vi.fn();
     expect(() =>
       invokeActionReducer((state: any) => state, false)
     ).not.toThrow();

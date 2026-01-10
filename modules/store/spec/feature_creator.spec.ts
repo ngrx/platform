@@ -212,23 +212,24 @@ describe('createFeature()', () => {
     });
   });
 
-  it('should set up a feature state', (done) => {
-    const initialFooState = { x: 1, y: 2, z: 3 };
-    const fooFeature = createFeature({
-      name: 'foo',
-      reducer: createReducer(initialFooState),
-    });
-
-    TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot({}), StoreModule.forFeature(fooFeature)],
-    });
-
-    TestBed.inject(Store)
-      .select(fooFeature.name)
-      .pipe(take(1))
-      .subscribe((fooState) => {
-        expect(fooState).toEqual(initialFooState);
-        done();
+  it('should set up a feature state', () =>
+    new Promise<void>((done) => {
+      const initialFooState = { x: 1, y: 2, z: 3 };
+      const fooFeature = createFeature({
+        name: 'foo',
+        reducer: createReducer(initialFooState),
       });
-  });
+
+      TestBed.configureTestingModule({
+        imports: [StoreModule.forRoot({}), StoreModule.forFeature(fooFeature)],
+      });
+
+      TestBed.inject(Store)
+        .select(fooFeature.name)
+        .pipe(take(1))
+        .subscribe((fooState) => {
+          expect(fooState).toEqual(initialFooState);
+          done();
+        });
+    }));
 });

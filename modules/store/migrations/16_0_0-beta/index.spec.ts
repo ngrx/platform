@@ -6,7 +6,10 @@ import {
 import * as path from 'path';
 
 describe('Store Migration 16_0_0-beta', () => {
-  const collectionPath = path.join(__dirname, '../migration.json');
+  const collectionPath = path.join(
+    process.cwd(),
+    'dist/modules/store/migrations/migration.json'
+  );
 
   it(`should replace getMockStore with createMockStore`, async () => {
     const input = `
@@ -14,7 +17,7 @@ describe('Store Migration 16_0_0-beta', () => {
     import { SomethingElse } from '@ngrx/store';
     import {getMockStore} from '@ngrx/store';
     import {foo, getMockStore, bar} from '@ngrx/store';
-    
+
     const mockStore = getMockStore();
 
     it('just a test', () => {
@@ -27,7 +30,7 @@ describe('Store Migration 16_0_0-beta', () => {
     import { SomethingElse } from '@ngrx/store';
     import {createMockStore} from '@ngrx/store';
     import {foo,createMockStore, bar} from '@ngrx/store';
-    
+
     const mockStore =createMockStore();
 
     it('just a test', () => {

@@ -6,7 +6,10 @@ import {
 import * as path from 'path';
 
 describe('Store Migration 15_2_0', () => {
-  const collectionPath = path.join(__dirname, '../migration.json');
+  const collectionPath = path.join(
+    process.cwd(),
+    'dist/modules/store/migrations/migration.json'
+  );
   const pkgName = 'store';
 
   it(`should replace remove the State type argument`, async () => {

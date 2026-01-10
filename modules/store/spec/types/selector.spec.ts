@@ -37,7 +37,7 @@ describe('createSelector()', () => {
         selectTest.projector();
       `).toSucceed();
     });
-  });
+  }, 8_000);
 
   it('should create a selector from selectors dictionary', () => {
     expectSnippet(`
@@ -96,4 +96,4 @@ describe('createSelector() with props', () => {
       `).toSucceed();
     });
   });
-});
+}, 8_000);

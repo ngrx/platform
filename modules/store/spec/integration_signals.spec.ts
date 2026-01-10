@@ -40,7 +40,7 @@ describe('NgRx and Signals Integration spec', () => {
 
   beforeEach(() => {
     resetId();
-    spyOn(reducers, 'todos').and.callThrough();
+    vi.spyOn(reducers, 'todos');
 
     TestBed.configureTestingModule({
       providers: [provideStore(reducers, { initialState })],
