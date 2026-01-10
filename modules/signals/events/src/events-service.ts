@@ -59,7 +59,7 @@ abstract class BaseEvents {
  *
  * const increment = event('[Counter Page] Increment');
  *
- * \@Component({ /* ... *\/ })
+ * \@Component(...)
  * class Counter {
  *   readonly #events = inject(Events);
  *

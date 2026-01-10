@@ -18,6 +18,43 @@ export type RxMethod<Input> = ((
 ) => RxMethodRef) &
   RxMethodRef;
 
+/**
+ * @description
+ *
+ * Creates a reactive method for managing side effects by utilizing RxJS APIs.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { Component, signal } from '@angular/core';
+ * import { pipe, switchMap } from 'rxjs';
+ * import { rxMethod } from '@ngrx/signals/rxjs-interop';
+ * import { tapResponse } from '@ngrx/operators';
+ *
+ * \@Component(...)
+ * export class TodoList {
+ *   readonly #todosService = inject(TodosService);
+ *   readonly userId = signal(1);
+ *   readonly todos = signal<Todo[]>([]);
+ *
+ *   readonly loadTodos = rxMethod<number>(
+ *     switchMap((id) =>
+ *       this.#todosService.getByUserId(id).pipe(
+ *         tapResponse({
+ *           next: (todos) => this.todos.set(todos),
+ *           error: console.error,
+ *         })
+ *       )
+ *     )
+ *   );
+ *
+ *   constructor() {
+ *     // 👇 Reload todos every time `userId` changes.
+ *     this.loadTodos(this.userId);
+ *   }
+ * }
+ * ```
+ */
 export function rxMethod<Input>(
   generator: (source$: Observable<Input>) => Observable<unknown>,
   config?: { injector?: Injector }

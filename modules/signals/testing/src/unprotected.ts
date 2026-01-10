@@ -12,6 +12,36 @@ type UnprotectedSource<Source extends StateSource<object>> =
       >
     : never;
 
+/**
+ * @description
+ *
+ * Updates the protected state of a SignalStore for testing purposes.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { TestBed } from '@angular/core/testing';
+ * import { signalStore, withState, withComputed } from '@ngrx/signals';
+ * import { unprotected } from '@ngrx/signals/testing';
+ *
+ * const UserStore = signalStore(
+ *   { providedIn: 'root' },
+ *   withState({ firstName: 'Eric', lastName: 'Clapton' }),
+ *   withComputed(({ firstName, lastName }) => ({
+ *     fullName: () => `${firstName()} ${lastName()}`,
+ *   }))
+ * );
+ *
+ * describe('UserStore', () => {
+ *   it('recomputes fullName on firstName changes', () => {
+ *     const userStore = TestBed.inject(UserStore);
+ *
+ *     patchState(unprotected(userStore), { firstName: 'Patrick' });
+ *     expect(userStore.fullName()).toBe('Patrick Clapton');
+ *   });
+ * });
+ * ```
+ */
 export function unprotected<Source extends StateSource<object>>(
   source: Source
 ): UnprotectedSource<Source> {
