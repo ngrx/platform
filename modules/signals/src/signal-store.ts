@@ -1337,7 +1337,44 @@ export function signalStore<
 ): Type<
   SignalStoreMembers<R> & WritableStateSource<Prettify<OmitPrivate<R['state']>>>
 >;
-
+/**
+ * @description
+ *
+ * Creates a store by composing features.
+ * Returns an Angular service that can be provided and injected where needed.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { Component, inject } from '@angular/core';
+ * import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+ *
+ * export const CounterStore = signalStore(
+ *   withState({ count: 0 }),
+ *   withMethods((store) => ({
+ *     increment(): void {
+ *       patchState(store, ({ count }) => ({ count: count + 1 }));
+ *     },
+ *   }))
+ * );
+ *
+ * \@Component({
+ *   // ...
+ *   providers: [CounterStore],
+ * })
+ * export class Counter {
+ *   readonly store = inject(CounterStore);
+ *
+ *   logCount(): void {
+ *     console.log(this.store.count());
+ *   }
+ *
+ *   increment(): void {
+ *     this.store.increment();
+ *   }
+ * }
+ * ```
+ */
 export function signalStore(
   ...args: [SignalStoreConfig, ...SignalStoreFeature[]] | SignalStoreFeature[]
 ): Type<SignalStoreMembers<any>> {

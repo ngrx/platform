@@ -367,7 +367,30 @@ export function signalStoreFeature<
   Prettify<EmptyFeatureResult & Input>,
   PrettifyFeatureResult<F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9 & F10>
 >;
-
+/**
+ * @description
+ *
+ * Combines multiple store features into a single feature.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { signalStore, signalStoreFeature, withMethods, withState } from '@ngrx/signals';
+ *
+ * export function withCounter() {
+ *   return signalStoreFeature(
+ *     withState({ count: 0 }),
+ *     withMethods((store) => ({
+ *       increment(): void {
+ *         patchState(store, ({ count }) => ({ count: count + 1 }));
+ *       },
+ *     }))
+ *   );
+ * }
+ *
+ * export const CounterStore = signalStore(withCounter());
+ * ```
+ */
 export function signalStoreFeature(
   ...args:
     | [Partial<SignalStoreFeatureResult>, ...SignalStoreFeature[]]

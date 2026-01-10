@@ -25,16 +25,21 @@ type LinkedStateResult<
       ? V
       : never;
 };
-
 /**
  * @description
  *
  * Adds linked state slices to a SignalStore.
+ * Accepts a factory function that returns a dictionary of linked signals or
+ * computation functions.
  *
  * @usageNotes
  *
- * ```typescript
- * const OptionsStore = signalStore(
+ * ### Using a computation function
+ *
+ * ```ts
+ * import { signalStore, withLinkedState, withState } from '@ngrx/signals';
+ *
+ * export const OptionsStore = signalStore(
  *   withState({ options: [1, 2, 3] }),
  *   withLinkedState(({ options }) => ({
  *     selectedOption: () => options()[0],
@@ -42,15 +47,15 @@ type LinkedStateResult<
  * );
  * ```
  *
- * This returns a state of type `{ options: number[], selectedOption: number | undefined }`.
- * When the `options` signal changes, the `selectedOption` automatically updates.
+ * ### Using linkedSignal for advanced use cases
  *
- * For advanced use cases, `linkedSignal` or any other `WritableSignal` instance can be used within `withLinkedState`:
+ * ```ts
+ * import { linkedSignal } from '@angular/core';
+ * import { signalStore, withLinkedState, withState } from '@ngrx/signals';
  *
- * ```typescript
  * type Option = { id: number; label: string };
  *
- * const OptionsStore = signalStore(
+ * export const OptionsStore = signalStore(
  *   withState({ options: [] as Option[] }),
  *   withLinkedState(({ options }) => ({
  *     selectedOption: linkedSignal<Option[], Option>({
@@ -59,12 +64,10 @@ type LinkedStateResult<
  *         const option = newOptions.find((o) => o.id === previous?.value.id);
  *         return option ?? newOptions[0];
  *       },
- *     })
+ *     }),
  *   }))
  * )
  * ```
- *
- * @param linkedStateFactory A function that returns an object literal with properties containing an actual `linkedSignal` or the computation function.
  */
 export function withLinkedState<
   State extends Record<

@@ -8,6 +8,24 @@ import {
 } from './signal-store-models';
 import { Prettify } from './ts-helpers';
 
+/**
+ * @description
+ *
+ * Adds custom properties to a SignalStore.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { signalStore, withProps, withState } from '@ngrx/signals';
+ *
+ * export const TodosStore = signalStore(
+ *   withState({ todos: [] as Todo[], isLoading: false }),
+ *   withProps(({ isLoading }) => ({
+ *     isLoading$: toObservable(isLoading),
+ *   }))
+ * );
+ * ```
+ */
 export function withProps<
   Input extends SignalStoreFeatureResult,
   Props extends object,

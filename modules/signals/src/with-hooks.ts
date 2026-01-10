@@ -35,7 +35,31 @@ export function withHooks<Input extends SignalStoreFeatureResult>(hooks: {
 export function withHooks<Input extends SignalStoreFeatureResult>(
   hooks: HooksFactory<Input>
 ): SignalStoreFeature<Input, EmptyFeatureResult>;
-
+/**
+ * @description
+ *
+ * Adds lifecycle hooks to a SignalStore.
+ * Supports onInit and onDestroy hooks that execute when the store is
+ * initialized and destroyed.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { signalStore, withHooks, withState } from '@ngrx/signals';
+ *
+ * export const UserStore = signalStore(
+ *   withState({ firstName: 'Jimi', lastName: 'Hendrix' }),
+ *   withHooks({
+ *     onInit({ firstName }) {
+ *       console.log('first name on init', firstName());
+ *     },
+ *     onDestroy({ lastName }) {
+ *       console.log('last name on destroy', lastName());
+ *     },
+ *   })
+ * );
+ * ```
+ */
 export function withHooks<Input extends SignalStoreFeatureResult>(
   hooksOrFactory:
     | {
