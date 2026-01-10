@@ -375,7 +375,13 @@ export function signalStoreFeature<
  * @usageNotes
  *
  * ```ts
- * import { signalStore, signalStoreFeature, withMethods, withState } from '@ngrx/signals';
+ * import {
+ *   patchState,
+ *   signalStore,
+ *   signalStoreFeature,
+ *   withMethods,
+ *   withState,
+ * } from '@ngrx/signals';
  *
  * export function withCounter() {
  *   return signalStoreFeature(

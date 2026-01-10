@@ -137,7 +137,7 @@ export function patchState<State extends object>(
  *   constructor() {
  *     effect(() => {
  *       const state = getState(this.store);
- *       // 👇 Logs on CounterStore state changes.
+ *       // 👇 Logs on state changes.
  *       console.log(state);
  *     });
  *   }
@@ -169,10 +169,6 @@ export function getState<State extends object>(
  * ```ts
  * import { Component } from '@angular/core';
  * import { signalState, watchState } from '@ngrx/signals';
- *
- * export const CounterStore = signalStore(
- *   withState({ count1: 0, count2: 0 })
- * );
  *
  * \@Component(...)
  * export class Counter {

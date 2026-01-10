@@ -1341,7 +1341,7 @@ export function signalStore<
  * @description
  *
  * Creates a store by composing features.
- * Returns an Angular service that can be provided and injected where needed.
+ * Returns an injectable service that can be provided locally or globally.
  *
  * @usageNotes
  *

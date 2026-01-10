@@ -16,6 +16,7 @@ import { Prettify } from './ts-helpers';
  * @usageNotes
  *
  * ```ts
+ * import { toObservable } from '@angular/core/rxjs-interop';
  * import { signalStore, withProps, withState } from '@ngrx/signals';
  *
  * export const TodosStore = signalStore(

@@ -22,7 +22,7 @@ import { DeepSignal, toDeepSignal } from './deep-signal';
  * }));
  *
  * console.log(pagination()); // { currentPage: 1, pageSize: 10 }
- * console.log(pagination.currentPage()); // 0
+ * console.log(pagination.currentPage()); // 1
  * console.log(pagination.pageSize()); // 10
  * ```
  */

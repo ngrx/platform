@@ -34,8 +34,10 @@ export type SignalMethod<Input> = ((
  *   );
  *
  *   constructor() {
+ *     this.logCount(10); // logs: 20
+ *
  *     this.logCount(this.count); // logs: 2
- *     setTimeout(() => this.count.set(2), 1_000); // logs: 4 after 1s
+ *     setTimeout(() => this.count.set(2), 1_000); // logs: 4 (after 1s)
  *   }
  * }
  * ```
