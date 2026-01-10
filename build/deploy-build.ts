@@ -2,10 +2,7 @@ import * as tasks from './tasks';
 import { createBuilder } from './util';
 import { packages } from './config';
 
-const deploy = createBuilder([
-  ['Deploy builds', tasks.publishToRepo],
-  // ['Deploy docs', tasks.publishDocs],
-]);
+const deploy = createBuilder([['Deploy builds', tasks.publishToRepo]]);
 
 deploy({
   scope: '@ngrx',
