@@ -72,15 +72,19 @@ function logCount(store: CounterStore): void {
 
 Yes. To inject a SignalStore via the constructor, define and export its type with the same name.
 
-<ngrx-code-example>
+<ngrx-code-example header="counter-store.ts">
 
 ```ts
-// counter-store.ts
 export const CounterStore = signalStore(withState({ count: 0 }));
 
 export type CounterStore = InstanceType<typeof CounterStore>;
+```
 
-// counter.ts
+</ngrx-code-example>
+
+<ngrx-code-example header="counter.ts">
+
+```ts
 import { CounterStore } from './counter.store';
 
 @Component({
