@@ -314,6 +314,8 @@ An alternative approach to custom features with input is using the `withFeature`
 The `withFeature` function accepts a callback that receives a store instance and returns a SignalStore feature.
 This enables using features that rely on external inputs without depending on the store’s internal structure.
 
+<ngrx-code-example>
+
 ```ts
 import { computed, Signal } from '@angular/core';
 import {
@@ -351,9 +353,13 @@ export const BooksStore = signalStore(
 );
 ```
 
+</ngrx-code-example>
+
 ## Known TypeScript Issues
 
 Combining multiple custom features with static input may cause unexpected compilation errors:
+
+<ngrx-code-example>
 
 ```ts
 function withZ() {
@@ -376,6 +382,8 @@ const Store = signalStore(
   withW()
 ); // ❌ compilation error
 ```
+
+</ngrx-code-example>
 
 This issue arises specifically with custom features that accept input but do not define any generic parameters.
 To prevent this issue, it is recommended to specify an unused generic for such custom features:

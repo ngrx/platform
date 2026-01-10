@@ -37,6 +37,8 @@ export class Numbers {
 Each invocation of the reactive method pushes the input value through the reactive chain.
 When called with a static value, the reactive chain executes once.
 
+<ngrx-code-example>
+
 ```ts
 import { Component } from '@angular/core';
 import { map, pipe, tap } from 'rxjs';
@@ -63,7 +65,11 @@ export class Numbers {
 }
 ```
 
+</ngrx-code-example>
+
 When a reactive method is called with a signal the reactive chain is executed every time the signal value changes.
+
+<ngrx-code-example>
 
 ```ts
 import { Component, signal } from '@angular/core';
@@ -92,7 +98,11 @@ export class Numbers {
 }
 ```
 
+</ngrx-code-example>
+
 In addition to providing a signal, it is also possible to provide a computation function and combine multiple signals within it.
+
+<ngrx-code-example>
 
 ```ts
 import { Component, signal } from '@angular/core';
@@ -123,7 +133,11 @@ export class Numbers {
 }
 ```
 
+</ngrx-code-example>
+
 When a reactive method is called with an observable, the reactive chain is executed every time the observable emits a new value.
+
+<ngrx-code-example>
 
 ```ts
 import { Component } from '@angular/core';
@@ -153,6 +167,8 @@ export class Numbers {
 }
 ```
 
+</ngrx-code-example>
+
 By default, the `rxMethod` needs to be executed within an injection context.
 It's tied to its lifecycle and is automatically cleaned up when the injector is destroyed.
 
@@ -160,6 +176,8 @@ It's tied to its lifecycle and is automatically cleaned up when the injector is 
 
 The `rxMethod` is a great choice for handling API calls in a reactive manner.
 The subsequent example demonstrates how to use `rxMethod` to fetch the book by id whenever the `selectedBookId` signal value changes.
+
+<ngrx-code-example>
 
 ```ts
 import { Component, inject, signal } from '@angular/core';
@@ -206,6 +224,8 @@ export class BookList {
 }
 ```
 
+</ngrx-code-example>
+
 <ngrx-docs-alert type="inform">
 
 For safe handling of API responses, it is recommended to use the `tapResponse` operator from the `@ngrx/operators` package.
@@ -219,6 +239,8 @@ Further details can be found in the [Reactive Store Methods](guide/signals/signa
 ### Reactive Methods without Arguments
 
 To create a reactive method without arguments, the `void` type should be specified as a generic argument to the `rxMethod` function.
+
+<ngrx-code-example>
 
 ```ts
 import { Component, inject, signal } from '@angular/core';
@@ -253,12 +275,16 @@ export class BookList {
 }
 ```
 
+</ngrx-code-example>
+
 ### Reactive Methods and Injector Hierarchies
 
 The cleanup behavior of reactive methods differs when they're created and called across different injector hierarchies.
 
 If the reactive method is called within the descendant injection context, the call will be automatically cleaned up when the descendant injector is destroyed.
 However, when the call is made outside of the descendant injection context, it's necessary to explicitly provide the descendant injector reference to ensure proper cleanup. Otherwise, the cleanup occurs when the ascendant injector where the reactive method is initialized gets destroyed.
+
+<ngrx-code-example>
 
 ```ts
 import {
@@ -297,6 +323,8 @@ export class Numbers implements OnInit {
 }
 ```
 
+</ngrx-code-example>
+
 <ngrx-docs-alert type="inform">
 
 If the injector is not provided when calling the reactive method with a signal, a computation function, or an observable outside the injection context, a warning message about a potential memory leak is displayed in development mode.
@@ -306,6 +334,8 @@ If the injector is not provided when calling the reactive method with a signal, 
 ### Manual Cleanup
 
 If a reactive method needs to be cleaned up before the injector is destroyed, manual cleanup can be performed by calling the `destroy` method.
+
+<ngrx-code-example>
 
 ```ts
 import { Component } from '@angular/core';
@@ -333,8 +363,12 @@ export class Numbers {
 }
 ```
 
+</ngrx-code-example>
+
 When invoked, the reactive method returns the object with the `destroy` method.
 This allows manual cleanup of a specific call, preserving the activity of other reactive method calls until the corresponding injector is destroyed.
+
+<ngrx-code-example>
 
 ```ts
 import { Component } from '@angular/core';
@@ -361,6 +395,8 @@ export class Numbers {
   }
 }
 ```
+
+</ngrx-code-example>
 
 ### Initialization Outside of Injection Context
 
