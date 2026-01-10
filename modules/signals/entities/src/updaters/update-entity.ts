@@ -55,6 +55,20 @@ export function updateEntity<Entity extends { id: EntityId }>(update: {
   id: EntityId;
   changes: EntityChanges<NoInfer<Entity>>;
 }): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @description
+ *
+ * Updates an entity in the collection by ID. Supports partial updates.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { patchState } from '@ngrx/signals';
+ * import { updateEntity } from '@ngrx/signals/entities';
+ *
+ * patchState(store, updateEntity({ id: 1, changes: { completed: true } }));
+ * ```
+ */
 export function updateEntity(
   update: {
     id: EntityId;

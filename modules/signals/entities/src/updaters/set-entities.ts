@@ -31,6 +31,20 @@ export function setEntities<Entity>(
   entities: Entity[],
   config: { selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @description
+ *
+ * Adds or replaces multiple entities in the collection.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { patchState } from '@ngrx/signals';
+ * import { setEntities } from '@ngrx/signals/entities';
+ *
+ * patchState(store, setEntities([todo1, todo2]));
+ * ```
+ */
 export function setEntities(
   entities: any[],
   config?: { collection?: string; selectId?: SelectEntityId<any> }

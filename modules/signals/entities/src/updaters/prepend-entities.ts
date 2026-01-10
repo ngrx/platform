@@ -31,6 +31,21 @@ export function prependEntities<Entity>(
   entities: Entity[],
   config: { selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @description
+ *
+ * Adds multiple entities to the beginning of the collection.
+ * Does not add existing entities with same IDs.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { patchState } from '@ngrx/signals';
+ * import { prependEntities } from '@ngrx/signals/entities';
+ *
+ * patchState(store, prependEntities([todo1, todo2]));
+ * ```
+ */
 export function prependEntities(
   entities: any[],
   config?: { collection?: string; selectId?: SelectEntityId<any> }
