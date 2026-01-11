@@ -23,7 +23,7 @@ export function entityConfig<Entity>(config: { entity: Entity }): typeof config;
  * @usageNotes
  *
  * ```ts
- * import { signalStore, type } from '@ngrx/signals';
+ * import { signalStore, type, withMethods } from '@ngrx/signals';
  * import { addEntity, entityConfig, withEntities } from '@ngrx/signals/entities';
  *
  * type Todo = { key: number; text: string };

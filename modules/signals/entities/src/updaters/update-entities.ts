@@ -110,10 +110,19 @@ export function updateEntities<Entity extends { id: EntityId }>(update: {
  * import { updateEntities } from '@ngrx/signals/entities';
  *
  * // Update by IDs
- * patchState(store, updateEntities({ ids: [1, 2], changes: { completed: true } }));
+ * patchState(
+ *   store,
+ *   updateEntities({ ids: [1, 2], changes: { completed: true } })
+ * );
  *
  * // Update by predicate
- * patchState(store, updateEntities({ predicate: (todo) => !todo.completed, changes: { text: '' } }));
+ * patchState(
+ *   store,
+ *   updateEntities({
+ *     predicate: (todo) => !todo.completed,
+ *     changes: { text: '' },
+ *   })
+ * );
  * ```
  */
 export function updateEntities(
