@@ -22,12 +22,14 @@ export type RxMethod<Input> = ((
  * @description
  *
  * Creates a reactive method for managing side effects by utilizing RxJS APIs.
+ * Created method accepts an observable, a signal, a computation function, or
+ * a static value.
  *
  * @usageNotes
  *
  * ```ts
- * import { Component, signal } from '@angular/core';
- * import { pipe, switchMap } from 'rxjs';
+ * import { Component, inject, signal } from '@angular/core';
+ * import { switchMap } from 'rxjs';
  * import { rxMethod } from '@ngrx/signals/rxjs-interop';
  * import { tapResponse } from '@ngrx/operators';
  *
@@ -49,7 +51,7 @@ export type RxMethod<Input> = ((
  *   );
  *
  *   constructor() {
- *     // 👇 Reload todos every time `userId` changes.
+ *     // 👇 Load todos on `userId` changes.
  *     this.loadTodos(this.userId);
  *   }
  * }

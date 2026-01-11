@@ -15,7 +15,7 @@ type UnprotectedSource<Source extends StateSource<object>> =
 /**
  * @description
  *
- * Updates the protected state of a SignalStore for testing purposes.
+ * Allows updating the protected state of a SignalStore for testing purposes.
  *
  * @usageNotes
  *
