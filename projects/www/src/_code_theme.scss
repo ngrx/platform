@@ -10,6 +10,11 @@ pre {
   overflow-x: auto;
 }
 
+pre:has(code) {
+  margin: 14px 0 24px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
 code.hljs {
   padding: 3px 5px;
 }

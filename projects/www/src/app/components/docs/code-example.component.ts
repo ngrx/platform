@@ -57,6 +57,11 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
         margin: 14px 0 24px;
       }
 
+      :host ::ng-deep pre:has(code) {
+        margin: 0;
+        border: 0;
+      }
+
       .header {
         padding: 8px 16px;
         background-color: rgba(255, 255, 255, 0.05);
