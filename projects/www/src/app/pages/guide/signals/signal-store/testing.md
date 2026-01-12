@@ -131,9 +131,8 @@ describe('MoviesStore', () => {
 The `unprotected` function from the `@ngrx/signals/testing` plugin is used to update the protected state of a SignalStore for testing purposes.
 This utility bypasses state encapsulation, making it possible to test state changes and their impacts.
 
-<ngrx-code-example header="counter.store.ts">
-
 ```ts
+// counter.store.ts
 const CounterStore = signalStore(
   { providedIn: 'root' },
   withState({ count: 1 }),
@@ -155,8 +154,6 @@ describe('CounterStore', () => {
   });
 });
 ```
-
-</ngrx-code-example>
 
 ### `withComputed`
 

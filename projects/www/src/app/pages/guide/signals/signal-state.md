@@ -27,8 +27,6 @@ The state's type must be a record/object literal. Add arrays or primitive values
 
 `signalState` returns an extended version of a signal that possesses all the capabilities of a read-only signal.
 
-<ngrx-code-example>
-
 ```ts
 import { computed, effect } from '@angular/core';
 
@@ -39,11 +37,7 @@ const userStateStr = computed(() => JSON.stringify(userState()));
 effect(() => console.log('userState', userState()));
 ```
 
-</ngrx-code-example>
-
 Additionally, the `signalState` function generates signals for each state property.
-
-<ngrx-code-example>
 
 ```ts
 const user = userState.user; // type: DeepSignal<User>
@@ -53,12 +47,8 @@ console.log(user()); // logs: { firstName: 'Eric', lastName: 'Clapton' }
 console.log(isAdmin()); // logs: false
 ```
 
-</ngrx-code-example>
-
 When a state property holds an object as its value, the `signalState` function generates a `DeepSignal`.
 It can be used as a regular read-only signal, but it also contains signals for each property of the object it refers to.
-
-<ngrx-code-example>
 
 ```ts
 const firstName = user.firstName; // type: Signal<string>
@@ -67,8 +57,6 @@ const lastName = user.lastName; // type: Signal<string>
 console.log(firstName()); // logs: 'Eric'
 console.log(lastName()); // logs: 'Clapton'
 ```
-
-</ngrx-code-example>
 
 <ngrx-docs-alert type="help">
 
@@ -80,8 +68,6 @@ For enhanced performance, deeply nested signals are generated lazily and initial
 
 The `patchState` function provides a type-safe way to perform updates on pieces of state.
 It takes a SignalState or SignalStore instance as the first argument, followed by a sequence of partial states or partial state updaters as additional arguments.
-
-<ngrx-code-example>
 
 ```ts
 import { patchState } from '@ngrx/signals';
@@ -100,8 +86,6 @@ patchState(userState, { isAdmin: false }, (state) => ({
 }));
 ```
 
-</ngrx-code-example>
-
 <ngrx-docs-alert type="error">
 
 Updaters passed to the `patchState` function must perform state updates in an immutable manner.
@@ -111,8 +95,6 @@ Updaters passed to the `patchState` function must perform state updates in an im
 ### Custom State Updaters
 
 Instead of providing partial states or updaters directly to the `patchState` function, it's possible to create custom state updaters.
-
-<ngrx-code-example>
 
 ```ts
 import { PartialStateUpdater } from '@ngrx/signals';
@@ -126,11 +108,7 @@ function setFirstName(
 const setAdmin = () => ({ isAdmin: true });
 ```
 
-</ngrx-code-example>
-
 Custom state updaters are easy to test and can be reused across different parts of the application.
-
-<ngrx-code-example>
 
 ```ts
 // Before:
@@ -142,8 +120,6 @@ patchState(userState, (state) => ({
 // After:
 patchState(userState, setFirstName('Stevie'), setAdmin());
 ```
-
-</ngrx-code-example>
 
 ## Usage
 

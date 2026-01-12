@@ -51,8 +51,6 @@ export class CounterStore extends signalStore(
 
 To get the type of a SignalStore, use the `InstanceType` utility type.
 
-<ngrx-code-example>
-
 ```ts
 const CounterStore = signalStore(withState({ count: 0 }));
 
@@ -63,8 +61,6 @@ function logCount(store: CounterStore): void {
 }
 ```
 
-</ngrx-code-example>
-
 </details>
 
 <details>
@@ -72,19 +68,13 @@ function logCount(store: CounterStore): void {
 
 Yes. To inject a SignalStore via the constructor, define and export its type with the same name.
 
-<ngrx-code-example header="counter-store.ts">
-
 ```ts
+// counter-store.ts
 export const CounterStore = signalStore(withState({ count: 0 }));
 
 export type CounterStore = InstanceType<typeof CounterStore>;
-```
 
-</ngrx-code-example>
-
-<ngrx-code-example header="counter.ts">
-
-```ts
+// counter.ts
 import { CounterStore } from './counter.store';
 
 @Component({
@@ -94,8 +84,6 @@ export class Counter {
   constructor(readonly store: CounterStore) {}
 }
 ```
-
-</ngrx-code-example>
 
 </details>
 

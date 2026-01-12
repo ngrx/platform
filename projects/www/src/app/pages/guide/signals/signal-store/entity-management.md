@@ -80,58 +80,40 @@ export const TodosStore = signalStore(
 Adds an entity to the collection.
 If the entity collection has an entity with the same ID, it is not overridden and no error is thrown.
 
-<ngrx-code-example>
-
 ```ts
 patchState(store, addEntity(todo));
 ```
-
-</ngrx-code-example>
 
 ### `addEntities`
 
 Adds multiple entities to the collection.
 If the entity collection has entities with the same IDs, they are not overridden and no error is thrown.
 
-<ngrx-code-example>
-
 ```ts
 patchState(store, addEntities([todo1, todo2]));
 ```
-
-</ngrx-code-example>
 
 ### `prependEntity`
 
 Adds an entity to the beginning of the collection.
 If the entity collection has an entity with the same ID, it is not added and no error is thrown.
 
-<ngrx-code-example>
-
 ```ts
 patchState(store, prependEntity(todo));
 ```
-
-</ngrx-code-example>
 
 ### `prependEntities`
 
 Adds multiple entities to the beginning of the collection, maintaining their relative order.
 If the entity collection has entities with the same IDs, they are not added and no error is thrown.
 
-<ngrx-code-example>
-
 ```ts
 patchState(store, prependEntities([todo1, todo2]));
 ```
 
-</ngrx-code-example>
-
 ### `updateEntity`
 
 Updates an entity in the collection by ID. Supports partial updates. No error is thrown if an entity doesn't exist.
-
-<ngrx-code-example>
 
 ```ts
 patchState(
@@ -148,13 +130,9 @@ patchState(
 );
 ```
 
-</ngrx-code-example>
-
 ### `updateEntities`
 
 Updates multiple entities in the collection by IDs or predicate. Supports partial updates. No error is thrown if entities don't exist.
-
-<ngrx-code-example>
 
 ```ts
 // update entities by IDs
@@ -189,13 +167,9 @@ patchState(
 );
 ```
 
-</ngrx-code-example>
-
 ### `updateAllEntities`
 
 Updates all entities in the collection. Supports partial updates. No error is thrown if entities don't exist.
-
-<ngrx-code-example>
 
 ```ts
 patchState(store, updateAllEntities({ text: '' }));
@@ -206,43 +180,29 @@ patchState(
 );
 ```
 
-</ngrx-code-example>
-
 ### `setEntity`
 
 Adds or replaces an entity in the collection.
-
-<ngrx-code-example>
 
 ```ts
 patchState(store, setEntity(todo));
 ```
 
-</ngrx-code-example>
-
 ### `setEntities`
 
 Adds or replaces multiple entities in the collection.
-
-<ngrx-code-example>
 
 ```ts
 patchState(store, setEntities([todo1, todo2]));
 ```
 
-</ngrx-code-example>
-
 ### `setAllEntities`
 
 Replaces the current entity collection with the provided collection.
 
-<ngrx-code-example>
-
 ```ts
 patchState(store, setAllEntities([todo1, todo2, todo3]));
 ```
-
-</ngrx-code-example>
 
 ### `upsertEntity`
 
@@ -251,13 +211,9 @@ When updating, it does not replace the existing entity but merges it with the pr
 Only the properties provided in the updated entity are merged with the existing entity.
 Properties not present in the updated entity remain unchanged.
 
-<ngrx-code-example>
-
 ```ts
 patchState(store, upsertEntity(todo));
 ```
-
-</ngrx-code-example>
 
 ### `upsertEntities`
 
@@ -266,31 +222,21 @@ When updating, it does not replace existing entities but merges them with the pr
 Only the properties provided in updated entities are merged with existing entities.
 Properties not present in updated entities remain unchanged.
 
-<ngrx-code-example>
-
 ```ts
 patchState(store, upsertEntities([todo1, todo2]));
 ```
-
-</ngrx-code-example>
 
 ### `removeEntity`
 
 Removes an entity from the collection by ID. No error is thrown if an entity doesn't exist.
 
-<ngrx-code-example>
-
 ```ts
 patchState(store, removeEntity(1));
 ```
 
-</ngrx-code-example>
-
 ### `removeEntities`
 
 Removes multiple entities from the collection by IDs or predicate. No error is thrown if entities don't exist.
-
-<ngrx-code-example>
 
 ```ts
 // remove entities by IDs
@@ -303,19 +249,13 @@ patchState(
 );
 ```
 
-</ngrx-code-example>
-
 ### `removeAllEntities`
 
 Removes all entities from the collection. No error is thrown if entities don't exist.
 
-<ngrx-code-example>
-
 ```ts
 patchState(store, removeAllEntities());
 ```
-
-</ngrx-code-example>
 
 ## Custom Entity Identifier
 
