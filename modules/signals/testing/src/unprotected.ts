@@ -21,7 +21,12 @@ type UnprotectedSource<Source extends StateSource<object>> =
  *
  * ```ts
  * import { TestBed } from '@angular/core/testing';
- * import { signalStore, withState, withComputed } from '@ngrx/signals';
+ * import {
+ *   patchState,
+ *   signalStore,
+ *   withState,
+ *   withComputed,
+ * } from '@ngrx/signals';
  * import { unprotected } from '@ngrx/signals/testing';
  *
  * const UserStore = signalStore(
