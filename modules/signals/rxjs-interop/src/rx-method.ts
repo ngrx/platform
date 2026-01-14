@@ -22,7 +22,7 @@ export type RxMethod<Input> = ((
  * @description
  *
  * Creates a reactive method for managing side effects by utilizing RxJS APIs.
- * Created method accepts an observable, a signal, a computation function, or
+ * The method accepts an observable, a signal, a computation function, or
  * a static value.
  *
  * @usageNotes
