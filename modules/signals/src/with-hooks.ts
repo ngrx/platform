@@ -39,8 +39,8 @@ export function withHooks<Input extends SignalStoreFeatureResult>(
  * @description
  *
  * Adds lifecycle hooks to a SignalStore.
- * Supports onInit and onDestroy hooks that execute when the store is
- * initialized and destroyed.
+ * Supports an onInit hook that executes when the store is initialized.
+ * Supports an onDestroy hook for when the store is destroyed.
  *
  * @usageNotes
  *
