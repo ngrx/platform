@@ -18,7 +18,7 @@ export type SignalMethod<Input> = ((
  * @description
  *
  * Creates a method for managing side effects with signals.
- * Created method accepts a signal, a computation function, or a static value.
+ * The method accepts a signal, a computation function, or a static value.
  *
  * @usageNotes
  *
