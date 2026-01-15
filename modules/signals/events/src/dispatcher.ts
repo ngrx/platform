@@ -16,7 +16,7 @@ import { Events, EVENTS, ReducerEvents } from './events-service';
  *
  * const increment = event('[Counter Page] Increment');
  *
- * \@Component({ /* ... *\/ })
+ * \@Component(...)
  * class Counter {
  *   readonly #dispatcher = inject(Dispatcher);
  *
@@ -65,7 +65,7 @@ export class Dispatcher {
  * const increment = event('[Counter Page] Increment');
  *
  * \@Component({
- *   /* ... *\/
+ *   // ...
  *   providers: [provideDispatcher()],
  * })
  * class Counter {

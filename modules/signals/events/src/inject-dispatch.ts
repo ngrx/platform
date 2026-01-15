@@ -38,7 +38,7 @@ type SelfDispatchingEvents<
  *   },
  * });
  *
- * \@Component({ /* ... *\/ })
+ * \@Component(...)
  * class Counter {
  *   readonly dispatch = injectDispatch(counterPageEvents);
  *
