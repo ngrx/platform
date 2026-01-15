@@ -45,6 +45,20 @@ export function updateAllEntities<Entity>(
 export function updateAllEntities<Entity extends { id: EntityId }>(
   changes: EntityChanges<NoInfer<Entity>>
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @description
+ *
+ * Updates all entities in the collection. Supports partial updates.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { patchState } from '@ngrx/signals';
+ * import { updateAllEntities } from '@ngrx/signals/entities';
+ *
+ * patchState(store, updateAllEntities({ completed: false }));
+ * ```
+ */
 export function updateAllEntities(
   changes: EntityChanges<any>,
   config?: { collection?: string; selectId?: SelectEntityId<any> }

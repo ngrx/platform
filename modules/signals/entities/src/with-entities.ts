@@ -45,6 +45,23 @@ export function withEntities<Entity>(config: {
     methods: {};
   }
 >;
+/**
+ * @description
+ *
+ * Provides entity management capabilities to the SignalStore.
+ * Adds `entityMap`, `ids`, and `entities` signals to the store.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { signalStore } from '@ngrx/signals';
+ * import { withEntities } from '@ngrx/signals/entities';
+ *
+ * type Todo = { id: number; text: string; completed: boolean };
+ *
+ * export const TodosStore = signalStore(withEntities<Todo>());
+ * ```
+ */
 export function withEntities<Entity>(config?: {
   entity: Entity;
   collection?: string;

@@ -29,6 +29,20 @@ export function setAllEntities<Entity>(
   entities: Entity[],
   config: { selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @description
+ *
+ * Replaces the entire entity collection with the provided entities.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { patchState } from '@ngrx/signals';
+ * import { setAllEntities } from '@ngrx/signals/entities';
+ *
+ * patchState(store, setAllEntities([todo1, todo2, todo3]));
+ * ```
+ */
 export function setAllEntities(
   entities: any[],
   config?: { collection?: string; selectId?: SelectEntityId<any> }

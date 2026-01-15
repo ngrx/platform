@@ -14,6 +14,20 @@ export function removeEntity<Collection extends string>(
   id: EntityId,
   config: { collection: Collection }
 ): PartialStateUpdater<NamedEntityState<any, Collection>>;
+/**
+ * @description
+ *
+ * Removes an entity from the collection by ID.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { patchState } from '@ngrx/signals';
+ * import { removeEntity } from '@ngrx/signals/entities';
+ *
+ * patchState(store, removeEntity(1));
+ * ```
+ */
 export function removeEntity(
   id: EntityId,
   config?: { collection?: string }

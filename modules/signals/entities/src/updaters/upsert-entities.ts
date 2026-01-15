@@ -31,6 +31,21 @@ export function upsertEntities<Entity>(
   entities: Entity[],
   config: { selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @description
+ *
+ * Adds or updates multiple entities in the collection.
+ * When updating, merges with existing entities.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { patchState } from '@ngrx/signals';
+ * import { upsertEntities } from '@ngrx/signals/entities';
+ *
+ * patchState(store, upsertEntities([todo1, todo2]));
+ * ```
+ */
 export function upsertEntities(
   entities: any[],
   config?: { collection?: string; selectId?: SelectEntityId<any> }

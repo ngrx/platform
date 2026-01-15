@@ -31,6 +31,21 @@ export function addEntity<Entity>(
   entity: Entity,
   config: { selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @description
+ *
+ * Adds an entity to the collection.
+ * Does not override if entity with same ID exists.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { patchState } from '@ngrx/signals';
+ * import { addEntity } from '@ngrx/signals/entities';
+ *
+ * patchState(store, addEntity(todo));
+ * ```
+ */
 export function addEntity(
   entity: any,
   config?: { collection?: string; selectId?: SelectEntityId<any> }
