@@ -8,25 +8,27 @@ import { Prettify } from './ts-helpers';
 
 /**
  * @description
- * Allows passing properties, methods, or signals from a SignalStore
- * to a feature.
+ *
+ * Allows passing state signals, properties, and methods from a SignalStore
+ * instance to a custom feature.
  *
  * @usageNotes
- * ```typescript
- * signalStore(
+ *
+ * ```ts
+ * import { signalStore, withFeature, withMethods } from '@ngrx/signals';
+ *
+ * export const UserStore = signalStore(
  *   withMethods((store) => ({
- *     load(id: number): Observable<Entity> {
- *       return of({ id, name: 'John' });
+ *     loadById(id: number): Promise<User> {
+ *       return Promise.resolve({ id, name: 'John' });
  *     },
  *   })),
  *   withFeature(
- *     // 👇 has full access to the store
- *     (store) => withEntityLoader((id) => firstValueFrom(store.load(id)))
+ *     // 👇 Has full access to store members.
+ *     (store) => withEntityLoader((id) => store.loadById(id))
  *   )
  * );
  * ```
- *
- * @param featureFactory function returning the actual feature
  */
 export function withFeature<
   Input extends SignalStoreFeatureResult,

@@ -10,6 +10,29 @@ import {
 } from './signal-store-models';
 import { Prettify } from './ts-helpers';
 
+/**
+ * @description
+ *
+ * Adds methods to a SignalStore.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+ *
+ * export const CounterStore = signalStore(
+ *   withState({ count: 0 }),
+ *   withMethods((store) => ({
+ *     increment(): void {
+ *       patchState(store, ({ count }) => ({ count: count + 1 }));
+ *     },
+ *     decrement(): void {
+ *       patchState(store, ({ count }) => ({ count: count - 1 }));
+ *     },
+ *   }))
+ * );
+ * ```
+ */
 export function withMethods<
   Input extends SignalStoreFeatureResult,
   Methods extends MethodsDictionary,
