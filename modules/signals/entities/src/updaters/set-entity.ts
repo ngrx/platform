@@ -31,6 +31,20 @@ export function setEntity<Entity>(
   entity: Entity,
   config: { selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @description
+ *
+ * Adds or replaces an entity in the collection.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { patchState } from '@ngrx/signals';
+ * import { setEntity } from '@ngrx/signals/entities';
+ *
+ * patchState(store, setEntity(todo));
+ * ```
+ */
 export function setEntity(
   entity: any,
   config?: { collection?: string; selectId?: SelectEntityId<any> }

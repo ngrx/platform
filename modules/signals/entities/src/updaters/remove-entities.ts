@@ -30,6 +30,24 @@ export function removeEntities<
   predicate: EntityPredicate<Entity>,
   config: { collection: Collection }
 ): PartialStateUpdater<State>;
+/**
+ * @description
+ *
+ * Removes multiple entities from the collection by IDs or predicate.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { patchState } from '@ngrx/signals';
+ * import { removeEntities } from '@ngrx/signals/entities';
+ *
+ * // Remove by IDs
+ * patchState(store, removeEntities([1, 2, 3]));
+ *
+ * // Remove by predicate
+ * patchState(store, removeEntities((todo) => todo.completed));
+ * ```
+ */
 export function removeEntities(
   idsOrPredicate: EntityId[] | EntityPredicate<any>,
   config?: { collection?: string }

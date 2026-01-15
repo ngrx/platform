@@ -31,6 +31,21 @@ export function prependEntity<Entity>(
   entity: Entity,
   config: { selectId: SelectEntityId<NoInfer<Entity>> }
 ): PartialStateUpdater<EntityState<Entity>>;
+/**
+ * @description
+ *
+ * Adds an entity to the beginning of the collection.
+ * Does not add if entity with same ID exists.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { patchState } from '@ngrx/signals';
+ * import { prependEntity } from '@ngrx/signals/entities';
+ *
+ * patchState(store, prependEntity(todo));
+ * ```
+ */
 export function prependEntity(
   entity: any,
   config?: { collection?: string; selectId?: SelectEntityId<any> }
