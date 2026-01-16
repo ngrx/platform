@@ -73,10 +73,22 @@ const PACKAGES_TO_PARSE: ApiPackage[] = [
     entryPoint: 'dist/modules/signals/types/ngrx-signals-entities.d.ts',
   },
   {
+    name: '@ngrx/signals-events',
+    rewriteName: '@ngrx/signals/events',
+    alias: 'signals-events',
+    entryPoint: 'dist/modules/signals/types/ngrx-signals-events.d.ts',
+  },
+  {
     name: '@ngrx/signals-rxjs-interop',
     rewriteName: '@ngrx/signals/rxjs-interop',
     alias: 'signals-rxjs-interop',
     entryPoint: 'dist/modules/signals/types/ngrx-signals-rxjs-interop.d.ts',
+  },
+  {
+    name: '@ngrx/signals-testing',
+    rewriteName: '@ngrx/signals/testing',
+    alias: 'signals-testing',
+    entryPoint: 'dist/modules/signals/types/ngrx-signals-testing.d.ts',
   },
   {
     name: '@ngrx/effects',
