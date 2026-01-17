@@ -78,7 +78,7 @@ selectedProduct$ = this.store.select(selectedProduct);
 
 </ngrx-code-example>
 
-1. Consider using an effect for side effects
+2. Consider using an effect for side effects
 
 <ngrx-code-example>
 
