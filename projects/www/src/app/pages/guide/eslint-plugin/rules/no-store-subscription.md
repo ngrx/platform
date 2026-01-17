@@ -20,7 +20,7 @@ This rule prevents manual subscriptions to the store, which can lead to memory l
 ⚠️ **Problems with manual store subscriptions:**
 
 - Creates a manual subscription that must be explicitly unsubscribed (e.g., using `takeUntil`, `async`, or `destroyRef`), otherwise it will persist beyond the component's lifecycle causing memory leaks
-- Makes change detection more manual since you have to assign values yourself
+Will not trigger change detection in zoneless mode. Users have to ensure it otherwise.
 
 ✅ **Benefits of using the async pipe:**
 
