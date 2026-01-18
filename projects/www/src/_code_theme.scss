@@ -5,13 +5,8 @@ pre code.hljs {
 }
 
 pre {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  overflow-x: auto;
-}
-
-pre:has(code) {
   margin: 14px 0 24px;
+  overflow-x: auto;
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
