@@ -228,7 +228,7 @@ class MyComponent {
   });
 
   describe('warning about select with props', () => {
-    it('should warn about select(selector, props) calls', async () => {
+    it('should add TODO comment and warn about select(selector, props) calls', async () => {
       const input = tags.stripIndent`
 import { Store, select } from '@ngrx/store';
 
@@ -237,14 +237,23 @@ class MyComponent {
   constructor(private store: Store) {}
 }
       `;
+      const output = tags.stripIndent`
+import { Store, select } from '@ngrx/store';
 
-      const logs = await verifySchematic(input, input);
+class MyComponent {
+  // TODO: @ngrx/store v21 migration - convert to a factory selector. See https://ngrx.io/guide/migration/v21
+  data$ = this.store.pipe(select(mySelector, { id: 1 }));
+  constructor(private store: Store) {}
+}
+      `;
+
+      const logs = await verifySchematic(input, output);
       const warnings = logs.filter((l) => l.level === 'warn');
       expect(warnings.length).toBe(1);
       expect(warnings[0].message).toContain('requires manual migration');
     });
 
-    it('should warn about store.select(selector, props) calls', async () => {
+    it('should add TODO comment and warn about store.select(selector, props) calls', async () => {
       const input = tags.stripIndent`
 import { Store } from '@ngrx/store';
 
@@ -253,8 +262,17 @@ class MyComponent {
   constructor(private store: Store) {}
 }
       `;
+      const output = tags.stripIndent`
+import { Store } from '@ngrx/store';
 
-      const logs = await verifySchematic(input, input);
+class MyComponent {
+  // TODO: @ngrx/store v21 migration - convert to a factory selector. See https://ngrx.io/guide/migration/v21
+  data$ = this.store.select(mySelector, { id: 1 });
+  constructor(private store: Store) {}
+}
+      `;
+
+      const logs = await verifySchematic(input, output);
       const warnings = logs.filter((l) => l.level === 'warn');
       expect(warnings.length).toBe(1);
       expect(warnings[0].message).toContain('requires manual migration');

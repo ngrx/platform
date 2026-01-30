@@ -7,6 +7,7 @@ import {
 } from '@angular-devkit/schematics';
 import {
   Change,
+  InsertChange,
   commitChanges,
   createReplaceChange,
   visitTSSourceFiles,
@@ -177,13 +178,25 @@ export function migrateSelectCalls(): Rule {
         }
 
         // Case 3: select(selectorFn, propsArg) — selector with props
-        // This cannot be safely auto-migrated. Warn the user.
+        // This cannot be safely auto-migrated. Warn the user and add an
+        // inline TODO comment above the call site.
         if (args.length >= 2 && !ts.isStringLiteral(firstArg)) {
-          const line =
-            sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile))
-              .line + 1;
+          const nodeStart = node.getStart(sourceFile);
+          const { line } = sourceFile.getLineAndCharacterOfPosition(nodeStart);
+          const lineStart = sourceFile.getLineStarts()[line];
+          const lineText = sourceFile.text.substring(lineStart, nodeStart);
+          const indent = lineText.match(/^\s*/)?.[0] ?? '';
+
+          const todoComment =
+            `${indent}// TODO: @ngrx/store v21 migration - convert to a factory selector.` +
+            ` See https://ngrx.io/guide/migration/v21\n`;
+
+          changes.push(
+            new InsertChange(sourceFile.fileName, lineStart, todoComment)
+          );
+
           ctx.logger.warn(
-            `[@ngrx/store] ${sourceFile.fileName}:${line}: ` +
+            `[@ngrx/store] ${sourceFile.fileName}:${line + 1}: ` +
               `Found ${name}(selector, props) call that requires manual migration. ` +
               `Convert to a factory selector pattern. See https://ngrx.io/guide/migration/v21`
           );

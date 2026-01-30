@@ -40,16 +40,7 @@
             },
             {
               "kind": "Content",
-              "text": "<any, any> | "
-            },
-            {
-              "kind": "Reference",
-              "text": "MemoizedSelectorWithProps",
-              "canonicalReference": "@ngrx/store!MemoizedSelectorWithProps:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<any, any, any>"
+              "text": "<any, any>"
             },
             {
               "kind": "Content",
@@ -62,7 +53,7 @@
           "name": "selector",
           "propertyTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 6
+            "endIndex": 4
           },
           "docs": {
             "modifiers": {

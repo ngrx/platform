@@ -29,16 +29,7 @@
         },
         {
           "kind": "Content",
-          "text": "<any, any>[] | "
-        },
-        {
-          "kind": "Reference",
-          "text": "SelectorWithProps",
-          "canonicalReference": "@ngrx/store!SelectorWithProps:type"
-        },
-        {
-          "kind": "Content",
-          "text": "<any, any, any>[]"
+          "text": "<any, any>[]"
         },
         {
           "kind": "Content",
@@ -72,8 +63,8 @@
       ],
       "fileUrlPath": "../../dist/modules/store/types/ngrx-store.d.ts",
       "returnTypeTokenRange": {
-        "startIndex": 12,
-        "endIndex": 13
+        "startIndex": 10,
+        "endIndex": 11
       },
       "releaseTag": "Public",
       "overloadIndex": 1,
@@ -90,23 +81,23 @@
           "parameterName": "selectors",
           "parameterTypeTokenRange": {
             "startIndex": 3,
-            "endIndex": 7
+            "endIndex": 5
           },
           "isOptional": false
         },
         {
           "parameterName": "props",
           "parameterTypeTokenRange": {
-            "startIndex": 8,
-            "endIndex": 9
+            "startIndex": 6,
+            "endIndex": 7
           },
           "isOptional": false
         },
         {
           "parameterName": "memoizedProjector",
           "parameterTypeTokenRange": {
-            "startIndex": 10,
-            "endIndex": 11
+            "startIndex": 8,
+            "endIndex": 9
           },
           "isOptional": false
         }

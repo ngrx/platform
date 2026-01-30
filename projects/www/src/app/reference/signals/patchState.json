@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals!patchState:function(1)",
-      "docComment": "",
+      "docComment": "/**\n * @description\n *\n * Updates the state of a SignalStore or SignalState. Accepts a sequence of partial state objects and partial state updaters.\n *\n * @usageNotes\n * ```ts\n * import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';\n *\n * export const CounterStore = signalStore(\n *   withState({ count1: 0, count2: 0 }),\n *   withMethods((store) => ({\n *     incrementFirst(): void {\n *       patchState(store, (state) => ({ count1: state.count1 + 1 }));\n *     },\n *     resetSecond(): void {\n *       patchState(store, { count2: 0 });\n *     },\n *   }))\n * );\n * ```\n *\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -141,8 +141,8 @@
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
-        "usageNotes": "",
+        "summary": "\n\nUpdates the state of a SignalStore or SignalState. Accepts a sequence of partial state objects and partial state updaters.\n\n",
+        "usageNotes": "\n```ts\nimport { patchState, signalStore, withMethods, withState } from '@ngrx/signals';\n\nexport const CounterStore = signalStore(\n  withState({ count1: 0, count2: 0 }),\n  withMethods((store) => ({\n    incrementFirst(): void {\n      patchState(store, (state) => ({ count1: state.count1 + 1 }));\n    },\n    resetSecond(): void {\n      patchState(store, { count2: 0 });\n    },\n  }))\n);\n```\n\n",
         "remarks": "",
         "deprecated": "",
         "returns": "",
