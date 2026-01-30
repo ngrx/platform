@@ -12,8 +12,10 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'problem',
+    deprecated: true,
     docs: {
-      description: '`Updater` should have an explicit return type.',
+      description:
+        '`Updater` should have an explicit return type. Deprecated: `ComponentStore.updater` now enforces exact return types at the type level.',
       ngrxModule: 'component-store',
     },
     schema: [],

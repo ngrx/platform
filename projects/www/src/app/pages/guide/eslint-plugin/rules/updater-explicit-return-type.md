@@ -3,6 +3,7 @@
 `Updater` should have an explicit return type.
 
 - **Type**: problem
+- **Deprecated**: Yes
 - **Fixable**: No
 - **Suggestion**: No
 - **Requires type checking**: No
@@ -10,6 +11,10 @@
 
 <!-- Everything above this generated, do not edit -->
 <!-- MANUAL-DOC:START -->
+
+## Deprecation Notice
+
+This rule is deprecated. The `ComponentStore.updater` method now enforces exact return types at the type level, so excess properties in updater callbacks will produce TypeScript compilation errors without needing an explicit return type annotation. It is safe to remove this rule from your ESLint configuration. See the [Updating state guide](guide/component-store/write) for details and known limitations.
 
 ## Rule Details
 

@@ -273,5 +273,61 @@ describe('ComponentStore types', () => {
         );
       });
     });
+
+    describe('catches excess properties', () => {
+      it('when extra property is returned with spread', () => {
+        expectSnippet(
+          `componentStore.updater((state, v: string) => ({...state, extraProp: 'bad'}))('test');`
+        ).toFail(/Remove excess properties/);
+      });
+
+      it('when extra property is returned with explicit object', () => {
+        expectSnippet(
+          `componentStore.updater((state, v: string) => ({ prop: v, prop2: state.prop2, extraProp: 'bad' }))('test');`
+        ).toFail(/Remove excess properties/);
+      });
+
+      it('when extra property is returned from void updater', () => {
+        expectSnippet(
+          `componentStore.updater((state) => ({...state, extraProp: true}))();`
+        ).toFail(/Remove excess properties/);
+      });
+
+      it('when required property is missing', () => {
+        expectSnippet(
+          `componentStore.updater((state, v: string) => ({ prop: v }))('test');`
+        ).toFail(/is missing in type/);
+      });
+
+      it('when property has wrong type', () => {
+        expectSnippet(
+          `componentStore.updater((state, v: string) => ({...state, prop: 123}))('test');`
+        ).toFail(/not assignable to type/);
+      });
+
+      it('allows spread with override', () => {
+        expectSnippet(
+          `const sub = componentStore.updater((state, v: string) => ({...state, prop: v}))('test');`
+        ).toInfer('sub', 'Subscription');
+      });
+
+      it('allows full explicit return matching all state keys', () => {
+        expectSnippet(
+          `const sub = componentStore.updater((state, v: string) => ({ prop: v, prop2: state.prop2 }))('test');`
+        ).toInfer('sub', 'Subscription');
+      });
+
+      it('allows void updater with spread return', () => {
+        expectSnippet(
+          `const v = componentStore.updater((state) => ({...state, prop: 'updated'}))();`
+        ).toInfer('v', 'void');
+      });
+
+      it('allows direct state return', () => {
+        expectSnippet(
+          `const v = componentStore.updater((state) => state)();`
+        ).toInfer('v', 'void');
+      });
+    });
   });
 });
