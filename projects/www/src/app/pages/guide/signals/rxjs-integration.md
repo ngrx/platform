@@ -299,7 +299,7 @@ export class Numbers implements OnInit {
 
 <ngrx-docs-alert type="inform">
 
-If the injector is not provided when calling the reactive method with a signal, a computation function, or an observable outside the injection context, a warning message about a potential memory leak is displayed in development mode.
+If the reactive method is initialized in a root-scoped injector (e.g. a service with `providedIn: 'root'`) and called with a signal, a computation function, or an observable outside the injection context without providing an injector, a warning message about a potential memory leak is displayed in development mode. This warning does not apply when the reactive method is initialized in a non-root injector (e.g. a component or a service provided at the component level), since cleanup is handled by the source injector's lifecycle.
 
 </ngrx-docs-alert>
 

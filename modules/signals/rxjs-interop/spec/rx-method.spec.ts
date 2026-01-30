@@ -402,7 +402,7 @@ describe('rxMethod', () => {
       [of(1), 'Observable'],
     ] as const) {
       describe(`${name}`, () => {
-        it('warns when source injector is used', () => {
+        it('warns when source injector is root', () => {
           let a = 1;
           const adder = createAdder((value) => (a += value));
           adder(reactiveValue);
@@ -412,6 +412,20 @@ describe('rxMethod', () => {
           expect(warning).toMatch(
             /reactive method was called outside the injection context with a signal or observable/
           );
+        });
+
+        it('does not warn when source injector is not root', () => {
+          let a = 1;
+          const childInjector = createEnvironmentInjector(
+            [],
+            TestBed.inject(EnvironmentInjector)
+          );
+          const adder = runInInjectionContext(childInjector, () =>
+            rxMethod<number>(tap((value) => (a += value)))
+          );
+          adder(reactiveValue);
+
+          expect(warnSpy).not.toHaveBeenCalled();
         });
 
         it('does not warn on manual injector', () => {

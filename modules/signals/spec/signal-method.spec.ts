@@ -248,7 +248,7 @@ describe('signalMethod', () => {
       warnSpy.mockClear();
     });
 
-    it('warns when source injector is used for a signal', () => {
+    it('warns when source injector is root', () => {
       let a = 1;
       const adder = createAdder((value) => (a += value));
       adder(n);
@@ -258,6 +258,20 @@ describe('signalMethod', () => {
       expect(warning).toMatch(
         /function returned by signalMethod was called outside the injection context with a signal/
       );
+    });
+
+    it('does not warn when source injector is not root', () => {
+      let a = 1;
+      const childInjector = createEnvironmentInjector(
+        [],
+        TestBed.inject(EnvironmentInjector)
+      );
+      const adder = runInInjectionContext(childInjector, () =>
+        signalMethod<number>((value) => (a += value))
+      );
+      adder(n);
+
+      expect(warnSpy).not.toHaveBeenCalled();
     });
 
     it('does not warn on non-reactive value and source injector', () => {
