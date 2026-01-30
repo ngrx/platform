@@ -10,7 +10,6 @@ export {
   NotAllowedCheck,
   ActionCreatorProps,
   Selector,
-  SelectorWithProps,
   RuntimeChecks,
   FunctionWithParametersType,
 } from './models';
@@ -37,7 +36,6 @@ export {
   MemoizeFn,
   MemoizedProjection,
   MemoizedSelector,
-  MemoizedSelectorWithProps,
   resultMemoize,
   DefaultProjectorFn,
 } from './selector';

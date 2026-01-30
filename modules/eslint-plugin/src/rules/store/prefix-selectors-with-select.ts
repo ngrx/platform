@@ -159,12 +159,7 @@ export default createRule<Options, MessageIds>({
 
           const hasSelectorType =
             typeName !== null &&
-            [
-              'MemoizedSelector',
-              'MemoizedSelectorWithProps',
-              'Selector',
-              'SelectorWithProps',
-            ].includes(typeName);
+            ['MemoizedSelector', 'Selector'].includes(typeName);
 
           const isSelectorCall =
             init?.type === 'CallExpression' && isSelectorFactoryCall(init);
