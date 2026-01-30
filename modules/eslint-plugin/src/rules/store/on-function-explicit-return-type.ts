@@ -17,9 +17,11 @@ export default createRule<Options, MessageIds>({
   name: path.parse(__filename).name,
   meta: {
     type: 'suggestion',
+    deprecated: true,
     hasSuggestions: true,
     docs: {
-      description: '`On` function should have an explicit return type.',
+      description:
+        '`On` function should have an explicit return type. Deprecated: The `on` function now enforces exact return types at the type level.',
       ngrxModule: 'store',
     },
     schema: [],

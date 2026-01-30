@@ -175,4 +175,9 @@ export interface SelectSignalOptions<T> {
   equal?: ValueEqualityFn<T>;
 }
 
+export const excessPropertiesAreNotAllowedMsg =
+  'callback return type must exactly match the state type. Remove excess properties.';
+export type ExcessPropertiesAreNotAllowed =
+  typeof excessPropertiesAreNotAllowedMsg;
+
 export type Prettify<T> = { [K in keyof T]: T[K] } & {};

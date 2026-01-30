@@ -3,6 +3,7 @@
 `On` function should have an explicit return type.
 
 - **Type**: suggestion
+- **Deprecated**: Yes
 - **Fixable**: No
 - **Suggestion**: Yes
 - **Requires type checking**: No
@@ -10,6 +11,10 @@
 
 <!-- Everything above this generated, do not edit -->
 <!-- MANUAL-DOC:START -->
+
+## Deprecation Notice
+
+This rule is deprecated. The `on` function now enforces exact return types at the type level, so excess properties in `on` callbacks will produce TypeScript compilation errors without needing an explicit return type annotation. It is safe to remove this rule from your ESLint configuration. See the [Reducers guide](guide/store/reducers) for details and known limitations.
 
 ## Rule Details
 
