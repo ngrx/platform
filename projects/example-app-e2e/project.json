@@ -7,20 +7,11 @@
   "implicitDependencies": ["example-app"],
   "targets": {
     "e2e": {
-      "executor": "@nx/cypress:cypress",
+      "executor": "@nx/playwright:playwright",
+      "outputs": ["{workspaceRoot}/dist/.playwright/projects/example-app-e2e"],
       "options": {
-        "cypressConfig": "projects/example-app-e2e/cypress.config.ts",
-        "testingType": "e2e"
-      },
-      "configurations": {
-        "production": {
-          "devServerTarget": "example-app:serve:production"
-        },
-        "development": {
-          "devServerTarget": "example-app:serve:development"
-        }
-      },
-      "defaultConfiguration": "production"
+        "config": "projects/example-app-e2e/playwright.config.ts"
+      }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
