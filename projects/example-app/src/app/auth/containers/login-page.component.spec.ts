@@ -1,5 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { vi } from 'vitest';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginPageComponent } from '@example-app/auth/containers';
 import { LoginFormComponent } from '@example-app/auth/components';
@@ -21,6 +22,7 @@ describe('Login Page', () => {
         provideMockStore({
           selectors: [
             { selector: fromAuth.selectLoginPagePending, value: false },
+            { selector: fromAuth.selectLoginPageError, value: null },
           ],
         }),
       ],
@@ -30,7 +32,7 @@ describe('Login Page', () => {
     instance = fixture.componentInstance;
     store = TestBed.inject(MockStore);
 
-    jest.spyOn(store, 'dispatch');
+    vi.spyOn(store, 'dispatch');
   });
 
   /**

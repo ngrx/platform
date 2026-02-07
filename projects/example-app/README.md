@@ -15,10 +15,7 @@ Built with [@angular/cli](https://github.com/angular/angular-cli)
 - [@ngrx/effects](https://ngrx.io/guide/effects) - Side effect model for @ngrx/store
 - [@ngrx/router-store](https://ngrx.io/guide/router-store) - Bindings to connect the Angular Router to @ngrx/store
 - [@ngrx/entity](https://ngrx.io/guide/entity) - Entity State adapter for managing record collections.
-- [@ngrx/store-devtools](https://ngrx.io/guide/store-devtools) - Instrumentation for @ngrx/store enabling time-travel debugging
-- [@angular/router](https://angular.dev/guide/routing) - Angular Router
-- [@angular/material](https://material.angular.io) - Angular Material
-- [jest](https://jestjs.io) - JavaScript test runner with easy setup, isolated browser testing and snapshot testing
+- [@ngrx/store-devtools](https://ngrx.io/guide/store-devtools) - Instrumentation for @ngrx/store enabling time-travel debugging.
 
 ### Quick start
 

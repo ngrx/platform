@@ -1,12 +1,87 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Selected Book Page should compile 1`] = `
-<bc-selected-book-page
-  book$={[Function _Store]}
-  isSelectedBookInCollection$={[Function _Store]}
-  store={[Function _MockStore]}
->
+exports[`Selected Book Page > should compile 1`] = `
+<bc-selected-book-page>
   <bc-book-detail>
+    <mat-card
+      class="mat-mdc-card mdc-card"
+    >
+      <mat-card-title-group
+        class="mat-mdc-card-title-group"
+      >
+        <div>
+          <mat-card-title
+            class="mat-mdc-card-title"
+          >
+            title
+          </mat-card-title>
+          <mat-card-subtitle
+            class="mat-mdc-card-subtitle"
+          >
+            subtitle
+          </mat-card-subtitle>
+          
+        </div>
+        <img
+          class="mat-mdc-card-sm-image mdc-card__media"
+          mat-card-sm-image=""
+          src="string"
+        />
+        
+      </mat-card-title-group>
+      <mat-card-content
+        class="mat-mdc-card-content"
+      >
+        <p>
+          description
+        </p>
+      </mat-card-content>
+      <mat-card-footer
+        class="mat-mdc-card-footer footer"
+      >
+        <bc-book-authors>
+          <h5
+            class="mat-mdc-subheader mdc-list-group__subheader"
+            mat-subheader=""
+          >
+            Written By:
+          </h5>
+          <span>
+             author 
+          </span>
+        </bc-book-authors>
+      </mat-card-footer>
+      <mat-card-actions
+        align="start"
+        class="mat-mdc-card-actions mdc-card__actions"
+      >
+        
+        <button
+          class="mdc-button mat-mdc-button-base mdc-button--raised mat-mdc-raised-button mat-primary _mat-animation-noopable"
+          color="primary"
+          mat-raised-button=""
+          mat-ripple-loader-class-name="mat-mdc-button-ripple"
+          mat-ripple-loader-uninitialized=""
+        >
+          <span
+            class="mat-mdc-button-persistent-ripple mdc-button__ripple"
+          />
+          <span
+            class="mdc-button__label"
+          >
+             Add Book to Collection 
+          </span>
+          <span
+            class="mat-focus-indicator"
+          />
+          <span
+            class="mat-mdc-button-touch-target"
+          />
+        </button>
+        
+      </mat-card-actions>
+    </mat-card>
+    
   </bc-book-detail>
 </bc-selected-book-page>
 `;

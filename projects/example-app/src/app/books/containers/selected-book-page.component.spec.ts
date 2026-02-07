@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { vi } from 'vitest';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
@@ -12,6 +13,7 @@ import { SelectedBookPageComponent } from '@example-app/books/containers';
 import { Book, generateMockBook } from '@example-app/books/models';
 import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 import { MaterialModule } from '@example-app/material';
+import * as fromBooks from '@example-app/books/reducers';
 
 describe('Selected Book Page', () => {
   let fixture: ComponentFixture<SelectedBookPageComponent>;
@@ -27,14 +29,24 @@ describe('Selected Book Page', () => {
         BookAuthorsComponent,
         AddCommasPipe,
       ],
-      providers: [provideMockStore()],
+      providers: [
+        provideMockStore({
+          selectors: [
+            {
+              selector: fromBooks.selectSelectedBook,
+              value: generateMockBook(),
+            },
+            { selector: fromBooks.isSelectedBookInCollection, value: false },
+          ],
+        }),
+      ],
     });
 
     fixture = TestBed.createComponent(SelectedBookPageComponent);
     instance = fixture.componentInstance;
     store = TestBed.inject(MockStore);
 
-    jest.spyOn(store, 'dispatch');
+    vi.spyOn(store, 'dispatch');
   });
 
   it('should compile', () => {

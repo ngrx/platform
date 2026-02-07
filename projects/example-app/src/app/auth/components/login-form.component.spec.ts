@@ -1,5 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { vi } from 'vitest';
 import { LoginFormComponent } from '@example-app/auth/components';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -59,7 +60,7 @@ describe('Login Page', () => {
     };
     instance.form.setValue(credentials);
 
-    jest.spyOn(instance.submitted, 'emit');
+    vi.spyOn(instance.submitted, 'emit');
     instance.submit();
 
     expect(instance.submitted.emit).toHaveBeenCalledWith(credentials);

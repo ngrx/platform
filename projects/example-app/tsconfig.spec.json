@@ -2,11 +2,11 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
-    "types": ["jest", "node"],
+    "module": "esnext",
+    "types": ["vitest", "node"],
     "strict": false,
     "target": "es2016"
   },
   "files": ["src/test-setup.ts"],
-  "include": ["jest.config.ts", "**/*.spec.ts", "**/*.test.ts", "**/*.d.ts"]
+  "include": ["vitest.config.ts", "**/*.spec.ts", "**/*.test.ts", "**/*.d.ts"]
 }

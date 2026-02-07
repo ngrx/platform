@@ -1,11 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`View Book Page should compile 1`] = `
-<bc-view-book-page
-  actionsSubscription={[Function SafeSubscriber]}
->
+exports[`View Book Page > should compile 1`] = `
+<bc-view-book-page>
   <bc-selected-book-page>
     <bc-book-detail>
+      
     </bc-book-detail>
   </bc-selected-book-page>
 </bc-view-book-page>

@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { vi } from 'vitest';
 
 import { UserEffects } from '@example-app/core/effects';
 import { UserActions } from '@example-app/core/actions/user.actions';
@@ -9,7 +10,7 @@ describe('UserEffects', () => {
   const eventsMap: { [key: string]: any } = {};
 
   beforeAll(() => {
-    document.addEventListener = jest.fn((event, cb) => {
+    document.addEventListener = vi.fn((event, cb) => {
       eventsMap[event] = cb;
     });
   });

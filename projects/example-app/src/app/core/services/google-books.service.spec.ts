@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
+import { vi } from 'vitest';
 
 import { cold } from 'jasmine-marbles';
 
@@ -11,7 +12,7 @@ describe('Service: GoogleBooks', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: HttpClient, useValue: { get: jest.fn() } }],
+      providers: [{ provide: HttpClient, useValue: { get: vi.fn() } }],
     });
 
     service = TestBed.inject(GoogleBooksService);
@@ -36,7 +37,7 @@ describe('Service: GoogleBooks', () => {
   it('should call the search api and return the search results', () => {
     const response = cold('-a|', { a: books });
     const expected = cold('-b|', { b: books.items });
-    http.get = jest.fn(() => response);
+    http.get = vi.fn(() => response);
 
     expect(service.searchBooks(queryTitle)).toBeObservable(expected);
     expect(http.get).toHaveBeenCalledWith(
@@ -47,7 +48,7 @@ describe('Service: GoogleBooks', () => {
   it('should retrieve the book from the volumeId', () => {
     const response = cold('-a|', { a: data });
     const expected = cold('-b|', { b: data });
-    http.get = jest.fn(() => response);
+    http.get = vi.fn(() => response);
 
     expect(service.retrieveBook(data.volumeId)).toBeObservable(expected);
     expect(http.get).toHaveBeenCalledWith(

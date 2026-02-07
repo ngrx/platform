@@ -12,7 +12,7 @@ export interface State {
   ids: string[];
 }
 
-const initialState: State = {
+export const initialState: State = {
   loaded: false,
   loading: false,
   ids: [],

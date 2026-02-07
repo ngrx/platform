@@ -1,5 +1,6 @@
 import { Title } from '@angular/platform-browser';
 import { TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
 
 import { of } from 'rxjs';
 
@@ -27,7 +28,7 @@ describe('RouterEffects', () => {
             { selector: fromRoot.selectRouteData, value: { title: 'Search' } },
           ],
         }),
-        { provide: Title, useValue: { setTitle: jest.fn() } },
+        { provide: Title, useValue: { setTitle: vi.fn() } },
       ],
     });
 

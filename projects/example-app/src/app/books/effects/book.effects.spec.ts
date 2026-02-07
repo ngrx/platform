@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
 
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
@@ -22,7 +23,7 @@ describe('BookEffects', () => {
         BookEffects,
         {
           provide: GoogleBooksService,
-          useValue: { searchBooks: jest.fn() },
+          useValue: { searchBooks: vi.fn() },
         },
         provideMockActions(() => actions$),
       ],
@@ -44,7 +45,7 @@ describe('BookEffects', () => {
       actions$ = hot('-a---', { a: action });
       const response = cold('-a|', { a: books });
       const expected = cold('-----b', { b: completion });
-      googleBooksService.searchBooks = jest.fn(() => response);
+      googleBooksService.searchBooks = vi.fn(() => response);
 
       expect(
         effects.search$({
@@ -64,7 +65,7 @@ describe('BookEffects', () => {
       actions$ = hot('-a---', { a: action });
       const response = cold('-#|', {}, error);
       const expected = cold('-----b', { b: completion });
-      googleBooksService.searchBooks = jest.fn(() => response);
+      googleBooksService.searchBooks = vi.fn(() => response);
 
       expect(
         effects.search$({

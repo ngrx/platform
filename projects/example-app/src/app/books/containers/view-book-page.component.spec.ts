@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
+import { vi } from 'vitest';
 
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { BehaviorSubject } from 'rxjs';
@@ -8,6 +9,7 @@ import {
   BookAuthorsComponent,
   BookDetailComponent,
 } from '@example-app/books/components';
+import * as fromBooks from '@example-app/books/reducers';
 import { SelectedBookPageComponent } from '@example-app/books/containers';
 import { ViewBookPageComponent } from '@example-app/books/containers';
 import { ViewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
@@ -27,7 +29,15 @@ describe('View Book Page', () => {
           provide: ActivatedRoute,
           useValue: { params: new BehaviorSubject({}) },
         },
-        provideMockStore(),
+        provideMockStore({
+          selectors: [
+            {
+              selector: fromBooks.selectSelectedBook,
+              value: null,
+            },
+            { selector: fromBooks.isSelectedBookInCollection, value: false },
+          ],
+        }),
       ],
       declarations: [
         ViewBookPageComponent,
@@ -42,7 +52,7 @@ describe('View Book Page', () => {
     store = TestBed.inject(MockStore);
     route = TestBed.inject(ActivatedRoute);
 
-    jest.spyOn(store, 'dispatch');
+    vi.spyOn(store, 'dispatch');
   });
 
   it('should compile', () => {

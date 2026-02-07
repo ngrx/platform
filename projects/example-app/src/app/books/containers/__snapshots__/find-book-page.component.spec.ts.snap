@@ -1,13 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Find Book Page should compile 1`] = `
-<bc-find-book-page
-  books$={[Function _Store]}
-  error$={[Function _Store]}
-  loading$={[Function _Store]}
-  searchQuery$={[Function _Store]}
-  store={[Function _MockStore]}
->
+exports[`Find Book Page > should compile 1`] = `
+<bc-find-book-page>
   <bc-book-search>
     <mat-card
       class="mat-mdc-card mdc-card"
@@ -23,18 +17,26 @@ exports[`Find Book Page should compile 1`] = `
         <mat-form-field
           class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-primary"
         >
+          
           <div
             class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled mdc-text-field--no-label"
           >
             <div
               class="mat-mdc-form-field-focus-overlay"
             />
+            
             <div
               class="mat-mdc-form-field-flex"
             >
+              
+              
+              
               <div
                 class="mat-mdc-form-field-infix"
               >
+                
+                
+                
                 <input
                   aria-invalid="false"
                   aria-required="false"
@@ -44,24 +46,30 @@ exports[`Find Book Page should compile 1`] = `
                   placeholder="Search for a book"
                 />
               </div>
+              
+              
             </div>
             <div
               class="mdc-line-ripple mdc-line-ripple--deactivating"
               matformfieldlineripple=""
             />
+            
           </div>
           <div
             aria-atomic="true"
             aria-live="polite"
             class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"
           >
+            
             <div
               class="mat-mdc-form-field-hint-wrapper"
             >
+              
               <div
                 class="mat-mdc-form-field-hint-spacer"
               />
             </div>
+            
           </div>
         </mat-form-field>
         <mat-spinner
@@ -73,6 +81,7 @@ exports[`Find Book Page should compile 1`] = `
           style="width: 30px; height: 30px; --mat-progress-spinner-size: 30px; --mat-progress-spinner-active-indicator-width: 30px;"
           tabindex="-1"
         >
+          
           <div
             aria-hidden="true"
             class="mdc-circular-progress__determinate-container"
@@ -115,6 +124,7 @@ exports[`Find Book Page should compile 1`] = `
                     style="stroke-dasharray: 62.83185307179586px; stroke-dashoffset: 31.41592653589793px; stroke-width: 10%;"
                   />
                 </svg>
+                
               </div>
               <div
                 class="mdc-circular-progress__gap-patch"
@@ -132,6 +142,7 @@ exports[`Find Book Page should compile 1`] = `
                     style="stroke-dasharray: 62.83185307179586px; stroke-dashoffset: 31.41592653589793px; stroke-width: 10%;"
                   />
                 </svg>
+                
               </div>
               <div
                 class="mdc-circular-progress__circle-clipper mdc-circular-progress__circle-right"
@@ -149,6 +160,7 @@ exports[`Find Book Page should compile 1`] = `
                     style="stroke-dasharray: 62.83185307179586px; stroke-dashoffset: 31.41592653589793px; stroke-width: 10%;"
                   />
                 </svg>
+                
               </div>
             </div>
           </div>
@@ -157,9 +169,12 @@ exports[`Find Book Page should compile 1`] = `
       <mat-card-footer
         class="mat-mdc-card-footer"
       >
+        
       </mat-card-footer>
     </mat-card>
-  </bc-book-search><bc-book-preview-list>
+  </bc-book-search>
+  <bc-book-preview-list>
+    
   </bc-book-preview-list>
 </bc-find-book-page>
 `;

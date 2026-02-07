@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
 
 import { cold } from 'jasmine-marbles';
 
@@ -12,9 +13,9 @@ describe('BookStorageService', () => {
   let fixture: any;
 
   const localStorageFake: Storage & any = {
-    removeItem: jest.fn(),
-    setItem: jest.fn(),
-    getItem: jest.fn((_) => JSON.stringify(persistedCollection)),
+    removeItem: vi.fn(),
+    setItem: vi.fn(),
+    getItem: vi.fn((_) => JSON.stringify(persistedCollection)),
   };
 
   const book1 = { id: '111', volumeInfo: {} } as Book;
