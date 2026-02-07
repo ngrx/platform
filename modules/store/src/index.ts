@@ -1,18 +1,19 @@
 export {
   Action,
   ActionCreator,
+  ActionCreatorProps,
   ActionReducer,
-  ActionReducerMap,
   ActionReducerFactory,
+  ActionReducerMap,
   ActionType,
   Creator,
+  FunctionWithParametersType,
   MetaReducer,
   NotAllowedCheck,
-  ActionCreatorProps,
+  RuntimeChecks,
+  SelectSignalOptions,
   Selector,
   SelectorWithProps,
-  RuntimeChecks,
-  FunctionWithParametersType,
 } from './models';
 export { createAction, props, union } from './action_creator';
 export { createActionGroup, emptyProps } from './action_group_creator';
