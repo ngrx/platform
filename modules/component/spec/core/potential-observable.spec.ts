@@ -1,4 +1,4 @@
-import { of } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 import { fromPotentialObservable } from '../../src/core/potential-observable';
 
@@ -46,16 +46,16 @@ describe('fromPotentialObservable', () => {
 
   testNonObservableInput([1, 2, 3], 'array');
 
-  it('should create observable from promise', (done) => {
-    const promise = Promise.resolve(100);
-    const obs$ = fromPotentialObservable(promise);
+  it('should create observable from promise', () =>
+    new Promise<void>((done) => {
+      const promise = Promise.resolve(100);
+      const obs$ = fromPotentialObservable(promise);
 
-    // promises cannot be tested with test scheduler
-    obs$.subscribe((value) => {
-      expect(value).toBe(100);
-      done();
-    });
-  });
+      obs$.subscribe((value) => {
+        expect(value).toBe(100);
+        done();
+      });
+    }));
 
   it('should return passed observable', () => {
     const obs1$ = of('ngrx');

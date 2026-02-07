@@ -25,7 +25,7 @@ describe('TickScheduler', () => {
     });
     const tickScheduler = TestBed.inject(TickScheduler);
     const appRef = TestBed.inject(ApplicationRef);
-    jest.spyOn(appRef, 'tick');
+    vi.spyOn(appRef, 'tick');
 
     return { tickScheduler, appRef };
   }

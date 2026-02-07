@@ -11,14 +11,14 @@ export const noopNgZoneMock = new MockNoopNgZone({
 });
 
 export class MockChangeDetectorRef {
-  markForCheck = jest.fn();
-  detectChanges = jest.fn();
-  checkNoChanges = jest.fn();
-  detach = jest.fn();
-  reattach = jest.fn();
+  markForCheck = vi.fn();
+  detectChanges = vi.fn();
+  checkNoChanges = vi.fn();
+  detach = vi.fn();
+  reattach = vi.fn();
   context = { x: 1, y: 2 };
 }
 
 export class MockErrorHandler {
-  handleError = jest.fn();
+  handleError = vi.fn();
 }
