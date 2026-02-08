@@ -18,7 +18,7 @@ Built with [@angular/cli](https://github.com/angular/angular-cli)
 - [@ngrx/store-devtools](https://ngrx.io/guide/store-devtools) - Instrumentation for @ngrx/store enabling time-travel debugging
 - [@angular/router](https://angular.dev/guide/routing) - Angular Router
 - [@angular/material](https://material.angular.io) - Angular Material
-- [jest](https://jestjs.io) - JavaScript test runner with easy setup, isolated browser testing and snapshot testing
+- [vitest](https://vitest.dev) - JavaScript test runner with easy setup, isolated browser testing and snapshot testing
 
 ### Quick start
 

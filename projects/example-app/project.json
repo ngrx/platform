@@ -72,13 +72,7 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "options": {
-        "jestConfig": "projects/example-app/jest.config.ts",
-        "runInBand": true,
-        "passWithNoTests": false
-      },
-      "outputs": ["{workspaceRoot}/coverage/projects/example-app"]
+      "executor": "@analogjs/vitest-angular:test"
     }
   }
 }

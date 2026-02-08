@@ -21,6 +21,7 @@ describe('Login Page', () => {
         provideMockStore({
           selectors: [
             { selector: fromAuth.selectLoginPagePending, value: false },
+            { selector: fromAuth.selectLoginPageError, value: null },
           ],
         }),
       ],
@@ -30,7 +31,7 @@ describe('Login Page', () => {
     instance = fixture.componentInstance;
     store = TestBed.inject(MockStore);
 
-    jest.spyOn(store, 'dispatch');
+    vi.spyOn(store, 'dispatch');
   });
 
   /**

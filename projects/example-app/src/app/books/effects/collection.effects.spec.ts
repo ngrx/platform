@@ -12,7 +12,7 @@ import {
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 describe('CollectionEffects', () => {
   let db: any;
@@ -29,19 +29,19 @@ describe('CollectionEffects', () => {
         {
           provide: BookStorageService,
           useValue: {
-            supported: jest.fn(),
-            deleteStoredCollection: jest.fn(),
-            addToCollection: jest.fn(),
-            getCollection: jest.fn(),
-            removeFromCollection: jest.fn(),
+            supported: vi.fn(() => of(true)),
+            deleteStoredCollection: vi.fn(),
+            addToCollection: vi.fn(),
+            getCollection: vi.fn(),
+            removeFromCollection: vi.fn(),
           },
         },
         {
           provide: LOCAL_STORAGE_TOKEN,
           useValue: {
-            removeItem: jest.fn(),
-            setItem: jest.fn(),
-            getItem: jest.fn((_) => JSON.stringify([])),
+            removeItem: vi.fn(),
+            setItem: vi.fn(),
+            getItem: vi.fn((_) => JSON.stringify([])),
           },
         },
         provideMockActions(() => actions$),
@@ -68,7 +68,7 @@ describe('CollectionEffects', () => {
       actions$ = hot('-a', { a: action });
       const response = cold('-a|', { a: [book1, book2] });
       const expected = cold('--c', { c: completion });
-      db.getCollection = jest.fn(() => response);
+      db.getCollection = vi.fn(() => response);
 
       expect(effects.loadCollection$).toBeObservable(expected);
     });
@@ -81,7 +81,7 @@ describe('CollectionEffects', () => {
       actions$ = hot('-a', { a: action });
       const response = cold('-#', {}, error);
       const expected = cold('--c', { c: completion });
-      db.getCollection = jest.fn(() => response);
+      db.getCollection = vi.fn(() => response);
 
       expect(effects.loadCollection$).toBeObservable(expected);
     });
@@ -95,7 +95,7 @@ describe('CollectionEffects', () => {
       actions$ = hot('-a', { a: action });
       const response = cold('-b', { b: true });
       const expected = cold('--c', { c: completion });
-      db.addToCollection = jest.fn(() => response);
+      db.addToCollection = vi.fn(() => response);
 
       expect(effects.addBookToCollection$).toBeObservable(expected);
       expect(db.addToCollection).toHaveBeenCalledWith([book1]);
@@ -109,7 +109,7 @@ describe('CollectionEffects', () => {
       actions$ = hot('-a', { a: action });
       const response = cold('-#', {}, error);
       const expected = cold('--c', { c: completion });
-      db.addToCollection = jest.fn(() => response);
+      db.addToCollection = vi.fn(() => response);
 
       expect(effects.addBookToCollection$).toBeObservable(expected);
     });
@@ -124,7 +124,7 @@ describe('CollectionEffects', () => {
         actions$ = hot('-a', { a: action });
         const response = cold('-b', { b: true });
         const expected = cold('--c', { c: completion });
-        db.removeFromCollection = jest.fn(() => response);
+        db.removeFromCollection = vi.fn(() => response);
 
         expect(effects.removeBookFromCollection$).toBeObservable(expected);
         expect(db.removeFromCollection).toHaveBeenCalledWith([book1.id]);
@@ -140,7 +140,7 @@ describe('CollectionEffects', () => {
         actions$ = hot('-a', { a: action });
         const response = cold('-#', {}, error);
         const expected = cold('--c', { c: completion });
-        db.removeFromCollection = jest.fn(() => response);
+        db.removeFromCollection = vi.fn(() => response);
 
         expect(effects.removeBookFromCollection$).toBeObservable(expected);
         expect(db.removeFromCollection).toHaveBeenCalledWith([book1.id]);
