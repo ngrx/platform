@@ -13,6 +13,7 @@ import { GuideSectionComponent } from './guide-section.component';
 import { GuideMenuService } from '../services/guide-menu.service';
 import { DOCUMENT } from '@angular/common';
 import { VersionNavigationComponent } from './version-navigation.component';
+import { ThemeToggleComponent } from './theme-toggle.component';
 
 @Component({
   selector: 'ngrx-menu',
@@ -23,6 +24,7 @@ import { VersionNavigationComponent } from './version-navigation.component';
     RouterLinkActive,
     GuideSectionComponent,
     VersionNavigationComponent,
+    ThemeToggleComponent,
   ],
   template: `
     <div class="mobile-nav-bar">
@@ -75,6 +77,7 @@ import { VersionNavigationComponent } from './version-navigation.component';
         <mat-icon>code</mat-icon>
         GitHub
       </a>
+      <ngrx-theme-toggle />
       <hr />
       <span class="guideHeader">Guide</span>
       <ngrx-guide-section
@@ -89,7 +92,7 @@ import { VersionNavigationComponent } from './version-navigation.component';
         position: fixed;
         top: 0;
         display: none;
-        background-color: #17111a;
+        background-color: var(--ngrx-bg-surface);
         width: 100%;
         padding: 15px 20px;
         .menu-toggle {
@@ -112,9 +115,9 @@ import { VersionNavigationComponent } from './version-navigation.component';
         flex-direction: column;
         gap: 16px;
         padding: 32px 24px;
-        border-right: 1px solid rgba(255, 255, 255, 0.12);
+        border-right: 1px solid var(--ngrx-border-color);
         @media only screen and (max-width: 1280px) {
-          background-color: #17111a;
+          background-color: var(--ngrx-bg-surface);
           position: fixed;
           top: 0;
           left: -270px;
@@ -147,7 +150,7 @@ import { VersionNavigationComponent } from './version-navigation.component';
         font-family: 'Oxanium', sans-serif;
         font-weight: 600;
         font-size: 18px;
-        color: white;
+        color: var(--ngrx-text);
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -162,9 +165,9 @@ import { VersionNavigationComponent } from './version-navigation.component';
         z-index: 2;
         width: 270px;
         height: 100lvh;
-        background-color: #17111a;
+        background-color: var(--ngrx-bg-surface);
         overflow-y: scroll;
-        border-right: 1px solid rgba(255, 255, 255, 0.12);
+        border-right: 1px solid var(--ngrx-border-color);
         @media only screen and (max-width: 1280px) {
           border-right: none;
           width: 0px;
@@ -178,31 +181,31 @@ import { VersionNavigationComponent } from './version-navigation.component';
         align-items: center;
         gap: 12px;
         text-decoration: none;
-        color: rgba(255, 255, 255, 0.64);
+        color: var(--ngrx-text-muted);
         font-family: 'Oxanium', sans-serif;
         font-size: 14px;
         transition: color 0.2s;
       }
 
       .menu-link mat-icon {
-        color: rgba(255, 255, 255, 0.32);
+        color: var(--ngrx-text-faint);
         font-size: 20px;
         transition: color 0.2s;
       }
 
       .menu-link:hover,
       .menu-link.active {
-        color: white;
+        color: var(--ngrx-text);
       }
 
       .menu-link:hover mat-icon,
       .menu-link.active mat-icon {
-        color: #cf8fc5;
+        color: var(--ngrx-accent);
       }
 
       hr {
         border: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
         width: 100%;
       }
 
@@ -213,6 +216,7 @@ import { VersionNavigationComponent } from './version-navigation.component';
         text-transform: uppercase;
         padding: 0 0 0 8px;
         margin: -8px;
+        color: var(--ngrx-text-muted);
       }
     `,
   ],

@@ -6,12 +6,12 @@ import { GroupNav } from '../services/contributors.service';
   template: `
     <div class="groups-navigation">
       @for (group of groupNames(); track group.name) {
-      <p
-        (click)="selectGroup(group.name)"
-        [class.selected]="selectedGroup() === group.name"
-      >
-        {{ group.name }}
-      </p>
+        <p
+          (click)="selectGroup(group.name)"
+          [class.selected]="selectedGroup() === group.name"
+        >
+          {{ group.name }}
+        </p>
       }
     </div>
   `,
@@ -19,7 +19,7 @@ import { GroupNav } from '../services/contributors.service';
     `
       .groups-navigation {
         display: flex;
-        background: #221925;
+        background: var(--ngrx-bg-elevated);
         width: fit-content;
         padding: 5px;
         gap: 5px;
@@ -28,7 +28,7 @@ import { GroupNav } from '../services/contributors.service';
         border-radius: 5px;
       }
       .groups-navigation p {
-        color: #bfbcc0;
+        color: var(--ngrx-text-muted);
         padding: 2px 10px;
         cursor: pointer;
         margin: 0;
@@ -36,8 +36,8 @@ import { GroupNav } from '../services/contributors.service';
         font-size: 18px;
       }
       .groups-navigation p.selected {
-        background: #120c14;
-        color: #fff;
+        background: var(--ngrx-bg-overlay);
+        color: var(--ngrx-text);
       }
     `,
   ],

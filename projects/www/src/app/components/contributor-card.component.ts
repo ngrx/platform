@@ -17,16 +17,17 @@ import { Contributor } from '../services/contributors.service';
 
         <div class="contributor-links">
           @if (contributor().twitter) {
-          <a
-            [href]="'https://twitter.com/' + contributor().twitter"
-            target="_blank"
-          >
-            <img src="/images/bios/card-icons/twitter.svg" alt="Twitter" />
-          </a>
-          } @if (contributor().website) {
-          <a [href]="contributor().website" target="_blank">
-            <img src="/images/bios/card-icons/link.svg" alt="Website" />
-          </a>
+            <a
+              [href]="'https://twitter.com/' + contributor().twitter"
+              target="_blank"
+            >
+              <img src="/images/bios/card-icons/twitter.svg" alt="Twitter" />
+            </a>
+          }
+          @if (contributor().website) {
+            <a [href]="contributor().website" target="_blank">
+              <img src="/images/bios/card-icons/link.svg" alt="Website" />
+            </a>
           }
         </div>
 
@@ -59,8 +60,8 @@ import { Contributor } from '../services/contributors.service';
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        background: #fff;
-        border-bottom: solid 4px #cf8fc5;
+        background: var(--ngrx-text);
+        border-bottom: solid 4px var(--ngrx-accent);
       }
       .contributor-photo img {
         height: 100%;
@@ -72,7 +73,7 @@ import { Contributor } from '../services/contributors.service';
         width: 200px;
         padding: 15px 0 0;
         text-align: center;
-        background: #120c14;
+        background: var(--ngrx-bg-overlay);
       }
       .contributor-info h3 {
         margin-top: 0;
@@ -82,14 +83,14 @@ import { Contributor } from '../services/contributors.service';
       }
       .view-bio {
         margin: 10px 0 0;
-        color: #cf8fc5;
+        color: var(--ngrx-accent);
         font-size: 14px;
         cursor: pointer;
-        background: #221925;
+        background: var(--ngrx-bg-elevated);
         padding: 6px 0;
       }
       .view-bio:hover {
-        color: #ececec;
+        color: var(--ngrx-text);
       }
       .contributor-links {
         display: flex;
@@ -108,8 +109,8 @@ import { Contributor } from '../services/contributors.service';
         right: 0;
         width: 100%;
         height: 100%;
-        background: #120c14;
-        color: #fff;
+        background: var(--ngrx-bg-overlay);
+        color: var(--ngrx-text);
         padding: 15px;
         overflow: hidden;
         display: flex;
@@ -130,7 +131,7 @@ import { Contributor } from '../services/contributors.service';
       }
       .contributor-bio-preview p {
         margin: 0;
-        color: #fff;
+        color: var(--ngrx-text);
         font-size: 12px;
         line-height: 16px;
       }

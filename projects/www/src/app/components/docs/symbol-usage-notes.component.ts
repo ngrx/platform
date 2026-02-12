@@ -19,7 +19,7 @@ import { ApiMember } from '@ngrx-io/shared';
       .notes {
         display: block;
         padding: 16px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom: 1px solid var(--ngrx-border-color);
       }
 
       h3 {
@@ -27,7 +27,7 @@ import { ApiMember } from '@ngrx-io/shared';
         font-size: 15px;
         font-weight: 700;
         margin: 0;
-        color: #fface6;
+        color: var(--ngrx-link);
       }
 
       code {

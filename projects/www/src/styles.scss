@@ -19,6 +19,10 @@ html {
   );
 }
 
+body.light-theme {
+  color-scheme: light;
+}
+
 *,
 *::before,
 *::after {
@@ -103,7 +107,9 @@ body {
 body.mat-app-background {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: #17111a;
+  background-color: var(--ngrx-bg);
+  color: var(--ngrx-text);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 code {
@@ -113,7 +119,7 @@ code {
 
 a {
   text-decoration: none;
-  color: #fface6;
+  color: var(--ngrx-link);
   cursor: pointer;
 }
 
@@ -122,6 +128,88 @@ a {
 
 :root {
   @include mat.all-component-themes(theme.$dark-theme);
+
+  // Theme CSS variables (dark theme defaults)
+  --ngrx-bg: #17111a;
+  --ngrx-bg-surface: #17111a;
+  --ngrx-bg-elevated: #241b28;
+  --ngrx-bg-elevated-hover: #2b1f31;
+  --ngrx-bg-overlay: #0d0a0f;
+  --ngrx-bg-content-menu: #201a23;
+  --ngrx-bg-content-menu-hover: #262029;
+  --ngrx-text: #fff;
+  --ngrx-text-primary: rgba(255, 255, 255, 0.87);
+  --ngrx-text-secondary: rgba(255, 255, 255, 0.72);
+  --ngrx-text-muted: rgba(255, 255, 255, 0.56);
+  --ngrx-text-faint: rgba(255, 255, 255, 0.54);
+  --ngrx-text-very-faint: rgba(255, 255, 255, 0.32);
+  --ngrx-border-color: rgba(255, 255, 255, 0.12);
+  --ngrx-link: #fface6;
+  --ngrx-accent: #cf8fc5;
+  --ngrx-accent-strong: #a91794;
+  --ngrx-active-border: rgba(207, 143, 197, 0.54);
+  --ngrx-table-header-bg: rgba(0, 0, 0, 0.36);
+}
+
+body.light-theme {
+  @include mat.all-component-colors(theme.$light-theme);
+
+  --ngrx-bg: #f5f3f4;
+  --ngrx-bg-surface: #f5f3f4;
+  --ngrx-bg-elevated: #dcdadb;
+  --ngrx-bg-elevated-hover: #cfccce;
+  --ngrx-bg-overlay: #e5e3e4;
+  --ngrx-bg-content-menu: #e0dedf;
+  --ngrx-bg-content-menu-hover: #d5d3d4;
+  --ngrx-text: #1f1a1d;
+  --ngrx-text-primary: rgba(0, 0, 0, 0.87);
+  --ngrx-text-secondary: rgba(0, 0, 0, 0.72);
+  --ngrx-text-muted: rgba(0, 0, 0, 0.56);
+  --ngrx-text-faint: rgba(0, 0, 0, 0.54);
+  --ngrx-text-very-faint: rgba(0, 0, 0, 0.32);
+  --ngrx-border-color: #dbdbdb;
+  --ngrx-link: #a91794;
+  --ngrx-accent: #a91794;
+  --ngrx-accent-strong: #850074;
+  --ngrx-active-border: rgba(169, 23, 148, 0.54);
+  --ngrx-table-header-bg: rgba(0, 0, 0, 0.06);
+  --ngrx-code-bg: rgba(241, 241, 241, 0.5);
+
+  // Light theme code blocks
+  .shiki,
+  pre code.shiki,
+  ngrx-code-example pre code {
+    background-color: #f6f8fa !important;
+  }
+
+  ngrx-code-example {
+    border-color: #d0d7de !important;
+  }
+
+  ngrx-code-example .header {
+    background-color: #f6f8fa !important;
+    color: #1f2328 !important;
+    border-color: #d0d7de !important;
+  }
+
+  // Keywords (pink → magenta)
+  span[style*="#fface6"], span[style*="#FFACE6"] { color: #a626a4 !important; }
+  // Strings (green → dark green)
+  span[style*="#98c379"], span[style*="#98C379"] { color: #50a14f !important; }
+  // Numbers/variables (orange → dark orange)
+  span[style*="#ffb871"], span[style*="#FFB871"] { color: #986801 !important; }
+  // Functions (red → dark red)
+  span[style*="#e06c75"], span[style*="#E06C75"] { color: #c18401 !important; }
+  // Comments (gray → gray)
+  span[style*="#5c6370"], span[style*="#5C6370"] { color: #717277 !important; }
+  // Types (blue → blue)
+  span[style*="#61aeee"], span[style*="#61AEEE"] { color: #4078f2 !important; }
+  // Classes/builtins (tan → teal)
+  span[style*="#ffdcbe"], span[style*="#FFDCBE"], span[style*="ffdcbe"] { color: #0184bc !important; }
+  // Literals (cyan → dark cyan)
+  span[style*="#56b6c2"], span[style*="#56B6C2"] { color: #0997b3 !important; }
+  // Plain text (gray → black)
+  span[style*="#abb2bf"], span[style*="#ABB2BF"] { color: #383a42 !important; }
 }
 
 h1,
@@ -192,3 +280,5 @@ analog-markdown-route > div {
     height: 100%;
   }
 }
+
+
