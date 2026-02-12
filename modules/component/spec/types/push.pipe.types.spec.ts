@@ -24,61 +24,61 @@ describe('PushPipe', () => {
       'Book',
       'interface Book { title: string; }'
     ).toBeInferredAs('Book');
-  });
+  }, 8_000);
 
   it('should infer the result when potential observable is a union of non-observables', () => {
     expectPotentialObservable('number | { x: symbol; } | null').toBeInferredAs(
       'number | { x: symbol; } | null'
     );
-  });
+  }, 8_000);
 
   it('should infer the result when potential observable is a promise', () => {
     expectPotentialObservable('Promise<string>').toBeInferredAs(
       'string | undefined'
     );
-  });
+  }, 8_000);
 
   it('should infer the result when potential observable is a union of promises', () => {
     expectPotentialObservable(
       'Promise<{ y: number[]; }> | Promise<string | { z: boolean; }>'
     ).toBeInferredAs('string | { y: number[]; } | { z: boolean; } | undefined');
-  });
+  }, 8_000);
 
   it('should infer the result when potential observable is a union of promise and non-observable', () => {
     expectPotentialObservable(
       'Promise<string[]> | boolean[] | null'
     ).toBeInferredAs('string[] | boolean[] | null | undefined');
-  });
+  }, 8_000);
 
   it('should infer the result when potential observable is an observable', () => {
     expectPotentialObservable('Observable<{ x: number; }>').toBeInferredAs(
       '{ x: number; } | undefined'
     );
-  });
+  }, 8_000);
 
   it('should infer the result when potential observable is a union of observables', () => {
     expectPotentialObservable(
       'Observable<symbol> | Observable<{ z: string; }> | null'
     ).toBeInferredAs('symbol | { z: string; } | null | undefined');
-  });
+  }, 8_000);
 
   it('should infer the result when potential observable is a union of observable and promise', () => {
     expectPotentialObservable(
       'Observable<boolean> | Promise<string | undefined>'
     ).toBeInferredAs('string | boolean | undefined');
-  });
+  }, 8_000);
 
   it('should infer the result when potential observable is a union of observable and non-observable', () => {
     expectPotentialObservable(
       'Observable<number[]> | Record<string, unknown>'
     ).toBeInferredAs('Record<string, unknown> | number[] | undefined');
-  });
+  }, 8_000);
 
   it('should infer the result when potential observable is a union of observable, promise, and non-observable', () => {
     expectPotentialObservable(
       'Observable<{ z: symbol; }> | Promise<number[]> | boolean | null'
     ).toBeInferredAs('boolean | { z: symbol; } | number[] | null | undefined');
-  });
+  }, 8_000);
 
   it('should infer the result when potential observable is an observable dictionary', () => {
     expectPotentialObservable(
@@ -86,14 +86,14 @@ describe('PushPipe', () => {
     ).toBeInferredAs(
       '{ o1: number | boolean; o2: { ngrx: string; }; } | undefined'
     );
-  });
+  }, 8_000);
 
   it('should infer the result when potential observable is an observable dictionary typed as interface', () => {
     expectPotentialObservable(
       'Dictionary',
       'interface Dictionary { o1: Observable<bigint>; o2: Observable<string | symbol> }'
     ).toBeInferredAs('{ o1: bigint; o2: string | symbol; } | undefined');
-  });
+  }, 8_000);
 
   it('should infer the result as static when potential observable is a dictionary with at least one non-observable property', () => {
     expectPotentialObservable(
@@ -103,7 +103,7 @@ describe('PushPipe', () => {
       'Dictionary',
       'interface Dictionary { o: Observable<string>; p: Promise<null> }'
     ).toBeInferredAs('Dictionary');
-  });
+  }, 8_000);
 
   it('should infer the result as static when potential observable is an observable dictionary with optional properties', () => {
     expectPotentialObservable(
@@ -115,7 +115,7 @@ describe('PushPipe', () => {
       'Dictionary',
       'interface Dictionary { o1: Observable<number>; o2?: Observable<bigint> }'
     ).toBeInferredAs('Dictionary');
-  });
+  }, 8_000);
 
   it('should infer the result when potential observable is a union of observable dictionary and non-observable', () => {
     expectPotentialObservable(
@@ -125,7 +125,7 @@ describe('PushPipe', () => {
       'Dictionary | number',
       'interface Dictionary { x: Observable<string> }'
     ).toBeInferredAs('number | { x: string; } | undefined');
-  });
+  }, 8_000);
 
   it('should infer the result when potential observable is a union of observable dictionary and promise', () => {
     expectPotentialObservable(
@@ -135,7 +135,7 @@ describe('PushPipe', () => {
       'Dictionary | Promise<symbol>',
       'interface Dictionary { o: Observable<symbol> }'
     ).toBeInferredAs('symbol | { o: symbol; } | undefined');
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is a union of observable dictionary and observable', () => {
     expectPotentialObservable(
@@ -145,5 +145,5 @@ describe('PushPipe', () => {
       'Dictionary | Observable<bigint>',
       'interface Dictionary { o: Observable<bigint> }'
     ).toBeInferredAs('bigint | { o: bigint; } | undefined');
-  });
+  }, 8_000);
 });

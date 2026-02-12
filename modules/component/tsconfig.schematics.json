@@ -5,11 +5,14 @@
     "stripInternal": true,
     "experimentalDecorators": true,
     "module": "nodenext",
+    "target": "es2022",
+
     "moduleResolution": "nodenext",
     "downlevelIteration": true,
     "outDir": "../../dist/modules/component",
     "paths": {
-      "@ngrx/component/schematics-core": ["./schematics-core"]
+      "@ngrx/component/schematics-core": ["./schematics-core"],
+      "@ngrx/component": ["./src"]
     },
     "sourceMap": true,
     "inlineSources": true,
