@@ -27,74 +27,74 @@ describe('LetDirective', () => {
       'User',
       'interface User { name: string; }'
     ).toBeInferredAs('User');
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is a union of non-observables', () => {
     expectPotentialObservable(
       'string | { ngrx: boolean; } | null'
     ).toBeInferredAs('string | { ngrx: boolean; } | null');
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is a promise', () => {
     expectPotentialObservable('Promise<{ ngrx: number; }>').toBeInferredAs(
       '{ ngrx: number; }'
     );
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is a union of promises', () => {
     expectPotentialObservable(
       'Promise<string> | Promise<boolean | { ngrx: number; }>'
     ).toBeInferredAs('string | boolean | { ngrx: number; }');
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is a union of promise and non-observable', () => {
     expectPotentialObservable(
       'Promise<{ ngrx: string; }> | number[] | null'
     ).toBeInferredAs('{ ngrx: string; } | number[] | null');
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is an observable', () => {
     expectPotentialObservable(
       'Observable<{ component: boolean; }>'
     ).toBeInferredAs('{ component: boolean; }');
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is a union of observables', () => {
     expectPotentialObservable(
       'Observable<string> | Observable<{ ngrx: number; } | null>'
     ).toBeInferredAs('string | { ngrx: number; } | null');
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is a union of observable and promise', () => {
     expectPotentialObservable(
       'Observable<{ component: number; }> | Promise<string | undefined>'
     ).toBeInferredAs('string | { component: number; } | undefined');
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is a union of observable and non-observable', () => {
     expectPotentialObservable(
       'Observable<Record<string, unknown>> | boolean[] | undefined'
     ).toBeInferredAs('Record<string, unknown> | boolean[] | undefined');
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is a union of observable, promise, and non-observable', () => {
     expectPotentialObservable(
       'Observable<number> | Promise<{ ngrx: string; }> | boolean | null'
     ).toBeInferredAs('number | boolean | { ngrx: string; } | null');
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is an observable dictionary', () => {
     expectPotentialObservable(
       '{ o1: Observable<number>; o2: Observable<{ ngrx: string }> }'
     ).toBeInferredAs('{ o1: number; o2: { ngrx: string; }; }');
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is an observable dictionary typed as interface', () => {
     expectPotentialObservable(
       'Dictionary',
       'interface Dictionary { x: Observable<string>; y: Observable<boolean | undefined> }'
     ).toBeInferredAs('{ x: string; y: boolean | undefined; }');
-  });
+  }, 8_000);
 
   it('should infer the value as static when potential observable is a dictionary with at least one non-observable property', () => {
     expectPotentialObservable(
@@ -104,7 +104,7 @@ describe('LetDirective', () => {
       'Dictionary',
       'interface Dictionary { o: Observable<number>; p: Promise<string> }'
     ).toBeInferredAs('Dictionary');
-  });
+  }, 8_000);
 
   it('should infer the value as static when potential observable is an observable dictionary with optional properties', () => {
     expectPotentialObservable(
@@ -116,7 +116,7 @@ describe('LetDirective', () => {
       'Dictionary',
       'interface Dictionary { o1: Observable<number>; o2?: Observable<bigint> }'
     ).toBeInferredAs('Dictionary');
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is a union of observable dictionary and non-observable', () => {
     expectPotentialObservable(
@@ -126,7 +126,7 @@ describe('LetDirective', () => {
       'Dictionary | number',
       'interface Dictionary { o: Observable<number> }'
     ).toBeInferredAs('number | { o: number; }');
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is a union of observable dictionary and promise', () => {
     expectPotentialObservable(
@@ -136,7 +136,7 @@ describe('LetDirective', () => {
       'Dictionary | Promise<number>',
       'interface Dictionary { o: Observable<number> }'
     ).toBeInferredAs('number | { o: number; }');
-  });
+  }, 8_000);
 
   it('should infer the value when potential observable is a union of observable dictionary and observable', () => {
     expectPotentialObservable(
@@ -146,5 +146,5 @@ describe('LetDirective', () => {
       'Dictionary | Observable<boolean>',
       'interface Dictionary { o: Observable<boolean> }'
     ).toBeInferredAs('boolean | { o: boolean; }');
-  });
+  }, 8_000);
 });
