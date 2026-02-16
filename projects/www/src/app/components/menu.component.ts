@@ -37,10 +37,13 @@ import { ThemeToggleComponent } from './theme-toggle.component';
       <button class="close-menu" (click)="closeMenu()">
         <mat-icon class="close-menu-icon">close</mat-icon>
       </button>
-      <a routerLink="" class="logoLink" (click)="closeMenu()">
-        <img src="/ngrx-logo-pink.svg" alt="ngrx logo" />
-        NgRx
-      </a>
+      <div class="sidebar-header">
+        <a routerLink="" class="logoLink" (click)="closeMenu()">
+          <img src="/ngrx-logo-pink.svg" alt="ngrx logo" />
+          NgRx
+        </a>
+        <ngrx-theme-toggle />
+      </div>
       <ngrx-version-navigation />
       <hr />
       <!--      <a-->
@@ -77,7 +80,6 @@ import { ThemeToggleComponent } from './theme-toggle.component';
         <mat-icon>code</mat-icon>
         GitHub
       </a>
-      <ngrx-theme-toggle />
       <hr />
       <span class="guideHeader">Guide</span>
       <ngrx-guide-section
@@ -159,6 +161,13 @@ import { ThemeToggleComponent } from './theme-toggle.component';
 
       .logoLink img {
         width: 24px;
+      }
+
+      .sidebar-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
       }
 
       :host {
