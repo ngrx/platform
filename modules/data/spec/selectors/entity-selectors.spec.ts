@@ -7,6 +7,7 @@ import {
   PropsFilterFnFactory,
   EntitySelectors,
 } from '../../';
+import { vi } from 'vitest';
 
 describe('EntitySelectors', () => {
   /** HeroMetadata identifies the extra collection state properties */
@@ -29,7 +30,7 @@ describe('EntitySelectors', () => {
 
   beforeEach(() => {
     collectionCreator = {
-      create: jasmine.createSpy('create'),
+      create: vi.fn().mockName('create'),
     };
     entitySelectorsFactory = new EntitySelectorsFactory(collectionCreator);
   });
@@ -43,7 +44,7 @@ describe('EntitySelectors', () => {
     });
 
     it('creates collection selector that defaults to initial state', () => {
-      collectionCreator.create.and.returnValue(initialState);
+      collectionCreator.create.mockReturnValue(initialState);
       const selectors = entitySelectorsFactory.createCollectionSelector<
         Hero,
         HeroCollection

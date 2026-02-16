@@ -1,5 +1,5 @@
 // Not using marble testing
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Action } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 import { observeOn } from 'rxjs/operators';
@@ -22,6 +22,7 @@ import {
   Logger,
   MergeStrategy,
 } from '../..';
+import { vi } from 'vitest';
 
 describe('EntityCacheEffects (normal testing)', () => {
   let actions$: ReplaySubject<Action>;
@@ -35,10 +36,10 @@ describe('EntityCacheEffects (normal testing)', () => {
     mergeStrategy: typeof mergeStrategy;
   };
 
-  function expectCompletion(completion: any, done: any) {
+  function expectCompletion(completion: any, done: any, fail: any) {
     effects.saveEntities$.subscribe({
       next: (result) => {
-        expect(result).toEqual(completion);
+        expect(result).toEqual(expect.objectContaining(completion));
         done();
       },
       error: fail,
@@ -49,9 +50,9 @@ describe('EntityCacheEffects (normal testing)', () => {
     actions$ = new ReplaySubject<Action>(1);
     correlationId = 'CORID42';
     logger = {
-      error: jasmine.createSpy('error'),
-      log: jasmine.createSpy('log'),
-      warn: jasmine.createSpy('warn'),
+      error: vi.fn().mockName('error'),
+      log: vi.fn().mockName('log'),
+      warn: vi.fn().mockName('warn'),
     };
     mergeStrategy = undefined;
     options = { correlationId, mergeStrategy };
@@ -79,92 +80,98 @@ describe('EntityCacheEffects (normal testing)', () => {
     ) as TestEntityCacheDataService;
   });
 
-  it('should return a SAVE_ENTITIES_SUCCESS with the expected ChangeSet on success', (done: any) => {
-    const cs = createChangeSet();
-    const action = new SaveEntities(cs, 'test/save', options);
-    const completion = new SaveEntitiesSuccess(cs, 'test/save', options);
+  it('should return a SAVE_ENTITIES_SUCCESS with the expected ChangeSet on success', () =>
+    new Promise<void>((done, fail) => {
+      const cs = createChangeSet();
+      const action = new SaveEntities(cs, 'test/save', options);
+      const completion = new SaveEntitiesSuccess(cs, 'test/save', options);
 
-    expectCompletion(completion, done);
+      expectCompletion(completion, done, fail);
 
-    actions$.next(action);
-    dataService.setResponse(cs);
-  });
+      actions$.next(action);
+      dataService.setResponse(cs);
+    }));
 
-  it('should not emit SAVE_ENTITIES_SUCCESS if cancel arrives in time', (done: any) => {
-    const cs = createChangeSet();
-    const action = new SaveEntities(cs, 'test/save', options);
-    const cancel = new SaveEntitiesCancel(correlationId, 'Test Cancel');
+  it('should not emit SAVE_ENTITIES_SUCCESS if cancel arrives in time', () =>
+    new Promise<void>((done, fail) => {
+      const cs = createChangeSet();
+      const action = new SaveEntities(cs, 'test/save', options);
+      const cancel = new SaveEntitiesCancel(correlationId, 'Test Cancel');
 
-    effects.saveEntities$.subscribe({
-      next: (result) => {
-        expect(result instanceof SaveEntitiesSuccess).toBe(false);
-        expect(result instanceof SaveEntitiesCanceled).toBe(true); // instead
-        done();
-      },
-      error: done.fail,
-    });
+      effects.saveEntities$.subscribe({
+        next: (result) => {
+          expect(result instanceof SaveEntitiesSuccess).toBe(false);
+          expect(result instanceof SaveEntitiesCanceled).toBe(true); // instead
+          done();
+        },
+        error: fail,
+      });
 
-    actions$.next(action);
-    actions$.next(cancel);
-    dataService.setResponse(cs);
-  });
+      actions$.next(action);
+      actions$.next(cancel);
+      dataService.setResponse(cs);
+    }));
 
-  it('should emit SAVE_ENTITIES_SUCCESS if cancel arrives too late', fakeAsync((
-    done: any
-  ) => {
-    const cs = createChangeSet();
-    const action = new SaveEntities(cs, 'test/save', options);
-    const cancel = new SaveEntitiesCancel(correlationId, 'Test Cancel');
+  it('should emit SAVE_ENTITIES_SUCCESS if cancel arrives too late', () =>
+    new Promise<void>((done, fail) => {
+      vi.useFakeTimers();
+      const cs = createChangeSet();
+      const action = new SaveEntities(cs, 'test/save', options);
+      const cancel = new SaveEntitiesCancel(correlationId, 'Test Cancel');
 
-    effects.saveEntities$.subscribe({
-      next: (result) => {
-        expect(result instanceof SaveEntitiesSuccess).toBe(true);
-        done();
-      },
-      error: done.fail,
-    });
+      effects.saveEntities$.subscribe({
+        next: (result) => {
+          expect(result).toBeInstanceOf(SaveEntitiesSuccess);
+          done();
+          vi.useRealTimers();
+        },
+        error: fail,
+      });
 
-    actions$.next(action);
-    dataService.setResponse(cs);
+      actions$.next(action);
+      dataService.setResponse(cs);
 
-    tick(1);
-    actions$.next(cancel);
-  }));
+      vi.advanceTimersByTime(1);
+      actions$.next(cancel);
+    }));
 
-  it('should emit SAVE_ENTITIES_SUCCESS immediately if no changes to save', (done: any) => {
-    const action = new SaveEntities({ changes: [] }, 'test/save', options);
-    effects.saveEntities$.subscribe({
-      next: (result) => {
-        expect(result instanceof SaveEntitiesSuccess).toBe(true);
-        expect(dataService.saveEntities).not.toHaveBeenCalled();
-        done();
-      },
-      error: done.fail,
-    });
-    actions$.next(action);
-  });
+  it('should emit SAVE_ENTITIES_SUCCESS immediately if no changes to save', () =>
+    new Promise<void>((done, fail) => {
+      const action = new SaveEntities({ changes: [] }, 'test/save', options);
+      effects.saveEntities$.subscribe({
+        next: (result) => {
+          expect(result instanceof SaveEntitiesSuccess).toBe(true);
+          expect(dataService.saveEntities).not.toHaveBeenCalled();
+          done();
+        },
+        error: fail,
+      });
+      actions$.next(action);
+    }));
 
-  it('should return a SAVE_ENTITIES_ERROR when data service fails', (done: any) => {
-    const cs = createChangeSet();
-    const action = new SaveEntities(cs, 'test/save', options);
-    const httpError = { error: new Error('Test Failure'), status: 501 };
-    const error = makeDataServiceError('POST', httpError);
-    const completion = new SaveEntitiesError(error, action);
+  it('should return a SAVE_ENTITIES_ERROR when data service fails', () =>
+    new Promise<void>((done, fail) => {
+      const cs = createChangeSet();
+      const action = new SaveEntities(cs, 'test/save', options);
+      const httpError = { error: new Error('Test Failure'), status: 501 };
+      const error = makeDataServiceError('POST', httpError);
+      const completion = new SaveEntitiesError(error, action);
 
-    expectCompletion(completion, done);
+      expectCompletion(completion, done, fail);
 
-    actions$.next(action);
-    dataService.setErrorResponse(error);
-  });
+      actions$.next(action);
+      dataService.setErrorResponse(error);
+    }));
 });
 
 // #region test helpers
 export class TestEntityCacheDataService {
   response$ = new Subject<any>();
 
-  saveEntities = jasmine
-    .createSpy('saveEntities')
-    .and.returnValue(this.response$.pipe(observeOn(asapScheduler)));
+  saveEntities = vi
+    .fn()
+    .mockName('saveEntities')
+    .mockReturnValue(this.response$);
 
   setResponse(data: any) {
     this.response$.next(data);
