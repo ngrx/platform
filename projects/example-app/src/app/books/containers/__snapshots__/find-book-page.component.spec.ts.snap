@@ -1,41 +1,50 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Find Book Page should compile 1`] = `
-<bc-find-book-page
-  books$={[Function _Store]}
-  error$={[Function _Store]}
-  loading$={[Function _Store]}
-  searchQuery$={[Function _Store]}
-  store={[Function _MockStore]}
->
-  <bc-book-search>
+exports[`Find Book Page > should compile 1`] = `
+<bc-find-book-page>
+  <bc-book-search
+    _nghost-a-c3898412319=""
+  >
     <mat-card
+      _ngcontent-a-c3898412319=""
       class="mat-mdc-card mdc-card"
     >
       <mat-card-title
+        _ngcontent-a-c3898412319=""
         class="mat-mdc-card-title"
       >
         Find a Book
       </mat-card-title>
       <mat-card-content
+        _ngcontent-a-c3898412319=""
         class="mat-mdc-card-content"
       >
         <mat-form-field
+          _ngcontent-a-c3898412319=""
           class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-primary"
         >
+          <!--container-->
           <div
             class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled mdc-text-field--no-label"
           >
             <div
               class="mat-mdc-form-field-focus-overlay"
             />
+            <!--container-->
             <div
               class="mat-mdc-form-field-flex"
             >
+              <!--container-->
+              <!--container-->
+              <!--container-->
               <div
                 class="mat-mdc-form-field-infix"
               >
+                <!--container-->
+                <!--container-->
+                <!--container-->
                 <input
+                  _ngcontent-a-c3898412319=""
                   aria-invalid="false"
                   aria-required="false"
                   class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input cdk-text-field-autofill-monitored"
@@ -44,27 +53,34 @@ exports[`Find Book Page should compile 1`] = `
                   placeholder="Search for a book"
                 />
               </div>
+              <!--container-->
+              <!--container-->
             </div>
             <div
               class="mdc-line-ripple mdc-line-ripple--deactivating"
               matformfieldlineripple=""
             />
+            <!--container-->
           </div>
           <div
             aria-atomic="true"
             aria-live="polite"
             class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"
           >
+            <!--container-->
             <div
               class="mat-mdc-form-field-hint-wrapper"
             >
+              <!--container-->
               <div
                 class="mat-mdc-form-field-hint-spacer"
               />
             </div>
+            <!--container-->
           </div>
         </mat-form-field>
         <mat-spinner
+          _ngcontent-a-c3898412319=""
           aria-valuemax="100"
           aria-valuemin="0"
           class="mat-mdc-progress-spinner mdc-circular-progress mat-primary _mat-animation-noopable mdc-circular-progress--indeterminate"
@@ -73,6 +89,7 @@ exports[`Find Book Page should compile 1`] = `
           style="width: 30px; height: 30px; --mat-progress-spinner-size: 30px; --mat-progress-spinner-active-indicator-width: 30px;"
           tabindex="-1"
         >
+          <!--container-->
           <div
             aria-hidden="true"
             class="mdc-circular-progress__determinate-container"
@@ -115,6 +132,7 @@ exports[`Find Book Page should compile 1`] = `
                     style="stroke-dasharray: 62.83185307179586px; stroke-dashoffset: 31.41592653589793px; stroke-width: 10%;"
                   />
                 </svg>
+                <!--ng-container-->
               </div>
               <div
                 class="mdc-circular-progress__gap-patch"
@@ -132,6 +150,7 @@ exports[`Find Book Page should compile 1`] = `
                     style="stroke-dasharray: 62.83185307179586px; stroke-dashoffset: 31.41592653589793px; stroke-width: 10%;"
                   />
                 </svg>
+                <!--ng-container-->
               </div>
               <div
                 class="mdc-circular-progress__circle-clipper mdc-circular-progress__circle-right"
@@ -149,17 +168,24 @@ exports[`Find Book Page should compile 1`] = `
                     style="stroke-dasharray: 62.83185307179586px; stroke-dashoffset: 31.41592653589793px; stroke-width: 10%;"
                   />
                 </svg>
+                <!--ng-container-->
               </div>
             </div>
           </div>
         </mat-spinner>
       </mat-card-content>
       <mat-card-footer
+        _ngcontent-a-c3898412319=""
         class="mat-mdc-card-footer"
       >
+        <!--container-->
       </mat-card-footer>
     </mat-card>
-  </bc-book-search><bc-book-preview-list>
+  </bc-book-search>
+  <bc-book-preview-list
+    _nghost-a-c3778324089=""
+  >
+    <!--container-->
   </bc-book-preview-list>
 </bc-find-book-page>
 `;

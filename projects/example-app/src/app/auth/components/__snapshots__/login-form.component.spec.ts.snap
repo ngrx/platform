@@ -1,22 +1,35 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Login Page should compile 1`] = `
+exports[`Login Page > should compile 1`] = `
 <bc-login-form
-  form={[Function FormGroup]}
-  submitted={[Function EventEmitter_]}
+  errormessage="[object Object]"
+  pending="[object Object]"
+  submitted="[object Object]"
 >
-  <mat-card>
-    <mat-card-title>
+  <mat-card
+    _ngcontent-a-c1882380116=""
+  >
+    <mat-card-title
+      _ngcontent-a-c1882380116=""
+    >
       Login
     </mat-card-title>
-    <mat-card-content>
+    <mat-card-content
+      _ngcontent-a-c1882380116=""
+    >
       <form
+        _ngcontent-a-c1882380116=""
         class="ng-untouched ng-pristine ng-valid"
         novalidate=""
       >
-        <p>
-          <mat-form-field>
+        <p
+          _ngcontent-a-c1882380116=""
+        >
+          <mat-form-field
+            _ngcontent-a-c1882380116=""
+          >
             <input
+              _ngcontent-a-c1882380116=""
               class="ng-untouched ng-pristine ng-valid"
               formcontrolname="username"
               matinput=""
@@ -25,9 +38,14 @@ exports[`Login Page should compile 1`] = `
             />
           </mat-form-field>
         </p>
-        <p>
-          <mat-form-field>
+        <p
+          _ngcontent-a-c1882380116=""
+        >
+          <mat-form-field
+            _ngcontent-a-c1882380116=""
+          >
             <input
+              _ngcontent-a-c1882380116=""
               class="ng-untouched ng-pristine ng-valid"
               formcontrolname="password"
               matinput=""
@@ -36,10 +54,13 @@ exports[`Login Page should compile 1`] = `
             />
           </mat-form-field>
         </p>
+        <!--container-->
         <div
+          _ngcontent-a-c1882380116=""
           class="login-buttons"
         >
           <button
+            _ngcontent-a-c1882380116=""
             mat-button=""
             type="submit"
           >
@@ -52,23 +73,36 @@ exports[`Login Page should compile 1`] = `
 </bc-login-form>
 `;
 
-exports[`Login Page should disable the form if pending 1`] = `
+exports[`Login Page > should disable the form if pending 1`] = `
 <bc-login-form
-  form={[Function FormGroup]}
-  submitted={[Function EventEmitter_]}
+  errormessage="[object Object]"
+  pending="[object Object]"
+  submitted="[object Object]"
 >
-  <mat-card>
-    <mat-card-title>
+  <mat-card
+    _ngcontent-a-c1882380116=""
+  >
+    <mat-card-title
+      _ngcontent-a-c1882380116=""
+    >
       Login
     </mat-card-title>
-    <mat-card-content>
+    <mat-card-content
+      _ngcontent-a-c1882380116=""
+    >
       <form
+        _ngcontent-a-c1882380116=""
         class="ng-untouched ng-pristine"
         novalidate=""
       >
-        <p>
-          <mat-form-field>
+        <p
+          _ngcontent-a-c1882380116=""
+        >
+          <mat-form-field
+            _ngcontent-a-c1882380116=""
+          >
             <input
+              _ngcontent-a-c1882380116=""
               class="ng-untouched ng-pristine"
               disabled=""
               formcontrolname="username"
@@ -78,9 +112,14 @@ exports[`Login Page should disable the form if pending 1`] = `
             />
           </mat-form-field>
         </p>
-        <p>
-          <mat-form-field>
+        <p
+          _ngcontent-a-c1882380116=""
+        >
+          <mat-form-field
+            _ngcontent-a-c1882380116=""
+          >
             <input
+              _ngcontent-a-c1882380116=""
               class="ng-untouched ng-pristine"
               disabled=""
               formcontrolname="password"
@@ -90,10 +129,13 @@ exports[`Login Page should disable the form if pending 1`] = `
             />
           </mat-form-field>
         </p>
+        <!--container-->
         <div
+          _ngcontent-a-c1882380116=""
           class="login-buttons"
         >
           <button
+            _ngcontent-a-c1882380116=""
             mat-button=""
             type="submit"
           >
@@ -106,24 +148,36 @@ exports[`Login Page should disable the form if pending 1`] = `
 </bc-login-form>
 `;
 
-exports[`Login Page should display an error message if provided 1`] = `
+exports[`Login Page > should display an error message if provided 1`] = `
 <bc-login-form
-  errorMessage={[Function String]}
-  form={[Function FormGroup]}
-  submitted={[Function EventEmitter_]}
+  errormessage="[object Object]"
+  pending="[object Object]"
+  submitted="[object Object]"
 >
-  <mat-card>
-    <mat-card-title>
+  <mat-card
+    _ngcontent-a-c1882380116=""
+  >
+    <mat-card-title
+      _ngcontent-a-c1882380116=""
+    >
       Login
     </mat-card-title>
-    <mat-card-content>
+    <mat-card-content
+      _ngcontent-a-c1882380116=""
+    >
       <form
+        _ngcontent-a-c1882380116=""
         class="ng-untouched ng-pristine ng-valid"
         novalidate=""
       >
-        <p>
-          <mat-form-field>
+        <p
+          _ngcontent-a-c1882380116=""
+        >
+          <mat-form-field
+            _ngcontent-a-c1882380116=""
+          >
             <input
+              _ngcontent-a-c1882380116=""
               class="ng-untouched ng-pristine ng-valid"
               formcontrolname="username"
               matinput=""
@@ -132,9 +186,14 @@ exports[`Login Page should display an error message if provided 1`] = `
             />
           </mat-form-field>
         </p>
-        <p>
-          <mat-form-field>
+        <p
+          _ngcontent-a-c1882380116=""
+        >
+          <mat-form-field
+            _ngcontent-a-c1882380116=""
+          >
             <input
+              _ngcontent-a-c1882380116=""
               class="ng-untouched ng-pristine ng-valid"
               formcontrolname="password"
               matinput=""
@@ -144,14 +203,18 @@ exports[`Login Page should display an error message if provided 1`] = `
           </mat-form-field>
         </p>
         <p
+          _ngcontent-a-c1882380116=""
           class="login-error"
         >
            Invalid credentials 
         </p>
+        <!--container-->
         <div
+          _ngcontent-a-c1882380116=""
           class="login-buttons"
         >
           <button
+            _ngcontent-a-c1882380116=""
             mat-button=""
             type="submit"
           >

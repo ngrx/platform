@@ -59,7 +59,7 @@ describe('Login Page', () => {
     };
     instance.form.setValue(credentials);
 
-    jest.spyOn(instance.submitted, 'emit');
+    vi.spyOn(instance.submitted, 'emit');
     instance.submit();
 
     expect(instance.submitted.emit).toHaveBeenCalledWith(credentials);
