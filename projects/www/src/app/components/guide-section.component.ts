@@ -53,7 +53,7 @@ import { Section } from '../services/guide-menu.service';
       }
 
       :host(.collapsible) .section-content {
-        border-left: 1px solid rgba(255, 255, 255, 0.12);
+        border-left: 1px solid var(--ngrx-border-color);
         padding: 4px 16px;
         margin-left: 12px;
       }
@@ -63,7 +63,7 @@ import { Section } from '../services/guide-menu.service';
       }
 
       :host(.hasActiveUrl) > section > .section-content {
-        border-color: rgba(207, 143, 197, 0.54);
+        border-color: var(--ngrx-active-border);
       }
 
       section header button {
@@ -78,12 +78,12 @@ import { Section } from '../services/guide-menu.service';
         outline: none;
         border: none;
         background: none;
-        color: rgba(255, 255, 255, 0.72);
+        color: var(--ngrx-text-secondary);
         cursor: pointer;
       }
 
       :host(.hasActiveUrl) > section > header > button {
-        color: #cf8fc5;
+        color: var(--ngrx-accent, #cf8fc5);
       }
 
       section header mat-icon {
@@ -103,7 +103,7 @@ import { Section } from '../services/guide-menu.service';
 
       hr {
         border: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
         margin: 16px 0;
         width: 100%;
       }

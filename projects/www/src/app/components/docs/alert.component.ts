@@ -22,7 +22,7 @@ export type AlertType = 'inform' | 'warn' | 'error' | 'help';
         border-top: 1px solid;
         border-bottom: 1px solid;
         border-right: 1px solid;
-        border-color: rgba(255, 255, 255, 0.12);
+        border-color: var(--ngrx-border-color);
       }
 
       :host p {
@@ -45,7 +45,7 @@ export type AlertType = 'inform' | 'warn' | 'error' | 'help';
       }
 
       :host(.help) {
-        border-color: rgba(255, 172, 230, 0.72);
+        border-color: var(--ngrx-link);
         background-color: rgba(255, 172, 230, 0.08);
       }
 

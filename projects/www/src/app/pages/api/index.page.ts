@@ -60,11 +60,11 @@ import { MinimizedApiMemberSummary } from '@ngrx-io/shared';
         padding: 8px 0 24px;
         justify-content: space-between;
         align-items: flex-end;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom: 1px solid var(--ngrx-border-color);
         position: sticky;
         top: 0;
         z-index: 1;
-        background-color: #17111a;
+        background-color: var(--ngrx-bg);
         @media only screen and (max-width: 1280px) {
           top: 62px;
         }
@@ -85,17 +85,17 @@ import { MinimizedApiMemberSummary } from '@ngrx-io/shared';
         bottom: 0;
         display: flex;
         align-items: center;
-        color: rgba(255, 255, 255, 0.54);
+        color: var(--ngrx-text-faint);
       }
 
       .filter input {
         background-color: transparent;
         border: none;
-        color: white;
+        color: var(--ngrx-text);
         font-size: 16px;
         padding: 8px 0 8px 38px;
         width: 100%;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid var(--ngrx-border-color);
         border-radius: 4px;
       }
 
@@ -105,7 +105,7 @@ import { MinimizedApiMemberSummary } from '@ngrx-io/shared';
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 16px;
-        border-left: 1px solid rgba(255, 255, 255, 0.12);
+        border-left: 1px solid var(--ngrx-border-color);
         @media only screen and (max-width: 1280px) {
           grid-template-columns: repeat(2, 1fr);
         }

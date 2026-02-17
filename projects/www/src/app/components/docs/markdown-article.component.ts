@@ -69,7 +69,7 @@ type Heading = { level: number; text: string; id: string; url: string };
         right: 24px;
         margin: 0;
         padding: 0;
-        border-left: 1px solid rgba(255, 255, 255, 0.12);
+        border-left: 1px solid var(--ngrx-border-color);
         @media only screen and (max-width: 1280px) {
           position: relative;
           width: 100%;
@@ -79,18 +79,18 @@ type Heading = { level: number; text: string; id: string; url: string };
       }
 
       menu a {
-        color: rgba(255, 255, 255, 0.56);
+        color: var(--ngrx-text-muted);
         font-size: 13px;
         border-left: 2px solid transparent;
       }
 
       menu a:hover {
-        color: rgba(255, 255, 255, 0.87);
+        color: var(--ngrx-text-primary);
       }
 
       menu a.active {
-        color: rgba(255, 255, 255, 0.87);
-        border-color: rgba(207, 143, 197, 0.96);
+        color: var(--ngrx-text-primary);
+        border-color: var(--ngrx-accent);
       }
 
       .content-menu-holder {
@@ -109,7 +109,7 @@ type Heading = { level: number; text: string; id: string; url: string };
         align-items: center;
         justify-content: space-between;
         padding: 5px 10px;
-        background: #201a23;
+        background: var(--ngrx-bg-content-menu);
         border-radius: 5px;
         display: flex;
         margin-bottom: 10px;
@@ -119,7 +119,7 @@ type Heading = { level: number; text: string; id: string; url: string };
           display: flex;
         }
         &:hover {
-          background: #262029;
+          background: var(--ngrx-bg-content-menu-hover);
         }
       }
 
@@ -153,9 +153,9 @@ type Heading = { level: number; text: string; id: string; url: string };
 
       article ::ng-deep table {
         border-collapse: collapse;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
-        border-left: 1px solid rgba(255, 255, 255, 0.12);
-        border-right: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
+        border-left: 1px solid var(--ngrx-border-color);
+        border-right: 1px solid var(--ngrx-border-color);
         margin: 14px 0;
         @media only screen and (max-width: 1280px) {
           display: block;
@@ -164,12 +164,12 @@ type Heading = { level: number; text: string; id: string; url: string };
       }
 
       article ::ng-deep table thead {
-        background-color: rgba(0, 0, 0, 0.36);
+        background-color: var(--ngrx-table-header-bg);
         font-family: 'Oxanium', sans-serif;
       }
 
       article ::ng-deep table tr {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom: 1px solid var(--ngrx-border-color);
       }
 
       article ::ng-deep table th,

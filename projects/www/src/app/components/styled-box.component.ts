@@ -100,7 +100,7 @@ import {
         --background-blur-shapes-rotation: 27deg;
         border-radius: 32px;
         overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid var(--ngrx-border-color);
         position: relative;
       }
 

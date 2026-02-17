@@ -17,7 +17,7 @@ import { MarkdownPipe } from './markdown.pipe';
       ngrx-symbol-summary .summary {
         display: block;
         padding: 16px;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
       }
 
       ngrx-symbol-summary p:first-of-type {

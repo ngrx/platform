@@ -11,7 +11,7 @@ import { CanonicalReference } from '@ngrx-io/shared';
   styles: [
     `
       ngrx-docs-symbol-link {
-        color: #ffdcbe;
+        color: var(--ngrx-link);
       }
 
       ngrx-docs-symbol-link a {
