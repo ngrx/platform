@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals!getState:function(1)",
-      "docComment": "",
+      "docComment": "/**\n * @description\n *\n * Returns a snapshot of the current state from a SignalStore or SignalState. When used within a reactive context, state changes are automatically tracked.\n *\n * @usageNotes\n * ```ts\n * import { Component, effect, inject } from '@angular/core';\n * import { getState, signalStore, withState } from '@ngrx/signals';\n *\n * export const CounterStore = signalStore(\n *   withState({ count1: 0, count2: 0 })\n * );\n *\n * \\@Component(...)\n * export class Counter {\n *   readonly store = inject(CounterStore);\n *\n *   constructor() {\n *     effect(() => {\n *       const state = getState(this.store);\n *       // 👇 Logs on state changes.\n *       console.log(state);\n *     });\n *   }\n * }\n * ```\n *\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -84,8 +84,8 @@
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
-        "usageNotes": "",
+        "summary": "\n\nReturns a snapshot of the current state from a SignalStore or SignalState. When used within a reactive context, state changes are automatically tracked.\n\n",
+        "usageNotes": "\n```ts\nimport { Component, effect, inject } from '@angular/core';\nimport { getState, signalStore, withState } from '@ngrx/signals';\n\nexport const CounterStore = signalStore(\n  withState({ count1: 0, count2: 0 })\n);\n\n\\@Component(...)\nexport class Counter {\n  readonly store = inject(CounterStore);\n\n  constructor() {\n    effect(() => {\n      const state = getState(this.store);\n      // 👇 Logs on state changes.\n      console.log(state);\n    });\n  }\n}\n```\n\n",
         "remarks": "",
         "deprecated": "",
         "returns": "",

@@ -239,12 +239,12 @@
             },
             {
               "kind": "Reference",
-              "text": "Memoized",
-              "canonicalReference": "@ngrx/store/testing!~Memoized:type"
+              "text": "MemoizedSelector",
+              "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
             },
             {
               "kind": "Content",
-              "text": "<Result>"
+              "text": "<any, Result>"
             },
             {
               "kind": "Content",
@@ -269,16 +269,7 @@
             },
             {
               "kind": "Content",
-              "text": "<any, infer T> ? T : Selector extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "MemoizedSelectorWithProps",
-              "canonicalReference": "@ngrx/store!MemoizedSelectorWithProps:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<any, any, infer U> ? U : Value"
+              "text": "<any, infer T> ? T : Value"
             },
             {
               "kind": "Content",
@@ -302,21 +293,12 @@
             },
             {
               "kind": "Reference",
-              "text": "OnlyMemoized",
-              "canonicalReference": "@ngrx/store/testing!~OnlyMemoized:type"
+              "text": "MemoizedSelector",
+              "canonicalReference": "@ngrx/store!MemoizedSelector:interface"
             },
             {
               "kind": "Content",
-              "text": "<typeof "
-            },
-            {
-              "kind": "Reference",
-              "text": "selector",
-              "canonicalReference": "@ngrx/store/testing!~selector:var"
-            },
-            {
-              "kind": "Content",
-              "text": ", Result>"
+              "text": "<any, Result>"
             },
             {
               "kind": "Content",
@@ -354,14 +336,14 @@
               },
               "defaultTypeTokenRange": {
                 "startIndex": 6,
-                "endIndex": 11
+                "endIndex": 9
               }
             }
           ],
           "isStatic": false,
           "returnTypeTokenRange": {
-            "startIndex": 16,
-            "endIndex": 20
+            "startIndex": 14,
+            "endIndex": 16
           },
           "releaseTag": "Public",
           "isProtected": false,
@@ -370,16 +352,16 @@
             {
               "parameterName": "selector",
               "parameterTypeTokenRange": {
-                "startIndex": 12,
-                "endIndex": 13
+                "startIndex": 10,
+                "endIndex": 11
               },
               "isOptional": false
             },
             {
               "parameterName": "value",
               "parameterTypeTokenRange": {
-                "startIndex": 14,
-                "endIndex": 15
+                "startIndex": 12,
+                "endIndex": 13
               },
               "isOptional": false
             }
@@ -625,14 +607,6 @@
             },
             {
               "kind": "Content",
-              "text": ", prop?: "
-            },
-            {
-              "kind": "Content",
-              "text": "any"
-            },
-            {
-              "kind": "Content",
               "text": "): "
             },
             {
@@ -651,8 +625,8 @@
           ],
           "isStatic": false,
           "returnTypeTokenRange": {
-            "startIndex": 5,
-            "endIndex": 7
+            "startIndex": 3,
+            "endIndex": 5
           },
           "releaseTag": "Public",
           "isProtected": false,
@@ -665,14 +639,6 @@
                 "endIndex": 2
               },
               "isOptional": false
-            },
-            {
-              "parameterName": "prop",
-              "parameterTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "isOptional": true
             }
           ],
           "isOptional": false,

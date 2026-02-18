@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals!withComputed:function(1)",
-      "docComment": "",
+      "docComment": "/**\n * @description\n *\n * Adds computed signals to a SignalStore. Accepts a factory function that returns a dictionary of computed signals or computation functions.\n *\n * @usageNotes\n * ```ts\n * import { signalStore, withState, withComputed } from '@ngrx/signals';\n *\n * export const CounterStore = signalStore(\n *   withState({ count: 0 }),\n *   withComputed(({ count }) => ({\n *     doubleCount: () => count() * 2,\n *   }))\n * );\n * ```\n *\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -145,8 +145,8 @@
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
-        "usageNotes": "",
+        "summary": "\n\nAdds computed signals to a SignalStore. Accepts a factory function that returns a dictionary of computed signals or computation functions.\n\n",
+        "usageNotes": "\n```ts\nimport { signalStore, withState, withComputed } from '@ngrx/signals';\n\nexport const CounterStore = signalStore(\n  withState({ count: 0 }),\n  withComputed(({ count }) => ({\n    doubleCount: () => count() * 2,\n  }))\n);\n```\n\n",
         "remarks": "",
         "deprecated": "",
         "returns": "",

@@ -40,6 +40,11 @@
       "description": "As of NgRx v18, the `TypedAction` has been removed in favor of `Action`.",
       "version": "18-beta",
       "factory": "./18_0_0-beta/index"
+    },
+    "ngrx-store-migration-21": {
+      "description": "As of NgRx v21, `SelectorWithProps` and `MemoizedSelectorWithProps` have been removed. Use factory selectors instead.",
+      "version": "21",
+      "factory": "./21_0_0/index"
     }
   }
 }

@@ -8,7 +8,7 @@
     {
       "kind": "Function",
       "canonicalReference": "@ngrx/signals!withMethods:function(1)",
-      "docComment": "",
+      "docComment": "/**\n * @description\n *\n * Adds methods to a SignalStore.\n *\n * @usageNotes\n * ```ts\n * import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';\n *\n * export const CounterStore = signalStore(\n *   withState({ count: 0 }),\n *   withMethods((store) => ({\n *     increment(): void {\n *       patchState(store, ({ count }) => ({ count: count + 1 }));\n *     },\n *     decrement(): void {\n *       patchState(store, ({ count }) => ({ count: count - 1 }));\n *     },\n *   }))\n * );\n * ```\n *\n */\n",
       "excerptTokens": [
         {
           "kind": "Content",
@@ -132,8 +132,8 @@
           "isOverride": false,
           "isExperimental": false
         },
-        "summary": "",
-        "usageNotes": "",
+        "summary": "\n\nAdds methods to a SignalStore.\n\n",
+        "usageNotes": "\n```ts\nimport { patchState, signalStore, withMethods, withState } from '@ngrx/signals';\n\nexport const CounterStore = signalStore(\n  withState({ count: 0 }),\n  withMethods((store) => ({\n    increment(): void {\n      patchState(store, ({ count }) => ({ count: count + 1 }));\n    },\n    decrement(): void {\n      patchState(store, ({ count }) => ({ count: count - 1 }));\n    },\n  }))\n);\n```\n\n",
         "remarks": "",
         "deprecated": "",
         "returns": "",

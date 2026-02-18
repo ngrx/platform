@@ -164,8 +164,8 @@ describe('ngRx Store', () => {
       counterSteps.subscribe((action) => store.dispatch(action));
 
       const counterStateWithString = feature
-        ? (store as any).select(feature, 'counter1')
-        : store.select('counter1');
+        ? store.select((state: any) => state[feature].counter1)
+        : store.select((state: any) => state.counter1);
 
       const counter1Values = { i: 1, w: 2, x: 0, y: 1, z: 2 };
 
@@ -203,12 +203,12 @@ describe('ngRx Store', () => {
       e: { type: INCREMENT },
     };
 
-    it('should let you select state with a key name', () => {
+    it('should let you select state with a selector function via pipe', () => {
       const counterSteps = hot(actionSequence, actionValues);
 
       counterSteps.subscribe((action) => store.dispatch(action));
 
-      const counterStateWithString = store.pipe(select('counter1'));
+      const counterStateWithString = store.pipe(select((s: any) => s.counter1));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
@@ -234,7 +234,7 @@ describe('ngRx Store', () => {
     });
 
     it('should correctly lift itself', () => {
-      const result = store.pipe(select('counter1'));
+      const result = store.pipe(select((s: any) => s.counter1));
 
       expect(result instanceof Store).toBe(true);
     });
@@ -244,7 +244,7 @@ describe('ngRx Store', () => {
 
       counterSteps.subscribe((action) => store.dispatch(action));
 
-      const counterState = store.pipe(select('counter1'));
+      const counterState = store.pipe(select((s: any) => s.counter1));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
@@ -257,7 +257,7 @@ describe('ngRx Store', () => {
 
       counterSteps.subscribe((action) => dispatcher.next(action));
 
-      const counterState = store.pipe(select('counter1'));
+      const counterState = store.pipe(select((s: any) => s.counter1));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter1Values = { i: 0, v: 1, w: 2, x: 1, y: 0, z: 1 };
@@ -270,8 +270,8 @@ describe('ngRx Store', () => {
 
       counterSteps.subscribe((action) => store.dispatch(action));
 
-      const counter1State = store.pipe(select('counter1'));
-      const counter2State = store.pipe(select('counter2'));
+      const counter1State = store.pipe(select((s: any) => s.counter1));
+      const counter2State = store.pipe(select((s: any) => s.counter2));
 
       const stateSequence = 'i-v--w--x--y--z';
       const counter2Values = { i: 1, v: 2, w: 3, x: 2, y: 0, z: 1 };
