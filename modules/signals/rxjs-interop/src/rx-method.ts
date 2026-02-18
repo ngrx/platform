@@ -80,25 +80,26 @@ export function rxMethod<Input>(
     }
 
     const callerInjector = getCallerInjector();
-    const instanceInjector =
-      config?.injector ?? callerInjector ?? sourceInjector;
 
     if (
       typeof ngDevMode !== 'undefined' &&
       ngDevMode &&
       config?.injector === undefined &&
-      callerInjector === undefined &&
-      isRootInjector(sourceInjector)
+      callerInjector === undefined
     ) {
       console.warn(
-        '@ngrx/signals/rxjs-interop: The reactive method was called outside',
-        'the injection context with a signal or observable. This may lead to',
-        'a memory leak. Make sure to call it within the injection context',
+        '@ngrx/signals/rxjs-interop: Calling a reactive method outside of',
+        'an injection context with a signal or observable is deprecated.',
+        'In a future version, this will throw an error.',
+        'Either call it within an injection context',
         '(e.g. in a constructor or field initializer) or pass an injector',
         'explicitly via the config parameter.\n\nFor more information, see:',
         'https://ngrx.io/guide/signals/rxjs-integration#reactive-methods-and-injector-hierarchies'
       );
     }
+
+    const instanceInjector =
+      config?.injector ?? callerInjector ?? sourceInjector;
 
     if (typeof input === 'function') {
       const watcher = effect(
@@ -139,16 +140,4 @@ function getCallerInjector(): Injector | undefined {
   } catch {
     return undefined;
   }
-}
-
-/**
- * Checks whether the given injector is a root or platform injector.
- *
- * Uses the `scopes` property from Angular's `R3Injector` (the concrete
- * `EnvironmentInjector` implementation) via duck typing. This is an
- * internal Angular API that may change in future versions.
- */
-function isRootInjector(injector: Injector): boolean {
-  const scopes: Set<string> | undefined = (injector as any)['scopes'];
-  return scopes?.has('root') === true || scopes?.has('platform') === true;
 }

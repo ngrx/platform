@@ -126,9 +126,9 @@ export class Numbers implements OnInit {
 
 Here, the `effect` used internally by `signalMethod` outlives the component, which would produce a memory leak.
 
-<ngrx-docs-alert type="inform">
+<ngrx-docs-alert type="warn">
 
-If `signalMethod` is initialized in a root-scoped injector (e.g. a service with `providedIn: 'root'`) and called with a signal outside the injection context without providing an injector, a warning message about a potential memory leak is displayed in development mode. This warning does not apply when `signalMethod` is initialized in a non-root injector (e.g. a component or a service provided at the component level), since cleanup is handled by the source injector's lifecycle.
+Calling `signalMethod` with a signal or a computation function outside of an injection context without providing an explicit injector is deprecated. In a future version, this will throw an error. Either call it within an injection context (e.g. in a constructor or field initializer) or pass an injector explicitly via the config parameter.
 
 </ngrx-docs-alert>
 

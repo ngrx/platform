@@ -378,7 +378,7 @@ describe('rxMethod', () => {
     });
   });
 
-  describe('warning on source injector', () => {
+  describe('deprecation warning for reactive calls outside injection context', () => {
     const warnSpy = vitest.spyOn(console, 'warn');
     warnSpy.mockImplementation(() => void true);
 
@@ -389,7 +389,7 @@ describe('rxMethod', () => {
     const createAdder = (callback: (value: number) => void) =>
       TestBed.runInInjectionContext(() => rxMethod<number>(tap(callback)));
 
-    it('does not warn on non-reactive value and source injector', () => {
+    it('does not warn on non-reactive value', () => {
       let a = 1;
       const adder = createAdder((value) => (a += value));
       adder(1);
@@ -397,50 +397,51 @@ describe('rxMethod', () => {
       expect(warnSpy).not.toHaveBeenCalled();
     });
 
-    for (const [reactiveValue, name] of [
-      [signal(1), 'Signal'],
-      [of(1), 'Observable'],
+    for (const [createReactiveValue, name] of [
+      [() => signal(1), 'Signal'],
+      [() => of(1), 'Observable'],
     ] as const) {
       describe(`${name}`, () => {
-        it('warns when source injector is root', () => {
+        it('warns when called outside of an injection context', () => {
           let a = 1;
           const adder = createAdder((value) => (a += value));
-          adder(reactiveValue);
+          adder(createReactiveValue());
 
           expect(warnSpy).toHaveBeenCalled();
+
           const warning = (warnSpy.mock.lastCall || []).join(' ');
           expect(warning).toMatch(
-            /reactive method was called outside the injection context with a signal or observable/
+            /reactive method outside of an injection context with a signal or observable is deprecated/
           );
         });
 
-        it('does not warn when source injector is not root', () => {
+        it('does not warn when explicit injector is provided', () => {
           let a = 1;
+          const adder = createAdder((value) => (a += value));
+          const injector = TestBed.inject(Injector);
+          adder(createReactiveValue(), { injector });
+
+          expect(warnSpy).not.toHaveBeenCalled();
+        });
+
+        it('does not warn when called within an injection context', () => {
+          let a = 1;
+          const adder = createAdder((value) => (a += value));
+          TestBed.runInInjectionContext(() => adder(createReactiveValue()));
+
+          expect(warnSpy).not.toHaveBeenCalled();
+        });
+
+        it('does not warn when called within a child injection context', () => {
+          let a = 1;
+          const adder = createAdder((value) => (a += value));
           const childInjector = createEnvironmentInjector(
             [],
             TestBed.inject(EnvironmentInjector)
           );
-          const adder = runInInjectionContext(childInjector, () =>
-            rxMethod<number>(tap((value) => (a += value)))
+          runInInjectionContext(childInjector, () =>
+            adder(createReactiveValue())
           );
-          adder(reactiveValue);
-
-          expect(warnSpy).not.toHaveBeenCalled();
-        });
-
-        it('does not warn on manual injector', () => {
-          let a = 1;
-          const adder = createAdder((value) => (a += value));
-          const injector = TestBed.inject(Injector);
-          adder(reactiveValue, { injector });
-
-          expect(warnSpy).not.toHaveBeenCalled();
-        });
-
-        it('does not warn if called within injection context', () => {
-          let a = 1;
-          const adder = createAdder((value) => (a += value));
-          TestBed.runInInjectionContext(() => adder(reactiveValue));
 
           expect(warnSpy).not.toHaveBeenCalled();
         });

@@ -59,25 +59,26 @@ export function signalMethod<Input>(
   ): EffectRef => {
     if (isReactiveComputation(input)) {
       const callerInjector = getCallerInjector();
-      const instanceInjector =
-        config?.injector ?? callerInjector ?? sourceInjector;
 
       if (
         typeof ngDevMode !== 'undefined' &&
         ngDevMode &&
         config?.injector === undefined &&
-        callerInjector === undefined &&
-        isRootInjector(sourceInjector)
+        callerInjector === undefined
       ) {
         console.warn(
-          '@ngrx/signals: The function returned by signalMethod was called',
-          'outside the injection context with a signal. This may lead to',
-          'a memory leak. Make sure to call it within the injection context',
-          '(e.g. in a constructor or field initializer) or pass an injector',
-          'explicitly via the config parameter.\n\nFor more information, see:',
+          '@ngrx/signals: Calling signalMethod outside of an injection',
+          'context with a signal is deprecated. In a future version,',
+          'this will throw an error. Either call it within an injection',
+          'context (e.g. in a constructor or field initializer) or pass',
+          'an injector explicitly via the config parameter.',
+          '\n\nFor more information, see:',
           'https://ngrx.io/guide/signals/signal-method#automatic-cleanup'
         );
       }
+
+      const instanceInjector =
+        config?.injector ?? callerInjector ?? sourceInjector;
 
       const watcher = effect(
         () => {
@@ -118,16 +119,4 @@ function getCallerInjector(): Injector | undefined {
 
 function isReactiveComputation<T>(value: T | (() => T)): value is () => T {
   return typeof value === 'function';
-}
-
-/**
- * Checks whether the given injector is a root or platform injector.
- *
- * Uses the `scopes` property from Angular's `R3Injector` (the concrete
- * `EnvironmentInjector` implementation) via duck typing. This is an
- * internal Angular API that may change in future versions.
- */
-function isRootInjector(injector: Injector): boolean {
-  const scopes: Set<string> | undefined = (injector as any)['scopes'];
-  return scopes?.has('root') === true || scopes?.has('platform') === true;
 }
