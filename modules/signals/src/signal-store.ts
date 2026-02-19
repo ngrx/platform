@@ -15,10 +15,12 @@ type SignalStoreConfig = ProvidedInConfig & { protectedState?: boolean };
 
 type SignalStoreMembers<FeatureResult extends SignalStoreFeatureResult> =
   Prettify<
-    OmitPrivate<
-      StateSignals<FeatureResult['state']> &
-        FeatureResult['props'] &
-        FeatureResult['methods']
+    Readonly<
+      OmitPrivate<
+        StateSignals<FeatureResult['state']> &
+          FeatureResult['props'] &
+          FeatureResult['methods']
+      >
     >
   >;
 
