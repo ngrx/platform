@@ -297,9 +297,9 @@ export class Numbers implements OnInit {
 }
 ```
 
-<ngrx-docs-alert type="inform">
+<ngrx-docs-alert type="warn">
 
-If the injector is not provided when calling the reactive method with a signal, a computation function, or an observable outside the injection context, a warning message about a potential memory leak is displayed in development mode.
+Calling a reactive method with a signal, a computation function, or an observable outside of an injection context without providing an explicit injector is deprecated. In a future version, this will throw an error. Either call it within an injection context (e.g. in a constructor or field initializer) or pass an injector explicitly via the config parameter.
 
 </ngrx-docs-alert>
 
