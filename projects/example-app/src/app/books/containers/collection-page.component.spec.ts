@@ -41,7 +41,7 @@ describe('Collection Page', () => {
     fixture = TestBed.createComponent(CollectionPageComponent);
     store = TestBed.inject(MockStore);
 
-    jest.spyOn(store, 'dispatch');
+    vi.spyOn(store, 'dispatch');
   });
 
   it('should compile', () => {

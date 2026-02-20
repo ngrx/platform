@@ -29,7 +29,7 @@ import {
   throwError,
   timer,
 } from 'rxjs';
-import { fakeSchedulers, marbles } from 'rxjs-marbles/jest';
+import { marbles } from 'rxjs-marbles/jest';
 import {
   concatMap,
   delay,
@@ -40,6 +40,7 @@ import {
   take,
   tap,
 } from 'rxjs/operators';
+import { vi } from 'vitest';
 
 describe('Component Store', () => {
   describe('initialization', () => {
@@ -101,7 +102,7 @@ describe('Component Store', () => {
           componentStore.setState(() => ({ setState: 'new state' }));
         }).toThrow(
           new Error(
-            'ComponentStore has not been initialized yet. ' +
+            'ComponentStore2 has not been initialized yet. ' +
               'Please make sure it is initialized before updating/getting.'
           )
         );
@@ -115,7 +116,7 @@ describe('Component Store', () => {
         componentStore.patchState({ foo: 'bar' });
       }).toThrow(
         new Error(
-          'ComponentStore has not been initialized yet. ' +
+          'ComponentStore2 has not been initialized yet. ' +
             'Please make sure it is initialized before updating/getting.'
         )
       );
@@ -128,7 +129,7 @@ describe('Component Store', () => {
         componentStore.patchState(of({ foo: 'bar' }));
       }).toThrow(
         new Error(
-          'ComponentStore has not been initialized yet. ' +
+          'ComponentStore2 has not been initialized yet. ' +
             'Please make sure it is initialized before updating/getting.'
         )
       );
@@ -144,7 +145,7 @@ describe('Component Store', () => {
           componentStore.patchState(() => ({ foo: 'bar' }));
         }).toThrow(
           new Error(
-            'ComponentStore has not been initialized yet. ' +
+            'ComponentStore2 has not been initialized yet. ' +
               'Please make sure it is initialized before updating/getting.'
           )
         );
@@ -160,7 +161,7 @@ describe('Component Store', () => {
         });
       }).toThrow(
         new Error(
-          'ComponentStore has not been initialized yet. ' +
+          'ComponentStore2 has not been initialized yet. ' +
             'Please make sure it is initialized before updating/getting.'
         )
       );
@@ -181,7 +182,7 @@ describe('Component Store', () => {
           );
         }).toThrow(
           new Error(
-            'ComponentStore has not been initialized yet. ' +
+            'ComponentStore2 has not been initialized yet. ' +
               'Please make sure it is initialized before updating/getting.'
           )
         );
@@ -207,7 +208,7 @@ describe('Component Store', () => {
           m.flush();
         }).toThrow(
           new Error(
-            'ComponentStore has not been initialized yet. ' +
+            'ComponentStore2 has not been initialized yet. ' +
               'Please make sure it is initialized before updating/getting.'
           )
         );
@@ -444,7 +445,8 @@ describe('Component Store', () => {
   });
 
   describe('cancels updater Observable', () => {
-    beforeEach(() => jest.useFakeTimers({ legacyFakeTimers: true }));
+    beforeEach(() => vi.useFakeTimers());
+    afterEach(() => vi.useRealTimers());
 
     interface State {
       value: string;
@@ -457,105 +459,99 @@ describe('Component Store', () => {
       componentStore = new ComponentStore<State>(INIT_STATE);
     });
 
-    it(
-      'by unsubscribing with returned Subscriber',
-      fakeSchedulers((advance) => {
-        const updater = componentStore.updater(
-          (state, value: Partial<State>) => ({
-            ...state,
-            ...value,
-          })
-        );
+    it('by unsubscribing with returned Subscriber', () => {
+      const updater = componentStore.updater(
+        (state, value: Partial<State>) => ({
+          ...state,
+          ...value,
+        })
+      );
 
-        // Record all the values that go through state$ into an array
-        const results: State[] = [];
-        componentStore.state$.subscribe((state) => results.push(state));
+      // Record all the values that go through state$ into an array
+      const results: State[] = [];
+      componentStore.state$.subscribe((state) => results.push(state));
 
-        // Update with Observable.
-        const subscription = updater(
-          interval(10).pipe(
-            map((v) => ({ value: String(v) })),
-            take(10) // just in case
-          )
-        );
+      // Update with Observable.
+      const subscription = updater(
+        interval(10).pipe(
+          map((v) => ({ value: String(v) })),
+          take(10) // just in case
+        )
+      );
 
-        // Advance for 40 fake milliseconds and unsubscribe - should capture
-        // from '0' to '3'
-        advance(40);
-        subscription.unsubscribe();
+      // Advance for 40 fake milliseconds and unsubscribe - should capture
+      // from '0' to '3'
+      vi.advanceTimersByTime(40);
+      subscription.unsubscribe();
 
-        // Advance for 20 more fake milliseconds, to check if anything else
-        // is captured
-        advance(20);
+      // Advance for 20 more fake milliseconds, to check if anything else
+      // is captured
+      vi.advanceTimersByTime(20);
 
-        expect(results).toEqual([
-          // First value is here due to ReplaySubject being at the heart of
-          // ComponentStore.
-          { value: 'init' },
-          { value: '0' },
-          { value: '1' },
-          { value: '2' },
-          { value: '3' },
-        ]);
-      })
-    );
+      expect(results).toEqual([
+        // First value is here due to ReplaySubject being at the heart of
+        // ComponentStore.
+        { value: 'init' },
+        { value: '0' },
+        { value: '1' },
+        { value: '2' },
+        { value: '3' },
+      ]);
+    });
 
-    it(
-      'and cancels the correct one',
-      fakeSchedulers((advance) => {
-        const updater = componentStore.updater(
-          (state, value: Partial<State>) => ({
-            ...state,
-            ...value,
-          })
-        );
+    it('and cancels the correct one', () => {
+      const updater = componentStore.updater(
+        (state, value: Partial<State>) => ({
+          ...state,
+          ...value,
+        })
+      );
 
-        // Record all the values that go through state$ into an array
-        const results: State[] = [];
-        componentStore.state$.subscribe((state) => results.push(state));
+      // Record all the values that go through state$ into an array
+      const results: State[] = [];
+      componentStore.state$.subscribe((state) => results.push(state));
 
-        // Update with Observable.
-        const subscription = updater(
-          interval(10).pipe(
-            map((v) => ({ value: 'a' + v })),
-            take(10) // just in case
-          )
-        );
+      // Update with Observable.
+      const subscription = updater(
+        interval(10).pipe(
+          map((v) => ({ value: 'a' + v })),
+          take(10) // just in case
+        )
+      );
 
-        // Create the second Observable that updates the state
-        updater(
-          timer(15, 10).pipe(
-            map((v) => ({ value: 'b' + v })),
-            take(10)
-          )
-        );
+      // Create the second Observable that updates the state
+      updater(
+        timer(15, 10).pipe(
+          map((v) => ({ value: 'b' + v })),
+          take(10)
+        )
+      );
 
-        // Advance for 40 fake milliseconds and unsubscribe - should capture
-        // from '0' to '3'
-        advance(40);
-        subscription.unsubscribe();
+      // Advance for 40 fake milliseconds and unsubscribe - should capture
+      // from '0' to '3'
+      vi.advanceTimersByTime(40);
+      subscription.unsubscribe();
 
-        // Advance for 30 more fake milliseconds, to make sure that second
-        // Observable still emits
-        advance(30);
+      // Advance for 30 more fake milliseconds, to make sure that second
+      // Observable still emits
+      vi.advanceTimersByTime(30);
 
-        expect(results).toEqual([
-          // First value is here due to ReplaySubject being at the heart of
-          // ComponentStore.
-          { value: 'init' },
-          { value: 'a0' },
-          { value: 'b0' },
-          { value: 'a1' },
-          { value: 'b1' },
-          { value: 'a2' },
-          { value: 'b2' },
-          { value: 'a3' },
-          { value: 'b3' },
-          { value: 'b4' },
-          { value: 'b5' }, // second Observable continues to emit values
-        ]);
-      })
-    );
+      expect(results).toEqual([
+        // First value is here due to ReplaySubject being at the heart of
+        // ComponentStore.
+        { value: 'init' },
+        { value: 'a0' },
+        { value: 'b0' },
+        { value: 'a1' },
+        { value: 'b1' },
+        { value: 'a2' },
+        { value: 'b2' },
+        { value: 'a3' },
+        { value: 'b3' },
+        { value: 'b4' },
+        { value: 'b5' }, // second Observable continues to emit values
+      ]);
+    });
   });
 
   describe('patches the state', () => {
@@ -1028,7 +1024,7 @@ describe('Component Store', () => {
     it(
       'are shared between subscribers',
       marbles((m) => {
-        const projectorCallback = jest.fn((s) => s.value);
+        const projectorCallback = vi.fn((s) => s.value);
         const selector = componentStore.select(projectorCallback);
 
         const resultsArray: string[] = [];
@@ -1049,20 +1045,21 @@ describe('Component Store', () => {
       })
     );
 
-    it('complete when componentStore is destroyed', (doneFn: jest.DoneCallback) => {
-      const selector = componentStore.select(() => ({}));
+    it('complete when componentStore is destroyed', () =>
+      new Promise<void>((doneFn) => {
+        const selector = componentStore.select(() => ({}));
 
-      selector.subscribe({
-        complete: () => {
-          doneFn();
-        },
-      });
+        selector.subscribe({
+          complete: () => {
+            doneFn();
+          },
+        });
 
-      componentStore.ngOnDestroy();
-    });
+        componentStore.ngOnDestroy();
+      }));
 
     it('supports memoization with createSelector', () => {
-      const projectorCallback = jest.fn((str: string) => str);
+      const projectorCallback = vi.fn((str: string) => str);
       const memoizedSelector = createSelector(
         (s: State) => s.value,
         projectorCallback
@@ -1345,7 +1342,7 @@ describe('Component Store', () => {
     it(
       'are shared between subscribers',
       marbles((m) => {
-        const projectorCallback = jest.fn((s) => s.value);
+        const projectorCallback = vi.fn((s) => s.value);
         const selector = componentStore.select(projectorCallback, {
           debounce: true,
         });
@@ -1368,17 +1365,18 @@ describe('Component Store', () => {
       })
     );
 
-    it('complete when componentStore is destroyed', (doneFn: jest.DoneCallback) => {
-      const selector = componentStore.select(() => ({}), { debounce: true });
+    it('complete when componentStore is destroyed', () =>
+      new Promise((doneFn) => {
+        const selector = componentStore.select(() => ({}), { debounce: true });
 
-      selector.subscribe({
-        complete: () => {
-          doneFn();
-        },
-      });
+        selector.subscribe({
+          complete: () => {
+            doneFn();
+          },
+        });
 
-      componentStore.ngOnDestroy();
-    });
+        componentStore.ngOnDestroy();
+      }));
   });
 
   describe('selector with custom equal fn', () => {
@@ -1612,7 +1610,7 @@ describe('Component Store', () => {
       'is run when value is provided',
       marbles((m) => {
         const results: string[] = [];
-        const mockGenerator = jest.fn((origin$: Observable<string>) =>
+        const mockGenerator = vi.fn((origin$: Observable<string>) =>
           origin$.pipe(tap((v) => results.push(v)))
         );
         const effect = componentStore.effect(mockGenerator);
@@ -1627,7 +1625,7 @@ describe('Component Store', () => {
       'is run when undefined value is provided',
       marbles((m) => {
         const results: string[] = [];
-        const mockGenerator = jest.fn((origin$: Observable<undefined>) =>
+        const mockGenerator = vi.fn((origin$: Observable<undefined>) =>
           origin$.pipe(tap((v) => results.push(typeof v)))
         );
         const effect = componentStore.effect(mockGenerator);
@@ -1641,7 +1639,7 @@ describe('Component Store', () => {
     it(
       'is run when observable is provided',
       marbles((m) => {
-        const mockGenerator = jest.fn((origin$) => origin$);
+        const mockGenerator = vi.fn((origin$) => origin$);
         const effect = componentStore.effect<string>(mockGenerator);
 
         effect(m.cold('-a-b-c|'));
@@ -1654,7 +1652,7 @@ describe('Component Store', () => {
     it(
       'is run with multiple Observables',
       marbles((m) => {
-        const mockGenerator = jest.fn((origin$) => origin$);
+        const mockGenerator = vi.fn((origin$) => origin$);
         const effect = componentStore.effect<string>(mockGenerator);
 
         effect(m.cold('-a-b-c|'));
@@ -1667,39 +1665,37 @@ describe('Component Store', () => {
     );
 
     describe('cancels effect Observable', () => {
-      beforeEach(() => jest.useFakeTimers());
-      it(
-        'by unsubscribing with returned Subscription',
-        fakeSchedulers((advance) => {
-          const results: string[] = [];
-          const effect = componentStore.effect((origin$: Observable<string>) =>
-            origin$.pipe(tap((v) => results.push(v)))
-          );
+      beforeEach(() => vi.useFakeTimers());
+      afterEach(() => vi.useRealTimers());
+      it('by unsubscribing with returned Subscription', () => {
+        const results: string[] = [];
+        const effect = componentStore.effect((origin$: Observable<string>) =>
+          origin$.pipe(tap((v) => results.push(v)))
+        );
 
-          const observable$ = interval(10).pipe(
-            map((v) => String(v)),
-            take(10) // just in case
-          );
+        const observable$ = interval(10).pipe(
+          map((v) => String(v)),
+          take(10) // just in case
+        );
 
-          // Update with Observable.
-          const subscription = effect(observable$);
+        // Update with Observable.
+        const subscription = effect(observable$);
 
-          // Advance for 40 fake milliseconds and unsubscribe - should capture
-          // from '0' to '3'
-          advance(40);
-          subscription.unsubscribe();
+        // Advance for 40 fake milliseconds and unsubscribe - should capture
+        // from '0' to '3'
+        vi.advanceTimersByTime(40);
+        subscription.unsubscribe();
 
-          // Advance for 20 more fake milliseconds, to check if anything else
-          // is captured
-          advance(20);
+        // Advance for 20 more fake milliseconds, to check if anything else
+        // is captured
+        vi.advanceTimersByTime(20);
 
-          expect(results).toEqual(['0', '1', '2', '3']);
-        })
-      );
+        expect(results).toEqual(['0', '1', '2', '3']);
+      });
       it(
         'could be unsubscribed from the specific Observable when multiple' +
           ' are provided',
-        fakeSchedulers((advance) => {
+        () => {
           // Record all the values that go through state$ into an array
           const results: Array<{ value: string }> = [];
           const effect = componentStore.effect(
@@ -1725,12 +1721,12 @@ describe('Component Store', () => {
 
           // Advance for 40 fake milliseconds and unsubscribe - should capture
           // from '0' to '3'
-          advance(40);
+          vi.advanceTimersByTime(40);
           subscription.unsubscribe();
 
           // Advance for 30 more fake milliseconds, to make sure that second
           // Observable still emits
-          advance(30);
+          vi.advanceTimersByTime(30);
 
           expect(results).toEqual([
             { value: 'a0' },
@@ -1744,35 +1740,37 @@ describe('Component Store', () => {
             { value: 'b4' },
             { value: 'b5' }, // second Observable continues to emit values
           ]);
-        })
+        }
       );
 
-      it('completes when componentStore is destroyed', (doneFn: jest.DoneCallback) => {
-        componentStore.effect((origin$: Observable<number>) =>
-          origin$.pipe(
-            finalize(() => {
-              doneFn();
-            })
-          )
-        )(interval(10));
+      it('completes when componentStore is destroyed', () =>
+        new Promise<void>((doneFn) => {
+          componentStore.effect((origin$: Observable<number>) =>
+            origin$.pipe(
+              finalize(() => {
+                doneFn();
+              })
+            )
+          )(interval(10));
 
-        setTimeout(() => componentStore.ngOnDestroy(), 20);
-        jest.advanceTimersByTime(20);
-      });
+          setTimeout(() => componentStore.ngOnDestroy(), 20);
+          vi.advanceTimersByTime(20);
+        }));
 
-      it('observable argument completes when componentStore is destroyed', (doneFn: jest.DoneCallback) => {
-        componentStore.effect((origin$: Observable<number>) => origin$)(
-          interval(10).pipe(
-            finalize(() => {
-              doneFn();
-            })
-          )
-        );
+      it('observable argument completes when componentStore is destroyed', () =>
+        new Promise<void>((doneFn) => {
+          componentStore.effect((origin$: Observable<number>) => origin$)(
+            interval(10).pipe(
+              finalize(() => {
+                doneFn();
+              })
+            )
+          );
 
-        setTimeout(() => componentStore.ngOnDestroy(), 20);
+          setTimeout(() => componentStore.ngOnDestroy(), 20);
 
-        jest.advanceTimersByTime(20);
-      });
+          vi.advanceTimersByTime(20);
+        }));
     });
   });
 
@@ -1951,7 +1949,7 @@ describe('Component Store', () => {
     });
 
     it('should not log a warning when a ComponentStore with hooks is provided using provideComponentStore()', fakeAsync(() => {
-      jest.spyOn(console, 'warn');
+      vi.spyOn(console, 'warn').mockImplementation(() => void 0);
 
       const state = setup();
 
@@ -1964,7 +1962,7 @@ describe('Component Store', () => {
     }));
 
     it('should log a warning when a hook is implemented without using provideComponentStore()', fakeAsync(() => {
-      jest.spyOn(console, 'warn');
+      vi.spyOn(console, 'warn').mockImplementation(() => void 0);
 
       const state = setup({
         providers: [NonProviderStore],

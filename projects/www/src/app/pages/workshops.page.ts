@@ -182,7 +182,7 @@ import { StyledBoxComponent } from '../components/styled-box.component';
 
       .agenda h4 {
         text-transform: uppercase;
-        color: #fface6;
+        color: var(--ngrx-link);
         margin-bottom: 0;
       }
 

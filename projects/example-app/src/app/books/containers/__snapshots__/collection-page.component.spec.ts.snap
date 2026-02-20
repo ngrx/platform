@@ -1,19 +1,23 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Collection Page should compile 1`] = `
-<bc-collection-page
-  books$={[Function _Store]}
-  store={[Function _MockStore]}
->
+exports[`Collection Page > should compile 1`] = `
+<bc-collection-page>
   <mat-card
+    _ngcontent-a-c1432040493=""
     class="mat-mdc-card mdc-card"
   >
     <mat-card-title
+      _ngcontent-a-c1432040493=""
       class="mat-mdc-card-title"
     >
       My Collection
     </mat-card-title>
-  </mat-card><bc-book-preview-list>
+  </mat-card>
+  <bc-book-preview-list
+    _ngcontent-a-c1432040493=""
+    _nghost-a-c3778324089=""
+  >
+    <!--container-->
   </bc-book-preview-list>
 </bc-collection-page>
 `;

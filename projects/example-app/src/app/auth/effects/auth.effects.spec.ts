@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
-import { Observable, of } from 'rxjs';
+import { firstValueFrom, Observable, of } from 'rxjs';
 import { LoginPageActions } from '@example-app/auth/actions/login-page.actions';
 import { AuthApiActions } from '@example-app/auth/actions/auth-api.actions';
 import { AuthActions } from '@example-app/auth/actions/auth.actions';
@@ -26,17 +26,17 @@ describe('AuthEffects', () => {
         AuthEffects,
         {
           provide: AuthService,
-          useValue: { login: jest.fn() },
+          useValue: { login: vi.fn() },
         },
         provideMockActions(() => actions$),
         {
           provide: Router,
-          useValue: { navigate: jest.fn() },
+          useValue: { navigate: vi.fn() },
         },
         {
           provide: MatDialog,
           useValue: {
-            open: jest.fn(),
+            open: vi.fn(),
           },
         },
       ],
@@ -48,7 +48,7 @@ describe('AuthEffects', () => {
     routerService = TestBed.inject(Router);
     dialog = TestBed.inject(MatDialog);
 
-    jest.spyOn(routerService, 'navigate');
+    vi.spyOn(routerService, 'navigate');
   });
 
   describe('login$', () => {
@@ -61,7 +61,7 @@ describe('AuthEffects', () => {
       actions$ = hot('-a---', { a: action });
       const response = cold('-a|', { a: user });
       const expected = cold('--b', { b: completion });
-      authService.login = jest.fn(() => response);
+      authService.login = vi.fn(() => response);
 
       expect(effects.login$).toBeObservable(expected);
     });
@@ -77,47 +77,43 @@ describe('AuthEffects', () => {
       actions$ = hot('-a---', { a: action });
       const response = cold('-#', {}, error);
       const expected = cold('--b', { b: completion });
-      authService.login = jest.fn(() => response);
+      authService.login = vi.fn(() => response);
 
       expect(effects.login$).toBeObservable(expected);
     });
   });
 
   describe('loginSuccess$', () => {
-    it('should dispatch a RouterNavigation action', (done: any) => {
+    it('should dispatch a RouterNavigation action', async () => {
       const user = { name: 'User' } as User;
       const action = AuthApiActions.loginSuccess({ user });
 
       actions$ = of(action);
 
-      effects.loginSuccess$.subscribe(() => {
-        expect(routerService.navigate).toHaveBeenCalledWith(['/']);
-        done();
-      });
+      await firstValueFrom(effects.loginSuccess$);
+      expect(routerService.navigate).toHaveBeenCalledWith(['/']);
     });
   });
 
   describe('loginRedirect$', () => {
-    it('should dispatch a RouterNavigation action when auth.loginRedirect is dispatched', (done: any) => {
+    it('should dispatch a RouterNavigation action when auth.loginRedirect is dispatched', async () => {
       const action = AuthApiActions.loginRedirect();
 
       actions$ = of(action);
 
-      effects.loginRedirect$.subscribe(() => {
-        expect(routerService.navigate).toHaveBeenCalledWith(['/login']);
-        done();
-      });
+      await firstValueFrom(effects.loginRedirect$);
+
+      expect(routerService.navigate).toHaveBeenCalledWith(['/login']);
     });
 
-    it('should dispatch a RouterNavigation action when auth.logout is dispatched', (done: any) => {
+    it('should dispatch a RouterNavigation action when auth.logout is dispatched', async () => {
       const action = AuthActions.logout();
 
       actions$ = of(action);
 
-      effects.loginRedirect$.subscribe(() => {
-        expect(routerService.navigate).toHaveBeenCalledWith(['/login']);
-        done();
-      });
+      await firstValueFrom(effects.loginRedirect$);
+
+      expect(routerService.navigate).toHaveBeenCalledWith(['/login']);
     });
   });
 
@@ -130,7 +126,7 @@ describe('AuthEffects', () => {
       const expected = cold('-b', { b: completion });
 
       dialog.open = () => ({
-        afterClosed: jest.fn(() => of(true)),
+        afterClosed: vi.fn(() => of(true)),
       });
 
       expect(effects.logoutConfirmation$).toBeObservable(expected);
@@ -144,7 +140,7 @@ describe('AuthEffects', () => {
       const expected = cold('-b', { b: completion });
 
       dialog.open = () => ({
-        afterClosed: jest.fn(() => of(false)),
+        afterClosed: vi.fn(() => of(false)),
       });
 
       expect(effects.logoutConfirmation$).toBeObservable(expected);

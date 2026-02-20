@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import {
   createRenderScheduler,
   RenderScheduler,
@@ -33,7 +34,7 @@ describe('RenderScheduler', () => {
   function setup() {
     const cdRef = new MockChangeDetectorRef();
     const tickScheduler = new NoopTickScheduler();
-    jest.spyOn(tickScheduler, 'schedule');
+    vi.spyOn(tickScheduler, 'schedule');
     const renderScheduler = new RenderScheduler(cdRef, tickScheduler);
 
     return { cdRef, renderScheduler, tickScheduler };

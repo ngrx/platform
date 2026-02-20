@@ -53,14 +53,19 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
       :host {
         display: flex;
         flex-direction: column;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid var(--ngrx-border-color);
         margin: 14px 0 24px;
+      }
+
+      :host ::ng-deep pre:has(code) {
+        margin: 0;
+        border: 0;
       }
 
       .header {
         padding: 8px 16px;
-        background-color: rgba(255, 255, 255, 0.05);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        background-color: var(--ngrx-bg-elevated);
+        border-bottom: 1px solid var(--ngrx-border-color);
         font-size: 12px;
         font-weight: 500;
       }
@@ -93,31 +98,31 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
         0% {
           background: rgba(207, 143, 197, 0.6);
           border-color: rgba(207, 143, 197, 0.4);
-          color: rgba(255, 255, 255, 1);
+          color: var(--ngrx-text);
           transform: scale(1);
         }
         15% {
           background: rgba(207, 143, 197, 0.6);
           border-color: rgba(207, 143, 197, 0.4);
-          color: rgba(255, 255, 255, 1);
+          color: var(--ngrx-text);
           transform: scale(1.1);
         }
         30% {
           background: rgba(207, 143, 197, 0.6);
           border-color: rgba(207, 143, 197, 0.4);
-          color: rgba(255, 255, 255, 1);
+          color: var(--ngrx-text);
           transform: scale(1);
         }
         80% {
           background: rgba(207, 143, 197, 0.6);
           border-color: rgba(207, 143, 197, 0.4);
-          color: rgba(255, 255, 255, 1);
+          color: var(--ngrx-text);
           transform: scale(1);
         }
         100% {
-          background: rgba(0, 0, 0, 0.7);
-          border-color: rgba(255, 255, 255, 0.2);
-          color: rgba(255, 255, 255, 0.8);
+          background: var(--ngrx-bg-elevated);
+          border-color: var(--ngrx-border-color);
+          color: var(--ngrx-text-secondary);
           transform: scale(1);
         }
       }

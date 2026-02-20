@@ -84,7 +84,7 @@ import { MatIconModule } from '@angular/material/icon';
         align-items: center;
         width: 100%;
         height: 100lvh;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom: 1px solid var(--ngrx-border-color);
         position: relative;
       }
 
@@ -150,7 +150,7 @@ import { MatIconModule } from '@angular/material/icon';
       }
 
       ngrx-styled-box mat-icon {
-        color: #cf8fc5;
+        color: var(--ngrx-accent);
         font-size: 32px;
       }
 
@@ -161,7 +161,7 @@ import { MatIconModule } from '@angular/material/icon';
 
       ngrx-styled-box p {
         padding-bottom: 16px;
-        color: rgba(255, 255, 255, 0.72);
+        color: var(--ngrx-text-secondary);
       }
 
       ngrx-styled-box button {

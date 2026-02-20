@@ -22,12 +22,12 @@ import {
         align-items: center;
         text-decoration: none;
         cursor: pointer;
-        color: rgba(255, 255, 255, 0.72);
+        color: var(--ngrx-text-secondary);
         transition: color 0.2s;
       }
 
       a:hover {
-        color: rgba(207, 143, 197, 1);
+        color: var(--ngrx-accent);
       }
 
       span {

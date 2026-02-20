@@ -8,7 +8,10 @@ import * as path from 'path';
 import { logging } from '@angular-devkit/core';
 
 describe('ComponentStore Migration to 18.0.0-beta', () => {
-  const collectionPath = path.join(__dirname, '../migration.json');
+  const collectionPath = path.join(
+    process.cwd(),
+    'dist/modules/component-store/migrations/migration.json'
+  );
   const schematicRunner = new SchematicTestRunner('schematics', collectionPath);
 
   let appTree: UnitTestTree;
