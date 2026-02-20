@@ -18,11 +18,6 @@ export default defineConfig(({ mode }) => {
       setupFiles: ['test-setup.ts'],
       include: ['**/*.spec.ts'],
       reporters: ['default'],
-      snapshotSerializers: [
-        'jest-preset-angular/build/serializers/html-comment',
-        'jest-preset-angular/build/serializers/ng-snapshot',
-        'jest-preset-angular/build/serializers/no-ng-attributes',
-      ],
     },
     define: {
       'import.meta.vitest': mode !== 'production',
