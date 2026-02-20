@@ -87,25 +87,18 @@ export default [
       },
     })),
   {
-    files: ['src/**/*.cy.{ts,tsx}'],
+    files: ['src/**/*.spec.ts'],
     languageOptions: {
       parserOptions: {
         project: ['projects/example-app-e2e/tsconfig.*.json'],
       },
       globals: {
-        cy: true,
-        describe: true,
-        it: true,
-        before: true,
-        beforeEach: true,
-        after: true,
-        afterEach: true,
+        test: true,
+        expect: true,
       },
     },
     rules: {
-      // Add optional Cypress-safe tweaks
-      'no-unused-expressions': 'off', // Allow Chai-style assertions
-      '@typescript-eslint/no-floating-promises': 'off', // Often triggered by cy.* commands
+      '@typescript-eslint/no-floating-promises': 'off',
     },
   },
 ];
