@@ -40,6 +40,10 @@ import {
 import { isOnStateInitDefined, isOnStoreInitDefined } from './lifecycle_hooks';
 import { toSignal } from '@angular/core/rxjs-interop';
 
+const excessPropertiesAreNotAllowedMsg =
+  'updater callback return type must exactly match the state type. Remove excess properties.';
+type ExcessPropertiesAreNotAllowed = typeof excessPropertiesAreNotAllowedMsg;
+
 export interface SelectConfig<T = unknown> {
   debounce?: boolean;
   equal?: ValueEqualityFn<T>;
@@ -132,7 +136,17 @@ export class ComponentStore<T extends object> implements OnDestroy {
     ReturnType = OriginType extends void
       ? () => void
       : (observableOrValue: ValueType | Observable<ValueType>) => Subscription,
-  >(updaterFn: (state: T, value: OriginType) => T): ReturnType {
+    // Captures the actual return type to enforce exact state shape
+    R extends T = T,
+  >(
+    updaterFn: (
+      state: T,
+      value: OriginType
+    ) => R &
+      (Exclude<keyof R, keyof T> extends never
+        ? unknown
+        : ExcessPropertiesAreNotAllowed)
+  ): ReturnType {
     return ((
       observableOrValue?: OriginType | Observable<OriginType>
     ): Subscription => {
@@ -379,9 +393,8 @@ export class ComponentStore<T extends object> implements OnDestroy {
     // This type quickly became part of effect 'API'
     ProvidedType = void,
     // The actual origin$ type, which could be unknown, when not specified
-    OriginType extends
-      | Observable<ProvidedType>
-      | unknown = Observable<ProvidedType>,
+    OriginType extends Observable<ProvidedType> | unknown =
+      Observable<ProvidedType>,
     // Unwrapped actual type of the origin$ Observable, after default was applied
     ObservableType = OriginType extends Observable<infer A> ? A : never,
     // Return either an optional callback or a function requiring specific types as inputs

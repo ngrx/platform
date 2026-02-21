@@ -41,4 +41,27 @@ describe('regression component-store', () => {
       `;
     expectSnippet(effectTest).toSucceed();
   });
+
+  describe('updater exact return type', () => {
+    it('should work with state containing optional properties', () => {
+      expectSnippet(`
+        const store = new ComponentStore<{ req: string; opt?: number }>({ req: 'a' });
+        store.updater((state) => ({ req: 'b' }))();
+      `).toSucceed();
+    });
+
+    it('should work with state containing index signature', () => {
+      expectSnippet(`
+        const store = new ComponentStore<{ [key: string]: number }>({});
+        store.updater((state, v: number) => ({...state, newKey: v}))(5);
+      `).toSucceed();
+    });
+
+    it('should catch excess properties with concrete state type', () => {
+      expectSnippet(`
+        const store = new ComponentStore<{ name: string }>({ name: 'test' });
+        store.updater((state, v: string) => ({...state, name: v, extra: true}))('test');
+      `).toFail(/Remove excess properties/);
+    });
+  });
 });
