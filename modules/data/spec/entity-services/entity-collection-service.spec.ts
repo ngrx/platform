@@ -28,6 +28,7 @@ import {
   DataServiceError,
   Logger,
 } from '../..';
+import { Mock, vi } from 'vitest';
 
 describe('EntityCollectionService', () => {
   describe('Command dispatching', () => {
@@ -55,122 +56,143 @@ describe('EntityCollectionService', () => {
     });
 
     // Compare to next test which subscribes to getAll() result
-    it('can use loading$ to learn when getAll() succeeds', (done: any) => {
-      const hero1 = { id: 1, name: 'A' } as Hero;
-      const hero2 = { id: 2, name: 'B' } as Hero;
-      const heroes = [hero1, hero2];
-      dataService.setResponse('getAll', heroes);
-      heroCollectionService.getAll();
+    it('can use loading$ to learn when getAll() succeeds', () =>
+      new Promise<void>((done, fail) => {
+        const hero1 = { id: 1, name: 'A' } as Hero;
+        const hero2 = { id: 2, name: 'B' } as Hero;
+        const heroes = [hero1, hero2];
+        dataService.setResponse('getAll', heroes);
+        heroCollectionService.getAll();
 
-      // N.B.: This technique does not detect errors
-      heroCollectionService.loading$
-        .pipe(
-          filter((loading) => !loading),
-          withLatestFrom(heroCollectionService.entities$)
-        )
-        .subscribe(([loading, data]) => {
-          expect(data).toEqual(heroes);
-          done();
-        });
-    });
+        // N.B.: This technique does not detect errors
+        heroCollectionService.loading$
+          .pipe(
+            filter((loading) => !loading),
+            withLatestFrom(heroCollectionService.entities$)
+          )
+          .subscribe(([loading, data]) => {
+            expect(data).toEqual(heroes);
+            done();
+          });
+      }));
 
     // Compare to previous test the waits for loading$ flag to flip
-    it('getAll observable should emit heroes on success', (done: any) => {
-      const hero1 = { id: 1, name: 'A' } as Hero;
-      const hero2 = { id: 2, name: 'B' } as Hero;
-      const heroes = [hero1, hero2];
-      dataService.setResponse('getAll', heroes);
-      heroCollectionService.getAll().subscribe(expectDataToBe(heroes, done));
+    it('getAll observable should emit heroes on success', () =>
+      new Promise<void>((done, fail) => {
+        const hero1 = { id: 1, name: 'A' } as Hero;
+        const hero2 = { id: 2, name: 'B' } as Hero;
+        const heroes = [hero1, hero2];
+        dataService.setResponse('getAll', heroes);
+        heroCollectionService
+          .getAll()
+          .subscribe(expectDataToBe(heroes, { done, fail }));
 
-      // reducedActions$Snoop(); // diagnostic
-    });
+        // reducedActions$Snoop(); // diagnostic
+      }));
 
-    it('getAll observable should emit expected error when data service fails', (done: any) => {
-      const httpError = { error: new Error('Test Failure'), status: 501 };
-      const error = makeDataServiceError('GET', httpError);
-      dataService.setErrorResponse('getAll', error);
-      heroCollectionService.getAll().subscribe(expectErrorToBe(error, done));
-    });
+    it('getAll observable should emit expected error when data service fails', () =>
+      new Promise<void>((done, fail) => {
+        const httpError = { error: new Error('Test Failure'), status: 501 };
+        const error = makeDataServiceError('GET', httpError);
+        dataService.setErrorResponse('getAll', error);
+        heroCollectionService
+          .getAll()
+          .subscribe(expectErrorToBe(error, { done, fail }));
+      }));
 
-    it('getByKey observable should emit a hero on success', (done: any) => {
-      const hero = { id: 1, name: 'A' } as Hero;
-      dataService.setResponse('getById', hero);
-      heroCollectionService.getByKey(1).subscribe(expectDataToBe(hero, done));
-    });
+    it('getByKey observable should emit a hero on success', () =>
+      new Promise<void>((done, fail) => {
+        const hero = { id: 1, name: 'A' } as Hero;
+        dataService.setResponse('getById', hero);
+        heroCollectionService
+          .getByKey(1)
+          .subscribe(expectDataToBe(hero, { done, fail }));
+      }));
 
-    it('getByKey observable should emit expected error when data service fails', (done: any) => {
-      // Simulate HTTP 'Not Found' response
-      const httpError = new HttpErrorResponse({
-        error: 'Entity not found',
-        status: 404,
-        statusText: 'Not Found',
-        url: 'bad/location',
-      });
+    it('getByKey observable should emit expected error when data service fails', () =>
+      new Promise<void>((done, fail) => {
+        // Simulate HTTP 'Not Found' response
+        const httpError = new HttpErrorResponse({
+          error: 'Entity not found',
+          status: 404,
+          statusText: 'Not Found',
+          url: 'bad/location',
+        });
 
-      // For test purposes, the following would have been effectively the same thing
-      // const httpError = { error: new Error('Entity not found'), status: 404 };
+        // For test purposes, the following would have been effectively the same thing
+        // const httpError = { error: new Error('Entity not found'), status: 404 };
 
-      const error = makeDataServiceError('GET', httpError);
-      dataService.setErrorResponse('getById', error);
-      heroCollectionService
-        .getByKey(42)
-        .subscribe(expectErrorToBe(error, done));
-    });
+        const error = makeDataServiceError('GET', httpError);
+        dataService.setErrorResponse('getById', error);
+        heroCollectionService
+          .getByKey(42)
+          .subscribe(expectErrorToBe(error, { done, fail }));
+      }));
 
-    it('getWithQuery observable should emit heroes on success', (done: any) => {
-      const hero1 = { id: 1, name: 'A' } as Hero;
-      const hero2 = { id: 2, name: 'B' } as Hero;
-      const heroes = [hero1, hero2];
-      dataService.setResponse('getWithQuery', heroes);
-      heroCollectionService
-        .getWithQuery({ name: 'foo' })
-        .subscribe(expectDataToBe(heroes, done));
+    it('getWithQuery observable should emit heroes on success', () =>
+      new Promise<void>((done, fail) => {
+        const hero1 = { id: 1, name: 'A' } as Hero;
+        const hero2 = { id: 2, name: 'B' } as Hero;
+        const heroes = [hero1, hero2];
+        dataService.setResponse('getWithQuery', heroes);
+        heroCollectionService
+          .getWithQuery({ name: 'foo' })
+          .subscribe(expectDataToBe(heroes, { done, fail }));
 
-      // reducedActions$Snoop(); // diagnostic
-    });
+        // reducedActions$Snoop(); // diagnostic
+      }));
 
-    it('getWithQuery observable should emit expected error when data service fails', (done: any) => {
-      const httpError = { error: new Error('Test Failure'), status: 501 };
-      const error = makeDataServiceError('GET', httpError);
-      dataService.setErrorResponse('getWithQuery', error);
-      heroCollectionService
-        .getWithQuery({ name: 'foo' })
-        .subscribe(expectErrorToBe(error, done));
-    });
+    it('getWithQuery observable should emit expected error when data service fails', () =>
+      new Promise<void>((done, fail) => {
+        const httpError = { error: new Error('Test Failure'), status: 501 };
+        const error = makeDataServiceError('GET', httpError);
+        dataService.setErrorResponse('getWithQuery', error);
+        heroCollectionService
+          .getWithQuery({ name: 'foo' })
+          .subscribe(expectErrorToBe(error, { done, fail }));
+      }));
 
-    it('load observable should emit heroes on success', (done: any) => {
-      const hero1 = { id: 1, name: 'A' } as Hero;
-      const hero2 = { id: 2, name: 'B' } as Hero;
-      const heroes = [hero1, hero2];
-      dataService.setResponse('getAll', heroes);
-      heroCollectionService.load().subscribe(expectDataToBe(heroes, done));
-    });
+    it('load observable should emit heroes on success', () =>
+      new Promise<void>((done, fail) => {
+        const hero1 = { id: 1, name: 'A' } as Hero;
+        const hero2 = { id: 2, name: 'B' } as Hero;
+        const heroes = [hero1, hero2];
+        dataService.setResponse('getAll', heroes);
+        heroCollectionService
+          .load()
+          .subscribe(expectDataToBe(heroes, { done, fail }));
+      }));
 
-    it('load observable should emit expected error when data service fails', (done: any) => {
-      const httpError = { error: new Error('Test Failure'), status: 501 };
-      const error = makeDataServiceError('GET', httpError);
-      dataService.setErrorResponse('getAll', error);
-      heroCollectionService.load().subscribe(expectErrorToBe(error, done));
-    });
+    it('load observable should emit expected error when data service fails', () =>
+      new Promise<void>((done, fail) => {
+        const httpError = { error: new Error('Test Failure'), status: 501 };
+        const error = makeDataServiceError('GET', httpError);
+        dataService.setErrorResponse('getAll', error);
+        heroCollectionService
+          .load()
+          .subscribe(expectErrorToBe(error, { done, fail }));
+      }));
 
-    it('loadWithQuery observable should emit heroes on success', (done: any) => {
-      const hero1 = { id: 1, name: 'A' } as Hero;
-      const hero2 = { id: 2, name: 'B' } as Hero;
-      const heroes = [hero1, hero2];
-      dataService.setResponse('getWithQuery', heroes);
-      heroCollectionService
-        .loadWithQuery({ name: 'foo' })
-        .subscribe(expectDataToBe(heroes, done));
-    });
+    it('loadWithQuery observable should emit heroes on success', () =>
+      new Promise<void>((done, fail) => {
+        const hero1 = { id: 1, name: 'A' } as Hero;
+        const hero2 = { id: 2, name: 'B' } as Hero;
+        const heroes = [hero1, hero2];
+        dataService.setResponse('getWithQuery', heroes);
+        heroCollectionService
+          .loadWithQuery({ name: 'foo' })
+          .subscribe(expectDataToBe(heroes, { done, fail }));
+      }));
 
-    it('loadWithQuery observable should emit expected error when data service fails', (done: any) => {
-      const httpError = { error: new Error('Test Failure'), status: 501 };
-      const error = makeDataServiceError('GET', httpError);
-      dataService.setErrorResponse('getWithQuery', error);
-      heroCollectionService
-        .loadWithQuery({ name: 'foo' })
-        .subscribe(expectErrorToBe(error, done));
-    });
+    it('loadWithQuery observable should emit expected error when data service fails', () =>
+      new Promise<void>((done, fail) => {
+        const httpError = { error: new Error('Test Failure'), status: 501 };
+        const error = makeDataServiceError('GET', httpError);
+        dataService.setErrorResponse('getWithQuery', error);
+        heroCollectionService
+          .loadWithQuery({ name: 'foo' })
+          .subscribe(expectErrorToBe(error, { done, fail }));
+      }));
   });
 
   describe('cancel', () => {
@@ -187,68 +209,71 @@ describe('EntityCollectionService', () => {
         entityServicesSetup());
     });
 
-    it('can cancel a long running query', (done: any) => {
-      const responseDelay = 4;
-      dataService['getAll'].and.returnValue(
-        of(heroes).pipe(delay(responseDelay))
-      );
+    it('can cancel a long running query', () =>
+      new Promise<void>((done, fail) => {
+        const responseDelay = 4;
+        dataService['getAll'].mockReturnValue(
+          of(heroes).pipe(delay(responseDelay))
+        );
 
-      // Create the correlation id yourself to know which action to cancel.
-      const correlationId = 'CRID007';
-      const options: EntityActionOptions = { correlationId };
-      heroCollectionService.getAll(options).subscribe({
-        next: (data) => fail('should not have data but got data'),
-        error: (error) => {
-          expect(error instanceof PersistanceCanceled).toBe(true);
-          expect(error.message).toBe('Test cancel');
-          done();
-        },
-      });
+        // Create the correlation id yourself to know which action to cancel.
+        const correlationId = 'CRID007';
+        const options: EntityActionOptions = { correlationId };
+        heroCollectionService.getAll(options).subscribe({
+          next: (data) => fail('should not have data but got data'),
+          error: (error) => {
+            expect(error instanceof PersistanceCanceled).toBe(true);
+            expect(error.message).toBe('Test cancel');
+            done();
+          },
+        });
 
-      heroCollectionService.cancel(correlationId, 'Test cancel');
-    });
+        heroCollectionService.cancel(correlationId, 'Test cancel');
+      }));
 
-    it('has no effect on action with different correlationId', (done: any) => {
-      const responseDelay = 4;
-      dataService['getAll'].and.returnValue(
-        of(heroes).pipe(delay(responseDelay))
-      );
+    it('has no effect on action with different correlationId', () =>
+      new Promise<void>((done, fail) => {
+        const responseDelay = 4;
+        dataService['getAll'].mockReturnValue(
+          of(heroes).pipe(delay(responseDelay))
+        );
 
-      const correlationId = 'CRID007';
-      const options: EntityActionOptions = { correlationId };
-      heroCollectionService.getAll(options).subscribe({
-        next: (data) => {
-          expect(data).toEqual(heroes);
-          done();
-        },
-        error: fail,
-      });
+        const correlationId = 'CRID007';
+        const options: EntityActionOptions = { correlationId };
+        heroCollectionService.getAll(options).subscribe({
+          next: (data) => {
+            expect(data).toEqual(heroes);
+            done();
+          },
+          error: fail,
+        });
 
-      heroCollectionService.cancel('not-the-crid');
-    });
+        heroCollectionService.cancel('not-the-crid');
+      }));
 
-    it('has no effect when too late', (done: any) => {
-      const responseDelay = 4;
-      dataService['getAll'].and.returnValue(
-        of(heroes).pipe(delay(responseDelay))
-      );
+    it('has no effect when too late', () =>
+      new Promise<void>((done, fail) => {
+        const responseDelay = 4;
+        dataService['getAll'].mockReturnValue(
+          of(heroes).pipe(delay(responseDelay))
+        );
 
-      const correlationId = 'CRID007';
-      const options: EntityActionOptions = { correlationId };
-      heroCollectionService.getAll(options).subscribe({
-        next: (data) => expect(data).toEqual(heroes),
-        error: fail,
-      });
+        const correlationId = 'CRID007';
+        const options: EntityActionOptions = { correlationId };
+        heroCollectionService.getAll(options).subscribe({
+          next: (data) => expect(data).toEqual(heroes),
+          error: fail,
+        });
 
-      setTimeout(
-        () => heroCollectionService.cancel(correlationId),
-        responseDelay + 2
-      );
-      setTimeout(done, responseDelay + 4); // wait for all to complete
-    });
+        setTimeout(
+          () => heroCollectionService.cancel(correlationId),
+          responseDelay + 2
+        );
+        setTimeout(done, responseDelay + 4); // wait for all to complete
+      }));
   });
 
-  xdescribe('saves (optimistic)', () => {
+  describe.skip('saves (optimistic)', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
@@ -264,7 +289,7 @@ describe('EntityCollectionService', () => {
     combinedSaveTests(true);
   });
 
-  xdescribe('saves (pessimistic)', () => {
+  describe.skip('saves (pessimistic)', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
@@ -298,131 +323,146 @@ describe('EntityCollectionService', () => {
       } = entityServicesSetup());
     });
 
-    it('add() should save a new entity and return it', (done: any) => {
-      const extra = expectOptimisticSuccess(isOptimistic);
-      const hero = { id: 1, name: 'A' } as Hero;
-      dataService.setResponse('add', hero);
-      heroCollectionService
-        .add(hero)
-        .subscribe(expectDataToBe(hero, done, undefined, extra));
-    });
+    it('add() should save a new entity and return it', () =>
+      new Promise<void>((done, fail) => {
+        const extra = expectOptimisticSuccess(isOptimistic);
+        const hero = { id: 1, name: 'A' } as Hero;
+        dataService.setResponse('add', hero);
+        heroCollectionService
+          .add(hero)
+          .subscribe(expectDataToBe(hero, { done, fail }, undefined, extra));
+      }));
 
-    it('add() observable should emit expected error when data service fails', (done: any) => {
-      const hero = { id: 1, name: 'A' } as Hero;
-      const httpError = { error: new Error('Test Failure'), status: 501 };
-      const error = makeDataServiceError('PUT', httpError);
-      dataService.setErrorResponse('add', error);
-      heroCollectionService.add(hero).subscribe(expectErrorToBe(error, done));
-    });
+    it('add() observable should emit expected error when data service fails', () =>
+      new Promise<void>((done, fail) => {
+        const hero = { id: 1, name: 'A' } as Hero;
+        const httpError = { error: new Error('Test Failure'), status: 501 };
+        const error = makeDataServiceError('PUT', httpError);
+        dataService.setErrorResponse('add', error);
+        heroCollectionService
+          .add(hero)
+          .subscribe(expectErrorToBe(error, { done, fail }));
+      }));
 
-    it('delete() should send delete for entity not in cache and return its id', (done: any) => {
-      const extra = expectOptimisticSuccess(isOptimistic);
-      dataService.setResponse('delete', 42);
-      heroCollectionService
-        .delete(42)
-        .subscribe(expectDataToBe(42, done, undefined, extra));
-    });
+    it('delete() should send delete for entity not in cache and return its id', () =>
+      new Promise<void>((done, fail) => {
+        const extra = expectOptimisticSuccess(isOptimistic);
+        dataService.setResponse('delete', 42);
+        heroCollectionService
+          .delete(42)
+          .subscribe(expectDataToBe(42, { done, fail }, undefined, extra));
+      }));
 
-    it('delete() should skip delete for added entity cache', (done: any) => {
-      // reducedActions$Snoop();
-      let wasSkipped: boolean;
-      successActions$.subscribe(
-        (act: EntityAction) => (wasSkipped = act.payload.skip === true)
-      );
-      const extra = () => expect(wasSkipped).toBe(true);
-
-      const hero = { id: 1, name: 'A' } as Hero;
-      heroCollectionService.addOneToCache(hero);
-      dataService.setResponse('delete', 1);
-      heroCollectionService
-        .delete(1)
-        .subscribe(expectDataToBe(1, done, undefined, extra));
-    });
-
-    it('delete() observable should emit expected error when data service fails', (done: any) => {
-      const httpError = { error: new Error('Test Failure'), status: 501 };
-      const error = makeDataServiceError('DELETE', httpError);
-      dataService.setErrorResponse('delete', error);
-      heroCollectionService.delete(42).subscribe(expectErrorToBe(error, done));
-    });
-
-    it('update() should save updated entity and return it', (done: any) => {
-      const extra = expectOptimisticSuccess(isOptimistic);
-      const preUpdate = { id: 1, name: 'A' } as Hero;
-      heroCollectionService.addAllToCache([preUpdate]); // populate cache
-      const update = { ...preUpdate, name: 'Updated A' };
-      dataService.setResponse('update', null); // server returns nothing after update
-      heroCollectionService
-        .update(update)
-        .subscribe(expectDataToBe(update, done, undefined, extra));
-    });
-
-    it('update() should save updated entity and return server-changed version', (done: any) => {
-      const extra = expectOptimisticSuccess(isOptimistic);
-      const preUpdate = { id: 1, name: 'A' } as Hero;
-      heroCollectionService.addAllToCache([preUpdate]); // populate cache
-      const update = { ...preUpdate, name: 'Updated A' };
-      const postUpdate = {
-        ...preUpdate,
-        name: 'Updated A',
-        saying: 'Server set this',
-      };
-      dataService.setResponse('update', postUpdate); // server returns entity with server-side changes
-      heroCollectionService
-        .update(update)
-        .subscribe(expectDataToBe(postUpdate, done, undefined, extra));
-    });
-
-    it('update() observable should emit expected error when data service fails', (done: any) => {
-      const preUpdate = { id: 1, name: 'A' } as Hero;
-      heroCollectionService.addAllToCache([preUpdate]); // populate cache
-      const update = { ...preUpdate, name: 'Updated A' };
-      const httpError = { error: new Error('Test Failure'), status: 501 };
-      const error = makeDataServiceError('PUT', httpError);
-      dataService.setErrorResponse('update', error);
-      heroCollectionService
-        .update(update)
-        .subscribe(expectErrorToBe(error, done));
-    });
-
-    it('can handle out-of-order save results', (done: any) => {
-      const hero1 = { id: 1, name: 'A' } as Hero;
-      const hero2 = { id: 2, name: 'B' } as Hero;
-      let successActionCount = 0;
-      const delayMs = 5;
-      let responseDelay = delayMs;
-      const savedHeroes: Hero[] = [];
-
-      successActions$.pipe(delay(1)).subscribe((act) => {
-        successActionCount += 1;
-        if (successActionCount === 2) {
-          // Confirm hero2 actually saved before hero1
-          expect(savedHeroes).toEqual([hero2, hero1]);
-          done();
-        }
-      });
-
-      // dataService.add returns odd responses later than even responses
-      // so add of hero2 should complete before add of hero1
-      dataService['add'].and.callFake((data: Hero) => {
-        const result = of(data).pipe(
-          delay(responseDelay),
-          tap((h) => savedHeroes.push(h))
+    it('delete() should skip delete for added entity cache', () =>
+      new Promise<void>((done, fail) => {
+        // reducedActions$Snoop();
+        let wasSkipped: boolean;
+        successActions$.subscribe(
+          (act: EntityAction) => (wasSkipped = act.payload.skip === true)
         );
-        responseDelay = delayMs === responseDelay ? 1 : responseDelay;
-        return result;
-      });
+        const extra = () => expect(wasSkipped).toBe(true);
 
-      // Save hero1 before hero2
-      // Confirm that each add returns with its own hero
-      heroCollectionService
-        .add(hero1)
-        .subscribe((data) => expect(data).toEqual(hero1));
+        const hero = { id: 1, name: 'A' } as Hero;
+        heroCollectionService.addOneToCache(hero);
+        dataService.setResponse('delete', 1);
+        heroCollectionService
+          .delete(1)
+          .subscribe(expectDataToBe(1, { done, fail }, undefined, extra));
+      }));
 
-      heroCollectionService
-        .add(hero2)
-        .subscribe((data) => expect(data).toEqual(hero2));
-    });
+    it('delete() observable should emit expected error when data service fails', () =>
+      new Promise<void>((done, fail) => {
+        const httpError = { error: new Error('Test Failure'), status: 501 };
+        const error = makeDataServiceError('DELETE', httpError);
+        dataService.setErrorResponse('delete', error);
+        heroCollectionService
+          .delete(42)
+          .subscribe(expectErrorToBe(error, { done, fail }));
+      }));
+
+    it('update() should save updated entity and return it', () =>
+      new Promise<void>((done, fail) => {
+        const extra = expectOptimisticSuccess(isOptimistic);
+        const preUpdate = { id: 1, name: 'A' } as Hero;
+        heroCollectionService.addAllToCache([preUpdate]); // populate cache
+        const update = { ...preUpdate, name: 'Updated A' };
+        dataService.setResponse('update', null); // server returns nothing after update
+        heroCollectionService
+          .update(update)
+          .subscribe(expectDataToBe(update, { done, fail }, undefined, extra));
+      }));
+
+    it('update() should save updated entity and return server-changed version', () =>
+      new Promise<void>((done, fail) => {
+        const extra = expectOptimisticSuccess(isOptimistic);
+        const preUpdate = { id: 1, name: 'A' } as Hero;
+        heroCollectionService.addAllToCache([preUpdate]); // populate cache
+        const update = { ...preUpdate, name: 'Updated A' };
+        const postUpdate = {
+          ...preUpdate,
+          name: 'Updated A',
+          saying: 'Server set this',
+        };
+        dataService.setResponse('update', postUpdate); // server returns entity with server-side changes
+        heroCollectionService
+          .update(update)
+          .subscribe(
+            expectDataToBe(postUpdate, { done, fail }, undefined, extra)
+          );
+      }));
+
+    it('update() observable should emit expected error when data service fails', () =>
+      new Promise<void>((done, fail) => {
+        const preUpdate = { id: 1, name: 'A' } as Hero;
+        heroCollectionService.addAllToCache([preUpdate]); // populate cache
+        const update = { ...preUpdate, name: 'Updated A' };
+        const httpError = { error: new Error('Test Failure'), status: 501 };
+        const error = makeDataServiceError('PUT', httpError);
+        dataService.setErrorResponse('update', error);
+        heroCollectionService
+          .update(update)
+          .subscribe(expectErrorToBe(error, { done, fail }));
+      }));
+
+    it('can handle out-of-order save results', () =>
+      new Promise<void>((done) => {
+        const hero1 = { id: 1, name: 'A' } as Hero;
+        const hero2 = { id: 2, name: 'B' } as Hero;
+        let successActionCount = 0;
+        const delayMs = 5;
+        let responseDelay = delayMs;
+        const savedHeroes: Hero[] = [];
+
+        successActions$.pipe(delay(1)).subscribe((act) => {
+          successActionCount += 1;
+          if (successActionCount === 2) {
+            // Confirm hero2 actually saved before hero1
+            expect(savedHeroes).toEqual([hero2, hero1]);
+            done();
+          }
+        });
+
+        // dataService.add returns odd responses later than even responses
+        // so add of hero2 should complete before add of hero1
+        dataService['add'].mockImplementation((data: Hero) => {
+          const result = of(data).pipe(
+            delay(responseDelay),
+            tap((h) => savedHeroes.push(h))
+          );
+          responseDelay = delayMs === responseDelay ? 1 : responseDelay;
+          return result;
+        });
+
+        // Save hero1 before hero2
+        // Confirm that each add returns with its own hero
+        heroCollectionService
+          .add(hero1)
+          .subscribe((data) => expect(data).toEqual(hero1));
+
+        heroCollectionService
+          .add(hero2)
+          .subscribe((data) => expect(data).toEqual(hero2));
+      }));
   }
 
   describe('selectors$', () => {
@@ -431,13 +471,13 @@ describe('EntityCollectionService', () => {
     let store: Store<EntityCache>;
 
     function dispatchedAction() {
-      return <EntityAction>(<jasmine.Spy>store.dispatch).calls.argsFor(0)[0];
+      return <EntityAction>(<Mock>store.dispatch).mock.calls.at(0)?.[0];
     }
 
     beforeEach(() => {
       const setup = entityServicesSetup();
       ({ entityActionFactory, heroCollectionService, store } = setup);
-      spyOn(store, 'dispatch').and.callThrough();
+      vi.spyOn(store, 'dispatch');
     });
 
     it('can get collection from collection$', () => {
@@ -470,9 +510,9 @@ const entityMetadata: EntityMetadataMap = {
 
 function entityServicesSetup() {
   const logger = {
-    error: jasmine.createSpy('error'),
-    log: jasmine.createSpy('log'),
-    warn: jasmine.createSpy('warn'),
+    error: vi.fn().mockName('error'),
+    log: vi.fn().mockName('log'),
+    warn: vi.fn().mockName('warn'),
   };
 
   TestBed.configureTestingModule({
@@ -545,7 +585,7 @@ function entityServicesSetup() {
 
 function expectDataToBe(
   expected: any,
-  done: any,
+  { done, fail }: { done: any; fail: any },
   message?: string,
   extra?: () => void
 ) {
@@ -561,7 +601,11 @@ function expectDataToBe(
   };
 }
 
-function expectErrorToBe(expected: any, done: any, message?: string) {
+function expectErrorToBe(
+  expected: any,
+  { done, fail }: { done: any; fail: any },
+  message?: string
+) {
   return {
     next: (data: any) => {
       fail(`Expected error response but got data: '${JSON.stringify(data)}'`);
@@ -607,35 +651,35 @@ export class PessimisticDispatcherDefaultOptions {
 }
 
 export interface TestDataServiceMethod {
-  add: jasmine.Spy;
-  delete: jasmine.Spy;
-  getAll: jasmine.Spy;
-  getById: jasmine.Spy;
-  getWithQuery: jasmine.Spy;
-  update: jasmine.Spy;
+  add: Mock;
+  delete: Mock;
+  getAll: Mock;
+  getById: Mock;
+  getWithQuery: Mock;
+  update: Mock;
 }
 
 export class TestDataService {
-  add = jasmine.createSpy('add');
-  delete = jasmine.createSpy('delete');
-  getAll = jasmine.createSpy('getAll');
-  getById = jasmine.createSpy('getById');
-  getWithQuery = jasmine.createSpy('getWithQuery');
-  update = jasmine.createSpy('update');
+  add = vi.fn().mockName('add');
+  delete = vi.fn().mockName('delete');
+  getAll = vi.fn().mockName('getAll');
+  getById = vi.fn().mockName('getById');
+  getWithQuery = vi.fn().mockName('getWithQuery');
+  update = vi.fn().mockName('update');
 
   getService(): TestDataServiceMethod {
     return this;
   }
 
   setResponse(methodName: keyof TestDataServiceMethod, data: any) {
-    this[methodName].and.returnValue(of(data).pipe(delay(1)));
+    this[methodName].mockReturnValue(of(data).pipe(delay(1)));
   }
 
   setErrorResponse(methodName: keyof TestDataServiceMethod, error: any) {
     // Following won't quite work because delay does not appear to delay an error
-    // this[methodName].and.returnValue(throwError(() => error).pipe(delay(1)));
+    // this[methodName].mockReturnValue(throwError(() => error).pipe(delay(1)));
     // Use timer instead
-    this[methodName].and.returnValue(
+    this[methodName].mockReturnValue(
       timer(1).pipe(mergeMap(() => throwError(() => error)))
     );
   }

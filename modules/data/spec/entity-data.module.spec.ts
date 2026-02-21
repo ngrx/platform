@@ -28,6 +28,8 @@ import {
   EntityCollection,
 } from '..';
 
+import { vi } from 'vitest';
+
 const TEST_ACTION = 'test/get-everything-succeeded';
 const EC_METAREDUCER_TOKEN = new InjectionToken<
   MetaReducer<EntityCache, Action>
@@ -100,7 +102,7 @@ describe('EntityDataModule', () => {
       store = TestBed.inject(Store);
 
       testEffects = TestBed.inject<unknown>(EntityEffects) as TestEntityEffects;
-      spyOn(testEffects, 'testHook').and.callThrough();
+      vi.spyOn(testEffects, 'testHook');
     });
 
     it('should invoke test effect with an EntityAction', () => {
@@ -184,33 +186,34 @@ describe('EntityDataModule', () => {
       expect(metaReducerLog.join('|')).toContain(EntityOp.SET_LOADING);
     });
 
-    it('should respond to action handled by custom EntityCacheMetaReducer', (done) => {
-      const data = {
-        Hero: [
-          { id: 2, name: 'B', power: 'Fast' },
-          { id: 1, name: 'A', power: 'invisible' },
-        ],
-        Villain: [{ id: 30, name: 'Dr. Evil' }],
-      };
-      const action = {
-        type: TEST_ACTION,
-        payload: data,
-      };
-      store.dispatch(action);
-      cacheSelector$.subscribe({
-        next: (cache) => {
-          try {
-            expect(cache.Hero.entities[1]).toEqual(data.Hero[1]);
-            expect(cache.Villain.entities[30]).toEqual(data.Villain[0]);
-            expect(metaReducerLog.join('|')).toContain(TEST_ACTION);
-            done();
-          } catch (error: any) {
-            fail(error);
-          }
-        },
-        error: fail,
-      });
-    });
+    it('should respond to action handled by custom EntityCacheMetaReducer', () =>
+      new Promise<void>((done, fail) => {
+        const data = {
+          Hero: [
+            { id: 2, name: 'B', power: 'Fast' },
+            { id: 1, name: 'A', power: 'invisible' },
+          ],
+          Villain: [{ id: 30, name: 'Dr. Evil' }],
+        };
+        const action = {
+          type: TEST_ACTION,
+          payload: data,
+        };
+        store.dispatch(action);
+        cacheSelector$.subscribe({
+          next: (cache) => {
+            try {
+              expect(cache.Hero.entities[1]).toEqual(data.Hero[1]);
+              expect(cache.Villain.entities[30]).toEqual(data.Villain[0]);
+              expect(metaReducerLog.join('|')).toContain(TEST_ACTION);
+              done();
+            } catch (error: any) {
+              fail(error);
+            }
+          },
+          error: fail,
+        });
+      }));
   });
 });
 

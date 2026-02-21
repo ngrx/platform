@@ -12,7 +12,7 @@ import {
 describe('Data ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/data',
-    path.join(__dirname, '../collection.json')
+    path.join(process.cwd(), 'dist/modules/data/schematics/collection.json')
   );
   const defaultOptions: DataEntityOptions = {
     skipPackageJson: false,
