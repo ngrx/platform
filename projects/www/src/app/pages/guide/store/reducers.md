@@ -122,7 +122,7 @@ When an action is dispatched, _all registered reducers_ receive the action. Whet
 
 ### Exact return type enforcement
 
-The `on` function enforces that callbacks return an object matching the state type exactly. Returning an object with extra properties that don't exist on the state type will produce a TypeScript compilation error:
+The `on` function enforces that callbacks return an object matching the state type exactly. Returning an object with extra properties that don't exist on the state type produces a TypeScript compilation error:
 
 <ngrx-code-example header="scoreboard.reducer.ts">
 
@@ -143,7 +143,7 @@ export const scoreboardReducer = createReducer(
 
 <ngrx-docs-alert type="inform">
 
-**Note:** When `on` is used inside a generic reducer factory where the state type is an unresolved generic parameter (e.g., `function createGenericReducer<TState>()`), TypeScript cannot fully resolve the excess property check because `keyof TState` is deferred. In those cases, callbacks that spread state and override known properties may produce a false type error. Return `state` directly or use a type assertion (`as TState`) as a workaround.
+**Note:** When `on` is used inside a generic reducer factory where the state type is an unresolved generic parameter (e.g., `function createGenericReducer<TState>()`), TypeScript cannot fully resolve the excess property check. In those cases, callbacks that spread state and override known properties may produce a false type error. Return `state` directly or use a type assertion (`as TState`) as a workaround.
 
 </ngrx-docs-alert>
 

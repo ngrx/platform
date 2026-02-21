@@ -46,7 +46,7 @@ export class MoviesStore extends ComponentStore<MoviesState> {
 
 </ngrx-code-example>
 
-The `updater` method enforces that callbacks return an object matching the state type exactly. Returning an object with extra properties that don't exist on the state type will produce a TypeScript compilation error:
+The `updater` method enforces that callbacks return an object matching the state type exactly. Returning an object with extra properties that don't exist on the state type produces a TypeScript compilation error:
 
 <ngrx-code-example header="movies.store.ts">
 
@@ -70,7 +70,7 @@ export class MoviesStore extends ComponentStore<MoviesState> {
 
 <ngrx-docs-alert type="inform">
 
-**Note:** When `ComponentStore` is extended with a generic state type parameter (e.g., `class MyStore<T extends object> extends ComponentStore<T>`), TypeScript cannot fully resolve the excess property check because `keyof T` is deferred. In those cases, callbacks that spread state and override known properties may produce a false type error. Return `state` directly or use a type assertion (`as T`) as a workaround.
+**Note:** When `ComponentStore` is extended with a generic state type parameter (e.g., `class MyStore<T extends object> extends ComponentStore<T>`), TypeScript cannot fully resolve the excess property check. In those cases, callbacks that spread state and override known properties may produce a false type error. Return `state` directly or use a type assertion (`as T`) as a workaround.
 
 </ngrx-docs-alert>
 
