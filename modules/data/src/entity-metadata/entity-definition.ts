@@ -28,7 +28,10 @@ export function createEntityDefinition<T, S extends object>(
   const selectId = metadata.selectId || defaultSelectId;
   const sortComparer = (metadata.sortComparer = metadata.sortComparer || false);
 
-  const entityAdapter = createEntityAdapter<T>({ selectId, sortComparer });
+  const entityAdapter = createEntityAdapter<T>({
+    selectId: selectId as any,
+    sortComparer,
+  });
 
   const entityDispatcherOptions: Partial<EntityDispatcherDefaultOptions> =
     metadata.entityDispatcherOptions || {};
