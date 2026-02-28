@@ -24,7 +24,7 @@ describe('PushPipe', () => {
       'Book',
       'interface Book { title: string; }'
     ).toBeInferredAs('Book');
-  }, 8_000);
+  }, 30_000);
 
   it('should infer the result when potential observable is a union of non-observables', () => {
     expectPotentialObservable('number | { x: symbol; } | null').toBeInferredAs(

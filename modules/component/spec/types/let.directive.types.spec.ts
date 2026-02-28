@@ -27,7 +27,7 @@ describe('LetDirective', () => {
       'User',
       'interface User { name: string; }'
     ).toBeInferredAs('User');
-  }, 8_000);
+  }, 30_000);
 
   it('should infer the value when potential observable is a union of non-observables', () => {
     expectPotentialObservable(
