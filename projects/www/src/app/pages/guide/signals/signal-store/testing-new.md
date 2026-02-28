@@ -1,17 +1,17 @@
 # Testing
 
-A SignalStore is an Angular service, so you test it like any other service. This guide assumes you are using Vitest; the same ideas apply to other test runners.
+A SignalStore is an Angular service and is tested like any other service. This guide assumes Vitest; the same ideas apply to other test runners.
 
-You can approach testing in three ways:
+Testing can be approached in three ways:
 
-- **Test the store in isolation** by mocking its dependencies and exercising its API. When you do, never spy on the store's methods - if a method grows complex, extract that logic into a service, call the service from the method, and mock or fake the service in the test.
-- **Include the store in a wider test**, such as a full feature where both components and store are tested together.
-- **Provide a fake or mock of the store** when testing a component or service that uses it.
+- **Testing the store in isolation** by mocking its dependencies and exercising its API. When doing so, tests should not spy on the store's methods - if a method grows complex, that logic can be extracted into a service; the method calls the service, and the test mocks or fakes the service.
+- **Including the store in a wider test**, such as a full feature where both components and store are tested together.
+- **Providing a fake or mock of the store** when testing a component or service that uses it.
 
 Guiding principles:
 
-- **Test the public API only.** Don't assert on internal state or call internal methods; that ties tests to implementation and makes them brittle.
-- **Use TestBed** when testing the store. It supplies dependency injection and the injection context that `rxMethod`, `inject()` inside `withMethods()`, and `withHooks()` need; instantiating the store with `new` won't work for those.
+- **Public API only.** Asserting on internal state or calling internal methods ties tests to implementation and makes them brittle.
+- **TestBed** is used when testing the store. It supplies dependency injection and the injection context that `rxMethod`, `inject()` inside `withMethods()`, and `withHooks()` need; instantiating the store with `new` won't work for those.
 
 ## Different Scopes
 
@@ -63,13 +63,68 @@ const CounterStore = signalStore(withState({ count: 0 }));
 describe('CounterStore (local)', () => {
   it('should be defined and have initial count', () => {
     TestBed.configureTestingModule({
-      providers: [CounterStore], // 👈 provide the store
+      providers: [CounterStore], // store provided here
     });
 
     const store = TestBed.inject(CounterStore);
 
     expect(store).toBeDefined();
     expect(store.count()).toBe(0);
+  });
+});
+```
+
+</ngrx-code-example>
+
+## SignalStore Members
+
+A SignalStore is tested like any other Angular service by asserting on initial state, on derived values, and on the effect of calling its methods. The following example uses the same `CounterStore` as in the previous section, extended with a computed value and a method. `CounterStore` doesn't have any dependencies or async operations.
+
+<ngrx-code-example header="counter.store.ts / counter.store.spec.ts">
+
+```ts
+import { computed } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+
+const CounterStore = signalStore(
+  { providedIn: 'root' },
+  withState({ count: 0 }),
+  withComputed(({ count }) => ({
+    doubleCount: computed(() => count() * 2),
+  })),
+  withMethods((store) => ({
+    increment() {
+      patchState(store, { count: store.count() + 1 });
+    },
+  }))
+);
+
+// Test
+describe('CounterStore', () => {
+  it('should have initial state and derived doubleCount', () => {
+    const store = TestBed.inject(CounterStore);
+
+    expect(store.count()).toBe(0);
+    expect(store.doubleCount()).toBe(0);
+  });
+
+  it('should update doubleCount when count changes via increment', () => {
+    const store = TestBed.inject(CounterStore);
+
+    store.increment();
+    expect(store.count()).toBe(1);
+    expect(store.doubleCount()).toBe(2);
+
+    store.increment();
+    expect(store.count()).toBe(2);
+    expect(store.doubleCount()).toBe(4);
   });
 });
 ```
