@@ -23,7 +23,7 @@ For the sake of brevity, the examples below show the store and its test in one s
 
 If the store is created with `{ providedIn: 'root' }`, `TestBed.inject(CounterStore)` is enough to instantiate the store.
 
-<ngrx-code-example header="counter.store.ts / counter.store.spec.ts">
+<ngrx-code-example header="counter-store.ts">
 
 ```ts
 import { TestBed } from '@angular/core/testing';
@@ -51,7 +51,7 @@ describe('CounterStore (global)', () => {
 
 If the store is not provided in root, the testing module provides it.
 
-<ngrx-code-example header="counter.store.ts / counter.store.spec.ts">
+<ngrx-code-example header="counter-store.ts">
 
 ```ts
 import { TestBed } from '@angular/core/testing';
@@ -80,7 +80,7 @@ describe('CounterStore (local)', () => {
 
 A SignalStore is tested like any other Angular service by asserting on initial state, on derived values, and on the effect of calling its methods. The following example uses the same `CounterStore` as in the previous section, extended with a computed value and a method. `CounterStore` doesn't have any dependencies or async operations.
 
-<ngrx-code-example header="counter.store.ts / counter.store.spec.ts">
+<ngrx-code-example header="counter-store.ts">
 
 ```ts
 import { computed } from '@angular/core';
@@ -125,6 +125,50 @@ describe('CounterStore', () => {
     store.increment();
     expect(store.count()).toBe(2);
     expect(store.doubleCount()).toBe(4);
+  });
+});
+```
+
+</ngrx-code-example>
+
+## The `unprotected` helper
+
+`patchState` cannot update a SignalStore instance whose state is protected (the default). Setting state directly is sometimes needed to when the necessary public setters are not available.
+
+Wrapping the store instance with `unprotected` returns a writable view that can be updated with `patchState`.
+
+To assert that the computed `doubleCount` updates when `count` changes, the state is patched via `unprotected` and the computed is read from the store.
+
+<ngrx-code-example header="counter-store.ts">
+
+```ts
+import { computed } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withState,
+} from '@ngrx/signals';
+import { unprotected } from '@ngrx/signals/testing';
+
+const CounterStore = signalStore(
+  { providedIn: 'root' },
+  withState({ count: 0 }),
+  withComputed(({ count }) => ({
+    doubleCount: computed(() => count() * 2),
+  }))
+);
+
+// Test
+describe('CounterStore', () => {
+  it('recomputes doubleCount when count is patched via unprotected', () => {
+    const store = TestBed.inject(CounterStore);
+
+    patchState(unprotected(store), { count: 5 });
+
+    expect(store.count()).toBe(5);
+    expect(store.doubleCount()).toBe(10);
   });
 });
 ```
