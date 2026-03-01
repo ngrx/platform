@@ -133,7 +133,7 @@ describe('CounterStore', () => {
 
 ## The `unprotected` helper
 
-`patchState` cannot update a SignalStore instance whose state is protected (the default). Setting state directly is sometimes needed to when the necessary public setters are not available.
+`patchState` cannot update a SignalStore instance whose state is protected (the default). Setting state directly is sometimes needed when the necessary public setters are not available.
 
 Wrapping the store instance with `unprotected` returns a writable view that can be updated with `patchState`.
 
@@ -169,6 +169,65 @@ describe('CounterStore', () => {
 
     expect(store.count()).toBe(5);
     expect(store.doubleCount()).toBe(10);
+  });
+});
+```
+
+</ngrx-code-example>
+
+## Mocking SignalStore Dependencies
+
+When a store injects a service (for example inside `withMethods`), a test could mock that service.
+
+The most straightforward approach is to register the dependency with `useValue` and provide an object that implements the methods the store uses. In the following example, the `CounterStore` depends on a `StepService` to determine the increment step; the test provides a mock `StepService` returning a fixed step so that assertions are predictable.
+
+<ngrx-code-example header="counter-store.ts">
+
+```ts
+import { TestBed } from '@angular/core/testing';
+import {
+  patchState,
+  signalStore,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+import { inject, Injectable } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
+class StepService {
+  getStep() {
+    return 1;
+  }
+}
+
+const CounterStore = signalStore(
+  { providedIn: 'root' },
+  withState({ count: 0 }),
+  withMethods((store, stepService = inject(StepService)) => ({
+    increment() {
+      patchState(store, {
+        count: store.count() + stepService.getStep(),
+      });
+    },
+  }))
+);
+
+// Test
+describe('CounterStore with StepService', () => {
+  it('increments by the step returned by the injected service', () => {
+    const mockStepService = { getStep: () => 3 };
+
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: StepService, useValue: mockStepService },
+      ],
+    });
+
+    const store = TestBed.inject(CounterStore);
+
+    store.increment();
+
+    expect(store.count()).toBe(3);
   });
 });
 ```
