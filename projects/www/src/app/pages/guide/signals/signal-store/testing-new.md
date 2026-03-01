@@ -8,7 +8,7 @@ Testing can be approached in three ways:
 - **Including the store in a wider test**, such as a full feature where both components and store are tested together.
 - **Providing a fake or mock of the store** when testing a component or service that uses it.
 
-Guiding principles:
+## Guiding principles
 
 - **Public API only.** Asserting on internal state or calling internal methods ties tests to implementation and makes them brittle.
 - **TestBed** is used when testing the store. It supplies dependency injection and the injection context that many features like `rxMethod()`, `signalMethod()`, and `inject()` require; instantiating the store with `new` won't work for those.
@@ -346,3 +346,91 @@ describe('CounterStore with rxMethod', () => {
 ```
 
 </ngrx-code-example>
+
+## Mocking the SignalStore
+
+When testing a component that uses a SignalStore, the store can be replaced with a plain object that exposes the same API: signals for state and computed values, and functions for methods. The component injects the store and the test provides a mock via dependency injection.
+
+The following example uses a minimal counter component that displays the count and has a button to increment it. Two testing styles are shown: one that verifies state change by implementing the mock's `increment`, and one that verifies the interaction by providing `increment` as a `vi.fn()` and asserting it was called.
+
+<ngrx-code-example header="counter.component.spec.ts">
+
+```ts
+import { Component, inject, signal } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import {
+  patchState,
+  signalStore,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+import { page } from 'vitest/browser';
+
+const CounterStore = signalStore(
+  { providedIn: 'root' },
+  withState({ count: 0 }),
+  withMethods((store) => ({
+    increment() {
+      patchState(store, ({ count }) => ({ count: count + 1 }));
+    },
+  }))
+);
+
+@Component({
+  selector: 'app-counter',
+  template: `
+    <p aria-label="count">{{ store.count() }}</p>
+    <button type="button" (click)="store.increment()">
+      Increment
+    </button>
+  `,
+})
+class CounterComponent {
+  protected readonly store = inject(CounterStore);
+}
+
+describe('CounterComponent', () => {
+  it('updates displayed count when the mock implements increment', async () => {
+    const count = signal(0);
+    const mockStore = {
+      count,
+      increment() {
+        count.set(count() + 1);
+      },
+    };
+
+    TestBed.configureTestingModule({
+      providers: [{ provide: CounterStore, useValue: mockStore }],
+    }).createComponent(CounterComponent);
+
+    await expect
+      .element(page.getByLabelText('count'))
+      .toHaveTextContent('0');
+    await page.getByRole('button', { name: 'Increment' }).click();
+    await expect
+      .element(page.getByLabelText('count'))
+      .toHaveTextContent('1');
+  });
+
+  it('calls increment when the button is clicked and mock uses vi.fn()', async () => {
+    const count = signal(0);
+    const increment = vi.fn(() => count.set(count() + 1));
+    const mockStore = { count, increment };
+
+    TestBed.configureTestingModule({
+      providers: [{ provide: CounterStore, useValue: mockStore }],
+    }).createComponent(CounterComponent);
+
+    await page.getByRole('button', { name: 'Increment' }).click();
+    expect(increment).toHaveBeenCalledTimes(1);
+  });
+});
+```
+
+</ngrx-code-example>
+
+<ngrx-docs-alert type="help">
+
+**Note:** Asserting on state (as in the first test) is preferred over asserting that a method was called (as in the second test). See [Guiding principles](#guiding-principles).
+
+</ngrx-docs-alert>
