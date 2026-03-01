@@ -295,3 +295,54 @@ describe('CounterStore with signalMethod', () => {
 ```
 
 </ngrx-code-example>
+
+## Testing `rxMethod`
+
+Testing a store method created with [`rxMethod`](/guide/signals/rxjs-integration) follows the same ideas as testing [`signalMethod`](#testing-signalmethod). The only difference is that `rxMethod` also supports an `Observable` as an input argument.
+
+<ngrx-code-example header="counter-store.spec.ts">
+
+```ts
+import { TestBed } from '@angular/core/testing';
+import { of, scheduled, tap, asyncScheduler } from 'rxjs';
+import {
+  patchState,
+  signalStore,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+
+const CounterStore = signalStore(
+  { providedIn: 'root' },
+  withState({ count: 0 }),
+  withMethods((store) => ({
+    increment: rxMethod<number>(
+      tap((n) =>
+        patchState(store, ({ count }) => ({ count: count + n }))
+      )
+    ),
+  }))
+);
+
+// Test
+describe('CounterStore with rxMethod', () => {
+  it('adds emitted values to count when called with a synchronous Observable', () => {
+    const store = TestBed.inject(CounterStore);
+
+    store.increment(of(1, 2, 3));
+    expect(store.count()).toBe(6);
+  });
+
+  it('adds emitted values to count when called with an asynchronous Observable', async () => {
+    const store = TestBed.inject(CounterStore);
+
+    store.increment(scheduled([1, 2, 3], asyncScheduler));
+    expect(store.count()).toBe(0);
+
+    await expect.poll(() => store.count()).toBe(6);
+  });
+});
+```
+
+</ngrx-code-example>
