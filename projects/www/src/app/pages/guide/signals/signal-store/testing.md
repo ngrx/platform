@@ -1,4 +1,4 @@
-# Testing SignalStore
+# Testing
 
 A SignalStore is an Angular service and is tested like any other service. This guide assumes Vitest; the same ideas apply to other test runners.
 
@@ -298,7 +298,7 @@ describe('CounterStore with signalMethod', () => {
 
 ## Testing `rxMethod` Instance
 
-Testing a store method created with [`rxMethod`](/guide/signals/rxjs-integration) follows the same ideas as testing [`signalMethod`](#testing-signalmethod-instance). The only difference is that `rxMethod` also supports an `Observable` as an input argument.
+Testing a store method created with [`rxMethod`](/guide/signals/rxjs-integration) follows the same ideas as testing [`signalMethod`](/guide/signals/signal-store/testing#testing-signalmethod-instance). The only difference is that `rxMethod` also supports an `Observable` as an input argument.
 
 <ngrx-code-example header="counter-store.spec.ts">
 
@@ -432,7 +432,7 @@ describe('CounterComponent', () => {
 
 <ngrx-docs-alert type="help">
 
-**Note:** Asserting on state (as in the first test) is preferred over asserting that a method was called (as in the second test). See [Guiding principles](#guiding-principles).
+**Note:** Asserting on state (as in the first test) is preferred over asserting that a method was called (as in the second test). See [Guiding principles](/guide/signals/signal-store/testing#guiding-principles).
 
 </ngrx-docs-alert>
 
