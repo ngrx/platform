@@ -1,4 +1,4 @@
-# Testing
+# Testing SignalStore
 
 A SignalStore is an Angular service and is tested like any other service. This guide assumes Vitest; the same ideas apply to other test runners.
 
@@ -11,19 +11,19 @@ Testing can be approached in three ways:
 Guiding principles:
 
 - **Public API only.** Asserting on internal state or calling internal methods ties tests to implementation and makes them brittle.
-- **TestBed** is used when testing the store. It supplies dependency injection and the injection context that `rxMethod`, `inject()` inside `withMethods()`, and `withHooks()` need; instantiating the store with `new` won't work for those.
+- **TestBed** is used when testing the store. It supplies dependency injection and the injection context that many features like `rxMethod()`, `signalMethod()`, and `inject()` require; instantiating the store with `new` won't work for those.
 
-## Different Scopes
+## Testing SignalStores with Different Scopes
 
 A SignalStore can be provided locally or globally. In both cases, `TestBed` can inject it.
 
-For the sake of brevity, the examples below show the store and its test in one snippet.
+For the sake of brevity, the test examples contain both the implementation and the test.
 
 ### Globally provided store
 
 If the store is created with `{ providedIn: 'root' }`, `TestBed.inject(CounterStore)` is enough to instantiate the store.
 
-<ngrx-code-example header="counter-store.ts">
+<ngrx-code-example header="counter-store.spec.ts">
 
 ```ts
 import { TestBed } from '@angular/core/testing';
@@ -51,7 +51,7 @@ describe('CounterStore (global)', () => {
 
 If the store is not provided in root, the testing module provides it.
 
-<ngrx-code-example header="counter-store.ts">
+<ngrx-code-example header="counter-store.spec.ts">
 
 ```ts
 import { TestBed } from '@angular/core/testing';
@@ -63,7 +63,8 @@ const CounterStore = signalStore(withState({ count: 0 }));
 describe('CounterStore (local)', () => {
   it('should be defined and have initial count', () => {
     TestBed.configureTestingModule({
-      providers: [CounterStore], // store provided here
+      // 👇 provide the store in the testing module
+      providers: [CounterStore],
     });
 
     const store = TestBed.inject(CounterStore);
@@ -76,14 +77,13 @@ describe('CounterStore (local)', () => {
 
 </ngrx-code-example>
 
-## SignalStore Members
+## Testing SignalStore Members
 
 A SignalStore is tested like any other Angular service by asserting on initial state, on derived values, and on the effect of calling its methods. The following example uses the same `CounterStore` as in the previous section, extended with a computed value and a method. `CounterStore` doesn't have any dependencies or async operations.
 
-<ngrx-code-example header="counter-store.ts">
+<ngrx-code-example header="counter-store.spec.ts">
 
 ```ts
-import { computed } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   patchState,
@@ -97,11 +97,11 @@ const CounterStore = signalStore(
   { providedIn: 'root' },
   withState({ count: 0 }),
   withComputed(({ count }) => ({
-    doubleCount: computed(() => count() * 2),
+    doubleCount: () => count() * 2,
   })),
   withMethods((store) => ({
     increment() {
-      patchState(store, { count: store.count() + 1 });
+      patchState(store, ({ count }) => ({ count: count + 1 }));
     },
   }))
 );
@@ -139,10 +139,9 @@ Wrapping the store instance with `unprotected` returns a writable view that can 
 
 To assert that the computed `doubleCount` updates when `count` changes, the state is patched via `unprotected` and the computed is read from the store.
 
-<ngrx-code-example header="counter-store.ts">
+<ngrx-code-example header="counter-store.spec.ts">
 
 ```ts
-import { computed } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   patchState,
@@ -156,7 +155,7 @@ const CounterStore = signalStore(
   { providedIn: 'root' },
   withState({ count: 0 }),
   withComputed(({ count }) => ({
-    doubleCount: computed(() => count() * 2),
+    doubleCount: () => count() * 2,
   }))
 );
 
@@ -165,6 +164,7 @@ describe('CounterStore', () => {
   it('recomputes doubleCount when count is patched via unprotected', () => {
     const store = TestBed.inject(CounterStore);
 
+    //         👇 makes the store writable
     patchState(unprotected(store), { count: 5 });
 
     expect(store.count()).toBe(5);
@@ -181,7 +181,7 @@ When a store injects a service (for example inside `withMethods`), a test could 
 
 The most straightforward approach is to register the dependency with `useValue` and provide an object that implements the methods the store uses. In the following example, the `CounterStore` depends on a `StepService` to determine the increment step; the test provides a mock `StepService` returning a fixed step so that assertions are predictable.
 
-<ngrx-code-example header="counter-store.ts">
+<ngrx-code-example header="counter-store.spec.ts">
 
 ```ts
 import { TestBed } from '@angular/core/testing';
@@ -205,9 +205,9 @@ const CounterStore = signalStore(
   withState({ count: 0 }),
   withMethods((store, stepService = inject(StepService)) => ({
     increment() {
-      patchState(store, {
-        count: store.count() + stepService.getStep(),
-      });
+      patchState(store, ({ count }) => ({
+        count: count + stepService.getStep(),
+      }));
     },
   }))
 );
@@ -219,6 +219,7 @@ describe('CounterStore with StepService', () => {
 
     TestBed.configureTestingModule({
       providers: [
+        //                      👇 provide the mock service
         { provide: StepService, useValue: mockStepService },
       ],
     });
@@ -228,6 +229,67 @@ describe('CounterStore with StepService', () => {
     store.increment();
 
     expect(store.count()).toBe(3);
+  });
+});
+```
+
+</ngrx-code-example>
+
+## Testing `signalMethod`
+
+When testing a store that exposes a method created with [`signalMethod`](/guide/signals/signal-method), the `TestBed` supplies the injection context. When the method is called with a Signal, the test must wait for the effect (e.g. `TestBed.tick()` or `expect.poll`) before asserting. Additionally, the call must be made within an injection context.
+
+<ngrx-code-example header="counter-store.spec.ts">
+
+```ts
+import { signal } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import {
+  patchState,
+  signalStore,
+  signalMethod,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+
+const CounterStore = signalStore(
+  { providedIn: 'root' },
+  withState({ count: 0 }),
+  withMethods((store) => ({
+    increment: signalMethod<number>((step) => {
+      patchState(store, ({ count }) => ({ count: count + step }));
+    }),
+  }))
+);
+
+// Test
+describe('CounterStore with signalMethod', () => {
+  it('increments by a static step synchronously', () => {
+    const store = TestBed.inject(CounterStore);
+
+    store.increment(1);
+    expect(store.count()).toBe(1);
+
+    store.increment(2);
+    expect(store.count()).toBe(3);
+  });
+
+  it('increments by a signal step after tick', async () => {
+    const store = TestBed.inject(CounterStore);
+    const step = signal(2);
+
+    TestBed.runInInjectionContext(() => store.increment(step));
+    expect(store.count()).toBe(0);
+
+    await expect.poll(() => store.count()).toBe(2);
+
+    step.set(3);
+    await expect.poll(() => store.count()).toBe(5);
+
+    // Alternatively, TestBed.tick() would flush the effect
+    step.set(1);
+    TestBed.tick();
+    expect(store.count()).toBe(6);
   });
 });
 ```
