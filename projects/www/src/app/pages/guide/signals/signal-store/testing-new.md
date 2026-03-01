@@ -131,7 +131,7 @@ describe('CounterStore', () => {
 
 </ngrx-code-example>
 
-## The `unprotected` helper
+## The `unprotected` Helper
 
 `patchState` cannot update a SignalStore instance whose state is protected (the default). Setting state directly is sometimes needed when the necessary public setters are not available.
 
@@ -235,7 +235,7 @@ describe('CounterStore with StepService', () => {
 
 </ngrx-code-example>
 
-## Testing `signalMethod`
+## Testing `signalMethod` Instance
 
 When testing a store that exposes a method created with [`signalMethod`](/guide/signals/signal-method), the `TestBed` supplies the injection context. When the method is called with a Signal, the test must wait for the effect (e.g. `TestBed.tick()` or `expect.poll`) before asserting. Additionally, the call must be made within an injection context.
 
@@ -296,9 +296,9 @@ describe('CounterStore with signalMethod', () => {
 
 </ngrx-code-example>
 
-## Testing `rxMethod`
+## Testing `rxMethod` Instance
 
-Testing a store method created with [`rxMethod`](/guide/signals/rxjs-integration) follows the same ideas as testing [`signalMethod`](#testing-signalmethod). The only difference is that `rxMethod` also supports an `Observable` as an input argument.
+Testing a store method created with [`rxMethod`](/guide/signals/rxjs-integration) follows the same ideas as testing [`signalMethod`](#testing-signalmethod-instance). The only difference is that `rxMethod` also supports an `Observable` as an input argument.
 
 <ngrx-code-example header="counter-store.spec.ts">
 
@@ -389,6 +389,7 @@ class CounterComponent {
   protected readonly store = inject(CounterStore);
 }
 
+// Test
 describe('CounterComponent', () => {
   it('updates displayed count when the mock implements increment', async () => {
     const count = signal(0);
@@ -434,3 +435,57 @@ describe('CounterComponent', () => {
 **Note:** Asserting on state (as in the first test) is preferred over asserting that a method was called (as in the second test). See [Guiding principles](#guiding-principles).
 
 </ngrx-docs-alert>
+
+## Testing Custom SignalStore Features
+
+Custom features built with [`signalStoreFeature`](/guide/signals/signal-store/custom-store-features) can be tested by creating a minimal store that uses the feature and asserting on that store.
+
+<ngrx-code-example header="with-counter.spec.ts">
+
+```ts
+import { TestBed } from '@angular/core/testing';
+import {
+  patchState,
+  signalStore,
+  signalStoreFeature,
+  withComputed,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+
+function withCounter() {
+  return signalStoreFeature(
+    withState({ count: 0 }),
+    withComputed(({ count }) => ({
+      doubleCount: () => count() * 2,
+    })),
+    withMethods((store) => ({
+      increment() {
+        patchState(store, ({ count }) => ({ count: count + 1 }));
+      },
+    }))
+  );
+}
+
+// Test
+describe('withCounter', () => {
+  it('has initial count and doubleCount, and increment updates both', () => {
+    // 👇 "testing store" wraps the feature
+    const CounterStore = signalStore(
+      { providedIn: 'root' },
+      withCounter()
+    );
+
+    const store = TestBed.inject(CounterStore);
+
+    expect(store.count()).toBe(0);
+    expect(store.doubleCount()).toBe(0);
+
+    store.increment();
+    expect(store.count()).toBe(1);
+    expect(store.doubleCount()).toBe(2);
+  });
+});
+```
+
+</ngrx-code-example>
