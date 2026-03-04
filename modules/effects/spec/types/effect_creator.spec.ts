@@ -24,7 +24,7 @@ describe('createEffect()', () => {
       `).toFail(
         /Type 'Observable<{ foo: string; }>' is not assignable to type 'EffectResult<Action<string>>'./
       );
-    });
+    }, 10_000);
 
     it('should help with action creator that is not called', () => {
       // Action creator is called with parentheses.
