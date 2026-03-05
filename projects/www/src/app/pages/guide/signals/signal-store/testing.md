@@ -1,6 +1,6 @@
 # Testing
 
-A SignalStore is an Angular service and is tested like any other service. This guide assumes Vitest; the same ideas apply to other test runners.
+A SignalStore is an Angular service and is tested like any other service. This guide assumes Vitest (in browser mode); the same ideas apply to other test runners.
 
 Testing can be approached in three ways:
 
