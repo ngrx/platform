@@ -36,7 +36,7 @@ const CounterStore = signalStore(
 
 // Test
 describe('CounterStore (global)', () => {
-  it('should be defined and have initial count', () => {
+  it('is defined with an initial count', () => {
     const store = TestBed.inject(CounterStore);
 
     expect(store).toBeDefined();
