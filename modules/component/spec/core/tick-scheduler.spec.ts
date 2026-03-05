@@ -93,6 +93,19 @@ describe('TickScheduler', () => {
       tick(300 + animationFrameDelay);
       expect(appRef.tick).toHaveBeenCalledTimes(3);
     }));
+
+    it('should ensure requestAnimationFrame is not bound to the tick scheduler', () => {
+      const rafSpy = vi.spyOn(window, 'requestAnimationFrame');
+      const { tickScheduler } = setup(noopNgZoneMock);
+
+      tickScheduler.schedule();
+
+      const invocationContext = rafSpy.mock.contexts[0];
+
+      expect(invocationContext).not.toBe(tickScheduler);
+
+      rafSpy.mockRestore();
+    });
   });
 
   describe('when NgZone is not provided and running in SSR mode', () => {
