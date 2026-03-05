@@ -61,7 +61,7 @@ const CounterStore = signalStore(withState({ count: 0 }));
 
 // Test
 describe('CounterStore (local)', () => {
-  it('should be defined and have initial count', () => {
+  it('is defined with an initial count', () => {
     TestBed.configureTestingModule({
       // 👇 provide the store in the testing module
       providers: [CounterStore],
