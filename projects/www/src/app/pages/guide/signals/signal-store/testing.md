@@ -115,7 +115,7 @@ describe('CounterStore', () => {
     expect(store.doubleCount()).toBe(0);
   });
 
-  it('should update doubleCount when count changes via increment', () => {
+  it('updates doubleCount when count changes on increment', () => {
     const store = TestBed.inject(CounterStore);
 
     store.increment();
