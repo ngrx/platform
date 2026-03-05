@@ -108,7 +108,7 @@ const CounterStore = signalStore(
 
 // Test
 describe('CounterStore', () => {
-  it('should have initial state and derived doubleCount', () => {
+  it('has an initial state and derived doubleCount', () => {
     const store = TestBed.inject(CounterStore);
 
     expect(store.count()).toBe(0);
