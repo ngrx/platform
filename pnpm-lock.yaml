@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@analogjs/content':
         specifier: 2.1.1
-        version: 2.1.1(tcq5efq4xil2xjfg57snb5t2lq)
+        version: 2.1.1(7jnqffch7zggnywzajyfqgg7ju)
       '@analogjs/router':
         specifier: 2.1.1
-        version: 2.1.1(@analogjs/content@2.1.1(tcq5efq4xil2xjfg57snb5t2lq))(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(@angular/router@21.0.1(@angular/common@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0))(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(@angular/platform-browser@21.0.1(@angular/animations@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0)))(@angular/common@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0))(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0)))(rxjs@7.8.0))
+        version: 2.1.1(@analogjs/content@2.1.1(7jnqffch7zggnywzajyfqgg7ju))(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(@angular/router@21.0.1(@angular/common@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0))(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(@angular/platform-browser@21.0.1(@angular/animations@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0)))(@angular/common@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0))(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0)))(rxjs@7.8.0))
       '@angular/animations':
         specifier: 21.0.1
         version: 21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))
@@ -113,7 +113,7 @@ importers:
     devDependencies:
       '@analogjs/platform':
         specifier: 2.1.1
-        version: 2.1.1(pnsk2aofuogikhc32q6xwg2rua)
+        version: 2.1.1(immp46l33esnd5yksbqz3zaddu)
       '@analogjs/vite-plugin-angular':
         specifier: 2.1.1
         version: 2.1.1(@angular-devkit/build-angular@21.0.1(mq6jjno7nqwx764wm44pxo4ggu))(@angular/build@21.0.1(nenyn7n5zmptoo2elzjvqn74y4))
@@ -174,6 +174,9 @@ importers:
       '@nx/node':
         specifier: 22.0.3
         version: 22.0.3(@babel/traverse@7.28.5)(@types/node@24.10.1)(@zkochan/js-yaml@0.0.7)(babel-plugin-macros@3.1.0)(eslint@9.34.0(jiti@2.4.2))(nx@22.0.3)(ts-node@10.9.2(@types/node@24.10.1)(typescript@5.9.3))(typescript@5.9.3)
+      '@nx/playwright':
+        specifier: ^22.4.5
+        version: 22.4.5(@babel/traverse@7.28.5)(@playwright/test@1.58.1)(@zkochan/js-yaml@0.0.7)(eslint@9.34.0(jiti@2.4.2))(nx@22.0.3)
       '@nx/vite':
         specifier: 22.0.3
         version: 22.0.3(@babel/traverse@7.28.5)(nx@22.0.3)(typescript@5.9.3)(vite@7.2.4(@types/node@24.10.1)(jiti@2.4.2)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vitest@4.0.14(@opentelemetry/api@1.9.0)(@types/node@24.10.1)(jiti@2.4.2)(jsdom@22.1.0)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
@@ -183,6 +186,9 @@ importers:
       '@octokit/rest':
         specifier: ^15.17.0
         version: 15.18.3(encoding@0.1.13)
+      '@playwright/test':
+        specifier: ^1.58.1
+        version: 1.58.1
       '@schematics/angular':
         specifier: 21.0.1
         version: 21.0.1(chokidar@4.0.3)
@@ -2870,6 +2876,11 @@ packages:
     peerDependencies:
       nx: '>= 21 <= 23 || ^22.0.0-0'
 
+  '@nx/devkit@22.4.5':
+    resolution: {integrity: sha512-mw5G6k/XTkL675eVIcFpyZdfdIc3wQMSSGWzfA6tQGmANDYc/NFGeZR9wDqXDceHXnYKoRO6g6GhKTOHUCW23Q==}
+    peerDependencies:
+      nx: '>= 21 <= 23 || ^22.0.0-0'
+
   '@nx/docker@22.0.3':
     resolution: {integrity: sha512-jH0ZlFTAwqNpc8bwo9atHXerryT3AoO9SpT7wYHY7gTfJ3xDmpI4wZAHvS9UWmRTZb5Xi0A/uGd/Q7ysH2muVA==}
 
@@ -2891,11 +2902,28 @@ packages:
       '@zkochan/js-yaml':
         optional: true
 
+  '@nx/eslint@22.4.5':
+    resolution: {integrity: sha512-/N/kG86gqagDziC7Ij/WwAnjjXx55E1Jbpp3kkau3Ncj+wjPoLqCebpg6aW83VJQ7a4SUU0BO3U5bkqQZPGBXQ==}
+    peerDependencies:
+      '@zkochan/js-yaml': 0.0.7
+      eslint: ^8.0.0 || ^9.0.0
+    peerDependenciesMeta:
+      '@zkochan/js-yaml':
+        optional: true
+
   '@nx/jest@22.0.3':
     resolution: {integrity: sha512-QxQYDbX5HMfqSPbTCaTaZFkpUX79hPEIb84tyX+/dCCX5NyT/0YKutJ8a6r3+OTChRGsa8/toC9PxyTqF/3niw==}
 
   '@nx/js@22.0.3':
     resolution: {integrity: sha512-9ZZWjIIpAVDq9tH1jXnmOlkuzutr/4ZIhRgtnK2hweQNEibgnYnJoAXKd8sEIATumPP0y6+UnU6vIRho64loyQ==}
+    peerDependencies:
+      verdaccio: ^6.0.5
+    peerDependenciesMeta:
+      verdaccio:
+        optional: true
+
+  '@nx/js@22.4.5':
+    resolution: {integrity: sha512-t8972z2uF6X5i4FFmTlnvSwwxfHkk87zBpKQK0yMH5CzOENViVFNbiPnbvCIJcGNrgVUSALL3f2ngwKcTZObmA==}
     peerDependencies:
       verdaccio: ^6.0.5
     peerDependenciesMeta:
@@ -2913,8 +2941,18 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
+  '@nx/nx-darwin-arm64@22.4.5':
+    resolution: {integrity: sha512-zdRHZv1AMvzgp+5g2VZNXXuqk0/n1wOFksOeZ6BRyKg6hC2YkjGyn5xle/UK668MDAwe9KKm4jizvztK/LlPuA==}
+    cpu: [arm64]
+    os: [darwin]
+
   '@nx/nx-darwin-x64@22.0.3':
     resolution: {integrity: sha512-NVDjPrl1gvIZQkPbL/qpCDV75D0bltkxJTD1oXjCr3994KNpcdRsaOnm20uywT7J1MfaBJbROWsjjR5nzmoHcQ==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@nx/nx-darwin-x64@22.4.5':
+    resolution: {integrity: sha512-1NVWaSgpa8yawi2UILX4NE9UcMuNzAAGh95JSV2yJovRfKxFQgQSB6hj0gpJu+TLLVCroTqy4woSQ2a0SPodeQ==}
     cpu: [x64]
     os: [darwin]
 
@@ -2923,8 +2961,18 @@ packages:
     cpu: [x64]
     os: [freebsd]
 
+  '@nx/nx-freebsd-x64@22.4.5':
+    resolution: {integrity: sha512-baaLz53wr/HsVfSJ7ZgIFCPAb/OtP7yPPasb3eIu65oVhSswGfgvz9+YINhuInUgW7x7STmRnhGeR8pj6iqFqw==}
+    cpu: [x64]
+    os: [freebsd]
+
   '@nx/nx-linux-arm-gnueabihf@22.0.3':
     resolution: {integrity: sha512-LUf2C8dhfGXK0NTLoLwNACJmQCsknnCt9br/yKwZtE4nWT+2zWoaM8mbQSpCh5gbYU79ypvp4ZR9PhMxYvV+OQ==}
+    cpu: [arm]
+    os: [linux]
+
+  '@nx/nx-linux-arm-gnueabihf@22.4.5':
+    resolution: {integrity: sha512-wRBPv/l39tz+sQjZUH4hygCsd/DoUXUbDYkR6lnNXWHAVyPUh48/27JozM8hD3o/G3O2Vd8PFQasIXtvy2GS0Q==}
     cpu: [arm]
     os: [linux]
 
@@ -2933,8 +2981,18 @@ packages:
     cpu: [arm64]
     os: [linux]
 
+  '@nx/nx-linux-arm64-gnu@22.4.5':
+    resolution: {integrity: sha512-6B/yCFiqjvV2Bkz6MKUtfFWjwtiF53DN07K1BFksMpQef+h2yE1IrGaG/OCl6VaVl4VRzQgLOluqP96M1yhDgg==}
+    cpu: [arm64]
+    os: [linux]
+
   '@nx/nx-linux-arm64-musl@22.0.3':
     resolution: {integrity: sha512-bhptGK4ZwKfdlnNkU0ffhhx8cFuTui+5PTeDWzTtUwAQ1VJSJDK5WJaS8hTTCTmmeoxyCl5qJ+NXawNbkk/kCQ==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@nx/nx-linux-arm64-musl@22.4.5':
+    resolution: {integrity: sha512-n0v60vRYn7BDHWB588snPZntLO2XC8/pvLd+QunneM2VGEPf51n5llX5U3AwTt/ybaZHWhbuHv0sJBIbT4I0GA==}
     cpu: [arm64]
     os: [linux]
 
@@ -2943,8 +3001,18 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@nx/nx-linux-x64-gnu@22.4.5':
+    resolution: {integrity: sha512-zT7nb1PRE3NcW/HFnbgKJ9ZPtCOeVDpbJ5J4ZhHj36ZAUWZVXFEIPq9VTIZFy5+0pioLUIClQQY7OUfwnV/Zig==}
+    cpu: [x64]
+    os: [linux]
+
   '@nx/nx-linux-x64-musl@22.0.3':
     resolution: {integrity: sha512-CPJ3K2VXcF5O8Bk6KGryqZntm/1/TeWtKaUC+dSe6RAWMwUYBwI+EV+YNyG0jtjbbY3eIf2yrjWYO6ifsTx/jQ==}
+    cpu: [x64]
+    os: [linux]
+
+  '@nx/nx-linux-x64-musl@22.4.5':
+    resolution: {integrity: sha512-r8Rls5BS7lGQbUNX1Z1S370XrOacOU1bQ/dxY8i7qahFQKnMwpFo0W8odhgzjk+vrC/WLf9jOgz5/JPzehQBIw==}
     cpu: [x64]
     os: [linux]
 
@@ -2953,10 +3021,28 @@ packages:
     cpu: [arm64]
     os: [win32]
 
+  '@nx/nx-win32-arm64-msvc@22.4.5':
+    resolution: {integrity: sha512-Lv81LTnG6sSvBOq2vDSeyfzpF9X0cTGlJdzJOJzPZXCZGFhTV1ig9TdLiij/GM2JwV4Kvq5Co6YzA5dxtGUphQ==}
+    cpu: [arm64]
+    os: [win32]
+
   '@nx/nx-win32-x64-msvc@22.0.3':
     resolution: {integrity: sha512-SqI4DJor7OcZyOSoX8gcPNo+1rWAcc9/DwE6kGGqLWjUauvd8SDhjvLEs1nA7XusJAwwJ1h9QUqo/BoBKG7E1w==}
     cpu: [x64]
     os: [win32]
+
+  '@nx/nx-win32-x64-msvc@22.4.5':
+    resolution: {integrity: sha512-52RfBcq9PXt76soCAZAJcNmCYrdsg6BvhBmjf0IFTMZ8IaeqZ9ktxAy1TZf/gCkOaM3ly4htbYMStiZ4MHX7Eg==}
+    cpu: [x64]
+    os: [win32]
+
+  '@nx/playwright@22.4.5':
+    resolution: {integrity: sha512-6cDgDws2mjlXP04C618pJF+F9uB8YR1UDU7Ic9t6TWuxqntAC9ajcjQqNuTcexvfRaGchQDf7VTmX+ijrr1wIg==}
+    peerDependencies:
+      '@playwright/test': ^1.36.0
+    peerDependenciesMeta:
+      '@playwright/test':
+        optional: true
 
   '@nx/rspack@22.0.3':
     resolution: {integrity: sha512-vxKgo+v/k7UfbOCqfvUfYqtXuoaWqNUncJu4MWsQQE43DE5Ex8j41sQKDgknXoufZ8CLLATxDeaTBGK8bh3FwQ==}
@@ -2978,6 +3064,9 @@ packages:
 
   '@nx/workspace@22.0.3':
     resolution: {integrity: sha512-lzqIRHYsR+NSsqwVF4VqS+6JfeQOs6giGS+sx7xle+pa9cKrptoGcyZ8u8SfpaLPAXen9/sYtP9xZbYQsq27rA==}
+
+  '@nx/workspace@22.4.5':
+    resolution: {integrity: sha512-QGapABrqBnRpEWbnd5UpbVCBzsYD+RlC1lWShXPpCM+dosR3qkGb+pSmxeSCsKbNVtCwYyyuRW+PvlF5Q5sU9A==}
 
   '@octokit/rest@15.18.3':
     resolution: {integrity: sha512-oHABAvvC83tPIuvUfWRaw9eLThFrCxBgywl+KvEwfTFjoCrMOfEaMh0r39+Ub/EEbV345GJiMzN+zPZ4kqOvbA==}
@@ -3106,6 +3195,11 @@ packages:
   '@pkgr/core@0.2.9':
     resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
+
+  '@playwright/test@1.58.1':
+    resolution: {integrity: sha512-6LdVIUERWxQMmUSSQi0I53GgCBYgM2RpGngCPY7hSeju+VrKjq3lvs7HpJoPbDiY5QM5EYRtRX5fvrinnMAz3w==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   '@poppinss/colors@4.1.5':
     resolution: {integrity: sha512-FvdDqtcRCtz6hThExcFOgW0cWX+xwSMWcRuQe5ZEb2m7cVQOAVZOIMt+/v9RxGiD9/OY16qJBXK4CVKWAPalBw==}
@@ -6542,6 +6636,11 @@ packages:
   fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 
+  fsevents@2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -8850,6 +8949,18 @@ packages:
       '@swc/core':
         optional: true
 
+  nx@22.4.5:
+    resolution: {integrity: sha512-l68kzhnemXXGCDS9/W8eccZ7Bzse9pw1oJ466pzDM89MbA6hEaOQ0p+eDXZI++iWl0T+lYJ56EDhO23syKzt9g==}
+    hasBin: true
+    peerDependencies:
+      '@swc-node/register': ^1.8.0
+      '@swc/core': ^1.3.85
+    peerDependenciesMeta:
+      '@swc-node/register':
+        optional: true
+      '@swc/core':
+        optional: true
+
   nypm@0.6.2:
     resolution: {integrity: sha512-7eM+hpOtrKrBDCh7Ypu2lJ9Z7PNZBdi/8AT3AX8xoCj43BBVHD0hPSTEvMtkMpfs8FCqBGhxB+uToIQimA111g==}
     engines: {node: ^14.16.0 || >=16.10.0}
@@ -9288,6 +9399,16 @@ packages:
 
   pkg-types@2.3.0:
     resolution: {integrity: sha512-SIqCzDRg0s9npO5XQ3tNZioRY1uK06lA41ynBC1YmFTmnY6FjUjVt6s4LoADmwoig1qqD0oK8h1p/8mlMx8Oig==}
+
+  playwright-core@1.58.1:
+    resolution: {integrity: sha512-bcWzOaTxcW+VOOGBCQgnaKToLJ65d6AqfLVKEWvexyS3AS6rbXl+xdpYRMGSRBClPvyj44njOWoxjNdL/H9UNg==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  playwright@1.58.1:
+    resolution: {integrity: sha512-+2uTZHxSCcxjvGc5C891LrS1/NlxglGxzrC4seZiVjcYVQfUa87wBL6rTDqzGjuoWNjnBzRqKmF6zRYGMvQUaQ==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   please-upgrade-node@3.2.0:
     resolution: {integrity: sha512-gQR3WpIgNIKwBMVLkpMUeR3e1/E1y42bqDQZfql+kDeXd8COYfM8PQA4X6y7a8u9Ua9FHmsrrmirW2vHs45hWg==}
@@ -12035,7 +12156,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
 
-  '@analogjs/content@2.1.1(tcq5efq4xil2xjfg57snb5t2lq)':
+  '@analogjs/content@2.1.1(7jnqffch7zggnywzajyfqgg7ju)':
     dependencies:
       '@angular/common': 21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0)
       '@angular/core': 21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0)
@@ -12050,9 +12171,9 @@ snapshots:
       rxjs: 7.8.0
       tslib: 2.8.1
     optionalDependencies:
-      '@nx/devkit': 22.0.3(nx@22.0.3)
+      '@nx/devkit': 22.4.5(nx@22.0.3)
 
-  '@analogjs/platform@2.1.1(pnsk2aofuogikhc32q6xwg2rua)':
+  '@analogjs/platform@2.1.1(immp46l33esnd5yksbqz3zaddu)':
     dependencies:
       '@analogjs/vite-plugin-angular': 2.1.1(@angular-devkit/build-angular@21.0.1(mq6jjno7nqwx764wm44pxo4ggu))(@angular/build@21.0.1(nenyn7n5zmptoo2elzjvqn74y4))
       '@analogjs/vite-plugin-nitro': 2.1.1(encoding@0.1.13)(rolldown@1.0.0-beta.47)
@@ -12064,7 +12185,7 @@ snapshots:
       vitefu: 1.1.1(vite@7.2.4(@types/node@24.10.1)(jiti@2.4.2)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
     optionalDependencies:
       '@nx/angular': 22.0.3(@angular-devkit/build-angular@21.0.1(mq6jjno7nqwx764wm44pxo4ggu))(@angular-devkit/core@21.0.1(chokidar@4.0.3))(@angular-devkit/schematics@21.0.1(chokidar@4.0.3))(@angular/build@21.0.1(nenyn7n5zmptoo2elzjvqn74y4))(@babel/traverse@7.28.5)(@module-federation/enhanced@0.21.6(@rspack/core@1.6.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(webpack@5.103.0))(@module-federation/node@2.7.25(@rspack/core@1.6.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(webpack@5.103.0))(@rspack/core@1.6.5)(@schematics/angular@21.0.1(chokidar@4.0.3))(@types/express@4.17.25)(@zkochan/js-yaml@0.0.7)(eslint@9.34.0(jiti@2.4.2))(less@4.4.2)(ng-packagr@21.0.0(@angular/compiler-cli@21.0.1(@angular/compiler@21.0.1)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(nx@22.0.3)(react-dom@19.2.0(react@19.2.0))(react-refresh@0.18.0)(react@19.2.0)(rxjs@7.8.0)(typescript@5.9.3)
-      '@nx/devkit': 22.0.3(nx@22.0.3)
+      '@nx/devkit': 22.4.5(nx@22.0.3)
       '@nx/vite': 22.0.3(@babel/traverse@7.28.5)(nx@22.0.3)(typescript@5.9.3)(vite@7.2.4(@types/node@24.10.1)(jiti@2.4.2)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vitest@4.0.14(@opentelemetry/api@1.9.0)(@types/node@24.10.1)(jiti@2.4.2)(jsdom@22.1.0)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
       marked-highlight: 2.2.3(marked@15.0.12)
       marked-shiki: 1.2.1(marked@15.0.12)(shiki@1.6.5)
@@ -12103,9 +12224,9 @@ snapshots:
       - uploadthing
       - xml2js
 
-  '@analogjs/router@2.1.1(@analogjs/content@2.1.1(tcq5efq4xil2xjfg57snb5t2lq))(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(@angular/router@21.0.1(@angular/common@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0))(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(@angular/platform-browser@21.0.1(@angular/animations@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0)))(@angular/common@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0))(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0)))(rxjs@7.8.0))':
+  '@analogjs/router@2.1.1(@analogjs/content@2.1.1(7jnqffch7zggnywzajyfqgg7ju))(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(@angular/router@21.0.1(@angular/common@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0))(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(@angular/platform-browser@21.0.1(@angular/animations@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0)))(@angular/common@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0))(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0)))(rxjs@7.8.0))':
     dependencies:
-      '@analogjs/content': 2.1.1(tcq5efq4xil2xjfg57snb5t2lq)
+      '@analogjs/content': 2.1.1(7jnqffch7zggnywzajyfqgg7ju)
       '@angular/core': 21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0)
       '@angular/router': 21.0.1(@angular/common@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0))(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(@angular/platform-browser@21.0.1(@angular/animations@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0)))(@angular/common@21.0.1(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0))(@angular/core@21.0.1(@angular/compiler@21.0.1)(rxjs@7.8.0)(zone.js@0.15.0)))(rxjs@7.8.0)
       tslib: 2.8.1
@@ -15549,6 +15670,28 @@ snapshots:
       tslib: 2.8.1
       yargs-parser: 21.1.1
 
+  '@nx/devkit@22.4.5(nx@22.0.3)':
+    dependencies:
+      '@zkochan/js-yaml': 0.0.7
+      ejs: 3.1.10
+      enquirer: 2.3.6
+      minimatch: 10.1.1
+      nx: 22.0.3
+      semver: 7.7.3
+      tslib: 2.8.1
+      yargs-parser: 21.1.1
+
+  '@nx/devkit@22.4.5(nx@22.4.5)':
+    dependencies:
+      '@zkochan/js-yaml': 0.0.7
+      ejs: 3.1.10
+      enquirer: 2.3.6
+      minimatch: 10.1.1
+      nx: 22.4.5
+      semver: 7.7.3
+      tslib: 2.8.1
+      yargs-parser: 21.1.1
+
   '@nx/docker@22.0.3(nx@22.0.3)':
     dependencies:
       '@nx/devkit': 22.0.3(nx@22.0.3)
@@ -15586,6 +15729,25 @@ snapshots:
     dependencies:
       '@nx/devkit': 22.0.3(nx@22.0.3)
       '@nx/js': 22.0.3(@babel/traverse@7.28.5)(nx@22.0.3)
+      eslint: 9.34.0(jiti@2.4.2)
+      semver: 7.7.3
+      tslib: 2.8.1
+      typescript: 5.9.3
+    optionalDependencies:
+      '@zkochan/js-yaml': 0.0.7
+    transitivePeerDependencies:
+      - '@babel/traverse'
+      - '@swc-node/register'
+      - '@swc/core'
+      - debug
+      - nx
+      - supports-color
+      - verdaccio
+
+  '@nx/eslint@22.4.5(@babel/traverse@7.28.5)(@zkochan/js-yaml@0.0.7)(eslint@9.34.0(jiti@2.4.2))(nx@22.0.3)':
+    dependencies:
+      '@nx/devkit': 22.4.5(nx@22.0.3)
+      '@nx/js': 22.4.5(@babel/traverse@7.28.5)(nx@22.0.3)
       eslint: 9.34.0(jiti@2.4.2)
       semver: 7.7.3
       tslib: 2.8.1
@@ -15644,6 +15806,42 @@ snapshots:
       '@babel/runtime': 7.28.4
       '@nx/devkit': 22.0.3(nx@22.0.3)
       '@nx/workspace': 22.0.3
+      '@zkochan/js-yaml': 0.0.7
+      babel-plugin-const-enum: 1.2.0(@babel/core@7.28.5)
+      babel-plugin-macros: 3.1.0
+      babel-plugin-transform-typescript-metadata: 0.3.2(@babel/core@7.28.5)(@babel/traverse@7.28.5)
+      chalk: 4.1.2
+      columnify: 1.6.0
+      detect-port: 1.6.1
+      ignore: 5.3.2
+      js-tokens: 4.0.0
+      jsonc-parser: 3.2.0
+      npm-run-path: 4.0.1
+      picocolors: 1.1.1
+      picomatch: 4.0.2
+      semver: 7.7.3
+      source-map-support: 0.5.19
+      tinyglobby: 0.2.15
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - '@babel/traverse'
+      - '@swc-node/register'
+      - '@swc/core'
+      - debug
+      - nx
+      - supports-color
+
+  '@nx/js@22.4.5(@babel/traverse@7.28.5)(nx@22.0.3)':
+    dependencies:
+      '@babel/core': 7.28.5
+      '@babel/plugin-proposal-decorators': 7.28.0(@babel/core@7.28.5)
+      '@babel/plugin-transform-class-properties': 7.27.1(@babel/core@7.28.5)
+      '@babel/plugin-transform-runtime': 7.28.5(@babel/core@7.28.5)
+      '@babel/preset-env': 7.28.5(@babel/core@7.28.5)
+      '@babel/preset-typescript': 7.28.5(@babel/core@7.28.5)
+      '@babel/runtime': 7.28.4
+      '@nx/devkit': 22.4.5(nx@22.0.3)
+      '@nx/workspace': 22.4.5
       '@zkochan/js-yaml': 0.0.7
       babel-plugin-const-enum: 1.2.0(@babel/core@7.28.5)
       babel-plugin-macros: 3.1.0
@@ -15733,32 +15931,82 @@ snapshots:
   '@nx/nx-darwin-arm64@22.0.3':
     optional: true
 
+  '@nx/nx-darwin-arm64@22.4.5':
+    optional: true
+
   '@nx/nx-darwin-x64@22.0.3':
+    optional: true
+
+  '@nx/nx-darwin-x64@22.4.5':
     optional: true
 
   '@nx/nx-freebsd-x64@22.0.3':
     optional: true
 
+  '@nx/nx-freebsd-x64@22.4.5':
+    optional: true
+
   '@nx/nx-linux-arm-gnueabihf@22.0.3':
+    optional: true
+
+  '@nx/nx-linux-arm-gnueabihf@22.4.5':
     optional: true
 
   '@nx/nx-linux-arm64-gnu@22.0.3':
     optional: true
 
+  '@nx/nx-linux-arm64-gnu@22.4.5':
+    optional: true
+
   '@nx/nx-linux-arm64-musl@22.0.3':
+    optional: true
+
+  '@nx/nx-linux-arm64-musl@22.4.5':
     optional: true
 
   '@nx/nx-linux-x64-gnu@22.0.3':
     optional: true
 
+  '@nx/nx-linux-x64-gnu@22.4.5':
+    optional: true
+
   '@nx/nx-linux-x64-musl@22.0.3':
+    optional: true
+
+  '@nx/nx-linux-x64-musl@22.4.5':
     optional: true
 
   '@nx/nx-win32-arm64-msvc@22.0.3':
     optional: true
 
+  '@nx/nx-win32-arm64-msvc@22.4.5':
+    optional: true
+
   '@nx/nx-win32-x64-msvc@22.0.3':
     optional: true
+
+  '@nx/nx-win32-x64-msvc@22.4.5':
+    optional: true
+
+  '@nx/playwright@22.4.5(@babel/traverse@7.28.5)(@playwright/test@1.58.1)(@zkochan/js-yaml@0.0.7)(eslint@9.34.0(jiti@2.4.2))(nx@22.0.3)':
+    dependencies:
+      '@nx/devkit': 22.4.5(nx@22.0.3)
+      '@nx/eslint': 22.4.5(@babel/traverse@7.28.5)(@zkochan/js-yaml@0.0.7)(eslint@9.34.0(jiti@2.4.2))(nx@22.0.3)
+      '@nx/js': 22.4.5(@babel/traverse@7.28.5)(nx@22.0.3)
+      minimatch: 10.1.1
+      tslib: 2.8.1
+    optionalDependencies:
+      '@playwright/test': 1.58.1
+    transitivePeerDependencies:
+      - '@babel/traverse'
+      - '@swc-node/register'
+      - '@swc/core'
+      - '@zkochan/js-yaml'
+      - debug
+      - eslint
+      - nx
+      - supports-color
+      - verdaccio
 
   '@nx/rspack@22.0.3(@babel/traverse@7.28.5)(@module-federation/enhanced@0.21.6(@rspack/core@1.6.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(webpack@5.103.0))(@module-federation/node@2.7.25(@rspack/core@1.6.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(webpack@5.103.0))(@types/express@4.17.25)(less@4.4.2)(nx@22.0.3)(react-dom@19.2.0(react@19.2.0))(react-refresh@0.18.0)(react@19.2.0)(typescript@5.9.3)':
     dependencies:
@@ -15938,6 +16186,22 @@ snapshots:
       - '@swc/core'
       - debug
 
+  '@nx/workspace@22.4.5':
+    dependencies:
+      '@nx/devkit': 22.4.5(nx@22.4.5)
+      '@zkochan/js-yaml': 0.0.7
+      chalk: 4.1.2
+      enquirer: 2.3.6
+      nx: 22.4.5
+      picomatch: 4.0.2
+      semver: 7.7.3
+      tslib: 2.8.1
+      yargs-parser: 21.1.1
+    transitivePeerDependencies:
+      - '@swc-node/register'
+      - '@swc/core'
+      - debug
+
   '@octokit/rest@15.18.3(encoding@0.1.13)':
     dependencies:
       before-after-hook: 1.4.0
@@ -16049,6 +16313,10 @@ snapshots:
     optional: true
 
   '@pkgr/core@0.2.9': {}
+
+  '@playwright/test@1.58.1':
+    dependencies:
+      playwright: 1.58.1
 
   '@poppinss/colors@4.1.5':
     dependencies:
@@ -20021,6 +20289,9 @@ snapshots:
 
   fs.realpath@1.0.0: {}
 
+  fsevents@2.3.2:
+    optional: true
+
   fsevents@2.3.3:
     optional: true
 
@@ -23167,6 +23438,57 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
+  nx@22.4.5:
+    dependencies:
+      '@napi-rs/wasm-runtime': 0.2.4
+      '@yarnpkg/lockfile': 1.1.0
+      '@yarnpkg/parsers': 3.0.2
+      '@zkochan/js-yaml': 0.0.7
+      axios: 1.13.2
+      chalk: 4.1.2
+      cli-cursor: 3.1.0
+      cli-spinners: 2.6.1
+      cliui: 8.0.1
+      dotenv: 16.4.7
+      dotenv-expand: 11.0.7
+      enquirer: 2.3.6
+      figures: 3.2.0
+      flat: 5.0.2
+      front-matter: 4.0.2
+      ignore: 7.0.5
+      jest-diff: 30.2.0
+      jsonc-parser: 3.2.0
+      lines-and-columns: 2.0.3
+      minimatch: 10.1.1
+      node-machine-id: 1.1.12
+      npm-run-path: 4.0.1
+      open: 8.4.2
+      ora: 5.3.0
+      resolve.exports: 2.0.3
+      semver: 7.7.3
+      string-width: 4.2.3
+      tar-stream: 2.2.0
+      tmp: 0.2.5
+      tree-kill: 1.2.2
+      tsconfig-paths: 4.2.0
+      tslib: 2.8.1
+      yaml: 2.8.2
+      yargs: 17.7.2
+      yargs-parser: 21.1.1
+    optionalDependencies:
+      '@nx/nx-darwin-arm64': 22.4.5
+      '@nx/nx-darwin-x64': 22.4.5
+      '@nx/nx-freebsd-x64': 22.4.5
+      '@nx/nx-linux-arm-gnueabihf': 22.4.5
+      '@nx/nx-linux-arm64-gnu': 22.4.5
+      '@nx/nx-linux-arm64-musl': 22.4.5
+      '@nx/nx-linux-x64-gnu': 22.4.5
+      '@nx/nx-linux-x64-musl': 22.4.5
+      '@nx/nx-win32-arm64-msvc': 22.4.5
+      '@nx/nx-win32-x64-msvc': 22.4.5
+    transitivePeerDependencies:
+      - debug
+
   nypm@0.6.2:
     dependencies:
       citty: 0.1.6
@@ -23620,6 +23942,14 @@ snapshots:
       confbox: 0.2.2
       exsolve: 1.0.8
       pathe: 2.0.3
+
+  playwright-core@1.58.1: {}
+
+  playwright@1.58.1:
+    dependencies:
+      playwright-core: 1.58.1
+    optionalDependencies:
+      fsevents: 2.3.2
 
   please-upgrade-node@3.2.0:
     dependencies:
