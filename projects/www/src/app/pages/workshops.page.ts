@@ -329,7 +329,7 @@ import { StyledBoxComponent } from '../components/styled-box.component';
         Are you interested in a dedicated in-person or online workshop for your
         team? Any questions about the workshops? Please reach out to us directly
         at
-        <a href="mailto:marko@ngrx.io">marko&#64;ngrx.io</a>.
+        <a href="mailto:marko@ngrx.io">marko&#64;ngrx.io</a>
       </p>
     </div>
   `,
