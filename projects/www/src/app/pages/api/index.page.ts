@@ -65,8 +65,9 @@ import { MinimizedApiMemberSummary } from '@ngrx-io/shared';
         top: 0;
         z-index: 1;
         background-color: var(--ngrx-bg);
+
         @media only screen and (max-width: 1280px) {
-          top: 62px;
+          top: calc(var(--top-banner-height, 0px) + 62px);
         }
       }
 

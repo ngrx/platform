@@ -46,15 +46,6 @@ import { ThemeToggleComponent } from './theme-toggle.component';
       </div>
       <ngrx-version-navigation />
       <hr />
-      <!--      <a-->
-      <!--        routerLink="/workshops"-->
-      <!--        routerLinkActive="active"-->
-      <!--        class="menu-link"-->
-      <!--        (click)="closeMenu()"-->
-      <!--      >-->
-      <!--        <mat-icon>co_present</mat-icon>-->
-      <!--        Workshops-->
-      <!--      </a>-->
       <a
         routerLink="/api"
         routerLinkActive="active"
@@ -63,6 +54,15 @@ import { ThemeToggleComponent } from './theme-toggle.component';
       >
         <mat-icon>description</mat-icon>
         API Reference
+      </a>
+      <a
+        routerLink="/workshops"
+        routerLinkActive="active"
+        class="menu-link"
+        (click)="closeMenu()"
+      >
+        <mat-icon>co_present</mat-icon>
+        Workshops
       </a>
       <a
         href="https://github.com/sponsors/ngrx"
@@ -92,26 +92,30 @@ import { ThemeToggleComponent } from './theme-toggle.component';
     `
       .mobile-nav-bar {
         position: fixed;
-        top: 0;
+        top: var(--top-banner-height, 0px);
         display: none;
         background-color: var(--ngrx-bg-surface);
         width: 100%;
         padding: 15px 20px;
+
         .menu-toggle {
           display: flex;
           align-items: center;
           background-color: transparent;
           border: none;
           cursor: pointer;
+
           img {
             width: 30px;
             margin-right: 8px;
           }
         }
+
         @media only screen and (max-width: 1280px) {
           display: block;
         }
       }
+
       .sidebar {
         display: flex;
         flex-direction: column;
@@ -128,12 +132,14 @@ import { ThemeToggleComponent } from './theme-toggle.component';
           height: 100lvh;
           overflow-y: scroll;
         }
+
         &.open {
           @media only screen and (max-width: 1280px) {
             display: flex;
             left: 0;
           }
         }
+
         .close-menu {
           display: none;
           background-color: transparent;
@@ -143,11 +149,13 @@ import { ThemeToggleComponent } from './theme-toggle.component';
           @media only screen and (max-width: 1280px) {
             display: block;
           }
+
           .close-menu-icon {
             cursor: pointer;
           }
         }
       }
+
       .logoLink {
         font-family: 'Oxanium', sans-serif;
         font-weight: 600;
@@ -172,6 +180,11 @@ import { ThemeToggleComponent } from './theme-toggle.component';
 
       :host {
         z-index: 2;
+
+        @media only screen and (max-width: 1280px) {
+          z-index: 4;
+        }
+
         width: 270px;
         height: 100lvh;
         background-color: var(--ngrx-bg-surface);

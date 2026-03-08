@@ -65,15 +65,16 @@ type Heading = { level: number; text: string; id: string; url: string };
         flex-direction: column;
         gap: 6px;
         position: fixed;
-        top: 24px;
+        top: calc(var(--top-banner-height, 0px) + 24px);
         right: 24px;
         margin: 0;
         padding: 0;
         border-left: 1px solid var(--ngrx-border-color);
         @media only screen and (max-width: 1280px) {
           position: relative;
+          top: 0;
           width: 100%;
-          padding: 24px;
+          padding: 24px 24px 0;
           right: 0px;
         }
       }
