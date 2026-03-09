@@ -36,18 +36,8 @@ With the `migrateNgRxData` flag the following will also take place:
 1. Remove `ngrx-data` from `package.json` > `dependencies`.
 2. Rename `ngrx-data` types to the matching `@ngrx/data` types.
 
-## Installing with `npm`
+## Manual Installation
 
-For more information on using `npm` check out the docs <a href="https://docs.npmjs.com/cli/install" target="_blank">here</a>.
+You can also install `@ngrx/data` manually using one of the following commands:
 
-```sh
-npm install @ngrx/data --save
-```
-
-## Installing with `yarn`
-
-For more information on using `yarn` check out the docs <a href="https://yarnpkg.com/getting-started/usage#installing-all-the-dependencies" target="_blank">here</a>.
-
-```sh
-yarn add @ngrx/data
-```
+<ngrx-docs-install package-name="@ngrx/data"></ngrx-docs-install>

@@ -40,8 +40,8 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
         }
       </button>
       <div #codeBody>
-        @if (path) {
-          <div [innerHTML]="codeContent() | ngrxCodeHighlight"></div>
+        @if (snippet || path) {
+          <div [innerHTML]="codeContent() | ngrxCodeHighlight: language"></div>
         } @else {
           <ng-content />
         }
@@ -138,6 +138,7 @@ export class CodeExampleComponent implements AfterViewInit {
   @Input() path = '';
   @Input() region = '';
   @Input() language = 'typescript';
+  @Input() snippet = '';
 
   codeBody = viewChild.required<ElementRef>('codeBody');
   copied = signal(false);
@@ -160,6 +161,11 @@ export class CodeExampleComponent implements AfterViewInit {
 
   async ngAfterViewInit() {
     if (isPlatformServer(this.platformId)) return;
+    if (this.snippet) {
+      this.codeContent.set(this.snippet);
+      return;
+    }
+
     if (!this.path) return;
 
     const content = await this.exampleService.extractSnippet(
