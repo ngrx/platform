@@ -33,7 +33,7 @@ describe('signalStore', () => {
     const result = expectSnippet(snippet);
     result.toInfer(
       'Store',
-      'Type<{ foo: Signal<string>; bar: Signal<number[]>; } & StateSource<{ foo: string; bar: number[]; }>>'
+      'Type<{ readonly foo: Signal<string>; readonly bar: Signal<number[]>; } & StateSource<{ foo: string; bar: number[]; }>>'
     );
   });
 
@@ -62,7 +62,7 @@ describe('signalStore', () => {
     const result = expectSnippet(snippet);
     result.toInfer(
       'store',
-      '{ user: DeepSignal<{ age: number; details: { first: string; flags: boolean[]; }; }>; } & StateSource<{ user: { age: number; details: { first: string; flags: boolean[]; }; }; }>'
+      '{ readonly user: DeepSignal<{ age: number; details: { first: string; flags: boolean[]; }; }>; } & StateSource<{ user: { age: number; details: { first: string; flags: boolean[]; }; }; }>'
     );
     result.toInfer(
       'user',
@@ -240,7 +240,7 @@ describe('signalStore', () => {
     const result = expectSnippet(snippet);
     result.toInfer(
       'store',
-      '{ foo: Signal<number | { s: string; }>; bar: DeepSignal<{ baz: { b: boolean; } | null; }>; x: DeepSignal<{ y: { z: number | undefined; }; }>; } & StateSource<{ foo: number | { ...; }; bar: { ...; }; x: { ...; }; }>'
+      '{ readonly foo: Signal<number | { s: string; }>; readonly bar: DeepSignal<{ baz: { b: boolean; } | null; }>; readonly x: DeepSignal<{ y: { z: number | undefined; }; }>; } & StateSource<...>'
     );
     result.toInfer('foo', 'Signal<number | { s: string; }>');
     result.toInfer('bar', 'DeepSignal<{ baz: { b: boolean; } | null; }>');
@@ -264,7 +264,7 @@ describe('signalStore', () => {
     const result1 = expectSnippet(snippet1);
     result1.toInfer(
       'Store',
-      'Type<{ name: DeepSignal<{ x: { y: string; }; }>; arguments: Signal<number[]>; call: Signal<boolean>; } & StateSource<{ name: { x: { y: string; }; }; arguments: number[]; call: boolean; }>>'
+      'Type<{ readonly name: DeepSignal<{ x: { y: string; }; }>; readonly arguments: Signal<number[]>; readonly call: Signal<boolean>; } & StateSource<{ name: { x: { y: string; }; }; arguments: number[]; call: boolean; }>>'
     );
 
     const snippet2 = `
@@ -280,7 +280,7 @@ describe('signalStore', () => {
     const result2 = expectSnippet(snippet2);
     result2.toInfer(
       'Store',
-      'Type<{ apply: Signal<string>; bind: DeepSignal<{ foo: string; }>; prototype: Signal<string[]>; } & StateSource<{ apply: string; bind: { foo: string; }; prototype: string[]; }>>'
+      'Type<{ readonly apply: Signal<string>; readonly bind: DeepSignal<{ foo: string; }>; readonly prototype: Signal<string[]>; } & StateSource<{ apply: string; bind: { foo: string; }; prototype: string[]; }>>'
     );
 
     const snippet3 = `
@@ -295,7 +295,7 @@ describe('signalStore', () => {
     const result3 = expectSnippet(snippet3);
     result3.toInfer(
       'Store',
-      'Type<{ length: Signal<number>; caller: Signal<undefined>; } & StateSource<{ length: number; caller: undefined; }>>'
+      'Type<{ readonly length: Signal<number>; readonly caller: Signal<undefined>; } & StateSource<{ length: number; caller: undefined; }>>'
     );
   });
 
@@ -343,7 +343,7 @@ describe('signalStore', () => {
     const result = expectSnippet(snippet);
     result.toInfer(
       'store',
-      '{ bar: DeepSignal<{ baz?: number | undefined; }>; x: DeepSignal<{ y?: { z: boolean; } | undefined; }>; } & StateSource<{ bar: { baz?: number | undefined; }; x: { y?: { z: boolean; } | undefined; }; }>'
+      '{ readonly bar: DeepSignal<{ baz?: number | undefined; }>; readonly x: DeepSignal<{ y?: { z: boolean; } | undefined; }>; } & StateSource<{ bar: { baz?: number | undefined; }; x: { ...; }; }>'
     );
     result.toInfer('bar', 'DeepSignal<{ baz?: number | undefined; }>');
     result.toInfer('baz', 'Signal<number | undefined> | undefined');
@@ -433,12 +433,12 @@ describe('signalStore', () => {
     const result = expectSnippet(snippet);
     result.toInfer(
       'store1',
-      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
+      '{ readonly count: Signal<number>; } & StateSource<{ count: number; }>'
     );
     result.toInfer('state1', '{ count: number; }');
     result.toInfer(
       'store2',
-      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
+      '{ readonly count: Signal<number>; } & StateSource<{ count: number; }>'
     );
     result.toInfer('state2', '{ count: number; }');
 
@@ -474,12 +474,12 @@ describe('signalStore', () => {
     const result = expectSnippet(snippet);
     result.toInfer(
       'store1',
-      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
+      '{ readonly count: Signal<number>; } & StateSource<{ count: number; }>'
     );
     result.toInfer('state1', '{ count: number; }');
     result.toInfer(
       'store2',
-      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
+      '{ readonly count: Signal<number>; } & StateSource<{ count: number; }>'
     );
     result.toInfer('state2', '{ count: number; }');
 
@@ -515,12 +515,12 @@ describe('signalStore', () => {
     const result = expectSnippet(snippet);
     result.toInfer(
       'store1',
-      '{ count: Signal<number>; } & WritableStateSource<{ count: number; }>'
+      '{ readonly count: Signal<number>; } & WritableStateSource<{ count: number; }>'
     );
     result.toInfer('state1', '{ count: number; }');
     result.toInfer(
       'store2',
-      '{ count: Signal<number>; } & WritableStateSource<{ count: number; }>'
+      '{ readonly count: Signal<number>; } & WritableStateSource<{ count: number; }>'
     );
     result.toInfer('state2', '{ count: number; }');
 
@@ -680,7 +680,7 @@ describe('signalStore', () => {
     const result = expectSnippet(snippet);
     result.toInfer(
       'store',
-      '{ ngrx: Signal<string>; x: DeepSignal<{ y: string; }>; signals: Signal<number[]>; mgmt: (arg: boolean) => number; } & StateSource<{ ngrx: string; x: { y: string; }; }>'
+      '{ readonly ngrx: Signal<string>; readonly x: DeepSignal<{ y: string; }>; readonly signals: Signal<number[]>; readonly mgmt: (arg: boolean) => number; } & StateSource<...>'
     );
   });
 
@@ -707,7 +707,7 @@ describe('signalStore', () => {
     const result = expectSnippet(snippet);
     result.toInfer(
       'store',
-      '{ foo: Signal<number>; bar: Signal<string>; baz: (x: number) => void; } & StateSource<{ foo: number; }>'
+      '{ readonly foo: Signal<number>; readonly bar: Signal<string>; readonly baz: (x: number) => void; } & StateSource<{ foo: number; }>'
     );
   });
 
@@ -754,7 +754,7 @@ describe('signalStore', () => {
     const result = expectSnippet(snippet);
     result.toInfer(
       'store',
-      '{ count1: Signal<number>; doubleCount2: Signal<number>; increment1: () => void; } & StateSource<{ count1: number; }>'
+      '{ readonly count1: Signal<number>; readonly doubleCount2: Signal<number>; readonly increment1: () => void; } & StateSource<{ count1: number; }>'
     );
   });
 
