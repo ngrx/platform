@@ -12,7 +12,15 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "interface EntityAdapter<T> extends "
+          "text": "interface EntityAdapter<T, IdType = "
+        },
+        {
+          "kind": "Content",
+          "text": "string | number"
+        },
+        {
+          "kind": "Content",
+          "text": "> extends "
         },
         {
           "kind": "Reference",
@@ -40,6 +48,17 @@
           "defaultTypeTokenRange": {
             "startIndex": 0,
             "endIndex": 0
+          }
+        },
+        {
+          "typeParameterName": "IdType",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
           }
         }
       ],
@@ -356,9 +375,22 @@
               "text": "selectId: "
             },
             {
+              "kind": "Content",
+              "text": "IdType extends string ? "
+            },
+            {
               "kind": "Reference",
-              "text": "IdSelector",
-              "canonicalReference": "@ngrx/entity!IdSelector:type"
+              "text": "IdSelectorStr",
+              "canonicalReference": "@ngrx/entity!~IdSelectorStr:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T> : "
+            },
+            {
+              "kind": "Reference",
+              "text": "IdSelectorNum",
+              "canonicalReference": "@ngrx/entity!~IdSelectorNum:type"
             },
             {
               "kind": "Content",
@@ -375,7 +407,7 @@
           "name": "selectId",
           "propertyTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 3
+            "endIndex": 6
           },
           "docs": {
             "modifiers": {
@@ -451,8 +483,8 @@
       ],
       "extendsTokenRanges": [
         {
-          "startIndex": 1,
-          "endIndex": 3
+          "startIndex": 3,
+          "endIndex": 5
         }
       ],
       "docs": {
