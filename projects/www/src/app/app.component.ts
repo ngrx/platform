@@ -14,6 +14,7 @@ import { AlertComponent } from './components/docs/alert.component';
 import { CodeExampleComponent } from './components/docs/code-example.component';
 import { CodeTabsComponent } from './components/docs/code-tabs.component';
 import { StackblitzComponent } from './components/docs/stackblitz.component';
+import { InstallInstructionsComponent } from './components/docs/install-instructions.component';
 import { FooterComponent } from './components/footer.component';
 import {
   TOP_BANNER_DISMISSED_STORAGE_KEY,
@@ -30,6 +31,7 @@ import {
     AlertComponent,
     CodeExampleComponent,
     StackblitzComponent,
+    InstallInstructionsComponent,
     FooterComponent,
   ],
   template: `
@@ -132,5 +134,11 @@ export class AppComponent {
       injector: this.#injector,
     });
     customElements.define('ngrx-docs-stackblitz', stackblitzElement);
+
+    const installInstructionsElement = createCustomElement(
+      InstallInstructionsComponent,
+      { injector: this.#injector }
+    );
+    customElements.define('ngrx-docs-install', installInstructionsElement);
   }
 }
