@@ -22,6 +22,20 @@ const valid: () => (string | ValidTestCase<Options>)[] = () => [
     const initialState = {};
     const Store = signalStore(withState(initialState));
   `,
+  `const store = withState(() => ({ foo: 'bar' }))`,
+  `const store = withState(function() { return { foo: 'bar' }; })`,
+  `
+    const initialState = { books: [] };
+    const store = withState(() => initialState);
+  `,
+  `
+    const initialState = { books: [] };
+    const store = withState(function() { return initialState; });
+  `,
+  `
+    function getState() { return { count: 0 }; }
+    const store = withState(getState);
+  `,
 ];
 
 const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
@@ -95,6 +109,25 @@ const store = withState(function() {});
   fromFixture(`
 const store = withState(() => {});
                         ~~~~~~~~ [${messageId} { "property": "Function" }]`),
+  fromFixture(`
+const store = withState(() => () => ({ foo: 'bar' }));
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId} { "property": "Function" }]`),
+  fromFixture(`
+const store = withState(() => [1, 2, 3]);
+                        ~~~~~~~~~~~~~~~ [${messageId} { "property": "Array" }]`),
+  fromFixture(`
+const initialState: string[] = [];
+const store = withState(() => initialState);
+                        ~~~~~~~~~~~~~~~~~~ [${messageId} { "property": "Array" }]`),
+  fromFixture(`
+const store = withState(() => new Set());
+                        ~~~~~~~~~~~~~~~ [${messageId} { "property": "Set" }]`),
+  fromFixture(`
+const store = withState(() => new Map());
+                        ~~~~~~~~~~~~~~~ [${messageId} { "property": "Map" }]`),
+  fromFixture(`
+const store = withState(function() { return function() { return { foo: 'bar' }; }; });
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [${messageId} { "property": "Function" }]`),
 ];
 
 ruleTester(rule.meta.docs?.requiresTypeChecking).run(
