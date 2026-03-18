@@ -52,7 +52,12 @@ export default createRule<Options, MessageIds>({
         } else if (argument) {
           const services = ESLintUtils.getParserServices(context);
           const typeChecker = services.program.getTypeChecker();
-          const type = services.getTypeAtLocation(argument);
+
+          let type = services.getTypeAtLocation(argument);
+          const callSignatures = type.getCallSignatures();
+          if (callSignatures.length > 0) {
+            type = typeChecker.getReturnTypeOfSignature(callSignatures[0]);
+          }
 
           if (typeChecker.isArrayType(type) || typeChecker.isTupleType(type)) {
             context.report({
@@ -73,8 +78,7 @@ export default createRule<Options, MessageIds>({
             return;
           }
 
-          const callSignatures = type.getCallSignatures();
-          if (callSignatures.length > 0) {
+          if (type.getCallSignatures().length > 0) {
             context.report({
               node: argument,
               messageId,
@@ -84,6 +88,16 @@ export default createRule<Options, MessageIds>({
           }
 
           const typeString = typeChecker.typeToString(type);
+
+          if (typeString === 'void') {
+            context.report({
+              node: argument,
+              messageId,
+              data: { property: 'Function' },
+            });
+            return;
+          }
+
           const matchedType = NON_RECORD_TYPES.find((t) =>
             typeString.startsWith(`${t}<`)
           );
