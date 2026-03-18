@@ -13,18 +13,8 @@ This command will automate the following steps:
 1. Update `package.json` > `dependencies` with `@ngrx/operators`.
 2. Run the package manager to install the added dependency.
 
-## Installing with `npm`
+## Manual Installation
 
-For more information on using `npm` check out the docs <a href="https://docs.npmjs.com/cli/install" target="_blank">here</a>.
+You can also install `@ngrx/operators` manually using one of the following commands:
 
-```sh
-npm install @ngrx/operators --save
-```
-
-## Installing with `yarn`
-
-For more information on using `yarn` check out the docs <a href="https://yarnpkg.com/getting-started/usage#installing-all-the-dependencies" target="_blank">here</a>.
-
-```sh
-yarn add @ngrx/operators
-```
+<ngrx-docs-install package-name="@ngrx/operators"></ngrx-docs-install>

@@ -27,18 +27,8 @@ This command will automate the following steps:
 3. Update your `src/app/app.module.ts` > `imports` array with `EffectsModule.forRoot([AppEffects])`. If you provided flags then the command will attempt to locate and update module found by the flags.
 4. If the project is using a `standalone bootstrap`, it adds `provideEffects()` into the application config.
 
-## Installing with `npm`
+## Manual Installation
 
-For more information on using `npm` check out the docs <a href="https://docs.npmjs.com/cli/install" target="_blank">here</a>.
+You can also install `@ngrx/effects` manually using one of the following commands:
 
-```sh
-npm install @ngrx/effects --save
-```
-
-## Installing with `yarn`
-
-For more information on using `yarn` check out the docs <a href="https://yarnpkg.com/getting-started/usage#installing-all-the-dependencies" target="_blank">here</a>.
-
-```sh
-yarn add @ngrx/effects
-```
+<ngrx-docs-install package-name="@ngrx/effects"></ngrx-docs-install>

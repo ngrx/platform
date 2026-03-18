@@ -38,18 +38,8 @@ This command will automate the following steps:
 4. Create a `src/app/reducers/index.ts` file with an empty `State` interface, an empty `reducers` map, and an empty `metaReducers` array. This may be created under a different directory if the `statePath` flag is provided.
 5. Update your `src/app/app.module.ts` > `imports` array with `StoreModule.forRoot(reducers, { metaReducers })`. If you provided flags then the command will attempt to locate and update module found by the flags.
 
-## Installing with `npm`
+## Manual Installation
 
-For more information on using `npm` check out the docs <a href="https://docs.npmjs.com/cli/install" target="_blank">here</a>.
+You can also install `@ngrx/store` manually using one of the following commands:
 
-```sh
-npm install @ngrx/store --save
-```
-
-## Installing with `yarn`
-
-For more information on using `yarn` check out the docs <a href="https://yarnpkg.com/getting-started/usage#installing-all-the-dependencies" target="_blank">here</a>.
-
-```sh
-yarn add @ngrx/store
-```
+<ngrx-docs-install package-name="@ngrx/store"></ngrx-docs-install>
