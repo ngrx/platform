@@ -3,24 +3,24 @@
 exports[`Find Book Page > should compile 1`] = `
 <bc-find-book-page>
   <bc-book-search
-    _nghost-a-c3898412319=""
+    _nghost-a-c3637513359=""
   >
     <mat-card
-      _ngcontent-a-c3898412319=""
+      _ngcontent-a-c3637513359=""
       class="mat-mdc-card mdc-card"
     >
       <mat-card-title
-        _ngcontent-a-c3898412319=""
+        _ngcontent-a-c3637513359=""
         class="mat-mdc-card-title"
       >
         Find a Book
       </mat-card-title>
       <mat-card-content
-        _ngcontent-a-c3898412319=""
+        _ngcontent-a-c3637513359=""
         class="mat-mdc-card-content"
       >
         <mat-form-field
-          _ngcontent-a-c3898412319=""
+          _ngcontent-a-c3637513359=""
           class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-primary"
         >
           <!--container-->
@@ -44,7 +44,7 @@ exports[`Find Book Page > should compile 1`] = `
                 <!--container-->
                 <!--container-->
                 <input
-                  _ngcontent-a-c3898412319=""
+                  _ngcontent-a-c3637513359=""
                   aria-invalid="false"
                   aria-required="false"
                   class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input cdk-text-field-autofill-monitored"
@@ -80,7 +80,7 @@ exports[`Find Book Page > should compile 1`] = `
           </div>
         </mat-form-field>
         <mat-spinner
-          _ngcontent-a-c3898412319=""
+          _ngcontent-a-c3637513359=""
           aria-valuemax="100"
           aria-valuemin="0"
           class="mat-mdc-progress-spinner mdc-circular-progress mat-primary _mat-animation-noopable mdc-circular-progress--indeterminate"
@@ -175,7 +175,7 @@ exports[`Find Book Page > should compile 1`] = `
         </mat-spinner>
       </mat-card-content>
       <mat-card-footer
-        _ngcontent-a-c3898412319=""
+        _ngcontent-a-c3637513359=""
         class="mat-mdc-card-footer"
       >
         <!--container-->

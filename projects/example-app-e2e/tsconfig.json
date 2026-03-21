@@ -2,10 +2,10 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "sourceMap": false,
-    "types": ["cypress", "node", "@testing-library/cypress"],
+    "types": ["node"],
     "outDir": "../../dist/out-tsc"
   },
-  "include": ["src/**/*.ts", "src/**/*.js", "cypress.config.ts"],
+  "include": ["src/**/*.ts", "src/**/*.js", "playwright.config.ts"],
   "files": [],
   "references": [],
   "exclude": []
