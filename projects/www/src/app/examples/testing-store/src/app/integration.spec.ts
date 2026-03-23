@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import {
@@ -16,9 +16,11 @@ import { booksReducer } from './state/books.reducer';
 describe('AppComponent Integration Test', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+  let booksService: GoogleBooksService;
   let httpMock: HttpTestingController;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
+    //#docregion integrate
     TestBed.configureTestingModule({
       declarations: [AppComponent, BookListComponent, BookCollectionComponent],
       imports: [
@@ -31,12 +33,14 @@ describe('AppComponent Integration Test', () => {
       providers: [GoogleBooksService],
     }).compileComponents();
 
-    httpMock = TestBed.inject(HttpTestingController);
-
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.debugElement.componentInstance;
 
     fixture.detectChanges();
+    //#enddocregion integrate
+
+    booksService = TestBed.get(GoogleBooksService);
+    httpMock = TestBed.get(HttpTestingController);
 
     const req = httpMock.expectOne(
       'https://www.googleapis.com/books/v1/volumes?maxResults=5&orderBy=relevance&q=oliver%20sacks'
@@ -61,7 +65,7 @@ describe('AppComponent Integration Test', () => {
     });
 
     fixture.detectChanges();
-  }));
+  });
 
   afterEach(() => {
     httpMock.verify();
@@ -70,7 +74,7 @@ describe('AppComponent Integration Test', () => {
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
-
+  //#docregion addTest
   describe('buttons should work as expected', () => {
     it('should add to collection when add button is clicked and remove from collection when remove button is clicked', () => {
       const addButton = getBookList()[1].query(
@@ -78,19 +82,18 @@ describe('AppComponent Integration Test', () => {
       );
 
       click(addButton);
-
       expect(getBookTitle(getCollection()[0])).toBe('Second Title');
 
       const removeButton = getCollection()[0].query(
         By.css('[data-test=remove-button]')
       );
-
       click(removeButton);
 
       expect(getCollection().length).toBe(0);
     });
   });
 
+  //functions used in the above test
   function getCollection() {
     return fixture.debugElement.queryAll(By.css('.book-collection .book-item'));
   }
@@ -108,4 +111,5 @@ describe('AppComponent Integration Test', () => {
     el.click();
     fixture.detectChanges();
   }
+  //#enddocregion addTest
 });
