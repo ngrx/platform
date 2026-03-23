@@ -87,8 +87,6 @@ You can reset selectors by calling the `MockStore.resetSelectors()` method in th
 
 </ngrx-code-example>
 
-Try the <ngrx-docs-stackblitz name="testing-store"></ngrx-docs-stackblitz>.
-
 ### Integration Testing
 
 An integration test should verify that the `Store` coherently works together with our components and services that inject `Store`. An integration test will not mock the store or individual selectors, as unit tests do, but will instead integrate a `Store` by using `StoreModule.forRoot` in your `TestBed` configuration. Here is part of an integration test for the `AppComponent` introduced in the [walkthrough](guide/store/walkthrough).
