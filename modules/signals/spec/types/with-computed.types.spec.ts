@@ -1,108 +1,72 @@
-import { expecter } from 'ts-snippet';
-import { compilerOptions } from './helpers';
+import { expectTypeOf } from 'vitest';
+import { signal, Signal, WritableSignal } from '@angular/core';
+import {
+  deepComputed,
+  DeepSignal,
+  patchState,
+  signalStore,
+  withComputed,
+  withMethods,
+  withProps,
+  withState,
+} from '@ngrx/signals';
 
 describe('withComputed', () => {
-  const expectSnippet = expecter(
-    (code) => `
-        import {
-          deepComputed,
-          patchState,
-          signalStore,
-          withComputed,
-          withMethods,
-          withProps,
-          withState,
-        } from '@ngrx/signals';
-        import { TestBed } from '@angular/core/testing';
-        import { signal } from '@angular/core';
-
-        ${code}
-      `,
-    compilerOptions()
-  );
-
   it('has access to props, state signals and methods', () => {
-    const snippet = `
-      signalStore(
-        withState({
-          a: 1,
-        }),
-        withProps(() => {
-          return {
-            b: 2,
-          };
-        }),
-        withMethods(({ a, b }) => ({
-          sum: () => a() + b,
-        })),
-        withComputed(({ a, b, sum }) => ({
-          prettySum: () => \`Sum: \${a()} + \${b} = \${sum()}\`,
-        }))
-      );
-    `;
-
-    expectSnippet(snippet).toSucceed();
+    signalStore(
+      withState({ a: 1 }),
+      withProps(() => ({ b: 2 })),
+      withMethods(({ a, b }) => ({
+        sum: () => a() + b,
+      })),
+      withComputed(({ a, b, sum }) => ({
+        prettySum: () => `Sum: ${a()} + ${b} = ${sum()}`,
+      }))
+    );
   });
 
   it('has no access to the state source', () => {
-    const snippet = `
-      signalStore(
-        withState({
-          a: 1,
-        }),
-        withComputed((store) => ({
-          prettySum: () => {
-            patchState(store, { a: 2 });
-            return store.a();
-          },
-        }))
-      );
-    `;
-
-    expectSnippet(snippet).toFail(
-      /not assignable to parameter of type 'WritableStateSource<object>'/
+    signalStore(
+      withState({ a: 1 }),
+      withComputed((store) => ({
+        prettySum: () => {
+          // @ts-expect-error - store is not assignable to parameter of type 'WritableStateSource<object>'
+          patchState(store, { a: 2 });
+          return store.a();
+        },
+      }))
     );
   });
 
   it('creates a Signal automatically', () => {
-    const snippet = `
-      const Store = signalStore(
-        withComputed(() => ({
-          user: () => ({ firstName: 'John', lastName: 'Doe' })
-        }))
-      );
+    const Store = signalStore(
+      withComputed(() => ({
+        user: () => ({ firstName: 'John', lastName: 'Doe' }),
+      }))
+    );
 
-      const store = TestBed.inject(Store);
-      const user = store.user;
-    `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer('user', 'Signal<{ firstName: string; lastName: string; }>');
+    type S = InstanceType<typeof Store>;
+    expectTypeOf<S['user']>().toEqualTypeOf<
+      Signal<{ firstName: string; lastName: string }>
+    >();
   });
 
   it('keeps a WritableSignal intact, if passed', () => {
-    const snippet = `
-      const user = signal({ firstName: 'John', lastName: 'Doe' });
+    const user = signal({ firstName: 'John', lastName: 'Doe' });
 
-      const Store = signalStore(
-        withComputed(() => ({
-          user,
-        }))
-      );
-
-      const store = TestBed.inject(Store);
-      const userSignal = store.user;
-    `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer(
-      'userSignal',
-      'WritableSignal<{ firstName: string; lastName: string; }>'
+    const Store = signalStore(
+      withComputed(() => ({
+        user,
+      }))
     );
+
+    type S = InstanceType<typeof Store>;
+    expectTypeOf<S['user']>().toEqualTypeOf<
+      WritableSignal<{ firstName: string; lastName: string }>
+    >();
   });
 
   it('keeps a DeepSignal intact, if passed', () => {
-    const snippet = `
     const user = deepComputed(
       signal({
         name: 'John Doe',
@@ -119,14 +83,9 @@ describe('withComputed', () => {
       }))
     );
 
-    const store = TestBed.inject(Store);
-    const userSignal = store.user;
-  `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer(
-      'userSignal',
-      'DeepSignal<{ name: string; address: { street: string; city: string; }; }>'
-    );
+    type S = InstanceType<typeof Store>;
+    expectTypeOf<S['user']>().toEqualTypeOf<
+      DeepSignal<{ name: string; address: { street: string; city: string } }>
+    >();
   });
-}, 8_000);
+});
