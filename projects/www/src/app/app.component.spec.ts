@@ -13,11 +13,6 @@ import { StackblitzComponent } from './components/docs/stackblitz.component';
 import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
 import { ReferenceService } from '@ngrx-io/app/reference/reference.service';
 
-const waitForCustomElementRender = async () => {
-  await Promise.resolve();
-  await Promise.resolve();
-};
-
 const examplesServiceMock = {
   load: vi.fn(),
   open: vi.fn(),
@@ -40,10 +35,9 @@ const registerCustomElement = (tagName: string, component: Type<unknown>) => {
   );
 };
 
-const renderCustomElement = async (
+const renderCustomElement = (
   tagName: string,
-  attributes: Record<string, string> = {},
-  renderPasses = 1
+  attributes: Record<string, string> = {}
 ) => {
   const element = document.createElement(tagName);
 
@@ -52,10 +46,6 @@ const renderCustomElement = async (
   });
 
   document.body.appendChild(element);
-
-  for (let i = 0; i < renderPasses; i++) {
-    await waitForCustomElementRender();
-  }
 
   return element;
 };
@@ -99,11 +89,11 @@ describe('docs custom elements', () => {
     document.body.innerHTML = '';
   });
 
-  it('passes signal inputs through @angular/elements for alert custom elements', async () => {
+  it('passes signal inputs through @angular/elements for alert custom elements', () => {
     const tagName = 'ngrx-test-alert-element';
     registerCustomElement(tagName, AlertComponent);
 
-    const element = await renderCustomElement(tagName, { type: 'warn' });
+    const element = renderCustomElement(tagName, { type: 'warn' });
 
     expect(element.classList.contains('warn')).toBe(true);
     expect(element.classList.contains('inform')).toBe(false);
@@ -114,26 +104,26 @@ describe('docs custom elements', () => {
     const snippet = 'const answer = 42;';
     registerCustomElement(tagName, CodeExampleComponent);
 
-    const element = await renderCustomElement(
-      tagName,
-      { snippet },
-      2
-    );
+    const element = renderCustomElement(tagName, { snippet });
 
-    expect(element.textContent).toContain(snippet);
+    await vi.waitFor(() => {
+      expect(element.textContent).toContain(snippet);
+    });
   });
 
-  it('passes signal inputs through @angular/elements for markdown symbol link custom elements', async () => {
+  it('passes signal inputs through @angular/elements for markdown symbol link custom elements', () => {
     const tagName = 'ngrx-test-markdown-symbol-link-element';
     const reference = '@angular/core!signal:function';
     registerCustomElement(tagName, MarkdownSymbolLinkComponent);
 
-    const element = await renderCustomElement(tagName, { reference });
+    const element = renderCustomElement(tagName, { reference });
 
     const link = element.querySelector('a');
 
     expect(link?.textContent).toContain('signal');
-    expect(link?.getAttribute('href')).toBe('https://angular.dev/api/core/signal');
+    expect(link?.getAttribute('href')).toBe(
+      'https://angular.dev/api/core/signal'
+    );
   });
 
   it('passes signal inputs through @angular/elements for stackblitz custom elements', async () => {
@@ -141,18 +131,21 @@ describe('docs custom elements', () => {
     const exampleName = 'store-walkthrough';
     registerCustomElement(tagName, StackblitzComponent);
 
-    const element = await renderCustomElement(
-      tagName,
-      {
-        name: exampleName,
-        embedded: 'true',
-      },
-      2
-    );
+    const element = renderCustomElement(tagName, {
+      name: exampleName,
+      embedded: 'true',
+    });
 
-    expect(element.querySelector(`div[title="${exampleName}"]`)).not.toBeNull();
-    expect(examplesServiceMock.load).toHaveBeenCalledTimes(1);
-    expect(examplesServiceMock.load).toHaveBeenCalledWith(expect.any(HTMLDivElement), exampleName);
+    await vi.waitFor(() => {
+      expect(
+        element.querySelector(`div[title="${exampleName}"]`)
+      ).not.toBeNull();
+      expect(examplesServiceMock.load).toHaveBeenCalledTimes(1);
+    });
+    expect(examplesServiceMock.load).toHaveBeenCalledWith(
+      expect.any(HTMLDivElement),
+      exampleName
+    );
   });
 
   it('passes signal inputs through @angular/elements for install instructions custom elements', async () => {
@@ -160,16 +153,16 @@ describe('docs custom elements', () => {
     const packageName = '@ngrx/store';
     registerCustomElement(tagName, InstallInstructionsComponent);
 
-    const element = await renderCustomElement(
-      tagName,
-      {
-        'package-name': packageName,
-        'dev-dependency': 'true',
-      },
-      2
-    );
+    const element = renderCustomElement(tagName, {
+      'package-name': packageName,
+      'dev-dependency': 'true',
+    });
 
-    expect(element.textContent).toContain(`npm install ${packageName} --save-dev`);
+    await vi.waitFor(() => {
+      expect(element.textContent).toContain(
+        `npm install ${packageName} --save-dev`
+      );
+    });
     expect(element.textContent).toContain('pnpm');
     expect(element.textContent).toContain('yarn');
   });
