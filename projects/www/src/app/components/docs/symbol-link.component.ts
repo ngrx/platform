@@ -2,10 +2,11 @@ import { Overlay } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   Component,
+  computed,
   ElementRef,
   Injector,
-  Input,
   inject,
+  input,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
@@ -22,12 +23,12 @@ import { ReferenceService } from '@ngrx-io/app/reference/reference.service';
   selector: 'ngrx-symbol-link',
   imports: [RouterLink, SymbolPopoverComponent],
   // Spacing is intentional to avoid unnecessary whitespace in the output
-  template: `@if (isPrivate) {
-      {{ name }}
-    } @else if (shouldUseExternalLink) {
-      <a [href]="url" target="_blank">{{ name }}</a>
+  template: `@if (isPrivate()) {
+      {{ name() }}
+    } @else if (shouldUseExternalLink()) {
+      <a [href]="url()" target="_blank">{{ name() }}</a>
     } @else {
-      <a [routerLink]="url" #internalSymbolLink>{{ name }}</a>
+      <a [routerLink]="url()" #internalSymbolLink>{{ name() }}</a>
     }`,
   styles: [
     `
@@ -44,47 +45,49 @@ export class SymbolLinkComponent {
   referenceService = inject(ReferenceService);
   internalSymbolLink =
     viewChild<ElementRef<HTMLAnchorElement>>('internalSymbolLink');
-  url = '';
-  isPrivate = true;
-  parsedReference: ParsedCanonicalReference = new ParsedCanonicalReference(
-    '@ngrx/store!Store:class'
+  reference = input<CanonicalReference>('@ngrx/store!Store:class');
+  parsedReference = computed(
+    () => new ParsedCanonicalReference(this.reference())
   );
-  shouldUseExternalLink = false;
+  isPrivate = computed(() => this.parsedReference().isPrivate);
+  shouldUseExternalLink = computed(() => {
+    const parsed = this.parsedReference();
 
-  /**
-   * Signal inputs aren't supported by @angular/elements, so we need
-   * to use a traditional input to set the reference.
-   */
-  @Input({ required: true }) set reference(ref: CanonicalReference) {
-    const parsed = new ParsedCanonicalReference(ref);
-    this.isPrivate = parsed.isPrivate;
-    this.shouldUseExternalLink =
-      parsed.package.startsWith('@angular') || parsed.package === 'rxjs';
-    this.parsedReference = parsed;
+    return parsed.package.startsWith('@angular') || parsed.package === 'rxjs';
+  });
+  url = computed(() => {
+    const parsed = this.parsedReference();
 
     if (parsed.isPrivate) {
-      this.url = '';
-    } else if (parsed.package.startsWith('@ngrx')) {
+      return '';
+    }
+
+    if (parsed.package.startsWith('@ngrx')) {
       const [_ngrx, ...rest] = parsed.package.split('/');
-      this.url = `/api/${rest.join('/')}/${parsed.name}`;
-    } else if (parsed.package.startsWith('@angular')) {
+      return `/api/${rest.join('/')}/${parsed.name}`;
+    }
+
+    if (parsed.package.startsWith('@angular')) {
       const [, packageName] = parsed.package.split('/');
 
-      this.url = `https://angular.dev/api/${packageName}/${parsed.name}`;
-    } else if (parsed.package === 'rxjs') {
-      this.url = `https://rxjs.dev/api/index/${parsed.kind}/${parsed.name}`;
-    } else {
-      throw new Error(`Unknown package: ${parsed.package}`);
-    }
-  }
-
-  get name() {
-    if (this.parsedReference.isPrivate) {
-      return this.parsedReference.name.slice(1);
+      return `https://angular.dev/api/${packageName}/${parsed.name}`;
     }
 
-    return this.parsedReference.name;
-  }
+    if (parsed.package === 'rxjs') {
+      return `https://rxjs.dev/api/index/${parsed.kind}/${parsed.name}`;
+    }
+
+    throw new Error(`Unknown package: ${parsed.package}`);
+  });
+  name = computed(() => {
+    const parsed = this.parsedReference();
+
+    if (parsed.isPrivate) {
+      return parsed.name.slice(1);
+    }
+
+    return parsed.name;
+  });
 
   constructor() {
     toObservable(this.internalSymbolLink)
@@ -97,7 +100,7 @@ export class SymbolLinkComponent {
           return fromEvent(link, 'mouseenter').pipe(
             switchMap(() =>
               this.referenceService.loadFromCanonicalReference(
-                this.parsedReference.referenceString
+                this.parsedReference().referenceString
               )
             ),
             switchMap((apiMemberSummary) => {

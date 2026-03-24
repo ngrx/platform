@@ -3,8 +3,8 @@ import {
   Component,
   ElementRef,
   inject,
-  Input,
   PLATFORM_ID,
+  input,
   signal,
   viewChild,
 } from '@angular/core';
@@ -18,8 +18,8 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
   standalone: true,
   imports: [MatIcon, CodeHighlightPipe],
   template: `
-    @if (header) {
-      <div class="header">{{ header }}</div>
+    @if (header()) {
+      <div class="header">{{ header() }}</div>
     }
 
     <div class="body">
@@ -40,8 +40,10 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
         }
       </button>
       <div #codeBody>
-        @if (snippet || path) {
-          <div [innerHTML]="codeContent() | ngrxCodeHighlight: language"></div>
+        @if (snippet() || path()) {
+          <div
+            [innerHTML]="codeContent() | ngrxCodeHighlight: language()"
+          ></div>
         } @else {
           <ng-content />
         }
@@ -134,11 +136,11 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
   ],
 })
 export class CodeExampleComponent implements AfterViewInit {
-  @Input() header = '';
-  @Input() path = '';
-  @Input() region = '';
-  @Input() language = 'typescript';
-  @Input() snippet = '';
+  header = input('');
+  path = input('');
+  region = input('');
+  language = input('typescript');
+  snippet = input('');
 
   codeBody = viewChild.required<ElementRef>('codeBody');
   copied = signal(false);
@@ -161,16 +163,16 @@ export class CodeExampleComponent implements AfterViewInit {
 
   async ngAfterViewInit() {
     if (isPlatformServer(this.platformId)) return;
-    if (this.snippet) {
-      this.codeContent.set(this.snippet);
+    if (this.snippet()) {
+      this.codeContent.set(this.snippet());
       return;
     }
 
-    if (!this.path) return;
+    if (!this.path()) return;
 
     const content = await this.exampleService.extractSnippet(
-      this.path,
-      this.region
+      this.path(),
+      this.region()
     );
     this.codeContent.set(content);
   }
