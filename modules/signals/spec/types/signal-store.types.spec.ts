@@ -331,13 +331,13 @@ describe('signalStore', () => {
   });
 
   it('fails when state is not an object', () => {
-    // @ts-expect-error
+    // @ts-expect-error - Type 'number' is not assignable to type 'object'
     signalStore(withState(10));
-    // @ts-expect-error
+    // @ts-expect-error - Type 'string' is not assignable to type 'object'
     signalStore(withState(''));
-    // @ts-expect-error
+    // @ts-expect-error - Type 'null' is not assignable to type 'object'
     signalStore(withState(null));
-    // @ts-expect-error
+    // @ts-expect-error - Type 'boolean' is not assignable to type 'object'
     signalStore(withState(true));
   });
 
