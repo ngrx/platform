@@ -300,13 +300,13 @@ describe('signalState', () => {
 
   it('fails when state is not an object', () => {
     void (() => {
-      // @ts-expect-error
+      // @ts-expect-error - Type 'number' is not assignable to type 'object'
       signalState(10);
-      // @ts-expect-error
+      // @ts-expect-error - Type 'string' is not assignable to type 'object'
       signalState('');
-      // @ts-expect-error
+      // @ts-expect-error - Type 'boolean' is not assignable to type 'object'
       signalState(null);
-      // @ts-expect-error
+      // @ts-expect-error - Type 'undefined' is not assignable to type 'object'
       signalState(true);
     });
   });
@@ -324,15 +324,15 @@ describe('signalState', () => {
 
   it('fails when state is patched with a non-record', () => {
     const state = signalState(initialState);
-    // @ts-expect-error
+    // @ts-expect-error - Type 'number' is not assignable to type 'Partial<NoInfer<typeof initialState>>'
     patchState(state, 10);
 
     const state2 = signalState(initialState);
-    // @ts-expect-error
+    // @ts-expect-error - Type 'undefined' is not assignable to type 'Partial<NoInfer<typeof initialState>>'
     patchState(state2, undefined);
 
     const state3 = signalState(initialState);
-    // @ts-expect-error
+    // @ts-expect-error - Type 'number[]' is not assignable to type 'Partial<NoInfer<typeof initialState>>'
     patchState(state3, [1, 2, 3]);
   });
 

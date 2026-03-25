@@ -41,17 +41,15 @@ describe('patchState', () => {
 
   it('fails with wrong partial state updater', () => {
     const state = signalState({ count: 1, foo: 'bar' });
-    void (() => {
-      // @ts-expect-error - Property 'numbers' is missing in type '{ count: number; foo: string; }'
-      patchState(state, addNumber(10));
-      // @ts-expect-error - Property 'numbers' is missing in type '{ count: number; foo: string; }'
-      patchState(state, { count: 10 }, addNumber(10));
-      // @ts-expect-error - Property 'numbers' is missing in type '{ count: number; foo: string; }'
-      patchState(state, addNumber(10), { count: 10 });
-      // @ts-expect-error - Property 'numbers' is missing in type '{ count: number; foo: string; }'
-      patchState(state, increment(), addNumber(10));
-      // @ts-expect-error - Property 'numbers' is missing in type '{ count: number; foo: string; }'
-      patchState(state, addNumber(10), increment());
-    });
+    // @ts-expect-error - Property 'numbers' is missing in type '{ count: number; foo: string; }'
+    patchState(state, addNumber(10));
+    // @ts-expect-error - Property 'numbers' is missing in type '{ count: number; foo: string; }'
+    patchState(state, { count: 10 }, addNumber(10));
+    // @ts-expect-error - Property 'numbers' is missing in type '{ count: number; foo: string; }'
+    patchState(state, addNumber(10), { count: 10 });
+    // @ts-expect-error - Property 'numbers' is missing in type '{ count: number; foo: string; }'
+    patchState(state, increment(), addNumber(10));
+    // @ts-expect-error - Property 'numbers' is missing in type '{ count: number; foo: string; }'
+    patchState(state, addNumber(10), increment());
   });
 });
