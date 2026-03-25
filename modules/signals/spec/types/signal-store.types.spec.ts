@@ -362,12 +362,14 @@ describe('signalStore', () => {
     expectTypeOf<
       S2 extends StateSource<infer St> ? St : never
     >().toEqualTypeOf<{ count: number }>();
-    void ((store1: S1, store2: S2) => {
-      // @ts-expect-error - readonly state source cannot be patched from outside
-      patchState(store1, { count: 1 });
-      // @ts-expect-error - readonly state source cannot be patched from outside
-      patchState(store2, { count: 1 });
-    });
+    // The arrow function is never invoked, so the body is type-checked
+    // at compile time but not executed at runtime by the test runner.
+    const store1 = null! as S1;
+    const store2 = null! as S2;
+    // @ts-expect-error - readonly state source cannot be patched from outside
+    const _patchStore1 = () => patchState(store1, { count: 1 });
+    // @ts-expect-error - readonly state source cannot be patched from outside
+    const _patchStore2 = () => patchState(store2, { count: 1 });
   });
 
   it('exposes readonly state source when protectedState is true', () => {
@@ -394,12 +396,12 @@ describe('signalStore', () => {
     expectTypeOf<
       S2 extends StateSource<infer St> ? St : never
     >().toEqualTypeOf<{ count: number }>();
-    void ((store1: S1, store2: S2) => {
-      // @ts-expect-error - readonly state source cannot be patched from outside
-      patchState(store1, { count: 10 });
-      // @ts-expect-error - readonly state source cannot be patched from outside
-      patchState(store2, { count: 10 });
-    });
+    const store1 = null! as S1;
+    const store2 = null! as S2;
+    // @ts-expect-error - readonly state source cannot be patched from outside
+    const _patchStore1 = () => patchState(store1, { count: 10 });
+    // @ts-expect-error - readonly state source cannot be patched from outside
+    const _patchStore2 = () => patchState(store2, { count: 10 });
   });
 
   it('exposes writable state source when protectedState is false', () => {
@@ -426,10 +428,10 @@ describe('signalStore', () => {
     expectTypeOf<
       S2 extends StateSource<infer St> ? St : never
     >().toEqualTypeOf<{ count: number }>();
-    void ((store1: S1, store2: S2) => {
-      patchState(store1, { count: 100 });
-      patchState(store2, { count: 100 });
-    });
+    const store1 = null! as S1;
+    const store2 = null! as S2;
+    const _patchStore1 = () => patchState(store1, { count: 100 });
+    const _patchStore2 = () => patchState(store2, { count: 100 });
   });
 
   it('patches state via sequence of partial state objects and updater functions', () => {
@@ -466,14 +468,13 @@ describe('signalStore', () => {
       withState({ foo: 'bar' })
     );
     type S = InstanceType<typeof Store>;
-    void ((store: S) => {
-      // @ts-expect-error
-      patchState(store, 10);
-      // @ts-expect-error
-      patchState(store, undefined);
-      // @ts-expect-error
-      patchState(store, [1, 2, 3]);
-    });
+    const store = null! as S;
+    // @ts-expect-error - 'number' is not assignable to 'Partial<NoInfer<{ foo: string; }>> | PartialStateUpdater<NoInfer<{ foo: string; }>>'
+    const _patchWithNumber = () => patchState(store, 10);
+    // @ts-expect-error - 'undefined' is not assignable to 'Partial<NoInfer<{ foo: string; }>> | PartialStateUpdater<NoInfer<{ foo: string; }>>'
+    const _patchWithUndefined = () => patchState(store, undefined);
+    // @ts-expect-error - 'number[]' is not assignable to 'Partial<NoInfer<{ foo: string; }>> | PartialStateUpdater<NoInfer<{ foo: string; }>>'
+    const _patchWithArray = () => patchState(store, [1, 2, 3]);
   });
 
   it('fails when state is patched with a wrong record', () => {
@@ -483,10 +484,9 @@ describe('signalStore', () => {
         withState({ foo: 'bar' })
       );
       type S = InstanceType<typeof Store>;
-      void ((store: S) => {
-        // @ts-expect-error - Type 'number' is not assignable to type 'string'
-        patchState(store, { foo: 10 });
-      });
+      const store = null! as S;
+      // @ts-expect-error - Type 'number' is not assignable to type 'string'
+      const _patchWithWrongType = () => patchState(store, { foo: 10 });
     }
     {
       signalStore(
@@ -517,10 +517,10 @@ describe('signalStore', () => {
         withState({ user: { first: 'John', age: 20 } })
       );
       type S = InstanceType<typeof Store>;
-      void ((store: S) => {
-        // @ts-expect-error - Type 'string' is not assignable to type 'number'
+      const store = null! as S;
+      // @ts-expect-error - Type 'string' is not assignable to type 'number'
+      const _patchWithWrongUpdater = () =>
         patchState(store, (state) => ({ user: { ...state.user, age: '30' } }));
-      });
     }
     {
       signalStore(
@@ -602,11 +602,10 @@ describe('signalStore', () => {
     );
 
     type S = InstanceType<typeof Store>;
-    void ((store: S) => {
-      store.log('ngrx');
-      // @ts-expect-error - number is not assignable to string
-      store.log(10);
-    });
+    const store = null! as S;
+    const _logString = () => store.log('ngrx');
+    // @ts-expect-error - number is not assignable to string
+    const _logNumber = () => store.log(10);
   });
 
   it('omits private store members from the public instance', () => {
@@ -645,11 +644,11 @@ describe('signalStore', () => {
       withState({ count1: 0, _count2: 0 })
     );
     type S = InstanceType<typeof CounterStore>;
-    void ((store: S) => {
-      patchState(store, { count1: 1 });
-      // @ts-expect-error - '_count2' does not exist in type
+    const store = null! as S;
+    const _patchPublicState = () => patchState(store, { count1: 1 });
+    // @ts-expect-error - '_count2' does not exist in type
+    const _patchPrivateState = () =>
       patchState(store, { count1: 1, _count2: 1 });
-    });
   });
 
   describe('custom features', () => {
