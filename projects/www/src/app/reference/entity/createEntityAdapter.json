@@ -12,16 +12,113 @@
       "excerptTokens": [
         {
           "kind": "Content",
-          "text": "declare function createEntityAdapter<T>(options?: "
+          "text": "declare function createEntityAdapter<T extends "
         },
         {
           "kind": "Content",
-          "text": "{\n    selectId?: "
+          "text": "{\n    id: string | number;\n}"
+        },
+        {
+          "kind": "Content",
+          "text": ">(options?: "
+        },
+        {
+          "kind": "Content",
+          "text": "{\n    sortComparer?: false | "
         },
         {
           "kind": "Reference",
-          "text": "IdSelector",
-          "canonicalReference": "@ngrx/entity!IdSelector:type"
+          "text": "Comparer",
+          "canonicalReference": "@ngrx/entity!Comparer:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<T>;\n}"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityAdapter",
+          "canonicalReference": "@ngrx/entity!EntityAdapter:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<T, T extends {\n    id: infer U;\n} ? U : never>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 9
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 1,
+      "parameters": [
+        {
+          "parameterName": "options",
+          "parameterTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
+          "isOptional": true
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "name": "createEntityAdapter",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/entity!createEntityAdapter:function(2)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "declare function createEntityAdapter<T>(options: "
+        },
+        {
+          "kind": "Content",
+          "text": "{\n    selectId: "
+        },
+        {
+          "kind": "Reference",
+          "text": "IdSelectorStr",
+          "canonicalReference": "@ngrx/entity!~IdSelectorStr:type"
         },
         {
           "kind": "Content",
@@ -47,7 +144,7 @@
         },
         {
           "kind": "Content",
-          "text": "<T>"
+          "text": "<T, string>"
         },
         {
           "kind": "Content",
@@ -60,7 +157,7 @@
         "endIndex": 9
       },
       "releaseTag": "Public",
-      "overloadIndex": 1,
+      "overloadIndex": 2,
       "parameters": [
         {
           "parameterName": "options",
@@ -68,9 +165,170 @@
             "startIndex": 1,
             "endIndex": 6
           },
-          "isOptional": true
+          "isOptional": false
         }
       ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "name": "createEntityAdapter",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/entity!createEntityAdapter:function(3)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "declare function createEntityAdapter<T>(options: "
+        },
+        {
+          "kind": "Content",
+          "text": "{\n    selectId: "
+        },
+        {
+          "kind": "Reference",
+          "text": "IdSelectorNum",
+          "canonicalReference": "@ngrx/entity!~IdSelectorNum:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<T>;\n    sortComparer?: false | "
+        },
+        {
+          "kind": "Reference",
+          "text": "Comparer",
+          "canonicalReference": "@ngrx/entity!Comparer:type"
+        },
+        {
+          "kind": "Content",
+          "text": "<T>;\n}"
+        },
+        {
+          "kind": "Content",
+          "text": "): "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityAdapter",
+          "canonicalReference": "@ngrx/entity!EntityAdapter:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<T, number>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 9
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 3,
+      "parameters": [
+        {
+          "parameterName": "options",
+          "parameterTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 6
+          },
+          "isOptional": false
+        }
+      ],
+      "typeParameters": [
+        {
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ],
+      "name": "createEntityAdapter",
+      "docs": {
+        "modifiers": {
+          "isInternal": false,
+          "isPublic": false,
+          "isAlpha": false,
+          "isBeta": false,
+          "isOverride": false,
+          "isExperimental": false
+        },
+        "summary": "",
+        "usageNotes": "",
+        "remarks": "",
+        "deprecated": "",
+        "returns": "",
+        "see": [],
+        "params": []
+      }
+    },
+    {
+      "kind": "Function",
+      "canonicalReference": "@ngrx/entity!createEntityAdapter:function(4)",
+      "docComment": "",
+      "excerptTokens": [
+        {
+          "kind": "Content",
+          "text": "declare function createEntityAdapter<T>(): "
+        },
+        {
+          "kind": "Reference",
+          "text": "EntityAdapter",
+          "canonicalReference": "@ngrx/entity!EntityAdapter:interface"
+        },
+        {
+          "kind": "Content",
+          "text": "<T>"
+        },
+        {
+          "kind": "Content",
+          "text": ";"
+        }
+      ],
+      "fileUrlPath": "../../dist/modules/entity/types/ngrx-entity.d.ts",
+      "returnTypeTokenRange": {
+        "startIndex": 1,
+        "endIndex": 3
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 4,
+      "parameters": [],
       "typeParameters": [
         {
           "typeParameterName": "T",
