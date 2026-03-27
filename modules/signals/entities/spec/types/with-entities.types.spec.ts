@@ -1,51 +1,36 @@
-import { expecter } from 'ts-snippet';
-import { compilerOptions } from './helpers';
+import {
+  patchState,
+  signalStoreFeature,
+  type,
+  withMethods,
+} from '@ngrx/signals';
+import {
+  addEntity,
+  entityConfig,
+  type EntityId,
+  withEntities,
+} from '@ngrx/signals/entities';
+import { describe, it } from 'tstyche';
 
 describe('withEntities', () => {
-  const expectSnippet = expecter(
-    (code) => `
-        import {
-          patchState,
-          signalStoreFeature,
-          type,
-          withMethods,
-        } from '@ngrx/signals';
-        import {
-          addEntity,
-          entityConfig,
-          EntityId,
-          withEntities,
-        } from '@ngrx/signals/entities';
-
-        ${code}
-      `,
-    compilerOptions()
-  );
-
   it('succeeds when creating a custom feature with named collection', () => {
-    const snippet = `
-      function withAddEntities<
-        Entity extends { id: EntityId },
-        Collection extends string
-      >(
-        collection: Collection
-      ) {
-        const config = entityConfig({
-          entity: type<Entity>(),
-          collection,
-        });
+    function withAddEntities<
+      Entity extends { id: EntityId },
+      Collection extends string,
+    >(collection: Collection) {
+      const config = entityConfig({
+        entity: type<Entity>(),
+        collection,
+      });
 
-        return signalStoreFeature(
-          withEntities(config),
-          withMethods((store) => ({
-            addEntity(entity: Entity): void {
-              patchState(store, addEntity(entity, { collection }));
-            },
-          }))
-        );
-      }
-    `;
-
-    expectSnippet(snippet).toSucceed();
+      return signalStoreFeature(
+        withEntities(config),
+        withMethods((store) => ({
+          addEntity(entity: Entity): void {
+            patchState(store, addEntity(entity, { collection }));
+          },
+        }))
+      );
+    }
   });
-}, 8_000);
+});

@@ -1,0 +1,3 @@
+{
+  "testFileMatch": ["modules/signals/**/types/*.spec.ts"]
+}

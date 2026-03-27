@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => {
       environment: 'jsdom',
       setupFiles: ['test-setup.ts'],
       include: ['**/*.spec.ts'],
+      exclude: ['**/types/*.spec.ts'],
       reporters: ['default']
     },
     define: {

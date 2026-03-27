@@ -1,0 +1,11 @@
+{
+  "extends": "../../../../../tsconfig.json",
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": true,
+    "noErrorTruncation": true,
+    "noEmit": true,
+    "types": []
+  },
+  "include": ["**/*"],
+  "exclude": []
+}

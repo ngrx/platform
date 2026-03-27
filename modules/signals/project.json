@@ -62,6 +62,12 @@
       "executor": "@analogjs/vitest-angular:test",
       "dependsOn": ["build"],
       "outputs": ["{workspaceRoot}/coverage/modules/signals"]
+    },
+    "test:types": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec tstyche"
+      }
     }
   }
 }
