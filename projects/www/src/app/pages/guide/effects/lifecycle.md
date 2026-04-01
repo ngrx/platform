@@ -18,6 +18,24 @@ init$ = createEffect(() => {
 
 </ngrx-code-example>
 
+### FEATURE_EFFECTS_INIT
+
+After all the root effects have been added, the feature effects are added, and after all of them are added too, the feature effect dispatches a `FEATURE_EFFECTS_INIT` action.
+Like with `ROOT_EFFECTS_INIT`, you can see this action as a lifecycle hook, which you can use in order to execute some code after all your root and feature effects have been added.
+
+<ngrx-code-example header="late-init.effects.ts">
+
+```ts
+lateInit$ = createEffect(() => {
+  return this.actions$.pipe(
+    ofType(FEATURE_EFFECTS_INIT),
+    map(action => ...)
+  );
+});
+```
+
+</ngrx-code-example>
+
 ## Effect Metadata
 
 ### Non-dispatching Effects
@@ -180,6 +198,8 @@ class UserEffects implements OnInitEffects {
   }
 }
 ```
+
+If there are too many effects in your app, you may instead consider relying on existing built-in actions `ROOT_EFFECTS_INIT` or `FEATURE_EFFECTS_INIT`.
 
 </ngrx-code-example>
 

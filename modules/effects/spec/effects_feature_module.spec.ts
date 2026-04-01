@@ -12,6 +12,7 @@ import {
 import { firstValueFrom } from 'rxjs';
 import { map, take, withLatestFrom } from 'rxjs/operators';
 import { Actions, EffectsModule, ofType, createEffect } from '../';
+import { FEATURE_EFFECTS_INIT } from '../src/effects_actions';
 import { EffectsFeatureModule } from '../src/effects_feature_module';
 import { EffectsRootModule } from '../src/effects_root_module';
 import { _FEATURE_EFFECTS_INSTANCE_GROUPS } from '../src/tokens';
@@ -24,6 +25,7 @@ describe('Effects Feature Module', () => {
     const effectSourceGroups = [[sourceA], [sourceB], [sourceC]];
 
     let mockEffectSources: { addEffects: MockInstance };
+    let mockStore: { dispatch: MockInstance };
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -32,6 +34,12 @@ describe('Effects Feature Module', () => {
             provide: EffectsRootModule,
             useValue: {
               addEffects: vi.fn(),
+            },
+          },
+          {
+            provide: Store,
+            useValue: {
+              dispatch: vi.fn(),
             },
           },
           {
@@ -45,6 +53,9 @@ describe('Effects Feature Module', () => {
       mockEffectSources = TestBed.inject<unknown>(EffectsRootModule) as {
         addEffects: MockInstance;
       };
+      mockStore = TestBed.inject<unknown>(Store) as {
+        dispatch: MockInstance;
+      };
     });
 
     it('should add all effects when instantiated', () => {
@@ -53,6 +64,14 @@ describe('Effects Feature Module', () => {
       expect(mockEffectSources.addEffects).toHaveBeenCalledWith(sourceA);
       expect(mockEffectSources.addEffects).toHaveBeenCalledWith(sourceB);
       expect(mockEffectSources.addEffects).toHaveBeenCalledWith(sourceC);
+    });
+
+    it('should dispatch the feature effects init action', () => {
+      TestBed.inject(EffectsFeatureModule);
+
+      expect(mockStore.dispatch).toHaveBeenCalledWith({
+        type: FEATURE_EFFECTS_INIT,
+      });
     });
   });
 

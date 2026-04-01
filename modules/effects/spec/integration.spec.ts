@@ -9,6 +9,7 @@ import {
   EffectsModule,
   OnInitEffects,
   ROOT_EFFECTS_INIT,
+  FEATURE_EFFECTS_INIT,
   OnIdentifyEffects,
   EffectSources,
   Actions,
@@ -193,6 +194,8 @@ describe('NgRx Effects Integration spec', () => {
           '[RootEffectWithInitAction2]: INIT',
 
           ROOT_EFFECTS_INIT,
+
+          FEATURE_EFFECTS_INIT,
         ]);
       });
 
@@ -292,12 +295,16 @@ describe('NgRx Effects Integration spec', () => {
         // next feat effects
         '[FeatEffectWithInitAction]: INIT',
 
+        FEATURE_EFFECTS_INIT,
+
         // lastly added features (3 effects but 2 unique keys)
         '[FeatEffectWithIdentifierAndInitAction]: INIT',
         '[FeatEffectWithIdentifierAndInitAction]: INIT',
 
         // from lazy loaded module
         '[FeatEffectFromLazyLoadedModuleWithInitAction]: INIT',
+
+        FEATURE_EFFECTS_INIT,
       ];
 
       // reducers should receive all actions
@@ -358,6 +365,8 @@ describe('NgRx Effects Integration spec', () => {
 
         // User provided effects loaded by feature module
         '[UserProvidedEffect2]: INIT',
+
+        FEATURE_EFFECTS_INIT,
       ];
       expect(dispatchedActionsLog).toEqual(expectedLog);
     });
