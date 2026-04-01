@@ -14,7 +14,12 @@ export {
 export { Actions, ofType } from './actions';
 export { EffectsModule } from './effects_module';
 export { EffectSources } from './effect_sources';
-export { ROOT_EFFECTS_INIT, rootEffectsInit } from './effects_actions';
+export {
+  ROOT_EFFECTS_INIT,
+  rootEffectsInit,
+  FEATURE_EFFECTS_INIT,
+  featureEffectsInit,
+} from './effects_actions';
 export { EffectsRunner } from './effects_runner';
 export { EffectNotification } from './effect_notification';
 export { EffectsFeatureModule } from './effects_feature_module';
