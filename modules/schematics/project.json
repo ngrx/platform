@@ -16,10 +16,6 @@
       },
       "outputs": ["{options.outputFile}"]
     },
-    "test": {
-      "executor": "@analogjs/vitest-angular:test",
-      "outputs": ["{workspaceRoot}/coverage/modules/schematics"]
-    },
     "build-package": {
       "executor": "@nx/js:tsc",
       "options": {
@@ -78,6 +74,11 @@
         ]
       },
       "outputs": ["{workspaceRoot}/dist/modules/schematics"]
+    },
+    "test": {
+      "executor": "@analogjs/vitest-angular:test",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/coverage/modules/schematics"]
     }
   }
 }
