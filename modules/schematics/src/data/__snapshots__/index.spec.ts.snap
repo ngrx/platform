@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Data Schematic should create a model interface 1`] = `
+exports[`Data Schematic > should create a model interface 1`] = `
 "export interface Foo {
   id?: unknown;
 }
 "
 `;
 
-exports[`Data Schematic should create a service class 1`] = `
+exports[`Data Schematic > should create a service class 1`] = `
 "import { Injectable } from '@angular/core';
 import {
   EntityCollectionServiceBase,
@@ -24,7 +24,7 @@ export class FooService extends EntityCollectionServiceBase<Foo> {
 "
 `;
 
-exports[`Data Schematic should create a spec class 1`] = `
+exports[`Data Schematic > should create a spec class 1`] = `
 "import { TestBed } from '@angular/core/testing';
 import {
   EntityCollectionServiceElementsFactory

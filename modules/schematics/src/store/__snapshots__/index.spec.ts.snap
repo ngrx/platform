@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Store Schematic should add a feature key if not root 1`] = `
+exports[`Store Schematic > should add a feature key if not root 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -22,7 +22,7 @@ export class AppModule { }
 "
 `;
 
-exports[`Store Schematic should add a feature key if not root 2`] = `
+exports[`Store Schematic > should add a feature key if not root 2`] = `
 "import { isDevMode } from '@angular/core';
 import {
   ActionReducer,
@@ -47,7 +47,7 @@ export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
 "
 `;
 
-exports[`Store Schematic should add the initial config correctly into an empty module 1`] = `
+exports[`Store Schematic > should add the initial config correctly into an empty module 1`] = `
 "
         import { NgModule, isDevMode } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
@@ -62,7 +62,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       "
 `;
 
-exports[`Store Schematic should create the initial store setup 1`] = `
+exports[`Store Schematic > should create the initial store setup 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -84,7 +84,7 @@ export class AppModule { }
 "
 `;
 
-exports[`Store Schematic should create the initial store setup 2`] = `
+exports[`Store Schematic > should create the initial store setup 2`] = `
 "import { isDevMode } from '@angular/core';
 import {
   ActionReducer,
@@ -108,7 +108,7 @@ export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
 "
 `;
 
-exports[`Store Schematic should import a feature a specified module 1`] = `
+exports[`Store Schematic > should import a feature a specified module 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -133,7 +133,7 @@ export class AppModule { }
 "
 `;
 
-exports[`Store Schematic should import a feature a specified module 2`] = `
+exports[`Store Schematic > should import a feature a specified module 2`] = `
 "import { isDevMode } from '@angular/core';
 import {
   ActionReducer,
@@ -158,7 +158,7 @@ export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
 "
 `;
 
-exports[`Store Schematic should import into a specified module 1`] = `
+exports[`Store Schematic > should import into a specified module 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -185,7 +185,7 @@ export class AppModule { }
 "
 `;
 
-exports[`Store Schematic should import into a specified module 2`] = `
+exports[`Store Schematic > should import into a specified module 2`] = `
 "import { isDevMode } from '@angular/core';
 import {
   ActionReducer,
@@ -209,7 +209,7 @@ export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
 "
 `;
 
-exports[`Store Schematic should not add a feature key if root 1`] = `
+exports[`Store Schematic > should not add a feature key if root 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -231,7 +231,7 @@ export class AppModule { }
 "
 `;
 
-exports[`Store Schematic should not add a feature key if root 2`] = `
+exports[`Store Schematic > should not add a feature key if root 2`] = `
 "import { isDevMode } from '@angular/core';
 import {
   ActionReducer,
@@ -255,7 +255,7 @@ export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
 "
 `;
 
-exports[`Store Schematic should not skip the initial store setup files if the minimal flag is provided with a feature 1`] = `
+exports[`Store Schematic > should not skip the initial store setup files if the minimal flag is provided with a feature 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -280,7 +280,7 @@ export class AppModule { }
 "
 `;
 
-exports[`Store Schematic should not skip the initial store setup files if the minimal flag is provided with a feature 2`] = `
+exports[`Store Schematic > should not skip the initial store setup files if the minimal flag is provided with a feature 2`] = `
 "import { isDevMode } from '@angular/core';
 import {
   ActionReducer,
@@ -305,7 +305,7 @@ export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
 "
 `;
 
-exports[`Store Schematic should skip the initial store setup files if the minimal flag is provided 1`] = `
+exports[`Store Schematic > should skip the initial store setup files if the minimal flag is provided 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -331,7 +331,7 @@ export class AppModule { }
 "
 `;
 
-exports[`Store Schematic should support a custom feature state interface name 1`] = `
+exports[`Store Schematic > should support a custom feature state interface name 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -353,7 +353,7 @@ export class AppModule { }
 "
 `;
 
-exports[`Store Schematic should support a custom feature state interface name 2`] = `
+exports[`Store Schematic > should support a custom feature state interface name 2`] = `
 "import { isDevMode } from '@angular/core';
 import {
   ActionReducer,
@@ -378,7 +378,7 @@ export const metaReducers: MetaReducer<FeatureState>[] = isDevMode() ? [] : [];
 "
 `;
 
-exports[`Store Schematic should support a custom root state interface name 1`] = `
+exports[`Store Schematic > should support a custom root state interface name 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -400,7 +400,7 @@ export class AppModule { }
 "
 `;
 
-exports[`Store Schematic should support a custom root state interface name 2`] = `
+exports[`Store Schematic > should support a custom root state interface name 2`] = `
 "import { isDevMode } from '@angular/core';
 import {
   ActionReducer,
@@ -424,7 +424,7 @@ export const metaReducers: MetaReducer<AppState>[] = isDevMode() ? [] : [];
 "
 `;
 
-exports[`Store Schematic should support a default feature state interface name 1`] = `
+exports[`Store Schematic > should support a default feature state interface name 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -446,7 +446,7 @@ export class AppModule { }
 "
 `;
 
-exports[`Store Schematic should support a default feature state interface name 2`] = `
+exports[`Store Schematic > should support a default feature state interface name 2`] = `
 "import { isDevMode } from '@angular/core';
 import {
   ActionReducer,
@@ -471,7 +471,7 @@ export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
 "
 `;
 
-exports[`Store Schematic should support a default root state interface name 1`] = `
+exports[`Store Schematic > should support a default root state interface name 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -493,7 +493,7 @@ export class AppModule { }
 "
 `;
 
-exports[`Store Schematic should support a default root state interface name 2`] = `
+exports[`Store Schematic > should support a default root state interface name 2`] = `
 "import { isDevMode } from '@angular/core';
 import {
   ActionReducer,
