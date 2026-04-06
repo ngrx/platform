@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect } from '@ngrx/effects';
 
 @Injectable()
 export class <%= classify(name) %>Effects {
-  constructor(private actions$: Actions) {}
+  private actions$ = inject(Actions);
 }
