@@ -304,9 +304,9 @@ describe('signalState', () => {
       signalState(10);
       // @ts-expect-error - Type 'string' is not assignable to type 'object'
       signalState('');
-      // @ts-expect-error - Type 'boolean' is not assignable to type 'object'
+      // @ts-expect-error - Type 'null' is not assignable to type 'object'
       signalState(null);
-      // @ts-expect-error - Type 'undefined' is not assignable to type 'object'
+      // @ts-expect-error - Type 'boolean' is not assignable to type 'object'
       signalState(true);
     });
   });

@@ -81,6 +81,16 @@ describe('signalStore', () => {
     expectTypeOf<S['x']['y']['z']>().toEqualTypeOf<
       Signal<Record<string, boolean | { foo: number }>>
     >();
+
+    type A = number;
+    const test: A = 10;
+    expectTypeOf<A>().toEqualTypeOf<number>();
+
+    type B = number;
+    // @ts-expect-error - number is not assignable to string
+    const test: B = 'test';
+    // @ts-expect-error - number is not assignable to string
+    expectTypeOf<B>().toEqualTypeOf<string>();
   });
 
   it('creates deep signals when state type is an interface', () => {
@@ -699,8 +709,29 @@ describe('signalStore', () => {
           );
         }
 
-        signalStore(withFoo(), withState({ count: 0 }), withBar());
-        signalStore(
+        function withBaz() {
+          return signalStoreFeature(
+            withFoo(),
+            withState({ count: 0 }),
+            withBar()
+          );
+        }
+
+        function withBaz2() {
+          return signalStoreFeature(
+            withState({ foo: 'foo' }),
+            withState({ count: 0 }),
+            withBar()
+          );
+        }
+
+        const BazStore = signalStore(
+          withFoo(),
+          withState({ count: 0 }),
+          withBar()
+        );
+
+        const Baz2Store = signalStore(
           withState({ foo: 'foo' }),
           withState({ count: 0 }),
           withBar()
@@ -820,11 +851,20 @@ describe('signalStore', () => {
           props: { selectedEntity2: Signal<Entity | undefined> };
           methods: { logEntity: (entity: Entity) => void };
         }>(),
-        withMethods(() => ({
-          loadEntities(): Promise<Entity[]> {
-            return Promise.resolve([]);
-          },
-        }))
+        withMethods(
+          ({ entities, selectedEntity, selectedEntity2, logEntity }) => {
+            const e: Signal<Entity[]> = entities;
+            const se: Signal<Entity | null> = selectedEntity;
+            const se2: Signal<Entity | undefined> = selectedEntity2;
+            const le: (entity: Entity) => void = logEntity;
+
+            return {
+              loadEntities(): Promise<Entity[]> {
+                return Promise.resolve([]);
+              },
+            };
+          }
+        )
       );
     }
 
