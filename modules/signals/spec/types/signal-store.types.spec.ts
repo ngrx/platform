@@ -81,16 +81,6 @@ describe('signalStore', () => {
     expectTypeOf<S['x']['y']['z']>().toEqualTypeOf<
       Signal<Record<string, boolean | { foo: number }>>
     >();
-
-    type A = number;
-    const test: A = 10;
-    expectTypeOf<A>().toEqualTypeOf<number>();
-
-    type B = number;
-    // @ts-expect-error - number is not assignable to string
-    const test: B = 'test';
-    // @ts-expect-error - number is not assignable to string
-    expectTypeOf<B>().toEqualTypeOf<string>();
   });
 
   it('creates deep signals when state type is an interface', () => {
