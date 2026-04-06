@@ -1,823 +1,693 @@
-import { expecter } from 'ts-snippet';
-import { compilerOptions } from './helpers';
+import { expectTypeOf } from 'vitest';
+import { computed, Signal, Type } from '@angular/core';
+import {
+  DeepSignal,
+  patchState,
+  signalStore,
+  signalStoreFeature,
+  StateSource,
+  type,
+  withComputed,
+  withHooks,
+  withMethods,
+  withState,
+  WritableStateSource,
+} from '@ngrx/signals';
 
 describe('signalStore', () => {
-  const expectSnippet = expecter(
-    (code) => `
-        import { computed, inject, Signal } from '@angular/core';
-        import {
-          getState,
-          patchState,
-          signalStore,
-          signalStoreFeature,
-          type,
-          withComputed,
-          withHooks,
-          withMethods,
-          withState,
-        } from '@ngrx/signals';
-
-        ${code}
-      `,
-    compilerOptions()
-  );
-
   it('allows passing state as a generic argument', () => {
-    const snippet = `
-      type State = { foo: string; bar: number[] };
-      const Store = signalStore(
-        withState<State>({ foo: 'bar', bar: [1, 2] })
-      );
-    `;
+    type State = { foo: string; bar: number[] };
+    const Store = signalStore(withState<State>({ foo: 'bar', bar: [1, 2] }));
 
-    const result = expectSnippet(snippet);
-    result.toInfer(
-      'Store',
-      'Type<{ foo: Signal<string>; bar: Signal<number[]>; } & StateSource<{ foo: string; bar: number[]; }>>'
-    );
+    expectTypeOf(Store).toEqualTypeOf<
+      Type<{ foo: Signal<string>; bar: Signal<number[]> } & StateSource<State>>
+    >();
   });
 
   it('creates deep signals for nested state slices', () => {
-    const snippet = `
-      const Store = signalStore(
-        withState({
-          user: {
-            age: 10,
-            details: {
-              first: 'John',
-              flags: [true, false],
-            },
+    const Store = signalStore(
+      withState({
+        user: {
+          age: 10,
+          details: {
+            first: 'John',
+            flags: [true, false],
           },
-        })
-      );
+        },
+      })
+    );
 
-      const store = new Store();
-      const user = store.user;
-      const age = store.user.age;
-      const details = store.user.details;
-      const first = store.user.details.first;
-      const flags = store.user.details.flags;
-    `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer(
-      'store',
-      '{ user: DeepSignal<{ age: number; details: { first: string; flags: boolean[]; }; }>; } & StateSource<{ user: { age: number; details: { first: string; flags: boolean[]; }; }; }>'
-    );
-    result.toInfer(
-      'user',
-      'DeepSignal<{ age: number; details: { first: string; flags: boolean[]; }; }>'
-    );
-    result.toInfer(
-      'details',
-      'DeepSignal<{ first: string; flags: boolean[]; }>'
-    );
-    result.toInfer('first', 'Signal<string>');
-    result.toInfer('flags', 'Signal<boolean[]>');
+    type S = InstanceType<typeof Store>;
+    expectTypeOf<S>().toEqualTypeOf<
+      {
+        user: DeepSignal<{
+          age: number;
+          details: { first: string; flags: boolean[] };
+        }>;
+      } & StateSource<{
+        user: { age: number; details: { first: string; flags: boolean[] } };
+      }>
+    >();
+    expectTypeOf<S['user']>().toEqualTypeOf<
+      DeepSignal<{ age: number; details: { first: string; flags: boolean[] } }>
+    >();
+    expectTypeOf<S['user']['details']>().toEqualTypeOf<
+      DeepSignal<{ first: string; flags: boolean[] }>
+    >();
+    expectTypeOf<S['user']['details']['first']>().toEqualTypeOf<
+      Signal<string>
+    >();
+    expectTypeOf<S['user']['details']['flags']>().toEqualTypeOf<
+      Signal<boolean[]>
+    >();
   });
 
   it('does not create deep signals when state slices are unknown records', () => {
-    const snippet = `
-      type State = {
-        foo: { [key: string]: string };
-        bar: { baz: Record<number, boolean> };
-        x: { y: { z: Record<string, { foo: number } | boolean> } };
-      }
+    type State = {
+      foo: { [key: string]: string };
+      bar: { baz: Record<number, boolean> };
+      x: { y: { z: Record<string, { foo: number } | boolean> } };
+    };
 
-      const Store = signalStore(
-        withState<State>({
-          foo: {},
-          bar: { baz: {} },
-          x: { y: { z: {} } },
-        })
-      );
+    const Store = signalStore(
+      withState<State>({ foo: {}, bar: { baz: {} }, x: { y: { z: {} } } })
+    );
 
-      const store = new Store();
-      const foo = store.foo;
-      const baz = store.bar.baz;
-      const z = store.x.y.z;
-    `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer('foo', 'Signal<{ [key: string]: string; }>');
-    result.toInfer('baz', 'Signal<Record<number, boolean>>');
-    result.toInfer('z', 'Signal<Record<string, boolean | { foo: number; }>>');
+    type S = InstanceType<typeof Store>;
+    expectTypeOf<S['foo']>().toEqualTypeOf<Signal<{ [key: string]: string }>>();
+    expectTypeOf<S['bar']['baz']>().toEqualTypeOf<
+      Signal<Record<number, boolean>>
+    >();
+    expectTypeOf<S['x']['y']['z']>().toEqualTypeOf<
+      Signal<Record<string, boolean | { foo: number }>>
+    >();
   });
 
   it('creates deep signals when state type is an interface', () => {
-    const snippet = `
-      interface User {
-        firstName: string;
-        lastName: string;
-      }
+    interface User {
+      firstName: string;
+      lastName: string;
+    }
 
-      interface State {
-        user: User;
-        num: number;
-        map: Map<string, { foo: number }>;
-        set: Set<number>;
-      }
+    interface State {
+      user: User;
+      num: number;
+      map: Map<string, { foo: number }>;
+      set: Set<number>;
+    }
 
-      const Store = signalStore(
-        withState<State>({
-          user: { firstName: 'John', lastName: 'Smith' },
-          num: 10,
-          map: new Map<string, { foo: number }>(),
-          set: new Set<number>(),
-        })
-      );
+    const Store = signalStore(
+      withState<State>({
+        user: { firstName: 'John', lastName: 'Smith' },
+        num: 10,
+        map: new Map<string, { foo: number }>(),
+        set: new Set<number>(),
+      })
+    );
 
-      const store = new Store();
-      const user = store.user;
-      const firstName = store.user.firstName;
-      const num = store.num;
-      const map = store.map;
-      const set = store.set;
-    `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer('user', 'DeepSignal<User>');
-    result.toInfer('firstName', 'Signal<string>');
-    result.toInfer('num', 'Signal<number>');
-    result.toInfer('map', 'Signal<Map<string, { foo: number; }>>');
-    result.toInfer('set', 'Signal<Set<number>>');
+    type S = InstanceType<typeof Store>;
+    expectTypeOf<S['user']>().toEqualTypeOf<DeepSignal<User>>();
+    expectTypeOf<S['user']['firstName']>().toEqualTypeOf<Signal<string>>();
+    expectTypeOf<S['num']>().toEqualTypeOf<Signal<number>>();
+    expectTypeOf<S['map']>().toEqualTypeOf<
+      Signal<Map<string, { foo: number }>>
+    >();
+    expectTypeOf<S['set']>().toEqualTypeOf<Signal<Set<number>>>();
   });
 
   it('does not create deep signals when state type is an iterable', () => {
-    const snippet = `
-      const ArrayStore = signalStore(withState<number[]>([]));
-      const arrayStore = new ArrayStore();
-      declare const arrayStoreKeys: keyof typeof arrayStore;
+    const ArrayStore = signalStore(withState<number[]>([]));
+    const arrayStore = null! as InstanceType<typeof ArrayStore>;
 
-      const SetStore = signalStore(withState(new Set<{ foo: string }>()));
-      const setStore = new SetStore();
-      declare const setStoreKeys: keyof typeof setStore;
+    const SetStore = signalStore(withState(new Set<{ foo: string }>()));
+    const setStore = null! as InstanceType<typeof SetStore>;
 
-      const MapStore = signalStore(withState(new Map<string, { foo: number }>()));
-      const mapStore = new MapStore();
-      declare const mapStoreKeys: keyof typeof mapStore;
+    const MapStore = signalStore(withState(new Map<string, { foo: number }>()));
+    const mapStore = null! as InstanceType<typeof MapStore>;
 
-      const FloatArrayStore = signalStore(withState(new Float32Array()));
-      const floatArrayStore = new FloatArrayStore();
-      declare const floatArrayStoreKeys: keyof typeof floatArrayStore;
-    `;
+    const FloatArrayStore = signalStore(withState(new Float32Array()));
+    const floatArrayStore = null! as InstanceType<typeof FloatArrayStore>;
 
-    const result = expectSnippet(snippet);
-    result.toInfer('arrayStoreKeys', 'unique symbol');
-    result.toInfer('setStoreKeys', 'unique symbol');
-    result.toInfer('mapStoreKeys', 'unique symbol');
-    result.toInfer('floatArrayStoreKeys', 'unique symbol');
+    expectTypeOf<string & keyof typeof arrayStore>().toBeNever();
+    expectTypeOf<string & keyof typeof setStore>().toBeNever();
+    expectTypeOf<string & keyof typeof mapStore>().toBeNever();
+    expectTypeOf<string & keyof typeof floatArrayStore>().toBeNever();
   });
 
   it('does not create deep signals when state type is a built-in object type', () => {
-    const snippet = `
-      const WeakMapStore = signalStore(withState(new WeakMap<{ foo: string }, { bar: number }>()));
-      const weakMapStore = new WeakMapStore();
-      declare const weakMapStoreKeys: keyof typeof weakMapStore;
+    const WeakMapStore = signalStore(
+      withState(new WeakMap<{ foo: string }, { bar: number }>())
+    );
+    const weakMapStore = null! as InstanceType<typeof WeakMapStore>;
 
-      const DateStore = signalStore(withState(new Date()));
-      const dateStore = new DateStore();
-      declare const dateStoreKeys: keyof typeof dateStore;
+    const DateStore = signalStore(withState(new Date()));
+    const dateStore = null! as InstanceType<typeof DateStore>;
 
-      const ErrorStore = signalStore(withState(new Error()));
-      const errorStore = new ErrorStore();
-      declare const errorStoreKeys: keyof typeof errorStore;
+    const ErrorStore = signalStore(withState(new Error()));
+    const errorStore = null! as InstanceType<typeof ErrorStore>;
 
-      const RegExpStore = signalStore(withState(new RegExp('')));
-      const regExpStore = new RegExpStore();
-      declare const regExpStoreKeys: keyof typeof regExpStore;
-    `;
+    const RegExpStore = signalStore(withState(new RegExp('')));
+    const regExpStore = null! as InstanceType<typeof RegExpStore>;
 
-    const result = expectSnippet(snippet);
-    result.toInfer('weakMapStoreKeys', 'unique symbol');
-    result.toInfer('dateStoreKeys', 'unique symbol');
-    result.toInfer('errorStoreKeys', 'unique symbol');
-    result.toInfer('regExpStoreKeys', 'unique symbol');
+    expectTypeOf<string & keyof typeof weakMapStore>().toBeNever();
+    expectTypeOf<string & keyof typeof dateStore>().toBeNever();
+    expectTypeOf<string & keyof typeof errorStore>().toBeNever();
+    expectTypeOf<string & keyof typeof regExpStore>().toBeNever();
   });
 
   it('does not create deep signals when state type is a function', () => {
-    const snippet = `
-      const Store = signalStore(withState(() => () => {}));
-      const store = new Store();
-      declare const storeKeys: keyof typeof store;
-    `;
+    const Store = signalStore(withState(() => () => {}));
+    const store = null! as InstanceType<typeof Store>;
 
-    const result = expectSnippet(snippet);
-    result.toInfer('storeKeys', 'unique symbol');
+    expectTypeOf<string & keyof typeof store>().toBeNever();
   });
 
   it('succeeds when state is an empty object', () => {
-    const snippet = `const Store = signalStore(withState({}))`;
+    const Store = signalStore(withState({}));
 
-    const result = expectSnippet(snippet);
-    result.toInfer('Store', 'Type<{} & StateSource<{}>>');
+    expectTypeOf(Store).toEqualTypeOf<Type<{} & StateSource<{}>>>();
   });
 
   it('succeeds when state slices are union types', () => {
-    const snippet = `
-      type State = {
-        foo: { s: string } | number;
-        bar: { baz: { b: boolean } | null };
-        x: { y: { z: number | undefined } };
-      };
+    type State = {
+      foo: { s: string } | number;
+      bar: { baz: { b: boolean } | null };
+      x: { y: { z: number | undefined } };
+    };
 
-      const Store = signalStore(
-        withState<State>({
-          foo: { s: 's' },
-          bar: { baz: null },
-          x: { y: { z: undefined } },
-        })
-      );
-      const store = inject(Store);
-      const foo = store.foo;
-      const bar = store.bar;
-      const baz = store.bar.baz;
-      const x = store.x;
-      const y = store.x.y;
-      const z = store.x.y.z;
-    `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer(
-      'store',
-      '{ foo: Signal<number | { s: string; }>; bar: DeepSignal<{ baz: { b: boolean; } | null; }>; x: DeepSignal<{ y: { z: number | undefined; }; }>; } & StateSource<{ foo: number | { ...; }; bar: { ...; }; x: { ...; }; }>'
+    const Store = signalStore(
+      withState<State>({
+        foo: { s: 's' },
+        bar: { baz: null },
+        x: { y: { z: undefined } },
+      })
     );
-    result.toInfer('foo', 'Signal<number | { s: string; }>');
-    result.toInfer('bar', 'DeepSignal<{ baz: { b: boolean; } | null; }>');
-    result.toInfer('baz', 'Signal<{ b: boolean; } | null>');
-    result.toInfer('x', 'DeepSignal<{ y: { z: number | undefined; }; }>');
-    result.toInfer('y', 'DeepSignal<{ z: number | undefined; }>');
-    result.toInfer('z', 'Signal<number | undefined>');
+    type S = InstanceType<typeof Store>;
+    expectTypeOf<S>().toEqualTypeOf<
+      {
+        foo: Signal<number | { s: string }>;
+        bar: DeepSignal<{ baz: { b: boolean } | null }>;
+        x: DeepSignal<{ y: { z: number | undefined } }>;
+      } & StateSource<State>
+    >();
+    expectTypeOf<S['foo']>().toEqualTypeOf<Signal<number | { s: string }>>();
+    expectTypeOf<S['bar']>().toEqualTypeOf<
+      DeepSignal<{ baz: { b: boolean } | null }>
+    >();
+    expectTypeOf<S['bar']['baz']>().toEqualTypeOf<
+      Signal<{ b: boolean } | null>
+    >();
+    expectTypeOf<S['x']>().toEqualTypeOf<
+      DeepSignal<{ y: { z: number | undefined } }>
+    >();
+    expectTypeOf<S['x']['y']>().toEqualTypeOf<
+      DeepSignal<{ z: number | undefined }>
+    >();
+    expectTypeOf<S['x']['y']['z']>().toEqualTypeOf<
+      Signal<number | undefined>
+    >();
   });
 
   it('succeeds when root state slices contain Function properties', () => {
-    const snippet1 = `
-      const Store = signalStore(
-        withState({
-          name: { x: { y: 'z' } },
-          arguments: [1, 2, 3],
-          call: false,
-        })
-      );
-    `;
-
-    const result1 = expectSnippet(snippet1);
-    result1.toInfer(
-      'Store',
-      'Type<{ name: DeepSignal<{ x: { y: string; }; }>; arguments: Signal<number[]>; call: Signal<boolean>; } & StateSource<{ name: { x: { y: string; }; }; arguments: number[]; call: boolean; }>>'
+    const Store1 = signalStore(
+      withState({ name: { x: { y: 'z' } }, arguments: [1, 2, 3], call: false })
     );
+    expectTypeOf(Store1).toEqualTypeOf<
+      Type<
+        {
+          name: DeepSignal<{ x: { y: string } }>;
+          arguments: Signal<number[]>;
+          call: Signal<boolean>;
+        } & StateSource<{
+          name: { x: { y: string } };
+          arguments: number[];
+          call: boolean;
+        }>
+      >
+    >();
 
-    const snippet2 = `
-      const Store = signalStore(
-        withState({
-          apply: 'apply',
-          bind: { foo: 'bar' },
-          prototype: ['ngrx'],
-        })
-      );
-    `;
-
-    const result2 = expectSnippet(snippet2);
-    result2.toInfer(
-      'Store',
-      'Type<{ apply: Signal<string>; bind: DeepSignal<{ foo: string; }>; prototype: Signal<string[]>; } & StateSource<{ apply: string; bind: { foo: string; }; prototype: string[]; }>>'
+    const Store2 = signalStore(
+      withState({ apply: 'apply', bind: { foo: 'bar' }, prototype: ['ngrx'] })
     );
+    expectTypeOf(Store2).toEqualTypeOf<
+      Type<
+        {
+          apply: Signal<string>;
+          bind: DeepSignal<{ foo: string }>;
+          prototype: Signal<string[]>;
+        } & StateSource<{
+          apply: string;
+          bind: { foo: string };
+          prototype: string[];
+        }>
+      >
+    >();
 
-    const snippet3 = `
-      const Store = signalStore(
-        withState({
-          length: 10,
-          caller: undefined,
-        })
-      );
-    `;
-
-    const result3 = expectSnippet(snippet3);
-    result3.toInfer(
-      'Store',
-      'Type<{ length: Signal<number>; caller: Signal<undefined>; } & StateSource<{ length: number; caller: undefined; }>>'
-    );
+    const Store3 = signalStore(withState({ length: 10, caller: undefined }));
+    expectTypeOf(Store3).toEqualTypeOf<
+      Type<
+        { length: Signal<number>; caller: Signal<undefined> } & StateSource<{
+          length: number;
+          caller: undefined;
+        }>
+      >
+    >();
   });
 
   it('succeeds when nested state slices contain Function properties', () => {
-    const snippet1 = `
-      type State = { x: { name?: string } };
-      const Store = signalStore(withState<State>({ x: { name: '' } }));
-      const store = new Store();
-      const name = store.x.name;
-    `;
+    type State1 = { x: { name?: string } };
+    const Store1 = signalStore(withState<State1>({ x: { name: '' } }));
+    type S1 = InstanceType<typeof Store1>;
+    expectTypeOf<S1['x']['name']>().toEqualTypeOf<
+      Signal<string | undefined> | undefined
+    >();
 
-    const result1 = expectSnippet(snippet1);
-    result1.toInfer('name', 'Signal<string | undefined> | undefined');
-
-    const snippet2 = `
-      const Store = signalStore(
-        withState({ x: { length: { name: false }, baz: 1 } })
-      );
-      const store = new Store();
-      const length = store.x.length;
-      const name = store.x.length.name;
-    `;
-
-    const result2 = expectSnippet(snippet2);
-    result2.toInfer('length', 'DeepSignal<{ name: boolean; }>');
-    result2.toInfer('name', 'Signal<boolean>');
+    const Store2 = signalStore(
+      withState({ x: { length: { name: false }, baz: 1 } })
+    );
+    type S2 = InstanceType<typeof Store2>;
+    expectTypeOf<S2['x']['length']>().toEqualTypeOf<
+      DeepSignal<{ name: boolean }>
+    >();
+    expectTypeOf<S2['x']['length']['name']>().toEqualTypeOf<Signal<boolean>>();
   });
 
   it('succeeds when nested state slices are optional', () => {
-    const snippet = `
-      type State = {
-        bar: { baz?: number };
-        x: { y?: { z: boolean } };
-      };
+    type State = {
+      bar: { baz?: number };
+      x: { y?: { z: boolean } };
+    };
 
-      const Store = signalStore(withState<State>({ bar: {}, x: {} }));
-
-      const store = new Store();
-      const bar = store.bar;
-      const baz = store.bar.baz;
-      const x = store.x;
-      const y = store.x.y;
-    `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer(
-      'store',
-      '{ bar: DeepSignal<{ baz?: number | undefined; }>; x: DeepSignal<{ y?: { z: boolean; } | undefined; }>; } & StateSource<{ bar: { baz?: number | undefined; }; x: { y?: { z: boolean; } | undefined; }; }>'
-    );
-    result.toInfer('bar', 'DeepSignal<{ baz?: number | undefined; }>');
-    result.toInfer('baz', 'Signal<number | undefined> | undefined');
-    result.toInfer('x', 'DeepSignal<{ y?: { z: boolean; } | undefined; }>');
-    result.toInfer('y', 'Signal<{ z: boolean; } | undefined> | undefined');
+    const Store = signalStore(withState<State>({ bar: {}, x: {} }));
+    type S = InstanceType<typeof Store>;
+    expectTypeOf<S>().toEqualTypeOf<
+      {
+        bar: DeepSignal<{ baz?: number | undefined }>;
+        x: DeepSignal<{ y?: { z: boolean } | undefined }>;
+      } & StateSource<State>
+    >();
+    expectTypeOf<S['bar']>().toEqualTypeOf<
+      DeepSignal<{ baz?: number | undefined }>
+    >();
+    expectTypeOf<S['bar']['baz']>().toEqualTypeOf<
+      Signal<number | undefined> | undefined
+    >();
+    expectTypeOf<S['x']>().toEqualTypeOf<
+      DeepSignal<{ y?: { z: boolean } | undefined }>
+    >();
+    expectTypeOf<S['x']['y']>().toEqualTypeOf<
+      Signal<{ z: boolean } | undefined> | undefined
+    >();
   });
 
   it('succeeds when root state slices are optional', () => {
-    const snippet = `
-      type State = {
-        foo?: { s: string };
-        bar: number;
-      };
-
-      const Store = signalStore(
-        withState<State>({ foo: { s: '' }, bar: 1 })
-      );
-      const store = new Store();
-      const foo = store.foo;
-    `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer('foo', 'Signal<{ s: string; } | undefined> | undefined');
+    type State = { foo?: { s: string }; bar: number };
+    const Store = signalStore(withState<State>({ foo: { s: '' }, bar: 1 }));
+    type S = InstanceType<typeof Store>;
+    expectTypeOf<S['foo']>().toEqualTypeOf<
+      Signal<{ s: string } | undefined> | undefined
+    >();
   });
 
   it('does not create deep signals when state is an unknown record', () => {
-    const snippet1 = `
-      const Store = signalStore(withState<{ [key: string]: number }>({}));
-      const store = new Store();
-      declare const storeKeys: keyof typeof store;
-    `;
+    const Store1 = signalStore(withState<{ [key: string]: number }>({}));
+    const store1 = null! as InstanceType<typeof Store1>;
+    expectTypeOf<string & keyof typeof store1>().toBeNever();
 
-    const result1 = expectSnippet(snippet1);
-    result1.toInfer('storeKeys', 'unique symbol');
+    const Store2 = signalStore(
+      withState<{ [key: number]: { bar: string } }>({})
+    );
+    const store2 = null! as InstanceType<typeof Store2>;
+    expectTypeOf<string & keyof typeof store2>().toBeNever();
 
-    const snippet2 = `
-      const Store = signalStore(
-        withState<{ [key: number]: { bar: string } }>({})
-      );
-      const store = new Store();
-      declare const storeKeys: keyof typeof store;
-    `;
-
-    const result2 = expectSnippet(snippet2);
-    result2.toInfer('storeKeys', 'unique symbol');
-
-    const snippet3 = `
-      const Store = signalStore(
-        withState<Record<string, { foo: boolean } | number>>({
-          x: { foo: true },
-          y: 1,
-        })
-      );
-      const store = new Store();
-      declare const storeKeys: keyof typeof store;
-    `;
-
-    const result3 = expectSnippet(snippet3);
-    result3.toInfer('storeKeys', 'unique symbol');
+    const Store3 = signalStore(
+      withState<Record<string, { foo: boolean } | number>>({
+        x: { foo: true },
+        y: 1,
+      })
+    );
+    const store3 = null! as InstanceType<typeof Store3>;
+    expectTypeOf<string & keyof typeof store3>().toBeNever();
   });
 
   it('fails when state is not an object', () => {
-    expectSnippet(`const Store = signalStore(withState(10));`).toFail();
-
-    expectSnippet(`const Store = signalStore(withState(''));`).toFail();
-
-    expectSnippet(`const Store = signalStore(withState(null));`).toFail();
-
-    expectSnippet(`const Store = signalStore(withState(true));`).toFail();
+    // @ts-expect-error - Type 'number' is not assignable to type 'object'
+    signalStore(withState(10));
+    // @ts-expect-error - Type 'string' is not assignable to type 'object'
+    signalStore(withState(''));
+    // @ts-expect-error - Type 'null' is not assignable to type 'object'
+    signalStore(withState(null));
+    // @ts-expect-error - Type 'boolean' is not assignable to type 'object'
+    signalStore(withState(true));
   });
 
   it('exposes readonly state source when protectedState is not provided', () => {
-    const snippet = `
-      const CounterStore1 = signalStore(withState({ count: 0 }));
-      const CounterStore2 = signalStore(
-        { providedIn: 'root' },
-        withState({ count: 0 })
-      );
-
-      const store1 = new CounterStore1();
-      const state1 = getState(store1);
-
-      const store2 = new CounterStore2();
-      const state2 = getState(store2);
-    `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer(
-      'store1',
-      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
+    const CounterStore1 = signalStore(withState({ count: 0 }));
+    const CounterStore2 = signalStore(
+      { providedIn: 'root' },
+      withState({ count: 0 })
     );
-    result.toInfer('state1', '{ count: number; }');
-    result.toInfer(
-      'store2',
-      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
-    );
-    result.toInfer('state2', '{ count: number; }');
 
-    expectSnippet(`
-      ${snippet}
-      patchState(store1, { count: 1 });
-    `).toFail();
-
-    expectSnippet(`
-      ${snippet}
-      patchState(store2, { count: 1 });
-    `).toFail();
+    type S1 = InstanceType<typeof CounterStore1>;
+    type S2 = InstanceType<typeof CounterStore2>;
+    expectTypeOf<S1>().toEqualTypeOf<
+      { count: Signal<number> } & StateSource<{ count: number }>
+    >();
+    expectTypeOf<
+      S1 extends StateSource<infer St> ? St : never
+    >().toEqualTypeOf<{ count: number }>();
+    expectTypeOf<S2>().toEqualTypeOf<
+      { count: Signal<number> } & StateSource<{ count: number }>
+    >();
+    expectTypeOf<
+      S2 extends StateSource<infer St> ? St : never
+    >().toEqualTypeOf<{ count: number }>();
+    // The arrow function is never invoked, so the body is type-checked
+    // at compile time but not executed at runtime by the test runner.
+    const store1 = null! as S1;
+    const store2 = null! as S2;
+    // @ts-expect-error - readonly state source cannot be patched from outside
+    const _patchStore1 = () => patchState(store1, { count: 1 });
+    // @ts-expect-error - readonly state source cannot be patched from outside
+    const _patchStore2 = () => patchState(store2, { count: 1 });
   });
 
   it('exposes readonly state source when protectedState is true', () => {
-    const snippet = `
-      const CounterStore1 = signalStore(
-        { protectedState: true },
-        withState({ count: 0 })
-      );
-      const CounterStore2 = signalStore(
-        { providedIn: 'root', protectedState: true },
-        withState({ count: 0 })
-      );
-
-      const store1 = new CounterStore1();
-      const state1 = getState(store1);
-
-      const store2 = new CounterStore2();
-      const state2 = getState(store2);
-    `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer(
-      'store1',
-      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
+    const CounterStore1 = signalStore(
+      { protectedState: true },
+      withState({ count: 0 })
     );
-    result.toInfer('state1', '{ count: number; }');
-    result.toInfer(
-      'store2',
-      '{ count: Signal<number>; } & StateSource<{ count: number; }>'
+    const CounterStore2 = signalStore(
+      { providedIn: 'root', protectedState: true },
+      withState({ count: 0 })
     );
-    result.toInfer('state2', '{ count: number; }');
 
-    expectSnippet(`
-      ${snippet}
-      patchState(store1, { count: 10 });
-    `).toFail();
-
-    expectSnippet(`
-      ${snippet}
-      patchState(store2, { count: 10 });
-    `).toFail();
+    type S1 = InstanceType<typeof CounterStore1>;
+    type S2 = InstanceType<typeof CounterStore2>;
+    expectTypeOf<S1>().toEqualTypeOf<
+      { count: Signal<number> } & StateSource<{ count: number }>
+    >();
+    expectTypeOf<
+      S1 extends StateSource<infer St> ? St : never
+    >().toEqualTypeOf<{ count: number }>();
+    expectTypeOf<S2>().toEqualTypeOf<
+      { count: Signal<number> } & StateSource<{ count: number }>
+    >();
+    expectTypeOf<
+      S2 extends StateSource<infer St> ? St : never
+    >().toEqualTypeOf<{ count: number }>();
+    const store1 = null! as S1;
+    const store2 = null! as S2;
+    // @ts-expect-error - readonly state source cannot be patched from outside
+    const _patchStore1 = () => patchState(store1, { count: 10 });
+    // @ts-expect-error - readonly state source cannot be patched from outside
+    const _patchStore2 = () => patchState(store2, { count: 10 });
   });
 
   it('exposes writable state source when protectedState is false', () => {
-    const snippet = `
-      const CounterStore1 = signalStore(
-        { protectedState: false },
-        withState({ count: 0 })
-      );
-      const CounterStore2 = signalStore(
-        { providedIn: 'root', protectedState: false },
-        withState({ count: 0 })
-      );
-
-      const store1 = new CounterStore1();
-      const state1 = getState(store1);
-
-      const store2 = new CounterStore2();
-      const state2 = getState(store2);
-    `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer(
-      'store1',
-      '{ count: Signal<number>; } & WritableStateSource<{ count: number; }>'
+    const CounterStore1 = signalStore(
+      { protectedState: false },
+      withState({ count: 0 })
     );
-    result.toInfer('state1', '{ count: number; }');
-    result.toInfer(
-      'store2',
-      '{ count: Signal<number>; } & WritableStateSource<{ count: number; }>'
+    const CounterStore2 = signalStore(
+      { providedIn: 'root', protectedState: false },
+      withState({ count: 0 })
     );
-    result.toInfer('state2', '{ count: number; }');
 
-    expectSnippet(`
-      ${snippet}
-      patchState(store1, { count: 100 });
-      patchState(store2, { count: 100 });
-    `).toSucceed();
+    type S1 = InstanceType<typeof CounterStore1>;
+    type S2 = InstanceType<typeof CounterStore2>;
+    expectTypeOf<S1>().toEqualTypeOf<
+      { count: Signal<number> } & WritableStateSource<{ count: number }>
+    >();
+    expectTypeOf<
+      S1 extends StateSource<infer St> ? St : never
+    >().toEqualTypeOf<{ count: number }>();
+    expectTypeOf<S2>().toEqualTypeOf<
+      { count: Signal<number> } & WritableStateSource<{ count: number }>
+    >();
+    expectTypeOf<
+      S2 extends StateSource<infer St> ? St : never
+    >().toEqualTypeOf<{ count: number }>();
+    const store1 = null! as S1;
+    const store2 = null! as S2;
+    const _patchStore1 = () => patchState(store1, { count: 100 });
+    const _patchStore2 = () => patchState(store2, { count: 100 });
   });
 
   it('patches state via sequence of partial state objects and updater functions', () => {
-    expectSnippet(`
-      const Store = signalStore(
-        withState({ ngrx: 'signals' }),
-        withState({ user: { age: 10, first: 'John' } }),
-        withMethods((store) => {
-          patchState(
-            store,
-            (state) => ({ user: { ...state.user, first: 'Peter' } }),
-            { ngrx: 'rocks' }
-          );
-
-          return {};
-        }),
-        withState({ flags: [true, false, true] }),
-        withMethods(({ ngrx, flags, ...store }) => {
-          patchState(
-            store,
-            { ngrx: 'rocks' },
-            (state) => ({ flags: [...state.flags, true] })
-          );
-
-          patchState(
-            store,
-            { flags: [true] },
-            (state) => ({ user: { ...state.user, age: state.user.age + 1 } }),
-            { ngrx: 'store' }
-          );
-
-          return {};
-        })
-      );
-    `).toSucceed();
+    signalStore(
+      withState({ ngrx: 'signals' }),
+      withState({ user: { age: 10, first: 'John' } }),
+      withMethods((store) => {
+        patchState(
+          store,
+          (state) => ({ user: { ...state.user, first: 'Peter' } }),
+          { ngrx: 'rocks' }
+        );
+        return {};
+      }),
+      withState({ flags: [true, false, true] }),
+      withMethods(({ ngrx, flags, ...store }) => {
+        patchState(store, { ngrx: 'rocks' }, (state) => ({
+          flags: [...state.flags, true],
+        }));
+        patchState(
+          store,
+          { flags: [true] },
+          (state) => ({ user: { ...state.user, age: state.user.age + 1 } }),
+          { ngrx: 'store' }
+        );
+        return {};
+      })
+    );
   });
 
   it('fails when state is patched with a non-record', () => {
-    expectSnippet(`
-      const Store = signalStore(
-        { protectedState: false },
-        withState({ foo: 'bar' })
-      );
-
-      const store = new Store();
-      patchState(store, 10);
-    `).toFail();
-
-    expectSnippet(`
-      const Store = signalStore(
-        { protectedState: false },
-        withState({ foo: 'bar' })
-      );
-
-      const store = new Store();
-      patchState(store, undefined);
-    `).toFail();
-
-    expectSnippet(`
-      const Store = signalStore(
-        { protectedState: false },
-        withState({ foo: 'bar' })
-      );
-
-      const store = new Store();
-      patchState(store, [1, 2, 3]);
-    `).toFail();
+    const Store = signalStore(
+      { protectedState: false },
+      withState({ foo: 'bar' })
+    );
+    type S = InstanceType<typeof Store>;
+    const store = null! as S;
+    // @ts-expect-error - 'number' is not assignable to 'Partial<NoInfer<{ foo: string; }>> | PartialStateUpdater<NoInfer<{ foo: string; }>>'
+    const _patchWithNumber = () => patchState(store, 10);
+    // @ts-expect-error - 'undefined' is not assignable to 'Partial<NoInfer<{ foo: string; }>> | PartialStateUpdater<NoInfer<{ foo: string; }>>'
+    const _patchWithUndefined = () => patchState(store, undefined);
+    // @ts-expect-error - 'number[]' is not assignable to 'Partial<NoInfer<{ foo: string; }>> | PartialStateUpdater<NoInfer<{ foo: string; }>>'
+    const _patchWithArray = () => patchState(store, [1, 2, 3]);
   });
 
   it('fails when state is patched with a wrong record', () => {
-    expectSnippet(`
+    {
       const Store = signalStore(
         { protectedState: false },
         withState({ foo: 'bar' })
       );
-
-      const store = new Store();
-      patchState(store, { foo: 10 });
-    `).toFail(/Type 'number' is not assignable to type 'string'/);
-
-    expectSnippet(`
-      const Store = signalStore(
+      type S = InstanceType<typeof Store>;
+      const store = null! as S;
+      // @ts-expect-error - Type 'number' is not assignable to type 'string'
+      const _patchWithWrongType = () => patchState(store, { foo: 10 });
+    }
+    {
+      signalStore(
         withState({ foo: 'bar' }),
         withMethods((store) => {
+          // @ts-expect-error - Type 'number' is not assignable to type 'string'
           patchState(store, { foo: 10 });
           return {};
         })
       );
-    `).toFail(/Type 'number' is not assignable to type 'string'/);
-
-    expectSnippet(`
-      const Store = signalStore(
+    }
+    {
+      signalStore(
         withState({ foo: 'bar' }),
         withMethods(({ foo, ...store }) => {
+          // @ts-expect-error - Type 'number' is not assignable to type 'string'
           patchState(store, { foo: 10 });
           return {};
         })
       );
-    `).toFail(/Type 'number' is not assignable to type 'string'/);
+    }
   });
 
   it('fails when state is patched with a wrong updater function', () => {
-    expectSnippet(`
+    {
       const Store = signalStore(
         { protectedState: false },
         withState({ user: { first: 'John', age: 20 } })
       );
-
-      const store = new Store();
-      patchState(store, (state) => ({ user: { ...state.user, age: '30' } }));
-    `).toFail(/Type 'string' is not assignable to type 'number'/);
-
-    expectSnippet(`
-      const Store = signalStore(
+      type S = InstanceType<typeof Store>;
+      const store = null! as S;
+      // @ts-expect-error - Type 'string' is not assignable to type 'number'
+      const _patchWithWrongUpdater = () =>
+        patchState(store, (state) => ({ user: { ...state.user, age: '30' } }));
+    }
+    {
+      signalStore(
         withState({ user: { first: 'John', age: 20 } }),
         withMethods((store) => {
-          patchState(store, (state) => ({ user: { ...state.user, age: '30' } }));
+          // @ts-expect-error - Type 'string' is not assignable to type 'number'
+          patchState(store, (state) => ({
+            user: { ...state.user, age: '30' },
+          }));
           return {};
         })
       );
-    `).toFail(/Type 'string' is not assignable to type 'number'/);
-
-    expectSnippet(`
-      const Store = signalStore(
+    }
+    {
+      signalStore(
         withState({ user: { first: 'John', age: 20 } }),
         withMethods(({ user, ...store }) => {
-          patchState(store, (state) => ({ user: { ...state.user, first: 10 } }));
+          // @ts-expect-error - Type 'number' is not assignable to type 'string'
+          patchState(store, (state) => ({
+            user: { ...state.user, first: 10 },
+          }));
           return {};
         })
       );
-    `).toFail(/Type 'number' is not assignable to type 'string'/);
+    }
   });
 
   it('allows injecting store using the `inject` function', () => {
-    const snippet = `
-      const Store = signalStore(
-        withState({ ngrx: 'rocks', x: { y: 'z' } }),
-        withComputed(() => ({ signals: computed(() => [1, 2, 3]) })),
-        withMethods(() => ({
-          mgmt(arg: boolean): number {
-            return 1;
-          }
-        }))
-      );
-
-      const store = inject(Store);
-    `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer(
-      'store',
-      '{ ngrx: Signal<string>; x: DeepSignal<{ y: string; }>; signals: Signal<number[]>; mgmt: (arg: boolean) => number; } & StateSource<{ ngrx: string; x: { y: string; }; }>'
+    const Store = signalStore(
+      withState({ ngrx: 'rocks', x: { y: 'z' } }),
+      withComputed(() => ({ signals: computed(() => [1, 2, 3]) })),
+      withMethods(() => ({
+        mgmt(_arg: boolean): number {
+          return 1;
+        },
+      }))
     );
+
+    const store = null! as InstanceType<typeof Store>;
+
+    expectTypeOf(store).toEqualTypeOf<
+      {
+        ngrx: Signal<string>;
+        x: DeepSignal<{ y: string }>;
+        signals: Signal<number[]>;
+        mgmt: (arg: boolean) => number;
+      } & StateSource<{ ngrx: string; x: { y: string } }>
+    >();
   });
 
   it('allows using store via constructor-based dependency injection', () => {
-    const snippet = `
-      const Store = signalStore(
-        withState({ foo: 10 }),
-        withComputed(({ foo }) => ({ bar: computed(() => foo() + '1') })),
-        withMethods(() => ({
-          baz(x: number): void {}
-        }))
-      );
-
-      type Store = InstanceType<typeof Store>;
-
-      class Component {
-        constructor (readonly store: Store) {}
-      }
-
-      const component = new Component(new Store());
-      const store = component.store;
-    `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer(
-      'store',
-      '{ foo: Signal<number>; bar: Signal<string>; baz: (x: number) => void; } & StateSource<{ foo: number; }>'
+    const Store = signalStore(
+      withState({ foo: 10 }),
+      withComputed(({ foo }) => ({ bar: computed(() => foo() + '1') })),
+      withMethods(() => ({
+        baz(_x: number): void {},
+      }))
     );
+
+    type StoreInstance = InstanceType<typeof Store>;
+    const store = null! as StoreInstance;
+
+    expectTypeOf(store).toEqualTypeOf<
+      {
+        foo: Signal<number>;
+        bar: Signal<string>;
+        baz: (x: number) => void;
+      } & StateSource<{ foo: number }>
+    >();
   });
 
   it('correctly infers the type of methods with generics', () => {
-    const snippet = `
-      const Store = signalStore(
-        withMethods(() => ({
-          log<Str extends string>(str: Str) {
-            console.log(str);
-          },
-        }))
-      );
+    const Store = signalStore(
+      withMethods(() => ({
+        log<Str extends string>(str: Str) {
+          console.log(str);
+        },
+      }))
+    );
 
-      const store = inject(Store);
-    `;
-
-    expectSnippet(snippet + `store.log('ngrx');`).toSucceed();
-    expectSnippet(snippet + `store.log(10);`).toFail();
+    type S = InstanceType<typeof Store>;
+    const store = null! as S;
+    const _logString = () => store.log('ngrx');
+    // @ts-expect-error - number is not assignable to string
+    const _logNumber = () => store.log(10);
   });
 
   it('omits private store members from the public instance', () => {
-    const snippet = `
-      const CounterStore = signalStore(
-        withState({ count1: 0, _count2: 0 }),
-        withComputed(({ count1, _count2 }) => ({
-          _doubleCount1: computed(() => count1() * 2),
-          doubleCount2: computed(() => _count2() * 2),
-        })),
-        withMethods(() => ({
-          increment1() {},
-          _increment2() {},
-        })),
-        withHooks({
-          onInit({ increment1, _increment2 }) {
-            increment1();
-            _increment2();
-          },
-        })
-      );
-
-      const store = new CounterStore();
-    `;
-
-    const result = expectSnippet(snippet);
-    result.toInfer(
-      'store',
-      '{ count1: Signal<number>; doubleCount2: Signal<number>; increment1: () => void; } & StateSource<{ count1: number; }>'
+    const CounterStore = signalStore(
+      withState({ count1: 0, _count2: 0 }),
+      withComputed(({ count1, _count2 }) => ({
+        _doubleCount1: computed(() => count1() * 2),
+        doubleCount2: computed(() => _count2() * 2),
+      })),
+      withMethods(() => ({
+        increment1() {},
+        _increment2() {},
+      })),
+      withHooks({
+        onInit({ increment1, _increment2 }) {
+          increment1();
+          _increment2();
+        },
+      })
     );
+
+    const store = null! as InstanceType<typeof CounterStore>;
+
+    expectTypeOf(store).toEqualTypeOf<
+      {
+        count1: Signal<number>;
+        doubleCount2: Signal<number>;
+        increment1: () => void;
+      } & StateSource<{ count1: number }>
+    >();
   });
 
   it('prevents private state slices from being updated from the outside', () => {
-    const snippet = `
-      const CounterStore = signalStore(
-        { protectedState: false },
-        withState({ count1: 0, _count2: 0 }),
-      );
-
-      const store = new CounterStore();
-    `;
-
-    expectSnippet(`
-      ${snippet}
-      patchState(store, { count1: 1 });
-    `).toSucceed();
-
-    expectSnippet(`
-      ${snippet}
+    const CounterStore = signalStore(
+      { protectedState: false },
+      withState({ count1: 0, _count2: 0 })
+    );
+    type S = InstanceType<typeof CounterStore>;
+    const store = null! as S;
+    const _patchPublicState = () => patchState(store, { count1: 1 });
+    // @ts-expect-error - '_count2' does not exist in type
+    const _patchPrivateState = () =>
       patchState(store, { count1: 1, _count2: 1 });
-    `).toFail(/'_count2' does not exist in type/);
   });
 
   describe('custom features', () => {
-    const baseSnippet = `
-      function withX() {
-        return signalStoreFeature(withState({ x: 1 }));
-      }
+    function withX() {
+      return signalStoreFeature(withState({ x: 1 }));
+    }
 
-      type Y = { a: string; b: number };
-      const initialY: Y = { a: '', b: 5 };
+    type Y = { a: string; b: number };
+    const initialY: Y = { a: '', b: 5 };
 
-      function withY<_>() {
-        return signalStoreFeature(
-          {
-            state: type<{ q1: string }>(),
-            props: type<{ sig: Signal<boolean> }>(),
+    function withY<_>() {
+      return signalStoreFeature(
+        {
+          state: type<{ q1: string }>(),
+          props: type<{ sig: Signal<boolean> }>(),
+        },
+        withState({ y: initialY }),
+        withComputed(() => ({ sigY: computed(() => 'sigY') })),
+        withHooks({
+          onInit({ q1, y, sigY, ...store }) {
+            patchState(store, { q1: '', y: { a: 'a', b: 2 } });
           },
-          withState({ y: initialY }),
-          withComputed(() => ({ sigY: computed(() => 'sigY') })),
-          withHooks({
-            onInit({ q1, y, sigY, ...store }) {
-              patchState(store, { q1: '', y: { a: 'a', b: 2 } });
-            },
-          })
-        );
-      }
+        })
+      );
+    }
 
-      function withZ<_>() {
-        return signalStoreFeature(
-          { methods: type<{ f: () => void }>() },
-          withMethods(({ f }) => ({
-            z() {
-              f();
-            }
-          }))
-        );
-      }
-    `;
+    function withZ<_>() {
+      return signalStoreFeature(
+        { methods: type<{ f: () => void }>() },
+        withMethods(({ f }) => ({
+          z() {
+            f();
+          },
+        }))
+      );
+    }
 
     it('combines custom features', () => {
-      expectSnippet(`
+      {
         function withFoo() {
           return withState({ foo: 'foo' });
         }
@@ -856,55 +726,43 @@ describe('signalStore', () => {
           withState({ count: 0 }),
           withBar()
         );
-      `).toSucceed();
+      }
 
-      expectSnippet(`
-        ${baseSnippet}
+      signalStore(
+        withMethods((_store) => ({ f() {}, g() {} })),
+        withComputed(() => ({ sig: computed(() => false) })),
+        withState({ q1: 'q1', q2: 'q2' }),
+        withX(),
+        withY(),
+        withZ()
+      );
 
-        const Store = signalStore(
-          withMethods((store) => ({
-            f() {},
-            g() {},
-          })),
-          withComputed(() => ({ sig: computed(() => false) })),
-          withState({ q1: 'q1', q2: 'q2' }),
-          withX(),
-          withY(),
-          withZ()
-        );
-      `).toSucceed();
-
-      expectSnippet(`
-        ${baseSnippet}
-
-        const feature = signalStoreFeature(
-          { props: type<{ sig: Signal<boolean> }>() },
-          withX(),
-          withState({ q1: 'q1' }),
-          withY(),
-          withMethods((store) => ({
-            f() {
-              patchState(store, { x: 1, q1: 'xyz', y: { a: '', b: 0 } });
-            },
-          })),
-          withZ()
-        );
-      `).toSucceed();
+      signalStoreFeature(
+        { props: type<{ sig: Signal<boolean> }>() },
+        withX(),
+        withState({ q1: 'q1' }),
+        withY(),
+        withMethods((store) => ({
+          f() {
+            patchState(store, { x: 1, q1: 'xyz', y: { a: '', b: 0 } });
+          },
+        })),
+        withZ()
+      );
     });
 
     it('fails when custom feature is used with wrong input', () => {
-      expectSnippet(
-        `${baseSnippet} const Store = signalStore(withY());`
-      ).toFail();
-
-      expectSnippet(
-        `${baseSnippet} const withY2 = () => signalStoreFeature(withY());`
-      ).toFail();
-
-      expectSnippet(`
-        ${baseSnippet}
-
-        const Store = signalStore(
+      {
+        // @ts-expect-error - withY requires state: { q1: string } and props: { sig: Signal<boolean> }
+        signalStore(withY());
+      }
+      {
+        // @ts-expect-error - withY requires state: { q1: string } and props: { sig: Signal<boolean> }
+        signalStoreFeature(withY());
+      }
+      {
+        // @ts-expect-error - q1 type mismatch: number vs string required by withY
+        signalStore(
           withState({ q1: 1, q2: 'q2' }),
           withComputed(() => ({ sig: computed(() => false) })),
           withX(),
@@ -916,12 +774,10 @@ describe('signalStore', () => {
             },
           }))
         );
-      `).toFail();
-
-      expectSnippet(`
-        ${baseSnippet}
-
-        const feature = signalStoreFeature(
+      }
+      {
+        // @ts-expect-error - sig type mismatch: Signal<string> vs Signal<boolean> required by withY
+        signalStoreFeature(
           { props: type<{ sig: Signal<string> }>() },
           withX(),
           withState({ q1: 'q1' }),
@@ -932,12 +788,10 @@ describe('signalStore', () => {
             },
           }))
         );
-      `).toFail();
-
-      expectSnippet(`
-        ${baseSnippet}
-
-        const Store = signalStore(
+      }
+      // The following combination succeeds: correct q1 type, sig type, and all required methods
+      {
+        signalStore(
           withState({ q1: 'q1', q2: 'q2' }),
           withComputed(() => ({ sig: computed(() => false) })),
           withX(),
@@ -948,58 +802,47 @@ describe('signalStore', () => {
             g: (str: string) => console.log(str),
           })),
           withY(),
-          withZ(),
+          withZ()
         );
 
-        const feature = signalStoreFeature(
+        signalStoreFeature(
           {
             props: type<{ sig: Signal<boolean> }>(),
-            methods: type<{ f(): void; g(arg: string): string; }>(),
+            methods: type<{ f(): void; g(arg: string): string }>(),
           },
           withX(),
           withZ(),
           withState({ q1: 'q1' }),
-          withY(),
+          withY()
         );
-      `).toSucceed();
+      }
     });
   });
 
   describe('custom features with generics', () => {
-    const baseSnippet = `
-      function withSelectedEntity<Entity>() {
-        return signalStoreFeature(
-          type<{
-            state: {
-              entities: Entity[];
-            };
-          }>(),
-          withState({ selectedEntity: null as Entity | null }),
-          withComputed(({ selectedEntity, entities }) => ({
-            selectedEntity2: computed(() =>
-              selectedEntity()
-                ? entities().find((e) => e === selectedEntity())
-                : undefined
-            ),
-          }))
-        );
-      }
+    function withSelectedEntity<Entity>() {
+      return signalStoreFeature(
+        type<{ state: { entities: Entity[] } }>(),
+        withState({ selectedEntity: null as Entity | null }),
+        withComputed(({ selectedEntity, entities }) => ({
+          selectedEntity2: computed(() =>
+            selectedEntity()
+              ? entities().find((e) => e === selectedEntity())
+              : undefined
+          ),
+        }))
+      );
+    }
 
-      function withLoadEntities<Entity extends { id: string }>() {
-        return signalStoreFeature(
-          type<{
-            state: {
-              entities: Entity[];
-              selectedEntity: Entity | null;
-            };
-            props: {
-              selectedEntity2: Signal<Entity | undefined>;
-            };
-            methods: {
-              logEntity: (entity: Entity) => void;
-            };
-          }>(),
-          withMethods(({ entities, selectedEntity, selectedEntity2, logEntity }) => {
+    function withLoadEntities<Entity extends { id: string }>() {
+      return signalStoreFeature(
+        type<{
+          state: { entities: Entity[]; selectedEntity: Entity | null };
+          props: { selectedEntity2: Signal<Entity | undefined> };
+          methods: { logEntity: (entity: Entity) => void };
+        }>(),
+        withMethods(
+          ({ entities, selectedEntity, selectedEntity2, logEntity }) => {
             const e: Signal<Entity[]> = entities;
             const se: Signal<Entity | null> = selectedEntity;
             const se2: Signal<Entity | undefined> = selectedEntity2;
@@ -1010,115 +853,81 @@ describe('signalStore', () => {
                 return Promise.resolve([]);
               },
             };
-          })
-        );
-      }
+          }
+        )
+      );
+    }
 
-      type User = {
-        id: string;
-        firstName: string;
-        lastName: string;
-      };
-    `;
+    type User = { id: string; firstName: string; lastName: string };
 
     it('combines custom features with generics', () => {
-      const snippet = `
-        ${baseSnippet}
-
-        const Store = signalStore(
-          withState({ entities: [] as User[] }),
-          withSelectedEntity(),
-          withMethods(() => ({
-            logEntity(user: User) {
-              console.log(user);
-            },
-          })),
-          withLoadEntities()
-        );
-
-        const store = new Store();
-        const selectedEntity = store.selectedEntity;
-        const selectedEntity2 = store.selectedEntity2;
-        const loadEntities = store.loadEntities;
-
-        const feature = signalStoreFeature(
-          {
-            state: type<{
-              entities: User[];
-            }>(),
-            methods: type<{
-              logEntity: (entity: User) => void;
-            }>(),
+      const Store = signalStore(
+        withState({ entities: [] as User[] }),
+        withSelectedEntity(),
+        withMethods(() => ({
+          logEntity(user: User) {
+            console.log(user);
           },
-          withSelectedEntity(),
-          withLoadEntities()
-        );
-      `;
+        })),
+        withLoadEntities()
+      );
 
-      const result = expectSnippet(snippet);
-      result.toInfer('selectedEntity', 'Signal<User | null>');
-      result.toInfer('selectedEntity2', 'Signal<User | undefined>');
-      result.toInfer('loadEntities', '() => Promise<User[]>');
+      type S = InstanceType<typeof Store>;
+      expectTypeOf<S['selectedEntity']>().toEqualTypeOf<Signal<User | null>>();
+      expectTypeOf<S['selectedEntity2']>().toEqualTypeOf<
+        Signal<User | undefined>
+      >();
+      expectTypeOf<S['loadEntities']>().toEqualTypeOf<() => Promise<User[]>>();
+
+      signalStoreFeature(
+        {
+          state: type<{ entities: User[] }>(),
+          methods: type<{ logEntity: (entity: User) => void }>(),
+        },
+        withSelectedEntity(),
+        withLoadEntities()
+      );
     });
 
     it('fails when custom feature with generics is used with wrong input', () => {
-      expectSnippet(`
-        ${baseSnippet}
-
-        const Store = signalStore(
+      {
+        // @ts-expect-error - missing logEntity method
+        signalStore(
           withState({ entities: [] as User[] }),
           withSelectedEntity(),
           withLoadEntities()
         );
-      `).toFail();
-
-      expectSnippet(`
-        ${baseSnippet}
-
-        const feature = signalStoreFeature(
+      }
+      {
+        // @ts-expect-error - logEntity expects User, not number
+        signalStoreFeature(
           {
-            state: type<{
-              entities: User[];
-            }>(),
-            methods: type<{
-              logEntity: (entity: number) => void;
-            }>(),
+            state: type<{ entities: User[] }>(),
+            methods: type<{ logEntity: (entity: number) => void }>(),
           },
           withSelectedEntity(),
           withLoadEntities()
         );
-      `).toFail();
-
-      expectSnippet(`
-        ${baseSnippet}
-
-        const feature = signalStoreFeature(
+      }
+      {
+        // @ts-expect-error - missing logEntity method in feature
+        signalStoreFeature(
+          { state: type<{ entities: User[] }>() },
+          withSelectedEntity(),
+          withLoadEntities()
+        );
+      }
+      {
+        // @ts-expect-error - entities type mismatch: boolean vs User[]
+        signalStoreFeature(
           {
-            state: type<{
-              entities: User[];
-            }>(),
+            state: type<{ entities: boolean }>(),
+            methods: type<{ logEntity: (entity: User) => void }>(),
           },
           withSelectedEntity(),
           withLoadEntities()
         );
-      `).toFail();
-
-      expectSnippet(`
-        ${baseSnippet}
-
-        const feature = signalStoreFeature(
-          {
-            state: type<{
-              entities: boolean;
-            }>(),
-            methods: type<{
-              logEntity: (entity: User) => void;
-            }>(),
-          },
-          withSelectedEntity(),
-          withLoadEntities()
-        );
-      `).toFail();
+      }
     });
   });
-}, 8_000);
+});
