@@ -8,7 +8,7 @@ exports[`Data Schematic should create a model interface 1`] = `
 `;
 
 exports[`Data Schematic should create a service class 1`] = `
-"import { Injectable } from '@angular/core';
+"import { Injectable, inject } from '@angular/core';
 import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory
@@ -17,8 +17,8 @@ import { Foo } from './foo';
 
 @Injectable({ providedIn: 'root' })
 export class FooService extends EntityCollectionServiceBase<Foo> {
-  constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
-    super('Foo', serviceElementsFactory);
+  constructor() {
+    super('Foo', inject(EntityCollectionServiceElementsFactory));
   }
 }
 "

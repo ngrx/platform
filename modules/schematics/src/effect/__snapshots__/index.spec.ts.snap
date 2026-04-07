@@ -25,7 +25,7 @@ import { FooEffects } from './foo/foo.effects';
 `;
 
 exports[`Effect Schematic feature effects should create an effect that describes a source of actions within a feature 1`] = `
-"import { Injectable } from '@angular/core';
+"import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { concatMap } from 'rxjs/operators';
@@ -34,6 +34,7 @@ import { FooActions } from './foo.actions';
 
 @Injectable()
 export class FooEffects {
+  private actions$ = inject(Actions);
 
 
   loadFoos$ = createEffect(() => {
@@ -45,7 +46,6 @@ export class FooEffects {
     );
   });
 
-  constructor(private actions$: Actions) {}
 }
 "
 `;
@@ -146,16 +146,16 @@ import { FooEffects } from './foo/foo.effects';
 `;
 
 exports[`Effect Schematic root effects should create an effect that does not define a source of actions within the root 1`] = `
-"import { Injectable } from '@angular/core';
+"import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect } from '@ngrx/effects';
 
 
 
 @Injectable()
 export class FooEffects {
+  private actions$ = inject(Actions);
 
 
-  constructor(private actions$: Actions) {}
 }
 "
 `;
@@ -210,7 +210,7 @@ export class AppModule { }
 `;
 
 exports[`Effect Schematic should add prefix to the effect 1`] = `
-"import { Injectable } from '@angular/core';
+"import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, concatMap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
@@ -219,6 +219,7 @@ import { FooActions } from './foo.actions';
 
 @Injectable()
 export class FooEffects {
+  private actions$ = inject(Actions);
 
   customFoos$ = createEffect(() => {
     return this.actions$.pipe(
@@ -234,13 +235,12 @@ export class FooEffects {
   });
 
 
-  constructor(private actions$: Actions) {}
 }
 "
 `;
 
 exports[`Effect Schematic should create an api effect that describes a source of actions within a feature 1`] = `
-"import { Injectable } from '@angular/core';
+"import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, concatMap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
@@ -249,6 +249,7 @@ import { FooActions } from './foo.actions';
 
 @Injectable()
 export class FooEffects {
+  private actions$ = inject(Actions);
 
   loadFoos$ = createEffect(() => {
     return this.actions$.pipe(
@@ -264,13 +265,12 @@ export class FooEffects {
   });
 
 
-  constructor(private actions$: Actions) {}
 }
 "
 `;
 
 exports[`Effect Schematic should group and nest the effect within a feature 1`] = `
-"import { Injectable } from '@angular/core';
+"import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { concatMap } from 'rxjs/operators';
@@ -279,6 +279,7 @@ import { FooActions } from '../../actions/foo/foo.actions';
 
 @Injectable()
 export class FooEffects {
+  private actions$ = inject(Actions);
 
 
   loadFoos$ = createEffect(() => {
@@ -290,7 +291,6 @@ export class FooEffects {
     );
   });
 
-  constructor(private actions$: Actions) {}
 }
 "
 `;

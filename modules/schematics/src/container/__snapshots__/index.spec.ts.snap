@@ -10,7 +10,7 @@ exports[`Container Schematic display-block should create add style if true 1`] =
 `;
 
 exports[`Container Schematic should import Store into the component 1`] = `
-"import { Component } from '@angular/core';
+"import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../reducers';
 
@@ -21,13 +21,14 @@ import * as fromStore from '../reducers';
   styleUrl: './foo.css',
 })
 export class Foo {
-  constructor(private store: Store) {}
+  store = inject(Store);
+
 }
 "
 `;
 
 exports[`Container Schematic should respect the state option if not provided 1`] = `
-"import { Component } from '@angular/core';
+"import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -37,7 +38,8 @@ import { Store } from '@ngrx/store';
   styleUrl: './foo.css',
 })
 export class Foo {
-  constructor(private store: Store) {}
+  store = inject(Store);
+
 }
 "
 `;
@@ -114,7 +116,7 @@ describe('FooComponent', () => {
 `;
 
 exports[`Container Schematic standalone should be standalone by default 1`] = `
-"import { Component } from '@angular/core';
+"import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -124,13 +126,14 @@ import { Store } from '@ngrx/store';
   styleUrl: './foo.css',
 })
 export class Foo {
-  constructor(private store: Store) {}
+  store = inject(Store);
+
 }
 "
 `;
 
 exports[`Container Schematic standalone should create a non-standalone component if false 1`] = `
-"import { Component } from '@angular/core';
+"import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -140,7 +143,8 @@ import { Store } from '@ngrx/store';
   styleUrl: './foo.css',
 })
 export class Foo {
-  constructor(private store: Store) {}
+  store = inject(Store);
+
 }
 "
 `;

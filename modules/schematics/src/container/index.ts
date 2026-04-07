@@ -81,6 +81,12 @@ function addStateToComponent(options: Partial<ContainerOptions>) {
       'Store',
       '@ngrx/store'
     );
+    const injectImport = insertImport(
+      source,
+      componentPath,
+      'inject',
+      '@angular/core'
+    );
     const stateImport = options.state
       ? insertImport(
           source,
@@ -98,10 +104,10 @@ function addStateToComponent(options: Partial<ContainerOptions>) {
       componentPath,
       componentClass.members.pos,
       '\n',
-      `\n  constructor(private store: Store) {}`
+      `\n  store = inject(Store);`
     );
 
-    const changes = [storeImport, stateImport, constructorUpdate];
+    const changes = [storeImport, injectImport, stateImport, constructorUpdate];
     const recorder = host.beginUpdate(componentPath);
 
     for (const change of changes) {
