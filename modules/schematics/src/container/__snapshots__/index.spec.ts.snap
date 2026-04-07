@@ -22,7 +22,6 @@ import * as fromStore from '../reducers';
 })
 export class Foo {
   constructor(private store: Store) {}
-
 }
 "
 `;
@@ -39,7 +38,6 @@ import { Store } from '@ngrx/store';
 })
 export class Foo {
   constructor(private store: Store) {}
-
 }
 "
 `;
@@ -127,7 +125,6 @@ import { Store } from '@ngrx/store';
 })
 export class Foo {
   constructor(private store: Store) {}
-
 }
 "
 `;
@@ -144,7 +141,6 @@ import { Store } from '@ngrx/store';
 })
 export class Foo {
   constructor(private store: Store) {}
-
 }
 "
 `;
