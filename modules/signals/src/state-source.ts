@@ -82,6 +82,45 @@ export function patchState<State extends object>(
     Partial<NoInfer<State>> | PartialStateUpdater<NoInfer<State>>
   >
 ): void {
+  const signals = stateSource[STATE_SOURCE];
+  const stateKeys = Reflect.ownKeys(stateSource[STATE_SOURCE]);
+
+  const draftState = untracked(() => getSafeState(stateSource));
+  const touchedKeys = new Set<keyof State>();
+
+  for (const updater of updaters) {
+    const partial =
+      typeof updater === 'function' ? updater(draftState) : updater;
+    for (const key of Reflect.ownKeys(partial) as (keyof State)[]) {
+      touchedKeys.add(key);
+      draftState[key] = (partial as State)[key];
+    }
+  }
+
+  for (const key of touchedKeys) {
+    if (stateKeys.includes(key as string | symbol)) {
+      signals[key].set(draftState[key]);
+    } else if (typeof ngDevMode !== 'undefined' && ngDevMode) {
+      console.warn(
+        `@ngrx/signals: patchState was called with an unknown state slice '${String(
+          key
+        )}'.`,
+        'Ensure that all state properties are explicitly defined in the initial state.',
+        'Updates to properties not present in the initial state will be ignored.'
+      );
+    }
+  }
+
+  notifyWatchers(stateSource);
+}
+
+/** @internal Backward-compatible helper with legacy patch behavior. */
+export function oldPatchState<State extends object>(
+  stateSource: WritableStateSource<State>,
+  ...updaters: Array<
+    Partial<NoInfer<State>> | PartialStateUpdater<NoInfer<State>>
+  >
+): void {
   const currentState = untracked(() => getState(stateSource));
   const newState = updaters.reduce(
     (nextState: State, updater) => ({
@@ -112,6 +151,32 @@ export function patchState<State extends object>(
   }
 
   notifyWatchers(stateSource);
+}
+
+/** @internal Exported for unit tests; not part of the `@ngrx/signals` public API. */
+export function getSafeState<State extends object>(
+  stateSource: StateSource<State>
+): State {
+  const signals: Record<string | symbol, Signal<unknown>> = stateSource[
+    STATE_SOURCE
+  ];
+  const state = {} as State;
+
+  for (const key of Reflect.ownKeys(signals)) {
+    try {
+      (state as Record<string | symbol, unknown>)[key] = signals[key]();
+    } catch (error) {
+      Object.defineProperty(state, key, {
+        get() {
+          throw error;
+        },
+        enumerable: true,
+        configurable: true,
+      });
+    }
+  }
+
+  return state;
 }
 
 /**
