@@ -117,7 +117,7 @@ export class Numbers {
     this.logSum(() => ({ a: num1(), b: num2() }));
     // console output: 30
 
-    setTimeout(() => b.set(30), 3_000);
+    setTimeout(() => num1.set(30), 3_000);
     // console output after 3 seconds: 50
   }
 }
