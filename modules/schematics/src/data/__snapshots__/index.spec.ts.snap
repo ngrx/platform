@@ -7,7 +7,7 @@ exports[`Data Schematic > should create a model interface 1`] = `
 "
 `;
 
-exports[`Data Schematic should create a service class 1`] = `
+exports[`Data Schematic > should create a service class 1`] = `
 "import { Injectable, inject } from '@angular/core';
 import {
   EntityCollectionServiceBase,

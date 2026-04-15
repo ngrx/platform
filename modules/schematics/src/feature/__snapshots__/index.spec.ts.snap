@@ -110,7 +110,7 @@ describe('Foo Reducer', () => {
 "
 `;
 
-exports[`Feature Schematic should create all files of a feature with an entity 4`] = `
+exports[`Feature Schematic > should create all files of a feature with an entity 4`] = `
 "import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
@@ -230,7 +230,7 @@ export const fooFeature = createFeature({
 "
 `;
 
-exports[`Feature Schematic should have all api effect if api flag enabled 1`] = `
+exports[`Feature Schematic > should have all api effect if api flag enabled 1`] = `
 "import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, concatMap } from 'rxjs/operators';
@@ -260,7 +260,7 @@ export class FooEffects {
 "
 `;
 
-exports[`Feature Schematic should have all api effect with prefix if api flag enabled 1`] = `
+exports[`Feature Schematic > should have all api effect with prefix if api flag enabled 1`] = `
 "import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, concatMap } from 'rxjs/operators';
