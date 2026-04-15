@@ -110,8 +110,8 @@ describe('Foo Reducer', () => {
 "
 `;
 
-exports[`Feature Schematic > should create all files of a feature with an entity 4`] = `
-"import { Injectable } from '@angular/core';
+exports[`Feature Schematic should create all files of a feature with an entity 4`] = `
+"import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { concatMap } from 'rxjs/operators';
@@ -120,6 +120,7 @@ import { FooActions } from './foo.actions';
 
 @Injectable()
 export class FooEffects {
+  private actions$ = inject(Actions);
 
 
   loadFoos$ = createEffect(() => {
@@ -131,7 +132,6 @@ export class FooEffects {
     );
   });
 
-  constructor(private actions$: Actions) {}
 }
 "
 `;
@@ -230,8 +230,8 @@ export const fooFeature = createFeature({
 "
 `;
 
-exports[`Feature Schematic > should have all api effect if api flag enabled 1`] = `
-"import { Injectable } from '@angular/core';
+exports[`Feature Schematic should have all api effect if api flag enabled 1`] = `
+"import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, concatMap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
@@ -240,6 +240,7 @@ import { FooActions } from './foo.actions';
 
 @Injectable()
 export class FooEffects {
+  private actions$ = inject(Actions);
 
   loadFoos$ = createEffect(() => {
     return this.actions$.pipe(
@@ -255,13 +256,12 @@ export class FooEffects {
   });
 
 
-  constructor(private actions$: Actions) {}
 }
 "
 `;
 
-exports[`Feature Schematic > should have all api effect with prefix if api flag enabled 1`] = `
-"import { Injectable } from '@angular/core';
+exports[`Feature Schematic should have all api effect with prefix if api flag enabled 1`] = `
+"import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, concatMap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
@@ -270,6 +270,7 @@ import { FooActions } from './foo.actions';
 
 @Injectable()
 export class FooEffects {
+  private actions$ = inject(Actions);
 
   customFoos$ = createEffect(() => {
     return this.actions$.pipe(
@@ -285,7 +286,6 @@ export class FooEffects {
   });
 
 
-  constructor(private actions$: Actions) {}
 }
 "
 `;

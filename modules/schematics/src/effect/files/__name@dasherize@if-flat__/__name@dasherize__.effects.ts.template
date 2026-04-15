@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, <%= effectMethod %><% if (feature) { %>, ofType<% } %> } from '@ngrx/effects';
 <% if (feature && api) { %>import { catchError, map, concatMap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
@@ -9,6 +9,7 @@ import { <%= classify(name) %>Actions } from '<%= featurePath(group, flat, "acti
 
 @Injectable()
 export class <%= classify(name) %>Effects {
+  private actions$ = inject(Actions);
 <% if (feature && api) { %>
   <%= effectStart %>
       ofType(<%= classify(name) %>Actions.<%= prefix %><%= classify(name) %>s),
@@ -27,5 +28,4 @@ export class <%= classify(name) %>Effects {
       concatMap(() => EMPTY as Observable<{ type: string }>)
   <%= effectEnd %>
 <% } %>
-  constructor(private actions$: Actions) {}
 }
