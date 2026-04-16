@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Entity Schematic should create 3 files 1`] = `
+exports[`Entity Schematic > should create 3 files 1`] = `
 "import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
@@ -24,14 +24,14 @@ export const FooActions = createActionGroup({
 "
 `;
 
-exports[`Entity Schematic should create 3 files 2`] = `
+exports[`Entity Schematic > should create 3 files 2`] = `
 "export interface Foo {
   id: string;
 }
 "
 `;
 
-exports[`Entity Schematic should create 3 files 3`] = `
+exports[`Entity Schematic > should create 3 files 3`] = `
 "import { createFeature, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Foo } from './foo.model';
@@ -100,13 +100,13 @@ export const {
 "
 `;
 
-exports[`Entity Schematic should create 3 files of an entity to specified project if provided 1`] = `""`;
+exports[`Entity Schematic > should create 3 files of an entity to specified project if provided 1`] = `""`;
 
-exports[`Entity Schematic should create 3 files of an entity to specified project if provided 2`] = `""`;
+exports[`Entity Schematic > should create 3 files of an entity to specified project if provided 2`] = `""`;
 
-exports[`Entity Schematic should create 3 files of an entity to specified project if provided 3`] = `""`;
+exports[`Entity Schematic > should create 3 files of an entity to specified project if provided 3`] = `""`;
 
-exports[`Entity Schematic should create all files of an entity within grouped and nested folders 1`] = `
+exports[`Entity Schematic > should create all files of an entity within grouped and nested folders 1`] = `
 "import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
@@ -130,14 +130,14 @@ export const FooActions = createActionGroup({
 "
 `;
 
-exports[`Entity Schematic should create all files of an entity within grouped and nested folders 2`] = `
+exports[`Entity Schematic > should create all files of an entity within grouped and nested folders 2`] = `
 "export interface Foo {
   id: string;
 }
 "
 `;
 
-exports[`Entity Schematic should create all files of an entity within grouped and nested folders 3`] = `
+exports[`Entity Schematic > should create all files of an entity within grouped and nested folders 3`] = `
 "import { createFeature, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Foo } from '../../models/foo/foo.model';
@@ -206,7 +206,7 @@ export const {
 "
 `;
 
-exports[`Entity Schematic should create all files of an entity within grouped and nested folders 4`] = `
+exports[`Entity Schematic > should create all files of an entity within grouped and nested folders 4`] = `
 "import { reducer, initialState } from '../../reducers/foo/foo.reducer';
 
 describe('Foo Reducer', () => {
@@ -223,7 +223,7 @@ describe('Foo Reducer', () => {
 "
 `;
 
-exports[`Entity Schematic should create all files of an entity within grouped folders if group is set 1`] = `
+exports[`Entity Schematic > should create all files of an entity within grouped folders if group is set 1`] = `
 "import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
@@ -247,14 +247,14 @@ export const FooActions = createActionGroup({
 "
 `;
 
-exports[`Entity Schematic should create all files of an entity within grouped folders if group is set 2`] = `
+exports[`Entity Schematic > should create all files of an entity within grouped folders if group is set 2`] = `
 "export interface Foo {
   id: string;
 }
 "
 `;
 
-exports[`Entity Schematic should create all files of an entity within grouped folders if group is set 3`] = `
+exports[`Entity Schematic > should create all files of an entity within grouped folders if group is set 3`] = `
 "import { createFeature, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Foo } from '../models/foo.model';
@@ -323,7 +323,7 @@ export const {
 "
 `;
 
-exports[`Entity Schematic should create all files of an entity within grouped folders if group is set 4`] = `
+exports[`Entity Schematic > should create all files of an entity within grouped folders if group is set 4`] = `
 "import { reducer, initialState } from '../reducers/foo.reducer';
 
 describe('Foo Reducer', () => {
@@ -340,7 +340,7 @@ describe('Foo Reducer', () => {
 "
 `;
 
-exports[`Entity Schematic should import into a specified module 1`] = `
+exports[`Entity Schematic > should import into a specified module 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -365,7 +365,7 @@ export class AppModule { }
 "
 `;
 
-exports[`Entity Schematic should update the state to plural 1`] = `
+exports[`Entity Schematic > should update the state to plural 1`] = `
 "import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
@@ -389,14 +389,14 @@ export const UserActions = createActionGroup({
 "
 `;
 
-exports[`Entity Schematic should update the state to plural 2`] = `
+exports[`Entity Schematic > should update the state to plural 2`] = `
 "export interface User {
   id: string;
 }
 "
 `;
 
-exports[`Entity Schematic should update the state to plural 3`] = `
+exports[`Entity Schematic > should update the state to plural 3`] = `
 "import { createFeature, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { User } from './user.model';
@@ -465,7 +465,7 @@ export const {
 "
 `;
 
-exports[`Entity Schematic should update the state to plural 4`] = `
+exports[`Entity Schematic > should update the state to plural 4`] = `
 "import { reducer, initialState } from './user.reducer';
 
 describe('User Reducer', () => {
@@ -482,7 +482,7 @@ describe('User Reducer', () => {
 "
 `;
 
-exports[`Entity Schematic should update the state to plural 5`] = `
+exports[`Entity Schematic > should update the state to plural 5`] = `
 "import { isDevMode } from '@angular/core';
 import {
   ActionReducer,

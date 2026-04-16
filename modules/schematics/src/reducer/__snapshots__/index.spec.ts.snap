@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Reducer Schematic should create a reducer 1`] = `
+exports[`Reducer Schematic > should create a reducer 1`] = `
 "import { createReducer, on } from '@ngrx/store';
 import { FooActions } from './foo.actions';
 
@@ -21,7 +21,7 @@ export const reducer = createReducer(
 "
 `;
 
-exports[`Reducer Schematic should create a reducer with prefix in an api feature 1`] = `
+exports[`Reducer Schematic > should create a reducer with prefix in an api feature 1`] = `
 "import { createFeature, createReducer, on } from '@ngrx/store';
 import { FooActions } from './foo.actions';
 
@@ -50,7 +50,7 @@ export const fooFeature = createFeature({
 "
 `;
 
-exports[`Reducer Schematic should create a reducers barrel file 1`] = `
+exports[`Reducer Schematic > should create a reducers barrel file 1`] = `
 "
     import { isDevMode } from '@angular/core';
     import {
@@ -77,7 +77,7 @@ import * as fromFoo from '../foo.reducer';
   "
 `;
 
-exports[`Reducer Schematic should create and export a reducer in a feature 1`] = `
+exports[`Reducer Schematic > should create and export a reducer in a feature 1`] = `
 "import { createFeature, createReducer, on } from '@ngrx/store';
 import { FooActions } from './foo.actions';
 
@@ -105,7 +105,7 @@ export const fooFeature = createFeature({
 "
 `;
 
-exports[`Reducer Schematic should create and export a reducer in an api feature 1`] = `
+exports[`Reducer Schematic > should create and export a reducer in an api feature 1`] = `
 "import { createFeature, createReducer, on } from '@ngrx/store';
 import { FooActions } from './foo.actions';
 
@@ -134,7 +134,7 @@ export const fooFeature = createFeature({
 "
 `;
 
-exports[`Reducer Schematic should group and nest the reducer within a feature 1`] = `
+exports[`Reducer Schematic > should group and nest the reducer within a feature 1`] = `
 "import { createFeature, createReducer, on } from '@ngrx/store';
 import { FooActions } from '../../actions/foo/foo.actions';
 
@@ -162,7 +162,7 @@ export const fooFeature = createFeature({
 "
 `;
 
-exports[`Reducer Schematic should group within a "reducers" folder if group is set 1`] = `
+exports[`Reducer Schematic > should group within a "reducers" folder if group is set 1`] = `
 "import { createReducer, on } from '@ngrx/store';
 import { FooActions } from '../actions/foo.actions';
 
@@ -183,7 +183,7 @@ export const reducer = createReducer(
 "
 `;
 
-exports[`Reducer Schematic should import into a specified module 1`] = `
+exports[`Reducer Schematic > should import into a specified module 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`component-store should import into a specified module when the module provided 1`] = `
+exports[`component-store > should import into a specified module when the module provided 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -24,7 +24,7 @@ export class AppModule { }
 "
 `;
 
-exports[`component-store should inject the component store correctly into the spec 1`] = `
+exports[`component-store > should inject the component store correctly into the spec 1`] = `
 "import { FooStore } from './foo.store';
 
 describe('FooStore', () => {
@@ -37,7 +37,7 @@ describe('FooStore', () => {
 "
 `;
 
-exports[`component-store should not be provided into the module by default 1`] = `
+exports[`component-store > should not be provided into the module by default 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -59,7 +59,7 @@ export class AppModule { }
 "
 `;
 
-exports[`component-store should register the component store in the provided component 1`] = `
+exports[`component-store > should register the component store in the provided component 1`] = `
 "import { Component, signal } from '@angular/core';
 import { FooStore } from './foo/foo.store';
 

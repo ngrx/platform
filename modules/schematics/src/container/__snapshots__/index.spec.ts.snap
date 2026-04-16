@@ -1,15 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Container Schematic display-block should be disabled by default 1`] = `""`;
+exports[`Container Schematic > display-block > should be disabled by default 1`] = `""`;
 
-exports[`Container Schematic display-block should create add style if true 1`] = `
+exports[`Container Schematic > display-block > should create add style if true 1`] = `
 ":host {
   display: block;
 }
 "
 `;
 
-exports[`Container Schematic should import Store into the component 1`] = `
+exports[`Container Schematic > should import Store into the component 1`] = `
 "import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../reducers';
@@ -26,7 +26,7 @@ export class Foo {
 "
 `;
 
-exports[`Container Schematic should respect the state option if not provided 1`] = `
+exports[`Container Schematic > should respect the state option if not provided 1`] = `
 "import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
@@ -42,7 +42,7 @@ export class Foo {
 "
 `;
 
-exports[`Container Schematic should update the component spec 1`] = `
+exports[`Container Schematic > should update the component spec 1`] = `
 "import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FooComponent } from './foo.component';
@@ -77,7 +77,7 @@ describe('FooComponent', () => {
 "
 `;
 
-exports[`Container Schematic should use StoreModule if integration test 1`] = `
+exports[`Container Schematic > should use StoreModule if integration test 1`] = `
 "import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FooComponent } from './foo.component';
@@ -113,7 +113,7 @@ describe('FooComponent', () => {
 "
 `;
 
-exports[`Container Schematic standalone should be standalone by default 1`] = `
+exports[`Container Schematic > standalone > should be standalone by default 1`] = `
 "import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
@@ -129,7 +129,7 @@ export class Foo {
 "
 `;
 
-exports[`Container Schematic standalone should create a non-standalone component if false 1`] = `
+exports[`Container Schematic > standalone > should create a non-standalone component if false 1`] = `
 "import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
