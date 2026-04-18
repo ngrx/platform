@@ -98,6 +98,7 @@ export class GuideMenuService {
       ]),
       link('SignalState', '/guide/signals/signal-state'),
       link('DeepComputed', '/guide/signals/deep-computed'),
+      link('DelegatedSignal', '/guide/signals/delegated-signal'),
       link('SignalMethod', '/guide/signals/signal-method'),
       link('RxJS Integration', '/guide/signals/rxjs-integration'),
       link('FAQ', '/guide/signals/faq'),
