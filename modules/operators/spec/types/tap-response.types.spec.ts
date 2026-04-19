@@ -13,9 +13,12 @@ describe('tapResponse types', () => {
     it('should infer next type', () => {
       expectSnippet(`
         of(1).pipe(
-          tapResponse((next) => {
-            const num = next;
-          }, noop)
+          tapResponse({
+            next: (next) => {
+              const num = next;
+            },
+            error: noop,
+          })
         );
       `).toInfer('num', 'number');
     });
@@ -23,8 +26,11 @@ describe('tapResponse types', () => {
     it('should accept error type', () => {
       expectSnippet(`
         of(true).pipe(
-          tapResponse(noop, (error: { message: string }) => {
-            const err = error;
+          tapResponse({
+            next: noop,
+            error: (error: { message: string }) => {
+              const err = error;
+            },
           })
         );
       `).toInfer('err', '{ message: string; }');
@@ -33,8 +39,11 @@ describe('tapResponse types', () => {
     it('should use unknown as default error type', () => {
       expectSnippet(`
         of(true).pipe(
-          tapResponse(noop, (error) => {
-            const err = error;
+          tapResponse({
+            next: noop,
+            error: (error) => {
+              const err = error;
+            },
           })
         );
       `).toInfer('err', 'unknown');
