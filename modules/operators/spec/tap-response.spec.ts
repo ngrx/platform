@@ -7,7 +7,9 @@ describe('tapResponse', () => {
   it('should invoke next callback on next', () => {
     const nextCallback = vi.fn<(value: [number]) => void>();
 
-    of(1, 2, 3).pipe(tapResponse(nextCallback, noop)).subscribe();
+    of(1, 2, 3)
+      .pipe(tapResponse({ next: nextCallback, error: noop }))
+      .subscribe();
 
     expect(nextCallback.mock.calls).toEqual([[1], [2], [3]]);
   });
@@ -17,7 +19,7 @@ describe('tapResponse', () => {
     const error = { message: 'error' };
 
     throwError(() => error)
-      .pipe(tapResponse(noop, errorCallback))
+      .pipe(tapResponse({ next: noop, error: errorCallback }))
       .subscribe();
 
     expect(errorCallback).toHaveBeenCalledWith(error);
@@ -31,7 +33,9 @@ describe('tapResponse', () => {
       throw error;
     }
 
-    of(1).pipe(tapResponse(producesError, errorCallback)).subscribe();
+    of(1)
+      .pipe(tapResponse({ next: producesError, error: errorCallback }))
+      .subscribe();
 
     expect(errorCallback).toHaveBeenCalledWith(error);
   });
@@ -39,7 +43,9 @@ describe('tapResponse', () => {
   it('should invoke complete callback on complete', () => {
     const completeCallback = vi.fn<() => void>();
 
-    EMPTY.pipe(tapResponse(noop, noop, completeCallback)).subscribe();
+    EMPTY.pipe(
+      tapResponse({ next: noop, error: noop, complete: completeCallback })
+    ).subscribe();
 
     expect(completeCallback).toHaveBeenCalledWith();
   });
@@ -105,7 +111,7 @@ describe('tapResponse', () => {
       .pipe(
         concatMap(() =>
           throwError(() => 'error').pipe(
-            tapResponse(noop, noop),
+            tapResponse({ next: noop, error: noop }),
             finalize(innerCompleteCallback)
           )
         ),
