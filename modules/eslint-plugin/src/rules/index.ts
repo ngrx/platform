@@ -1,7 +1,6 @@
 // component-store
 import avoidCombiningComponentStoreSelectors from './component-store/avoid-combining-component-store-selectors';
 import avoidMappingComponentStoreSelectors from './component-store/avoid-mapping-component-store-selectors';
-import updaterExplicitReturnType from './component-store/updater-explicit-return-type';
 import requireSuperOnDestroy from './component-store/require-super-ondestroy';
 // effects
 import avoidCyclicEffects from './effects/avoid-cyclic-effects';
@@ -21,7 +20,6 @@ import noMultipleGlobalStores from './store/no-multiple-global-stores';
 import noReducerInKeyNames from './store/no-reducer-in-key-names';
 import noStoreSubscription from './store/no-store-subscription';
 import noTypedGlobalStore from './store/no-typed-global-store';
-import onFunctionExplicitReturnType from './store/on-function-explicit-return-type';
 import preferActionCreator from './store/prefer-action-creator';
 import preferActionCreatorInDispatch from './store/prefer-action-creator-in-dispatch';
 import preferInlineActionProps from './store/prefer-inline-action-props';
@@ -45,7 +43,6 @@ export const rules = {
     avoidCombiningComponentStoreSelectors,
   'avoid-mapping-component-store-selectors':
     avoidMappingComponentStoreSelectors,
-  'updater-explicit-return-type': updaterExplicitReturnType,
   'require-super-ondestroy': requireSuperOnDestroy,
   //effects
   'avoid-cyclic-effects': avoidCyclicEffects,
@@ -67,7 +64,6 @@ export const rules = {
   'no-reducer-in-key-names': noReducerInKeyNames,
   'no-store-subscription': noStoreSubscription,
   'no-typed-global-store': noTypedGlobalStore,
-  'on-function-explicit-return-type': onFunctionExplicitReturnType,
   'prefer-action-creator': preferActionCreator,
   'prefer-action-creator-in-dispatch': preferActionCreatorInDispatch,
   'prefer-inline-action-props': preferInlineActionProps,
