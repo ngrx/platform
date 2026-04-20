@@ -1,78 +1,55 @@
-import { expecter } from 'ts-snippet';
-import { compilerOptions } from './helpers';
+import { PartialStateUpdater, patchState, signalState } from '@ngrx/signals';
+
+function increment(): PartialStateUpdater<{ count: number }> {
+  return ({ count }) => ({ count: count + 1 });
+}
+
+function addNumber(num: number): PartialStateUpdater<{ numbers: number[] }> {
+  return ({ numbers }) => ({ numbers: [...numbers, num] });
+}
 
 describe('patchState', () => {
-  const expectSnippet = expecter(
-    (code) => `
-        import {
-          PartialStateUpdater,
-          patchState,
-          signalState,
-        } from '@ngrx/signals';
-
-        const state = signalState({ count: 1, foo: 'bar' });
-
-        function increment(): PartialStateUpdater<{ count: number }> {
-          return ({ count }) => ({ count: count + 1 });
-        }
-
-        function addNumber(num: number): PartialStateUpdater<{
-          numbers: number[];
-        }> {
-          return ({ numbers }) => ({ numbers: [...numbers, num] });
-        }
-
-        ${code}
-      `,
-    compilerOptions()
-  );
-
   it('infers the state type from WritableStateSource with updater', () => {
-    expectSnippet('patchState(state, increment())').toSucceed();
+    const state = signalState({ count: 1, foo: 'bar' });
+    patchState(state, increment());
   });
 
   it('infers the state type from WritableStateSource with object', () => {
-    expectSnippet("patchState(state, { foo: 'baz' })").toSucceed();
+    const state = signalState({ count: 1, foo: 'bar' });
+    patchState(state, { foo: 'baz' });
   });
 
   it('infers the state type from WritableStateSource with updater and object', () => {
-    expectSnippet("patchState(state, { foo: 'baz' }, increment())").toSucceed();
-    expectSnippet("patchState(state, increment(), { foo: 'baz' })").toSucceed();
+    const state = signalState({ count: 1, foo: 'bar' });
+    patchState(state, { foo: 'baz' }, increment());
+    patchState(state, increment(), { foo: 'baz' });
   });
 
   it('fails with wrong partial state object', () => {
-    expectSnippet('patchState(state, { x: 1 })').toFail(
-      /'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>>/
-    );
-    expectSnippet("patchState(state, { foo: 'baz' }, { x: 1 })").toFail(
-      /'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>>/
-    );
-    expectSnippet('patchState(state, { x: 1 }, { count: 0 })').toFail(
-      /'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>>/
-    );
-    expectSnippet('patchState(state, increment(), { x: 1 })').toFail(
-      /'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>>/
-    );
-    expectSnippet('patchState(state, { x: 1 }, increment())').toFail(
-      /'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>>/
-    );
+    const state = signalState({ count: 1, foo: 'bar' });
+    // @ts-expect-error - 'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>> | PartialStateUpdater<NoInfer<{ count: number; foo: string; }>>'
+    patchState(state, { x: 1 });
+    // @ts-expect-error - 'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>> | PartialStateUpdater<NoInfer<{ count: number; foo: string; }>>'
+    patchState(state, { foo: 'baz' }, { x: 1 });
+    // @ts-expect-error - 'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>> | PartialStateUpdater<NoInfer<{ count: number; foo: string; }>>'
+    patchState(state, { x: 1 }, { count: 0 });
+    // @ts-expect-error - 'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>> | PartialStateUpdater<NoInfer<{ count: number; foo: string; }>>'
+    patchState(state, increment(), { x: 1 });
+    // @ts-expect-error - 'x' does not exist in type 'Partial<NoInfer<{ count: number; foo: string; }>> | PartialStateUpdater<NoInfer<{ count: number; foo: string; }>>'
+    patchState(state, { x: 1 }, increment());
   });
 
   it('fails with wrong partial state updater', () => {
-    expectSnippet('patchState(state, addNumber(10))').toFail(
-      /Property 'numbers' is missing in type '{ count: number; foo: string; }'/
-    );
-    expectSnippet('patchState(state, { count: 10 }, addNumber(10))').toFail(
-      /Property 'numbers' is missing in type '{ count: number; foo: string; }'/
-    );
-    expectSnippet('patchState(state, addNumber(10), { count: 10 })').toFail(
-      /Property 'numbers' is missing in type '{ count: number; foo: string; }'/
-    );
-    expectSnippet('patchState(state, increment(), addNumber(10))').toFail(
-      /Property 'numbers' is missing in type '{ count: number; foo: string; }'/
-    );
-    expectSnippet('patchState(state, addNumber(10), increment())').toFail(
-      /Property 'numbers' is missing in type '{ count: number; foo: string; }'/
-    );
+    const state = signalState({ count: 1, foo: 'bar' });
+    // @ts-expect-error - PartialStateUpdater<{ numbers: number[]; }> is not assignable to PartialStateUpdater<NoInfer<{ count: number; foo: string; }>>
+    const test = () => patchState(state, addNumber(10));
+    // @ts-expect-error - PartialStateUpdater<{ numbers: number[]; }> is not assignable to PartialStateUpdater<NoInfer<{ count: number; foo: string; }>>
+    const test2 = () => patchState(state, { count: 10 }, addNumber(10));
+    // @ts-expect-error - PartialStateUpdater<{ numbers: number[]; }> is not assignable to PartialStateUpdater<NoInfer<{ count: number; foo: string; }>>
+    const test3 = () => patchState(state, addNumber(10), { count: 10 });
+    // @ts-expect-error - PartialStateUpdater<{ numbers: number[]; }> is not assignable to PartialStateUpdater<NoInfer<{ count: number; foo: string; }>>
+    const test4 = () => patchState(state, increment(), addNumber(10));
+    // @ts-expect-error - PartialStateUpdater<{ numbers: number[]; }> is not assignable to PartialStateUpdater<NoInfer<{ count: number; foo: string; }>>
+    const test5 = () => patchState(state, addNumber(10), increment());
   });
-}, 8_000);
+});
