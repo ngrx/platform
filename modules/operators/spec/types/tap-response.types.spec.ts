@@ -22,7 +22,7 @@ describe('tapResponse types', () => {
   it('infers next and error type', () => {
     of(1).pipe(
       tapResponse({
-        next: (value) => expectTypeOf(value).toEqualTypeOf<string>(),
+        next: (value) => expectTypeOf(value).toEqualTypeOf<number>(),
         error: (error: { message: string }) =>
           expectTypeOf(error).toEqualTypeOf<{ message: string }>(),
       })
