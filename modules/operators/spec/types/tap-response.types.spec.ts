@@ -1,71 +1,40 @@
-import { Expect, expecter } from 'ts-snippet';
-import { compilerOptions } from './utils';
+import { expectTypeOf, describe, it } from 'vitest';
+import { of } from 'rxjs';
+import { tapResponse } from '../../';
 
 describe('tapResponse types', () => {
-  const snippetFactory = (code: string): string => `
-    import { tapResponse } from '@ngrx/operators';
-    import { noop, of } from 'rxjs';
+  it('requires next and error handlers', () => {
+    of(1).pipe(
+      // @ts-expect-error error handler is required
+      tapResponse({
+        next: () => {},
+      })
+    );
 
-    ${code}
-  `;
-
-  function testWith(expectSnippet: (code: string) => Expect): void {
-    it('should infer next type', () => {
-      expectSnippet(`
-        of(1).pipe(
-          tapResponse((next) => {
-            const num = next;
-          }, noop)
-        );
-      `).toInfer('num', 'number');
-    });
-
-    it('should accept error type', () => {
-      expectSnippet(`
-        of(true).pipe(
-          tapResponse(noop, (error: { message: string }) => {
-            const err = error;
-          })
-        );
-      `).toInfer('err', '{ message: string; }');
-    });
-
-    it('should use unknown as default error type', () => {
-      expectSnippet(`
-        of(true).pipe(
-          tapResponse(noop, (error) => {
-            const err = error;
-          })
-        );
-      `).toInfer('err', 'unknown');
-    });
-  }
-
-  describe('strict mode', () => {
-    const expectSnippet = expecter(snippetFactory, {
-      ...compilerOptions(),
-      strict: true,
-    });
-
-    testWith(expectSnippet);
+    of(1).pipe(
+      // @ts-expect-error next handler is required
+      tapResponse({
+        error: () => {},
+      })
+    );
   });
 
-  describe('non-strict mode', () => {
-    const expectSnippet = expecter(snippetFactory, {
-      ...compilerOptions(),
-      strict: false,
-    });
-
-    testWith(expectSnippet);
+  it('infers next and error type', () => {
+    of(1).pipe(
+      tapResponse({
+        next: (value) => expectTypeOf(value).toEqualTypeOf<number>(),
+        error: (error: { message: string }) =>
+          expectTypeOf(error).toEqualTypeOf<{ message: string }>(),
+      })
+    );
   });
 
-  describe('non-strict mode with strict generic checks', () => {
-    const expectSnippet = expecter(snippetFactory, {
-      ...compilerOptions(),
-      strict: false,
-      noStrictGenericChecks: false,
-    });
-
-    testWith(expectSnippet);
+  it('uses unknown as default error type', () => {
+    of(true).pipe(
+      tapResponse({
+        next: (value) => expectTypeOf(value).toEqualTypeOf<boolean>(),
+        error: (error) => expectTypeOf(error).toEqualTypeOf<unknown>(),
+      })
+    );
   });
-}, 8_000);
+});
