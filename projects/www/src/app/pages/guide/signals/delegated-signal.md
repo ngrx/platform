@@ -1,7 +1,7 @@
 # DelegatedSignal
 
 The `delegatedSignal` function creates a `WritableSignal` whose reads are delegated to a `source` computation and whose writes are delegated to an `update` callback.
-It is useful for bridging two state containers.
+It is useful for bridging two state containers, such as synchronizing SignalStore with Signal Forms as shown in the example below.
 
 <ngrx-code-example>
 
