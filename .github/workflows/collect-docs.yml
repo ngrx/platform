@@ -1,0 +1,39 @@
+name: Collect Docs
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  collect-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: npm install --global corepack@0.31.0
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - run: pnpm install --frozen-lockfile --prefer-offline
+      - run: pnpm exec nx run-many -t build --exclude=www --skip-nx-cache --parallel=3
+      - run: pnpm exec nx run www:collect-docs --skip-nx-cache
+      - name: Commit updated API reference docs
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git diff --quiet && exit 0
+          git add projects/www/src/app/reference/
+          git commit -m "docs: update API reference [skip ci]"
+          git push
