@@ -10,6 +10,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "downlevelIteration": true,
+    "ignoreDeprecations": "6.0",
     "outDir": "../../dist/modules/store-devtools",
     "paths": {},
     "rootDir": ".",

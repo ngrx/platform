@@ -8,6 +8,7 @@
     "target": "es2022",
     "moduleResolution": "nodenext",
     "downlevelIteration": true,
+    "ignoreDeprecations": "6.0",
     "outDir": "../../dist/modules/effects",
     "paths": {
       "@ngrx/effects/schematics-core": ["./schematics-core"]
@@ -16,7 +17,8 @@
     "inlineSources": true,
     "lib": ["ES2022", "dom"],
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "types": ["node"]
   },
   "include": ["migrations/**/*.ts", "schematics/**/*.ts"],
   "exclude": ["**/*.spec.ts"],

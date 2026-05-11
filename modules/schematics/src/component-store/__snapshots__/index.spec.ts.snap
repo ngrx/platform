@@ -16,7 +16,7 @@ import { FooStore } from './foo/foo.store';
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
-    FooStore
+    FooStore,
   ],
   bootstrap: [App]
 })
@@ -51,7 +51,7 @@ import { App } from './app';
     BrowserModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })

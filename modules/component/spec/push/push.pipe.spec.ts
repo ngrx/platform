@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ErrorHandler,
@@ -31,6 +32,7 @@ let pushPipe: PushPipe;
 @Component({
   template: ` {{ (value$ | ngrxPush | json) || 'undefined' }} `,
   imports: [PushPipe, JsonPipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
 })
 class PushPipeTestComponent {
   value$: unknown = of(42);
