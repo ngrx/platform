@@ -10,7 +10,7 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.sha }}
+  group: ${{ github.workflow }}
   cancel-in-progress: true
 
 jobs:
@@ -18,8 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - run: npm install --global corepack@0.31.0
       - run: corepack enable
       - uses: actions/setup-node@v4
@@ -39,14 +37,13 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
 
-          git diff --quiet && exit 0
-
           BRANCH="chore/update-api-reference-docs"
           BASE_BRANCH="main"
           TITLE="docs: update API reference"
 
           git checkout -B "$BRANCH"
           git add projects/www/src/app/reference/
+          git diff --cached --quiet && exit 0
           git commit -m "docs: update API reference [skip ci]"
           git push --force-with-lease --set-upstream origin "$BRANCH"
 
