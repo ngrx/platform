@@ -5,9 +5,13 @@ export default defineProject((config) =>
   mergeConfig(baseConfig, {
     root: __dirname,
     test: {
-      name: 'schematics',
+      name: 'entity',
       setupFiles: ['test-setup.ts'],
-      exclude: [...configDefaults.exclude, '**/migrations/**'],
+      exclude: [
+        ...configDefaults.exclude,
+        '**/migrations/**',
+        '**/schematics/**',
+      ],
     },
     define: {
       'import.meta.vitest': config.mode !== 'production',

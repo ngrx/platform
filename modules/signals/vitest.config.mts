@@ -1,13 +1,12 @@
-import { defineProject, mergeConfig, configDefaults } from 'vitest/config';
+import { defineProject, mergeConfig } from 'vitest/config';
 import { baseConfig } from '../../vitest.config.mts';
 
 export default defineProject((config) =>
   mergeConfig(baseConfig, {
     root: __dirname,
     test: {
-      name: 'schematics',
+      name: 'signals',
       setupFiles: ['test-setup.ts'],
-      exclude: [...configDefaults.exclude, '**/migrations/**'],
     },
     define: {
       'import.meta.vitest': config.mode !== 'production',

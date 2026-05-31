@@ -1,9 +1,9 @@
 /// <reference types="vitest" />
 import {
-  defineConfig,
   defaultClientConditions,
   defaultServerConditions,
 } from 'vite';
+import { defineConfig } from 'vitest/config';
 import analog from '@analogjs/platform';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import ngrxStackblitzPlugin from './src/tools/vite-ngrx-stackblitz.plugin';
@@ -71,7 +71,7 @@ export default defineConfig(({ mode }) => ({
     setupFiles: ['src/test-setup.ts'],
     include: ['**/*.spec.ts'],
     exclude: [...configDefaults.exclude, 'src/app/examples/**'],
-    reporters: ['default'],
+    typecheck: { enabled: true, ignoreSourceErrors: true },
   },
 
   define: {
