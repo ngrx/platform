@@ -6,7 +6,7 @@ export default defineProject((config) =>
     root: __dirname,
     test: {
       name: 'example-app',
-      setupFiles: ['src/test-setup.ts'],
+      setupFiles: ['test-setup.ts'],
     },
     define: {
       'import.meta.vitest': config.mode !== 'production',
