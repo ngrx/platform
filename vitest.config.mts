@@ -11,12 +11,12 @@ export const baseConfig = {
   test: {
     globals: true,
     environment: 'jsdom',
-    include: ['**/*.spec.ts'],
+    include: ['**/*.{spec,test}.ts'],
     passWithNoTests: true,
     typecheck: {
       enabled: true,
       ignoreSourceErrors: true,
-      include: ['**/*.test-d.ts'],
+      include: ['**/types/**/*.{spec,test}.ts', '**/*.test-d.ts'],
       tsconfig: './tsconfig.spec.json',
     },
   },
