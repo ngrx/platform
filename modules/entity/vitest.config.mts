@@ -1,4 +1,4 @@
-import { defineProject, mergeConfig, configDefaults } from 'vitest/config';
+import { defineProject, mergeConfig } from 'vitest/config';
 import { baseConfig } from '../../vitest.config.mts';
 
 export default defineProject((config) =>
@@ -7,11 +7,6 @@ export default defineProject((config) =>
     test: {
       name: 'entity',
       setupFiles: ['test-setup.ts'],
-      exclude: [
-        ...configDefaults.exclude,
-        '**/migrations/**',
-        '**/schematics/**',
-      ],
     },
     define: {
       'import.meta.vitest': config.mode !== 'production',
