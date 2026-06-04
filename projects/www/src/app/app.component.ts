@@ -1,10 +1,9 @@
 import {
   Component,
+  inject,
   Injector,
   PLATFORM_ID,
-  inject,
   signal,
-  effect,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
@@ -16,10 +15,7 @@ import { CodeTabsComponent } from './components/docs/code-tabs.component';
 import { StackblitzComponent } from './components/docs/stackblitz.component';
 import { InstallInstructionsComponent } from './components/docs/install-instructions.component';
 import { FooterComponent } from './components/footer.component';
-import {
-  TOP_BANNER_DISMISSED_STORAGE_KEY,
-  TopBannerComponent,
-} from './components/top-banner.component';
+import { TopBannerComponent } from './components/top-banner.component';
 
 @Component({
   selector: 'ngrx-root',
@@ -89,23 +85,23 @@ export class AppComponent {
 
   constructor() {
     if (isPlatformBrowser(this.#platformId)) {
-      this.initTopBanner();
+      // this.initTopBanner();
       this.installCustomElements();
     }
   }
 
-  initTopBanner(): void {
-    if (localStorage.getItem(TOP_BANNER_DISMISSED_STORAGE_KEY) !== 'true') {
-      this.isTopBannerVisible.set(true);
-    }
-
-    effect(() => {
-      localStorage.setItem(
-        TOP_BANNER_DISMISSED_STORAGE_KEY,
-        `${!this.isTopBannerVisible()}`
-      );
-    });
-  }
+  // initTopBanner(): void {
+  //   if (localStorage.getItem(TOP_BANNER_DISMISSED_STORAGE_KEY) !== 'true') {
+  //     this.isTopBannerVisible.set(true);
+  //   }
+  //
+  //   effect(() => {
+  //     localStorage.setItem(
+  //       TOP_BANNER_DISMISSED_STORAGE_KEY,
+  //       `${!this.isTopBannerVisible()}`
+  //     );
+  //   });
+  // }
 
   async installCustomElements(): Promise<void> {
     const { createCustomElement } = await import('@angular/elements');
