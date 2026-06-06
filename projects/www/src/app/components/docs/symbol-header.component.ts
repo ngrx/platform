@@ -1,4 +1,9 @@
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ApiMember, ParsedCanonicalReference } from '@ngrx-io/shared';
 import { SymbolExcerptComponent } from './symbol-excerpt.component';
 import { NgClass } from '@angular/common';
@@ -21,6 +26,7 @@ import { DeprecatedChipComponent } from './deprecated-chip.component';
       <ngrx-deprecated-chip [reason]="symbol().docs.deprecated" />
     }
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {

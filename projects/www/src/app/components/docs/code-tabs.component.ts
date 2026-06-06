@@ -5,6 +5,7 @@ import {
   signal,
   viewChild,
   AfterContentInit,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -25,6 +26,7 @@ import { CodeExampleComponent } from './code-example.component';
       }
     </mat-tab-group>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       ngrx-code-example {

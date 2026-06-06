@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -38,6 +38,7 @@ import { RouterLink } from '@angular/router';
       <a href="https://discord.com/invite/ngrx" target="_blank">Discord</a>
     </nav>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {

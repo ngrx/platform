@@ -6,6 +6,7 @@ import {
   inject,
   signal,
   viewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -88,6 +89,7 @@ import { ThemeToggleComponent } from './theme-toggle.component';
       ></ngrx-guide-section>
     </nav>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .mobile-nav-bar {

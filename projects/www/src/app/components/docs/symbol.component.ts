@@ -1,5 +1,5 @@
 import { AsyncPipe, JsonPipe } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { ApiMemberSummary } from '@ngrx-io/shared';
 import { SymbolApiComponent } from './symbol-api.component';
 import { SymbolCodeLinkComponent } from './symbol-code-link.component';
@@ -75,6 +75,7 @@ import { SymbolUsageNotesComponent } from './symbol-usage-notes.component';
       }
     `,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     SymbolExcerptComponent,
     SymbolParamsComponent,

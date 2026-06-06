@@ -9,6 +9,7 @@ import {
   inject,
   viewChild,
   viewChildren,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 type ComputedLineGroup = {
@@ -34,6 +35,7 @@ const COLOR_PAIRS: ColorPairs = [
 @Component({
   selector: 'ngrx-banner-animation',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <svg
       #svg

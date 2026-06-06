@@ -7,5 +7,13 @@
   },
   "files": ["src/main.ts", "src/polyfills.ts"],
   "include": ["src/**/*.d.ts"],
-  "exclude": ["**/*.test.ts", "**/*.spec.ts", "jest.config.ts"]
+  "exclude": ["**/*.test.ts", "**/*.spec.ts", "jest.config.ts"],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }

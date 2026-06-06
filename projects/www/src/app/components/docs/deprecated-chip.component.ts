@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
@@ -6,6 +6,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   standalone: true,
   imports: [MatTooltipModule],
   template: ` <span [matTooltip]="reason()">Deprecated</span> `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {

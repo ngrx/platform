@@ -8,6 +8,7 @@ import {
   computed,
   inject,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 @Component({
@@ -93,6 +94,7 @@ import {
     </svg>
     <ng-content></ng-content>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {

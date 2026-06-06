@@ -1,4 +1,10 @@
-import { Component, inject, signal, ElementRef } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  ElementRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { VersionInfoService } from '../services/versionInfo.service';
 
 @Component({
@@ -97,6 +103,7 @@ import { VersionInfoService } from '../services/versionInfo.service';
       }
     `,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '(document:click)': 'closeDropdownOnOutsideClick($event)',
   },
