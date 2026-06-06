@@ -1,26 +1,40 @@
-This PR introduces native Vitest support. Vitest manages packages on its own, with an inheritable configuration.
+This PR upgrades the current test setup to use Vitest and makes it more compatible with the default configuration of Vitest.
 
-That means tests can also run via `pnpm vitest --project <project-name>` and all Vitest-based tools, e.g. VSCode Vitest extension, run flawlessly.
+## What this PR does
 
-The main file is `/vitest.config.mts`. It does two things:
+- Introduces a shared Vitest workspace via `/vitest.config.mts` and per-project `vitest.config.mts` files (**14 projects**: 12 `modules/*`, `example-app`, `www`)
+- Replaces per-project `vite.config.mts` with `vitest.config.mts` extending shared `baseConfig` via `mergeConfig`
+- Enables `pnpm vitest --project <project-name>` and Vitest IDE tooling across the monorepo
+- Configures three test modes: runtime, type-only (`.test-d.ts`), and combi (`types/*.spec.ts` with Vitest type-check)
+- Drops per-project `pool: 'forks'` and `reporters: ['default']` in favor of Vitest defaults (shared `baseConfig` has neither)
+- Streamlines `example-app`: moves `test-setup.ts` to the project root and updates `tsconfig.spec.json` (`files` path, drops `strict: false`)
+- Fixes schematic and migration tests (`dist/modules/...` paths, `dependsOn: ["build"]` on module test targets)
+- Applies common test fixes: `mock_actions` → `async`/`await`, local `strip-json-comments` for eslint-plugin schematics
 
-- Exposes a basic config which is used by all projects
-- Configures Vitest so that it is aware of the projects. The repo root is NOT a vitest project.
+The main file is `/vitest.config.mts`. It exposes shared `baseConfig` for most projects and registers all Vitest projects — the repo root is not a project itself. Each project extends `baseConfig` via `mergeConfig`; exceptions are noted below.
 
-Each project has its own `vitest.config.ts` which extends the root config. Most of the time are the same. Exceptions are explained below.
+## Current state
+
+Runtime tests already run through Vitest; type suites are **not migrated yet**.
+
+- **29** spec files under `types/` — `ts-snippet` (25), `expectTypeOf` (1), custom helpers (2), runtime regression (1)
+- Naming is mixed: **16** `*.types.spec.ts`, **13** plain `*.spec.ts`; no `*.test-d.ts` files yet
+- `standalone-app` is still on Jest; everything else in scope uses Vitest
+
+The configuration below is the basis for follow-up PRs that migrate those suites to native type-only or combi tests (see [Follow-up tasks](#follow-up-tasks)).
 
 ## Projects with customized test config
 
 - `www`: Is our website and doesn't follow the standard config at all.
-- `effect` runs with a custom `testTimeout` of 15 seconds.
-- `eslint-plugin` runs with a custom `testTimeout`
+- `effects` runs with a custom `testTimeout` of 15 seconds.
+- `eslint-plugin` runs with a custom `testTimeout` of 8 seconds.
 
 ## Folder Structure
 
 With Vitest we have three types of tests:
 
 - Runtime Tests: That is the default one. Those are the ones where we verify via `expect`, etc. Those tests are **not type-safe**. Vitest just removes the types and runs. That makes the tests fast, at the cost of type-safety.
-- Type Tests: These kind of tests are specific type-only tests, We use `expectTypeOf` or `assertType` to verify the types. Vitest only runs the compiler on them, so they are not executed at runtime.
+- Type Tests: These kinds of tests are specific type-only tests. We use `expectTypeOf` or `assertType` to verify the types. Vitest only runs the compiler on them, so they are not executed at runtime.
 - Combi Tests: Tests with `@ts-expect-error` are not precise enough to count as type tests. Here's an example:
 
 ```ts
@@ -47,16 +61,18 @@ it('should fail', () => {
 
 Therefore, we need to run these tests both as runtime and type tests.
 
-With the new configuration, both type and combi tests need to be located in a subfolder `types`. All files in `types`, matching `**/test-d.ts`, will run as type-tests only, whereas normal `**/{spec,test}.ts` files will run as both runtime and type tests.
+With the new configuration, combi tests need to be located in a subfolder `types`. Files matching `**/*.test-d.ts` run as type-tests only (anywhere in the project), whereas `**/{spec,test}.ts` files under `types/` run as both runtime and type tests.
+
+> **Sidenote:** With `typecheck.enabled: true`, Vitest prints an experimental-feature warning at startup: _"Testing types with tsc and vue-tsc is an experimental feature. Breaking changes might not follow SemVer, please pin Vitest's version when using it."_ This is expected and harmless — type-checking works as intended. Pin the Vitest version in `package.json` until the feature stabilizes.
 
 Here is a visual representation of the folder structure, indicating where each type of test should be placed:
 
 ```
 project-root/
-├── packages/
+├── modules/
 │   └── mypackage/
 │       ├── src/
-│       ├── test/
+│       ├── spec/
 │       │   ├── foo.spec.ts    # Runtime Test
 │       │   ├── bar.test.ts    # Runtime Test
 │       │   └── types/
@@ -96,7 +112,7 @@ path.join(
 );
 ```
 
-Module `test` targets use `dependsOn: ["build"]` so `dist/` exists before Vitest runs.
+Module `test` targets use `dependsOn: ["build"]` so `dist/` exists before Vitest runs. Project apps (`example-app`, `www`) do not — they have no schematic/migration specs that require a pre-test build.
 
 ### Replacing deprecated `done()` callbacks
 
@@ -137,41 +153,45 @@ import { stripJsonComments } from '../strip-json-comments';
 Type tests that run `tsc` via `ts-snippet` can exceed the default timeout. Projects with heavy type suites (e.g. `effects`, `eslint-plugin`) set a higher limit in `vitest.config.mts`:
 
 ```ts
+// effects
 test: {
   name: 'effects',
   setupFiles: ['test-setup.ts'],
   testTimeout: 15000,
 },
+
+// eslint-plugin
+test: {
+  name: 'eslint-plugin',
+  setupFiles: ['test-setup.ts'],
+  testTimeout: 8000,
+},
 ```
 
-## Follow-up Tasks
+## Follow-up tasks
 
-Outstanding work after the Vitest migration (verified June 2026). Status reflects current `main`-branch behavior.
+Outstanding work after this PR (verified June 2026). Planned as separate PRs on top of the configuration introduced here.
 
-### Modernizing type-test naming
+### Migrate type suites to native Vitest type tests
 
-**Still open.** Sixteen type suites use `*.types.spec.ts`; only one file uses `*.test-d.ts` (`modules/signals/spec/types/test.test-d.ts`). Renaming to `.test-d.ts` would allow dropping the custom `typecheck.include` pattern in `vitest.config.mts` (`**/types/**/*.{spec,test}.ts`) and aligning with Vitest defaults.
+**Planned.** Convert the 29 existing `types/` spec files from `ts-snippet` (and related helpers) to native `.test-d.ts` type-only tests or combi tests. Start with smaller packages, then tackle heavy suites (`signals`, `store`, `effects`). Once complete, drop the custom `typecheck.include` pattern (`**/types/**/*.{spec,test}.ts`) in `vitest.config.mts` and standardize on `*.test-d.ts` naming.
 
-### Refactoring deprecated `done()` callbacks
+### Refactor deprecated `done()` callbacks
 
-**Still open (broader scope).** `modules/effects/testing/spec/mock_actions.spec.ts` is already on `async`/`await`. Vitest 4 still warns on Jasmine-style `done()` in other packages - mainly `data`, `router-store`, `store`, and `store-devtools` (roughly 100 usages across 18 spec files). These should move to Promises or `async`/`await` (see [Replacing deprecated `done()` callbacks](#replacing-deprecated-done-callbacks)).
+**Planned.** `modules/effects/testing/spec/mock_actions.spec.ts` is already on `async`/`await`. Vitest 4 still warns on Jasmine-style `done()` in `data`, `router-store`, `store`, and `store-devtools` (roughly 70 usages across 16 spec files). These should move to Promises or `async`/`await` (see [Replacing deprecated `done()` callbacks](#replacing-deprecated-done-callbacks)).
+
+### Fix source type errors (`ignoreSourceErrors`)
+
+**Planned.** Shared `baseConfig` in `vitest.config.mts` sets `typecheck.ignoreSourceErrors: true` so Vitest type-checking only reports errors in test files, not in library source. Without it, **17 type errors** in source code surface during `pnpm vitest`. Fix those errors and remove `ignoreSourceErrors` from `baseConfig` so type-check runs also guard production code. This does not apply to `www`, which uses its own standalone config and sets `ignoreSourceErrors` separately.
 
 ### Performance: long-running type tests
 
-**Partially addressed.** `with-entities.types.spec.ts` and the rest of the `signals` type suite pass with the default timeout. `effects` (15s) and `eslint-plugin` (8s) still use raised `testTimeout` values as a stopgap (see [Slow type-check tests](#slow-type-check-tests-testtimeout)). Further optimization of heavy type snippets or generics remains worthwhile for those projects.
+**Partially addressed.** `with-entities.types.spec.ts` and the rest of the `signals` type suite pass with the default timeout. `effects` (15s) and `eslint-plugin` (8s) still use raised `testTimeout` values as a stopgap (see [Slow type-check tests](#slow-type-check-tests-testtimeout)). Optimization may become less urgent as suites migrate off `ts-snippet`.
 
-### Explicit imports
+### Remove legacy test framework artifacts
 
-**Low priority / mostly done in `modules/`.** Only two spec files under `modules/` still use default imports (`eslint-plugin` schematic and rule specs). Broader cleanup may still apply under `projects/`.
-
-### Removing legacy test framework artifacts
-
-**Still open.** Vitest modules no longer exclude migration tests, but legacy tooling remains in the workspace: `jasmine-marbles` in a few `modules/` specs (`store`, `operators`, `data`), Jasmine/Jest devDependencies in `package.json`, and `projects/standalone-app` still on Jest/Karma config. These should be migrated or removed where Vitest (or `@analogjs/vitest-angular`) equivalents exist.
+**Planned.** `jasmine-marbles` remains in a few `modules/` specs (`store`, `operators`, `data`), Jasmine/Jest devDependencies remain in `package.json`, and `projects/standalone-app` is still on Jest/Karma. Migrate or remove where Vitest (or `@analogjs/vitest-angular`) equivalents exist.
 
 ### Browser runtime instead of JSDOM
 
-**Still open (future).** Shared config sets `environment: 'jsdom'`. Moving runtime tests to a real browser environment is a larger follow-up for closer DOM fidelity.
-
-### Resolved: schematic and migration test pipeline
-
-**Done.** Migration and schematic specs now point at `dist/modules/...` (see [Schematic and migration paths](#schematic-and-migration-paths-__dirname--dist)), and module `test` targets use `dependsOn: ["build"]`. Verified passing: `effects:test`, `entity:test`, `schematics:test`, `eslint-plugin:test` (including migration/schematic paths). No Vitest-level exclusions remain for these folders.
+**Future.** Shared config sets `environment: 'jsdom'`. Moving runtime tests to a real browser environment is a larger follow-up for closer DOM fidelity.
