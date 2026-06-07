@@ -28,6 +28,9 @@ export const baseConfig = {
  */
 export default defineConfig({
   test: {
-    projects: ['modules/*/vitest.config.mts', 'projects/*/vitest.config.mts'],
+    projects: [
+      'modules/*/vitest.config.mts',
+      'projects/example-app/vitest.config.mts',
+    ],
   },
 });

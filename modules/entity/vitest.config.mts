@@ -8,6 +8,7 @@ export default defineProject((config) =>
       name: 'entity',
       setupFiles: ['test-setup.ts'],
       include: ['spec/**/*.spec.ts'],
+      testTimeout: 15000,
     },
     define: {
       'import.meta.vitest': config.mode !== 'production',

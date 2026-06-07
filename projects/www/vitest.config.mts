@@ -10,14 +10,19 @@ import ngrxStackblitzPlugin from './src/tools/vite-ngrx-stackblitz.plugin';
 import { ngrxTheme } from './src/shared/ngrx-shiki-theme';
 import { configDefaults } from 'vitest/config';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { dirname, join } from 'path';
+
+const wwwRoot = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig(({ mode }) => ({
-  root: dirname(fileURLToPath(import.meta.url)),
+  root: wwwRoot,
   cacheDir: '../../node_modules/.vite/www',
 
   resolve: {
     conditions: [...defaultClientConditions],
+    alias: {
+      '@ngrx-io': join(wwwRoot, 'src'),
+    },
   },
 
   ssr: {
