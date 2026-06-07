@@ -7,6 +7,7 @@ export default defineProject((config) =>
     test: {
       name: 'schematics',
       setupFiles: ['test-setup.ts'],
+      include: ['src/**/*.spec.ts'],
     },
     define: {
       'import.meta.vitest': config.mode !== 'production',

@@ -1,4 +1,4 @@
-import { configDefaults, defineProject, mergeConfig } from 'vitest/config';
+import { defineProject, mergeConfig } from 'vitest/config';
 import { baseConfig } from '../../vitest.config.mts';
 
 export default defineProject((config) =>
@@ -7,12 +7,7 @@ export default defineProject((config) =>
     test: {
       name: 'effects',
       setupFiles: ['test-setup.ts'],
-      exclude: [
-        ...configDefaults.exclude,
-        '**/migrations/**',
-        '**/schematics/**',
-        '**/testing/**',
-      ],
+      include: ['spec/**/*.spec.ts'],
       coverage: {
         reportsDirectory: '../../coverage/modules/effects',
       },
