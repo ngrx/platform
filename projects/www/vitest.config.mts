@@ -21,7 +21,8 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     conditions: [...defaultClientConditions],
     alias: {
-      '@ngrx-io': join(wwwRoot, 'src'),
+      // Trailing slash required for subpath imports (e.g. @ngrx-io/app/...).
+      '@ngrx-io/': join(wwwRoot, 'src/'),
     },
   },
 

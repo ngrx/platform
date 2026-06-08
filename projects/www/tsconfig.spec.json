@@ -2,7 +2,11 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "types": ["node", "vitest/globals"]
+    "types": ["node", "vitest/globals"],
+    "baseUrl": ".",
+    "paths": {
+      "@ngrx-io/*": ["./src/*"]
+    }
   },
   "files": ["src/test-setup.ts"],
   "include": ["src/**/*.spec.ts", "**/*.d.ts"]

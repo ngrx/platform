@@ -54,7 +54,10 @@
     "test": {
       "executor": "@analogjs/vitest-angular:test",
       "outputs": ["{projectRoot}/coverage"],
-      "dependsOn": [{ "target": "collect-docs" }]
+      "dependsOn": [{ "target": "collect-docs" }],
+      "options": {
+        "configFile": "vitest.config.mts"
+      }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
