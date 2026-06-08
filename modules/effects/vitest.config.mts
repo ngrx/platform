@@ -11,7 +11,6 @@ export default defineProject((config) =>
       coverage: {
         reportsDirectory: '../../coverage/modules/effects',
       },
-      testTimeout: 15000,
     },
     define: {
       'import.meta.vitest': config.mode !== 'production',
