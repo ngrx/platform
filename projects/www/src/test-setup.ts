@@ -7,9 +7,18 @@ import {
   platformBrowserTesting,
 } from '@angular/platform-browser/testing';
 import { getTestBed } from '@angular/core/testing';
+import { API_REPORT_DATA } from './app/reference/api-report.token';
 
 @NgModule({
-  providers: [provideZonelessChangeDetection()],
+  providers: [
+    provideZonelessChangeDetection(),
+    {
+      provide: API_REPORT_DATA,
+      useValue: {
+        getData: () => ({ packageNames: [], packages: {} }),
+      },
+    },
+  ],
 })
 export class ZonelessTestModule {}
 
