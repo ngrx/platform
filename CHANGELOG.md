@@ -1,3 +1,31 @@
+<a name="21.1.1"></a>
+
+## [21.1.1](https://github.com/ngrx/platform/compare/21.1.0...21.1.1) (2026-06-08)
+
+### Bug Fixes
+
+- **data:** remove QueryParams deprecation warning ([#5152](https://github.com/ngrx/platform/issues/5152)) ([77dd99e](https://github.com/ngrx/platform/commit/77dd99e)), closes [#5150](https://github.com/ngrx/platform/issues/5150)
+- **effects:** update ng-add schematic to use inject function ([#5141](https://github.com/ngrx/platform/issues/5141)) ([eaac970](https://github.com/ngrx/platform/commit/eaac970))
+- **schematics:** use inject in generated data, effect, and component-store templates ([#5142](https://github.com/ngrx/platform/issues/5142)) ([bc253ae](https://github.com/ngrx/platform/commit/bc253ae)), closes [#5136](https://github.com/ngrx/platform/issues/5136)
+
+### Features
+
+- **signals:** add delegatedSignal ([#5151](https://github.com/ngrx/platform/issues/5151)) ([a469cbf](https://github.com/ngrx/platform/commit/a469cbf)), closes [#5121](https://github.com/ngrx/platform/issues/5121)
+
+<a name="21.1.1"></a>
+
+## [21.1.1](https://github.com/ngrx/platform/compare/21.1.0...21.1.1) (2026-06-08)
+
+### Bug Fixes
+
+- **data:** remove QueryParams deprecation warning ([#5152](https://github.com/ngrx/platform/issues/5152)) ([77dd99e](https://github.com/ngrx/platform/commit/77dd99e)), closes [#5150](https://github.com/ngrx/platform/issues/5150)
+- **effects:** update ng-add schematic to use inject function ([#5141](https://github.com/ngrx/platform/issues/5141)) ([eaac970](https://github.com/ngrx/platform/commit/eaac970))
+- **schematics:** use inject in generated data, effect, and component-store templates ([#5142](https://github.com/ngrx/platform/issues/5142)) ([bc253ae](https://github.com/ngrx/platform/commit/bc253ae)), closes [#5136](https://github.com/ngrx/platform/issues/5136)
+
+### Features
+
+- **signals:** add delegatedSignal ([#5151](https://github.com/ngrx/platform/issues/5151)) ([a469cbf](https://github.com/ngrx/platform/commit/a469cbf)), closes [#5121](https://github.com/ngrx/platform/issues/5121)
+
 <a name="21.1.0"></a>
 
 # [21.1.0](https://github.com/ngrx/platform/compare/21.0.1...21.1.0) (2026-03-24)
