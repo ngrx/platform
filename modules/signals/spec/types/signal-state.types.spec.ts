@@ -1,373 +1,355 @@
-import { expecter } from 'ts-snippet';
-import { compilerOptions } from './helpers';
+import { expectTypeOf } from 'vitest';
+import { Signal } from '@angular/core';
+import {
+  DeepSignal,
+  patchState,
+  signalState,
+  SignalState,
+} from '@ngrx/signals';
+
+const initialState = {
+  user: {
+    age: 30,
+    details: {
+      first: 'John',
+      last: 'Smith',
+    },
+    address: ['Belgrade', 'Serbia'],
+  },
+  numbers: [1, 2, 3],
+  ngrx: 'rocks',
+};
 
 describe('signalState', () => {
-  const expectSnippet = expecter(
-    (code) => `
-        import { patchState, signalState } from '@ngrx/signals';
-
-        const initialState = {
-          user: {
-            age: 30,
-            details: {
-              first: 'John',
-              last: 'Smith',
-            },
-            address: ['Belgrade', 'Serbia'],
-          },
-          numbers: [1, 2, 3],
-          ngrx: 'rocks',
-        };
-
-        ${code}
-      `,
-    compilerOptions()
-  );
-
   it('allows passing state as a generic argument', () => {
-    const snippet = `
-      type FooState = { foo: string; bar: number };
-      const state = signalState<FooState>({ foo: 'bar', bar: 1 });
-    `;
+    type FooState = { foo: string; bar: number };
+    const state = signalState<FooState>({ foo: 'bar', bar: 1 });
 
-    const result = expectSnippet(snippet);
-
-    result.toInfer('state', 'SignalState<FooState>');
+    expectTypeOf(state).toEqualTypeOf<SignalState<FooState>>();
   });
 
   it('creates deep signals for nested state slices', () => {
-    const snippet = `
-      const state = signalState(initialState);
+    const state = signalState(initialState);
 
-      const user = state.user;
-      const age = state.user.age;
-      const details = state.user.details;
-      const first = state.user.details.first;
-      const last = state.user.details.last;
-      const address = state.user.address;
-      const numbers = state.numbers;
-      const ngrx = state.ngrx;
-    `;
+    const user = state.user;
+    const age = state.user.age;
+    const details = state.user.details;
+    const first = state.user.details.first;
+    const last = state.user.details.last;
+    const address = state.user.address;
+    const numbers = state.numbers;
+    const ngrx = state.ngrx;
 
-    const result = expectSnippet(snippet);
-    result.toInfer(
-      'state',
-      'SignalState<{ user: { age: number; details: { first: string; last: string; }; address: string[]; }; numbers: number[]; ngrx: string; }>'
-    );
-    result.toInfer(
-      'user',
-      'DeepSignal<{ age: number; details: { first: string; last: string; }; address: string[]; }>'
-    );
-    result.toInfer('details', 'DeepSignal<{ first: string; last: string; }>');
-    result.toInfer('first', 'Signal<string>');
-    result.toInfer('last', 'Signal<string>');
-    result.toInfer('address', 'Signal<string[]>');
-    result.toInfer('numbers', 'Signal<number[]>');
-    result.toInfer('ngrx', 'Signal<string>');
+    expectTypeOf(state).toEqualTypeOf<
+      SignalState<{
+        user: {
+          age: number;
+          details: { first: string; last: string };
+          address: string[];
+        };
+        numbers: number[];
+        ngrx: string;
+      }>
+    >();
+    expectTypeOf(user).toEqualTypeOf<
+      DeepSignal<{
+        age: number;
+        details: { first: string; last: string };
+        address: string[];
+      }>
+    >();
+    expectTypeOf(details).toEqualTypeOf<
+      DeepSignal<{ first: string; last: string }>
+    >();
+    expectTypeOf(age).toEqualTypeOf<Signal<number>>();
+    expectTypeOf(first).toEqualTypeOf<Signal<string>>();
+    expectTypeOf(last).toEqualTypeOf<Signal<string>>();
+    expectTypeOf(address).toEqualTypeOf<Signal<string[]>>();
+    expectTypeOf(numbers).toEqualTypeOf<Signal<number[]>>();
+    expectTypeOf(ngrx).toEqualTypeOf<Signal<string>>();
   });
 
   it('creates deep signals when state type is an interface', () => {
-    const snippet = `
-      interface User {
-        firstName: string;
-        lastName: string;
-      }
+    interface User {
+      firstName: string;
+      lastName: string;
+    }
 
-      interface State {
-        user: User;
-        bool: boolean;
-        map: Map<string, string>;
-        set: Set<{ foo: number }>;
-      };
+    interface State {
+      user: User;
+      bool: boolean;
+      map: Map<string, string>;
+      set: Set<{ foo: number }>;
+    }
 
-      const state = signalState<State>({
-        user: { firstName: 'John', lastName: 'Smith' },
-        bool: true,
-        map: new Map<string, string>(),
-        set: new Set<{ foo: number }>(),
-      });
+    const state = signalState<State>({
+      user: { firstName: 'John', lastName: 'Smith' },
+      bool: true,
+      map: new Map<string, string>(),
+      set: new Set<{ foo: number }>(),
+    });
 
-      const user = state.user;
-      const lastName = state.user.lastName;
-      const bool = state.bool;
-      const map = state.map;
-      const set = state.set;
-    `;
+    const user = state.user;
+    const lastName = state.user.lastName;
+    const bool = state.bool;
+    const map = state.map;
+    const set = state.set;
 
-    const result = expectSnippet(snippet);
-    result.toInfer('user', 'DeepSignal<User>');
-    result.toInfer('lastName', 'Signal<string>');
-    result.toInfer('bool', 'Signal<boolean>');
-    result.toInfer('map', 'Signal<Map<string, string>>');
-    result.toInfer('set', 'Signal<Set<{ foo: number; }>>');
+    expectTypeOf(user).toEqualTypeOf<DeepSignal<User>>();
+    expectTypeOf(lastName).toEqualTypeOf<Signal<string>>();
+    expectTypeOf(bool).toEqualTypeOf<Signal<boolean>>();
+    expectTypeOf(map).toEqualTypeOf<Signal<Map<string, string>>>();
+    expectTypeOf(set).toEqualTypeOf<Signal<Set<{ foo: number }>>>();
   });
 
   it('does not create deep signals for iterables', () => {
-    const snippet = `
-      const arrayState = signalState<string[]>([]);
-      const arrayStateValue = arrayState();
-      declare const arrayStateKeys: keyof typeof arrayState;
+    const arrayState = signalState<string[]>([]);
+    const arrayStateValue = arrayState();
 
-      const setState = signalState(new Set<number>());
-      const setStateValue = setState();
-      declare const setStateKeys: keyof typeof setState;
+    const setState = signalState(new Set<number>());
+    const setStateValue = setState();
 
-      const mapState = signalState(new Map<number, { bar: boolean }>());
-      const mapStateValue = mapState();
-      declare const mapStateKeys: keyof typeof mapState;
+    const mapState = signalState(new Map<number, { bar: boolean }>());
+    const mapStateValue = mapState();
 
-      const uintArrayState = signalState(new Uint8ClampedArray());
-      const uintArrayStateValue = uintArrayState();
-      declare const uintArrayStateKeys: keyof typeof uintArrayState;
-    `;
+    const uintArrayState = signalState(new Uint8ClampedArray());
+    const uintArrayStateValue = uintArrayState();
 
-    const result = expectSnippet(snippet);
-    result.toInfer('arrayStateValue', 'string[]');
-    result.toInfer('arrayStateKeys', 'unique symbol | unique symbol');
-    result.toInfer('setStateValue', 'Set<number>');
-    result.toInfer('setStateKeys', 'unique symbol | unique symbol');
-    result.toInfer('mapStateValue', 'Map<number, { bar: boolean; }>');
-    result.toInfer('mapStateKeys', 'unique symbol | unique symbol');
-    result.toInfer('uintArrayStateValue', 'Uint8ClampedArray<ArrayBuffer>');
-    result.toInfer('uintArrayStateKeys', 'unique symbol | unique symbol');
+    expectTypeOf(arrayStateValue).toEqualTypeOf<string[]>();
+    expectTypeOf<string & keyof typeof arrayState>().toBeNever();
+
+    expectTypeOf(setStateValue).toEqualTypeOf<Set<number>>();
+    expectTypeOf<string & keyof typeof setState>().toBeNever();
+
+    expectTypeOf(mapStateValue).toEqualTypeOf<Map<number, { bar: boolean }>>();
+    expectTypeOf<string & keyof typeof mapState>().toBeNever();
+
+    expectTypeOf(uintArrayStateValue).toEqualTypeOf<Uint8ClampedArray>();
+    expectTypeOf<string & keyof typeof uintArrayState>().toBeNever();
   });
 
   it('does not create deep signals for built-in object types', () => {
-    const snippet = `
-      const weakSetState = signalState(new WeakSet<{ foo: string }>());
-      const weakSetStateValue = weakSetState();
-      declare const weakSetStateKeys: keyof typeof weakSetState;
+    const weakSetState = signalState(new WeakSet<{ foo: string }>());
+    const weakSetStateValue = weakSetState();
 
-      const dateState = signalState(new Date());
-      const dateStateValue = dateState();
-      declare const dateStateKeys: keyof typeof dateState;
+    const dateState = signalState(new Date());
+    const dateStateValue = dateState();
 
-      const errorState = signalState(new Error());
-      const errorStateValue = errorState();
-      declare const errorStateKeys: keyof typeof errorState;
+    const errorState = signalState(new Error());
+    const errorStateValue = errorState();
 
-      const regExpState = signalState(new RegExp(''));
-      const regExpStateValue = regExpState();
-      declare const regExpStateKeys: keyof typeof regExpState;
-    `;
+    const regExpState = signalState(new RegExp(''));
+    const regExpStateValue = regExpState();
 
-    const result = expectSnippet(snippet);
-    result.toInfer('weakSetStateValue', 'WeakSet<{ foo: string; }>');
-    result.toInfer('weakSetStateKeys', 'unique symbol | unique symbol');
-    result.toInfer('dateStateValue', 'Date');
-    result.toInfer('dateStateKeys', 'unique symbol | unique symbol');
-    result.toInfer('errorStateValue', 'Error');
-    result.toInfer('errorStateKeys', 'unique symbol | unique symbol');
-    result.toInfer('regExpStateValue', 'RegExp');
-    result.toInfer('regExpStateKeys', 'unique symbol | unique symbol');
+    expectTypeOf(weakSetStateValue).toEqualTypeOf<WeakSet<{ foo: string }>>();
+    expectTypeOf<string & keyof typeof weakSetState>().toBeNever();
+
+    expectTypeOf(dateStateValue).toEqualTypeOf<Date>();
+    expectTypeOf<string & keyof typeof dateState>().toBeNever();
+
+    expectTypeOf(errorStateValue).toEqualTypeOf<Error>();
+    expectTypeOf<string & keyof typeof errorState>().toBeNever();
+
+    expectTypeOf(regExpStateValue).toEqualTypeOf<RegExp>();
+    expectTypeOf<string & keyof typeof regExpState>().toBeNever();
   });
 
   it('does not create deep signals for functions', () => {
-    const snippet = `
-      const state = signalState(() => {});
-      const stateValue = state();
-      declare const stateKeys: keyof typeof state;
-    `;
+    const state = signalState(() => {});
+    const stateValue = state();
 
-    const result = expectSnippet(snippet);
-    result.toInfer('stateValue', '() => void');
-    result.toInfer('stateKeys', 'unique symbol | unique symbol');
+    expectTypeOf(stateValue).toEqualTypeOf<() => void>();
+    expectTypeOf<string & keyof typeof state>().toBeNever();
   });
 
   it('does not create deep signals for optional state slices', () => {
-    const snippet = `
-      type State = {
-        foo?: string;
-        bar: { baz?: number };
-        x?: { y: { z?: boolean } };
-      };
+    type State = {
+      foo?: string;
+      bar: { baz?: number };
+      x?: { y: { z?: boolean } };
+    };
 
-      const state = signalState<State>({ bar: {} });
-      const foo = state.foo;
-      const bar = state.bar;
-      const baz = state.bar.baz;
-      const x = state.x;
-    `;
+    const state = signalState<State>({ bar: {} });
+    const foo = state.foo;
+    const bar = state.bar;
+    const baz = state.bar.baz;
+    const x = state.x;
 
-    const result = expectSnippet(snippet);
-    result.toInfer('state', 'SignalState<State>');
-    result.toInfer('foo', 'Signal<string | undefined> | undefined');
-    result.toInfer('bar', 'DeepSignal<{ baz?: number | undefined; }>');
-    result.toInfer('baz', 'Signal<number | undefined> | undefined');
-    result.toInfer(
-      'x',
-      'Signal<{ y: { z?: boolean | undefined; }; } | undefined> | undefined'
-    );
+    expectTypeOf(state).toEqualTypeOf<SignalState<State>>();
+    expectTypeOf(foo).toEqualTypeOf<Signal<string | undefined> | undefined>();
+    expectTypeOf(bar).toEqualTypeOf<DeepSignal<{ baz?: number | undefined }>>();
+    expectTypeOf(baz).toEqualTypeOf<Signal<number | undefined> | undefined>();
+    expectTypeOf(x).toEqualTypeOf<
+      Signal<{ y: { z?: boolean | undefined } } | undefined> | undefined
+    >();
   });
 
   it('does not create deep signals for unknown records', () => {
-    const snippet = `
-      const state1 = signalState<{ [key: string]: number }>({});
-      declare const state1Keys: keyof typeof state1;
+    const state1 = signalState<{ [key: string]: number }>({});
+    const state2 = signalState<{ [key: number]: { foo: string } }>({
+      1: { foo: 'bar' },
+    });
+    const state3 = signalState<Record<string, { bar: number }>>({});
+    const state4 = signalState({
+      foo: {} as Record<string, { bar: boolean } | number>,
+    });
+    const foo = state4.foo;
+    const state5 = signalState({
+      bar: { baz: {} as Record<number, unknown> },
+    });
+    const bar = state5.bar;
+    const baz = bar.baz;
+    const state6 = signalState({
+      x: {} as Record<symbol, string>,
+    });
+    const x = state6.x;
+    const state7 = signalState({ y: {} });
+    const y = state7.y;
 
-      const state2 = signalState<{ [key: number]: { foo: string } }>({
-         1: { foo: 'bar' },
-      });
-      declare const state2Keys: keyof typeof state2;
+    expectTypeOf(state1).toEqualTypeOf<
+      SignalState<{ [key: string]: number }>
+    >();
+    expectTypeOf<string & keyof typeof state1>().toBeNever();
 
-      const state3 = signalState<Record<string, { bar: number }>>({});
-      declare const state3Keys: keyof typeof state3;
+    expectTypeOf(state2).toEqualTypeOf<
+      SignalState<{ [key: number]: { foo: string } }>
+    >();
+    expectTypeOf<string & keyof typeof state2>().toBeNever();
 
-      const state4 = signalState({
-        foo: {} as Record<string, { bar: boolean } | number>,
-      });
-      const foo = state4.foo;
+    expectTypeOf(state3).toEqualTypeOf<
+      SignalState<Record<string, { bar: number }>>
+    >();
+    expectTypeOf<string & keyof typeof state3>().toBeNever();
 
-      const state5 = signalState({
-        bar: { baz: {} as Record<number, unknown> }
-      });
-      const bar = state5.bar;
-      const baz = bar.baz;
+    expectTypeOf(state4).toEqualTypeOf<
+      SignalState<{ foo: Record<string, number | { bar: boolean }> }>
+    >();
+    expectTypeOf(foo).toEqualTypeOf<
+      Signal<Record<string, number | { bar: boolean }>>
+    >();
 
-      const state6 = signalState({
-        x: {} as Record<symbol, string>
-      });
-      const x = state6.x;
+    expectTypeOf(state5).toEqualTypeOf<
+      SignalState<{ bar: { baz: Record<number, unknown> } }>
+    >();
+    expectTypeOf(bar).toEqualTypeOf<
+      DeepSignal<{ baz: Record<number, unknown> }>
+    >();
+    expectTypeOf(baz).toEqualTypeOf<Signal<Record<number, unknown>>>();
 
-      const state7 = signalState({ y: {} });
-      const y = state7.y;
-    `;
+    expectTypeOf(state6).toEqualTypeOf<
+      SignalState<{ x: Record<symbol, string> }>
+    >();
+    expectTypeOf(x).toEqualTypeOf<Signal<Record<symbol, string>>>();
 
-    const result = expectSnippet(snippet);
-    result.toInfer('state1', 'SignalState<{ [key: string]: number; }>');
-    result.toInfer('state1Keys', 'unique symbol | unique symbol');
-    result.toInfer(
-      'state2',
-      'SignalState<{ [key: number]: { foo: string; }; }>'
-    );
-    result.toInfer('state2Keys', 'unique symbol | unique symbol');
-    result.toInfer('state3', 'SignalState<Record<string, { bar: number; }>>');
-    result.toInfer('state3Keys', 'unique symbol | unique symbol');
-    result.toInfer(
-      'state4',
-      'SignalState<{ foo: Record<string, number | { bar: boolean; }>; }>'
-    );
-    result.toInfer('foo', 'Signal<Record<string, number | { bar: boolean; }>>');
-    result.toInfer(
-      'state5',
-      'SignalState<{ bar: { baz: Record<number, unknown>; }; }>'
-    );
-    result.toInfer('bar', 'DeepSignal<{ baz: Record<number, unknown>; }>');
-    result.toInfer('baz', 'Signal<Record<number, unknown>>');
-    result.toInfer('state6', 'SignalState<{ x: Record<symbol, string>; }>');
-    result.toInfer('x', 'Signal<Record<symbol, string>>');
-    result.toInfer('state7', 'SignalState<{ y: {}; }>');
-    result.toInfer('y', 'Signal<{}>');
+    expectTypeOf(state7).toEqualTypeOf<SignalState<{ y: {} }>>();
+    expectTypeOf(y).toEqualTypeOf<Signal<{}>>();
   });
 
   it('succeeds when state is an empty object', () => {
-    const snippet = `const state = signalState({})`;
-
-    const result = expectSnippet(snippet);
-    result.toInfer('state', 'SignalState<{}>');
+    const state = signalState({});
+    expectTypeOf(state).toEqualTypeOf<SignalState<{}>>();
   });
 
   it('succeeds when state slices are union types', () => {
-    const snippet = `
-      type State = {
-        foo: { s: string } | number;
-        bar: { baz: { n: number } | null };
-        x: { y: { z: boolean | undefined } };
-      };
+    type State = {
+      foo: { s: string } | number;
+      bar: { baz: { n: number } | null };
+      x: { y: { z: boolean | undefined } };
+    };
 
-      const state = signalState<State>({
-        foo: { s: 's' },
-        bar: { baz: null },
-        x: { y: { z: undefined } },
-      });
-      const foo = state.foo;
-      const bar = state.bar;
-      const baz = state.bar.baz;
-      const x = state.x;
-      const y = state.x.y;
-      const z = state.x.y.z;
-    `;
+    const state = signalState<State>({
+      foo: { s: 's' },
+      bar: { baz: null },
+      x: { y: { z: undefined } },
+    });
+    const foo = state.foo;
+    const bar = state.bar;
+    const baz = state.bar.baz;
+    const x = state.x;
+    const y = state.x.y;
+    const z = state.x.y.z;
 
-    const result = expectSnippet(snippet);
-    result.toInfer('state', 'SignalState<State>');
-    result.toInfer('foo', 'Signal<number | { s: string; }>');
-    result.toInfer('bar', 'DeepSignal<{ baz: { n: number; } | null; }>');
-    result.toInfer('baz', 'Signal<{ n: number; } | null>');
-    result.toInfer('x', 'DeepSignal<{ y: { z: boolean | undefined; }; }>');
-    result.toInfer('y', 'DeepSignal<{ z: boolean | undefined; }>');
-    result.toInfer('z', 'Signal<boolean | undefined>');
+    expectTypeOf(state).toEqualTypeOf<SignalState<State>>();
+    expectTypeOf(foo).toEqualTypeOf<Signal<number | { s: string }>>();
+    expectTypeOf(bar).toEqualTypeOf<
+      DeepSignal<{ baz: { n: number } | null }>
+    >();
+    expectTypeOf(baz).toEqualTypeOf<Signal<{ n: number } | null>>();
+    expectTypeOf(x).toEqualTypeOf<
+      DeepSignal<{ y: { z: boolean | undefined } }>
+    >();
+    expectTypeOf(y).toEqualTypeOf<DeepSignal<{ z: boolean | undefined }>>();
+    expectTypeOf(z).toEqualTypeOf<Signal<boolean | undefined>>();
   });
 
   it('succeeds when state contains Function properties', () => {
-    const snippet = `
-      const state1 = signalState({ name: 0 });
-      const state2 = signalState({ foo: { length: [] as boolean[] } });
-      const state3 = signalState({ name: { length: '' } });
+    const state1 = signalState({ name: 0 });
+    const state2 = signalState({ foo: { length: [] as boolean[] } });
+    const state3 = signalState({ name: { length: '' } });
 
-      const name = state1.name;
-      const length1 = state2.foo.length;
-      const name2 = state3.name;
-      const length2 = state3.name.length;
-    `;
+    const name = state1.name;
+    const length1 = state2.foo.length;
+    const name2 = state3.name;
+    const length2 = state3.name.length;
 
-    const result = expectSnippet(snippet);
-    result.toInfer('name', 'Signal<number>');
-    result.toInfer('length1', 'Signal<boolean[]>');
-    result.toInfer('name2', 'DeepSignal<{ length: string; }>');
-    result.toInfer('length2', 'Signal<string>');
+    expectTypeOf(name).toEqualTypeOf<Signal<number>>();
+    expectTypeOf(length1).toEqualTypeOf<Signal<boolean[]>>();
+    expectTypeOf(name2).toEqualTypeOf<DeepSignal<{ length: string }>>();
+    expectTypeOf(length2).toEqualTypeOf<Signal<string>>();
   });
 
   it('fails when state is not an object', () => {
-    expectSnippet(`const state = signalState(10);`).toFail();
-
-    expectSnippet(`const state = signalState('');`).toFail();
-
-    expectSnippet(`const state = signalState(null);`).toFail();
-
-    expectSnippet(`const state = signalState(true);`).toFail();
+    void (() => {
+      // @ts-expect-error - Type 'number' is not assignable to type 'object'
+      signalState(10);
+      // @ts-expect-error - Type 'string' is not assignable to type 'object'
+      signalState('');
+      // @ts-expect-error - Type 'null' is not assignable to type 'object'
+      signalState(null);
+      // @ts-expect-error - Type 'boolean' is not assignable to type 'object'
+      signalState(true);
+    });
   });
 
   it('patches state via sequence of partial state objects and updater functions', () => {
-    expectSnippet(`
-      const state = signalState(initialState);
+    const state = signalState(initialState);
 
-      patchState(
-        state,
-        { numbers: [10, 100, 1000] },
-        (state) => ({ user: { ...state.user, age: state.user.age + 1 } }),
-        { ngrx: 'signals' }
-      );
-    `).toSucceed();
+    patchState(
+      state,
+      { numbers: [10, 100, 1000] },
+      (s) => ({ user: { ...s.user, age: s.user.age + 1 } }),
+      { ngrx: 'signals' }
+    );
   });
 
   it('fails when state is patched with a non-record', () => {
-    expectSnippet(`
-      const state = signalState(initialState);
-      patchState(state, 10);
-    `).toFail();
+    const state = signalState(initialState);
+    // @ts-expect-error - Type 'number' is not assignable to type 'Partial<NoInfer<typeof initialState>>'
+    patchState(state, 10);
 
-    expectSnippet(`
-      const state = signalState(initialState);
-      patchState(state, undefined);
-    `).toFail();
+    const state2 = signalState(initialState);
+    // @ts-expect-error - Type 'undefined' is not assignable to type 'Partial<NoInfer<typeof initialState>>'
+    patchState(state2, undefined);
 
-    expectSnippet(`
-      const state = signalState(initialState);
-      patchState(state, [1, 2, 3]);
-    `).toFail();
+    const state3 = signalState(initialState);
+    // @ts-expect-error - Type 'number[]' is not assignable to type 'Partial<NoInfer<typeof initialState>>'
+    patchState(state3, [1, 2, 3]);
   });
 
   it('fails when state is patched with a wrong record', () => {
-    expectSnippet(`
-      const state = signalState(initialState);
-      patchState(state, { ngrx: 10 });
-    `).toFail(/Type 'number' is not assignable to type 'string'/);
+    const state = signalState(initialState);
+    // @ts-expect-error - Type 'number' is not assignable to type 'string'
+    patchState(state, { ngrx: 10 });
   });
 
   it('fails when state is patched with a wrong updater function', () => {
-    expectSnippet(`
-      const state = signalState(initialState);
-      patchState(state, (state) => ({ user: { ...state.user, age: '30' } }));
-    `).toFail(/Type 'string' is not assignable to type 'number'/);
+    const state = signalState(initialState);
+    // @ts-expect-error - Type 'string' is not assignable to type 'number'
+    patchState(state, (s) => ({
+      user: {
+        ...s.user,
+        age: '30',
+      },
+    }));
   });
-}, 8_000);
+});
