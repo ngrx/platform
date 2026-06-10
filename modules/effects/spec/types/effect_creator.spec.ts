@@ -143,7 +143,7 @@ describe('createEffect()', () => {
         );
       `).toInfer(
         'effect',
-        'FunctionalEffect<({ type }?: { type?: string; }) => Observable<{ type: string; }>>'
+        'FunctionalEffect<({ type }?: { type?: string | undefined; }) => Observable<{ type: string; }>>'
       );
     });
 
@@ -203,7 +203,10 @@ describe('createEffect()', () => {
         effect('m', 's');
 
         let effectArgs: Parameters<typeof effect>;
-      `).toInfer('effectArgs', '[type?: string, payload?: string]');
+      `).toInfer(
+        'effectArgs',
+        '[type?: string | undefined, payload?: string | undefined]'
+      );
     });
 
     it('should be possible to invoke non-dispatching effect without args as function', () => {
@@ -231,7 +234,10 @@ describe('createEffect()', () => {
         effect({ a: 100, b: 200 });
 
         let effectArgs: Parameters<typeof effect>;
-      `).toInfer('effectArgs', '[{ a?: number; b?: number; }?]');
+      `).toInfer(
+        'effectArgs',
+        '[({ a?: number | undefined; b?: number | undefined; } | undefined)?]'
+      );
     });
 
     it('should fail when dispatching effect arguments do not have default values', () => {

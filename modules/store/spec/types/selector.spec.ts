@@ -90,7 +90,7 @@ describe('createSelector() with props', () => {
         > = createSelector(
           () => 'one',
           () => 2,
-          (one, two, props) => 3
+          (one: any, two: any, props: any) => 3
         );
         selectTest.projector();
       `).toSucceed();

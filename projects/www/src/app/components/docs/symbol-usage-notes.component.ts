@@ -1,4 +1,9 @@
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MarkdownPipe } from './markdown.pipe';
 import { ApiMember } from '@ngrx-io/shared';
 
@@ -14,6 +19,7 @@ import { ApiMember } from '@ngrx-io/shared';
       </div>
     }
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .notes {

@@ -6,53 +6,61 @@ import { Injector } from '@angular/core';
 
 describe('Mock Actions', () => {
   describe('with TestBed', () => {
-    it('should provide Actions from source', (done: any) => {
+    it('should provide Actions from source', () => {
       TestBed.configureTestingModule({
         providers: [provideMockActions(of({ type: 'foo' }))],
       });
 
       const actions$ = TestBed.inject(Actions);
-      actions$.subscribe((action) => {
-        expect(action.type).toBe('foo');
-        done();
+      return new Promise<void>((resolve) => {
+        actions$.subscribe((action) => {
+          expect(action.type).toBe('foo');
+          resolve();
+        });
       });
     });
 
-    it('should provide Actions from factory', (done: any) => {
+    it('should provide Actions from factory', () => {
       TestBed.configureTestingModule({
         providers: [provideMockActions(() => of({ type: 'bar' }))],
       });
 
       const actions$ = TestBed.inject(Actions);
-      actions$.subscribe((action) => {
-        expect(action.type).toBe('bar');
-        done();
+      return new Promise<void>((resolve) => {
+        actions$.subscribe((action) => {
+          expect(action.type).toBe('bar');
+          resolve();
+        });
       });
     });
   });
 
   describe('with Injector', () => {
-    it('should provide Actions from source', (done: any) => {
+    it('should provide Actions from source', () => {
       const injector = Injector.create({
         providers: [provideMockActions(of({ type: 'foo' }))],
       });
 
       const actions$ = injector.get(Actions);
-      actions$.subscribe((action) => {
-        expect(action.type).toBe('foo');
-        done();
+      return new Promise<void>((resolve) => {
+        actions$.subscribe((action) => {
+          expect(action.type).toBe('foo');
+          resolve();
+        });
       });
     });
 
-    it('should provide Actions from factory', (done: any) => {
+    it('should provide Actions from factory', () => {
       const injector = Injector.create({
         providers: [provideMockActions(() => of({ type: 'bar' }))],
       });
 
       const actions$ = injector.get(Actions);
-      actions$.subscribe((action) => {
-        expect(action.type).toBe('bar');
-        done();
+      return new Promise<void>((resolve) => {
+        actions$.subscribe((action) => {
+          expect(action.type).toBe('bar');
+          resolve();
+        });
       });
     });
   });

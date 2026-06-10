@@ -1,4 +1,11 @@
-import { Component, input, signal, computed, inject } from '@angular/core';
+import {
+  Component,
+  input,
+  signal,
+  computed,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Location } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
@@ -43,6 +50,7 @@ import { Section } from '../services/guide-menu.service';
     '[class.collapsible]': 'collapsible()',
     '[class.hasActiveUrl]': 'hasActiveUrl()',
   },
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .section-content {

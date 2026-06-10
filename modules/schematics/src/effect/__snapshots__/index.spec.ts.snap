@@ -91,7 +91,7 @@ import { FooEffects } from './foo/foo.effects';
     EffectsModule.forFeature([FooEffects])
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
@@ -177,7 +177,7 @@ import { FooEffects } from './foo/foo.effects';
     EffectsModule.forRoot([FooEffects])
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
@@ -201,7 +201,7 @@ import { EffectsModule } from '@ngrx/effects';
     EffectsModule.forRoot([])
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
@@ -312,7 +312,7 @@ import { FooEffects } from './foo/foo.effects';
     EffectsModule.forFeature([FooEffects])
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
@@ -363,7 +363,7 @@ import { App } from './app';
     BrowserModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })

@@ -179,6 +179,7 @@ exports[`Login Page > should compile 1`] = `
               >
                 Login
               </span>
+              <!--container-->
               <span
                 class="mat-focus-indicator"
               />

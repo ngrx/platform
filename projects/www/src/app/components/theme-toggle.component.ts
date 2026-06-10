@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ThemeService } from '../services/theme.service';
@@ -7,6 +7,7 @@ import { ThemeService } from '../services/theme.service';
   selector: 'ngrx-theme-toggle',
   standalone: true,
   imports: [MatButtonModule, MatIconModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <button
       mat-icon-button

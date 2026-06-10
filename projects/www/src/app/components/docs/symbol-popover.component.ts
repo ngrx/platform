@@ -1,4 +1,9 @@
-import { Component, InjectionToken, inject } from '@angular/core';
+import {
+  Component,
+  InjectionToken,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ApiMemberSummary } from '@ngrx-io/shared';
 import { SymbolHeaderComponent } from './symbol-header.component';
 import { SymbolApiComponent } from './symbol-api.component';
@@ -19,6 +24,7 @@ export const SYMBOl_POPOVER_REF = new InjectionToken<ApiMemberSummary>(
       <ngrx-symbol-api [symbol]="symbol" />
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .popover {

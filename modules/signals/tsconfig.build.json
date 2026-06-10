@@ -5,6 +5,7 @@
     "stripInternal": true,
     "experimentalDecorators": true,
     "downlevelIteration": true,
+    "ignoreDeprecations": "6.0",
     "module": "preserve",
     "moduleResolution": "bundler",
     "outDir": "../../dist/modules/signals",

@@ -102,7 +102,7 @@ describe('Component Store', () => {
           componentStore.setState(() => ({ setState: 'new state' }));
         }).toThrow(
           new Error(
-            'ComponentStore2 has not been initialized yet. ' +
+            'ComponentStore has not been initialized yet. ' +
               'Please make sure it is initialized before updating/getting.'
           )
         );
@@ -116,7 +116,7 @@ describe('Component Store', () => {
         componentStore.patchState({ foo: 'bar' });
       }).toThrow(
         new Error(
-          'ComponentStore2 has not been initialized yet. ' +
+          'ComponentStore has not been initialized yet. ' +
             'Please make sure it is initialized before updating/getting.'
         )
       );
@@ -129,7 +129,7 @@ describe('Component Store', () => {
         componentStore.patchState(of({ foo: 'bar' }));
       }).toThrow(
         new Error(
-          'ComponentStore2 has not been initialized yet. ' +
+          'ComponentStore has not been initialized yet. ' +
             'Please make sure it is initialized before updating/getting.'
         )
       );
@@ -145,7 +145,7 @@ describe('Component Store', () => {
           componentStore.patchState(() => ({ foo: 'bar' }));
         }).toThrow(
           new Error(
-            'ComponentStore2 has not been initialized yet. ' +
+            'ComponentStore has not been initialized yet. ' +
               'Please make sure it is initialized before updating/getting.'
           )
         );
@@ -161,7 +161,7 @@ describe('Component Store', () => {
         });
       }).toThrow(
         new Error(
-          'ComponentStore2 has not been initialized yet. ' +
+          'ComponentStore has not been initialized yet. ' +
             'Please make sure it is initialized before updating/getting.'
         )
       );
@@ -182,7 +182,7 @@ describe('Component Store', () => {
           );
         }).toThrow(
           new Error(
-            'ComponentStore2 has not been initialized yet. ' +
+            'ComponentStore has not been initialized yet. ' +
               'Please make sure it is initialized before updating/getting.'
           )
         );
@@ -208,7 +208,7 @@ describe('Component Store', () => {
           m.flush();
         }).toThrow(
           new Error(
-            'ComponentStore2 has not been initialized yet. ' +
+            'ComponentStore has not been initialized yet. ' +
               'Please make sure it is initialized before updating/getting.'
           )
         );

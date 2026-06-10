@@ -20,7 +20,6 @@ describe('Container Schematic', () => {
     project: 'bar',
     inlineStyle: false,
     inlineTemplate: false,
-    changeDetection: 'Default',
     style: 'css',
     module: undefined,
     export: false,

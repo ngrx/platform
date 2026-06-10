@@ -7,6 +7,7 @@ import {
   input,
   signal,
   viewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
@@ -50,6 +51,7 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
       </div>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {

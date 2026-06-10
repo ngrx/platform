@@ -4,6 +4,8 @@ import {
   Injector,
   PLATFORM_ID,
   signal,
+  effect,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
@@ -73,6 +75,7 @@ import { TopBannerComponent } from './components/top-banner.component';
       }
     `,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[class.top-banner-visible]': 'isTopBannerVisible()',
   },

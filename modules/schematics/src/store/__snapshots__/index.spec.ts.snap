@@ -14,7 +14,7 @@ import { App } from './app';
     BrowserModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
@@ -76,7 +76,7 @@ import { App } from './app';
     BrowserModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
@@ -125,7 +125,7 @@ import * as fromFoo from './reducers';
     StoreModule.forFeature(fromFoo.fooFeatureKey, fromFoo.reducers, { metaReducers: fromFoo.metaReducers })
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
@@ -177,7 +177,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     isDevMode() ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
@@ -223,7 +223,7 @@ import { App } from './app';
     BrowserModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
@@ -272,7 +272,7 @@ import * as fromFoo from './reducers';
     StoreModule.forFeature(fromFoo.fooFeatureKey, fromFoo.reducers, { metaReducers: fromFoo.metaReducers })
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
@@ -323,7 +323,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     isDevMode() ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
@@ -345,7 +345,7 @@ import { App } from './app';
     BrowserModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
@@ -392,7 +392,7 @@ import { App } from './app';
     BrowserModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
@@ -438,7 +438,7 @@ import { App } from './app';
     BrowserModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
@@ -485,7 +485,7 @@ import { App } from './app';
     BrowserModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })
