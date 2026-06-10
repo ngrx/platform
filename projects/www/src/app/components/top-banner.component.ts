@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, output, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 export const TOP_BANNER_DISMISSED_STORAGE_KEY = 'ngrx-top-banner-dismissed';
@@ -27,6 +27,7 @@ export const TOP_BANNER_DISMISSED_STORAGE_KEY = 'ngrx-top-banner-dismissed';
       </button>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {

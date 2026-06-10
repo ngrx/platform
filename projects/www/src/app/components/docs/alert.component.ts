@@ -1,4 +1,9 @@
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 export type AlertType = 'inform' | 'warn' | 'error' | 'help';
 
@@ -12,6 +17,7 @@ export type AlertType = 'inform' | 'warn' | 'error' | 'help';
     '[class.error]': 'isError()',
     '[class.help]': 'isHelp()',
   },
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {

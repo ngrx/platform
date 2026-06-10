@@ -200,7 +200,7 @@ import * as fromFoo from './foo.reducer';
     StoreModule.forFeature(fromFoo.fooFeatureKey, fromFoo.reducer)
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })

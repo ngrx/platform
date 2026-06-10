@@ -12,6 +12,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "downlevelIteration": true,
+    "ignoreDeprecations": "6.0",
     "outDir": "../../dist/packages/component",
     "paths": {},
     "rootDir": ".",

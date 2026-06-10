@@ -1,4 +1,9 @@
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CodeExampleComponent } from './code-example.component';
 
@@ -6,6 +11,7 @@ import { CodeExampleComponent } from './code-example.component';
   selector: 'ngrx-install-instructions',
   standalone: true,
   imports: [MatTabsModule, CodeExampleComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <mat-tab-group [preserveContent]="true">
       <mat-tab label="npm">

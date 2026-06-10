@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { StyledBoxComponent } from '../components/styled-box.component';
 
@@ -22,9 +22,9 @@ import { StyledBoxComponent } from '../components/styled-box.component';
         <a routerLink="." fragment="team">participating NgRx team members</a>.
       </p>
 
-      <a routerLink="." fragment="upcoming" class="cta-button">
-        View upcoming dates ↓
-      </a>
+      <!--      <a routerLink="." fragment="upcoming" class="cta-button">-->
+      <!--        View upcoming dates ↓-->
+      <!--      </a>-->
 
       <h2>
         Enterprise Angular Architectures with NgRx, Signals, and AI Assistants
@@ -193,42 +193,42 @@ import { StyledBoxComponent } from '../components/styled-box.component';
         learning experience.
       </p>
 
-      <h2 id="upcoming">Upcoming Workshops</h2>
+      <!--      <h2 id="upcoming">Upcoming Workshops</h2>-->
 
-      <div class="upcoming">
-        <div class="workshop-item">
-          <div class="workshop-meta">
-            <span class="workshop-date">May 13&ndash;15, 2026</span>
-            <span class="workshop-tz">US-friendly timezone</span>
-            <span class="workshop-time">
-              Start time: 8 AM (PT) / 11 AM (ET)
-            </span>
-            <span class="workshop-duration">8 hours / day</span>
-          </div>
-          <a
-            href="https://ti.to/ngrx/workshop-may-2025-us?source=ngrx_io"
-            target="_blank"
-            class="workshop-register"
-          >
-            Register
-          </a>
-        </div>
-        <div class="workshop-item">
-          <div class="workshop-meta">
-            <span class="workshop-date">May 20&ndash;22, 2026</span>
-            <span class="workshop-tz">EU-friendly timezone</span>
-            <span class="workshop-time">Start time: 10 AM (CET)</span>
-            <span class="workshop-duration">8 hours / day</span>
-          </div>
-          <a
-            href="https://ti.to/ngrx/workshop-may-2025-eu?source=ngrx_io"
-            target="_blank"
-            class="workshop-register"
-          >
-            Register
-          </a>
-        </div>
-      </div>
+      <!--      <div class="upcoming">-->
+      <!--        <div class="workshop-item">-->
+      <!--          <div class="workshop-meta">-->
+      <!--            <span class="workshop-date">May 13&ndash;15, 2026</span>-->
+      <!--            <span class="workshop-tz">US-friendly timezone</span>-->
+      <!--            <span class="workshop-time">-->
+      <!--              Start time: 8 AM (PT) / 11 AM (ET)-->
+      <!--            </span>-->
+      <!--            <span class="workshop-duration">8 hours / day</span>-->
+      <!--          </div>-->
+      <!--          <a-->
+      <!--            href="https://ti.to/ngrx/workshop-may-2025-us?source=ngrx_io"-->
+      <!--            target="_blank"-->
+      <!--            class="workshop-register"-->
+      <!--          >-->
+      <!--            Register-->
+      <!--          </a>-->
+      <!--        </div>-->
+      <!--        <div class="workshop-item">-->
+      <!--          <div class="workshop-meta">-->
+      <!--            <span class="workshop-date">May 20&ndash;22, 2026</span>-->
+      <!--            <span class="workshop-tz">EU-friendly timezone</span>-->
+      <!--            <span class="workshop-time">Start time: 10 AM (CET)</span>-->
+      <!--            <span class="workshop-duration">8 hours / day</span>-->
+      <!--          </div>-->
+      <!--          <a-->
+      <!--            href="https://ti.to/ngrx/workshop-may-2025-eu?source=ngrx_io"-->
+      <!--            target="_blank"-->
+      <!--            class="workshop-register"-->
+      <!--          >-->
+      <!--            Register-->
+      <!--          </a>-->
+      <!--        </div>-->
+      <!--      </div>-->
 
       <h2 id="team">Participating NgRx Team Members</h2>
 
@@ -333,6 +333,7 @@ import { StyledBoxComponent } from '../components/styled-box.component';
       </p>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {

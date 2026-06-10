@@ -9,6 +9,12 @@
   "include": ["src/**/*.d.ts"],
   "exclude": ["**/*.spec.ts", "**/*.test.ts"],
   "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    },
     "strictTemplates": true,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true

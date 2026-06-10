@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * The dialog will close with true if user clicks the ok button,
@@ -31,6 +31,7 @@ import { Component } from '@angular/core';
       }
     `,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class LogoutConfirmationDialogComponent {}

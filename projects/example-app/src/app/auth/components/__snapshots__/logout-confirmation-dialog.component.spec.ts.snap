@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Logout Confirmation Dialog > should compile 1`] = `
-<undefined>
+<ng-component>
   <h2
     _ngcontent-a-c626405556=""
     class="mat-mdc-dialog-title mdc-dialog__title"
@@ -36,6 +36,7 @@ exports[`Logout Confirmation Dialog > should compile 1`] = `
       >
         Cancel
       </span>
+      <!--container-->
       <span
         class="mat-focus-indicator"
       />
@@ -59,6 +60,7 @@ exports[`Logout Confirmation Dialog > should compile 1`] = `
       >
         OK
       </span>
+      <!--container-->
       <span
         class="mat-focus-indicator"
       />
@@ -67,5 +69,5 @@ exports[`Logout Confirmation Dialog > should compile 1`] = `
       />
     </button>
   </mat-dialog-actions>
-</undefined>
+</ng-component>
 `;

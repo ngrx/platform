@@ -1,4 +1,9 @@
-import { Component, input, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  input,
+  ViewEncapsulation,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { SymbolLinkComponent } from './symbol-link.component';
 import { CanonicalReference } from '@ngrx-io/shared';
 
@@ -8,6 +13,7 @@ import { CanonicalReference } from '@ngrx-io/shared';
   imports: [SymbolLinkComponent],
   template: ` <ngrx-symbol-link [reference]="reference()"></ngrx-symbol-link> `,
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       ngrx-docs-symbol-link {

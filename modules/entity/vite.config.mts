@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
       pool: 'forks',
       environment: 'jsdom',
       setupFiles: ['test-setup.ts'],
-      include: ['spec/**/*.spec.ts'],
+      include: ['**/*.spec.ts'],
       reporters: ['default'],
     },
     define: {

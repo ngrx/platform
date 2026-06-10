@@ -1,4 +1,9 @@
-import { Component, Type, Injectable } from '@angular/core';
+import {
+  Component,
+  Type,
+  Injectable,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ComponentStore } from '../src';
 import {
   TestBed,
@@ -206,6 +211,7 @@ describe('ComponentStore integration', () => {
       <child></child>
     }`,
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
   })
   class ParentComponent implements Parent {
     isChildVisible = true;

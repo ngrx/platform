@@ -206,7 +206,7 @@ exports[`Login Page > should display an error message if provided 1`] = `
           _ngcontent-a-c1882380116=""
           class="login-error"
         >
-           Invalid credentials 
+           Invalid credentials
         </p>
         <!--container-->
         <div

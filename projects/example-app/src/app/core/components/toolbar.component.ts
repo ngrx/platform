@@ -1,4 +1,9 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 @Component({
   selector: 'bc-toolbar',
@@ -10,6 +15,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
       <ng-content></ng-content>
     </mat-toolbar>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ToolbarComponent {
