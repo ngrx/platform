@@ -6,8 +6,10 @@ export {
   EntityAdapter,
   EntityMap,
   EntityMapOne,
+  EntitySelectors,
   EntityState,
   IdSelector,
+  MemoizedEntitySelectors,
   Predicate,
   Update,
 } from './models';

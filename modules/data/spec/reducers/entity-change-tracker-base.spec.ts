@@ -253,11 +253,11 @@ describe('EntityChangeTrackerBase', () => {
     });
   });
 
-  describe('#mergeSaveDeletes', () => {
+  describe.skip('#mergeSaveDeletes', () => {
     // TODO: add some tests
   });
 
-  describe('#mergeSaveUpdates', () => {
+  describe.skip('#mergeSaveUpdates', () => {
     // TODO: add some tests
   });
 

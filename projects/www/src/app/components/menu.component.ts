@@ -6,6 +6,7 @@ import {
   inject,
   signal,
   viewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -13,6 +14,7 @@ import { GuideSectionComponent } from './guide-section.component';
 import { GuideMenuService } from '../services/guide-menu.service';
 import { DOCUMENT } from '@angular/common';
 import { VersionNavigationComponent } from './version-navigation.component';
+import { ThemeToggleComponent } from './theme-toggle.component';
 
 @Component({
   selector: 'ngrx-menu',
@@ -23,6 +25,7 @@ import { VersionNavigationComponent } from './version-navigation.component';
     RouterLinkActive,
     GuideSectionComponent,
     VersionNavigationComponent,
+    ThemeToggleComponent,
   ],
   template: `
     <div class="mobile-nav-bar">
@@ -35,21 +38,15 @@ import { VersionNavigationComponent } from './version-navigation.component';
       <button class="close-menu" (click)="closeMenu()">
         <mat-icon class="close-menu-icon">close</mat-icon>
       </button>
-      <a routerLink="" class="logoLink" (click)="closeMenu()">
-        <img src="/ngrx-logo-pink.svg" alt="ngrx logo" />
-        NgRx
-      </a>
+      <div class="sidebar-header">
+        <a routerLink="" class="logoLink" (click)="closeMenu()">
+          <img src="/ngrx-logo-pink.svg" alt="ngrx logo" />
+          NgRx
+        </a>
+        <ngrx-theme-toggle />
+      </div>
       <ngrx-version-navigation />
       <hr />
-      <!--      <a-->
-      <!--        routerLink="/workshops"-->
-      <!--        routerLinkActive="active"-->
-      <!--        class="menu-link"-->
-      <!--        (click)="closeMenu()"-->
-      <!--      >-->
-      <!--        <mat-icon>co_present</mat-icon>-->
-      <!--        Workshops-->
-      <!--      </a>-->
       <a
         routerLink="/api"
         routerLinkActive="active"
@@ -58,6 +55,15 @@ import { VersionNavigationComponent } from './version-navigation.component';
       >
         <mat-icon>description</mat-icon>
         API Reference
+      </a>
+      <a
+        routerLink="/workshops"
+        routerLinkActive="active"
+        class="menu-link"
+        (click)="closeMenu()"
+      >
+        <mat-icon>co_present</mat-icon>
+        Workshops
       </a>
       <a
         href="https://github.com/sponsors/ngrx"
@@ -83,38 +89,43 @@ import { VersionNavigationComponent } from './version-navigation.component';
       ></ngrx-guide-section>
     </nav>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .mobile-nav-bar {
         position: fixed;
-        top: 0;
+        top: var(--top-banner-height, 0px);
         display: none;
-        background-color: #17111a;
+        background-color: var(--ngrx-bg-surface);
         width: 100%;
         padding: 15px 20px;
+
         .menu-toggle {
           display: flex;
           align-items: center;
           background-color: transparent;
           border: none;
           cursor: pointer;
+
           img {
             width: 30px;
             margin-right: 8px;
           }
         }
+
         @media only screen and (max-width: 1280px) {
           display: block;
         }
       }
+
       .sidebar {
         display: flex;
         flex-direction: column;
         gap: 16px;
         padding: 32px 24px;
-        border-right: 1px solid rgba(255, 255, 255, 0.12);
+        border-right: 1px solid var(--ngrx-border-color);
         @media only screen and (max-width: 1280px) {
-          background-color: #17111a;
+          background-color: var(--ngrx-bg-surface);
           position: fixed;
           top: 0;
           left: -270px;
@@ -123,12 +134,14 @@ import { VersionNavigationComponent } from './version-navigation.component';
           height: 100lvh;
           overflow-y: scroll;
         }
+
         &.open {
           @media only screen and (max-width: 1280px) {
             display: flex;
             left: 0;
           }
         }
+
         .close-menu {
           display: none;
           background-color: transparent;
@@ -138,16 +151,18 @@ import { VersionNavigationComponent } from './version-navigation.component';
           @media only screen and (max-width: 1280px) {
             display: block;
           }
+
           .close-menu-icon {
             cursor: pointer;
           }
         }
       }
+
       .logoLink {
         font-family: 'Oxanium', sans-serif;
         font-weight: 600;
         font-size: 18px;
-        color: white;
+        color: var(--ngrx-text);
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -158,13 +173,25 @@ import { VersionNavigationComponent } from './version-navigation.component';
         width: 24px;
       }
 
+      .sidebar-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
       :host {
         z-index: 2;
+
+        @media only screen and (max-width: 1280px) {
+          z-index: 4;
+        }
+
         width: 270px;
         height: 100lvh;
-        background-color: #17111a;
+        background-color: var(--ngrx-bg-surface);
         overflow-y: scroll;
-        border-right: 1px solid rgba(255, 255, 255, 0.12);
+        border-right: 1px solid var(--ngrx-border-color);
         @media only screen and (max-width: 1280px) {
           border-right: none;
           width: 0px;
@@ -178,31 +205,31 @@ import { VersionNavigationComponent } from './version-navigation.component';
         align-items: center;
         gap: 12px;
         text-decoration: none;
-        color: rgba(255, 255, 255, 0.64);
+        color: var(--ngrx-text-muted);
         font-family: 'Oxanium', sans-serif;
         font-size: 14px;
         transition: color 0.2s;
       }
 
       .menu-link mat-icon {
-        color: rgba(255, 255, 255, 0.32);
+        color: var(--ngrx-text-faint);
         font-size: 20px;
         transition: color 0.2s;
       }
 
       .menu-link:hover,
       .menu-link.active {
-        color: white;
+        color: var(--ngrx-text);
       }
 
       .menu-link:hover mat-icon,
       .menu-link.active mat-icon {
-        color: #cf8fc5;
+        color: var(--ngrx-accent);
       }
 
       hr {
         border: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
         width: 100%;
       }
 
@@ -213,6 +240,7 @@ import { VersionNavigationComponent } from './version-navigation.component';
         text-transform: uppercase;
         padding: 0 0 0 8px;
         margin: -8px;
+        color: var(--ngrx-text-muted);
       }
     `,
   ],

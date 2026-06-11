@@ -1,4 +1,9 @@
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ApiMember } from '@ngrx-io/shared';
 import { SymbolExcerptComponent } from './symbol-excerpt.component';
 import { InlineMarkdownPipe } from './inline-markdown.pipe';
@@ -26,11 +31,12 @@ import { InlineMarkdownPipe } from './inline-markdown.pipe';
       </div>
     }
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {
         display: block;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
       }
 
       .param {
@@ -48,7 +54,7 @@ import { InlineMarkdownPipe } from './inline-markdown.pipe';
 
       .paramSymbol {
         font-weight: 700;
-        color: #fface6;
+        color: var(--ngrx-link);
       }
 
       code {

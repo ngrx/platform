@@ -197,7 +197,6 @@ export class GuideMenuService {
     ]),
     lineBreak(),
     section('Developer Resources', [
-      link('Nightlies', '/guide/nightlies'),
       section('Migrations', [
         link('V22', '/guide/migration/v22'),
         link('V21', '/guide/migration/v21'),

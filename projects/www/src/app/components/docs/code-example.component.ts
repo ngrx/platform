@@ -3,10 +3,11 @@ import {
   Component,
   ElementRef,
   inject,
-  Input,
   PLATFORM_ID,
+  input,
   signal,
   viewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
@@ -18,8 +19,8 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
   standalone: true,
   imports: [MatIcon, CodeHighlightPipe],
   template: `
-    @if (header) {
-      <div class="header">{{ header }}</div>
+    @if (header()) {
+      <div class="header">{{ header() }}</div>
     }
 
     <div class="body">
@@ -40,27 +41,35 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
         }
       </button>
       <div #codeBody>
-        @if (path) {
-          <div [innerHTML]="codeContent() | ngrxCodeHighlight"></div>
+        @if (snippet() || path()) {
+          <div
+            [innerHTML]="codeContent() | ngrxCodeHighlight: language()"
+          ></div>
         } @else {
           <ng-content />
         }
       </div>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {
         display: flex;
         flex-direction: column;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid var(--ngrx-border-color);
         margin: 14px 0 24px;
+      }
+
+      :host ::ng-deep pre:has(code) {
+        margin: 0;
+        border: 0;
       }
 
       .header {
         padding: 8px 16px;
-        background-color: rgba(255, 255, 255, 0.05);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        background-color: var(--ngrx-bg-elevated);
+        border-bottom: 1px solid var(--ngrx-border-color);
         font-size: 12px;
         font-weight: 500;
       }
@@ -93,31 +102,31 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
         0% {
           background: rgba(207, 143, 197, 0.6);
           border-color: rgba(207, 143, 197, 0.4);
-          color: rgba(255, 255, 255, 1);
+          color: var(--ngrx-text);
           transform: scale(1);
         }
         15% {
           background: rgba(207, 143, 197, 0.6);
           border-color: rgba(207, 143, 197, 0.4);
-          color: rgba(255, 255, 255, 1);
+          color: var(--ngrx-text);
           transform: scale(1.1);
         }
         30% {
           background: rgba(207, 143, 197, 0.6);
           border-color: rgba(207, 143, 197, 0.4);
-          color: rgba(255, 255, 255, 1);
+          color: var(--ngrx-text);
           transform: scale(1);
         }
         80% {
           background: rgba(207, 143, 197, 0.6);
           border-color: rgba(207, 143, 197, 0.4);
-          color: rgba(255, 255, 255, 1);
+          color: var(--ngrx-text);
           transform: scale(1);
         }
         100% {
-          background: rgba(0, 0, 0, 0.7);
-          border-color: rgba(255, 255, 255, 0.2);
-          color: rgba(255, 255, 255, 0.8);
+          background: var(--ngrx-bg-elevated);
+          border-color: var(--ngrx-border-color);
+          color: var(--ngrx-text-secondary);
           transform: scale(1);
         }
       }
@@ -129,10 +138,11 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
   ],
 })
 export class CodeExampleComponent implements AfterViewInit {
-  @Input() header = '';
-  @Input() path = '';
-  @Input() region = '';
-  @Input() language = 'typescript';
+  header = input('');
+  path = input('');
+  region = input('');
+  language = input('typescript');
+  snippet = input('');
 
   codeBody = viewChild.required<ElementRef>('codeBody');
   copied = signal(false);
@@ -155,11 +165,16 @@ export class CodeExampleComponent implements AfterViewInit {
 
   async ngAfterViewInit() {
     if (isPlatformServer(this.platformId)) return;
-    if (!this.path) return;
+    if (this.snippet()) {
+      this.codeContent.set(this.snippet());
+      return;
+    }
+
+    if (!this.path()) return;
 
     const content = await this.exampleService.extractSnippet(
-      this.path,
-      this.region
+      this.path(),
+      this.region()
     );
     this.codeContent.set(content);
   }

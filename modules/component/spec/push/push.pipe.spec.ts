@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ErrorHandler,
@@ -31,6 +32,7 @@ let pushPipe: PushPipe;
 @Component({
   template: ` {{ (value$ | ngrxPush | json) || 'undefined' }} `,
   imports: [PushPipe, JsonPipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
 })
 class PushPipeTestComponent {
   value$: unknown = of(42);
@@ -137,14 +139,15 @@ describe('PushPipe', () => {
         expect(pushPipe.transform(of(42))).toBe(42);
       });
 
-      it('should return emitted value from passed promise without changing it', (done) => {
-        const promise = Promise.resolve(42);
-        pushPipe.transform(promise);
-        setTimeout(() => {
-          expect(pushPipe.transform(promise)).toBe(42);
-          done();
-        });
-      });
+      it('should return emitted value from passed promise without changing it', () =>
+        new Promise<void>((done) => {
+          const promise = Promise.resolve(42);
+          pushPipe.transform(promise);
+          setTimeout(() => {
+            expect(pushPipe.transform(promise)).toBe(42);
+            done();
+          });
+        }));
 
       it('should return undefined when any observable from dictionary emits first value asynchronously', () => {
         const result = pushPipe.transform({

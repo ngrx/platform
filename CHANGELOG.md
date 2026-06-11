@@ -1,3 +1,48 @@
+<a name="21.1.1"></a>
+
+## [21.1.1](https://github.com/ngrx/platform/compare/21.1.0...21.1.1) (2026-06-08)
+
+### Bug Fixes
+
+- **data:** remove QueryParams deprecation warning ([#5152](https://github.com/ngrx/platform/issues/5152)) ([77dd99e](https://github.com/ngrx/platform/commit/77dd99e)), closes [#5150](https://github.com/ngrx/platform/issues/5150)
+- **effects:** update ng-add schematic to use inject function ([#5141](https://github.com/ngrx/platform/issues/5141)) ([eaac970](https://github.com/ngrx/platform/commit/eaac970))
+- **schematics:** use inject in generated data, effect, and component-store templates ([#5142](https://github.com/ngrx/platform/issues/5142)) ([bc253ae](https://github.com/ngrx/platform/commit/bc253ae)), closes [#5136](https://github.com/ngrx/platform/issues/5136)
+
+### Features
+
+- **signals:** add delegatedSignal ([#5151](https://github.com/ngrx/platform/issues/5151)) ([a469cbf](https://github.com/ngrx/platform/commit/a469cbf)), closes [#5121](https://github.com/ngrx/platform/issues/5121)
+
+<a name="21.1.1"></a>
+
+## [21.1.1](https://github.com/ngrx/platform/compare/21.1.0...21.1.1) (2026-06-08)
+
+### Bug Fixes
+
+- **data:** remove QueryParams deprecation warning ([#5152](https://github.com/ngrx/platform/issues/5152)) ([77dd99e](https://github.com/ngrx/platform/commit/77dd99e)), closes [#5150](https://github.com/ngrx/platform/issues/5150)
+- **effects:** update ng-add schematic to use inject function ([#5141](https://github.com/ngrx/platform/issues/5141)) ([eaac970](https://github.com/ngrx/platform/commit/eaac970))
+- **schematics:** use inject in generated data, effect, and component-store templates ([#5142](https://github.com/ngrx/platform/issues/5142)) ([bc253ae](https://github.com/ngrx/platform/commit/bc253ae)), closes [#5136](https://github.com/ngrx/platform/issues/5136)
+
+### Features
+
+- **signals:** add delegatedSignal ([#5151](https://github.com/ngrx/platform/issues/5151)) ([a469cbf](https://github.com/ngrx/platform/commit/a469cbf)), closes [#5121](https://github.com/ngrx/platform/issues/5121)
+
+<a name="21.1.0"></a>
+
+# [21.1.0](https://github.com/ngrx/platform/compare/21.0.1...21.1.0) (2026-03-24)
+
+### Bug Fixes
+
+- **component:** fix "Illegal invocation" error ([#5110](https://github.com/ngrx/platform/issues/5110)) ([2b26360](https://github.com/ngrx/platform/commit/2b26360)), closes [#5108](https://github.com/ngrx/platform/issues/5108)
+- **eslint-plugin:** Support factory by with-state-no-arrays-at-root-level ([#5115](https://github.com/ngrx/platform/issues/5115)) ([653efa5](https://github.com/ngrx/platform/commit/653efa5)), closes [#5104](https://github.com/ngrx/platform/issues/5104)
+- **signals:** deprecate calling rxMethod/signalMethod outside injection context ([#5079](https://github.com/ngrx/platform/issues/5079)) ([0ea338f](https://github.com/ngrx/platform/commit/0ea338f))
+
+### Features
+
+- **docs:** add theme toggle ([#5092](https://github.com/ngrx/platform/issues/5092)) ([5d88f2c](https://github.com/ngrx/platform/commit/5d88f2c)), closes [#5065](https://github.com/ngrx/platform/issues/5065)
+- **entity:** export EntitySelectors and MemoizedEntitySelectors types ([2906540](https://github.com/ngrx/platform/commit/2906540))
+- **eslint-plugin:** add ESLint v10 compatibility ([#5103](https://github.com/ngrx/platform/issues/5103)) ([853cbc5](https://github.com/ngrx/platform/commit/853cbc5)), closes [#5102](https://github.com/ngrx/platform/issues/5102)
+- **store:** export SelectSignalOptions type ([97a6843](https://github.com/ngrx/platform/commit/97a6843))
+
 <a name="21.0.1"></a>
 
 ## [21.0.1](https://github.com/ngrx/platform/compare/21.0.0...21.0.1) (2025-12-22)

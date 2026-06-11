@@ -80,7 +80,6 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: '**/pnpm-lock.yaml'
       - run: pnpm install --frozen-lockfile --prefer-offline
-      - run: pnpm exec cypress install
       - uses: nrwl/nx-set-shas@v4
       - run: pnpm exec nx run-many -t e2e --exclude=www --parallel=1
 

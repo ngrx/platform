@@ -7,7 +7,10 @@ import { tags, logging } from '@angular-devkit/core';
 import * as path from 'path';
 
 describe('Effects Migration to 18.0.0-beta', () => {
-  const collectionPath = path.join(__dirname, '../migration.json');
+  const collectionPath = path.join(
+    process.cwd(),
+    'dist/modules/effects/migrations/migration.json'
+  );
   const schematicRunner = new SchematicTestRunner('schematics', collectionPath);
 
   let appTree: UnitTestTree;

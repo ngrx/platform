@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -38,6 +38,7 @@ import { RouterLink } from '@angular/router';
       <a href="https://discord.com/invite/ngrx" target="_blank">Discord</a>
     </nav>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {
@@ -45,7 +46,7 @@ import { RouterLink } from '@angular/router';
         grid-template-columns: 280px 1fr 1fr 1fr;
         gap: 32px;
         padding: 32px;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
         @media only screen and (max-width: 1280px) {
           grid-template-columns: repeat(2, 1fr);
         }

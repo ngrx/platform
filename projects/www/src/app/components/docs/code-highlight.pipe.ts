@@ -10,7 +10,7 @@ import {
 
 let highlighter: HighlighterGeneric<BundledLanguage, BundledTheme>;
 getHighlighter({
-  langs: ['typescript'],
+  langs: ['typescript', 'sh', 'html'],
   themes: [ngrxTheme],
 }).then((h) => (highlighter = h));
 
@@ -22,9 +22,9 @@ getHighlighter({
 export class CodeHighlightPipe implements PipeTransform {
   private sanitizer = inject(DomSanitizer);
 
-  transform(code: string): SafeHtml {
+  transform(code: string, language = 'typescript'): SafeHtml {
     const html = highlighter?.codeToHtml(code, {
-      lang: 'typescript',
+      lang: language,
       theme: 'ngrx-theme',
     });
 

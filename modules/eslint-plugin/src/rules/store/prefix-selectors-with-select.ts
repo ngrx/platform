@@ -57,7 +57,8 @@ export default createRule<Options, MessageIds>({
               data: { name: suggestedName },
               fix: (fixer) => {
                 const parent = node.parent;
-                const sourceCode = context.getSourceCode();
+                const sourceCode =
+                  context.sourceCode ?? context.getSourceCode();
 
                 // Handle destructuring: { selectAll: allItems }
                 if (

@@ -1,32 +1,40 @@
-import { Component, inject, signal, ElementRef } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  ElementRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { VersionInfoService } from '../services/versionInfo.service';
 
 @Component({
   selector: 'ngrx-version-navigation',
   template: `
     @if (previousVersions && previousVersions.length > 0) {
-    <div class="version-navigation">
-      <button
-        (click)="toggleDropdown()"
-        class="version-toggle-btn"
-        type="button"
-      >
-        <span>v{{ currentVersion }}</span>
-        <span class="arrow-icon" [class.rotated]="isDropdownVisible()">▼</span>
-      </button>
+      <div class="version-navigation">
+        <button
+          (click)="toggleDropdown()"
+          class="version-toggle-btn"
+          type="button"
+        >
+          <span>v{{ currentVersion }}</span>
+          <span class="arrow-icon" [class.rotated]="isDropdownVisible()"
+            >▼</span
+          >
+        </button>
 
-      <div class="version-list" [class.hidden]="!isDropdownVisible()">
-        <ul>
-          @for (version of previousVersions; track version.title) {
-          <li>
-            <a [href]="version.url">
-              {{ version.title }}
-            </a>
-          </li>
-          }
-        </ul>
+        <div class="version-list" [class.hidden]="!isDropdownVisible()">
+          <ul>
+            @for (version of previousVersions; track version.title) {
+              <li>
+                <a [href]="version.url">
+                  {{ version.title }}
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
       </div>
-    </div>
     }
   `,
   styles: [
@@ -34,8 +42,8 @@ import { VersionInfoService } from '../services/versionInfo.service';
       .version-toggle-btn {
         width: 100%;
         padding: 0.5rem 1rem;
-        background-color: #241b28;
-        color: #ffffffa3;
+        background-color: var(--ngrx-bg-elevated);
+        color: var(--ngrx-text-faint);
         border: none;
         cursor: pointer;
         font-size: 0.9rem;
@@ -56,11 +64,11 @@ import { VersionInfoService } from '../services/versionInfo.service';
       }
 
       .version-toggle-btn:hover {
-        background-color: #2b1f31;
+        background-color: var(--ngrx-bg-elevated-hover);
       }
 
       .version-list {
-        background-color: #0d0a0f;
+        background-color: var(--ngrx-bg-overlay);
       }
 
       .version-list.hidden {
@@ -74,7 +82,7 @@ import { VersionInfoService } from '../services/versionInfo.service';
       }
 
       .version-list li {
-        border-bottom: 1px solid #17111a;
+        border-bottom: 1px solid var(--ngrx-bg);
         font-size: 0.9rem;
       }
 
@@ -86,15 +94,16 @@ import { VersionInfoService } from '../services/versionInfo.service';
         display: block;
         padding: 0.25rem 1rem;
         text-decoration: none;
-        color: #ffffffa3;
+        color: var(--ngrx-text-faint);
         transition: background-color 0.2s ease;
       }
 
       .version-list a:hover {
-        background-color: #2b1f31;
+        background-color: var(--ngrx-bg-elevated-hover);
       }
     `,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '(document:click)': 'closeDropdownOnOutsideClick($event)',
   },

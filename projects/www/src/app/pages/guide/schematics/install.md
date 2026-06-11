@@ -12,18 +12,8 @@ This command will automate the following steps:
 
 1. Add `@ngrx/schematics` to `angular.json` > `cli > schematicCollections`. If `schematicCollections` does not exist, it will be created.
 
-## Installing with `npm`
+## Manual Installation
 
-For more information on using `npm` check out the docs <a href="https://docs.npmjs.com/cli/install" target="_blank">here</a>.
+You can also install `@ngrx/schematics` manually using one of the following commands:
 
-```sh
-npm install @ngrx/schematics --save-dev
-```
-
-## Installing with `yarn`
-
-For more information on using `yarn` check out the docs <a href="https://yarnpkg.com/getting-started/usage#installing-all-the-dependencies" target="_blank">here</a>.
-
-```sh
-yarn add @ngrx/schematics --dev
-```
+<ngrx-docs-install package-name="@ngrx/schematics" npm-flags="--save-dev" yarn-flags="--dev"></ngrx-docs-install>

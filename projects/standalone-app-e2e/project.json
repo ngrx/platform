@@ -7,15 +7,13 @@
   "implicitDependencies": ["standalone-app"],
   "targets": {
     "e2e": {
-      "executor": "@nx/cypress:cypress",
+      "executor": "@nx/playwright:playwright",
       "options": {
-        "cypressConfig": "projects/standalone-app-e2e/cypress.config.ts",
-        "devServerTarget": "standalone-app:serve:development",
-        "testingType": "e2e"
+        "config": "projects/standalone-app-e2e/playwright.config.ts"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "standalone-app:serve:production"
+          "config": "projects/standalone-app-e2e/playwright.config.ts"
         }
       }
     },

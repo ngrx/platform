@@ -5,17 +5,21 @@
     "stripInternal": true,
     "experimentalDecorators": true,
     "module": "nodenext",
+    "target": "es2022",
     "moduleResolution": "nodenext",
     "downlevelIteration": true,
+    "ignoreDeprecations": "6.0",
     "outDir": "../../dist/modules/data",
     "paths": {
-      "@ngrx/data/schematics-core": ["./schematics-core"]
+      "@ngrx/data/schematics-core": ["./schematics-core"],
+      "@ngrx/data": ["./src"]
     },
     "sourceMap": true,
     "inlineSources": true,
     "lib": ["ES2022", "dom"],
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "types": ["node"]
   },
   "include": ["migrations/**/*.ts", "schematics/**/*.ts"],
   "exclude": ["**/*.spec.ts"],

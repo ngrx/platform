@@ -22,6 +22,7 @@ import {
   Logger,
 } from '../..';
 import { ENTITY_EFFECTS_SCHEDULER } from '../../src/effects/entity-effects-scheduler';
+import { Mock, vi } from 'vitest';
 
 //////// Tests begin ////////
 describe('EntityEffects (marble testing)', () => {
@@ -33,9 +34,9 @@ describe('EntityEffects (marble testing)', () => {
 
   beforeEach(() => {
     logger = {
-      error: jasmine.createSpy('error'),
-      log: jasmine.createSpy('log'),
-      warn: jasmine.createSpy('warn'),
+      error: vi.fn().mockName('error'),
+      log: vi.fn().mockName('log'),
+      warn: vi.fn().mockName('warn'),
     };
 
     TestBed.configureTestingModule({
@@ -77,7 +78,7 @@ describe('EntityEffects (marble testing)', () => {
     // delay the response 3 frames
     const response = cold('---a|', { a: heroes });
     const expected = cold('----b', { b: completion });
-    dataService.getAll.and.returnValue(response);
+    dataService.getAll.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -91,7 +92,7 @@ describe('EntityEffects (marble testing)', () => {
     actions = hot('-a---', { a: action });
     const response = cold('----#|', {}, error);
     const expected = cold('------b', { b: completion });
-    dataService.getAll.and.returnValue(response);
+    dataService.getAll.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
     expect(completion.payload.entityOp).toEqual(EntityOp.QUERY_ALL_ERROR);
@@ -110,7 +111,7 @@ describe('EntityEffects (marble testing)', () => {
     // delay the response 3 frames
     const response = cold('---a|', { a: hero });
     const expected = cold('----b', { b: completion });
-    dataService.getById.and.returnValue(response);
+    dataService.getById.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -128,7 +129,7 @@ describe('EntityEffects (marble testing)', () => {
     actions = hot('-a---', { a: action });
     const response = cold('----#|', {}, error);
     const expected = cold('------b', { b: completion });
-    dataService.getById.and.returnValue(response);
+    dataService.getById.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -151,7 +152,7 @@ describe('EntityEffects (marble testing)', () => {
     // delay the response 3 frames
     const response = cold('---a|', { a: heroes });
     const expected = cold('----b', { b: completion });
-    dataService.getWithQuery.and.returnValue(response);
+    dataService.getWithQuery.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -169,7 +170,7 @@ describe('EntityEffects (marble testing)', () => {
     actions = hot('-a---', { a: action });
     const response = cold('----#|', {}, error);
     const expected = cold('------b', { b: completion });
-    dataService.getWithQuery.and.returnValue(response);
+    dataService.getWithQuery.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
     expect(completion.payload.entityOp).toEqual(EntityOp.QUERY_MANY_ERROR);
@@ -195,7 +196,7 @@ describe('EntityEffects (marble testing)', () => {
     // delay the response 3 frames
     const response = cold('---a|', { a: hero });
     const expected = cold('----b', { b: completion });
-    dataService.add.and.returnValue(response);
+    dataService.add.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -218,7 +219,7 @@ describe('EntityEffects (marble testing)', () => {
     // delay the response 3 frames
     const response = cold('---a|', { a: hero });
     const expected = cold('----b', { b: completion });
-    dataService.add.and.returnValue(response);
+    dataService.add.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -237,7 +238,7 @@ describe('EntityEffects (marble testing)', () => {
     actions = hot('-a---', { a: action });
     const response = cold('----#|', {}, error);
     const expected = cold('------b', { b: completion });
-    dataService.add.and.returnValue(response);
+    dataService.add.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -260,7 +261,7 @@ describe('EntityEffects (marble testing)', () => {
     // delay the response 3 frames
     const response = cold('---a|', { a: 42 });
     const expected = cold('----b', { b: completion });
-    dataService.delete.and.returnValue(response);
+    dataService.delete.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -281,7 +282,7 @@ describe('EntityEffects (marble testing)', () => {
     // delay the response 3 frames
     const response = cold('---a|', { a: 42 });
     const expected = cold('----b', { b: completion });
-    dataService.delete.and.returnValue(response);
+    dataService.delete.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -299,7 +300,7 @@ describe('EntityEffects (marble testing)', () => {
     actions = hot('-a---', { a: action });
     const response = cold('----#|', {}, error);
     const expected = cold('------b', { b: completion });
-    dataService.delete.and.returnValue(response);
+    dataService.delete.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -326,7 +327,7 @@ describe('EntityEffects (marble testing)', () => {
     // delay the response 3 frames
     const response = cold('---a|', { a: updateEntity });
     const expected = cold('----b', { b: completion });
-    dataService.update.and.returnValue(response);
+    dataService.update.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -351,7 +352,7 @@ describe('EntityEffects (marble testing)', () => {
     // delay the response 3 frames
     const response = cold('---a|', { a: updateEntity });
     const expected = cold('----b', { b: completion });
-    dataService.update.and.returnValue(response);
+    dataService.update.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -370,7 +371,7 @@ describe('EntityEffects (marble testing)', () => {
     actions = hot('-a---', { a: action });
     const response = cold('----#|', {}, error);
     const expected = cold('------b', { b: completion });
-    dataService.update.and.returnValue(response);
+    dataService.update.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -395,7 +396,7 @@ describe('EntityEffects (marble testing)', () => {
     // delay the response 3 frames
     const response = cold('---a|', { a: hero });
     const expected = cold('----b', { b: completion });
-    dataService.upsert.and.returnValue(response);
+    dataService.upsert.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -418,7 +419,7 @@ describe('EntityEffects (marble testing)', () => {
     // delay the response 3 frames
     const response = cold('---a|', { a: hero });
     const expected = cold('----b', { b: completion });
-    dataService.upsert.and.returnValue(response);
+    dataService.upsert.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -437,7 +438,7 @@ describe('EntityEffects (marble testing)', () => {
     actions = hot('-a---', { a: action });
     const response = cold('----#|', {}, error);
     const expected = cold('------b', { b: completion });
-    dataService.upsert.and.returnValue(response);
+    dataService.upsert.mockReturnValue(response);
 
     expect(effects.persist$).toBeObservable(expected);
   });
@@ -495,30 +496,30 @@ function makeEntityErrorCompletion(
 }
 
 export interface TestDataServiceMethod {
-  add: jasmine.Spy;
-  delete: jasmine.Spy;
-  getAll: jasmine.Spy;
-  getById: jasmine.Spy;
-  getWithQuery: jasmine.Spy;
-  update: jasmine.Spy;
-  upsert: jasmine.Spy;
+  add: Mock;
+  delete: Mock;
+  getAll: Mock;
+  getById: Mock;
+  getWithQuery: Mock;
+  update: Mock;
+  upsert: Mock;
 }
 
 export class TestDataService {
-  add = jasmine.createSpy('add');
-  delete = jasmine.createSpy('delete');
-  getAll = jasmine.createSpy('getAll');
-  getById = jasmine.createSpy('getById');
-  getWithQuery = jasmine.createSpy('getWithQuery');
-  update = jasmine.createSpy('update');
-  upsert = jasmine.createSpy('upsert');
+  add = vi.fn().mockName('add');
+  delete = vi.fn().mockName('delete');
+  getAll = vi.fn().mockName('getAll');
+  getById = vi.fn().mockName('getById');
+  getWithQuery = vi.fn().mockName('getWithQuery');
+  update = vi.fn().mockName('update');
+  upsert = vi.fn().mockName('upsert');
 
   getService(): TestDataServiceMethod {
     return this;
   }
 
   setResponse(methodName: keyof TestDataServiceMethod, data$: Observable<any>) {
-    this[methodName].and.returnValue(data$);
+    this[methodName].mockReturnValue(data$);
   }
 }
 // #endregion test helpers

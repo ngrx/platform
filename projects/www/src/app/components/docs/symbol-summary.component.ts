@@ -1,4 +1,9 @@
-import { Component, ViewEncapsulation, input } from '@angular/core';
+import {
+  Component,
+  ViewEncapsulation,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ApiMember } from '@ngrx-io/shared';
 import { MarkdownPipe } from './markdown.pipe';
 
@@ -12,12 +17,13 @@ import { MarkdownPipe } from './markdown.pipe';
     }
   `,
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       ngrx-symbol-summary .summary {
         display: block;
         padding: 16px;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
       }
 
       ngrx-symbol-summary p:first-of-type {

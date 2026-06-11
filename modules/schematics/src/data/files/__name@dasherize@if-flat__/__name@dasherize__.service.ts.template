@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory
@@ -7,7 +7,7 @@ import { <%= classify(name) %> } from './<%= dasherize(name) %>';
 
 @Injectable({ providedIn: 'root' })
 export class <%= classify(name) %>Service extends EntityCollectionServiceBase<<%= classify(name) %>> {
-  constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
-    super('<%= classify(name) %>', serviceElementsFactory);
+  constructor() {
+    super('<%= classify(name) %>', inject(EntityCollectionServiceElementsFactory));
   }
 }

@@ -14,7 +14,7 @@ import {
 describe('component-store', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
-    path.join(__dirname, '../../collection.json')
+    path.join(process.cwd(), 'dist/modules/schematics/collection.json')
   );
 
   const defaultOptions: ComponentStoreOptions = {

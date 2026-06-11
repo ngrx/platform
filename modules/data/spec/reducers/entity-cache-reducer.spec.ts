@@ -31,6 +31,7 @@ import {
   MergeStrategy,
   ChangeType,
 } from '../..';
+import { vi } from 'vitest';
 
 class Hero {
   id!: number;
@@ -57,9 +58,9 @@ describe('EntityCacheReducer', () => {
   beforeEach(() => {
     entityActionFactory = new EntityActionFactory();
     const logger = {
-      error: jasmine.createSpy('error'),
-      log: jasmine.createSpy('log'),
-      warn: jasmine.createSpy('warn'),
+      error: vi.fn().mockName('error'),
+      log: vi.fn().mockName('log'),
+      warn: vi.fn().mockName('warn'),
     };
 
     TestBed.configureTestingModule({

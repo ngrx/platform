@@ -20,6 +20,7 @@ import {
   ENTITY_COLLECTION_META_REDUCERS,
   Logger,
 } from '../..';
+import { vi } from 'vitest';
 
 class Bar {
   id!: number;
@@ -48,14 +49,14 @@ describe('EntityCollectionReducerRegistry', () => {
   let entityActionFactory: EntityActionFactory;
   let entityCacheReducer: ActionReducer<EntityCache, Action>;
   let entityCollectionReducerRegistry: EntityCollectionReducerRegistry;
-  let logger: jasmine.Spy;
+  let logger: Logger;
 
   beforeEach(() => {
     entityActionFactory = new EntityActionFactory();
     const logger = {
-      error: jasmine.createSpy('error'),
-      log: jasmine.createSpy('log'),
-      warn: jasmine.createSpy('warn'),
+      error: vi.fn().mockName('error'),
+      log: vi.fn().mockName('log'),
+      warn: vi.fn().mockName('warn'),
     };
 
     TestBed.configureTestingModule({
@@ -201,12 +202,18 @@ describe('EntityCollectionReducerRegistry', () => {
 
     beforeEach(() => {
       metaReducerOutput = [];
-      metaReducerA = jasmine
-        .createSpy('metaReducerA')
-        .and.callFake(testMetadataReducerFactory('A'));
-      metaReducerB = jasmine
-        .createSpy('metaReducerA')
-        .and.callFake(testMetadataReducerFactory('B'));
+      metaReducerA = vi
+        .fn(testMetadataReducerFactory('A'))
+        .mockName('metaReducerA') as MetaReducer<
+        EntityCollection,
+        EntityAction
+      >;
+      metaReducerB = vi
+        .fn(testMetadataReducerFactory('B'))
+        .mockName('metaReducerB') as MetaReducer<
+        EntityCollection,
+        EntityAction
+      >;
       const metaReducers = [metaReducerA, metaReducerB];
 
       TestBed.configureTestingModule({

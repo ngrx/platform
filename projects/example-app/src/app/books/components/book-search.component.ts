@@ -1,4 +1,10 @@
-import { Component, Output, Input, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Output,
+  Input,
+  EventEmitter,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 @Component({
   selector: 'bc-book-search',
@@ -11,7 +17,7 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
             matInput
             placeholder="Search for a book"
             [value]="query"
-            (keyup)="onSearch($event)"
+            (input)="onSearch($event)"
           />
         </mat-form-field>
         <mat-spinner
@@ -60,6 +66,7 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
       }
     `,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class BookSearchComponent {
@@ -68,7 +75,7 @@ export class BookSearchComponent {
   @Input() error = '';
   @Output() searchBooks = new EventEmitter<string>();
 
-  onSearch(event: KeyboardEvent): void {
+  onSearch(event: Event): void {
     this.searchBooks.emit((event.target as HTMLInputElement).value);
   }
 }

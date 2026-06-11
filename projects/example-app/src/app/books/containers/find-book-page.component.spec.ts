@@ -56,7 +56,7 @@ describe('Find Book Page', () => {
     instance = fixture.componentInstance;
     store = TestBed.inject(MockStore);
 
-    jest.spyOn(store, 'dispatch');
+    vi.spyOn(store, 'dispatch');
   });
 
   it('should compile', () => {

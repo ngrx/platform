@@ -1,4 +1,9 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 export type AlertType = 'inform' | 'warn' | 'error' | 'help';
 
@@ -7,11 +12,12 @@ export type AlertType = 'inform' | 'warn' | 'error' | 'help';
   standalone: true,
   template: ` <ng-content></ng-content> `,
   host: {
-    '[class.inform]': 'isInform',
-    '[class.warn]': 'isWarn',
-    '[class.error]': 'isError',
-    '[class.help]': 'isHelp',
+    '[class.inform]': 'isInform()',
+    '[class.warn]': 'isWarn()',
+    '[class.error]': 'isError()',
+    '[class.help]': 'isHelp()',
   },
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {
@@ -22,7 +28,7 @@ export type AlertType = 'inform' | 'warn' | 'error' | 'help';
         border-top: 1px solid;
         border-bottom: 1px solid;
         border-right: 1px solid;
-        border-color: rgba(255, 255, 255, 0.12);
+        border-color: var(--ngrx-border-color);
       }
 
       :host p {
@@ -45,7 +51,7 @@ export type AlertType = 'inform' | 'warn' | 'error' | 'help';
       }
 
       :host(.help) {
-        border-color: rgba(255, 172, 230, 0.72);
+        border-color: var(--ngrx-link);
         background-color: rgba(255, 172, 230, 0.08);
       }
 
@@ -56,11 +62,9 @@ export type AlertType = 'inform' | 'warn' | 'error' | 'help';
   ],
 })
 export class AlertComponent {
-  #type: AlertType = 'inform';
-
-  @Input() set type(type: AlertType) {
-    this.#type = type;
-
+  type = input<AlertType>('inform');
+  #validatedType = computed(() => {
+    const type = this.type();
     if (
       type !== 'inform' &&
       type !== 'warn' &&
@@ -71,21 +75,11 @@ export class AlertComponent {
         `Invalid alert type: ${type}. Must be: 'inform', 'warn', 'error', or 'help'.`
       );
     }
-  }
 
-  get isInform() {
-    return this.#type === 'inform';
-  }
-
-  get isWarn() {
-    return this.#type === 'warn';
-  }
-
-  get isError() {
-    return this.#type === 'error';
-  }
-
-  get isHelp() {
-    return this.#type === 'help';
-  }
+    return type;
+  });
+  isInform = computed(() => this.#validatedType() === 'inform');
+  isWarn = computed(() => this.#validatedType() === 'warn');
+  isError = computed(() => this.#validatedType() === 'error');
+  isHelp = computed(() => this.#validatedType() === 'help');
 }

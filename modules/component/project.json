@@ -26,11 +26,23 @@
             "command": "pnpm exec tsc -p modules/component/tsconfig.schematics.json"
           },
           {
+            "command": "pnpm exec rimraf node_modules/@ngrx/component"
+          },
+          {
+            "command": "pnpm exec mkdirp node_modules/@ngrx/component"
+          },
+          {
+            "command": "ncp dist/modules/component node_modules/@ngrx/component"
+          },
+          {
             "command": "cpy LICENSE dist/modules/component"
           }
         ]
       },
-      "outputs": ["{workspaceRoot}/dist/modules/component"]
+      "outputs": [
+        "{workspaceRoot}/dist/modules/component",
+        "{workspaceRoot}/node_modules/@ngrx/component"
+      ]
     },
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -43,12 +55,8 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "options": {
-        "jestConfig": "modules/component/jest.config.ts",
-        "runInBand": true,
-        "passWithNoTests": false
-      },
+      "executor": "@analogjs/vitest-angular:test",
+      "dependsOn": ["build"],
       "outputs": ["{workspaceRoot}/coverage/modules/component"]
     }
   }

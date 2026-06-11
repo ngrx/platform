@@ -1,2 +1,7 @@
-export const getGreeting = () => cy.get('h1');
-export const loadFeature = () => cy.get('a').click();
+import type { Locator, Page } from '@playwright/test';
+
+export const getGreeting = (page: Page): Locator => page.locator('h1');
+
+export const loadFeature = async (page: Page): Promise<void> => {
+  await page.locator('a').click();
+};

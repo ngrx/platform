@@ -1,4 +1,9 @@
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   ApiExcerptToken,
   ApiExcerptTokenKind,
@@ -28,13 +33,14 @@ import { SymbolExcerptGroupComponent } from './symbol-excerpt-group.component';
       }
     </ngrx-symbol-excerpt-group>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {
         display: flex;
         padding: 8px;
         flex-direction: column;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
       }
 
       h4 {
@@ -43,7 +49,7 @@ import { SymbolExcerptGroupComponent } from './symbol-excerpt-group.component';
         font-weight: 700;
         margin: 0;
         padding: 8px;
-        color: #fface6;
+        color: var(--ngrx-link);
       }
 
       .memberExcerpt {

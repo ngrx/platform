@@ -1,486 +1,346 @@
 # Testing
 
-A SignalStore is a straightforward Angular service, and the same testing techniques applied to other services also apply to SignalStore. This guide provides examples for common testing scenarios.
+A SignalStore is an Angular service and is tested like any other service. This guide assumes Vitest (in browser mode); the same ideas apply to other test runners.
 
-One of the challenges in testing is managing asynchronous tasks and mocking dependencies. Although the examples use Jest, the same principles are applicable to other testing frameworks.
+Testing can be approached in three ways:
 
-There are two primary scenarios for testing:
+- **Testing the store in isolation** by mocking its dependencies and exercising its API. When doing so, tests should not spy on the store's methods - if a method grows complex, that logic can be extracted into a service; the method calls the service, and the test mocks or fakes the service.
+- **Including the store in a wider test**, such as a full feature where both components and store are tested together.
+- **Providing a fake or mock of the store** when testing a component or service that uses it.
 
-1. Testing the SignalStore itself.
-2. Testing a component or service that utilizes the SignalStore.
+## Guiding principles
 
-In the first scenario, the dependencies of the SignalStore should be mocked, while in the second scenario, the SignalStore itself needs to be mocked.
+- **Public API only.** Asserting on internal state or calling internal methods ties tests to implementation and makes them brittle.
+- **TestBed** is used when testing the store. It supplies dependency injection and the injection context that many features like `rxMethod()`, `signalMethod()`, and `inject()` require; instantiating the store with `new` won't work for those.
 
----
+## Testing SignalStores with Different Scopes
 
-When testing the SignalStore, interaction should occur through its public API, as any component or service would.
+A SignalStore can be provided locally or globally. In both cases, `TestBed` can inject it.
 
-A key concern in testing is maintainability. The more tests are coupled to internal implementations, the more frequently they are likely to break. Public APIs are generally more stable and less prone to change.
+For the sake of brevity, the test examples contain both the implementation and the test.
 
-For example, when testing the store in a loading state, avoid directly setting the loading property. Instead, trigger a loading method and assert against an exposed computed property or slice. This approach reduces dependency on internal implementations, such as properties set during the loading state.
+### Globally provided store
 
-From this perspective, private properties or methods of the SignalStore should not be accessed.
+If the store is created with `{ providedIn: 'root' }`, `TestBed.inject(CounterStore)` is enough to instantiate the store.
 
----
-
-The SignalStore is a function that returns a class, allowing tests to instantiate the class and test it without using `TestBed`.
-
-However, in practice, `TestBed` is typically used due to its numerous advantages, such as the ability to mock dependencies and trigger the execution of effects.
-
-Additionally, key features of the SignalStore do not function properly if they do not run in an injection context. Examples include `rxMethod`, the use of `inject` within `withMethods()`, and `withHooks()`.
-
-<ngrx-docs-alert type="help">
-
-**Note:** Using the `TestBed` is also the recommendation of the [Angular team](https://github.com/angular/angular/issues/54438#issuecomment-1971813177).
-
-</ngrx-docs-alert>
-
-## Testing the SignalStore
-
-The following example demonstrates the testing of a SignalStore:
-
-### Globally provided
-
-<ngrx-code-example header="movies.store.ts">
+<ngrx-code-example header="counter-store.spec.ts">
 
 ```ts
+import { TestBed } from '@angular/core/testing';
 import { signalStore, withState } from '@ngrx/signals';
 
-type Movie = {
-  id: number;
-  name: string;
-};
-
-type State = { movies: Movie[] };
-
-export const MoviesStore = signalStore(
-  { providedIn: 'root' },
-  withState<State>({
-    movies: [
-      { id: 1, name: 'A New Hope' },
-      { id: 2, name: 'Into Darkness' },
-      { id: 3, name: 'The Lord of the Rings' },
-    ],
-  })
-);
-```
-
-</ngrx-code-example>
-
-The `TestBed` instantiates the `MoviesStore`, enabling immediate testing.
-
-<ngrx-code-example header="movies.store.spec.ts">
-
-```ts
-import { MoviesStore } from './movies-store';
-import { TestBed } from '@angular/core/testing';
-
-describe('MoviesStore', () => {
-  it('should verify that three movies are available', () => {
-    const store = TestBed.inject(MoviesStore);
-
-    expect(store.movies()).toHaveLength(3);
-  });
-});
-```
-
-</ngrx-code-example>
-
-### Locally Provided
-
-This is possible due to the `MoviesStore` being provided globally. For locally provided stores, some adjustments to the test are required.
-
-<ngrx-code-example header="movies.store.ts">
-
-```ts
-export const MoviesStore = signalStore(
-  withState({
-    movies: [
-      // ... entries
-    ],
-  })
-);
-```
-
-</ngrx-code-example>
-
-The required addition is that the internal `TestingModule` must provide the `MoviesStore`.
-
-<ngrx-code-example header="movies.store.spec.ts">
-
-```ts
-import { MoviesStore } from './movies.store';
-
-describe('MoviesStore', () => {
-  it('should verify that three movies are available', () => {
-    TestBed.configureTestingModule({
-      providers: [MoviesStore],
-    });
-
-    const store = TestBed.inject(MoviesStore);
-
-    expect(store.movies()).toHaveLength(3);
-  });
-});
-```
-
-</ngrx-code-example>
-
-### `unprotected`
-
-The `unprotected` function from the `@ngrx/signals/testing` plugin is used to update the protected state of a SignalStore for testing purposes.
-This utility bypasses state encapsulation, making it possible to test state changes and their impacts.
-
-```ts
-// counter.store.ts
 const CounterStore = signalStore(
   { providedIn: 'root' },
-  withState({ count: 1 }),
-  withComputed(({ count }) => ({
-    doubleCount: computed(() => count() * 2),
-  }))
+  withState({ count: 0 })
 );
 
-// counter.store.spec.ts
+// Test
+describe('CounterStore (global)', () => {
+  it('is defined with an initial count', () => {
+    const store = TestBed.inject(CounterStore);
+
+    expect(store).toBeDefined();
+    expect(store.count()).toBe(0);
+  });
+});
+```
+
+</ngrx-code-example>
+
+### Locally provided store
+
+If the store is not provided in root, the testing module provides it.
+
+<ngrx-code-example header="counter-store.spec.ts">
+
+```ts
 import { TestBed } from '@angular/core/testing';
-import { unprotected } from '@ngrx/signals/testing';
-
-describe('CounterStore', () => {
-  it('recomputes doubleCount on count changes', () => {
-    const counterStore = TestBed.inject(CounterStore);
-
-    patchState(unprotected(counterStore), { count: 10 });
-    expect(counterStore.doubleCount()).toBe(20);
-  });
-});
-```
-
-### `withComputed`
-
-Testing derived values of `withComputed` is also straightforward.
-
-<ngrx-code-example header="movies.store.ts">
-
-```ts
-export const MoviesStore = signalStore(
-  withState({
-    movies: [
-      // ... entries
-    ],
-  }),
-  withComputed((state) => ({
-    moviesCount: computed(() => state.movies().length),
-  }))
-);
-```
-
-</ngrx-code-example>
-
-<ngrx-code-example header="movies.store.spec.ts">
-
-```ts
-import { MoviesStore } from './movies.store';
-
-describe('MoviesStore', () => {
-  it('should verify that three movies are available', () => {
-    const store = TestBed.inject(MoviesStore);
-
-    expect(store.moviesCount()).toBe(3);
-  });
-});
-```
-
-</ngrx-code-example>
-
-### `withMethods`, Dependency Injection, and Asynchronous Tasks
-
-A loading method asynchronously retrieves movies by studio in this scenario.
-
-<ngrx-code-example header="movies.store.ts">
-
-```ts
 import { signalStore, withState } from '@ngrx/signals';
 
-type State = { studio: string; movies: Movie[]; loading: boolean };
+const CounterStore = signalStore(withState({ count: 0 }));
 
-export const MoviesStore = signalStore(
-  withState<State>({
-    studio: '',
-    movies: [],
-    loading: false,
-  }),
-  withMethods((store) => {
-    const moviesService = store.inject(MoviesService);
+// Test
+describe('CounterStore (local)', () => {
+  it('is defined with an initial count', () => {
+    TestBed.configureTestingModule({
+      // 👇 provide the store in the testing module
+      providers: [CounterStore],
+    });
 
-    return {
-      async load(studio: string) {
-        this.patchState({ loading: true });
-        const movies = await moviesService.loadMovies(studio);
-        this.patchState(store, { studio, movies, loading: false });
-      },
-    };
-  })
-);
+    const store = TestBed.inject(CounterStore);
+
+    expect(store).toBeDefined();
+    expect(store.count()).toBe(0);
+  });
+});
 ```
 
 </ngrx-code-example>
 
-The `MoviesService` is mocked in the test, with the implementation returning the result as a `Promise`.
+## Testing SignalStore Members
 
-<ngrx-code-example header="movies.store.spec.ts">
+A SignalStore is tested like any other Angular service by asserting on initial state, on derived values, and on the effect of calling its methods. The following example uses the same `CounterStore` as in the previous section, extended with a computed value and a method. `CounterStore` doesn't have any dependencies or async operations.
+
+<ngrx-code-example header="counter-store.spec.ts">
 
 ```ts
-describe('MoviesStore', () => {
-  it('should load movies of Warner Bros', fakeAsync(() => {
-    const moviesService = {
-      load: () =>
-        Promise.resolve([
-          { id: 1, name: 'Harry Potter' },
-          { id: 2, name: 'The Dark Knight' },
-        ]),
-    };
+import { TestBed } from '@angular/core/testing';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+
+const CounterStore = signalStore(
+  { providedIn: 'root' },
+  withState({ count: 0 }),
+  withComputed(({ count }) => ({
+    doubleCount: () => count() * 2,
+  })),
+  withMethods((store) => ({
+    increment() {
+      patchState(store, ({ count }) => ({ count: count + 1 }));
+    },
+  }))
+);
+
+// Test
+describe('CounterStore', () => {
+  it('has an initial state and derived doubleCount', () => {
+    const store = TestBed.inject(CounterStore);
+
+    expect(store.count()).toBe(0);
+    expect(store.doubleCount()).toBe(0);
+  });
+
+  it('updates doubleCount when count changes on increment', () => {
+    const store = TestBed.inject(CounterStore);
+
+    store.increment();
+    expect(store.count()).toBe(1);
+    expect(store.doubleCount()).toBe(2);
+
+    store.increment();
+    expect(store.count()).toBe(2);
+    expect(store.doubleCount()).toBe(4);
+  });
+});
+```
+
+</ngrx-code-example>
+
+## The `unprotected` Helper
+
+`patchState` cannot update a SignalStore instance whose state is protected (the default). Setting state directly is sometimes needed when the necessary public setters are not available.
+
+Wrapping the store instance with `unprotected` returns a writable view that can be updated with `patchState`.
+
+To assert that the computed `doubleCount` updates when `count` changes, the state is patched via `unprotected` and the computed is read from the store.
+
+<ngrx-code-example header="counter-store.spec.ts">
+
+```ts
+import { TestBed } from '@angular/core/testing';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withState,
+} from '@ngrx/signals';
+import { unprotected } from '@ngrx/signals/testing';
+
+const CounterStore = signalStore(
+  { providedIn: 'root' },
+  withState({ count: 0 }),
+  withComputed(({ count }) => ({
+    doubleCount: () => count() * 2,
+  }))
+);
+
+// Test
+describe('CounterStore', () => {
+  it('recomputes doubleCount when count is patched via unprotected', () => {
+    const store = TestBed.inject(CounterStore);
+
+    //         👇 makes the store writable
+    patchState(unprotected(store), { count: 5 });
+
+    expect(store.count()).toBe(5);
+    expect(store.doubleCount()).toBe(10);
+  });
+});
+```
+
+</ngrx-code-example>
+
+## Mocking SignalStore Dependencies
+
+When a store injects a service (for example inside `withMethods`), a test could mock that service.
+
+The most straightforward approach is to register the dependency with `useValue` and provide an object that implements the methods the store uses. In the following example, the `CounterStore` depends on a `StepService` to determine the increment step; the test provides a mock `StepService` returning a fixed step so that assertions are predictable.
+
+<ngrx-code-example header="counter-store.spec.ts">
+
+```ts
+import { TestBed } from '@angular/core/testing';
+import {
+  patchState,
+  signalStore,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+import { inject, Injectable } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
+class StepService {
+  getStep() {
+    return 1;
+  }
+}
+
+const CounterStore = signalStore(
+  { providedIn: 'root' },
+  withState({ count: 0 }),
+  withMethods((store, stepService = inject(StepService)) => ({
+    increment() {
+      patchState(store, ({ count }) => ({
+        count: count + stepService.getStep(),
+      }));
+    },
+  }))
+);
+
+// Test
+describe('CounterStore with StepService', () => {
+  it('increments by the step returned by the injected service', () => {
+    const mockStepService = { getStep: () => 3 };
 
     TestBed.configureTestingModule({
       providers: [
-        {
-          provide: MoviesService,
-          useValue: moviesService,
-        },
+        //                      👇 provide the mock service
+        { provide: StepService, useValue: mockStepService },
       ],
     });
 
-    const store = TestBed.inject(MoviesStore);
-    store.load('Warner Bros');
-    expect(store.loading()).toBe(true);
+    const store = TestBed.inject(CounterStore);
 
-    tick();
+    store.increment();
 
-    expect(store.moviesCount()).toBe(2);
-    expect(store.loading()).toBe(false);
-  }));
+    expect(store.count()).toBe(3);
+  });
 });
 ```
 
 </ngrx-code-example>
 
-<ngrx-docs-alert type="help">
+## Testing `signalMethod` Instance
 
-**Note:** Manually mocking dependencies is not required. Libraries such as ng-mocks, @testing-library/angular, and [jest|jasmine]-auto-spies can be used for this purpose.
+When testing a store that exposes a method created with [`signalMethod`](/guide/signals/signal-method), the `TestBed` supplies the injection context. When the method is called with a Signal, the test must wait for the effect (e.g. `TestBed.tick()` or `expect.poll`) before asserting. Additionally, the call must be made within an injection context.
 
-</ngrx-docs-alert>
-
-### `rxMethod`
-
-The `load` method is created using `rxMethod` to accommodate a component that provides an input field for the studio and initiates loading as soon as a user types in a name.
-
-In this scenario, the `MovieService` returns an `Observable<Movie[]>` instead of a `Promise<Movie[]>`.
-
-<ngrx-code-example header="movies.store.ts">
+<ngrx-code-example header="counter-store.spec.ts">
 
 ```ts
-export const MoviesStore = signalStore(
-  // ... code omitted
-  withMethods((store, moviesService = inject(MoviesService)) => ({
-    load: rxMethod<string>(
-      pipe(
-        tap(() => patchState(store, { loading: true })),
-        switchMap((studio) =>
-          moviesService.load(studio).pipe(
-            tapResponse({
-              next: (movies) =>
-                patchState(store, { movies, loading: false }),
-              error: console.error,
-            })
-          )
-        )
+import { signal } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import {
+  patchState,
+  signalStore,
+  signalMethod,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+
+const CounterStore = signalStore(
+  { providedIn: 'root' },
+  withState({ count: 0 }),
+  withMethods((store) => ({
+    increment: signalMethod<number>((step) => {
+      patchState(store, ({ count }) => ({ count: count + step }));
+    }),
+  }))
+);
+
+// Test
+describe('CounterStore with signalMethod', () => {
+  it('increments by a static step synchronously', () => {
+    const store = TestBed.inject(CounterStore);
+
+    store.increment(1);
+    expect(store.count()).toBe(1);
+
+    store.increment(2);
+    expect(store.count()).toBe(3);
+  });
+
+  it('increments by a signal step after tick', async () => {
+    const store = TestBed.inject(CounterStore);
+    const step = signal(2);
+
+    TestBed.runInInjectionContext(() => store.increment(step));
+    expect(store.count()).toBe(0);
+
+    await expect.poll(() => store.count()).toBe(2);
+
+    step.set(3);
+    await expect.poll(() => store.count()).toBe(5);
+
+    // Alternatively, TestBed.tick() would flush the effect
+    step.set(1);
+    TestBed.tick();
+    expect(store.count()).toBe(6);
+  });
+});
+```
+
+</ngrx-code-example>
+
+## Testing `rxMethod` Instance
+
+Testing a store method created with [`rxMethod`](/guide/signals/rxjs-integration) follows the same ideas as testing [`signalMethod`](/guide/signals/signal-store/testing#testing-signalmethod-instance). The only difference is that `rxMethod` also supports an `Observable` as an input argument.
+
+<ngrx-code-example header="counter-store.spec.ts">
+
+```ts
+import { TestBed } from '@angular/core/testing';
+import { of, scheduled, tap, asyncScheduler } from 'rxjs';
+import {
+  patchState,
+  signalStore,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+
+const CounterStore = signalStore(
+  { providedIn: 'root' },
+  withState({ count: 0 }),
+  withMethods((store) => ({
+    increment: rxMethod<number>(
+      tap((n) =>
+        patchState(store, ({ count }) => ({ count: count + n }))
       )
     ),
   }))
 );
-```
 
-</ngrx-code-example>
+// Test
+describe('CounterStore with rxMethod', () => {
+  it('adds emitted values to count when called with a synchronous Observable', () => {
+    const store = TestBed.inject(CounterStore);
 
-Since `rxMethod` accepts a string as a parameter, the previous test remains valid.
+    store.increment(of(1, 2, 3));
+    expect(store.count()).toBe(6);
+  });
 
-An additional focus in testing is ensuring proper handling of race conditions, which is why `switchMap` is used.
+  it('adds emitted values to count when called with an asynchronous Observable', async () => {
+    const store = TestBed.inject(CounterStore);
 
-The parameter's type can also be `Signal<number>` or `Observable<number>`, in addition to `number`.
+    store.increment(scheduled([1, 2, 3], asyncScheduler));
+    expect(store.count()).toBe(0);
 
-#### With Observables
-
-The goal is to test whether the `load` method properly handles the scenario where a new studio name is entered before or after the previous request has completed.
-
-<ngrx-code-example header="movies.store.spec.ts">
-
-```ts
-describe('MoviesStore', () => {
-  // ... beforeEach and afterEach omitted
-
-  const setup = () => {
-    const moviesService = {
-      load: jest.fn((studio: string) =>
-        of([
-          studio === 'Warner Bros'
-            ? { id: 1, name: 'Harry Potter' }
-            : { id: 2, name: 'Jurassic Park' },
-        ]).pipe(delay(100))
-      ),
-    };
-
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: MoviesService,
-          useValue: moviesService,
-        },
-      ],
-    });
-
-    return TestBed.inject(MoviesStore);
-  };
-
-  it('should load two times', fakeAsync(() => {
-    const store = setup();
-
-    const studio$ = new Subject<string>();
-    store.load(studio$);
-    studio$.next('Warner Bros');
-
-    tick(100);
-    expect(store.movies()).toEqual([{ id: 1, name: 'Harry Potter' }]);
-
-    studio$.next('Universal');
-    tick(100);
-    expect(store.movies()).toEqual([
-      { id: 2, name: 'Jurassic Park' },
-    ]);
-  }));
-
-  it('should cancel a running request when a new one is made', fakeAsync(() => {
-    const store = setup();
-
-    const studio$ = new Subject<string>();
-    store.load(studio$);
-    studio$.next('Warner Bros');
-
-    tick(50);
-    studio$.next('Universal');
-
-    tick(50);
-    expect(store.movies()).toEqual([]);
-    expect(store.loading()).toBe(true);
-
-    tick(50);
-    expect(store.movies()).toEqual([
-      { id: 2, name: 'Jurassic Park' },
-    ]);
-    expect(store.loading()).toBe(false);
-  }));
-});
-```
-
-</ngrx-code-example>
-
-By utilizing the testing framework's function to manage time, both scenarios can be verified.
-
-The test also employs a setup function to prevent code duplication, a common pattern in testing and an alternative to the `beforeEach` function. In this case, each test can choose whether to use the setup function or not.
-
-#### With Signals
-
-Testing both scenarios with a `Signal` type as input is similar to testing with Observables.
-
-This similarity arises primarily due to the asynchronous tasks involved.
-
-<ngrx-code-example header="movies.store.spec.ts">
-
-```ts
-describe('MoviesStore', () => {
-  // ... setup omitted
-
-  it('should test two sequential loads with a Signal', fakeAsync(() => {
-    const store = setup();
-    const studio = signal('Warner Bros');
-    store.load(studio);
-
-    tick(100);
-    expect(store.movies()).toEqual([{ id: 1, name: 'Harry Potter' }]);
-
-    studio.set('Universal');
-    tick(100);
-    expect(store.movies()).toEqual([
-      { id: 2, name: 'Jurassic Park' },
-    ]);
-  }));
-
-  it('should cancel a running request when a new one is made via a Signal', fakeAsync(() => {
-    const store = setup();
-    const studio = signal('Warner Bros');
-
-    effect(() => {
-      console.log(studio());
-    });
-    store.load(studio);
-
-    tick(50);
-
-    studio.set('Universal');
-    tick(50);
-    expect(store.movies()).toEqual([]);
-    expect(store.loading()).toBe(true);
-
-    tick(50);
-    expect(store.movies()).toEqual([
-      { id: 2, name: 'Jurassic Park' },
-    ]);
-    expect(store.loading()).toBe(false);
-  }));
-});
-```
-
-</ngrx-code-example>
-
-It is important to account for the glitch-free effect when using Signals. The `rxMethod` relies on `effect`, which may need to be triggered manually through `TestBed.tick()`.
-
-If the mocked `MovieService` operates synchronously, the following test fails unless `TestBed.tick()` is called.
-
-<ngrx-code-example header="movies.store.spec.ts">
-
-```ts
-describe('MoviesStore', () => {
-  // ... beforeEach, and afterEach omitted
-
-  it('should depend on flushEffects because of synchronous execution', () => {
-    const moviesService = {
-      load: jest.fn((studio: string) =>
-        of([
-          studio === 'Warner Bros'
-            ? { id: 1, name: 'Harry Potter' }
-            : { id: 2, name: 'Jurassic Park' },
-        ])
-      ),
-    };
-
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: MoviesService,
-          useValue: moviesService,
-        },
-      ],
-    });
-
-    const store = TestBed.inject(MoviesStore);
-    const studio = signal('Warner Bros');
-    store.load(studio);
-    TestBed.tick(); // required
-    expect(store.movies()).toEqual([{ id: 1, name: 'Harry Potter' }]);
-
-    studio.set('Universal');
-    TestBed.tick(); // required
-    expect(store.movies()).toEqual([
-      { id: 2, name: 'Jurassic Park' },
-    ]);
+    await expect.poll(() => store.count()).toBe(6);
   });
 });
 ```
@@ -489,304 +349,142 @@ describe('MoviesStore', () => {
 
 ## Mocking the SignalStore
 
-What applies to testing the SignalStore also applies to mocking it. The SignalStore functions like any other service, meaning it can be mocked using the same tools and techniques applied to other services.
+When testing a component that uses a SignalStore, the store can be replaced with a plain object that exposes the same API: signals for state and computed values, and functions for methods. The component injects the store and the test provides a mock via dependency injection.
 
-The `MovieComponent` utilizes the `MoviesStore` to display movies:
+The following example uses a minimal counter component that displays the count and has a button to increment it. Two testing styles are shown: one that verifies state change by implementing the mock's `increment`, and one that verifies the interaction by providing `increment` as a `vi.fn()` and asserting it was called.
 
-<ngrx-code-example header="movies.component.ts">
+<ngrx-code-example header="counter.component.spec.ts">
 
 ```ts
+import { Component, inject, signal } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import {
+  patchState,
+  signalStore,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+import { page } from 'vitest/browser';
+
+const CounterStore = signalStore(
+  { providedIn: 'root' },
+  withState({ count: 0 }),
+  withMethods((store) => ({
+    increment() {
+      patchState(store, ({ count }) => ({ count: count + 1 }));
+    },
+  }))
+);
+
 @Component({
-  selector: 'app-movies',
+  selector: 'app-counter',
   template: `
-    <input
-      type="text"
-      [(ngModel)]="studio"
-      [disabled]="store.loading()"
-      placeholder="Name of Studio"
-    />
-
-    <ul>
-      @for (movie of store.movies(); track movie.id) {
-        <p>{{ movie.id }}: {{ movie.name }}</p>
-      }
-    </ul>
+    <p aria-label="count">{{ store.count() }}</p>
+    <button type="button" (click)="store.increment()">
+      Increment
+    </button>
   `,
-  imports: [FormsModule],
 })
-export class MoviesComponent {
-  protected studio = signal('');
-  protected readonly store = inject(MoviesStore);
-
-  constructor() {
-    this.store.load(this.studio);
-  }
+class CounterComponent {
+  protected readonly store = inject(CounterStore);
 }
-```
 
-</ngrx-code-example>
-
-### Native Mocking
-
-<ngrx-code-example header="movies.component.spec.ts">
-
-```ts
-it('should show movies (native Jest)', () => {
-  const load = jest.fn<void, [Signal<string>]>();
-
-  const moviesStore = {
-    movies: signal(new Array<Movie>()),
-    loading: signal(false),
-    load,
-  };
-
-  TestBed.configureTestingModule({
-    imports: [MoviesComponent],
-    providers: [
-      {
-        provide: MoviesStore,
-        useValue: moviesStore,
+// Test
+describe('CounterComponent', () => {
+  it('updates displayed count when the mock implements increment', async () => {
+    const count = signal(0);
+    const mockStore = {
+      count,
+      increment() {
+        count.set(count() + 1);
       },
-    ],
+    };
+
+    TestBed.configureTestingModule({
+      providers: [{ provide: CounterStore, useValue: mockStore }],
+    }).createComponent(CounterComponent);
+
+    await expect
+      .element(page.getByLabelText('count'))
+      .toHaveTextContent('0');
+    await page.getByRole('button', { name: 'Increment' }).click();
+    await expect
+      .element(page.getByLabelText('count'))
+      .toHaveTextContent('1');
   });
 
-  const fixture = TestBed.createComponent(MoviesComponent);
-  fixture.autoDetectChanges(true);
+  it('calls increment when the button is clicked and mock uses vi.fn()', async () => {
+    const count = signal(0);
+    const increment = vi.fn(() => count.set(count() + 1));
+    const mockStore = { count, increment };
 
-  const studio = load.mock.calls[0][0];
-  const input: HTMLInputElement = fixture.debugElement.query(
-    By.css('input')
-  ).nativeElement;
+    TestBed.configureTestingModule({
+      providers: [{ provide: CounterStore, useValue: mockStore }],
+    }).createComponent(CounterComponent);
 
-  expect(studio()).toBe('');
-
-  input.value = 'Warner Bros';
-  input.dispatchEvent(new Event('input'));
-  expect(studio()).toBe('Warner Bros');
-
-  moviesStore.movies.set([
-    { id: 1, name: 'Harry Potter' },
-    { id: 2, name: 'The Dark Knight' },
-  ]);
-  fixture.detectChanges();
-
-  const movieNames = fixture.debugElement
-    .queryAll(By.css('p'))
-    .map((el) => el.nativeElement.textContent);
-  expect(movieNames).toEqual([
-    '1: Harry Potter',
-    '2: The Dark Knight',
-  ]);
+    await page.getByRole('button', { name: 'Increment' }).click();
+    expect(increment).toHaveBeenCalledTimes(1);
+  });
 });
 ```
 
 </ngrx-code-example>
 
-The test mocks only the properties and methods used by the component in the specific test. Even if a SignalStore contains additional methods, it is not necessary to mock all of them.
+<ngrx-docs-alert type="help">
 
-### "Partial Mocking" via Spies
+**Note:** Asserting on state (as in the first test) is preferred over asserting that a method was called (as in the second test). See [Guiding principles](/guide/signals/signal-store/testing#guiding-principles).
 
-Partial mocking can be used to mock only the `load` method. This approach allows computed properties to function correctly without requiring them to be mocked.
+</ngrx-docs-alert>
 
-<ngrx-code-example header="movies.component.spec.ts">
+## Testing Custom SignalStore Features
+
+Custom features built with [`signalStoreFeature`](/guide/signals/signal-store/custom-store-features) can be tested by creating a minimal store that uses the feature and asserting on that store.
+
+<ngrx-code-example header="with-counter.spec.ts">
 
 ```ts
-it('should show movies (spy)', () => {
-  TestBed.configureTestingModule({
-    imports: [MoviesComponent],
-    providers: [
-      {
-        provide: MoviesService,
-        useValue: {},
+import { TestBed } from '@angular/core/testing';
+import {
+  patchState,
+  signalStore,
+  signalStoreFeature,
+  withComputed,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+
+function withCounter() {
+  return signalStoreFeature(
+    withState({ count: 0 }),
+    withComputed(({ count }) => ({
+      doubleCount: () => count() * 2,
+    })),
+    withMethods((store) => ({
+      increment() {
+        patchState(store, ({ count }) => ({ count: count + 1 }));
       },
-    ],
-  });
-
-  const moviesStore = TestBed.inject(MoviesStore);
-  const loadSpy = jest.spyOn(moviesStore, 'load');
-  const fixture = TestBed.createComponent(MoviesComponent);
-
-  fixture.autoDetectChanges(true);
-
-  const studio = loadSpy.mock.calls[0][0];
-  if (studio instanceof Observable || typeof studio === 'string') {
-    throw new Error('Expected signal');
-  }
-
-  const input: HTMLInputElement = fixture.debugElement.query(
-    By.css('input')
-  ).nativeElement;
-
-  expect(studio()).toBe('');
-
-  input.value = 'Warner Bros';
-  input.dispatchEvent(new Event('input'));
-  expect(studio()).toBe('Warner Bros');
-
-  patchState(moviesStore, {
-    movies: [
-      { id: 1, name: 'Harry Potter' },
-      { id: 2, name: 'The Dark Knight' },
-    ],
-  });
-
-  fixture.detectChanges();
-
-  const movies = fixture.debugElement
-    .queryAll(By.css('p'))
-    .map((el) => el.nativeElement.textContent);
-  expect(movies).toEqual(['1: Harry Potter', '2: The Dark Knight']);
-});
-```
-
-</ngrx-code-example>
-
-This version requires the `MoviesStore` state to be unprotected.
-
-## Integration Tests
-
-Services attached to a component are often simple, and writing unit tests for them may not always be necessary, particularly when considering the returned value and maintenance costs. In such cases, it is more effective to test the services together with the component as a whole. This type of testing is commonly referred to as integration testing.
-
-The same applies to the SignalStore. If the SignalStore, such as the `MoviesStore`, is relatively simple, a single test can cover both the `MoviesComponent` and the `MoviesStore`. However, the `HttpClient` must still be replaced with a test double.
-
-<ngrx-code-example header="movies.spec.ts">
-
-```ts
-it('should show movies with MoviesStore', async () => {
-  const fixture = TestBed.configureTestingModule({
-    imports: [MoviesComponent],
-    providers: [provideHttpClient(), provideHttpClientTesting()],
-  }).createComponent(MoviesComponent);
-
-  const ctrl = TestBed.inject(HttpTestingController);
-
-  fixture.autoDetectChanges(true);
-
-  const input: HTMLInputElement = fixture.debugElement.query(
-    By.css('input')
-  ).nativeElement;
-  input.value = 'Warner Bros';
-  input.dispatchEvent(new Event('input'));
-
-  ctrl
-    .expectOne('https://movies.com/studios?query=Warner%20Bros')
-    .flush([
-      { id: 1, name: 'Harry Potter' },
-      { id: 2, name: 'The Dark Knight' },
-    ]);
-  await fixture.whenStable();
-
-  const movies = fixture.debugElement
-    .queryAll(By.css('p'))
-    .map((el) => el.nativeElement.textContent);
-  expect(movies).toEqual(['1: Harry Potter', '2: The Dark Knight']);
-  ctrl.verify();
-});
-```
-
-</ngrx-code-example>
-
-This test assumes that the `MoviesService` sends a request.
-
-## Testing Custom Extensions
-
-An extension is responsible for playing a movie and tracking the duration of viewership. The extension provides `play` and `stop` methods, along with a Signal containing the movie's ID and the time spent watching it.
-
-<ngrx-code-example header="with-play-tracking.ts">
-
-```ts
-type PlayTrackingState = {
-  _currentId: number;
-  _status: 'playing' | 'stopped';
-  _startedAt: Date | undefined;
-  trackedData: Record<number, number>;
-};
-
-const initialState: PlayTrackingState = {
-  _currentId: 0,
-  _status: 'stopped',
-  _startedAt: undefined,
-  trackedData: {},
-};
-
-export const withPlayTracking = () =>
-  signalStoreFeature(
-    withState(initialState),
-    withMethods((store) => {
-      const stop = () => {
-        const startedAt = store._startedAt();
-        if (!startedAt || store._status() === 'stopped') {
-          return;
-        }
-
-        const timeSpent = new Date().getTime() - startedAt.getTime();
-        const alreadySpent =
-          store.trackedData()[store._currentId()] ?? 0;
-        patchState(store, (state) => ({
-          _currentId: 0,
-          _status: 'stopped' as const,
-          trackedData: {
-            ...state.trackedData,
-            [state._currentId]: alreadySpent + timeSpent,
-          },
-        }));
-      };
-
-      return {
-        play(id: number) {
-          stop();
-          patchState(store, {
-            _currentId: id,
-            _status: 'playing',
-            _startedAt: new Date(),
-          });
-        },
-        stop,
-      };
-    })
+    }))
   );
-```
+}
 
-</ngrx-code-example>
+// Test
+describe('withCounter', () => {
+  it('has initial count and doubleCount, and increment updates both', () => {
+    // 👇 "testing store" wraps the feature
+    const CounterStore = signalStore(
+      { providedIn: 'root' },
+      withCounter()
+    );
 
-There are two options for testing this extension: in combination with the `MoviesStore` or in isolation.
+    const store = TestBed.inject(CounterStore);
 
-When tested with the `MoviesStore`, the same approach as in previous examples is followed.
+    expect(store.count()).toBe(0);
+    expect(store.doubleCount()).toBe(0);
 
-To test the extension in isolation, an artificial "Wrapper" SignalStore is created. The test process remains straightforward.
-
-<ngrx-code-example header="with-play-tracking.spec.ts">
-
-```ts
-describe('withTrackedPlay', () => {
-  const TrackedPlayStore = signalStore(
-    { providedIn: 'root' },
-    withPlayTracking()
-  );
-
-  it('should track movies', fakeAsync(() => {
-    const store = TestBed.inject(TrackedPlayStore);
-
-    store.play(1);
-    tick(1000);
-
-    store.stop();
-    store.play(2);
-    tick(1000);
-
-    store.play(3);
-    tick(1000);
-
-    store.play(1);
-    tick(1000);
-    store.stop();
-
-    expect(store.trackedData()).toEqual({
-      1: 2000,
-      2: 1000,
-      3: 1000,
-    });
-  }));
+    store.increment();
+    expect(store.count()).toBe(1);
+    expect(store.doubleCount()).toBe(2);
+  });
 });
 ```
 

@@ -9,7 +9,10 @@ import { waitForAsync } from '@angular/core/testing';
 
 describe('Component Migration 15_0_0-beta', () => {
   let appTree: UnitTestTree;
-  const collectionPath = path.join(__dirname, '../migration.json');
+  const collectionPath = path.join(
+    process.cwd(),
+    'dist/modules/component/migrations/migration.json'
+  );
   const pkgName = 'component';
 
   beforeEach(() => {

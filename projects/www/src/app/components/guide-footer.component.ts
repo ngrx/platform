@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { FlattenedLink } from '../services/guide-menu.service';
@@ -41,6 +41,7 @@ import { FlattenedLink } from '../services/guide-menu.service';
       }
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {
@@ -50,7 +51,7 @@ import { FlattenedLink } from '../services/guide-menu.service';
         width: 960px;
         padding-top: 24px;
         margin-top: 24px;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
         @media only screen and (max-width: 1280px) {
           width: 100%;
         }
@@ -65,7 +66,7 @@ import { FlattenedLink } from '../services/guide-menu.service';
         width: 100%;
         padding: 16px;
         border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid var(--ngrx-border-color);
         align-items: center;
         transition: border-color 200ms;
         height: 100%;
@@ -88,7 +89,7 @@ import { FlattenedLink } from '../services/guide-menu.service';
 
       .parents {
         grid-area: parents;
-        color: rgba(255, 255, 255, 0.54);
+        color: var(--ngrx-text-faint);
         font-weight: 600;
         font-size: 12px;
       }
@@ -98,7 +99,7 @@ import { FlattenedLink } from '../services/guide-menu.service';
         font-size: 32px;
         position: relative;
         top: -2px;
-        color: rgba(255, 255, 255, 0.54);
+        color: var(--ngrx-text-faint);
         transition: color 200ms;
       }
 
@@ -107,11 +108,11 @@ import { FlattenedLink } from '../services/guide-menu.service';
       }
 
       .linkWrapper a:hover {
-        border-color: rgba(207, 143, 197, 1);
+        border-color: var(--ngrx-accent);
       }
 
       .linkWrapper a:hover mat-icon {
-        color: rgba(207, 143, 197, 1);
+        color: var(--ngrx-accent);
       }
     `,
   ],

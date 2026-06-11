@@ -1,4 +1,9 @@
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { SymbolExcerptComponent } from './symbol-excerpt.component';
 import { InlineMarkdownPipe } from './inline-markdown.pipe';
 import { ApiMember } from '@ngrx-io/shared';
@@ -16,6 +21,7 @@ import { ApiMember } from '@ngrx-io/shared';
       </div>
     }
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .returns {
@@ -27,7 +33,7 @@ import { ApiMember } from '@ngrx-io/shared';
         grid-template-columns: 104px 1fr;
         padding: 8px;
         align-items: center;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom: 1px solid var(--ngrx-border-color);
       }
 
       h4 {
@@ -37,7 +43,7 @@ import { ApiMember } from '@ngrx-io/shared';
         font-size: 15px;
         font-weight: 700;
         padding: 8px;
-        color: #fface6;
+        color: var(--ngrx-link);
       }
 
       div {

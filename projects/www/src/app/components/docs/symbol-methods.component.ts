@@ -1,4 +1,9 @@
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { NgClass } from '@angular/common';
 import { ApiMember, ApiMemberKind } from '@ngrx-io/shared';
 import { SymbolExcerptComponent } from './symbol-excerpt.component';
@@ -63,11 +68,12 @@ import { SymbolUsageNotesComponent } from './symbol-usage-notes.component';
       </div>
     }
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .methods {
         display: block;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
       }
 
       h3 {
@@ -75,7 +81,7 @@ import { SymbolUsageNotesComponent } from './symbol-usage-notes.component';
         font-size: 15px;
         font-weight: 700;
         padding: 8px 16px;
-        color: #fface6;
+        color: var(--ngrx-link);
       }
 
       .method {
@@ -146,8 +152,8 @@ import { SymbolUsageNotesComponent } from './symbol-usage-notes.component';
       ngrx-symbol-usage-notes {
         /* border-top: none; */
         margin-left: 8px;
-        border-left: 16px solid rgba(255, 255, 255, 0.12);
-        border-right: 1px solid rgba(255, 255, 255, 0.12);
+        border-left: 16px solid var(--ngrx-border-color);
+        border-right: 1px solid var(--ngrx-border-color);
       }
     `,
   ],

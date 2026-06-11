@@ -21,6 +21,7 @@ import {
   DataServiceError,
   Logger,
 } from '../..';
+import { vi } from 'vitest';
 
 describe('EntityServices', () => {
   describe('entityActionErrors$', () => {
@@ -85,66 +86,70 @@ describe('EntityServices', () => {
 
   describe('dispatch(MergeQuerySet)', () => {
     // using async test to guard against false test pass.
-    it('should update entityCache$ twice after merging two individual collections', (done: any) => {
-      const hero1 = { id: 1, name: 'A' } as Hero;
-      const hero2 = { id: 2, name: 'B' } as Hero;
-      const heroes = [hero1, hero2];
+    it('should update entityCache$ twice after merging two individual collections', () =>
+      new Promise<void>((done) => {
+        const hero1 = { id: 1, name: 'A' } as Hero;
+        const hero2 = { id: 2, name: 'B' } as Hero;
+        const heroes = [hero1, hero2];
 
-      const villain = { key: 'DE', name: 'Dr. Evil' } as Villain;
+        const villain = { key: 'DE', name: 'Dr. Evil' } as Villain;
 
-      const { entityServices } = entityServicesSetup();
-      const heroCollectionService =
-        entityServices.getEntityCollectionService<Hero>('Hero');
-      const villainCollectionService =
-        entityServices.getEntityCollectionService<Villain>('Villain');
+        const { entityServices } = entityServicesSetup();
+        const heroCollectionService =
+          entityServices.getEntityCollectionService<Hero>('Hero');
+        const villainCollectionService =
+          entityServices.getEntityCollectionService<Villain>('Villain');
 
-      const entityCacheValues: any = [];
-      entityServices.entityCache$.subscribe((cache) => {
-        entityCacheValues.push(cache);
-        if (entityCacheValues.length === 3) {
-          expect(entityCacheValues[0]).toEqual({});
-          expect(entityCacheValues[1]['Hero'].ids).toEqual([1, 2]);
-          expect(entityCacheValues[1]['Villain']).toBeUndefined();
-          expect(entityCacheValues[2]['Villain'].entities['DE']).toEqual(
-            villain
-          );
-          done();
-        }
-      });
+        const entityCacheValues: any = [];
+        entityServices.entityCache$.subscribe((cache) => {
+          entityCacheValues.push(cache);
+          if (entityCacheValues.length === 3) {
+            expect(entityCacheValues[0]).toEqual({});
+            expect(entityCacheValues[1]['Hero'].ids).toEqual([1, 2]);
+            expect(entityCacheValues[1]['Villain']).toBeUndefined();
+            expect(entityCacheValues[2]['Villain'].entities['DE']).toEqual(
+              villain
+            );
+            done();
+          }
+        });
 
-      // Emulate what would happen if had queried collections separately
-      heroCollectionService.createAndDispatch(
-        EntityOp.QUERY_MANY_SUCCESS,
-        heroes
-      );
-      villainCollectionService.createAndDispatch(
-        EntityOp.QUERY_BY_KEY_SUCCESS,
-        villain
-      );
-    });
+        // Emulate what would happen if had queried collections separately
+        heroCollectionService.createAndDispatch(
+          EntityOp.QUERY_MANY_SUCCESS,
+          heroes
+        );
+        villainCollectionService.createAndDispatch(
+          EntityOp.QUERY_BY_KEY_SUCCESS,
+          villain
+        );
+      }));
 
     // using async test to guard against false test pass.
-    it('should update entityCache$ once when MergeQuerySet multiple collections', (done: any) => {
-      const hero1 = { id: 1, name: 'A' } as Hero;
-      const hero2 = { id: 2, name: 'B' } as Hero;
-      const heroes = [hero1, hero2];
-      const villain = { key: 'DE', name: 'Dr. Evil' } as Villain;
-      const querySet: EntityCacheQuerySet = {
-        Hero: heroes,
-        Villain: [villain],
-      };
-      const action = new MergeQuerySet(querySet);
+    it('should update entityCache$ once when MergeQuerySet multiple collections', () =>
+      new Promise<void>((done) => {
+        const hero1 = { id: 1, name: 'A' } as Hero;
+        const hero2 = { id: 2, name: 'B' } as Hero;
+        const heroes = [hero1, hero2];
+        const villain = { key: 'DE', name: 'Dr. Evil' } as Villain;
+        const querySet: EntityCacheQuerySet = {
+          Hero: heroes,
+          Villain: [villain],
+        };
+        const action = new MergeQuerySet(querySet);
 
-      const { entityServices } = entityServicesSetup();
+        const { entityServices } = entityServicesSetup();
 
-      // Skip initial value. Want the first one after merge is dispatched
-      entityServices.entityCache$.pipe(skip(1), first()).subscribe((cache) => {
-        expect(cache['Hero'].ids).toEqual([1, 2]);
-        expect(cache['Villain'].entities['DE']).toEqual(villain);
-        done();
-      });
-      entityServices.dispatch(action);
-    });
+        // Skip initial value. Want the first one after merge is dispatched
+        entityServices.entityCache$
+          .pipe(skip(1), first())
+          .subscribe((cache) => {
+            expect(cache['Hero'].ids).toEqual([1, 2]);
+            expect(cache['Villain'].entities['DE']).toEqual(villain);
+            done();
+          });
+        entityServices.dispatch(action);
+      }));
   });
 });
 
@@ -166,9 +171,9 @@ const entityMetadata: EntityMetadataMap = {
 
 function entityServicesSetup() {
   const logger = {
-    error: jasmine.createSpy('error'),
-    log: jasmine.createSpy('log'),
-    warn: jasmine.createSpy('warn'),
+    error: vi.fn().mockName('error'),
+    log: vi.fn().mockName('log'),
+    warn: vi.fn().mockName('warn'),
   };
 
   TestBed.configureTestingModule({

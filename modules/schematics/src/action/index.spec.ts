@@ -10,12 +10,11 @@ import {
   defaultWorkspaceOptions,
   defaultAppOptions,
 } from '@ngrx/schematics-core/testing';
-import { capitalize } from '../../schematics-core/utility/strings';
 
 describe('Action Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/schematics',
-    path.join(__dirname, '../../collection.json')
+    path.join(process.cwd(), 'dist/modules/schematics/collection.json')
   );
   const defaultOptions: ActionOptions = {
     name: 'foo',

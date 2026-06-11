@@ -8,7 +8,10 @@ import { createPackageJson } from '@ngrx/schematics-core/testing/create-package'
 
 describe('Component Migration 16_0_0', () => {
   let appTree: UnitTestTree;
-  const collectionPath = path.join(__dirname, '../migration.json');
+  const collectionPath = path.join(
+    process.cwd(),
+    'dist/modules/component/migrations/migration.json'
+  );
   const pkgName = 'component';
 
   beforeEach(() => {

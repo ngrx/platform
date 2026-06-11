@@ -33,10 +33,6 @@ export interface RequestData {
  * Same as HttpClient's HttpParamsOptions which at the time of writing was
  * NOT exported at package level
  * https://github.com/angular/angular/issues/22013
- *
- * @deprecated Use HttpOptions instead. getWithQuery still accepts QueryParams as its
- * first argument, but HttpOptions.httpParams uses Angular's own HttpParamsOptions which
- * HttpClient accepts as an argument.
  */
 export interface QueryParams {
   [name: string]:

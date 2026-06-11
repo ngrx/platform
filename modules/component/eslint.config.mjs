@@ -11,7 +11,13 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['**/dist', '**/jest.config.ts', '**/schematics-core/**/*.ts'],
+    ignores: [
+      '**/dist',
+      '**/jest.config.ts',
+      '**/schematics-core/**/*.ts',
+      '**/vite.config.*.timestamp*',
+      '**/vitest.config.*.timestamp*'
+    ],
   },
   ...baseConfig,
   ...compat

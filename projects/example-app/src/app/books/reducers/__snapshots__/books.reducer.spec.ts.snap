@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`BooksReducer LOAD should add a single book, if the book does not exist 1`] = `
+exports[`BooksReducer > LOAD > should add a single book, if the book does not exist 1`] = `
 {
   "entities": {
     "1": {
@@ -30,7 +30,7 @@ exports[`BooksReducer LOAD should add a single book, if the book does not exist 
 }
 `;
 
-exports[`BooksReducer LOAD should return the existing state if the book exists 1`] = `
+exports[`BooksReducer > LOAD > should return the existing state if the book exists 1`] = `
 {
   "entities": {
     "1": {
@@ -60,57 +60,7 @@ exports[`BooksReducer LOAD should return the existing state if the book exists 1
 }
 `;
 
-exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add all books in the payload when none exist 1`] = `
-{
-  "entities": {
-    "1": {
-      "id": "1",
-      "volumeInfo": {
-        "authors": [
-          "author",
-        ],
-        "averageRating": 3,
-        "description": "description",
-        "imageLinks": {
-          "smallThumbnail": "string",
-          "thumbnail": "string",
-        },
-        "publishDate": "",
-        "publisher": "publisher",
-        "ratingsCount": 5,
-        "subtitle": "subtitle",
-        "title": "title",
-      },
-    },
-    "222": {
-      "id": "222",
-      "volumeInfo": {
-        "authors": [
-          "author",
-        ],
-        "averageRating": 3,
-        "description": "description",
-        "imageLinks": {
-          "smallThumbnail": "string",
-          "thumbnail": "string",
-        },
-        "publishDate": "",
-        "publisher": "publisher",
-        "ratingsCount": 5,
-        "subtitle": "subtitle",
-        "title": "title",
-      },
-    },
-  },
-  "ids": [
-    "1",
-    "222",
-  ],
-  "selectedBookId": null,
-}
-`;
-
-exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add all books in the payload when none exist 2`] = `
+exports[`BooksReducer > SEARCH_COMPLETE & LOAD_SUCCESS > should add all books in the payload when none exist 1`] = `
 {
   "entities": {
     "1": {
@@ -160,7 +110,7 @@ exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add all books in the
 }
 `;
 
-exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add only books when books already exist 1`] = `
+exports[`BooksReducer > SEARCH_COMPLETE & LOAD_SUCCESS > should add all books in the payload when none exist 2`] = `
 {
   "entities": {
     "1": {
@@ -201,36 +151,16 @@ exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add only books when 
         "title": "title",
       },
     },
-    "333": {
-      "id": "333",
-      "volumeInfo": {
-        "authors": [
-          "author",
-        ],
-        "averageRating": 3,
-        "description": "description",
-        "imageLinks": {
-          "smallThumbnail": "string",
-          "thumbnail": "string",
-        },
-        "publishDate": "",
-        "publisher": "publisher",
-        "ratingsCount": 5,
-        "subtitle": "subtitle",
-        "title": "title",
-      },
-    },
   },
   "ids": [
     "1",
     "222",
-    "333",
   ],
   "selectedBookId": null,
 }
 `;
 
-exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add only books when books already exist 2`] = `
+exports[`BooksReducer > SEARCH_COMPLETE & LOAD_SUCCESS > should add only books when books already exist 1`] = `
 {
   "entities": {
     "1": {
@@ -300,7 +230,77 @@ exports[`BooksReducer SEARCH_COMPLETE & LOAD_SUCCESS should add only books when 
 }
 `;
 
-exports[`BooksReducer SELECT should set the selected book id on the state 1`] = `
+exports[`BooksReducer > SEARCH_COMPLETE & LOAD_SUCCESS > should add only books when books already exist 2`] = `
+{
+  "entities": {
+    "1": {
+      "id": "1",
+      "volumeInfo": {
+        "authors": [
+          "author",
+        ],
+        "averageRating": 3,
+        "description": "description",
+        "imageLinks": {
+          "smallThumbnail": "string",
+          "thumbnail": "string",
+        },
+        "publishDate": "",
+        "publisher": "publisher",
+        "ratingsCount": 5,
+        "subtitle": "subtitle",
+        "title": "title",
+      },
+    },
+    "222": {
+      "id": "222",
+      "volumeInfo": {
+        "authors": [
+          "author",
+        ],
+        "averageRating": 3,
+        "description": "description",
+        "imageLinks": {
+          "smallThumbnail": "string",
+          "thumbnail": "string",
+        },
+        "publishDate": "",
+        "publisher": "publisher",
+        "ratingsCount": 5,
+        "subtitle": "subtitle",
+        "title": "title",
+      },
+    },
+    "333": {
+      "id": "333",
+      "volumeInfo": {
+        "authors": [
+          "author",
+        ],
+        "averageRating": 3,
+        "description": "description",
+        "imageLinks": {
+          "smallThumbnail": "string",
+          "thumbnail": "string",
+        },
+        "publishDate": "",
+        "publisher": "publisher",
+        "ratingsCount": 5,
+        "subtitle": "subtitle",
+        "title": "title",
+      },
+    },
+  },
+  "ids": [
+    "1",
+    "222",
+    "333",
+  ],
+  "selectedBookId": null,
+}
+`;
+
+exports[`BooksReducer > SELECT > should set the selected book id on the state 1`] = `
 {
   "entities": {
     "1": {
@@ -350,9 +350,9 @@ exports[`BooksReducer SELECT should set the selected book id on the state 1`] = 
 }
 `;
 
-exports[`BooksReducer Selectors selectId should return the selected id 1`] = `"1"`;
+exports[`BooksReducer > Selectors > selectId > should return the selected id 1`] = `"1"`;
 
-exports[`BooksReducer undefined action should return the default state 1`] = `
+exports[`BooksReducer > undefined action > should return the default state 1`] = `
 {
   "entities": {},
   "ids": [],

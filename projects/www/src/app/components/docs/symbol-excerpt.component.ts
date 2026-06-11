@@ -1,4 +1,10 @@
-import { Component, computed, forwardRef, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  forwardRef,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { NgClass } from '@angular/common';
 import { ApiExcerptToken } from '@ngrx-io/shared';
 import { SymbolLinkComponent } from './symbol-link.component';
@@ -25,6 +31,7 @@ import { CodeHighlightPipe } from './code-highlight.pipe';
     </div>
     <pre><code [ngClass]="{deprecated: deprecated()}" [innerHTML]="joinedContent() | ngrxCodeHighlight"></code></pre>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {
@@ -62,6 +69,7 @@ import { CodeHighlightPipe } from './code-highlight.pipe';
       pre {
         margin: 0;
         overflow-x: initial;
+        border: none;
       }
 
       .deprecated {

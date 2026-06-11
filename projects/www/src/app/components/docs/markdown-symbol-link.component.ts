@@ -1,4 +1,9 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  input,
+  ViewEncapsulation,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { SymbolLinkComponent } from './symbol-link.component';
 import { CanonicalReference } from '@ngrx-io/shared';
 
@@ -6,12 +11,13 @@ import { CanonicalReference } from '@ngrx-io/shared';
   selector: 'ngrx-markdown-symbol-link',
   standalone: true,
   imports: [SymbolLinkComponent],
-  template: ` <ngrx-symbol-link [reference]="reference"></ngrx-symbol-link> `,
+  template: ` <ngrx-symbol-link [reference]="reference()"></ngrx-symbol-link> `,
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       ngrx-docs-symbol-link {
-        color: #ffdcbe;
+        color: var(--ngrx-link);
       }
 
       ngrx-docs-symbol-link a {
@@ -24,5 +30,5 @@ import { CanonicalReference } from '@ngrx-io/shared';
   ],
 })
 export class MarkdownSymbolLinkComponent {
-  @Input() reference: CanonicalReference = '@ngrx/store!Store:class';
+  reference = input<CanonicalReference>('@ngrx/store!Store:class');
 }

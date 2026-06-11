@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -14,6 +14,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       <ng-content></ng-content>
     </a>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {
@@ -22,14 +23,14 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
       a {
         display: block;
-        color: rgba(255, 255, 255, 0.56);
+        color: var(--ngrx-text-muted);
         transition: color 0.2s;
         font-size: 14px;
       }
 
       a.active,
       a:hover {
-        color: rgba(255, 255, 255, 0.87);
+        color: var(--ngrx-text-primary);
       }
     `,
   ],

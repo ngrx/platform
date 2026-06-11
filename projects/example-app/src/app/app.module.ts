@@ -40,7 +40,7 @@ import { AppComponent } from '@example-app/core/containers';
         // strictStateImmutability and strictActionImmutability are enabled by default
         strictStateSerializability: true,
         strictActionSerializability: true,
-        strictActionWithinNgZone: true,
+        strictActionWithinNgZone: false,
         strictActionTypeUniqueness: true,
       },
     }),

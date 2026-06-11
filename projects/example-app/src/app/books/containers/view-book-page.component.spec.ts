@@ -11,6 +11,7 @@ import {
 import { SelectedBookPageComponent } from '@example-app/books/containers';
 import { ViewBookPageComponent } from '@example-app/books/containers';
 import { ViewBookPageActions } from '@example-app/books/actions/view-book-page.actions';
+import * as fromBooks from '@example-app/books/reducers';
 import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 import { MaterialModule } from '@example-app/material';
 
@@ -27,7 +28,12 @@ describe('View Book Page', () => {
           provide: ActivatedRoute,
           useValue: { params: new BehaviorSubject({}) },
         },
-        provideMockStore(),
+        provideMockStore({
+          selectors: [
+            { selector: fromBooks.selectSelectedBook, value: null },
+            { selector: fromBooks.isSelectedBookInCollection, value: false },
+          ],
+        }),
       ],
       declarations: [
         ViewBookPageComponent,
@@ -42,7 +48,7 @@ describe('View Book Page', () => {
     store = TestBed.inject(MockStore);
     route = TestBed.inject(ActivatedRoute);
 
-    jest.spyOn(store, 'dispatch');
+    vi.spyOn(store, 'dispatch');
   });
 
   it('should compile', () => {

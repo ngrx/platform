@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Feature Schematic should create all files of a feature with an entity 1`] = `
+exports[`Feature Schematic > should create all files of a feature with an entity 1`] = `
 "import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
@@ -24,7 +24,7 @@ export const FooActions = createActionGroup({
 "
 `;
 
-exports[`Feature Schematic should create all files of a feature with an entity 2`] = `
+exports[`Feature Schematic > should create all files of a feature with an entity 2`] = `
 "import { createFeature, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Foo } from './foo.model';
@@ -93,7 +93,7 @@ export const {
 "
 `;
 
-exports[`Feature Schematic should create all files of a feature with an entity 3`] = `
+exports[`Feature Schematic > should create all files of a feature with an entity 3`] = `
 "import { reducer, initialState } from './foo.reducer';
 
 describe('Foo Reducer', () => {
@@ -110,8 +110,8 @@ describe('Foo Reducer', () => {
 "
 `;
 
-exports[`Feature Schematic should create all files of a feature with an entity 4`] = `
-"import { Injectable } from '@angular/core';
+exports[`Feature Schematic > should create all files of a feature with an entity 4`] = `
+"import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { concatMap } from 'rxjs/operators';
@@ -120,6 +120,7 @@ import { FooActions } from './foo.actions';
 
 @Injectable()
 export class FooEffects {
+  private actions$ = inject(Actions);
 
 
   loadFoos$ = createEffect(() => {
@@ -131,12 +132,11 @@ export class FooEffects {
     );
   });
 
-  constructor(private actions$: Actions) {}
 }
 "
 `;
 
-exports[`Feature Schematic should create all files of a feature with an entity 5`] = `
+exports[`Feature Schematic > should create all files of a feature with an entity 5`] = `
 "import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
@@ -165,14 +165,14 @@ describe('FooEffects', () => {
 "
 `;
 
-exports[`Feature Schematic should create all files of a feature with an entity 6`] = `
+exports[`Feature Schematic > should create all files of a feature with an entity 6`] = `
 "export interface Foo {
   id: string;
 }
 "
 `;
 
-exports[`Feature Schematic should have all api actions in reducer if api flag enabled 1`] = `
+exports[`Feature Schematic > should have all api actions in reducer if api flag enabled 1`] = `
 "import { createFeature, createReducer, on } from '@ngrx/store';
 import { FooActions } from './foo.actions';
 
@@ -201,7 +201,7 @@ export const fooFeature = createFeature({
 "
 `;
 
-exports[`Feature Schematic should have all api actions with prefix in reducer if api flag enabled 1`] = `
+exports[`Feature Schematic > should have all api actions with prefix in reducer if api flag enabled 1`] = `
 "import { createFeature, createReducer, on } from '@ngrx/store';
 import { FooActions } from './foo.actions';
 
@@ -230,8 +230,8 @@ export const fooFeature = createFeature({
 "
 `;
 
-exports[`Feature Schematic should have all api effect if api flag enabled 1`] = `
-"import { Injectable } from '@angular/core';
+exports[`Feature Schematic > should have all api effect if api flag enabled 1`] = `
+"import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, concatMap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
@@ -240,6 +240,7 @@ import { FooActions } from './foo.actions';
 
 @Injectable()
 export class FooEffects {
+  private actions$ = inject(Actions);
 
   loadFoos$ = createEffect(() => {
     return this.actions$.pipe(
@@ -255,13 +256,12 @@ export class FooEffects {
   });
 
 
-  constructor(private actions$: Actions) {}
 }
 "
 `;
 
-exports[`Feature Schematic should have all api effect with prefix if api flag enabled 1`] = `
-"import { Injectable } from '@angular/core';
+exports[`Feature Schematic > should have all api effect with prefix if api flag enabled 1`] = `
+"import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, concatMap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
@@ -270,6 +270,7 @@ import { FooActions } from './foo.actions';
 
 @Injectable()
 export class FooEffects {
+  private actions$ = inject(Actions);
 
   customFoos$ = createEffect(() => {
     return this.actions$.pipe(
@@ -285,12 +286,11 @@ export class FooEffects {
   });
 
 
-  constructor(private actions$: Actions) {}
 }
 "
 `;
 
-exports[`Feature Schematic should respect the path provided for the feature name 1`] = `
+exports[`Feature Schematic > should respect the path provided for the feature name 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -304,7 +304,7 @@ import { App } from './app';
     BrowserModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
   bootstrap: [App]
 })

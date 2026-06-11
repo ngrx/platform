@@ -1,5 +1,5 @@
 import { AsyncPipe, JsonPipe } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { ApiMemberSummary } from '@ngrx-io/shared';
 import { SymbolApiComponent } from './symbol-api.component';
 import { SymbolCodeLinkComponent } from './symbol-code-link.component';
@@ -67,7 +67,7 @@ import { SymbolUsageNotesComponent } from './symbol-usage-notes.component';
       }
 
       .symbol-call-signature {
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid var(--ngrx-border-color);
         border-radius: 8px;
         margin: 16px 0;
         max-width: 100%;
@@ -75,6 +75,7 @@ import { SymbolUsageNotesComponent } from './symbol-usage-notes.component';
       }
     `,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     SymbolExcerptComponent,
     SymbolParamsComponent,
