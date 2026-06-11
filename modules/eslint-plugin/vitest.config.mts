@@ -6,7 +6,6 @@ export default defineProject((config) =>
     root: __dirname,
     test: {
       name: 'eslint-plugin',
-      setupFiles: ['test-setup.ts'],
       testTimeout: 8000,
     },
     define: {

@@ -13,6 +13,7 @@ export const baseConfig = {
     environment: 'jsdom',
     include: ['**/*.{spec,test}.ts'],
     passWithNoTests: true,
+    setupFiles: ['test-setup.ts'],
     typecheck: {
       enabled: true,
       ignoreSourceErrors: true,

@@ -6,7 +6,6 @@ export default defineProject((config) =>
     root: __dirname,
     test: {
       name: 'schematics',
-      setupFiles: ['test-setup.ts'],
       include: ['src/**/*.spec.ts'],
     },
     define: {

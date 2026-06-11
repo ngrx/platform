@@ -6,7 +6,6 @@ export default defineProject((config) =>
     root: __dirname,
     test: {
       name: 'effects',
-      setupFiles: ['test-setup.ts'],
       include: ['spec/**/*.spec.ts'],
       coverage: {
         reportsDirectory: '../../coverage/modules/effects',
