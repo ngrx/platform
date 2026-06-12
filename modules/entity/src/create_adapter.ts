@@ -67,6 +67,10 @@ export function createEntityAdapter<T>(options: {
   selectId: IdSelectorNum<T>;
   sortComparer?: false | Comparer<T>;
 }): EntityAdapter<T, number>;
+export function createEntityAdapter<T>(options: {
+  selectId: IdSelector<T>;
+  sortComparer?: false | Comparer<T>;
+}): EntityAdapter<T>;
 export function createEntityAdapter<T>(): EntityAdapter<T>;
 export function createEntityAdapter<T>(
   options: {

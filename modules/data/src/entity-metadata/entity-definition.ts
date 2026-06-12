@@ -25,11 +25,11 @@ export function createEntityDefinition<T, S extends object>(
     throw new Error('Missing required entityName');
   }
   metadata.entityName = entityName = entityName.trim();
-  const selectId = metadata.selectId || defaultSelectId;
+  const selectId = metadata.selectId || (defaultSelectId as IdSelector<T>);
   const sortComparer = (metadata.sortComparer = metadata.sortComparer || false);
 
   const entityAdapter = createEntityAdapter<T>({
-    selectId: selectId as any,
+    selectId,
     sortComparer,
   });
 
