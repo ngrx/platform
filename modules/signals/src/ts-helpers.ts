@@ -38,3 +38,16 @@ export type IsKnownRecord<T> =
 export type OmitPrivate<T> = {
   [K in keyof T as K extends `_${string}` ? never : K]: T[K];
 };
+
+/**
+ * Converts a tuple of types into an intersection of those types. For example, `TupleToIntersection<[A, B, C]>` will result in `A & B & C`.
+ * This is useful for combining multiple types into a single type that has all the properties of the original types.
+ * 
+ * @template T - A tuple of types to be converted into an intersection.
+ * @returns An intersection of the types in the tuple.
+ */
+export type TupleToIntersection<T extends any[]> = {
+  [I in keyof T]: (x: T[I]) => void 
+}[number] extends (x: infer I) => void 
+    ? I 
+    : never;
