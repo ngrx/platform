@@ -11,6 +11,7 @@ export const baseConfig = {
   test: {
     globals: true,
     environment: 'jsdom',
+    pool: 'forks',
     include: ['**/*.{spec,test}.ts'],
     passWithNoTests: true,
     setupFiles: ['test-setup.ts'],
