@@ -7,9 +7,6 @@ export default defineProject((config) =>
     test: {
       name: 'effects',
       include: ['spec/**/*.spec.ts'],
-      coverage: {
-        reportsDirectory: '../../coverage/modules/effects',
-      },
     },
     define: {
       'import.meta.vitest': config.mode !== 'production',
