@@ -28,4 +28,4 @@ describe('EntitySelectors', () => {
       >;
     `).toInfer('result', 'true');
   });
-}, 15_000);
+}, 8_000);

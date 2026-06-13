@@ -60,4 +60,4 @@ describe('EntityState Types', () => {
       `).toSucceed();
     });
   });
-}, 15_000);
+}, 8_000);
