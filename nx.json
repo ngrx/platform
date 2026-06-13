@@ -96,5 +96,6 @@
     ]
   },
   "nxCloudAccessToken": "NTlmOGIxYmItZjM0OC00YzAxLTgzZTgtZDNiZmExMzcwZTA4fHJlYWQ=",
-  "defaultBase": "main"
+  "defaultBase": "main",
+  "analytics": false
 }
