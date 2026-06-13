@@ -5,8 +5,8 @@ export default defineProject((config) =>
   mergeConfig(baseConfig, {
     root: __dirname,
     test: {
-      name: 'schematics',
-      include: ['src/**/*.spec.ts'],
+      name: 'effects',
+      include: ['spec/**/*.spec.ts'],
     },
     define: {
       'import.meta.vitest': config.mode !== 'production',

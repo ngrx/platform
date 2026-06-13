@@ -58,8 +58,7 @@
       ],
       "@ngrx/store/schematics-core": ["./modules/store/schematics-core"],
       "@ngrx/store/testing": ["./modules/store/testing"]
-    },
-    "typeRoots": ["node_modules/@types"]
+    }
   },
   "exclude": [
     "dist",

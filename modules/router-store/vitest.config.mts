@@ -5,8 +5,7 @@ export default defineProject((config) =>
   mergeConfig(baseConfig, {
     root: __dirname,
     test: {
-      name: 'schematics',
-      include: ['src/**/*.spec.ts'],
+      name: 'router-store',
     },
     define: {
       'import.meta.vitest': config.mode !== 'production',

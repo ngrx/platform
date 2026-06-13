@@ -5,8 +5,8 @@ export default defineProject((config) =>
   mergeConfig(baseConfig, {
     root: __dirname,
     test: {
-      name: 'schematics',
-      include: ['src/**/*.spec.ts'],
+      name: 'eslint-plugin',
+      testTimeout: 8000,
     },
     define: {
       'import.meta.vitest': config.mode !== 'production',

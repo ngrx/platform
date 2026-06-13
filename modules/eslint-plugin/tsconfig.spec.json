@@ -9,5 +9,5 @@
     "resolveJsonModule": true
   },
   "files": ["test-setup.ts"],
-  "include": ["**/*.spec.ts", "**/*.test.ts", "**/*.d.ts"]
+  "include": ["**/*.spec.ts", "**/*.test.ts", "**/*.test-d.ts"]
 }

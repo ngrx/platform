@@ -1,7 +1,7 @@
 import type { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
-import stripJsonComments from 'strip-json-comments';
-import type { Schema } from './schema';
 import * as ts from 'typescript';
+import { stripJsonComments } from '../strip-json-comments';
+import type { Schema } from './schema';
 
 export const possibleFlatConfigPaths = [
   'eslint.config.js',
