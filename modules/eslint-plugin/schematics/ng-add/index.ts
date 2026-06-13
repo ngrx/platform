@@ -1,15 +1,13 @@
 import type { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import * as ts from 'typescript';
 import { stripJsonComments } from '../strip-json-comments';
 import type { Schema } from './schema';
-import * as ts from 'typescript';
 
-const possibleFlatConfigPaths = [
+export const possibleFlatConfigPaths = [
   'eslint.config.js',
   'eslint.config.mjs',
   'eslint.config.cjs',
 ];
-
-export { possibleFlatConfigPaths };
 
 export default function (schema: Schema): Rule {
   return (host: Tree, context: SchematicContext) => {
