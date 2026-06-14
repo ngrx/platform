@@ -124,7 +124,7 @@ Signals generated for state slices can be utilized to access state values, as de
 <ngrx-code-example header="book-search.ts">
 
 ```ts
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { BookSearchStore } from './book-search-store';
 
@@ -142,7 +142,6 @@ import { BookSearchStore } from './book-search-store';
     <p>Order: {{ store.filter.order() }}</p>
   `,
   providers: [BookSearchStore],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookSearch {
   readonly store = inject(BookSearchStore);
@@ -502,11 +501,7 @@ The `BookSearch` component can use the `BookSearchStore` to manage the state, as
 <ngrx-code-example header="book-search.ts">
 
 ```ts
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BookFilter } from './book-filter';
 import { BookList } from './book-list';
 import { BooksStore } from './books.store';
@@ -529,7 +524,6 @@ import { BooksStore } from './books.store';
     />
   `,
   providers: [BookSearchStore],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookSearch {
   readonly store = inject(BookSearchStore);

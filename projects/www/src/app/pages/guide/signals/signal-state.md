@@ -128,7 +128,7 @@ patchState(userState, setFirstName('Stevie'), setAdmin());
 <ngrx-code-example header="counter.ts">
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { signalState, patchState } from '@ngrx/signals';
 
 @Component({
@@ -140,7 +140,6 @@ import { signalState, patchState } from '@ngrx/signals';
     <button (click)="decrement()">Decrement</button>
     <button (click)="reset()">Reset</button>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Counter {
   readonly state = signalState({ count: 0 });
@@ -213,12 +212,7 @@ export class BookListStore {
 <ngrx-code-example header="book-list.ts">
 
 ```ts
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnInit,
-} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BookListStore } from './book-list-store';
 
 @Component({
@@ -237,7 +231,6 @@ import { BookListStore } from './book-list-store';
     }
   `,
   providers: [BookListStore],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookList {
   readonly store = inject(BookListStore);
