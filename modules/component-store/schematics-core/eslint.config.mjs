@@ -2,7 +2,7 @@ import tseslint from 'typescript-eslint';
 import baseConfig, {
   angularTemplateConfig,
   angularTsConfig,
-} from '../../../eslint.config.mjs';
+} from '../../eslint.config.mjs';
 
 export default tseslint.config(
   {
