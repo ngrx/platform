@@ -2,9 +2,11 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "module": "es2022",
+    "module": "preserve",
     "types": ["vitest/globals", "node"],
-    "target": "es2016"
+    "target": "es2016",
+    "moduleResolution": "bundler",
+    "isolatedModules": true
   },
   "files": ["test-setup.ts"],
   "include": ["**/*.spec.ts", "**/*.test.ts", "**/*.d.ts"]
