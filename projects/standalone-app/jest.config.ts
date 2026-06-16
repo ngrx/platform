@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'standalone-app',
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/projects/standalone-app',
