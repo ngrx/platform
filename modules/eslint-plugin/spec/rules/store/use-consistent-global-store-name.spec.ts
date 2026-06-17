@@ -13,7 +13,10 @@ import { ruleTester, fromFixture } from '../../utils';
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[0][];
 
-const validConstructor: () => (string | ValidTestCase<Options>)[] = () => [
+const validConstructor: () => readonly (
+  | string
+  | ValidTestCase<Options>
+)[] = () => [
   `
 class Ok {}`,
   `
@@ -33,7 +36,7 @@ class Ok2 {
   },
 ];
 
-const validInject: () => (string | ValidTestCase<Options>)[] = () => [
+const validInject: () => readonly (string | ValidTestCase<Options>)[] = () => [
   `
 class Ok3 {}`,
   `
@@ -55,7 +58,10 @@ class Ok5 {
   },
 ];
 
-const invalidConstructor: () => InvalidTestCase<MessageIds, Options>[] = () => [
+const invalidConstructor: () => readonly InvalidTestCase<
+  MessageIds,
+  Options
+>[] = () => [
   fromFixture(
     `
 import { Store } from '@ngrx/store'
@@ -172,7 +178,10 @@ class NotOk3 {
   ),
 ];
 
-const invalidInject: () => InvalidTestCase<MessageIds, Options>[] = () => [
+const invalidInject: () => readonly InvalidTestCase<
+  MessageIds,
+  Options
+>[] = () => [
   fromFixture(
     `
 import { Store } from '@ngrx/store'

@@ -12,7 +12,7 @@ import { ruleTester, fromFixture } from '../../utils';
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[];
 
-const valid: () => (string | ValidTestCase<Options>)[] = () => [
+const valid: () => readonly (string | ValidTestCase<Options>)[] = () => [
   `const withY = <Y>() => signalStoreFeature({ state: type<{ y: Y }>() }, withState({}));`,
   `export const withY = <Y>() => signalStoreFeature(type<{ state: { y: Y } }>(), withState({}));`,
   `const withY = <_>() => { return signalStoreFeature({ state: type<{ y: number }>() }, withState({})); }`,
@@ -25,7 +25,7 @@ const valid: () => (string | ValidTestCase<Options>)[] = () => [
   }`,
 ];
 
-const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
+const invalid: () => readonly InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(
     `
 const withY = () => signalStoreFeature({ state: type<{ y: number }>() }, withState({}));

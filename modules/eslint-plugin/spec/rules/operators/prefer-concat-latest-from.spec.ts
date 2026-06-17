@@ -12,7 +12,7 @@ import { ruleTester, fromFixture } from '../../utils';
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[0][];
 
-const valid: () => (string | ValidTestCase<Options>)[] = () => [
+const valid: () => readonly (string | ValidTestCase<Options>)[] = () => [
   {
     code: `
   import { of, withLatestFrom } from 'rxjs'
@@ -111,7 +111,7 @@ const valid: () => (string | ValidTestCase<Options>)[] = () => [
   }`,
 ];
 
-const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
+const invalid: () => readonly InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(
     `
 import { Actions } from '@ngrx/effects'
