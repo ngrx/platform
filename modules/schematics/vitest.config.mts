@@ -8,7 +8,7 @@ export default defineProject((config) =>
       name: 'schematics',
       include: ['src/**/*.spec.ts'],
       typecheck: {
-        include: ['src/**/*.spec.ts'],
+        include: ['src/**/*.spec.ts', '**/*.test-d.ts'],
       },
     },
     define: {

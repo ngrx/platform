@@ -8,7 +8,7 @@ export default defineProject((config) =>
       name: 'effects',
       include: ['spec/**/*.spec.ts'],
       typecheck: {
-        include: ['spec/**/*.spec.ts'],
+        include: ['spec/**/*.spec.ts', '**/*.test-d.ts'],
       },
     },
     define: {
