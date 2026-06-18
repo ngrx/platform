@@ -1,19 +1,8 @@
-import type { ESLintUtils } from '@typescript-eslint/utils';
-import type {
-  InvalidTestCase,
-  ValidTestCase,
-} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, { SelectStyle } from '../../../src/rules/store/select-style';
 import { ruleTester, fromFixture } from '../../utils';
 
-type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
-type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[0][];
-
-const validConstructor: () => readonly (
-  | string
-  | ValidTestCase<Options>
-)[] = () => [
+const validConstructor = () => [
   `
 import { Store } from '@ngrx/store'
 
@@ -96,7 +85,7 @@ class Ok9 {
   },
 ];
 
-const validInject: () => readonly (string | ValidTestCase<Options>)[] = () => [
+const validInject = () => [
   `
 import { Store } from '@ngrx/store'
 import { inject } from '@angular/core'
@@ -168,10 +157,7 @@ class Ok17 {
   },
 ];
 
-const invalidConstructor: () => readonly InvalidTestCase<
-  MessageIds,
-  Options
->[] = () => [
+const invalidConstructor = () => [
   fromFixture(
     `
 import { select, Store } from '@ngrx/store'
@@ -342,10 +328,7 @@ class NotOk5 {
   ),
 ];
 
-const invalidInject: () => readonly InvalidTestCase<
-  MessageIds,
-  Options
->[] = () => [
+const invalidInject = () => [
   fromFixture(
     `
 import { select, Store } from '@ngrx/store'

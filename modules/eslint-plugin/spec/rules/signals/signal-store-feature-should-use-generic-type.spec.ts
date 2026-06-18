@@ -1,18 +1,10 @@
-import type { ESLintUtils } from '@typescript-eslint/utils';
-import type {
-  InvalidTestCase,
-  ValidTestCase,
-} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, {
   messageId,
 } from '../../../src/rules/signals/signal-store-feature-should-use-generic-type';
 import { ruleTester, fromFixture } from '../../utils';
 
-type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
-type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[];
-
-const valid: () => readonly (string | ValidTestCase<Options>)[] = () => [
+const valid = () => [
   `const withY = <Y>() => signalStoreFeature({ state: type<{ y: Y }>() }, withState({}));`,
   `export const withY = <Y>() => signalStoreFeature(type<{ state: { y: Y } }>(), withState({}));`,
   `const withY = <_>() => { return signalStoreFeature({ state: type<{ y: number }>() }, withState({})); }`,
@@ -25,7 +17,7 @@ const valid: () => readonly (string | ValidTestCase<Options>)[] = () => [
   }`,
 ];
 
-const invalid: () => readonly InvalidTestCase<MessageIds, Options>[] = () => [
+const invalid = () => [
   fromFixture(
     `
 const withY = () => signalStoreFeature({ state: type<{ y: number }>() }, withState({}));
