@@ -299,7 +299,7 @@ ruleTester(rule.meta.docs?.requiresTypeChecking).run(
   path.parse(__filename).name,
   rule,
   {
-    valid: [...validConstructor(), ...validInject()],
-    invalid: [...invalidConstructor(), ...invalidInject()],
+    valid: [...validConstructor(), ...validInject()] as any,
+    invalid: [...invalidConstructor(), ...invalidInject()] as any,
   }
 );

@@ -75,7 +75,7 @@ ruleTester(rule.meta.docs?.requiresTypeChecking).run(
   path.parse(__filename).name,
   rule,
   {
-    valid: valid(),
-    invalid: invalid(),
+    valid: valid() as any,
+    invalid: invalid() as any,
   }
 );
