@@ -11,7 +11,7 @@ import {
 } from '@example-app/core/services';
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { cold, hot } from 'jasmine-marbles';
+import { cold, hot } from '../../testing/marbles';
 import { Observable, of } from 'rxjs';
 
 describe('CollectionEffects', () => {

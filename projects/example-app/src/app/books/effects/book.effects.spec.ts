@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { cold, getTestScheduler, hot } from 'jasmine-marbles';
+import { cold, getTestScheduler, hot } from '../../testing/marbles';
 import { Observable } from 'rxjs';
 
 import { FindBookPageActions } from '@example-app/books/actions/find-book-page.actions';
