@@ -1,10 +1,18 @@
+import type { ESLintUtils } from '@typescript-eslint/utils';
+import type {
+  InvalidTestCase,
+  ValidTestCase,
+} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, {
   messageId,
 } from '../../../src/rules/operators/prefer-concat-latest-from';
 import { ruleTester, fromFixture } from '../../utils';
 
-const valid = () => [
+type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
+type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[0][];
+
+const valid: () => readonly (string | ValidTestCase<Options>)[] = () => [
   {
     code: `
   import { of, withLatestFrom } from 'rxjs'
@@ -103,7 +111,7 @@ const valid = () => [
   }`,
 ];
 
-const invalid = () => [
+const invalid: () => readonly InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(
     `
 import { Actions } from '@ngrx/effects'
@@ -405,7 +413,7 @@ ruleTester(rule.meta.docs?.requiresTypeChecking).run(
   path.parse(__filename).name,
   rule,
   {
-    valid: valid() as any,
-    invalid: invalid() as any,
+    valid: valid(),
+    invalid: invalid(),
   }
 );

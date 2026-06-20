@@ -7,6 +7,9 @@ export default defineProject((config) =>
     test: {
       name: 'eslint-plugin',
       testTimeout: 8000,
+      typecheck: {
+        include: ['spec/types/**/*.{spec,test}.ts', '**/*.test-d.ts'],
+      },
     },
     define: {
       'import.meta.vitest': config.mode !== 'production',

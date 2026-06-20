@@ -1,3 +1,8 @@
+import type { ESLintUtils } from '@typescript-eslint/utils';
+import type {
+  InvalidTestCase,
+  ValidTestCase,
+} from '@typescript-eslint/rule-tester';
 import * as path from 'path';
 import rule, {
   useConsistentGlobalStoreName,
@@ -5,7 +10,13 @@ import rule, {
 } from '../../../src/rules/store/use-consistent-global-store-name';
 import { ruleTester, fromFixture } from '../../utils';
 
-const validConstructor = () => [
+type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
+type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[0][];
+
+const validConstructor: () => readonly (
+  | string
+  | ValidTestCase<Options>
+)[] = () => [
   `
 class Ok {}`,
   `
@@ -25,7 +36,7 @@ class Ok2 {
   },
 ];
 
-const validInject = () => [
+const validInject: () => readonly (string | ValidTestCase<Options>)[] = () => [
   `
 class Ok3 {}`,
   `
@@ -47,7 +58,10 @@ class Ok5 {
   },
 ];
 
-const invalidConstructor = () => [
+const invalidConstructor: () => readonly InvalidTestCase<
+  MessageIds,
+  Options
+>[] = () => [
   fromFixture(
     `
 import { Store } from '@ngrx/store'
@@ -164,7 +178,10 @@ class NotOk3 {
   ),
 ];
 
-const invalidInject = () => [
+const invalidInject: () => readonly InvalidTestCase<
+  MessageIds,
+  Options
+>[] = () => [
   fromFixture(
     `
 import { Store } from '@ngrx/store'
@@ -299,7 +316,7 @@ ruleTester(rule.meta.docs?.requiresTypeChecking).run(
   path.parse(__filename).name,
   rule,
   {
-    valid: [...validConstructor(), ...validInject()] as any,
-    invalid: [...invalidConstructor(), ...invalidInject()] as any,
+    valid: [...validConstructor(), ...validInject()],
+    invalid: [...invalidConstructor(), ...invalidInject()],
   }
 );
