@@ -13,14 +13,14 @@ import { ruleTester, fromFixture } from '../../utils';
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[];
 
-const valid: () => readonly (string | ValidTestCase<Options>)[] = () => [
+const valid: () => (string | ValidTestCase<Options>)[] = () => [
   `const mySignalStore = signalStore();`,
   `const mySignalStore = signalStore({ protectedState: true });`,
   `const mySignalStore = signalStore({ providedIn: 'root' });`,
   `const mySignalStore = signalStore({ providedIn: 'root', protectedState: true });`,
 ];
 
-const invalid: () => readonly InvalidTestCase<MessageIds, Options>[] = () => [
+const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
   fromFixture(
     `
 const mySignalStore = signalStore({ providedIn: 'root', protectedState: false, });

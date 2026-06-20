@@ -12,7 +12,7 @@ import rule, {
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
 type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[];
 
-const valid: () => readonly (string | ValidTestCase<Options>)[] = () => [
+const valid: () => (string | ValidTestCase<Options>)[] = () => [
   {
     code: `
       import { type } from '@ngrx/signals';
@@ -33,7 +33,7 @@ const valid: () => readonly (string | ValidTestCase<Options>)[] = () => [
   },
 ];
 
-const invalid: () => readonly InvalidTestCase<MessageIds, Options>[] = () => [
+const invalid: () => InvalidTestCase<MessageIds, Options>[] = () => [
   {
     code: `
       import { type } from '@ngrx/signals';
