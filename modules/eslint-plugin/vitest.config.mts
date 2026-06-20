@@ -9,6 +9,7 @@ export default defineProject((config) =>
       testTimeout: 8000,
       typecheck: {
         include: ['spec/types/**/*.{spec,test}.ts', '**/*.test-d.ts'],
+        exclude: ['spec/rules/**/*.{spec,test}.ts'],
       },
     },
     define: {
