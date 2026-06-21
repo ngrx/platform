@@ -348,57 +348,106 @@ describe('ComponentStore types', () => {
 
     describe('catches excess properties', () => {
       it('when extra property is returned with spread', () => {
-        expectSnippet(
-          `componentStore.updater((state, v: string) => ({...state, extraProp: 'bad'}))('test');`
-        ).toFail(/Remove excess properties/);
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        componentStore.updater((state, v: string) => ({
+          ...state,
+          // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+          extraProp: 'bad',
+        }))('test');
       });
 
       it('when extra property is returned with explicit object', () => {
-        expectSnippet(
-          `componentStore.updater((state, v: string) => ({ prop: v, prop2: state.prop2, extraProp: 'bad' }))('test');`
-        ).toFail(/Remove excess properties/);
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        componentStore.updater((state, v: string) => ({
+          prop: v,
+          prop2: state.prop2,
+          // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+          extraProp: 'bad',
+        }))('test');
       });
 
       it('when extra property is returned from void updater', () => {
-        expectSnippet(
-          `componentStore.updater((state) => ({...state, extraProp: true}))();`
-        ).toFail(/Remove excess properties/);
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        componentStore.updater((state) => ({
+          ...state,
+          // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+          extraProp: true,
+        }))();
       });
 
       it('when required property is missing', () => {
-        expectSnippet(
-          `componentStore.updater((state, v: string) => ({ prop: v }))('test');`
-        ).toFail(/is missing in type/);
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        // @ts-expect-error Property 'prop2' is missing in type '{ prop: string; }'
+        componentStore.updater((state, v: string) => ({ prop: v }))('test');
       });
 
       it('when property has wrong type', () => {
-        expectSnippet(
-          `componentStore.updater((state, v: string) => ({...state, prop: 123}))('test');`
-        ).toFail(/not assignable to type/);
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        componentStore.updater((state, v: string) => ({
+          ...state,
+          // @ts-expect-error Type 'number' is not assignable to type 'string'
+          prop: 123,
+        }))('test');
       });
 
       it('allows spread with override', () => {
-        expectSnippet(
-          `const sub = componentStore.updater((state, v: string) => ({...state, prop: v}))('test');`
-        ).toInfer('sub', 'Subscription');
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        const sub = componentStore.updater((state, v: string) => ({
+          ...state,
+          prop: v,
+        }))('test');
+        expectTypeOf(sub).toEqualTypeOf<Subscription>();
       });
 
       it('allows full explicit return matching all state keys', () => {
-        expectSnippet(
-          `const sub = componentStore.updater((state, v: string) => ({ prop: v, prop2: state.prop2 }))('test');`
-        ).toInfer('sub', 'Subscription');
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        const sub = componentStore.updater((state, v: string) => ({
+          prop: v,
+          prop2: state.prop2,
+        }))('test');
+        expectTypeOf(sub).toEqualTypeOf<Subscription>();
       });
 
       it('allows void updater with spread return', () => {
-        expectSnippet(
-          `const v = componentStore.updater((state) => ({...state, prop: 'updated'}))();`
-        ).toInfer('v', 'void');
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        const v = componentStore.updater((state) => ({
+          ...state,
+          prop: 'updated',
+        }))();
+        expectTypeOf(v).toBeVoid();
       });
 
       it('allows direct state return', () => {
-        expectSnippet(
-          `const v = componentStore.updater((state) => state)();`
-        ).toInfer('v', 'void');
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        const v = componentStore.updater((state) => state)();
+        expectTypeOf(v).toBeVoid();
       });
     });
   });
