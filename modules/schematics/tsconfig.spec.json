@@ -7,5 +7,10 @@
     "target": "es2016"
   },
   "files": ["test-setup.ts"],
-  "include": ["vitest.config.ts", "**/*.spec.ts", "**/*.test.ts", "**/*.d.ts"]
+  "include": [
+    "vitest.config.ts",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.test-d.ts"
+  ]
 }

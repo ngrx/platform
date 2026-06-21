@@ -79,25 +79,25 @@ export class Store<T = object>
 
   select<K>(mapFn: (state: T) => K): Observable<K>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated and will be removed in v23. For more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
    */
   select<K, Props = any>(
     mapFn: (state: T, props: Props) => K,
     props: Props
   ): Observable<K>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated and will be removed in v23. For more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
    */
   select<a extends keyof T>(key: a): Observable<T[a]>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated and will be removed in v23. For more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
    */
   select<a extends keyof T, b extends keyof T[a]>(
     key1: a,
     key2: b
   ): Observable<T[a][b]>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated and will be removed in v23. For more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
    */
   select<a extends keyof T, b extends keyof T[a], c extends keyof T[a][b]>(
     key1: a,
@@ -105,7 +105,7 @@ export class Store<T = object>
     key3: c
   ): Observable<T[a][b][c]>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated and will be removed in v23. For more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
    */
   select<
     a extends keyof T,
@@ -114,7 +114,7 @@ export class Store<T = object>
     d extends keyof T[a][b][c],
   >(key1: a, key2: b, key3: c, key4: d): Observable<T[a][b][c][d]>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated and will be removed in v23. For more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
    */
   select<
     a extends keyof T,
@@ -124,7 +124,7 @@ export class Store<T = object>
     e extends keyof T[a][b][c][d],
   >(key1: a, key2: b, key3: c, key4: d, key5: e): Observable<T[a][b][c][d][e]>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated and will be removed in v23. For more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
    */
   select<
     a extends keyof T,
@@ -142,7 +142,7 @@ export class Store<T = object>
     key6: f
   ): Observable<T[a][b][c][d][e][f]>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated and will be removed in v23. For more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
    */
   select<
     a extends keyof T,
@@ -162,7 +162,7 @@ export class Store<T = object>
     ...paths: string[]
   ): Observable<K>;
   /**
-   * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+   * @deprecated Selectors with props are deprecated and will be removed in v23. For more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
    */
   select<Props = any, K = any>(
     pathOrMapFn: ((state: T, props?: Props) => K) | string,
@@ -271,7 +271,7 @@ export function select<T, K>(
   mapFn: (state: T) => K
 ): (source$: Observable<T>) => Observable<K>;
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated and will be removed in v23. For more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
  */
 export function select<T, Props, K>(
   mapFn: (state: T, props: Props) => K,

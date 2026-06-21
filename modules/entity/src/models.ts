@@ -106,8 +106,15 @@ export type MemoizedEntitySelectors<T, V> = {
   >;
 };
 
-export interface EntityAdapter<T> extends EntityStateAdapter<T> {
-  selectId: IdSelector<T>;
+export interface EntityAdapter<
+  T,
+  IdType = string | number,
+> extends EntityStateAdapter<T> {
+  selectId: IdType extends string
+    ? IdSelectorStr<T>
+    : IdType extends number
+      ? IdSelectorNum<T>
+      : unknown;
   sortComparer: false | Comparer<T>;
   getInitialState(): EntityState<T>;
   getInitialState<S extends EntityState<T>>(

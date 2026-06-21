@@ -1,23 +1,29 @@
 /// <reference types="vitest" />
 import {
-  defineConfig,
   defaultClientConditions,
   defaultServerConditions,
 } from 'vite';
+import { defineConfig } from 'vitest/config';
 import analog from '@analogjs/platform';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import ngrxStackblitzPlugin from './src/tools/vite-ngrx-stackblitz.plugin';
 import { ngrxTheme } from './src/shared/ngrx-shiki-theme';
 import { configDefaults } from 'vitest/config';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { dirname, join } from 'path';
+
+const wwwRoot = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig(({ mode }) => ({
-  root: dirname(fileURLToPath(import.meta.url)),
+  root: wwwRoot,
   cacheDir: '../../node_modules/.vite/www',
 
   resolve: {
     conditions: [...defaultClientConditions],
+    alias: {
+      // Trailing slash required for subpath imports (e.g. @ngrx-io/app/...).
+      '@ngrx-io/': join(wwwRoot, 'src/'),
+    },
   },
 
   ssr: {
@@ -71,7 +77,7 @@ export default defineConfig(({ mode }) => ({
     setupFiles: ['src/test-setup.ts'],
     include: ['**/*.spec.ts'],
     exclude: [...configDefaults.exclude, 'src/app/examples/**'],
-    reporters: ['default'],
+    typecheck: { enabled: true, ignoreSourceErrors: true },
   },
 
   define: {

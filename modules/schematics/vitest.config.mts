@@ -1,26 +1,15 @@
-/// <reference types="vitest" />
+import { defineProject, mergeConfig } from 'vitest/config';
+import { baseConfig } from '../../vitest.config.mts';
 
-import angular from '@analogjs/vite-plugin-angular';
-
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
-
-import { defineConfig } from 'vite';
-
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
-  return {
+export default defineProject((config) =>
+  mergeConfig(baseConfig, {
     root: __dirname,
-    plugins: [angular(), nxViteTsPaths()],
     test: {
-      globals: true,
-      pool: 'forks',
-      environment: 'jsdom',
-      setupFiles: ['test-setup.ts'],
+      name: 'schematics',
       include: ['src/**/*.spec.ts'],
-      reporters: ['default'],
     },
     define: {
-      'import.meta.vitest': mode !== 'production',
+      'import.meta.vitest': config.mode !== 'production',
     },
-  };
-});
+  })
+);

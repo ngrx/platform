@@ -29,7 +29,7 @@
       ],
       "options": {
         "main": "projects/www/src/main.ts",
-        "configFile": "projects/www/vite.config.ts",
+        "configFile": "projects/www/vitest.config.mts",
         "outputPath": "dist/projects/www/client",
         "tsConfig": "projects/www/tsconfig.app.json"
       }
