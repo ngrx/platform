@@ -352,11 +352,10 @@ describe('ComponentStore types', () => {
           prop: 'init',
           prop2: 'yeah!',
         });
-        componentStore.updater((state, v: string) => ({
-          ...state,
+        componentStore.updater(
           // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
-          extraProp: 'bad',
-        }))('test');
+          (state, v: string) => ({ ...state, extraProp: 'bad' })
+        );
       });
 
       it('when extra property is returned with explicit object', () => {
@@ -364,12 +363,14 @@ describe('ComponentStore types', () => {
           prop: 'init',
           prop2: 'yeah!',
         });
-        componentStore.updater((state, v: string) => ({
-          prop: v,
-          prop2: state.prop2,
+        componentStore.updater(
           // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
-          extraProp: 'bad',
-        }))('test');
+          (state, v: string) => ({
+            prop: v,
+            prop2: state.prop2,
+            extraProp: 'bad',
+          })
+        );
       });
 
       it('when extra property is returned from void updater', () => {
@@ -377,11 +378,10 @@ describe('ComponentStore types', () => {
           prop: 'init',
           prop2: 'yeah!',
         });
-        componentStore.updater((state) => ({
-          ...state,
+        componentStore.updater(
           // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
-          extraProp: true,
-        }))();
+          (state) => ({ ...state, extraProp: true })
+        );
       });
 
       it('when required property is missing', () => {
@@ -389,8 +389,10 @@ describe('ComponentStore types', () => {
           prop: 'init',
           prop2: 'yeah!',
         });
-        // @ts-expect-error Property 'prop2' is missing in type '{ prop: string; }'
-        componentStore.updater((state, v: string) => ({ prop: v }))('test');
+        componentStore.updater(
+          // @ts-expect-error Property 'prop2' is missing in type '{ prop: string; }'
+          (state, v: string) => ({ prop: v })
+        );
       });
 
       it('when property has wrong type', () => {
@@ -398,11 +400,10 @@ describe('ComponentStore types', () => {
           prop: 'init',
           prop2: 'yeah!',
         });
-        componentStore.updater((state, v: string) => ({
-          ...state,
+        componentStore.updater(
           // @ts-expect-error Type 'number' is not assignable to type 'string'
-          prop: 123,
-        }))('test');
+          (state, v: string) => ({ ...state, prop: 123 })
+        );
       });
 
       it('allows spread with override', () => {

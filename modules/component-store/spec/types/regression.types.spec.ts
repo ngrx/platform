@@ -46,12 +46,10 @@ describe('regression component-store', () => {
 
     it('should catch excess properties with concrete state type', () => {
       const store = new ComponentStore<{ name: string }>({ name: 'test' });
-      store.updater((state, v: string) => ({
-        ...state,
-        name: v,
+      store.updater(
         // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
-        extra: true,
-      }))('test');
+        (state, v: string) => ({ ...state, name: v, extra: true })
+      );
     });
   });
 });
