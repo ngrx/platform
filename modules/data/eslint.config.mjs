@@ -6,7 +6,7 @@ import baseConfig, {
 
 export default tseslint.config(
   {
-    ignores: ['**/dist', '**/jest.config.ts', '**/schematics-core/**/*.ts'],
+    ignores: ['**/dist', '**/schematics-core/**/*.ts'],
   },
   baseConfig,
   {

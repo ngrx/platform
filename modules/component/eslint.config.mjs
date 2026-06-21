@@ -8,7 +8,6 @@ export default tseslint.config(
   {
     ignores: [
       '**/dist',
-      '**/jest.config.ts',
       '**/schematics-core/**/*.ts',
       '**/vite.config.*.timestamp*',
       '**/vitest.config.*.timestamp*',
