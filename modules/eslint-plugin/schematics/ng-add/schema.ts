@@ -1,3 +1,12 @@
 export interface Schema {
-  config: 'all' | 'store' | 'effects' | 'component-store' | 'signals';
+  config:
+    | 'all'
+    | 'allTypeChecked'
+    | 'componentStore'
+    | 'effects'
+    | 'effectsTypeChecked'
+    | 'operators'
+    | 'signals'
+    | 'signalsTypeChecked'
+    | 'store';
 }
