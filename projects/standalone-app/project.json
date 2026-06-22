@@ -76,11 +76,8 @@
       }
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/projects/standalone-app"],
-      "options": {
-        "jestConfig": "projects/standalone-app/jest.config.ts"
-      }
+      "executor": "@analogjs/vitest-angular:test",
+      "outputs": ["{workspaceRoot}/coverage/projects/standalone-app"]
     }
   }
 }

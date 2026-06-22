@@ -105,7 +105,7 @@ const selectBooksPageViewModel = createSelector({
 
 <ngrx-docs-alert type="error">
 
-Selectors with props are [deprecated](https://github.com/ngrx/platform/issues/2980).
+Selectors with props are [deprecated](https://github.com/ngrx/platform/issues/2980) and will be removed in v23.
 
 </ngrx-docs-alert>
 
