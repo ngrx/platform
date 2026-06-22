@@ -79,12 +79,6 @@ effects.search$({
 
 Testing Effects via marble diagrams is particularly useful when the Effect is time sensitive or when the Effect has a lot of behavior.
 
-<ngrx-docs-alert type="help">
-
-For a detailed look on the marble syntax and helper APIs, see [Writing marble tests](https://rxjs.dev/guide/testing/marble-testing).
-
-</ngrx-docs-alert>
-
 <ngrx-code-example header="my.effects.spec.ts">
 
 ```ts
