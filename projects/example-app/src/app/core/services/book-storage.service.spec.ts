@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { cold } from 'jasmine-marbles';
+import { cold } from '../../testing/marbles';
 
 import { Book } from '@example-app/books/models';
 import {

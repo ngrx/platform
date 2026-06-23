@@ -79,14 +79,6 @@ effects.search$({
 
 Testing Effects via marble diagrams is particularly useful when the Effect is time sensitive or when the Effect has a lot of behavior.
 
-<ngrx-docs-alert type="help">
-
-For a detailed look on the marble syntax, see [Writing marble tests](https://rxjs.dev/guide/testing/marble-testing).
-
-The `hot`, `cold`, and `toBeObservable` methods are imported from [`jasmine-marbles`](https://www.npmjs.com/package/jasmine-marbles).
-
-</ngrx-docs-alert>
-
 <ngrx-code-example header="my.effects.spec.ts">
 
 ```ts
@@ -122,7 +114,7 @@ expect(
 
 ### With `TestScheduler`
 
-Instead of using `jasmine-marbles`, we can also run tests with the [RxJS `TestScheduler`](https://rxjs.dev/guide/testing/marble-testing).
+Marble tests can be run with the [RxJS `TestScheduler`](https://rxjs.dev/guide/testing/marble-testing).
 
 To use the `TestScheduler` we first have to instantiate it,
 this can be done in the test case or within a `beforeEach` block.
