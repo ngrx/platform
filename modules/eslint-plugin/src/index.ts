@@ -1,25 +1,42 @@
+import type { TSESLint } from '@typescript-eslint/utils';
+import { parser } from 'typescript-eslint';
 import { rules } from './rules';
-import all from './configs/all.json';
+import {
+  name as packageName,
+  version as packageVersion,
+} from '../package.json';
+import all from './configs/all';
 import allTypeChecked from './configs/all-type-checked';
-import componentStore from './configs/component-store.json';
-import effects from './configs/effects.json';
+import store from './configs/store';
+import effects from './configs/effects';
 import effectsTypeChecked from './configs/effects-type-checked';
-import store from './configs/store.json';
-import operators from './configs/operators.json';
-import signals from './configs/signals.json';
+import componentStore from './configs/component-store';
+import operators from './configs/operators';
+import signals from './configs/signals';
 import signalsTypeChecked from './configs/signals-type-checked';
 
-export = {
-  configs: {
-    all,
-    'all-type-checked': allTypeChecked,
-    'component-store': componentStore,
-    effects: effects,
-    'effects-type-checked': effectsTypeChecked,
-    store: store,
-    operators: operators,
-    signals: signals,
-    'signals-type-checked': signalsTypeChecked,
-  },
+const meta = { name: packageName, version: packageVersion };
+
+const tsPlugin: TSESLint.FlatConfig.Plugin = {
+  meta,
   rules,
 };
+
+const configs = {
+  all: all(tsPlugin, parser),
+  allTypeChecked: allTypeChecked(tsPlugin, parser),
+  store: store(tsPlugin, parser),
+  effects: effects(tsPlugin, parser),
+  effectsTypeChecked: effectsTypeChecked(tsPlugin, parser),
+  componentStore: componentStore(tsPlugin, parser),
+  operators: operators(tsPlugin, parser),
+  signals: signals(tsPlugin, parser),
+  signalsTypeChecked: signalsTypeChecked(tsPlugin, parser),
+};
+
+export default {
+  meta,
+  configs,
+  rules,
+};
+export { configs, meta, rules };

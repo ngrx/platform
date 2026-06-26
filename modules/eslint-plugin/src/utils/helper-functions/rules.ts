@@ -30,5 +30,5 @@ export const rulesForGenerate = Array.from(traverseFolder(rulesDir, ['.ts']))
   }, {});
 
 export const configsForGenerate = Array.from(
-  traverseFolder(configsDir, ['.json'])
+  traverseFolder(configsDir, ['.ts'])
 ).map((config) => config.file);

@@ -20,7 +20,7 @@ This rule prevents manual subscriptions to the store, which can lead to memory l
 ⚠️ **Problems with manual store subscriptions:**
 
 - Creates a manual subscription that must be explicitly unsubscribed (e.g., using `takeUntil`, `async`, or `destroyRef`), otherwise it will persist beyond the component's lifecycle causing memory leaks
-Will not trigger change detection in zoneless mode. Users have to ensure it otherwise.
+  Will not trigger change detection in zoneless mode. Users have to ensure it otherwise.
 
 ✅ **Benefits of using the async pipe:**
 
@@ -86,7 +86,7 @@ selectedProduct$ = this.store.select(selectedProduct);
 redirectIfAuthenticated$ = createEffect(
   () => {
     return this.store.select(selectAuthenticatedUserState).pipe(
-      filter(state => state.authenticated),
+      filter((state) => state.authenticated),
       tap(() => {
         this.router.navigateByUrl('/');
       })

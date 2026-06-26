@@ -1,46 +1,44 @@
 # Overview
 
-You can use [ESLint](https://eslint.org/) to follow best practices and avoid common pitfalls in your application.
+[ESLint](https://eslint.org/) helps enforce best practices and avoid common pitfalls in applications.
 
 The NgRx ESLint Plugin is no different and promotes the key concepts to create maintainable projects.
-It consists of [rules](#rules) that are grouped into predefined [configurations](#configurations) for each NgRx package to help you get started quickly.
+It consists of [rules](#rules) that are grouped into predefined [configurations](#configurations) for each NgRx package to provide a quick starting point.
 
-By default, all rules have set the severity level to `error`.
+By default, all rules set the severity level to `error`.
 Some rules also include a recommendation or an automatic fix using `ng lint --fix`.
 
 ## Configuration and Usage
 
-### ESLint v9 (Flat Config)
+### ESLint Flat Config
 
-To use the NgRx ESLint Plugin with ESLint v9, include the desired configurations within your ESLint configuration file (e.g. `eslint.config.js`).
-Optionally override some rules via the `rules` property.
-
-Import the NgRx Plugin via `@ngrx/eslint-plugin/v9` and use one or more predefined [configurations](#configurations) by adding them to the `extends` array.
+The NgRx ESLint Plugin supports ESLint v9 and later through flat config files, for example `eslint.config.js`.
+Predefined [configurations](#configurations) can be added to the `extends` array, and rules can be overridden via the `rules` property.
 
 <ngrx-code-example>
 
 ```ts
 const tseslint = require('typescript-eslint');
-const ngrx = require('@ngrx/eslint-plugin/v9');
+const ngrx = require('@ngrx/eslint-plugin');
 
 module.exports = tseslint.config({
   files: ['**/*.ts'],
   extends: [
-    // 👇 Use all rules at once
+    // Use all rules at once.
     ...ngrx.configs.all,
-    // 👇 Or only import the rules for a specific package
+    // Or only import the rules for a specific package.
     ...ngrx.configs.store,
     ...ngrx.configs.effects,
     ...ngrx.configs.componentStore,
     ...ngrx.configs.operators,
     ...ngrx.configs.signals,
-    // 👇 Include rules that require type information
+    // Include rules that require type information.
     ...ngrx.configs.allTypeChecked,
-    ...ngrx.configs.effectsChecked,
-    ...ngrx.configs.signalsChecked,
+    ...ngrx.configs.effectsTypeChecked,
+    ...ngrx.configs.signalsTypeChecked,
   ],
   rules: {
-    // 👇 Configure specific rules
+    // Configure specific rules.
     '@ngrx/with-state-no-arrays-at-root-level': 'warn',
   },
 });
@@ -48,78 +46,26 @@ module.exports = tseslint.config({
 
 </ngrx-code-example>
 
-To enable rules that require type information, the ESLint `parserOptions` configuration needs be configured. For more info see the [TypeScript ESLint documentation](https://typescript-eslint.io/getting-started/typed-linting/).
+Rules that require type information need `parserOptions` configuration. For more information, see the [TypeScript ESLint documentation](https://typescript-eslint.io/getting-started/typed-linting/).
 
 ```ts
 const tseslint = require('typescript-eslint');
-const ngrx = require('@ngrx/eslint-plugin/v9');
+const ngrx = require('@ngrx/eslint-plugin');
 
 module.exports = tseslint.config({
   files: ['**/*.ts'],
   extends: [
-    // Rules that require type information
+    // Rules that require type information.
     ...ngrx.configs.allTypeChecked,
-    ...ngrx.configs.effectsChecked,
-    ...ngrx.configs.signalsChecked,
+    ...ngrx.configs.effectsTypeChecked,
+    ...ngrx.configs.signalsTypeChecked,
   ],
-  {
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-      },
-    }
-  }
-});
-```
-
-### ESLint v8 (Legacy Config)
-
-To use the NgRx ESLint Plugin with ESLint v8, add it to your ESLint file (e.g. `.eslintrc.json`).
-Add the `@ngrx` plugin to the `plugins` section and add the rules you want to use within your project to the `rules` section.
-
-```json
-{
-  "plugins": ["@ngrx"],
-  "rules": {
-    "@ngrx/good-action-hygiene": "error"
-  }
-}
-```
-
-For rules that require type information, the ESLint configuration needs to provide the `parserOptions.project` property, otherwise the rule throws an error.
-
-```json
-{
-  "plugins": ["@ngrx"],
-  "parserOptions": {
-    "project": "tsconfig.json"
+  languageOptions: {
+    parserOptions: {
+      projectService: true,
+    },
   },
-  "rules": {
-    "@ngrx/avoid-cyclic-effects": "error"
-  }
-}
-```
-
-Instead of adding rules individually, you can use one of the [preconfigured configurations](#configurations) by adding it to the `extends` section.
-This automatically includes all rules of the configuration.
-To override a specific rule, add it to the `rules` section and adjust the severity level or the configuration.
-
-```json
-{
-  "extends": ["plugin:@ngrx/all"],
-  "rules": {
-    "@ngrx/good-action-hygiene": "warn"
-  }
-}
-```
-
-Instead of including all NgRx rules, you can also use a specific configuration for a package.
-This is useful if you only use a specific package, as it only includes the rules relevant to that package.
-
-```json
-{
-  "extends": ["@ngrx/signals"]
-}
+});
 ```
 
 ## Rules
@@ -192,16 +138,16 @@ This is useful if you only use a specific package, as it only includes the rules
 <!-- DO NOT EDIT, this table is automatically generated-->
 <!-- CONFIGURATIONS-CONFIG:START -->
 
-| Name                                                                                                                           |
-| ------------------------------------------------------------------------------------------------------------------------------ |
-| [all-type-checked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all-type-checked.json)         |
-| [all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all.json)                                   |
-| [component-store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/component-store.json)           |
-| [effects-type-checked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects-type-checked.json) |
-| [effects](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects.json)                           |
-| [operators](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/operators.json)                       |
-| [signals-type-checked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/signals-type-checked.json) |
-| [signals](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/signals.json)                           |
-| [store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/store.json)                               |
+| Name                                                                                                                         |
+| ---------------------------------------------------------------------------------------------------------------------------- |
+| [all-type-checked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all-type-checked.ts)         |
+| [all](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/all.ts)                                   |
+| [component-store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/component-store.ts)           |
+| [effects-type-checked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects-type-checked.ts) |
+| [effects](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/effects.ts)                           |
+| [operators](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/operators.ts)                       |
+| [signals-type-checked](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/signals-type-checked.ts) |
+| [signals](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/signals.ts)                           |
+| [store](https://github.com/ngrx/platform/blob/main/modules/eslint-plugin/src/configs/store.ts)                               |
 
 <!-- CONFIGURATIONS-CONFIG:END -->

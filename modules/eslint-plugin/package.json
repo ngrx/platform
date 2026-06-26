@@ -42,7 +42,7 @@
   },
   "sideEffects": false,
   "peerDependencies": {
-    "eslint": "^8.57.0 || ^9.0.0 || ^10.0.0",
+    "eslint": "^9.0.0 || ^10.0.0",
     "typescript": "*",
     "typescript-eslint": "^8.0.0",
     "@typescript-eslint/utils": "^8.0.0"
