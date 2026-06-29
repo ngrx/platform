@@ -100,6 +100,7 @@ export class GuideMenuService {
       link('DeepComputed', '/guide/signals/deep-computed'),
       link('SignalMethod', '/guide/signals/signal-method'),
       link('RxJS Integration', '/guide/signals/rxjs-integration'),
+      link('Resource Extensions', '/guide/signals/resource-extensions'),
       link('FAQ', '/guide/signals/faq'),
     ]),
     section('Entity', [
