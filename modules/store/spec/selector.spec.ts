@@ -1,5 +1,5 @@
 import * as ngCore from '@angular/core';
-import { cold } from 'jasmine-marbles';
+import { cold } from './marbles';
 import {
   createSelector,
   createFeatureSelector,

@@ -1,7 +1,7 @@
 // Using marble testing
 import { TestBed } from '@angular/core/testing';
 
-import { cold, hot, getTestScheduler } from 'jasmine-marbles';
+import { cold, hot, getTestScheduler } from './marbles';
 import { Observable } from 'rxjs';
 
 import { Actions } from '@ngrx/effects';

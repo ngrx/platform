@@ -6,7 +6,7 @@ import {
   signal,
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { hot } from 'jasmine-marbles';
+import { hot } from './marbles';
 import {
   ActionsSubject,
   ReducerManager,
