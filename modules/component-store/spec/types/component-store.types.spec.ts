@@ -345,5 +345,143 @@ describe('ComponentStore types', () => {
         componentStore.updater((state, v: string) => ({ ...state }))(number$);
       });
     });
+
+    describe('catches excess properties', () => {
+      it('when extra property is returned with spread', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        componentStore.updater(
+          // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+          (state, v: string) => ({ ...state, extraProp: 'bad' })
+        );
+      });
+
+      it('when extra property is returned with explicit object', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        componentStore.updater(
+          // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+          (state, v: string) => ({
+            prop: v,
+            prop2: state.prop2,
+            extraProp: 'bad',
+          })
+        );
+      });
+
+      it('when extra property is returned from void updater', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        componentStore.updater(
+          // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+          (state) => ({ ...state, extraProp: true })
+        );
+      });
+
+      it('when required property is missing', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        componentStore.updater(
+          // @ts-expect-error Property 'prop2' is missing in type '{ prop: string; }'
+          (state, v: string) => ({ prop: v })
+        );
+      });
+
+      it('when property has wrong type', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        componentStore.updater(
+          // @ts-expect-error Type 'number' is not assignable to type 'string'
+          (state, v: string) => ({ ...state, prop: 123 })
+        );
+      });
+
+      it('allows spread with override', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        const sub = componentStore.updater((state, v: string) => ({
+          ...state,
+          prop: v,
+        }))('test');
+        expectTypeOf(sub).toEqualTypeOf<Subscription>();
+      });
+
+      it('allows full explicit return matching all state keys', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        const sub = componentStore.updater((state, v: string) => ({
+          prop: v,
+          prop2: state.prop2,
+        }))('test');
+        expectTypeOf(sub).toEqualTypeOf<Subscription>();
+      });
+
+      it('allows void updater with spread return', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        const v = componentStore.updater((state) => ({
+          ...state,
+          prop: 'updated',
+        }))();
+        expectTypeOf(v).toBeVoid();
+      });
+
+      it('allows direct state return', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        const v = componentStore.updater((state) => state)();
+        expectTypeOf(v).toBeVoid();
+      });
+    });
+
+    describe('with a generic state type parameter', () => {
+      // When `ComponentStore` is extended with an unresolved generic state
+      // type, TypeScript cannot fully resolve the excess-property check, so
+      // spreading state and overriding a known property reports a false
+      // positive. Returning `state` directly, or asserting `as T`, is the
+      // documented workaround.
+      class GenericStore<T extends { id: string }> extends ComponentStore<T> {
+        // Spreading state and overriding a known property reports a false
+        // positive here: while `T` is unresolved the excess-property check is
+        // deferred and cannot collapse to `never`, so the callback is rejected.
+        readonly setIdViaSpread = this.updater(
+          // @ts-expect-error known limitation: the excess-property check is
+          // deferred for an unresolved generic state type
+          (state, id: string) => ({ ...state, id })
+        );
+
+        // Workaround 1: assert the return value as `T`.
+        readonly setIdViaAssertion = this.updater(
+          (state, id: string) => ({ ...state, id } as T)
+        );
+
+        // Workaround 2: return a full `T` (or `state`) directly.
+        readonly replaceViaDirectReturn = this.updater(
+          (_state, next: T) => next
+        );
+      }
+
+      it('documents the generic-state limitation and its workarounds', () => {
+        expectTypeOf(GenericStore).toBeConstructibleWith({ id: '1' });
+      });
+    });
   });
 });
