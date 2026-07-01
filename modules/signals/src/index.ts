@@ -9,6 +9,7 @@ export {
   SignalStoreFeature,
   SignalStoreFeatureResult,
   StateSignals,
+  type SignalStoreFeatureType,
 } from './signal-store-models';
 export {
   getState,
