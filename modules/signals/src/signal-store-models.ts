@@ -46,3 +46,36 @@ export type SignalStoreFeature<
 > = (
   store: InnerSignalStore<Input['state'], Input['props'], Input['methods']>
 ) => InnerSignalStore<Output['state'], Output['props'], Output['methods']>;
+
+/**
+ * @description
+ *
+ * Extracts the output type of a SignalStore feature factory.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * function withFeatureA() {
+ *   return signalStoreFeature(withState({ foo: 'bar' }));
+ * }
+ *
+ * type FeatureA = SignalStoreFeatureType<typeof withFeatureA>;
+ *
+ * function withFeatureB() {
+ *   return signalStoreFeature(
+ *     type<FeatureA>(),
+ *     withMethods(({ foo }) => ({
+ *       logFoo(): void {
+ *         console.log(foo());
+ *       },
+ *     }))
+ *   );
+ * }
+ * ```
+ */
+export type SignalStoreFeatureType<
+  Feature extends (...params: never[]) => unknown,
+> =
+  ReturnType<Feature> extends SignalStoreFeature<infer _, infer Output>
+    ? Output
+    : never;

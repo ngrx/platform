@@ -184,6 +184,8 @@ This enables the utilization of input properties within the custom feature, even
 
 The expected input type should be defined as the first argument of the `signalStoreFeature` function, using the `type` helper function from the `@ngrx/signals` package.
 
+`SignalStoreFeatureType` helper can extract the complete output type of a custom feature factory and reuse it as the input type of another custom feature.
+
 <ngrx-docs-alert type="inform">
 
 It's recommended to define loosely-coupled/independent features whenever possible.
@@ -306,6 +308,60 @@ export function withBaz<Foo extends string | number>() {
 </ngrx-code-example>
 
 The `withBaz` feature can only be used in a store where the property `foo` and the method `bar` are defined.
+
+### Example 5: Reusing Feature Output as Input
+
+`SignalStoreFeatureType` extracts the output type of `withFooBar` and improves the developer experience when another custom feature depends on this output.
+
+<ngrx-code-example header="with-foo-bar.ts">
+
+```ts
+import { computed } from '@angular/core';
+import {
+  signalStoreFeature,
+  SignalStoreFeatureType,
+  withComputed,
+  withMethods,
+} from '@ngrx/signals';
+
+export function withFooBar() {
+  return signalStoreFeature(
+    withComputed(() => ({
+      foo: computed(() => 10),
+    })),
+    withMethods(() => ({
+      bar(foo: number): void {
+        console.log(foo);
+      },
+    }))
+  );
+}
+
+export type FooBarFeature = SignalStoreFeatureType<typeof withFooBar>;
+```
+
+</ngrx-code-example>
+
+<ngrx-code-example header="with-baz.ts">
+
+```ts
+import { signalStoreFeature, type, withMethods } from '@ngrx/signals';
+import { FooBarFeature } from './with-foo-bar';
+
+export function withBaz() {
+  return signalStoreFeature(
+    type<FooBarFeature>(),
+    withMethods((store) => ({
+      baz(): void {
+        const foo = store.foo();
+        store.bar(foo);
+      },
+    }))
+  );
+}
+```
+
+</ngrx-code-example>
 
 ## Using `withFeature`
 
