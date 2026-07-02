@@ -222,7 +222,7 @@ describe('Selectors', () => {
         incrementOne,
         incrementTwo,
         (state: any, props: any) => {
-          fail(`Shouldn't be called`);
+          throw new Error(`Shouldn't be called`);
           return props.value;
         },
         projectFn
@@ -408,7 +408,7 @@ describe('Selectors', () => {
           incrementOne,
           incrementTwo,
           (state: any, props: any) => {
-            fail(`Shouldn't be called`);
+            throw new Error(`Shouldn't be called`);
             return props.value;
           },
         ],

@@ -36,9 +36,9 @@ describe('Effects Error Handler', () => {
     });
 
     globalErrorHandler = TestBed.inject(ErrorHandler)
-      .handleError as MockInstance;
+      .handleError as unknown as MockInstance;
     const store = TestBed.inject(Store);
-    storeNext = store.next as MockInstance;
+    storeNext = store.next as unknown as MockInstance;
   }
 
   it('should retry on infinite error up to 10 times', () => {

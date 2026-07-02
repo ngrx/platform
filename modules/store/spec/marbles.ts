@@ -14,16 +14,24 @@ export function cold<T = unknown>(
   marbles: string,
   values?: Record<string, T>,
   error?: unknown
-): Observable<T> {
-  return scheduler.createColdObservable(marbles, values, error);
+): MarbleObservable<T> {
+  return scheduler.createColdObservable(
+    marbles,
+    values,
+    error
+  ) as MarbleObservable<T>;
 }
 
 export function hot<T = unknown>(
   marbles: string,
   values?: Record<string, T>,
   error?: unknown
-): Observable<T> {
-  return scheduler.createHotObservable(marbles, values, error);
+): MarbleObservable<T> {
+  return scheduler.createHotObservable(
+    marbles,
+    values,
+    error
+  ) as MarbleObservable<T>;
 }
 
 expect.extend({
@@ -75,6 +83,6 @@ expect.extend({
 
 declare module 'vitest' {
   interface Assertion<T = unknown> {
-    toBeObservable(expected: MarbleObservable<T>): T;
+    toBeObservable(expected: MarbleObservable<any>): T;
   }
 }

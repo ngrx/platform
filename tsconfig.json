@@ -17,6 +17,7 @@
     "baseUrl": ".",
     "rootDir": ".",
     "strict": true,
+    "types": ["vitest/globals"],
     "paths": {
       "@example-app/*": ["./projects/example-app/src/app/*"],
       "@ngrx-io/*": ["./projects/www/src/*"],

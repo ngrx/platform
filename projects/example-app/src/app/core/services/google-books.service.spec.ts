@@ -36,7 +36,7 @@ describe('Service: GoogleBooks', () => {
   it('should call the search api and return the search results', () => {
     const response = cold('-a|', { a: books });
     const expected = cold('-b|', { b: books.items });
-    http.get = vi.fn(() => response);
+    http.get = vi.fn(() => response) as unknown as typeof http.get;
 
     expect(service.searchBooks(queryTitle)).toBeObservable(expected);
     expect(http.get).toHaveBeenCalledWith(
@@ -47,7 +47,7 @@ describe('Service: GoogleBooks', () => {
   it('should retrieve the book from the volumeId', () => {
     const response = cold('-a|', { a: data });
     const expected = cold('-b|', { b: data });
-    http.get = vi.fn(() => response);
+    http.get = vi.fn(() => response) as unknown as typeof http.get;
 
     expect(service.retrieveBook(data.volumeId)).toBeObservable(expected);
     expect(http.get).toHaveBeenCalledWith(

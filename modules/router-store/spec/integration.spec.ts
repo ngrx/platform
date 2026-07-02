@@ -644,7 +644,7 @@ describe('integration spec', () => {
       router
         .navigateByUrl('/load')
         .then(() => {
-          fail(`Shouldn't be called`);
+          throw new Error(`Shouldn't be called`);
         })
         .catch((err) => {
           expect(err).toBe('boom');

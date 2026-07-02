@@ -18,7 +18,7 @@ export const baseConfig = {
     typecheck: {
       enabled: true,
       ignoreSourceErrors: true,
-      include: ['**/types/**/*.{spec,test}.ts', '**/*.test-d.ts'],
+      include: ['**/*.{spec,test}.ts', '**/*.test-d.ts'],
       tsconfig: './tsconfig.spec.json',
     },
   },
