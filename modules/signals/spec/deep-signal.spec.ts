@@ -57,7 +57,7 @@ describe('toDeepSignal', () => {
     const sig = signal({ m: { s: 't' } } as
       | { s: 'asdf' }
       | { m: { s: string } });
-    const deepSig = toDeepSignal(sig) as any;
+    const deepSig = toDeepSignal(sig);
 
     expect('m' in deepSig).toBe(true);
     expect('m' in deepSig && deepSig.m()).toEqual({ s: 't' });
