@@ -1,4 +1,4 @@
-import { WritableSignal, computed, effect, isSignal } from '@angular/core';
+import { computed, effect, isSignal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { patchState, signalState } from '../src';
 import { SignalsDictionary } from '../src/signal-store-models';
@@ -28,10 +28,7 @@ describe('signalState', () => {
     expect(isSignal(state)).toBe(true);
     for (const key of Reflect.ownKeys(stateSource)) {
       expect(isSignal(stateSource[key])).toBe(true);
-      expect(
-        typeof (stateSource[key] as WritableSignal<unknown>).update ===
-          'function'
-      ).toBe(true);
+      expect(typeof stateSource[key].update === 'function').toBe(true);
     }
   });
 
