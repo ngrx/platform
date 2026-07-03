@@ -10,7 +10,7 @@ ng add @ngrx/signals@latest
 
 This command will automate the following steps:
 
-1. Update `package.json` > `dependencies` with `@ngrx/signals`.
+1. Update `package.json` &gt; `dependencies` with `@ngrx/signals`.
 2. Run the package manager to install the added dependency.
 
 ## Manual Installation
