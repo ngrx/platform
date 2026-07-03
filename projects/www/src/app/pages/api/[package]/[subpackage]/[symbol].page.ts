@@ -1,10 +1,4 @@
-import {
-  Component,
-  computed,
-  inject,
-  input,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import {
   takeUntilDestroyed,
   toObservable,
@@ -22,7 +16,6 @@ import { ReferenceService } from '@ngrx-io/app/reference/reference.service';
       <ngrx-symbol [summary]="summary" />
     }
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [SymbolComponent],
 })
 export default class SubpackageSymbolPageComponent {
