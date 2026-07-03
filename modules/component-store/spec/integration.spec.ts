@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, Type, Injectable } from '@angular/core';
+import {
+  Component,
+  Type,
+  Injectable,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ComponentStore } from '../src';
 import {
   TestBed,
@@ -106,8 +111,8 @@ describe('ComponentStore integration', () => {
       expect(state.prop2Changes).toEqual([undefined, 0, 1, 2, 3]);
 
       state.parent.isChildVisible = false;
-      state.fixture.componentRef.injector.get(ChangeDetectorRef).markForCheck();
-      state.fixture.detectChanges();
+      state.fixture.changeDetectorRef.markForCheck();
+      state.fixture.changeDetectorRef.detectChanges();
 
       tick(20);
       // Still at the same values, so effect stopped running
@@ -206,6 +211,7 @@ describe('ComponentStore integration', () => {
       <child></child>
     }`,
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
   })
   class ParentComponent implements Parent {
     isChildVisible = true;
