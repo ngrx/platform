@@ -196,7 +196,7 @@ describe('signalState', () => {
     result.toInfer('baz', 'Signal<number | undefined> | undefined');
     result.toInfer(
       'x',
-      'Signal<{ y: { z?: boolean | undefined; }; } | undefined> | undefined'
+      'DeepSignal<{ y: { z?: boolean | undefined; }; }> | Signal<undefined> | undefined'
     );
   });
 
@@ -290,12 +290,77 @@ describe('signalState', () => {
 
     const result = expectSnippet(snippet);
     result.toInfer('state', 'SignalState<State>');
-    result.toInfer('foo', 'Signal<number | { s: string; }>');
+    result.toInfer('foo', 'DeepSignal<{ s: string; }> | Signal<number>');
     result.toInfer('bar', 'DeepSignal<{ baz: { n: number; } | null; }>');
-    result.toInfer('baz', 'Signal<{ n: number; } | null>');
+    result.toInfer('baz', 'DeepSignal<{ n: number; }> | Signal<null>');
     result.toInfer('x', 'DeepSignal<{ y: { z: boolean | undefined; }; }>');
     result.toInfer('y', 'DeepSignal<{ z: boolean | undefined; }>');
     result.toInfer('z', 'Signal<boolean | undefined>');
+  });
+
+  it('does not split non-record union members into separate signals', () => {
+    const snippet = `
+      type FooBar = 'foo' | 'bar';
+      type State = {
+        flag: boolean;
+        status: FooBar;
+        mixed: string | number;
+        withRecord: { id: number } | boolean;
+        combo: { a: string } | FooBar | null;
+        multi: { a: number } | { b: string } | boolean;
+        withCollection: { id: number } | Set<number> | boolean;
+        nested: { foo: boolean | { deep: string } };
+      };
+
+      const state = signalState<State>({
+        flag: true,
+        status: 'foo',
+        mixed: 1,
+        withRecord: { id: 1 },
+        combo: null,
+        multi: true,
+        withCollection: { id: 1 },
+        nested: { foo: true },
+      });
+      const flag = state.flag;
+      const status = state.status;
+      const mixed = state.mixed;
+      const withRecord = state.withRecord;
+      const combo = state.combo;
+      const multi = state.multi;
+      const withCollection = state.withCollection;
+      const nested = state.nested;
+      const nestedFoo = state.nested.foo;
+    `;
+
+    const result = expectSnippet(snippet);
+    result.toInfer('flag', 'Signal<boolean>');
+    result.toInfer('status', 'Signal<FooBar>');
+    result.toInfer('mixed', 'Signal<string | number>');
+    result.toInfer(
+      'withRecord',
+      'Signal<boolean> | DeepSignal<{ id: number; }>'
+    );
+    result.toInfer(
+      'combo',
+      'DeepSignal<{ a: string; }> | Signal<FooBar | null>'
+    );
+    result.toInfer(
+      'multi',
+      'Signal<boolean> | DeepSignal<{ a: number; }> | DeepSignal<{ b: string; }>'
+    );
+    result.toInfer(
+      'withCollection',
+      'DeepSignal<{ id: number; }> | Signal<boolean | Set<number>>'
+    );
+    result.toInfer(
+      'nested',
+      'DeepSignal<{ foo: boolean | { deep: string; }; }>'
+    );
+    result.toInfer(
+      'nestedFoo',
+      'Signal<boolean> | DeepSignal<{ deep: string; }>'
+    );
   });
 
   it('succeeds when state contains Function properties', () => {

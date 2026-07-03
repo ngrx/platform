@@ -240,14 +240,82 @@ describe('signalStore', () => {
     const result = expectSnippet(snippet);
     result.toInfer(
       'store',
-      '{ foo: Signal<number | { s: string; }>; bar: DeepSignal<{ baz: { b: boolean; } | null; }>; x: DeepSignal<{ y: { z: number | undefined; }; }>; } & StateSource<{ foo: number | { ...; }; bar: { ...; }; x: { ...; }; }>'
+      '{ foo: DeepSignal<{ s: string; }> | Signal<number>; bar: DeepSignal<{ baz: { b: boolean; } | null; }>; x: DeepSignal<{ y: { z: number | undefined; }; }>; } & StateSource<...>'
     );
-    result.toInfer('foo', 'Signal<number | { s: string; }>');
+    result.toInfer('foo', 'DeepSignal<{ s: string; }> | Signal<number>');
     result.toInfer('bar', 'DeepSignal<{ baz: { b: boolean; } | null; }>');
-    result.toInfer('baz', 'Signal<{ b: boolean; } | null>');
+    result.toInfer('baz', 'DeepSignal<{ b: boolean; }> | Signal<null>');
     result.toInfer('x', 'DeepSignal<{ y: { z: number | undefined; }; }>');
     result.toInfer('y', 'DeepSignal<{ z: number | undefined; }>');
     result.toInfer('z', 'Signal<number | undefined>');
+  });
+
+  it('does not split non-record union members into separate signals', () => {
+    const snippet = `
+      type FooBar = 'foo' | 'bar';
+      type State = {
+        flag: boolean;
+        status: FooBar;
+        mixed: string | number;
+        withRecord: { id: number } | boolean;
+        combo: { a: string } | FooBar | null;
+        multi: { a: number } | { b: string } | boolean;
+        withCollection: { id: number } | Set<number> | boolean;
+        nested: { foo: boolean | { deep: string } };
+      };
+
+      const Store = signalStore(
+        withState<State>({
+          flag: true,
+          status: 'foo',
+          mixed: 1,
+          withRecord: { id: 1 },
+          combo: null,
+          multi: true,
+          withCollection: { id: 1 },
+          nested: { foo: true },
+        })
+      );
+      const store = inject(Store);
+      const flag = store.flag;
+      const status = store.status;
+      const mixed = store.mixed;
+      const withRecord = store.withRecord;
+      const combo = store.combo;
+      const multi = store.multi;
+      const withCollection = store.withCollection;
+      const nested = store.nested;
+      const nestedFoo = store.nested.foo;
+    `;
+
+    const result = expectSnippet(snippet);
+    result.toInfer('flag', 'Signal<boolean>');
+    result.toInfer('status', 'Signal<FooBar>');
+    result.toInfer('mixed', 'Signal<string | number>');
+    result.toInfer(
+      'withRecord',
+      'Signal<boolean> | DeepSignal<{ id: number; }>'
+    );
+    result.toInfer(
+      'combo',
+      'DeepSignal<{ a: string; }> | Signal<FooBar | null>'
+    );
+    result.toInfer(
+      'multi',
+      'Signal<boolean> | DeepSignal<{ a: number; }> | DeepSignal<{ b: string; }>'
+    );
+    result.toInfer(
+      'withCollection',
+      'DeepSignal<{ id: number; }> | Signal<boolean | Set<number>>'
+    );
+    result.toInfer(
+      'nested',
+      'DeepSignal<{ foo: boolean | { deep: string; }; }>'
+    );
+    result.toInfer(
+      'nestedFoo',
+      'Signal<boolean> | DeepSignal<{ deep: string; }>'
+    );
   });
 
   it('succeeds when root state slices contain Function properties', () => {
@@ -348,7 +416,10 @@ describe('signalStore', () => {
     result.toInfer('bar', 'DeepSignal<{ baz?: number | undefined; }>');
     result.toInfer('baz', 'Signal<number | undefined> | undefined');
     result.toInfer('x', 'DeepSignal<{ y?: { z: boolean; } | undefined; }>');
-    result.toInfer('y', 'Signal<{ z: boolean; } | undefined> | undefined');
+    result.toInfer(
+      'y',
+      'DeepSignal<{ z: boolean; }> | Signal<undefined> | undefined'
+    );
   });
 
   it('succeeds when root state slices are optional', () => {
@@ -366,7 +437,10 @@ describe('signalStore', () => {
     `;
 
     const result = expectSnippet(snippet);
-    result.toInfer('foo', 'Signal<{ s: string; } | undefined> | undefined');
+    result.toInfer(
+      'foo',
+      'DeepSignal<{ s: string; }> | Signal<undefined> | undefined'
+    );
   });
 
   it('does not create deep signals when state is an unknown record', () => {
@@ -999,9 +1073,8 @@ describe('signalStore', () => {
               logEntity: (entity: Entity) => void;
             };
           }>(),
-          withMethods(({ entities, selectedEntity, selectedEntity2, logEntity }) => {
+          withMethods(({ entities, selectedEntity2, logEntity }) => {
             const e: Signal<Entity[]> = entities;
-            const se: Signal<Entity | null> = selectedEntity;
             const se2: Signal<Entity | undefined> = selectedEntity2;
             const le: (entity: Entity) => void = logEntity;
 
@@ -1056,7 +1129,7 @@ describe('signalStore', () => {
       `;
 
       const result = expectSnippet(snippet);
-      result.toInfer('selectedEntity', 'Signal<User | null>');
+      result.toInfer('selectedEntity', 'DeepSignal<User> | Signal<null>');
       result.toInfer('selectedEntity2', 'Signal<User | undefined>');
       result.toInfer('loadEntities', '() => Promise<User[]>');
     });
