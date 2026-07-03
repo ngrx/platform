@@ -123,8 +123,8 @@ describe('ComponentStore integration', () => {
       state.child.init();
 
       state.parent.isChildVisible = false;
-      state.fixture.componentRef.injector.get(ChangeDetectorRef).markForCheck();
-      state.fixture.detectChanges();
+      state.fixture.changeDetectorRef.markForCheck();
+      state.fixture.changeDetectorRef.detectChanges();
 
       state.destroy();
 
