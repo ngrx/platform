@@ -104,5 +104,32 @@ describe('SignalStoreFeatureType', () => {
         })
       );
     });
+
+    it('uses inline', () => {
+      signalStoreFeature(
+        type<CounterContainerFeature & { state: { value: number } }>(),
+        withMethods((store) => {
+          expectTypeOf(store).toMatchObjectType<{
+            count: Signal<number>;
+            value: Signal<number>;
+            increment: () => void;
+            a: string;
+          }>();
+
+          return {};
+        })
+      );
+    });
+
+    it('intersects on the same member, which results in a never', () => {
+      signalStoreFeature(
+        type<CounterContainerFeature & { state: { count: string } }>(),
+        withMethods((store) => {
+          expectTypeOf(store.count).toEqualTypeOf<Signal<never>>();
+
+          return {};
+        })
+      );
+    });
   });
 });
