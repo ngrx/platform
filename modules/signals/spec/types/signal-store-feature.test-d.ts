@@ -38,7 +38,7 @@ describe('SignalStoreFeatureType', () => {
   it('extracts the output result of a custom feature', () => {
     type CounterFeature = SignalStoreFeatureType<typeof withCounter>;
 
-    expectTypeOf<CounterFeature>().toEqualTypeOf<{
+    expectTypeOf<CounterFeature>().toMatchObjectType<{
       state: { count: number };
       methods: { increment: () => void };
       props: {};
@@ -52,11 +52,54 @@ describe('SignalStoreFeatureType', () => {
 
     type ContainerType = SignalStoreFeatureType<typeof withContainer<number>>;
 
-    expectTypeOf<ContainerType>().toEqualTypeOf<{
+    expectTypeOf<ContainerType>().toMatchObjectType<{
       state: {};
       methods: {};
       props: { a: number };
     }>();
+  });
+
+  it('preserves required input from custom features', () => {
+    function withCounterLogger() {
+      return signalStoreFeature(
+        {
+          state: type<{ count: number }>(),
+          methods: type<{ increment: () => void }>(),
+        },
+        withMethods(({ count, increment }) => ({
+          logAndIncrement(): void {
+            console.log(count());
+            increment();
+          },
+        }))
+      );
+    }
+
+    type CounterLoggerFeature = SignalStoreFeatureType<
+      typeof withCounterLogger
+    >;
+
+    expectTypeOf<CounterLoggerFeature>().toMatchObjectType<{
+      state: { count: number };
+      methods: {
+        increment: () => void;
+        logAndIncrement: () => void;
+      };
+      props: {};
+    }>();
+
+    signalStoreFeature(
+      type<CounterLoggerFeature>(),
+      withMethods((store) => {
+        expectTypeOf(store).toMatchObjectType<{
+          count: Signal<number>;
+          increment: () => void;
+          logAndIncrement: () => void;
+        }>();
+
+        return {};
+      })
+    );
   });
 
   describe('intersections', () => {

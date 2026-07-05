@@ -74,6 +74,6 @@ export type SignalStoreFeature<
 export type SignalStoreFeatureType<
   Feature extends (...params: never[]) => unknown,
 > =
-  ReturnType<Feature> extends SignalStoreFeature<infer _, infer Output>
-    ? Output
+  ReturnType<Feature> extends SignalStoreFeature<infer Input, infer Output>
+    ? Input & Output
     : never;
