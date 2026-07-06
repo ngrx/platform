@@ -41,11 +41,11 @@ The same applies to nested state properties, with all deeply nested signals bein
 
 The `BookSearchStore` instance will contain the following properties:
 
-- `books: Signal<Book[]>`
-- `isLoading: Signal<boolean>`
-- `filter: DeepSignal<{ query: string; order: 'asc' | 'desc' }>`
-- `filter.query: Signal<string>`
-- `filter.order: Signal<'asc' | 'desc'>`
+- `books: Signal&lt;Book[]&gt;`
+- `isLoading: Signal&lt;boolean&gt;`
+- `filter: DeepSignal&lt;{ query: string; order: 'asc' | 'desc' }&gt;`
+- `filter.query: Signal&lt;string&gt;`
+- `filter.order: Signal&lt;'asc' | 'desc'&gt;`
 
 <ngrx-docs-alert type="help">
 
@@ -476,18 +476,18 @@ export const BookSearchStore = signalStore(
 The `BookSearchStore` instance will contain the following properties and methods:
 
 - State signals:
-  - `books: Signal<Book[]>`
-  - `isLoading: Signal<boolean>`
-  - `filter: DeepSignal<{ query: string; order: 'asc' | 'desc' }>`
-  - `filter.query: Signal<string>`
-  - `filter.order: Signal<'asc' | 'desc'>`
+  - `books: Signal&lt;Book[]&gt;`
+  - `isLoading: Signal&lt;boolean&gt;`
+  - `filter: DeepSignal&lt;{ query: string; order: 'asc' | 'desc' }&gt;`
+  - `filter.query: Signal&lt;string&gt;`
+  - `filter.order: Signal&lt;'asc' | 'desc'&gt;`
 - Computed signals:
-  - `booksCount: Signal<number>`
-  - `sortedBooks: Signal<Book[]>`
+  - `booksCount: Signal&lt;number&gt;`
+  - `sortedBooks: Signal&lt;Book[]&gt;`
 - Methods:
   - `updateQuery(query: string): void`
   - `updateOrder(order: 'asc' | 'desc'): void`
-  - `loadByQuery: RxMethod<string>`
+  - `loadByQuery: RxMethod&lt;string&gt;`
 
 <ngrx-docs-alert type="help">
 

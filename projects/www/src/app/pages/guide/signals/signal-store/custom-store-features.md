@@ -105,18 +105,18 @@ export const BooksStore = signalStore(
 The `BooksStore` instance will contain the following properties and methods:
 
 - State signals from `withEntities` feature:
-  - `entityMap: Signal<EntityMap<Book>>`
-  - `ids: Signal<EntityId[]>`
+  - `entityMap: Signal&lt;EntityMap&lt;Book&gt;&gt;`
+  - `ids: Signal&lt;EntityId[]&gt;`
 - Computed signals from `withEntities` feature:
-  - `entities: Signal<Book[]>`
+  - `entities: Signal&lt;Book[]&gt;`
 - State signals from `withRequestStatus` feature:
-  - `requestStatus: Signal<RequestStatus>`
+  - `requestStatus: Signal&lt;RequestStatus&gt;`
 - Computed signals from `withRequestStatus` feature:
-  - `isPending: Signal<boolean>`
-  - `isFulfilled: Signal<boolean>`
-  - `error: Signal<string | null>`
+  - `isPending: Signal&lt;boolean&gt;`
+  - `isFulfilled: Signal&lt;boolean&gt;`
+  - `error: Signal&lt;string | null&gt;`
 - Methods:
-  - `loadAll(): Promise<void>`
+  - `loadAll(): Promise&lt;void&gt;`
 
 <ngrx-docs-alert type="help">
 
@@ -249,14 +249,14 @@ export const BooksStore = signalStore(
 The `BooksStore` instance will contain the following properties:
 
 - State signals from `withEntities` feature:
-  - `entityMap: Signal<EntityMap<Book>>`
-  - `ids: Signal<EntityId[]>`
+  - `entityMap: Signal&lt;EntityMap&lt;Book&gt;&gt;`
+  - `ids: Signal&lt;EntityId[]&gt;`
 - Computed signals from `withEntities` feature:
-  - `entities: Signal<Book[]>`
+  - `entities: Signal&lt;Book[]&gt;`
 - State signals from `withSelectedEntity` feature:
-  - `selectedEntityId: Signal<EntityId | null>`
+  - `selectedEntityId: Signal&lt;EntityId | null&gt;`
 - Computed signals from `withSelectedEntity` feature:
-  - `selectedEntity: Signal<Book | null>`
+  - `selectedEntity: Signal&lt;Book | null&gt;`
 
 The `@ngrx/signals` package offers high-level type safety.
 Therefore, if `BooksStore` does not contain state properties from the `EntityState` type, the compilation error will occur.
