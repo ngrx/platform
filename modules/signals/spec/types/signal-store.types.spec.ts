@@ -6,6 +6,7 @@ describe('signalStore', () => {
     (code) => `
         import { computed, inject, Signal } from '@angular/core';
         import {
+          DeepSignalOf,
           getState,
           patchState,
           signalStore,
@@ -1073,8 +1074,10 @@ describe('signalStore', () => {
               logEntity: (entity: Entity) => void;
             };
           }>(),
-          withMethods(({ entities, selectedEntity2, logEntity }) => {
+          withMethods(({ entities, selectedEntity, selectedEntity2, logEntity }) => {
             const e: Signal<Entity[]> = entities;
+            const se: DeepSignalOf<Entity | null> = selectedEntity;
+            const seId: string | null = 'id' in se ? se.id() : null;
             const se2: Signal<Entity | undefined> = selectedEntity2;
             const le: (entity: Entity) => void = logEntity;
 
