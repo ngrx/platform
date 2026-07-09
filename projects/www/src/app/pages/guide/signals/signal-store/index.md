@@ -49,6 +49,40 @@ The `BookSearchStore` instance will contain the following properties:
 
 <ngrx-docs-alert type="help">
 
+When a state slice's type is a union, `signalStore` creates a `DeepSignal` for each object literal member. The remaining members (primitives, dynamic records, etc.) stay a regular `Signal`.
+
+```ts
+type Book = { id: number; title: string };
+type Status =
+  | { type: 'success'; data: string }
+  | { type: 'error'; message: string };
+
+const BookStore = signalStore(
+  withState<{ book: Book | null; status: Status }>({
+    book: null,
+    status: { type: 'success', data: '' },
+  })
+);
+const store = inject(BookStore);
+
+// 👇 object literal + null: store.book is DeepSignal<Book> | Signal<null>
+if ('title' in store.book) {
+  const title = store.book.title; // Signal<string>
+  console.log(title());
+}
+
+// 👇 union of object literals: a DeepSignal is created for each member
+// store.status: DeepSignal<{ type: 'success'; data: string }> | DeepSignal<{ type: 'error'; message: string }>
+if ('message' in store.status) {
+  const message = store.status.message; // Signal<string>
+  console.log(message());
+}
+```
+
+</ngrx-docs-alert>
+
+<ngrx-docs-alert type="help">
+
 The `withState` feature also has a signature that takes the initial state factory as an input argument.
 The factory is executed within the injection context, allowing initial state to be obtained from a service or injection token.
 
