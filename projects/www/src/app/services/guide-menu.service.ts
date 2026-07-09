@@ -198,6 +198,7 @@ export class GuideMenuService {
     lineBreak(),
     section('Developer Resources', [
       section('Migrations', [
+        link('V22', '/guide/migration/v22'),
         link('V21', '/guide/migration/v21'),
         link('V20', '/guide/migration/v20'),
         link('V19', '/guide/migration/v19'),

@@ -30,4 +30,26 @@ describe('regression component-store', () => {
       }
     }
   });
+
+  describe('updater exact return type', () => {
+    it('should work with state containing optional properties', () => {
+      const store = new ComponentStore<{ req: string; opt?: number }>({
+        req: 'a',
+      });
+      store.updater((state) => ({ req: 'b' }))();
+    });
+
+    it('should work with state containing index signature', () => {
+      const store = new ComponentStore<{ [key: string]: number }>({});
+      store.updater((state, v: number) => ({ ...state, newKey: v }))(5);
+    });
+
+    it('should catch excess properties with concrete state type', () => {
+      const store = new ComponentStore<{ name: string }>({ name: 'test' });
+      store.updater(
+        // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+        (state, v: string) => ({ ...state, name: v, extra: true })
+      );
+    });
+  });
 });
