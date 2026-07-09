@@ -1,5 +1,9 @@
 import { computed, isSignal, Signal, untracked } from '@angular/core';
-import { IsKnownRecord } from './ts-helpers';
+import {
+  HasKnownRecordMember,
+  IsKnownRecord,
+  NonRecordMembers,
+} from './ts-helpers';
 
 const DEEP_SIGNAL = Symbol(
   typeof ngDevMode !== 'undefined' && ngDevMode ? 'DEEP_SIGNAL' : ''
@@ -7,14 +11,25 @@ const DEEP_SIGNAL = Symbol(
 
 export type DeepSignal<T> = Signal<T> &
   (IsKnownRecord<T> extends true
-    ? Readonly<{
-        [K in keyof T]: IsKnownRecord<T[K]> extends true
-          ? DeepSignal<T[K]>
-          : Signal<T[K]>;
-      }>
+    ? Readonly<{ [K in keyof T]: DeepSignalOf<T[K]> }>
     : unknown);
 
-export function toDeepSignal<T>(signal: Signal<T>): DeepSignal<T> {
+export type DeepSignalOf<T> =
+  HasKnownRecordMember<T> extends true
+    ? DeepSignalRecordMembers<T> | DeepSignalNonRecordMembers<T>
+    : Signal<T>;
+
+type DeepSignalRecordMembers<T> = T extends unknown
+  ? IsKnownRecord<T> extends true
+    ? DeepSignal<T>
+    : never
+  : never;
+
+type DeepSignalNonRecordMembers<T> = [NonRecordMembers<T>] extends [never]
+  ? never
+  : Signal<NonRecordMembers<T>>;
+
+export function toDeepSignal<T>(signal: Signal<T>): DeepSignalOf<T> {
   return new Proxy(signal, {
     has(target: any, prop) {
       return !!this.get!(target, prop, undefined);

@@ -1,5 +1,5 @@
 import { computed } from '@angular/core';
-import { DeepSignal, toDeepSignal } from './deep-signal';
+import { DeepSignalOf, toDeepSignal } from './deep-signal';
 
 /**
  * @description
@@ -26,8 +26,6 @@ import { DeepSignal, toDeepSignal } from './deep-signal';
  * console.log(pagination.pageSize()); // 10
  * ```
  */
-export function deepComputed<T extends object>(
-  computation: () => T
-): DeepSignal<T> {
+export function deepComputed<T>(computation: () => T): DeepSignalOf<T> {
   return toDeepSignal(computed(computation));
 }
