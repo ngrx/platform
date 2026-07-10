@@ -1,3 +1,18 @@
+<a name="22.0.0"></a>
+
+# [22.0.0](https://github.com/ngrx/platform/compare/21.1.1...22.0.0) (2026-07-10)
+
+### Features
+
+- **core:** align NgRx with Angular v22
+
+### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9`
+  subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 <a name="21.1.1"></a>
 
 ## [21.1.1](https://github.com/ngrx/platform/compare/21.1.0...21.1.1) (2026-06-08)
@@ -92,6 +107,8 @@
 - **signals:** rename withEffects to withEventHandlers ([#5009](https://github.com/ngrx/platform/issues/5009)) ([3aa64ae](https://github.com/ngrx/platform/commit/3aa64ae))
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - **signals:** The withEffects feature from @ngrx/signals/events plugin is renamed to withEventHandlers.
 
@@ -206,6 +223,8 @@ export const CounterStore = signalStore(
 - **www:** add sidebar for mobile view and make home page responsive ([#4813](https://github.com/ngrx/platform/issues/4813)) ([4397bfb](https://github.com/ngrx/platform/commit/4397bfb)), closes [#4807](https://github.com/ngrx/platform/issues/4807)
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - **signals:** The internal `STATE_SOURCE` is no longer represented as a single `WritableSignal` holding the entire state object. Instead, each top-level state property becomes its own `WritableSignal` or remains as-is if a `WritableSignal` is provided as a state property.
 
@@ -335,6 +354,8 @@ The minimum required version is Angular 20.x
 
 ### BREAKING CHANGES
 
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 - The minimum required version of Angular has been updated.
 
 BEFORE:
@@ -364,6 +385,8 @@ The minimum required version is Angular 20.x
 - **www:** add sidebar for mobile view and make home page responsive ([#4813](https://github.com/ngrx/platform/issues/4813)) ([4397bfb](https://github.com/ngrx/platform/commit/4397bfb)), closes [#4807](https://github.com/ngrx/platform/issues/4807)
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - The minimum required version of Angular has been updated.
 
@@ -443,6 +466,8 @@ The minimum required version is Angular 20.x
 
 ### BREAKING CHANGES
 
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 - **signals:** - The `computed` property in `SignalStoreFeatureResult` type is renamed to `props`.
 
 * The `EntityComputed` and `NamedEntityComputed` types in the `entities` plugin are renamed to `EntityProps` and `NamedEntityProps`.
@@ -508,6 +533,8 @@ export function withTotalEntities<Entity>(): SignalStoreFeature<
 - **signals:** throw error in dev mode on state mutation ([#4526](https://github.com/ngrx/platform/issues/4526)) ([7a84209](https://github.com/ngrx/platform/commit/7a84209))
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - **signals:** The `signalState`/`signalStore` state object is frozen in development mode.
   If a mutable change occurs to the state object, an error will be thrown.
@@ -669,6 +696,8 @@ The minimum required version is Angular 19.x
 
 ### BREAKING CHANGES
 
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 - **effects:** The concatLatestFrom operator has been removed from @ngrx/effects in favor of the @ngrx/operators package.
 
 BEFORE:
@@ -712,6 +741,8 @@ import { tapResponse } from '@ngrx/operators';
 - **store:** merge Action and TypedAction intefaces ([#4318](https://github.com/ngrx/platform/issues/4318)) ([c8bde71](https://github.com/ngrx/platform/commit/c8bde71))
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - The minimum required version of Angular has been updated
 
@@ -833,6 +864,8 @@ The TypedAction interface is removed.
 - **signals:** add rxjs-interop subpackage ([#4061](https://github.com/ngrx/platform/issues/4061)) ([fd565ed](https://github.com/ngrx/platform/commit/fd565ed))
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - **component:** The LetModule is removed in favor of the standalone LetDirective.
 
@@ -1069,6 +1102,8 @@ The minimum required version of Angular is 17.x
 
 ### BREAKING CHANGES
 
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 - **store:** The event name case is preserved when converting to the action name by using the `createActionGroup` function.
 
 BEFORE:
@@ -1271,6 +1306,8 @@ counterFeature.selectCount.projector;
 
 ### BREAKING CHANGES
 
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 - **component:** The `LetDirective` view will be cleared when the replaced observable is in a suspense state. Also, the `suspense` property is removed from the `LetViewContext` because it would always be `false` when the `LetDirective` view is rendered. Instead of `suspense` property, use the suspense template to handle the suspense state.
 
 BEFORE:
@@ -1353,6 +1390,8 @@ AFTER:
 
 ### BREAKING CHANGES
 
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 - **router-store:** Property `title: string | undefined` is added to the `MinimalActivatedRouteSnapshot` interface.
 
 BEFORE:
@@ -1383,6 +1422,8 @@ The `MinimalActivatedRouteSnapshot` interface contains the required `title` prop
 - **store:** strict projectors ([#3581](https://github.com/ngrx/platform/issues/3581)) ([43198a2](https://github.com/ngrx/platform/commit/43198a2)), closes [#3571](https://github.com/ngrx/platform/issues/3571)
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - **component:** `ReactiveComponentModule` is removed in favor of `LetModule` and `PushModule`.
 
@@ -1640,6 +1681,8 @@ provideEffects(MyEffect, MySecondEffect);
 
 ### BREAKING CHANGES
 
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 - **router-store:** The full router state serializer has been renamed.
 
 BEFORE:
@@ -1677,6 +1720,8 @@ The full router state serializer is named `FullRouterStateSerializer`. A migrati
 - **component:** reset state / trigger CD only if necessary ([#3328](https://github.com/ngrx/platform/issues/3328)) ([f5b055b](https://github.com/ngrx/platform/commit/f5b055b))
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - 1. The context of `LetDirective` is strongly typed when `null` or
      `undefined` is passed as input.
@@ -1807,6 +1852,8 @@ AFTER:
 
 ### BREAKING CHANGES
 
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 - **store:** When manually specifying the generic arguments, you have to specify the selector's list of selector return values.
 
 BEFORE:
@@ -1853,6 +1900,8 @@ The `getWithQuery` method sets the `loaded` property to true upon success
 - **store:** provide better TS errors for action creator props ([#3060](https://github.com/ngrx/platform/issues/3060)) ([5ed3c3d](https://github.com/ngrx/platform/commit/5ed3c3d)), closes [#2892](https://github.com/ngrx/platform/issues/2892)
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - The minimum version required for Angular and RxJS has been updated
 
@@ -2054,6 +2103,8 @@ The Effect decorator removal and migration are performed automatically on upgrad
 
 ### BREAKING CHANGES
 
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 - Minimum versions of Angular and TypeScript have been updated
 
 BEFORE:
@@ -2146,6 +2197,8 @@ The minimum TypeScript version is 4.1.x
 
 ### BREAKING CHANGES
 
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 - **push:** BEFORE:
 
 ngrxPush typing doesn't consider `undefined` when the input type is an observable
@@ -2191,6 +2244,8 @@ ngrxPush typing considers `undefined` when the input type is an observable
 - **router-store:** optimize selectQueryParams, selectQueryParam and selectFragment selectors ([#2764](https://github.com/ngrx/platform/issues/2764)) ([918f184](https://github.com/ngrx/platform/commit/918f184))
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - **router-store:** Router-store selectors for query params and fragment select from the root router state node. This could potentially break unit tests, but is functionally equivalent to the current behavior at runtime.
 
@@ -2276,6 +2331,8 @@ Injection Token is `INITIAL_STATE_TOKEN`
 
 ### BREAKING CHANGES
 
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 - **component-store:** EffectReturnFn has been removed and the effect type is stricter and more predictable.
 
 BEFORE:
@@ -2307,6 +2364,8 @@ If effect was const e = effect((o: Observable<string>) => ....) its not allowed 
 - remove skipTest option ([#2596](https://github.com/ngrx/platform/issues/2596)) ([60cd5cc](https://github.com/ngrx/platform/commit/60cd5cc)), closes [#2561](https://github.com/ngrx/platform/issues/2561)
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - The skipTest option has been renamed to skipTests
 
@@ -2347,6 +2406,8 @@ ng generate container UsersPage --skipTests
 - **component-store:** push updates to queueScheduler and single selectors to asapSchedulers ([#2586](https://github.com/ngrx/platform/issues/2586)) ([58073ab](https://github.com/ngrx/platform/commit/58073ab))
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - **entity:** The compare function is used in two places, neither of which expect it to be able to return a string:
   The first caller is the Array prototype sort function, and there it "should return a negative, zero, or positive value, depending on the arguments".
@@ -2518,6 +2579,8 @@ Angular v10 are minimum dependencies
 - **store:** testing - expose MockStore provider ([#2331](https://github.com/ngrx/platform/issues/2331)) ([ef5cd5f](https://github.com/ngrx/platform/commit/ef5cd5f)), closes [#2328](https://github.com/ngrx/platform/issues/2328)
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - **router:** The MinimalRouterStateSerializer is enabled by default.
 
@@ -2852,6 +2915,8 @@ ng generate reducer ReducerName --creators=false
 
 ### BREAKING CHANGES
 
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 - **effects:** Prior to introduction of automatic resubscriptions on errors, all effects had effectively {resubscribeOnError: false} behavior. For the rare cases when this is still wanted please add {resubscribeOnError: false} to the effect metadata.
 
 BEFORE:
@@ -2966,6 +3031,8 @@ login$ = createEffect(
 - **store:** run migration schema for v8 beta ([#1716](https://github.com/ngrx/platform/issues/1716)) ([0abc948](https://github.com/ngrx/platform/commit/0abc948))
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - **entity:** Dictionary could be producing undefined but previous typings were not explicit about it.
 - **Store:** Internal functions and tokens are removed from the public API
@@ -3164,6 +3231,8 @@ StoreDevtoolsModule.instrument({
 
 ### BREAKING CHANGES
 
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 - **router-store:** The default router serializer now returns a `null` value for
   `routeConfig` when `routeConfig` doesn't exist on the
   `ActivatedRouteSnapshot` instead of an empty object.
@@ -3335,6 +3404,8 @@ AFTER:
 
 ### BREAKING CHANGES
 
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
+
 - **Schematics:** The action blueprint has been updated to be less generic, with associated reducer and effects updated for the feature blueprint
 
 BEFORE:
@@ -3395,6 +3466,8 @@ export type UserActions = LoadUsers;
 - **Schematics:** Add support for custom store interface name ([#810](https://github.com/ngrx/platform/issues/810)) ([1352d83](https://github.com/ngrx/platform/commit/1352d83))
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - **StoreDevtools:** Errors in reducers are no longer hidden from ErrorHandler by
   StoreDevtools
@@ -3534,6 +3607,8 @@ Router state snapshot is returned as a SerializedRouterStateSnapshot with cyclic
 - **StoreDevtools:** Add support for jumping to a specific action ([#703](https://github.com/ngrx/platform/issues/703)) ([b9f6442](https://github.com/ngrx/platform/commit/b9f6442)), closes [#681](https://github.com/ngrx/platform/issues/681)
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - **Effects:** The utility function `toPayload`, deprecated in @ngrx/effects v4.0, has been removed.
 
@@ -3734,6 +3809,8 @@ Minimum peer dependency of RxJS ^5.5.0
 - **Store:** Simplify API for adding meta-reducers ([#87](https://github.com/ngrx/platform/issues/87)) ([d2295c7](https://github.com/ngrx/platform/commit/d2295c7))
 
 ### BREAKING CHANGES
+
+- **eslint-plugin:** The `@ngrx/eslint-plugin/v9` subpath export has been removed. Use `@ngrx/eslint-plugin` directly. Run `ng update @ngrx/store@22` to migrate automatically.
 
 - **Effects:** Effects API for registering effects has been updated to allow for multiple classes to be provided.
 
