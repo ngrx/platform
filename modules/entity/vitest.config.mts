@@ -7,9 +7,6 @@ export default defineProject((config) =>
     test: {
       name: 'entity',
       include: ['spec/**/*.spec.ts'],
-      typecheck: {
-        include: ['spec/**/*.spec.ts', '**/*.test-d.ts'],
-      },
     },
     define: {
       'import.meta.vitest': config.mode !== 'production',
