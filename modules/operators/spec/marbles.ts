@@ -71,6 +71,8 @@ expect.extend({
 
 declare module 'vitest' {
   interface Assertion<T = unknown> {
-    toBeObservable(expected: MarbleObservable<any>): T;
+    toBeObservable(
+      expected: MarbleObservable<T extends Observable<infer V> ? V : T>
+    ): void;
   }
 }
