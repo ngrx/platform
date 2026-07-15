@@ -19,7 +19,7 @@ type Heading = { level: number; text: string; id: string; url: string };
   standalone: true,
   imports: [MatIcon],
   template: `
-    <article #article>
+    <article #article (click)="onArticleClick($event)">
       <ng-content></ng-content>
     </article>
     <menu>
@@ -222,8 +222,33 @@ export class MarkdownArticleComponent implements OnDestroy {
   navigateToHeading($event: MouseEvent, heading: Heading) {
     $event.preventDefault();
 
-    this.router.navigate([], { fragment: heading.id }).then(() => {
-      const element = document.getElementById(heading.id);
+    this.navigateToFragment(heading.id);
+  }
+
+  onArticleClick($event: MouseEvent) {
+    if (
+      $event.button !== 0 ||
+      $event.ctrlKey ||
+      $event.metaKey ||
+      $event.shiftKey ||
+      $event.altKey
+    ) {
+      return;
+    }
+
+    const anchor = ($event.target as HTMLElement).closest('a');
+    const href = anchor?.getAttribute('href');
+    if (!href?.startsWith('#')) {
+      return;
+    }
+
+    $event.preventDefault();
+    this.navigateToFragment(decodeURIComponent(href.slice(1)));
+  }
+
+  private navigateToFragment(fragment: string) {
+    this.router.navigate([], { fragment }).then(() => {
+      const element = document.getElementById(fragment);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
