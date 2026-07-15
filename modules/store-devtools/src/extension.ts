@@ -1,5 +1,5 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { Action, UPDATE } from '@ngrx/store';
+import { Action, ActionCreator, UPDATE } from '@ngrx/store';
 import { EMPTY, Observable, of } from 'rxjs';
 import {
   catchError,
@@ -60,6 +60,7 @@ export interface ReduxDevtoolsExtensionConfig {
   serialize?: boolean | SerializationOptions;
   trace?: boolean | (() => string);
   traceLimit?: number;
+  actionCreators?: ActionCreator[] | Record<string, ActionCreator>;
 }
 
 export interface ReduxDevtoolsExtension {
@@ -269,6 +270,9 @@ export class DevtoolsExtension {
     };
     if (config.maxAge !== false /* support === 0 */) {
       extensionOptions.maxAge = config.maxAge;
+    }
+    if (config.actionCreators) {
+      extensionOptions.actionCreators = config.actionCreators;
     }
     return extensionOptions;
   }

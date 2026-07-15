@@ -6,7 +6,7 @@ import {
   ReduxDevtoolsExtensionConfig,
   ReduxDevtoolsExtensionConnection,
 } from './../src/extension';
-import { Action } from '@ngrx/store';
+import { Action, createAction, props } from '@ngrx/store';
 
 import { DevtoolsExtension, ReduxDevtoolsExtension } from '../src/extension';
 import {
@@ -160,6 +160,40 @@ describe('DevtoolsExtension', () => {
       20
     );
     expect(reduxDevtoolsExtension.connect).toHaveBeenCalledWith(options);
+  });
+
+  it('should connect with given action creators', () => {
+    const bookRented = createAction(
+      '[Books] Rent',
+      props<{ id: number; customerId: number }>()
+    );
+    const bookReturned = createAction(
+      '[Books] Return',
+      props<{ id: number }>()
+    );
+
+    const { devtoolsExtension, reduxDevtoolsExtension } = testSetup({
+      config: createConfig({
+        actionCreators: [bookRented, bookReturned],
+      }),
+    });
+
+    // Subscription needed or else extension connection will not be established.
+    devtoolsExtension.actions$.subscribe(() => null);
+    expect(reduxDevtoolsExtension.connect).toHaveBeenCalledWith(
+      expect.objectContaining({ actionCreators: [bookRented, bookReturned] })
+    );
+  });
+
+  it('should not add action creators to the connect options when not provided', () => {
+    const { devtoolsExtension, reduxDevtoolsExtension } = testSetup({
+      config: createConfig({}),
+    });
+
+    // Subscription needed or else extension connection will not be established.
+    devtoolsExtension.actions$.subscribe(() => null);
+    const [connectOptions] = reduxDevtoolsExtension.connect.mock.lastCall;
+    expect(connectOptions).not.toHaveProperty('actionCreators');
   });
 
   it('should connect with custom serializer', () => {
