@@ -23,7 +23,6 @@
     "update": "nx migrate latest",
     "update:check": "ng update",
     "update:versions": "npx tsx ./build/update-version-numbers.ts",
-    "postupdate:versions": "npm run changelog",
     "lint": "nx run-many --target=lint --all",
     "eslint-plugin:update": "npx tsx ./build/generate-eslint-plugin.ts",
     "prepare": "husky install"
