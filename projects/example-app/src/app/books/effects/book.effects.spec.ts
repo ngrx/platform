@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { cold, getTestScheduler, hot } from '../../testing/marbles';
 import { Observable } from 'rxjs';
+import { cold, getTestScheduler, hot } from '../../testing/marbles';
 
-import { FindBookPageActions } from '@example-app/books/actions/find-book-page.actions';
 import { BooksApiActions } from '@example-app/books/actions/books-api.actions';
+import { FindBookPageActions } from '@example-app/books/actions/find-book-page.actions';
 import { BookEffects } from '@example-app/books/effects';
 import { Book } from '@example-app/books/models';
 import { GoogleBooksService } from '@example-app/core/services';
@@ -78,7 +78,7 @@ describe('BookEffects', () => {
       const action = FindBookPageActions.searchBooks({ query: '' });
 
       actions$ = hot('-a---', { a: action });
-      const expected = cold('---');
+      const expected = cold<never>('---');
 
       expect(
         effects.search$({

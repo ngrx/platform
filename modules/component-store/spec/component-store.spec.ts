@@ -1366,7 +1366,7 @@ describe('Component Store', () => {
     );
 
     it('complete when componentStore is destroyed', () =>
-      new Promise((doneFn) => {
+      new Promise<void>((doneFn) => {
         const selector = componentStore.select(() => ({}), { debounce: true });
 
         selector.subscribe({
