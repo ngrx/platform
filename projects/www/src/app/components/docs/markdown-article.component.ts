@@ -231,9 +231,19 @@ export class MarkdownArticleComponent implements OnDestroy {
   }
 
   private collectHeadings() {
-    const headingElements = this.articleRef().nativeElement.querySelectorAll(
-      'h1, h2, h3, h4, h5, h6'
-    );
+    const article = this.articleRef().nativeElement;
+    const currentUrlWithoutHash = this.router.url.split('#')[0];
+    const fragmentLinks =
+      article.querySelectorAll<HTMLAnchorElement>('a[href^="#"]');
+
+    for (const link of Array.from(fragmentLinks)) {
+      link.setAttribute(
+        'href',
+        `${currentUrlWithoutHash}${link.getAttribute('href')}`
+      );
+    }
+
+    const headingElements = article.querySelectorAll('h1, h2, h3, h4, h5, h6');
     const headings: Heading[] = [];
 
     for (const heading of Array.from(headingElements)) {
@@ -246,8 +256,6 @@ export class MarkdownArticleComponent implements OnDestroy {
         .replaceAll('/', '-');
       heading.id = id;
 
-      const currentUrl = this.router.url;
-      const currentUrlWithoutHash = currentUrl.split('#')[0];
       const url = `${currentUrlWithoutHash}#${id}`;
 
       headings.push({

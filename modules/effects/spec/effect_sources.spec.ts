@@ -419,13 +419,14 @@ describe('EffectSources', () => {
         testScheduler.run(({ hot, expectObservable }) => {
           const sources$ = of(
             new (class {
-              b$ = createEffect(() =>
-                hot('a--e--b--e--c--e--d').pipe(
-                  map((v) => {
-                    if (v == 'e') throw new Error('An Error');
-                    return v;
-                  })
-                )
+              b$ = createEffect(
+                () =>
+                  hot('a--e--b--e--c--e--d').pipe(
+                    map((v) => {
+                      if (v == 'e') throw new Error('An Error');
+                      return v;
+                    })
+                  ) as any
               );
             })()
           );
@@ -493,11 +494,11 @@ describe('EffectSources', () => {
       });
 
       it('should not complete the group if just one effect completes', () => {
-        testScheduler.run(({ cold, expectObservable, scheduler }) => {
+        testScheduler.run(({ cold, expectObservable }) => {
           class SourceH {
             empty = createEffect(() => of('value') as any);
             never = createEffect(
-              () => timer(5, scheduler).pipe(map(() => 'update')) as any
+              () => timer(5, testScheduler).pipe(map(() => 'update')) as any
             );
           }
 

@@ -1,6 +1,5 @@
 import type { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import { stripJsonComments } from '../strip-json-comments';
 import type { Schema } from './schema';
 
 export const possibleFlatConfigPaths = [
@@ -11,7 +10,6 @@ export const possibleFlatConfigPaths = [
 
 export default function (schema: Schema): Rule {
   return (host: Tree, context: SchematicContext) => {
-    const jsonConfigPath = '.eslintrc.json';
     const flatConfigPath = possibleFlatConfigPaths.find((path) =>
       host.exists(path)
     );
@@ -22,18 +20,11 @@ export default function (schema: Schema): Rule {
       return host;
     }
 
-    if (!host.exists(jsonConfigPath)) {
-      context.logger.warn(`
-Could not find an ESLint config at any of ${possibleFlatConfigPaths.join(
-        ', '
-      )} or \`${jsonConfigPath}\`.
+    context.logger.warn(`
+Could not find an ESLint config at any of ${possibleFlatConfigPaths.join(', ')}.
 The NgRx ESLint Plugin is installed but not configured.
 Please see ${docs} to configure the NgRx ESLint Plugin.
       `);
-      return host;
-    }
-
-    updateJsonConfig(host, context, jsonConfigPath, schema, docs);
     return host;
   };
 }
@@ -45,7 +36,7 @@ function updateFlatConfig(
   schema: Schema,
   docs: string
 ): void {
-  const ngrxPlugin = '@ngrx/eslint-plugin/v9';
+  const ngrxPlugin = '@ngrx/eslint-plugin';
   const content = host.read(flatConfigPath)?.toString('utf-8');
   if (!content) {
     context.logger.error(
@@ -53,15 +44,16 @@ function updateFlatConfig(
     );
     return;
   }
+  const configContent = content;
 
-  if (content.includes(ngrxPlugin)) {
+  if (configContent.includes(ngrxPlugin)) {
     context.logger.info(
       `Skipping installation, the NgRx ESLint Plugin is already installed in your flat config.`
     );
     return;
   }
 
-  if (!content.includes('tseslint.config')) {
+  if (!configContent.includes('tseslint.config')) {
     context.logger.warn(
       `No tseslint found, skipping the installation of the NgRx ESLint Plugin in your flat config.`
     );
@@ -70,7 +62,7 @@ function updateFlatConfig(
 
   const source = ts.createSourceFile(
     flatConfigPath,
-    content,
+    configContent,
     ts.ScriptTarget.Latest,
     true
   );
@@ -86,7 +78,7 @@ See ${docs} for more details.
   `);
 
   function addImport() {
-    const isESM = content!.includes('export default');
+    const isESM = configContent.includes('export default');
     if (isESM) {
       const lastImport = source.statements
         .filter((statement) => ts.isImportDeclaration(statement))
@@ -154,67 +146,5 @@ See ${docs} for more details.
         recorder.insertRight(tseslintConfigCall.end - 1, `\n${plugin}\n`);
       }
     }
-  }
-}
-
-function updateJsonConfig(
-  host: Tree,
-  context: SchematicContext,
-  jsonConfigPath: string,
-  schema: Schema,
-  docs: string
-): void {
-  const eslint = host.read(jsonConfigPath)?.toString('utf-8');
-  if (!eslint) {
-    context.logger.error(`
-Could not find the ESLint config at \`${jsonConfigPath}\`.
-The NgRx ESLint Plugin is installed but not configured.
-Please see ${docs} to configure the NgRx ESLint Plugin.
-`);
-    return;
-  }
-
-  try {
-    const json = JSON.parse(stripJsonComments(eslint));
-    const plugin = {
-      files: ['*.ts'],
-      extends: [`plugin:@ngrx/${schema.config}`],
-    };
-    if (json.overrides) {
-      if (
-        !json.overrides.some((override: any) =>
-          override.extends?.some((extend: any) =>
-            extend.startsWith('plugin:@ngrx')
-          )
-        )
-      ) {
-        json.overrides.push(plugin);
-      }
-    } else if (
-      !json.extends?.some((extend: any) => extend.startsWith('plugin:@ngrx'))
-    ) {
-      json.overrides = [plugin];
-    }
-
-    host.overwrite(jsonConfigPath, JSON.stringify(json, null, 2));
-
-    context.logger.info(`
-The NgRx ESLint Plugin is installed and configured with the '${schema.config}' config.
-Take a look at the docs at ${docs} if you want to change the default configuration.
-`);
-  } catch (err) {
-    const detailsContent =
-      err instanceof Error
-        ? `
-Details:
-${err.message}
-`
-        : '';
-    context.logger.warn(`
-Something went wrong while adding the NgRx ESLint Plugin.
-The NgRx ESLint Plugin is installed but not configured.
-Please see ${docs} to configure the NgRx ESLint Plugin.
-${detailsContent}
-`);
   }
 }

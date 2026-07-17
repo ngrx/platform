@@ -200,7 +200,12 @@ describe('DevtoolsExtension', () => {
         return (unwrappedAction = action);
       });
 
-      const [callback] = extensionConnection.subscribe.mock.lastCall;
+      const lastCall = extensionConnection.subscribe.mock.lastCall;
+      if (!lastCall) {
+        throw new Error('Expected extension connection to be subscribed');
+      }
+
+      const [callback] = lastCall;
       callback({ type: ExtensionActionTypes.START });
       callback({ type: ExtensionActionTypes.ACTION, payload });
       expect(unwrappedAction).toEqual({

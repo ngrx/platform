@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { cold, hot } from 'jasmine-marbles';
+import { cold, hot } from '../../testing/marbles';
 import { firstValueFrom, Observable, of } from 'rxjs';
 import { LoginPageActions } from '@example-app/auth/actions/login-page.actions';
 import { AuthApiActions } from '@example-app/auth/actions/auth-api.actions';

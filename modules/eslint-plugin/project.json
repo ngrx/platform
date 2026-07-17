@@ -12,7 +12,6 @@
         "tsConfig": "modules/eslint-plugin/tsconfig.build.json",
         "packageJson": "modules/eslint-plugin/package.json",
         "main": "modules/eslint-plugin/src/index.ts",
-        "additionalEntryPoints": ["modules/eslint-plugin/v9/index.ts"],
         "generateExportsField": true,
         "updateBuildableProjectDepsInPackageJson": false,
         "sourceMap": false,

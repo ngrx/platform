@@ -100,6 +100,7 @@ export class GuideMenuService {
       link('DeepComputed', '/guide/signals/deep-computed'),
       link('SignalMethod', '/guide/signals/signal-method'),
       link('RxJS Integration', '/guide/signals/rxjs-integration'),
+      link('Resource Extensions', '/guide/signals/resource-extensions'),
       link('FAQ', '/guide/signals/faq'),
     ]),
     section('Entity', [
@@ -198,6 +199,7 @@ export class GuideMenuService {
     lineBreak(),
     section('Developer Resources', [
       section('Migrations', [
+        link('V22', '/guide/migration/v22'),
         link('V21', '/guide/migration/v21'),
         link('V20', '/guide/migration/v20'),
         link('V19', '/guide/migration/v19'),
