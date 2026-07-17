@@ -10,7 +10,7 @@ import rule, {
 } from '../../../src/rules/signals/enforce-type-call';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
-type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[];
+type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
 
 const valid: () => (string | ValidTestCase<Options>)[] = () => [
   {

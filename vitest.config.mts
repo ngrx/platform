@@ -18,7 +18,7 @@ export const baseConfig = {
     typecheck: {
       enabled: true,
       ignoreSourceErrors: true,
-      include: ['**/types/**/*.{spec,test}.ts', '**/*.test-d.ts'],
+      include: ['**/*.{spec,test}.ts', '**/*.test-d.ts'],
       tsconfig: './tsconfig.spec.json',
     },
   },
@@ -33,6 +33,7 @@ export default defineConfig({
     projects: [
       'modules/*/vitest.config.mts',
       'projects/example-app/vitest.config.mts',
+      'projects/standalone-app/vitest.config.mts',
     ],
   },
 });

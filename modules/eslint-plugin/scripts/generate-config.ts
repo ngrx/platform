@@ -105,23 +105,5 @@ import { NgRxRule } from '../src/rule-creator';
       join(CONFIG_DIRECTORY, `${configName}.ts`),
       tsConfigFormatted
     );
-
-    const jsonConfig: { [key: string]: any } = {
-      parser: '@typescript-eslint/parser',
-      plugins: ['@ngrx'],
-      rules: configRules,
-    };
-    const jsonConfigFormatted = await format(
-      JSON.stringify(jsonConfig, null, 2),
-      {
-        parser: 'json',
-        ...prettierConfig,
-      }
-    );
-
-    writeFileSync(
-      join(CONFIG_DIRECTORY, `${configName}.json`),
-      jsonConfigFormatted
-    );
   }
 })();

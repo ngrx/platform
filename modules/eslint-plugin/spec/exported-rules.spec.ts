@@ -1,7 +1,6 @@
 import * as path from 'path';
-import * as lib from '../src/rules';
 import { traverseFolder } from '../src/utils';
-import { configs } from '../v9';
+import { configs, rules as exportedRules } from '../src';
 
 const rulesDirectory = path.join(__dirname, '../src/rules');
 const configsDirectory = path.join(__dirname, '../src/configs');
@@ -15,30 +14,25 @@ function getAllConfigs() {
   return [...traverseFolder(configsDirectory, ['.ts'])];
 }
 
-describe('ESLint V8', () => {
+describe('ESLint flat config', () => {
   test('exports all rules', () => {
     const rules = getAllRules();
-    expect(Object.keys(lib.rules).length).toBe(rules.length);
+    expect(Object.keys(exportedRules).length).toBe(rules.length);
   });
   test('exports all configurations', () => {
-    const configs = getAllConfigs();
-    expect(configs.length).toBe(9);
+    const configFiles = getAllConfigs();
+    expect(configFiles.length).toBe(9);
+    expect(Object.keys(configs).length).toBe(9);
   });
-});
-
-describe('ESLint V9', () => {
-  test('exports all rules ', () => {
+  test('exports all rules in the all type-checked config', () => {
     const rules = getAllRules();
     expect(Object.keys((configs.allTypeChecked[1] as any).rules).length).toBe(
       rules.length
     );
   });
-  test('there is a difference between typed checked rules ', () => {
+  test('there is a difference between type-checked rules', () => {
     expect(
       Object.keys((configs.allTypeChecked[1] as any).rules).length
     ).toBeGreaterThan(Object.keys((configs.all[1] as any).rules).length);
-  });
-  test('exports all configurations', () => {
-    expect(Object.keys(configs).length).toBe(9);
   });
 });

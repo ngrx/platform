@@ -18,16 +18,21 @@ Usage:
 ```ts
 import { TestBed } from '@angular/core/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { cold } from 'jasmine-marbles';
+import { TestScheduler } from 'rxjs/testing';
 
 import { AuthGuard } from '../guards/auth.guard';
 
 describe('Auth Guard', () => {
   let guard: AuthGuard;
   let store: MockStore;
+  let testScheduler: TestScheduler;
   const initialState = { loggedIn: false };
 
   beforeEach(() => {
+    testScheduler = new TestScheduler((actual, expected) => {
+      expect(actual).toEqual(expected);
+    });
+
     TestBed.configureTestingModule({
       imports: [
         // any modules needed
@@ -44,17 +49,17 @@ describe('Auth Guard', () => {
   });
 
   it('should return false if the user state is not logged in', () => {
-    const expected = cold('(a|)', { a: false });
-
-    expect(guard.canActivate()).toBeObservable(expected);
+    testScheduler.run(({ expectObservable }) => {
+      expectObservable(guard.canActivate()).toBe('(a|)', { a: false });
+    });
   });
 
   it('should return true if the user state is logged in', () => {
     store.setState({ loggedIn: true });
 
-    const expected = cold('(a|)', { a: true });
-
-    expect(guard.canActivate()).toBeObservable(expected);
+    testScheduler.run(({ expectObservable }) => {
+      expectObservable(guard.canActivate()).toBe('(a|)', { a: true });
+    });
   });
 });
 ```

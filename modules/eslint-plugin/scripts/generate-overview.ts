@@ -85,7 +85,7 @@ ${overview.substring(end)}`,
     const end = overview.indexOf('<!-- CONFIGURATIONS-CONFIG:END -->');
 
     const configTable = configsForGenerate.map(
-      (configName) => `| [${configName}](${GH_CONFIGS}/${configName}.json) |`
+      (configName) => `| [${configName}](${GH_CONFIGS}/${configName}.ts) |`
     );
     const newOverview = await format(
       `${overview.substring(

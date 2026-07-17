@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { skipWhile } from 'rxjs/operators';
-import { hot } from 'jasmine-marbles';
+import { hot } from './marbles';
 import { concatLatestFrom } from '../src/concat_latest_from';
 
 describe('concatLatestFrom', () => {

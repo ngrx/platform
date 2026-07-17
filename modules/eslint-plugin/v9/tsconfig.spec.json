@@ -1,4 +1,0 @@
-{
-  "extends": "../tsconfig.spec",
-  "files": ["index.ts"]
-}

@@ -10,7 +10,7 @@ import rule, {
 import { ruleTester, fromFixture } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
-type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[];
+type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
 
 const valid: () => (string | ValidTestCase<Options>)[] = () => [
   `const withY = <Y>() => signalStoreFeature({ state: type<{ y: Y }>() }, withState({}));`,

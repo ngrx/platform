@@ -10,13 +10,13 @@
       "default": "all",
       "enum": [
         "all",
-        "allTypedChecked",
-        "component-store",
+        "allTypeChecked",
+        "componentStore",
         "effects",
-        "effectsTypedChecked",
+        "effectsTypeChecked",
         "operators",
         "signals",
-        "signalsTypedChecked",
+        "signalsTypeChecked",
         "store"
       ],
       "x-prompt": {
@@ -28,20 +28,20 @@
             "label": "all"
           },
           {
-            "value": "allTypedChecked",
-            "label": "allTypedChecked"
+            "value": "allTypeChecked",
+            "label": "allTypeChecked"
           },
           {
-            "value": "component-store",
-            "label": "component-store"
+            "value": "componentStore",
+            "label": "componentStore"
           },
           {
             "value": "effects",
             "label": "effects"
           },
           {
-            "value": "effectsTypedChecked",
-            "label": "effectsTypedChecked"
+            "value": "effectsTypeChecked",
+            "label": "effectsTypeChecked"
           },
           {
             "value": "operators",
@@ -52,8 +52,8 @@
             "label": "signals"
           },
           {
-            "value": "signalsTypedChecked",
-            "label": "signalsTypedChecked"
+            "value": "signalsTypeChecked",
+            "label": "signalsTypeChecked"
           },
           {
             "value": "store",
