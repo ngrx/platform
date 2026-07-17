@@ -9,7 +9,6 @@ import {
   inject,
   input,
   viewChild,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
 
@@ -26,7 +25,6 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
     }
   `,
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       ngrx-docs-stackblitz iframe {
