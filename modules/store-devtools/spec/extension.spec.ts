@@ -225,7 +225,7 @@ describe('DevtoolsExtension', () => {
 
     // Subscription needed or else extension connection will not be established.
     devtoolsExtension.actions$.subscribe(() => null);
-    const [connectOptions] = reduxDevtoolsExtension.connect.mock.lastCall;
+    const [connectOptions] = reduxDevtoolsExtension.connect.mock.calls[0];
     expect(connectOptions).not.toHaveProperty('actionCreators');
   });
 
@@ -304,7 +304,7 @@ describe('DevtoolsExtension', () => {
         return (unwrappedAction = action);
       });
 
-      const [callback] = extensionConnection.subscribe.mock.lastCall;
+      const [callback] = extensionConnection.subscribe.mock.calls[0];
       callback({ type: ExtensionActionTypes.START });
       callback({ type: ExtensionActionTypes.ACTION, payload });
       return unwrappedAction;
