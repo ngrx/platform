@@ -1,9 +1,4 @@
-import {
-  Component,
-  inject,
-  signal,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   ComponentStore,
@@ -25,7 +20,6 @@ import { TestPipe } from './test.pipe';
 
     <router-outlet></router-outlet>
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     provideComponentStore(ComponentStore),
     { provide: INITIAL_STATE_TOKEN, useValue: { test: true } },

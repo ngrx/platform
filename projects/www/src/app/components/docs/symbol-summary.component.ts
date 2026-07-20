@@ -1,9 +1,4 @@
-import {
-  Component,
-  ViewEncapsulation,
-  input,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, ViewEncapsulation, input } from '@angular/core';
 import { ApiMember } from '@ngrx-io/shared';
 import { MarkdownPipe } from './markdown.pipe';
 
@@ -17,7 +12,6 @@ import { MarkdownPipe } from './markdown.pipe';
     }
   `,
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       ngrx-symbol-summary .summary {

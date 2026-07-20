@@ -1,4 +1,4 @@
-import { Component, input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ContributorCardComponent } from './contributor-card.component';
 import { Contributor } from '../services/contributors.service';
 
@@ -18,7 +18,6 @@ import { Contributor } from '../services/contributors.service';
       <p>No contributors found</p>
     }
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .contributor-list {

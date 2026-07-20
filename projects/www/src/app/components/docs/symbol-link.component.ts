@@ -8,7 +8,6 @@ import {
   inject,
   input,
   viewChild,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
@@ -31,7 +30,6 @@ import { ReferenceService } from '@ngrx-io/app/reference/reference.service';
     } @else {
       <a [routerLink]="url()" #internalSymbolLink>{{ name() }}</a>
     }`,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       a {

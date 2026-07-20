@@ -1,8 +1,5 @@
 /// <reference types="vitest" />
-import {
-  defaultClientConditions,
-  defaultServerConditions,
-} from 'vite';
+import { defaultClientConditions, defaultServerConditions } from 'vite';
 import { defineConfig } from 'vitest/config';
 import analog from '@analogjs/platform';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
@@ -77,7 +74,13 @@ export default defineConfig(({ mode }) => ({
     setupFiles: ['src/test-setup.ts'],
     include: ['**/*.spec.ts'],
     exclude: [...configDefaults.exclude, 'src/app/examples/**'],
-    typecheck: { enabled: true, ignoreSourceErrors: true },
+    typecheck: {
+      enabled: true,
+      ignoreSourceErrors: true,
+      include: ['**/*.spec.ts', '**/*.test-d.ts'],
+      exclude: [...configDefaults.exclude, 'src/app/examples/**'],
+      tsconfig: './tsconfig.spec.json',
+    },
   },
 
   define: {

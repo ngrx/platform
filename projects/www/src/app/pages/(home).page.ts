@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { BannerAnimationComponent } from '../components/banner-animation.component';
@@ -67,7 +67,6 @@ import { MatIconModule } from '@angular/material/icon';
       </ngrx-styled-box>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {
