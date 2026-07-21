@@ -68,7 +68,7 @@ jobs:
           git config --global user.email ${{ secrets.RELEASE_EMAIL }}
           git config --global user.name "${{ secrets.RELEASE_NAME }}"
           git status
-          git commit -am "chore: release ${{ inputs.release_version }}"
+          git commit -am --allow-empty "chore: release ${{ inputs.release_version }}"
           git tag ${{ inputs.release_version }}
           git push https://x-access-token:${{ steps.generate_token.outputs.token }}@github.com/ngrx/platform.git --follow-tags $(${{ inputs.dry_run == true }} && echo '--dry-run' || echo '')
       - name: Build Packages
