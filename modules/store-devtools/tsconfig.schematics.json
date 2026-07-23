@@ -7,7 +7,6 @@
     "module": "nodenext",
     "target": "es2022",
     "moduleResolution": "nodenext",
-    "downlevelIteration": true,
     "ignoreDeprecations": "6.0",
     "outDir": "../../dist/modules/store-devtools",
     "paths": {
