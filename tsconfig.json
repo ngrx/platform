@@ -5,7 +5,6 @@
     "declaration": false,
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "noImplicitOverride": true,
     "useDefineForClassFields": false,

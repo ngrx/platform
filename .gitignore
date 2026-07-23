@@ -79,3 +79,5 @@ modules/*/schematics-core/testing
 
 .angular
 migrations.json
+pnpm-lock.yaml
+pnpm-workspace.yaml

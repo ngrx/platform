@@ -5,7 +5,6 @@
     "stripInternal": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "downlevelIteration": true,
     "outDir": "../../dist/modules/effects",
     "paths": {
       "@ngrx/effects/schematics-core": ["./schematics-core"]
@@ -14,7 +13,8 @@
     "inlineSources": true,
     "lib": ["es2018", "dom"],
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "target": "es2018"
   },
   "include": ["migrations/**/*.ts", "schematics/**/*.ts"],
   "exclude": ["**/*.spec.ts"],
