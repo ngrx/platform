@@ -52,7 +52,7 @@ function - called for every action before sending, takes state and action object
 
 ### `actionCreators`
 
-array or object of action creators to make available in the extension's dispatcher, so actions can be dispatched manually from the extension, [more information here](https://github.com/reduxjs/redux-devtools/blob/main/extension/docs/API/Arguments.md#actioncreators).
+An array or object of action creators to make available in the extension's dispatcher, so actions can be dispatched manually from the extension, [more information here](https://github.com/reduxjs/redux-devtools/blob/main/extension/docs/API/Arguments.md#actioncreators).
 
 When an array is given, the creators are listed in the dispatcher under their action type. When an object is given (for example an action group created with `createActionGroup`), the creators are listed under their keys.
 
