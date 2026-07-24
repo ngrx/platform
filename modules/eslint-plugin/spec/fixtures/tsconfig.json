@@ -2,7 +2,7 @@
   "compilerOptions": {
     "lib": ["esnext"],
     "module": "commonjs",
-    "moduleResolution": "node",
+    "moduleResolution": "node10",
     "skipLibCheck": true,
     "target": "esnext",
     "paths": {
