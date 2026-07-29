@@ -29,9 +29,9 @@
   },
   "engines": {
     "node": "^22.22.3 || ^24.15.0 || >=26.0.0",
-    "pnpm": "^9.0.0"
+    "pnpm": "^11.0.0"
   },
-  "packageManager": "pnpm@9.10.0",
+  "packageManager": "pnpm@11.18.0",
   "lint-staged": {
     "*.{ts,json,md}": [
       "prettier --write",
