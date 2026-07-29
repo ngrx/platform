@@ -75,7 +75,6 @@
     "@angular/forms": "22.0.0",
     "@angular/material": "22.0.0",
     "@angular/platform-browser": "22.0.0",
-    "@angular/platform-browser-dynamic": "22.0.0",
     "@angular/platform-server": "22.0.0",
     "@angular/router": "22.0.0",
     "@microsoft/api-extractor": "^7.55.1",
