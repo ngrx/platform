@@ -103,7 +103,6 @@
     "@analogjs/platform": "2.6.3",
     "@analogjs/vite-plugin-angular": "2.6.3",
     "@analogjs/vitest-angular": "2.6.3",
-    "@angular-devkit/build-angular": "22.0.0",
     "@angular-devkit/core": "22.0.0",
     "@angular-devkit/schematics": "22.0.0",
     "@angular-eslint/builder": "22.0.0",
