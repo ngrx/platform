@@ -8,7 +8,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@angular/animations": "<angular-version>",
     "@angular/cdk": "<angular-version>",
     "@angular/common": "<angular-version>",
     "@angular/compiler": "<angular-version>",

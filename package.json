@@ -67,7 +67,6 @@
   "dependencies": {
     "@analogjs/content": "2.6.3",
     "@analogjs/router": "2.6.3",
-    "@angular/animations": "22.0.0",
     "@angular/cdk": "22.0.0",
     "@angular/common": "22.0.0",
     "@angular/compiler": "22.0.0",

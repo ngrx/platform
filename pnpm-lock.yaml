@@ -14,9 +14,6 @@ importers:
       '@analogjs/router':
         specifier: 2.6.3
         version: 2.6.3(@analogjs/content@2.6.3(e87ccbf1da87c1e112530f02cbc26068))(@angular/core@22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.0)(zone.js@0.15.0))(@angular/router@22.0.0(@angular/common@22.0.0(@angular/core@22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0))(@angular/core@22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.0)(zone.js@0.15.0))(@angular/platform-browser@22.0.0(@angular/animations@22.0.0(@angular/core@22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.0)(zone.js@0.15.0)))(@angular/common@22.0.0(@angular/core@22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0))(@angular/core@22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.0)(zone.js@0.15.0)))(rxjs@7.8.0))
-      '@angular/animations':
-        specifier: 22.0.0
-        version: 22.0.0(@angular/core@22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.0)(zone.js@0.15.0))
       '@angular/cdk':
         specifier: 22.0.0
         version: 22.0.0(@angular/common@22.0.0(@angular/core@22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0))(@angular/core@22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.0)(zone.js@0.15.0))(@angular/platform-browser@22.0.0(@angular/animations@22.0.0(@angular/core@22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.0)(zone.js@0.15.0)))(@angular/common@22.0.0(@angular/core@22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.0)(zone.js@0.15.0))(rxjs@7.8.0))(@angular/core@22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.0)(zone.js@0.15.0)))(rxjs@7.8.0)
@@ -12340,6 +12337,7 @@ snapshots:
     dependencies:
       '@angular/core': 22.0.0(@angular/compiler@22.0.0)(rxjs@7.8.0)(zone.js@0.15.0)
       tslib: 2.8.1
+    optional: true
 
   '@angular/build@22.0.0(afc9a73f91164e2b071b3a2f7b6d3c99)':
     dependencies:
