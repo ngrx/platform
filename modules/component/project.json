@@ -8,7 +8,7 @@
   "generators": {},
   "targets": {
     "build-package": {
-      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "executor": "@angular/build:ng-packagr",
       "options": {
         "tsConfig": "modules/component/tsconfig.build.json",
         "project": "modules/component/ng-package.json"

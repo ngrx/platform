@@ -33,25 +33,25 @@ jobs:
     steps:
       - name: Generate bot app token
         id: generate_token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ secrets.NGRX_APP_ID }}
           private-key: ${{ secrets.NGRX_APP_PRIVATE_KEY }}
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           token: ${{ steps.generate_token.outputs.token }}
           fetch-depth: 0
           persist-credentials: false
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
       - run: npm install --global corepack@0.31.0
       - run: corepack enable
       - run: pnpm --version
       - name: Install dependencies
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v7
         with:
           cache: 'pnpm'
           cache-dependency-path: '**/pnpm-lock.yaml'
