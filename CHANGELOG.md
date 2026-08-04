@@ -1,3 +1,170 @@
+<a name="22.0.0-beta.0"></a>
+
+# [22.0.0-beta.0](https://github.com/ngrx/platform/compare/21.1.1...22.0.0-beta.0) (2026-07-16)
+
+### Bug Fixes
+
+- **entity:** infer selectId return type from adapter configuration ([#5085](https://github.com/ngrx/platform/issues/5085)) ([de9bf52](https://github.com/ngrx/platform/commit/de9bf52))
+- **signals:** execute state watchers outside of reactive context ([#5171](https://github.com/ngrx/platform/issues/5171)) ([dbd6fac](https://github.com/ngrx/platform/commit/dbd6fac)), closes [#5165](https://github.com/ngrx/platform/issues/5165)
+- **www:** fix same-page fragment links ([#5193](https://github.com/ngrx/platform/issues/5193)) ([b90671e](https://github.com/ngrx/platform/commit/b90671e))
+- **www:** stub api references ([#5162](https://github.com/ngrx/platform/issues/5162)) ([6df7b20](https://github.com/ngrx/platform/commit/6df7b20))
+
+### Features
+
+- prepare v22 release ([#5182](https://github.com/ngrx/platform/issues/5182)) ([6d41f5c](https://github.com/ngrx/platform/commit/6d41f5c))
+- **eslint-plugin:** drop support for eslint v8 and legacy eslintrc config format ([#5175](https://github.com/ngrx/platform/issues/5175)) ([4240de4](https://github.com/ngrx/platform/commit/4240de4)), closes [#5169](https://github.com/ngrx/platform/issues/5169)
+- **operators:** remove deprecated tapResponse signature ([#5153](https://github.com/ngrx/platform/issues/5153)) ([e9316ed](https://github.com/ngrx/platform/commit/e9316ed))
+- **router-store:** deprecate APIs from data-persistence sub-package ([#5180](https://github.com/ngrx/platform/issues/5180)) ([46c0077](https://github.com/ngrx/platform/commit/46c0077))
+- **signals:** add resource extensions ([#5167](https://github.com/ngrx/platform/issues/5167)) ([c61f834](https://github.com/ngrx/platform/commit/c61f834)), closes [#5126](https://github.com/ngrx/platform/issues/5126)
+- **signals:** enable creation of dynamic deep signals ([#5187](https://github.com/ngrx/platform/issues/5187)) ([fa0780e](https://github.com/ngrx/platform/commit/fa0780e))
+- upgrade to Angular 22 ([#5155](https://github.com/ngrx/platform/issues/5155)) ([7b5aa8e](https://github.com/ngrx/platform/commit/7b5aa8e))
+
+### BREAKING CHANGES
+
+- **signals:** Union state slices and computed results that include an object literal now create a `DeepSignal` for each object literal member, instead of exposing the whole union as a single `Signal`.
+
+BEFORE:
+
+A union that included an object literal was exposed as a single `Signal` of the whole union.
+
+signalState:
+
+```ts
+const state = signalState<{ user: { name: string } | null }>({
+  user: null,
+});
+// state.user: Signal<{ name: string } | null>
+```
+
+signalStore:
+
+```ts
+const Store = signalStore(
+  withState<{ user: { name: string } | null }>({ user: null })
+);
+const store = inject(Store);
+// store.user: Signal<{ name: string } | null>
+```
+
+deepComputed:
+
+```ts
+const source = signal<{ a: number } | { b: number }>({ a: 1 });
+const result = deepComputed(() => source());
+// result: Signal<{ a: number } | { b: number }>
+```
+
+Custom SignalStore feature with generics:
+
+```ts
+function withMyFeature<Entity extends { id: number }>() {
+  return signalStoreFeature(
+    type<{ state: { entity: Entity | null } }>(),
+    withMethods(({ entity }) => {
+      // the type of entity is Signal<Entity | null>
+      const e: Signal<Entity | null> = entity;
+
+      return {
+        // ...
+      };
+    })
+  );
+}
+```
+
+AFTER:
+
+Each object literal member becomes its own `DeepSignal`; the remaining members stay a regular `Signal`.
+
+signalState:
+
+```ts
+const state = signalState<{ user: { name: string } | null }>({
+  user: null,
+});
+// state.user: DeepSignal<{ name: string }> | Signal<null>
+```
+
+signalStore:
+
+```ts
+const Store = signalStore(
+  withState<{ user: { name: string } | null }>({ user: null })
+);
+const store = inject(Store);
+// store.user: DeepSignal<{ name: string }> | Signal<null>
+```
+
+deepComputed:
+
+```ts
+const source = signal<{ a: number } | { b: number }>({ a: 1 });
+const result = deepComputed(() => source());
+// result: DeepSignal<{ a: number }> | DeepSignal<{ b: number }>
+```
+
+Custom SignalStore feature with generics:
+
+```ts
+function withMyFeature<Entity extends { id: number }>() {
+  return signalStoreFeature(
+    type<{ state: { entity: Entity | null } }>(),
+    withMethods(({ entity }) => {
+      // the type of entity is DeepSignalOf<Entity | null>
+      const e: DeepSignalOf<Entity | null> = entity;
+
+      return {
+        // ...
+      };
+    })
+  );
+}
+```
+
+- **eslint-plugin:** BEFORE:
+
+The NgRx ESLint plugin can be configured to use the ESLint v8 format.
+
+AFTER:
+
+Support for ESLint v8 has been dropped. Only the flat config syntax is supported to register the NgRx ESLint plugin.
+
+- **operators:** The deprecated callback-style signature of tapResponse is removed.
+
+BEFORE:
+
+The callback signature could be used.
+
+```ts
+tapResponse(
+  (value) => {},
+  (error) => {},
+  () => {} // optional
+);
+```
+
+AFTER:
+
+Use the object-style signature.
+
+```ts
+tapResponse({
+  next: (value) => {},
+  error: (error) => {},
+  complete: () => {},
+});
+```
+
+- The minimum required version of Angular has been updated.
+
+BEFORE:
+
+The minimum required version is Angular 21.x
+
+AFTER:
+
+The minimum required version is Angular 22.x
+
 <a name="21.1.1"></a>
 
 ## [21.1.1](https://github.com/ngrx/platform/compare/21.1.0...21.1.1) (2026-06-08)

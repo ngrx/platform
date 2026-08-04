@@ -1,9 +1,4 @@
-import {
-  Component,
-  inject,
-  computed,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
@@ -30,7 +25,6 @@ import { map, shareReplay, startWith } from 'rxjs';
       <ngrx-contributor-list [contributors]="selectedGroup()" />
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .page {

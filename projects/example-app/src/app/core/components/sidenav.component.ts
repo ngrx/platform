@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'bc-sidenav',
@@ -28,7 +22,6 @@ import {
       }
     `,
   ],
-  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class SidenavComponent {

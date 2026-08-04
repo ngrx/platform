@@ -50,6 +50,33 @@ array of strings as regex - actions types to be hidden / shown in the monitors, 
 
 function - called for every action before sending, takes state and action object, and returns `true` in case it allows sending the current data to the monitor, [more information here](https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md#predicate).
 
+### `actionCreators`
+
+An array or object of action creators to make available in the extension's dispatcher, so actions can be dispatched manually from the extension, [more information here](https://github.com/reduxjs/redux-devtools/blob/main/extension/docs/API/Arguments.md#actioncreators).
+
+When an array is given, the creators are listed in the dispatcher under their action type. When an object is given (for example an action group created with `createActionGroup`), the creators are listed under their keys.
+
+```typescript
+const bookRented = createAction(
+  '[Books] Rent',
+  props<{ id: number }>()
+);
+const bookReturned = createAction(
+  '[Books] Return',
+  props<{ id: number }>()
+);
+
+provideStoreDevtools({
+  // listed as '[Books] Rent' and '[Books] Return'
+  actionCreators: [bookRented, bookReturned],
+});
+
+provideStoreDevtools({
+  // listed as 'rentBook' and 'returnBook'
+  actionCreators: { rentBook: bookRented, returnBook: bookReturned },
+});
+```
+
 ### `connectInZone`
 
 boolean - property determines whether the extension connection is established within the Angular zone or not. When `false`, the connection is established outside the Angular zone to prevent unnecessary change detection cycles. Default is `false`.

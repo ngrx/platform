@@ -1,9 +1,4 @@
-import {
-  Component,
-  input,
-  signal,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { Contributor } from '../services/contributors.service';
 
 @Component({
@@ -48,7 +43,6 @@ import { Contributor } from '../services/contributors.service';
       </div>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .contributor {
