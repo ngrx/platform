@@ -175,4 +175,21 @@ describe('SignalStoreFeatureType', () => {
       );
     });
   });
+
+  it('ignores unresolved input from bare feature factories', () => {
+    function withLogger() {
+      return withMethods(() => ({ log(): void {} }));
+    }
+
+    signalStoreFeature(
+      type<SignalStoreFeatureType<typeof withLogger>>(),
+      withMethods((store) => {
+        expectTypeOf(store.log).toEqualTypeOf<() => void>();
+        // @ts-expect-error no Function index signature
+        store.anythingAtAll();
+
+        return {};
+      })
+    );
+  });
 });
