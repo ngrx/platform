@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'bc-layout',
@@ -14,7 +14,6 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
       }
     `,
   ],
-  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class LayoutComponent {}

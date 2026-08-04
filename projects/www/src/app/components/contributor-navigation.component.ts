@@ -1,9 +1,4 @@
-import {
-  Component,
-  input,
-  output,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { GroupNav } from '../services/contributors.service';
 
 @Component({
@@ -20,7 +15,6 @@ import { GroupNav } from '../services/contributors.service';
       }
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .groups-navigation {
