@@ -8,8 +8,8 @@ export {
   EmptyFeatureResult,
   SignalStoreFeature,
   SignalStoreFeatureResult,
+  SignalStoreFeatureType,
   StateSignals,
-  type SignalStoreFeatureType,
 } from './signal-store-models';
 export {
   getState,
