@@ -10,12 +10,6 @@ export {
   SignalStoreFeatureResult,
   StateSignals,
   type SignalStoreFeatureType,
-export {
-  EmptyFeatureResult,
-  SignalStoreFeature,
-  SignalStoreFeatureType,
-  SignalStoreFeatureResult,
-  StateSignals,
 } from './signal-store-models';
 export {
   getState,
