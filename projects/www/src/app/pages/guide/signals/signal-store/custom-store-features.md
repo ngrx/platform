@@ -184,8 +184,6 @@ This enables the utilization of input properties within the custom feature, even
 
 The expected input type should be defined as the first argument of the `signalStoreFeature` function, using the `type` helper function from the `@ngrx/signals` package.
 
-`SignalStoreFeatureType` helper can extract the complete output type of a custom feature factory and reuse it as the input type of another custom feature.
-
 <ngrx-docs-alert type="inform">
 
 It's recommended to define loosely-coupled/independent features whenever possible.
@@ -309,52 +307,42 @@ export function withBaz<Foo extends string | number>() {
 
 The `withBaz` feature can only be used in a store where the property `foo` and the method `bar` are defined.
 
-### Example 5: Reusing Feature Output as Input
+## Using `SignalStoreFeatureType`
 
-`SignalStoreFeatureType` extracts the output type of `withFooBar` and improves the developer experience when another custom feature depends on this output.
+`SignalStoreFeatureType` helper can extract the complete output type of a custom feature factory and reuse it as the input type of another custom feature.
 
-<ngrx-code-example header="with-foo-bar.ts">
+<ngrx-code-example header="with-request-status.ts">
 
 ```ts
-import { computed } from '@angular/core';
-import {
-  signalStoreFeature,
-  SignalStoreFeatureType,
-  withComputed,
-  withMethods,
-} from '@ngrx/signals';
+import { SignalStoreFeatureType } from '@ngrx/signals';
 
-export function withFooBar() {
-  return signalStoreFeature(
-    withComputed(() => ({
-      foo: computed(() => 10),
-    })),
-    withMethods(() => ({
-      bar(foo: number): void {
-        console.log(foo);
-      },
-    }))
-  );
-}
-
-export type FooBarFeature = SignalStoreFeatureType<typeof withFooBar>;
+export type RequestStatusFeature = SignalStoreFeatureType<
+  typeof withRequestStatus
+>;
 ```
 
 </ngrx-code-example>
 
-<ngrx-code-example header="with-baz.ts">
+<ngrx-code-example header="with-status-message.ts">
 
 ```ts
-import { signalStoreFeature, type, withMethods } from '@ngrx/signals';
-import { FooBarFeature } from './with-foo-bar';
+import {
+  signalStoreFeature,
+  type,
+  withComputed,
+} from '@ngrx/signals';
+import { RequestStatusFeature } from './with-request-status';
 
-export function withBaz() {
+export function withStatusMessage() {
   return signalStoreFeature(
-    type<FooBarFeature>(),
-    withMethods((store) => ({
-      baz(): void {
-        const foo = store.foo();
-        store.bar(foo);
+    type<RequestStatusFeature>(),
+    withComputed(({ isPending, error }) => ({
+      statusMessage: () => {
+        if (isPending()) {
+          return 'Loading...';
+        }
+
+        return error() ?? 'Ready';
       },
     }))
   );
