@@ -309,7 +309,7 @@ The `withBaz` feature can only be used in a store where the property `foo` and t
 
 ## Using `SignalStoreFeatureType`
 
-`SignalStoreFeatureType` helper can extract the complete output type of a custom feature factory and reuse it as the input type of another custom feature.
+`SignalStoreFeatureType` can extract the state and members from a custom feature factory, and reuse it as the input type of another custom feature.
 
 <ngrx-code-example header="with-request-status.ts">
 
