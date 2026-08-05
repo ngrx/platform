@@ -1,6 +1,7 @@
 import { Signal } from '@angular/core';
 import { describe, expectTypeOf, it } from 'vitest';
 import {
+  signalStore,
   signalStoreFeature,
   SignalStoreFeatureType,
   type,
@@ -191,5 +192,26 @@ describe('SignalStoreFeatureType', () => {
         return {};
       })
     );
+  });
+
+  it('does a full check on the `signalStore` outcome', () => {
+    function withCounterLogger() {
+      return signalStoreFeature(
+        type<SignalStoreFeatureType<typeof withCounter>>(),
+        withMethods(({ count, increment }) => ({
+          logAndIncrement(): void {
+            increment();
+          },
+        }))
+      );
+    }
+
+    const CounterStore = signalStore(withCounter(), withCounterLogger());
+
+    expectTypeOf<InstanceType<typeof CounterStore>>().toMatchObjectType<{
+      count: Signal<number>;
+      increment: () => void;
+      logAndIncrement: () => void;
+    }>();
   });
 });
