@@ -48,7 +48,8 @@ export type SignalStoreFeature<
 /**
  * @description
  *
- * Extracts the output type of a SignalStore feature factory.
+ * Extracts the state and members from a feature factory, allowing
+ * them to be reused as input in another `signalStoreFeature`.
  *
  * @usageNotes
  *
