@@ -307,6 +307,50 @@ export function withBaz<Foo extends string | number>() {
 
 The `withBaz` feature can only be used in a store where the property `foo` and the method `bar` are defined.
 
+## Using `SignalStoreFeatureType`
+
+`SignalStoreFeatureType` can extract the state and members from a custom feature factory, and reuse it as the input type of another custom feature.
+
+<ngrx-code-example header="with-request-status.ts">
+
+```ts
+import { SignalStoreFeatureType } from '@ngrx/signals';
+
+export type RequestStatusFeature = SignalStoreFeatureType<
+  typeof withRequestStatus
+>;
+```
+
+</ngrx-code-example>
+
+<ngrx-code-example header="with-status-message.ts">
+
+```ts
+import {
+  signalStoreFeature,
+  type,
+  withComputed,
+} from '@ngrx/signals';
+import { RequestStatusFeature } from './with-request-status';
+
+export function withStatusMessage() {
+  return signalStoreFeature(
+    type<RequestStatusFeature>(),
+    withComputed(({ isPending, error }) => ({
+      statusMessage: () => {
+        if (isPending()) {
+          return 'Loading...';
+        }
+
+        return error() ?? 'Ready';
+      },
+    }))
+  );
+}
+```
+
+</ngrx-code-example>
+
 ## Using `withFeature`
 
 An alternative approach to custom features with input is using the `withFeature` utility, which offers more flexibility.
