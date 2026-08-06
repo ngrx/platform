@@ -4,7 +4,7 @@
     "rootDir": ".",
     "stripInternal": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "node10",
     "downlevelIteration": true,
     "ignoreDeprecations": "6.0",
     "esModuleInterop": true,
