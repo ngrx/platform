@@ -26,7 +26,7 @@ Sponsorships aid in the continued development and maintenance of NgRx libraries,
 </a>
 
 <a href="https://coderabbit.link/ngrx" target="_blank">
-  <img src="https://www.coderabbit.ai/content/assets/white-typemark.svg?dpl=dpl_23B9G1vkmRcRYP3HkBUvyFiomcu7" width="200px" height="200px" alt="CodeRabbit" />
+  <img src="https://www.coderabbit.ai/content/assets/white-typemark.svg?dpl=dpl_23B9G1vkmRcRYP3HkBUvyFiomcu7" alt="CodeRabbit" />
 </a>
 
 Become a gold sponsor and get your logo on our README on GitHub and the front page of [ngrx.io](https://ngrx.io).
