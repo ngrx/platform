@@ -1,5 +1,5 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { Action, UPDATE } from '@ngrx/store';
+import { Action, ActionCreator, UPDATE } from '@ngrx/store';
 import { EMPTY, Observable, of } from 'rxjs';
 import {
   catchError,
@@ -60,7 +60,89 @@ export interface ReduxDevtoolsExtensionConfig {
   serialize?: boolean | SerializationOptions;
   trace?: boolean | (() => string);
   traceLimit?: number;
+  actionCreators?: ActionCreatorDescriptor[];
 }
+
+/**
+ * The shape the Redux DevTools extension expects action creators to be in.
+ * The extension serializes the entries with `JSON.stringify` (keeping `name`
+ * and `args` to render its dispatcher) and refers back to an entry by its
+ * index (`selected`) when an action is dispatched from the extension.
+ */
+export interface ActionCreatorDescriptor {
+  name: string;
+  func: ActionCreator;
+  args: string[];
+}
+
+/**
+ * The payload the extension sends when an action is dispatched from its
+ * dispatcher using one of the configured action creators. `selected` is the
+ * index of the action creator and `args` contains the entered arguments as
+ * strings of JavaScript.
+ */
+interface ActionCreatorPayload {
+  name: string;
+  selected: number;
+  args: string[];
+  rest: string;
+}
+
+function isActionCreatorPayload(
+  action: unknown
+): action is ActionCreatorPayload {
+  return (
+    typeof action === 'object' &&
+    action !== null &&
+    !('type' in action) &&
+    typeof (action as ActionCreatorPayload).selected === 'number' &&
+    Array.isArray((action as ActionCreatorPayload).args)
+  );
+}
+
+/**
+ * Parse the parameter names out of an action creator so the extension can
+ * render input fields for them in its dispatcher.
+ */
+function getActionCreatorArgs(actionCreator: ActionCreator): string[] {
+  const source = String(actionCreator);
+  const parenthesizedArgs = source.match(/^[^(]*\(([^)]*)\)/);
+  if (!parenthesizedArgs) {
+    // arrow function with a single parameter without parentheses
+    const singleArg = source.match(/^\s*([^=\s(]+)\s*=>/);
+    return singleArg ? [singleArg[1]] : [];
+  }
+  return parenthesizedArgs[1]
+    .split(',')
+    .map((arg) =>
+      arg
+        .replace(/^\s*\.{3}/, '')
+        .split('=')[0]
+        .trim()
+    )
+    .filter((arg) => arg !== '');
+}
+
+function getActionCreatorDescriptors(
+  actionCreators: ActionCreator[] | Record<string, ActionCreator>
+): ActionCreatorDescriptor[] {
+  if (Array.isArray(actionCreators)) {
+    return actionCreators.map((actionCreator) => ({
+      name: actionCreator.type || actionCreator.name || 'anonymous',
+      func: actionCreator,
+      args: getActionCreatorArgs(actionCreator),
+    }));
+  }
+  return Object.keys(actionCreators).map((name) => ({
+    name,
+    func: actionCreators[name],
+    args: getActionCreatorArgs(actionCreators[name]),
+  }));
+}
+
+// indirect eval according to https://esbuild.github.io/content-types/#direct-eval
+const evalArg = (arg: string): unknown =>
+  arg === '' ? undefined : (0, eval)(`(${arg})`);
 
 export interface ReduxDevtoolsExtension {
   connect(
@@ -73,6 +155,7 @@ export interface ReduxDevtoolsExtension {
 export class DevtoolsExtension {
   private devtoolsExtension: ReduxDevtoolsExtension;
   private extensionConnection!: ReduxDevtoolsExtensionConnection;
+  private readonly actionCreatorDescriptors?: ActionCreatorDescriptor[];
 
   liftedActions$!: Observable<any>;
   actions$!: Observable<any>;
@@ -86,6 +169,9 @@ export class DevtoolsExtension {
     private dispatcher: DevtoolsDispatcher
   ) {
     this.devtoolsExtension = devtoolsExtension;
+    this.actionCreatorDescriptors = config.actionCreators
+      ? getActionCreatorDescriptors(config.actionCreators)
+      : undefined;
     this.createActionStreams();
   }
 
@@ -247,8 +333,27 @@ export class DevtoolsExtension {
   }
 
   private unwrapAction(action: Action) {
-    // indirect eval according to https://esbuild.github.io/content-types/#direct-eval
-    return typeof action === 'string' ? (0, eval)(`(${action})`) : action;
+    if (typeof action === 'string') {
+      // indirect eval according to https://esbuild.github.io/content-types/#direct-eval
+      return (0, eval)(`(${action})`);
+    }
+    // When action creators are configured, the extension dispatches them as a
+    // `{ selected, args }` payload that refers back to the configured action
+    // creators instead of a ready-made action.
+    if (this.actionCreatorDescriptors && isActionCreatorPayload(action)) {
+      const descriptor = this.actionCreatorDescriptors[action.selected];
+      if (descriptor) {
+        const args = action.args.map(evalArg);
+        if (action.rest) {
+          const rest = evalArg(action.rest);
+          if (Array.isArray(rest)) {
+            args.push(...rest);
+          }
+        }
+        return descriptor.func(...args);
+      }
+    }
+    return action;
   }
 
   private getExtensionConfig(config: StoreDevtoolsConfig) {
@@ -269,6 +374,9 @@ export class DevtoolsExtension {
     };
     if (config.maxAge !== false /* support === 0 */) {
       extensionOptions.maxAge = config.maxAge;
+    }
+    if (this.actionCreatorDescriptors) {
+      extensionOptions.actionCreators = this.actionCreatorDescriptors;
     }
     return extensionOptions;
   }

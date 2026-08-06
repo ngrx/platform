@@ -6,7 +6,7 @@ import {
   ReduxDevtoolsExtensionConfig,
   ReduxDevtoolsExtensionConnection,
 } from './../src/extension';
-import { Action } from '@ngrx/store';
+import { Action, createAction, props } from '@ngrx/store';
 
 import { DevtoolsExtension, ReduxDevtoolsExtension } from '../src/extension';
 import {
@@ -162,6 +162,73 @@ describe('DevtoolsExtension', () => {
     expect(reduxDevtoolsExtension.connect).toHaveBeenCalledWith(options);
   });
 
+  it('should connect with given action creators', () => {
+    const bookRented = createAction(
+      '[Books] Rent',
+      props<{ id: number; customerId: number }>()
+    );
+    const bookReturned = createAction(
+      '[Books] Return',
+      props<{ id: number }>()
+    );
+
+    const { devtoolsExtension, reduxDevtoolsExtension } = testSetup({
+      config: createConfig({
+        actionCreators: [bookRented, bookReturned],
+      }),
+    });
+
+    // Subscription needed or else extension connection will not be established.
+    devtoolsExtension.actions$.subscribe(() => null);
+    expect(reduxDevtoolsExtension.connect).toHaveBeenCalledWith(
+      expect.objectContaining({
+        actionCreators: [
+          { name: '[Books] Rent', func: bookRented, args: ['props'] },
+          { name: '[Books] Return', func: bookReturned, args: ['props'] },
+        ],
+      })
+    );
+  });
+
+  it('should connect with action creators named by record keys', () => {
+    const bookRented = createAction(
+      '[Books] Rent',
+      props<{ id: number; customerId: number }>()
+    );
+    const allBooksReturned = createAction('[Books] Return All');
+
+    const { devtoolsExtension, reduxDevtoolsExtension } = testSetup({
+      config: createConfig({
+        actionCreators: {
+          rentBook: bookRented,
+          returnAllBooks: allBooksReturned,
+        },
+      }),
+    });
+
+    // Subscription needed or else extension connection will not be established.
+    devtoolsExtension.actions$.subscribe(() => null);
+    expect(reduxDevtoolsExtension.connect).toHaveBeenCalledWith(
+      expect.objectContaining({
+        actionCreators: [
+          { name: 'rentBook', func: bookRented, args: ['props'] },
+          { name: 'returnAllBooks', func: allBooksReturned, args: [] },
+        ],
+      })
+    );
+  });
+
+  it('should not add action creators to the connect options when not provided', () => {
+    const { devtoolsExtension, reduxDevtoolsExtension } = testSetup({
+      config: createConfig({}),
+    });
+
+    // Subscription needed or else extension connection will not be established.
+    devtoolsExtension.actions$.subscribe(() => null);
+    const [connectOptions] = reduxDevtoolsExtension.connect.mock.calls[0];
+    expect(connectOptions).not.toHaveProperty('actionCreators');
+  });
+
   it('should connect with custom serializer', () => {
     const customSerializer = {
       replacer: (key: {}, value: any) => value,
@@ -215,6 +282,85 @@ describe('DevtoolsExtension', () => {
       });
     });
   }
+
+  describe('actions dispatched with configured action creators', () => {
+    const bookRented = createAction(
+      '[Books] Rent',
+      props<{ id: number; customerId: number }>()
+    );
+    const allBooksReturned = createAction('[Books] Return All');
+    const booksSearched = createAction(
+      '[Books] Search',
+      (query: string, page: number) => ({ query, page })
+    );
+
+    function dispatchFromExtension(
+      config: StoreDevtoolsConfig,
+      payload: unknown
+    ) {
+      const { devtoolsExtension, extensionConnection } = testSetup({ config });
+      let unwrappedAction: Action | undefined = undefined;
+      devtoolsExtension.actions$.subscribe((action) => {
+        return (unwrappedAction = action);
+      });
+
+      const [callback] = extensionConnection.subscribe.mock.calls[0];
+      callback({ type: ExtensionActionTypes.START });
+      callback({ type: ExtensionActionTypes.ACTION, payload });
+      return unwrappedAction;
+    }
+
+    it('should create the action with the entered props', () => {
+      const unwrappedAction = dispatchFromExtension(
+        createConfig({ actionCreators: [bookRented, allBooksReturned] }),
+        {
+          name: '[Books] Rent(props)',
+          selected: 0,
+          args: ['{ id: 5, customerId: 12 }'],
+          rest: '',
+        }
+      );
+      expect(unwrappedAction).toEqual({
+        type: '[Books] Rent',
+        id: 5,
+        customerId: 12,
+      });
+    });
+
+    it('should create an action without props', () => {
+      const unwrappedAction = dispatchFromExtension(
+        createConfig({ actionCreators: [bookRented, allBooksReturned] }),
+        { name: '[Books] Return All()', selected: 1, args: [], rest: '' }
+      );
+      expect(unwrappedAction).toEqual({ type: '[Books] Return All' });
+    });
+
+    it('should create an action from a function-style creator with rest args', () => {
+      const unwrappedAction = dispatchFromExtension(
+        createConfig({ actionCreators: { searchBooks: booksSearched } }),
+        {
+          name: 'searchBooks(args)',
+          selected: 0,
+          args: [],
+          rest: '["tolkien", 3]',
+        }
+      );
+      expect(unwrappedAction).toEqual({
+        type: '[Books] Search',
+        query: 'tolkien',
+        page: 3,
+      });
+    });
+
+    it('should pass the payload through when the selected index is unknown', () => {
+      const payload = { name: 'unknown()', selected: 99, args: [], rest: '' };
+      const unwrappedAction = dispatchFromExtension(
+        createConfig({ actionCreators: [bookRented] }),
+        payload
+      );
+      expect(unwrappedAction).toEqual(payload);
+    });
+  });
 
   describe('notify', () => {
     it('should send notification with default options', () => {

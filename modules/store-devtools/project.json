@@ -15,7 +15,7 @@
   },
   "targets": {
     "build-package": {
-      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "executor": "@angular/build:ng-packagr",
       "options": {
         "tsConfig": "modules/store-devtools/tsconfig.build.json",
         "project": "modules/store-devtools/ng-package.json"
