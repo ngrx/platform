@@ -5,13 +5,13 @@
     "experimentalDecorators": true,
     "module": "preserve",
     "moduleResolution": "bundler",
-    "downlevelIteration": true,
     "outDir": "../../dist/modules/schematics-score",
     "sourceMap": true,
     "inlineSources": true,
     "lib": ["es2022", "dom"],
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "target": "es2022"
   },
   "include": ["**/*.ts"],
   "exclude": ["**/*.spec.ts", "test-setup.ts"],
