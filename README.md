@@ -25,6 +25,10 @@ Sponsorships aid in the continued development and maintenance of NgRx libraries,
   <img src="https://github.com/ngrx/platform/blob/main/projects/www/public/images/sponsors/nx.svg" width="200px" height="200px" alt="NxDevTools logo">
 </a>
 
+<a href="https://coderabbit.link/ngrx" target="_blank">
+  <img src="./apps/docs-app/static/img/logos/coderabbit.svg" width="250px" height="100px" alt="CodeRabbit" />
+</a>
+
 Become a gold sponsor and get your logo on our README on GitHub and the front page of [ngrx.io](https://ngrx.io).
 
 ### Silver Sponsors
