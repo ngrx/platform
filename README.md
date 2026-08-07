@@ -21,13 +21,21 @@ Sponsorships aid in the continued development and maintenance of NgRx libraries,
 
 ### Gold Sponsors
 
-<a href="https://nx.dev" target="_blank">
-  <img src="https://github.com/ngrx/platform/blob/main/projects/www/public/images/sponsors/nx.svg" width="200px" height="200px" alt="NxDevTools logo">
-</a>
+<br />
 
-<a href="https://coderabbit.link/ngrx" target="_blank">
-  <img src="https://www.coderabbit.ai/content/assets/white-typemark.svg?dpl=dpl_23B9G1vkmRcRYP3HkBUvyFiomcu7" width="200px" height="200px" alt="CodeRabbit" />
-</a>
+<p>
+  <a href="https://nx.dev" target="_blank">
+    <img src="https://github.com/ngrx/platform/blob/main/projects/www/public/images/sponsors/nx.png" width="200px" alt="NxDevTools logo">
+  </a>
+</p>
+
+<br />
+
+<p>
+  <a href="https://coderabbit.link/ngrx" target="_blank">
+    <img src="https://github.com/ngrx/platform/blob/main/projects/www/public/images/sponsors/coderabbit.png" width="420px" alt="CodeRabbit logo" />
+  </a>
+</p>
 
 Become a gold sponsor and get your logo on our README on GitHub and the front page of [ngrx.io](https://ngrx.io).
 
