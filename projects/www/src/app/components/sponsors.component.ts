@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'ngrx-sponsors',
@@ -86,6 +86,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       width: 310px;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SponsorsComponent {}
