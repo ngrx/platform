@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { BannerAnimationComponent } from '../components/banner-animation.component';
 import { StyledBoxComponent } from '../components/styled-box.component';
-import { MatIconModule } from '@angular/material/icon';
+import { SponsorsComponent } from '../components/sponsors.component';
 
 @Component({
   selector: 'ngrx-home-page',
-  standalone: true,
   imports: [
     BannerAnimationComponent,
     MatButtonModule,
     StyledBoxComponent,
     MatIconModule,
     RouterLink,
+    SponsorsComponent,
   ],
   template: `
     <div class="banner">
@@ -66,6 +67,7 @@ import { MatIconModule } from '@angular/material/icon';
         >
       </ngrx-styled-box>
     </div>
+    <ngrx-sponsors />
   `,
   styles: [
     `
