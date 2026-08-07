@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BannerAnimationComponent } from '../components/banner-animation.component';
 import { StyledBoxComponent } from '../components/styled-box.component';
 import { MatIconModule } from '@angular/material/icon';
+import { SponsorsComponent } from '../components/sponsors.component';
 
 @Component({
   selector: 'ngrx-home-page',
@@ -14,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
     StyledBoxComponent,
     MatIconModule,
     RouterLink,
+    SponsorsComponent,
   ],
   template: `
     <div class="banner">
@@ -66,6 +68,7 @@ import { MatIconModule } from '@angular/material/icon';
         >
       </ngrx-styled-box>
     </div>
+    <ngrx-sponsors />
   `,
   styles: [
     `

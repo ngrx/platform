@@ -45,12 +45,4 @@ Become a silver sponsor and get your logo on our README on GitHub.
 
 ### Bronze Sponsors
 
-<a href="https://houseofangular.io" target="_blank">
-  <img src="https://github.com/ngrx/platform/blob/main/projects/www/public/images/sponsors/house-of-angular.png" width="50px" height="50px" alt="House of Angular" />
-</a>
-
 Become a bronze sponsor and get your logo on our README on GitHub.
-
-## Enterprise Support
-
-If your team or your company is looking for more hands-on support such as training or workshops, check out our [Enterprise Support](https://ngrx.io/enterprise-support) page.
