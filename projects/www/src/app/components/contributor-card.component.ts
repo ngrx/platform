@@ -20,23 +20,43 @@ import { Contributor } from '../services/contributors.service';
             <a
               [href]="'https://twitter.com/' + contributor().twitter"
               target="_blank"
+              rel="noopener noreferrer"
             >
-              <img src="/images/bios/card-icons/twitter.svg" alt="Twitter" />
+              <img
+                src="/images/bios/card-icons/twitter.svg"
+                [alt]="contributor().name + ' on Twitter'"
+              />
             </a>
           }
           @if (contributor().website) {
-            <a [href]="contributor().website" target="_blank">
-              <img src="/images/bios/card-icons/link.svg" alt="Website" />
+            <a
+              [href]="contributor().website"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="/images/bios/card-icons/link.svg"
+                [alt]="'Website of ' + contributor().name"
+              />
             </a>
           }
         </div>
 
-        <p (click)="toggleBio()" class="view-bio">View Bio</p>
+        <button
+          type="button"
+          (click)="toggleBio()"
+          class="view-bio"
+          [attr.aria-expanded]="bioVisible()"
+          [attr.aria-label]="'View bio of ' + contributor().name"
+        >
+          View Bio
+        </button>
       </div>
 
       <div
         class="contributor-bio-preview"
         [class.show]="bioVisible()"
+        [attr.aria-hidden]="!bioVisible()"
         (click)="toggleBio()"
       >
         <p>{{ contributor().bio }}</p>
@@ -82,7 +102,10 @@ import { Contributor } from '../services/contributors.service';
         font-weight: 500;
       }
       .view-bio {
+        display: block;
+        width: 100%;
         margin: 10px 0 0;
+        border: none;
         color: var(--ngrx-accent);
         font-size: 14px;
         cursor: pointer;

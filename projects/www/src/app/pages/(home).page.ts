@@ -32,7 +32,7 @@ import { MatIconModule } from '@angular/material/icon';
     <div class="content">
       <ngrx-styled-box>
         <mat-icon inline>school</mat-icon>
-        <h3>Learn</h3>
+        <h2>Learn</h2>
         <p>
           Dive into NgRx with our getting started guide. You will learn how to
           think reactively and architect your Angular apps for success.
@@ -56,11 +56,12 @@ import { MatIconModule } from '@angular/material/icon';
       <!--      </ngrx-styled-box>-->
       <ngrx-styled-box>
         <mat-icon inline>volunteer_activism</mat-icon>
-        <h3>Support the team</h3>
+        <h2>Support the team</h2>
         <p>Support the development of NgRx by sponsoring us.</p>
         <a
           href="https://github.com/sponsors/ngrx"
           target="_blank"
+          rel="noopener noreferrer"
           mat-flat-button
           >Sponsor</a
         >
@@ -154,9 +155,11 @@ import { MatIconModule } from '@angular/material/icon';
         font-size: 32px;
       }
 
-      ngrx-styled-box h3 {
+      ngrx-styled-box h2 {
         font-weight: 500;
+        font-size: 24px;
         font-family: 'Oxanium', sans-serif;
+        margin: 0;
       }
 
       ngrx-styled-box p {

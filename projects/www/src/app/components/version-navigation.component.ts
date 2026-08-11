@@ -10,9 +10,16 @@ import { VersionInfoService } from '../services/versionInfo.service';
           (click)="toggleDropdown()"
           class="version-toggle-btn"
           type="button"
+          [attr.aria-expanded]="isDropdownVisible()"
+          [attr.aria-label]="
+            'NgRx version v' + currentVersion + ', show other versions'
+          "
         >
           <span>v{{ currentVersion }}</span>
-          <span class="arrow-icon" [class.rotated]="isDropdownVisible()"
+          <span
+            class="arrow-icon"
+            [class.rotated]="isDropdownVisible()"
+            aria-hidden="true"
             >▼</span
           >
         </button>

@@ -10,9 +10,12 @@ import { FlattenedLink } from '../services/guide-menu.service';
   template: `
     <div class="linkWrapper previous">
       @if (previousLink(); as previousLink) {
-        <a [routerLink]="previousLink.url">
+        <a
+          [routerLink]="previousLink.url"
+          [attr.aria-label]="'Previous page: ' + previousLink.text"
+        >
           <mat-icon>chevron_left</mat-icon>
-          <div class="parents">
+          <div class="parents" aria-hidden="true">
             @for (parent of previousLink.parents; track $index) {
               <span>{{ parent }}</span>
               @if ($index < previousLink.parents.length - 1) {
@@ -20,14 +23,19 @@ import { FlattenedLink } from '../services/guide-menu.service';
               }
             }
           </div>
-          <span class="linkText">{{ previousLink.text }}</span>
+          <span class="linkText" aria-hidden="true">{{
+            previousLink.text
+          }}</span>
         </a>
       }
     </div>
     <div class="linkWrapper next">
       @if (nextLink(); as nextLink) {
-        <a [routerLink]="nextLink.url">
-          <div class="parents">
+        <a
+          [routerLink]="nextLink.url"
+          [attr.aria-label]="'Next page: ' + nextLink.text"
+        >
+          <div class="parents" aria-hidden="true">
             @for (parent of nextLink.parents; track $index) {
               <span>{{ parent }}</span>
               @if ($index < nextLink.parents.length - 1) {
@@ -35,12 +43,16 @@ import { FlattenedLink } from '../services/guide-menu.service';
               }
             }
           </div>
-          <span class="linkText">{{ nextLink.text }}</span>
+          <span class="linkText" aria-hidden="true">{{ nextLink.text }}</span>
           <mat-icon>chevron_right</mat-icon>
         </a>
       }
     </div>
   `,
+  host: {
+    role: 'navigation',
+    'aria-label': 'Previous and next pages',
+  },
   styles: [
     `
       :host {
