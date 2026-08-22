@@ -19,9 +19,14 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
     @if (isEmbedded()) {
       <div [attr.title]="name()" #example></div>
     } @else {
-      <a (click)="openStackblitz()" [attr.title]="name()"
-        ><ng-content>StackBlitz example</ng-content></a
+      <button
+        type="button"
+        class="stackblitz-link"
+        (click)="openStackblitz()"
+        [attr.title]="name()"
       >
+        <ng-content>StackBlitz example</ng-content>
+      </button>
     }
   `,
   encapsulation: ViewEncapsulation.None,
@@ -32,6 +37,15 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
         width: 100%;
         height: 800px;
         border: none;
+      }
+
+      ngrx-docs-stackblitz .stackblitz-link {
+        background: none;
+        border: none;
+        padding: 0;
+        font: inherit;
+        color: var(--ngrx-link);
+        cursor: pointer;
       }
     `,
   ],

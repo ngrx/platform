@@ -37,7 +37,9 @@ import { TopBannerComponent } from './components/top-banner.component';
     }
     <ngrx-menu />
     <div class="content">
-      <router-outlet />
+      <main>
+        <router-outlet />
+      </main>
       <ngrx-footer />
     </div>
   `,

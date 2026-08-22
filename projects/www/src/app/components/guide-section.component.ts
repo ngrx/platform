@@ -15,7 +15,7 @@ import { Section } from '../services/guide-menu.service';
     <section>
       @if (collapsible()) {
         <header>
-          <button (click)="toggleSection()">
+          <button (click)="toggleSection()" [attr.aria-expanded]="isOpen()">
             <mat-icon>chevron_right</mat-icon>
             <span>{{ section().title }}</span>
           </button>
@@ -75,7 +75,6 @@ import { Section } from '../services/guide-menu.service';
         gap: 4px;
         align-items: center;
         padding: 0;
-        outline: none;
         border: none;
         background: none;
         color: var(--ngrx-text-secondary);

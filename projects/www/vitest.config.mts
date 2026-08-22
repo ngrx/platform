@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config';
 import analog from '@analogjs/platform';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import ngrxStackblitzPlugin from './src/tools/vite-ngrx-stackblitz.plugin';
-import { ngrxTheme } from './src/shared/ngrx-shiki-theme';
+import { ngrxTheme, ngrxThemeLight } from './src/shared/ngrx-shiki-theme';
 import { configDefaults } from 'vitest/config';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -52,11 +52,12 @@ export default defineConfig(({ mode }) => ({
         highlighter: 'shiki',
         shikiOptions: {
           highlight: {
-            theme: 'ngrx-theme',
+            themes: { light: 'ngrx-theme-light', dark: 'ngrx-theme' },
+            defaultColor: 'dark',
           },
           highlighter: {
             additionalLangs: ['sh'],
-            themes: [ngrxTheme],
+            themes: [ngrxTheme, ngrxThemeLight],
           },
         },
       },

@@ -17,6 +17,11 @@ import { ThemeService } from '../services/theme.service';
           ? 'Switch to light mode'
           : 'Switch to dark mode'
       "
+      [attr.aria-label]="
+        themeService.theme() === 'dark'
+          ? 'Switch to light mode'
+          : 'Switch to dark mode'
+      "
     >
       <mat-icon>
         {{ themeService.theme() === 'dark' ? 'light' : 'dark' }}_mode

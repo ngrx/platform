@@ -133,7 +133,7 @@ export const TOP_BANNER_DISMISSED_STORAGE_KEY = 'ngrx-top-banner-dismissed';
         cursor: pointer;
         font-size: 1rem;
         color: inherit;
-        opacity: 0.5;
+        opacity: 0.7;
         padding: 4px 8px;
         line-height: 1;
         border-radius: 4px;

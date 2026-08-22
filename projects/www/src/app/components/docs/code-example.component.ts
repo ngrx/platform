@@ -39,6 +39,9 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
           <mat-icon>content_copy</mat-icon>
         }
       </button>
+      <span class="visually-hidden" role="status">
+        {{ copied() ? 'Code copied to clipboard' : '' }}
+      </span>
       <div #codeBody>
         @if (snippet() || path()) {
           <div
@@ -131,6 +134,18 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
 
       .copy-button:active {
         transform: scale(0.95);
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
       }
     `,
   ],

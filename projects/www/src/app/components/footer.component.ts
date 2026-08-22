@@ -14,15 +14,20 @@ import { RouterLink } from '@angular/router';
       <span>Released under the MIT License</span>
     </div>
 
-    <nav class="learn-ngrx">
+    <nav class="learn-ngrx" aria-label="Learn NgRx">
       <h4>Learn NgRx</h4>
       <!--      <a routerLink="/workshops">Workshops</a>-->
       <a routerLink="/api">API Reference</a>
-      <a href="https://github.com/sponsors/ngrx" target="_blank">Sponsor</a>
+      <a
+        href="https://github.com/sponsors/ngrx"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Sponsor</a
+      >
       <a routerLink="/about">About</a>
     </nav>
 
-    <nav class="packages">
+    <nav class="packages" aria-label="Packages">
       <h4>Packages</h4>
       <a routerLink="/guide/store">Store</a>
       <a routerLink="/guide/effects">Effects</a>
@@ -30,14 +35,31 @@ import { RouterLink } from '@angular/router';
       <a routerLink="/guide/operators">Operators</a>
     </nav>
 
-    <nav class="community">
+    <nav class="community" aria-label="Community">
       <h4>Community</h4>
-      <a href="https://dev.to/ngrx" target="_blank">Blog</a>
-      <a href="https://github.com/ngrx/platform" target="_blank">GitHub</a>
-      <a href="https://x.com/ngrx_io" target="_blank">X/Twitter</a>
-      <a href="https://discord.com/invite/ngrx" target="_blank">Discord</a>
+      <a href="https://dev.to/ngrx" target="_blank" rel="noopener noreferrer"
+        >Blog</a
+      >
+      <a
+        href="https://github.com/ngrx/platform"
+        target="_blank"
+        rel="noopener noreferrer"
+        >GitHub</a
+      >
+      <a href="https://x.com/ngrx_io" target="_blank" rel="noopener noreferrer"
+        >X/Twitter</a
+      >
+      <a
+        href="https://discord.com/invite/ngrx"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Discord</a
+      >
     </nav>
   `,
+  host: {
+    role: 'contentinfo',
+  },
   styles: [
     `
       :host {
