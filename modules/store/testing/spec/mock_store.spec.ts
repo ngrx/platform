@@ -65,7 +65,7 @@ describe('Mock Store with TestBed', () => {
       ],
     });
 
-    mockStore = TestBed.inject(MockStore);
+    mockStore = TestBed.inject<MockStore<TestAppSchema>>(MockStore);
   });
 
   afterEach(() => {
@@ -325,7 +325,7 @@ describe('Mock Store with Injector', () => {
     it('should provide MockStore', () =>
       new Promise<void>((done) => {
         const mockStore: MockStore<typeof initialState> =
-          injector.get(MockStore);
+          injector.get<MockStore<typeof initialState>>(MockStore);
 
         mockStore.pipe(take(1)).subscribe((state) => {
           expect(state).toBe(initialState);
@@ -334,8 +334,10 @@ describe('Mock Store with Injector', () => {
       }));
 
     it('should provide the same instance for Store and MockStore', () => {
-      const store: Store<typeof initialState> = injector.get(Store);
-      const mockStore: MockStore<typeof initialState> = injector.get(MockStore);
+      const store: Store<typeof initialState> =
+        injector.get<Store<typeof initialState>>(Store);
+      const mockStore: MockStore<typeof initialState> =
+        injector.get<MockStore<typeof initialState>>(MockStore);
 
       expect(store).toBe(mockStore);
     });
@@ -343,7 +345,7 @@ describe('Mock Store with Injector', () => {
     it('should use a mock selector', () =>
       new Promise<void>((done) => {
         const mockStore: MockStore<typeof initialState> =
-          injector.get(MockStore);
+          injector.get<MockStore<typeof initialState>>(MockStore);
 
         mockStore
           .select(mockSelector.selector)
@@ -373,7 +375,7 @@ describe('Mock Store with Injector', () => {
     it('should provide MockState', () =>
       new Promise<void>((done) => {
         const mockState: MockState<typeof initialState> =
-          injector.get(MockState);
+          injector.get<MockState<typeof initialState>>(MockState);
 
         mockState.pipe(take(1)).subscribe((state) => {
           expect(state).toEqual({});
@@ -392,7 +394,8 @@ describe('Mock Store with Injector', () => {
       }));
 
     it('should provide the same instance for MockState and StateObservable', () => {
-      const mockState: MockState<typeof initialState> = injector.get(MockState);
+      const mockState: MockState<typeof initialState> =
+        injector.get<MockState<typeof initialState>>(MockState);
       const stateObservable: StateObservable = injector.get(StateObservable);
 
       expect(mockState).toBe(stateObservable);
@@ -490,7 +493,7 @@ describe('Refreshing state', () => {
       providers: [provideMockStore()],
     }).compileComponents();
 
-    mockStore = TestBed.inject(MockStore);
+    mockStore = TestBed.inject<MockStore<TodoState>>(MockStore);
     mockSelector = mockStore.overrideSelector(todos, initialTodos);
 
     fixture = TestBed.createComponent(TodosComponent);
