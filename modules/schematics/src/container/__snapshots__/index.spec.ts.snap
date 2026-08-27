@@ -15,10 +15,10 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../reducers';
 
 @Component({
-  selector: 'app-foo',
   imports: [],
-  templateUrl: './foo.html',
+  selector: 'app-foo',
   styleUrl: './foo.css',
+  templateUrl: './foo.html',
 })
 export class Foo {
   constructor(private store: Store) {}
@@ -31,10 +31,10 @@ exports[`Container Schematic > should respect the state option if not provided 1
 import { Store } from '@ngrx/store';
 
 @Component({
-  selector: 'app-foo',
   imports: [],
-  templateUrl: './foo.html',
+  selector: 'app-foo',
   styleUrl: './foo.css',
+  templateUrl: './foo.html',
 })
 export class Foo {
   constructor(private store: Store) {}
@@ -118,10 +118,10 @@ exports[`Container Schematic > standalone > should be standalone by default 1`] 
 import { Store } from '@ngrx/store';
 
 @Component({
-  selector: 'app-foo',
   imports: [],
-  templateUrl: './foo.html',
+  selector: 'app-foo',
   styleUrl: './foo.css',
+  templateUrl: './foo.html',
 })
 export class Foo {
   constructor(private store: Store) {}
@@ -136,8 +136,8 @@ import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-foo',
   standalone: false,
-  templateUrl: './foo.html',
   styleUrl: './foo.css',
+  templateUrl: './foo.html',
 })
 export class Foo {
   constructor(private store: Store) {}
