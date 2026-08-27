@@ -2,6 +2,7 @@ allowBuilds:
   '@parcel/watcher': false
   core-js: false
   esbuild: false
+  less: set this to true or false
   lmdb: false
   msgpackr-extract: false
   nx: true
