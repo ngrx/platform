@@ -1,29 +1,13 @@
 {
+  "extends": "../../tsconfig.build.json",
   "compilerOptions": {
-    "baseUrl": "../../",
-    "declaration": true,
-    "stripInternal": true,
-    "experimentalDecorators": true,
-    "ignoreDeprecations": "6.0",
-    "module": "preserve",
-    "moduleResolution": "bundler",
     "outDir": "../../dist/modules/store",
-    "paths": {},
-    "rootDir": ".",
-    "sourceMap": true,
-    "inlineSources": true,
-    "lib": ["ES2022", "dom"],
-    "target": "ES2022",
-    "useDefineForClassFields": false,
-    "skipLibCheck": true,
-    "strict": true
+    "useDefineForClassFields": false
   },
   "files": ["public_api.ts"],
   "include": ["**/*.ts"],
   "exclude": ["**/*.spec.ts"],
   "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "compilationMode": "partial",
     "flatModuleOutFile": "index.js",
     "flatModuleId": "@ngrx/store"
   }
