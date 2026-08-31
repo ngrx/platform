@@ -15,6 +15,7 @@ import {
   StateSource,
   watchState,
   withHooks,
+  withLinkedState,
   withMethods,
   withState,
 } from '../src';
@@ -245,6 +246,45 @@ describe('StateSource', () => {
       }));
       TestBed.tick();
       expect(userChangedCount).toBe(2);
+    });
+
+    describe('error behavior', () => {
+      function setupStore() {
+        const Store = signalStore(
+          { providedIn: 'root', protectedState: false },
+          withState({ name: '' }),
+          withLinkedState(() => ({
+            value: () => {
+              throw new Error('Failed to read value.');
+            },
+          }))
+        );
+
+        return TestBed.inject(Store);
+      }
+
+      it('patches an unrelated state slice without throwing', () => {
+        const store = setupStore();
+
+        expect(() => patchState(store, { name: 'foo' })).not.toThrow();
+        expect(store.name()).toBe('foo');
+      });
+
+      it('throws when an updater reads the errored state slice', () => {
+        const store = setupStore();
+
+        expect(() =>
+          patchState(store, ({ value }) => ({ name: String(value) }))
+        ).toThrow('Failed to read value.');
+      });
+
+      it('throws when patching the errored state slice', () => {
+        const store = setupStore();
+
+        expect(() => patchState(store, { value: undefined })).toThrow(
+          'Failed to read value.'
+        );
+      });
     });
   });
 
