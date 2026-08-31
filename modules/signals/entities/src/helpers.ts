@@ -193,16 +193,18 @@ export function updateEntitiesMutably(
     if (entity) {
       const changesRecord =
         typeof changes === 'function' ? changes(entity) : changes;
-      state.entityMap[id] = { ...entity, ...changesRecord };
+      const updatedEntity = { ...entity, ...changesRecord };
       didMutate = DidMutate.Entities;
 
-      const newId = selectId(state.entityMap[id]);
+      const newId = selectId(updatedEntity);
       if (newId !== id) {
-        state.entityMap[newId] = state.entityMap[id];
         delete state.entityMap[id];
+        state.entityMap[newId] = updatedEntity;
 
         newIds = newIds || {};
         newIds[id] = newId;
+      } else {
+        state.entityMap[id] = updatedEntity;
       }
     }
   }
