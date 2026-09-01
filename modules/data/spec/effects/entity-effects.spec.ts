@@ -57,7 +57,6 @@ describe('EntityEffects (normal testing)', () => {
         EntityEffects,
         { provide: Actions, useValue: actions$ },
         { provide: EntityActionFactory, useValue: entityActionFactory },
-        /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
         { provide: EntityDataService, useClass: TestDataService },
         { provide: Logger, useValue: logger },
         {

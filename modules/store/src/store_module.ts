@@ -43,7 +43,9 @@ export class StoreRootModule {
     @Optional()
     @Inject(_ACTION_TYPE_UNIQUENESS_CHECK)
     actionCheck: any
-  ) {}
+  ) {
+    // the injections are required to instantiate the store eagerly
+  }
 }
 
 @NgModule({})

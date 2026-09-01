@@ -64,7 +64,6 @@ describe('EntityCacheEffects (normal testing)', () => {
         EntityCacheEffects,
         { provide: EntityActionFactory, useValue: eaFactory },
         { provide: Actions, useValue: actions$ },
-        /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
         {
           provide: EntityCacheDataService,
           useClass: TestEntityCacheDataService,
