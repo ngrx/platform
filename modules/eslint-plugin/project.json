@@ -7,6 +7,7 @@
   "targets": {
     "build-package": {
       "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/modules/eslint-plugin",
         "tsConfig": "modules/eslint-plugin/tsconfig.build.json",
@@ -29,11 +30,11 @@
           }
         ],
         "srcRootForCompilationRoot": "modules/eslint-plugin"
-      },
-      "outputs": ["{options.outputPath}"]
+      }
     },
     "build": {
       "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/modules/eslint-plugin"],
       "options": {
         "parallel": false,
         "commands": [
@@ -53,23 +54,12 @@
             "command": "cpy LICENSE dist/modules/eslint-plugin"
           }
         ]
-      },
-      "outputs": ["{workspaceRoot}/dist/modules/eslint-plugin"]
+      }
     },
     "test": {
       "executor": "@analogjs/vitest-angular:test",
       "dependsOn": ["build"],
       "outputs": ["{workspaceRoot}/coverage/modules/eslint-plugin"]
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "modules/eslint-plugin/*/**/*.ts",
-          "modules/eslint-plugin/*/**/*.html"
-        ]
-      },
-      "outputs": ["{options.outputFile}"]
     }
   }
 }
