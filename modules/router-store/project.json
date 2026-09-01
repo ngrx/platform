@@ -16,6 +16,7 @@
     },
     "build": {
       "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/modules/router-store"],
       "options": {
         "parallel": false,
         "commands": [
@@ -38,18 +39,7 @@
             "command": "cpy LICENSE dist/modules/router-store"
           }
         ]
-      },
-      "outputs": ["{workspaceRoot}/dist/modules/router-store"]
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "modules/router-store/*/**/*.ts",
-          "modules/router-store/*/**/*.html"
-        ]
-      },
-      "outputs": ["{options.outputFile}"]
+      }
     },
     "test": {
       "executor": "@analogjs/vitest-angular:test",

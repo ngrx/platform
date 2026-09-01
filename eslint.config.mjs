@@ -8,6 +8,7 @@ export const angularTsConfig = tseslint.config(
     files: ['**/*.ts'],
     rules: {
       '@angular-eslint/prefer-on-push-component-change-detection': 'off',
+      '@typescript-eslint/no-empty-interface': 'off',
     },
   }
 );
@@ -17,6 +18,11 @@ export const angularTemplateConfig = angularEslint.configs.templateRecommended;
 export default tseslint.config(
   {
     ignores: ['**/dist'],
+  },
+  {
+    linterOptions: {
+      reportUnusedDisableDirectives: 'error',
+    },
   },
   { plugins: { '@nx': nxEslintPlugin } },
   {
@@ -56,18 +62,15 @@ export default tseslint.config(
     files: ['**/*.ts'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          caughtErrorsIgnorePattern: '^_',
-        },
-      ],
+      '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/naming-convention': 'off',
       '@typescript-eslint/prefer-namespace-keyword': 'error',
       '@typescript-eslint/no-empty-function': 'warn',
-      '@typescript-eslint/no-empty-object-type': 'warn',
+      '@typescript-eslint/no-empty-object-type': [
+        'warn',
+        { allowObjectTypes: 'always' },
+      ],
+      '@typescript-eslint/no-empty-interface': 'off',
       eqeqeq: ['off', 'smart'],
       'id-blacklist': [
         'error',
@@ -89,6 +92,12 @@ export default tseslint.config(
       'no-prototype-builtins': 'off',
       '@typescript-eslint/no-wrapper-object-types': 'off',
       '@typescript-eslint/no-unsafe-function-type': 'off',
+    },
+  },
+  {
+    files: ['**/spec/**', '**/*.spec.ts'],
+    rules: {
+      '@typescript-eslint/no-empty-function': 'off',
     },
   },
   {

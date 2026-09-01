@@ -8,7 +8,6 @@ import {
 
 describe('Migration to version 8.0.0 rc', () => {
   describe('removes the usage of the storeFreeze meta-reducer', () => {
-    /* eslint-disable */
     const fixtures = [
       {
         description: 'removes the ngrx-store-freeze import',
@@ -46,7 +45,6 @@ describe('Migration to version 8.0.0 rc', () => {
           const metaReducers = environment.production ? [] : [foo, bar]`,
       },
     ];
-    /* eslint-enable */
 
     const reducerPath = normalize('reducers/index.ts');
 
@@ -68,7 +66,6 @@ describe('Migration to version 8.0.0 rc', () => {
   });
 
   describe('StoreModule.forRoot()', () => {
-    /* eslint-disable */
     const fixtures = [
       {
         description:
@@ -180,7 +177,6 @@ describe('Migration to version 8.0.0 rc', () => {
         export class AppModule {}`,
       },
     ];
-    /* eslint-enable */
 
     const appModulePath = normalize('app.module.ts');
 
@@ -214,7 +210,6 @@ describe('Migration to version 8.0.0 rc', () => {
   });
 
   describe('package.json', () => {
-    /* eslint-disable */
     const fixtures = [
       {
         description: 'removes ngrx-store-freeze as a dependency',
@@ -240,7 +235,6 @@ describe('Migration to version 8.0.0 rc', () => {
         }),
       },
     ];
-    /* eslint-enable */
 
     const packageJsonPath = normalize('package.json');
 

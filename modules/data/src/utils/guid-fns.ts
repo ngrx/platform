@@ -18,9 +18,7 @@ function getUuid() {
   // The original implementation is based on this SO answer:
   // http://stackoverflow.com/a/2117523/200253
   return 'xxxxxxxxxx4xxyxxxxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    // eslint-disable-next-line no-bitwise
     const r = (Math.random() * 16) | 0,
-      // eslint-disable-next-line no-bitwise
       v = c === 'x' ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
@@ -55,7 +53,6 @@ export function getGuidComb(seed?: number) {
   );
   return (
     'xxxxxxxxxx4xxyxxx'.replace(/[xy]/g, function (c) {
-      /* eslint-disable no-bitwise */
       const r = (Math.random() * 16) | 0,
         v = c === 'x' ? r : (r & 0x3) | 0x8;
       return v.toString(16);

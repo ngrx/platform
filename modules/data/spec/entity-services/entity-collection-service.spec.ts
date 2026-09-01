@@ -276,7 +276,6 @@ describe('EntityCollectionService', () => {
   describe.skip('saves (optimistic)', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
         providers: [
           {
             provide: EntityDispatcherDefaultOptions,
@@ -292,7 +291,6 @@ describe('EntityCollectionService', () => {
   describe.skip('saves (pessimistic)', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
         providers: [
           {
             provide: EntityDispatcherDefaultOptions,
@@ -525,7 +523,6 @@ function entityServicesSetup() {
     ],
     providers: [
       { provide: EntityCacheEffects, useValue: {} },
-      /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
       { provide: EntityDataService, useClass: TestDataService },
       { provide: Logger, useValue: logger },
     ],

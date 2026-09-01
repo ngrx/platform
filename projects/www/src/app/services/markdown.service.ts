@@ -69,7 +69,6 @@ export class NgRxMarkedSetupService extends MarkedSetupService {
   }
 
   override getMarkedInstance(): typeof marked {
-    // eslint-disable-next-line no-underscore-dangle
     return this._marked as unknown as typeof marked;
   }
 }
