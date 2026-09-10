@@ -1,29 +1,11 @@
 {
+  "extends": "../../tsconfig.build.json",
   "compilerOptions": {
-    "baseUrl": "../../",
-    "declaration": true,
-    "stripInternal": true,
-    "experimentalDecorators": true,
-    "module": "preserve",
-    "moduleResolution": "bundler",
-    "noEmitOnError": false,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "ignoreDeprecations": "6.0",
     "outDir": "../../dist/modules/router-store",
-    "paths": {},
-    "rootDir": ".",
-    "sourceMap": true,
-    "inlineSources": true,
-    "lib": ["ES2022", "dom"],
-    "target": "ES2022",
-    "useDefineForClassFields": false,
-    "skipLibCheck": true
+    "useDefineForClassFields": false
   },
   "files": ["public_api.ts"],
   "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "compilationMode": "partial",
     "flatModuleOutFile": "index.js",
     "flatModuleId": "@ngrx/router-store"
   }
