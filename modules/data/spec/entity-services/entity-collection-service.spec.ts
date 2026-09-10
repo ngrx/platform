@@ -273,10 +273,9 @@ describe('EntityCollectionService', () => {
       }));
   });
 
-  describe.skip('saves (optimistic)', () => {
+  describe('saves (optimistic)', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
         providers: [
           {
             provide: EntityDispatcherDefaultOptions,
@@ -289,10 +288,9 @@ describe('EntityCollectionService', () => {
     combinedSaveTests(true);
   });
 
-  describe.skip('saves (pessimistic)', () => {
+  describe('saves (pessimistic)', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
         providers: [
           {
             provide: EntityDispatcherDefaultOptions,
@@ -517,7 +515,15 @@ function entityServicesSetup() {
 
   TestBed.configureTestingModule({
     imports: [
-      StoreModule.forRoot({}),
+      StoreModule.forRoot(
+        {},
+        {
+          runtimeChecks: {
+            // @ngrx/data sets the error on the action when a reducer throws
+            strictActionImmutability: false,
+          },
+        }
+      ),
       EffectsModule.forRoot([]),
       EntityDataModule.forRoot({
         entityMetadata: entityMetadata,
