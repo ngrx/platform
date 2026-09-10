@@ -71,6 +71,7 @@ jobs:
           git commit --allow-empty -am "chore: release ${{ inputs.release_version }}"
           git tag ${{ inputs.release_version }}
           git push https://x-access-token:${{ steps.generate_token.outputs.token }}@github.com/ngrx/platform.git --follow-tags $(${{ inputs.dry_run == true }} && echo '--dry-run' || echo '')
+          git push https://x-access-token:${{ steps.generate_token.outputs.token }}@github.com/ngrx/platform.git ${{ inputs.release_version }} && echo '--dry-run' || echo '')
       - name: Build Packages
         run: pnpm run build --exclude=standalone-app,example-app,www --skip-nx-cache
       - name: Release
