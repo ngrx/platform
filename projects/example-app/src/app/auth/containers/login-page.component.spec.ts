@@ -10,7 +10,7 @@ import { MaterialModule } from '@example-app/material';
 
 describe('Login Page', () => {
   let fixture: ComponentFixture<LoginPageComponent>;
-  let store: MockStore;
+  let store: MockStore<fromAuth.State>;
   let instance: LoginPageComponent;
 
   beforeEach(() => {
@@ -29,7 +29,7 @@ describe('Login Page', () => {
 
     fixture = TestBed.createComponent(LoginPageComponent);
     instance = fixture.componentInstance;
-    store = TestBed.inject(MockStore);
+    store = TestBed.inject<MockStore<fromAuth.State>>(MockStore);
 
     vi.spyOn(store, 'dispatch');
   });
