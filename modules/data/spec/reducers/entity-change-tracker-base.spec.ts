@@ -253,14 +253,6 @@ describe('EntityChangeTrackerBase', () => {
     });
   });
 
-  describe.skip('#mergeSaveDeletes', () => {
-    // TODO: add some tests
-  });
-
-  describe.skip('#mergeSaveUpdates', () => {
-    // TODO: add some tests
-  });
-
   describe('#mergeSaveUpserts', () => {
     it('should use default overwrite changes strategy', () => {
       let {

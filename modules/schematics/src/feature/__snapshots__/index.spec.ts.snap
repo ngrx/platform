@@ -293,7 +293,6 @@ export class FooEffects {
 exports[`Feature Schematic > should respect the path provided for the feature name 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { App } from './app';
 
 @NgModule({

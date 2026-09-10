@@ -343,7 +343,6 @@ describe('Foo Reducer', () => {
 exports[`Entity Schematic > should import into a specified module 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { App } from './app';
 import { StoreModule } from '@ngrx/store';
 import * as fromFoo from './foo.reducer';

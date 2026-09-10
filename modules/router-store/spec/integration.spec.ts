@@ -141,42 +141,6 @@ describe('integration spec', () => {
         });
     }));
 
-  test.skip('should support preventing navigation', () =>
-    new Promise<void>((done) => {
-      const reducer = (state = '', action: RouterAction<any>) => {
-        if (
-          action.type === ROUTER_NAVIGATION &&
-          action.payload.routerState.url.toString() === '/next'
-        ) {
-          throw new Error('You shall not pass!');
-        } else {
-          return state;
-        }
-      };
-
-      createTestModule({ reducers: { reducer } });
-
-      const router = TestBed.inject(Router);
-      const log = logOfRouterAndActionsAndStore();
-
-      router
-        .navigateByUrl('/')
-        .then(() => {
-          log.splice(0);
-          return router.navigateByUrl('next');
-        })
-        .catch((e) => {
-          expect(e.message).toEqual('You shall not pass!');
-          expect(log).toEqual([
-            { type: 'router', event: 'NavigationStart', url: '/next' },
-            { type: 'router', event: 'RoutesRecognized', url: '/next' },
-            { type: 'router', event: 'NavigationError', url: '/next' },
-          ]);
-
-          done();
-        });
-    }));
-
   it('should ignore routing actions for the URL that is currently open', async () => {
     createTestModule({
       reducers: { router: routerReducer },
