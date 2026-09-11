@@ -2,7 +2,7 @@
 import { defaultClientConditions, defaultServerConditions } from 'vite';
 import { defineConfig } from 'vitest/config';
 import analog from '@analogjs/platform';
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
+import tsconfigPaths from 'vite-tsconfig-paths';
 import ngrxStackblitzPlugin from './src/tools/vite-ngrx-stackblitz.plugin';
 import { ngrxTheme, ngrxThemeLight } from './src/shared/ngrx-shiki-theme';
 import { configDefaults } from 'vitest/config';
@@ -65,7 +65,9 @@ export default defineConfig(({ mode }) => ({
         inlineStylesExtension: 'scss',
       },
     }),
-    nxViteTsPaths(),
+    // The workspace root tsconfig holds the path aliases for all projects,
+    // so resolve it explicitly instead of crawling the project root.
+    tsconfigPaths({ projects: [join(wwwRoot, '../../tsconfig.json')] }),
     ngrxStackblitzPlugin(),
   ],
 
