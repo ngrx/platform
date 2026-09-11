@@ -82,13 +82,18 @@ export function patchState<State extends object>(
     Partial<NoInfer<State>> | PartialStateUpdater<NoInfer<State>>
   >
 ): void {
-  const currentState = untracked(() => getState(stateSource));
+  const requiresCurrentState = updaters.some(
+    (updater) => typeof updater === 'function'
+  );
+  const currentState = requiresCurrentState
+    ? untracked(() => getState(stateSource))
+    : undefined;
   const newState = updaters.reduce(
     (nextState: State, updater) => ({
       ...nextState,
       ...(typeof updater === 'function' ? updater(nextState) : updater),
     }),
-    currentState
+    currentState ?? ({} as State)
   );
 
   const signals = stateSource[STATE_SOURCE];
@@ -97,7 +102,10 @@ export function patchState<State extends object>(
   for (const key of Reflect.ownKeys(newState)) {
     if (stateKeys.includes(key)) {
       const signalKey = key as keyof State;
-      if (currentState[signalKey] !== newState[signalKey]) {
+      const currentValue = currentState
+        ? currentState[signalKey]
+        : untracked(() => signals[signalKey]());
+      if (currentValue !== newState[signalKey]) {
         signals[signalKey].set(newState[signalKey]);
       }
     } else if (typeof ngDevMode !== 'undefined' && ngDevMode) {

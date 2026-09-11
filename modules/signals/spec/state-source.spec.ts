@@ -3,6 +3,7 @@ import {
   effect,
   EnvironmentInjector,
   Injectable,
+  linkedSignal,
   signal,
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -61,6 +62,19 @@ describe('StateSource', () => {
   });
 
   describe('patchState', () => {
+    it('does not read unrelated state slices for partial state objects', () => {
+      const name = signal('');
+      const inaccessible = linkedSignal(() => {
+        throw new Error('Failed to read state slice');
+      });
+      const stateSource = {
+        [STATE_SOURCE]: { name, inaccessible },
+      };
+
+      expect(() => patchState(stateSource, { name: 'John' })).not.toThrow();
+      expect(name()).toBe('John');
+    });
+
     [
       {
         name: 'with signalState',
