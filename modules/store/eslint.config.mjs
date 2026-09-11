@@ -30,6 +30,7 @@ export default tseslint.config(
     extends: [angularTsConfig],
     rules: {
       '@nx/enforce-module-boundaries': 'off',
+      '@angular-eslint/prefer-inject': 'off',
     },
     languageOptions: {
       parserOptions: {

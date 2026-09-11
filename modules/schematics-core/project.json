@@ -6,16 +6,5 @@
   "prefix": "ngrx",
   "tags": [],
   "generators": {},
-  "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "modules/schematics-core/*/**/*.ts",
-          "modules/schematics-core/*/**/*.html"
-        ]
-      },
-      "outputs": ["{options.outputFile}"]
-    }
-  }
+  "targets": {}
 }

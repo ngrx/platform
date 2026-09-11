@@ -6,18 +6,9 @@
   "tags": [],
   "generators": {},
   "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "modules/schematics/*/**/*.ts",
-          "modules/schematics/*/**/*.html"
-        ]
-      },
-      "outputs": ["{options.outputFile}"]
-    },
     "build-package": {
       "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/modules/schematics",
         "tsConfig": "modules/schematics/tsconfig.build.json",
@@ -39,11 +30,11 @@
           }
         ],
         "srcRootForCompilationRoot": "modules/schematics"
-      },
-      "outputs": ["{options.outputPath}"]
+      }
     },
     "build": {
       "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/modules/schematics"],
       "options": {
         "parallel": false,
         "commands": [
@@ -72,8 +63,7 @@
             "command": "cpy LICENSE dist/modules/schematics"
           }
         ]
-      },
-      "outputs": ["{workspaceRoot}/dist/modules/schematics"]
+      }
     },
     "test": {
       "executor": "@analogjs/vitest-angular:test",

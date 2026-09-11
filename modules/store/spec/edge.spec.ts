@@ -3,7 +3,7 @@ import { select, Store, StoreModule } from '..';
 
 import { todoCount, todos } from './fixtures/edge_todos';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface Todo {}
 
 interface TodoAppSchema {

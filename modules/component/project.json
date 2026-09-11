@@ -16,6 +16,10 @@
     },
     "build": {
       "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/modules/component",
+        "{workspaceRoot}/node_modules/@ngrx/component"
+      ],
       "options": {
         "parallel": false,
         "commands": [
@@ -38,21 +42,7 @@
             "command": "cpy LICENSE dist/modules/component"
           }
         ]
-      },
-      "outputs": [
-        "{workspaceRoot}/dist/modules/component",
-        "{workspaceRoot}/node_modules/@ngrx/component"
-      ]
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "modules/component/*/**/*.ts",
-          "modules/component/*/**/*.html"
-        ]
-      },
-      "outputs": ["{options.outputFile}"]
+      }
     },
     "test": {
       "executor": "@analogjs/vitest-angular:test",

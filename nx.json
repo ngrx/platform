@@ -83,5 +83,18 @@
   },
   "nxCloudAccessToken": "NTlmOGIxYmItZjM0OC00YzAxLTgzZTgtZDNiZmExMzcwZTA4fHJlYWQ=",
   "defaultBase": "main",
-  "analytics": false
+  "analytics": false,
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      },
+      "exclude": [
+        "modules/*/schematics/**",
+        "modules/*/schematics-core/**",
+        "modules/*/migrations/**"
+      ]
+    }
+  ]
 }

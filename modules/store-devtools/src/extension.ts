@@ -161,7 +161,7 @@ export class DevtoolsExtension {
   actions$!: Observable<any>;
   start$!: Observable<any>;
 
-  private zoneConfig = injectZoneConfig(this.config.connectInZone!);
+  private zoneConfig = injectZoneConfig(this.config.connectInZone ?? false);
 
   constructor(
     @Inject(REDUX_DEVTOOLS_EXTENSION) devtoolsExtension: ReduxDevtoolsExtension,

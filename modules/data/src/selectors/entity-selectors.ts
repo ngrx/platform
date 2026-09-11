@@ -139,7 +139,6 @@ export class EntitySelectorsFactory {
 
   // Based on @ngrx/entity/state_selectors.ts
 
-  /* eslint-disable @typescript-eslint/unified-signatures */
   // createCollectionSelectors(metadata) overload
   /**
    * Creates entity collection selectors from metadata.
@@ -151,7 +150,6 @@ export class EntitySelectorsFactory {
     S extends CollectionSelectors<T> = CollectionSelectors<T>,
   >(metadata: EntityMetadata<T>): S;
 
-  /* eslint-disable @typescript-eslint/unified-signatures */
   // createCollectionSelectors(entityName) overload
   /**
    * Creates default entity collection selectors for an entity type.
@@ -260,7 +258,6 @@ export class EntitySelectorsFactory {
    * through the collection, to the collection members.
    */
   create<T, S extends EntitySelectors<T> = EntitySelectors<T>>(
-    // eslint-disable-next-line @typescript-eslint/unified-signatures
     entityName: string
   ): S;
 

@@ -78,7 +78,7 @@ export class StoreDevtools implements Observer<any>, OnDestroy {
 
     const liftedReducer$ = reducers$.pipe(map(liftReducer));
 
-    const zoneConfig = injectZoneConfig(config.connectInZone!);
+    const zoneConfig = injectZoneConfig(config.connectInZone ?? false);
 
     const liftedStateSubject = new ReplaySubject<LiftedState>(1);
 
@@ -164,9 +164,13 @@ export class StoreDevtools implements Observer<any>, OnDestroy {
     this.dispatcher.next(action);
   }
 
-  error(error: any) {}
+  error(error: any) {
+    // noop: implements Observer, errors are not handled here
+  }
 
-  complete() {}
+  complete() {
+    // noop: implements Observer
+  }
 
   performAction(action: any) {
     this.dispatch(new Actions.PerformAction(action, +Date.now()));

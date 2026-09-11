@@ -16,13 +16,6 @@
           "config": "projects/standalone-app-e2e/playwright.config.ts"
         }
       }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["projects/standalone-app-e2e/**/*.{js,ts}"]
-      }
     }
   }
 }

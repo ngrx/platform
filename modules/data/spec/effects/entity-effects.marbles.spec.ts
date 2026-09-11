@@ -46,7 +46,6 @@ describe('EntityEffects (marble testing)', () => {
         EntityActionFactory,
         // See https://github.com/ReactiveX/rxjs/blob/master/doc/marble-testing.md
         { provide: ENTITY_EFFECTS_SCHEDULER, useFactory: getTestScheduler },
-        /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
         { provide: EntityDataService, useClass: TestDataService },
         { provide: Logger, useValue: logger },
         {
