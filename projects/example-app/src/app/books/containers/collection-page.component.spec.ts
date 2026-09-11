@@ -18,7 +18,7 @@ import { MaterialModule } from '@example-app/material';
 
 describe('Collection Page', () => {
   let fixture: ComponentFixture<CollectionPageComponent>;
-  let store: MockStore;
+  let store: MockStore<fromBooks.State>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -39,7 +39,7 @@ describe('Collection Page', () => {
     });
 
     fixture = TestBed.createComponent(CollectionPageComponent);
-    store = TestBed.inject(MockStore);
+    store = TestBed.inject<MockStore<fromBooks.State>>(MockStore);
 
     vi.spyOn(store, 'dispatch');
   });

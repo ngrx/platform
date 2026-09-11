@@ -17,7 +17,7 @@ import { MaterialModule } from '@example-app/material';
 
 describe('View Book Page', () => {
   let fixture: ComponentFixture<ViewBookPageComponent>;
-  let store: MockStore;
+  let store: MockStore<fromBooks.State>;
   let route: ActivatedRoute;
 
   beforeEach(() => {
@@ -45,7 +45,7 @@ describe('View Book Page', () => {
     });
 
     fixture = TestBed.createComponent(ViewBookPageComponent);
-    store = TestBed.inject(MockStore);
+    store = TestBed.inject<MockStore<fromBooks.State>>(MockStore);
     route = TestBed.inject(ActivatedRoute);
 
     vi.spyOn(store, 'dispatch');
