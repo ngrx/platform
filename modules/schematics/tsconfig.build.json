@@ -3,8 +3,9 @@
     "baseUrl": ".",
     "stripInternal": true,
     "experimentalDecorators": true,
+    "module": "commonjs",
     "moduleResolution": "node",
-    "downlevelIteration": true,
+    "ignoreDeprecations": "6.0",
     "outDir": "../../dist/modules/schematics",
     "paths": {
       "@ngrx/schematics/schematics-core": ["./schematics-core"]
@@ -13,7 +14,9 @@
     "inlineSources": true,
     "lib": ["es2022", "dom"],
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "types": ["node"],
+    "target": "es2022"
   },
   "include": ["**/*.ts"],
   "exclude": ["**/*.spec.ts", "test-setup.ts"],

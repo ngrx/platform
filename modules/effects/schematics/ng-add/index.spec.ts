@@ -13,9 +13,8 @@ import {
 describe('Effects ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/effects',
-    path.join(__dirname, '../collection.json')
+    path.join(process.cwd(), 'dist/modules/effects/schematics/collection.json')
   );
-
   const defaultOptions: RootEffectOptions = {
     name: 'foo',
     skipPackageJson: false,

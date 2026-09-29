@@ -22,18 +22,8 @@ This command will automate the following steps:
 2. Run `npm install` to install those dependencies.
 3. By default it adds `provideRouterStore()` to the `ApplicationConfig` in the `app.config.ts` file. If you provided flags then the command will attempt to locate and update the corresponding config found by the flags.
 
-## Installing with `npm`
+## Manual Installation
 
-For more information on using `npm` check out the docs <a href="https://docs.npmjs.com/cli/install" target="_blank">here</a>.
+You can also install `@ngrx/router-store` manually using one of the following commands:
 
-```sh
-npm install @ngrx/router-store --save
-```
-
-## Installing with `yarn`
-
-For more information on using `yarn` check out the docs <a href="https://yarnpkg.com/getting-started/usage#installing-all-the-dependencies" target="_blank">here</a>.
-
-```sh
-yarn add @ngrx/router-store
-```
+<ngrx-docs-install package-name="@ngrx/router-store"></ngrx-docs-install>

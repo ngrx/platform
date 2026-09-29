@@ -41,11 +41,45 @@ The same applies to nested state properties, with all deeply nested signals bein
 
 The `BookSearchStore` instance will contain the following properties:
 
-- `books: Signal<Book[]>`
-- `isLoading: Signal<boolean>`
-- `filter: DeepSignal<{ query: string; order: 'asc' | 'desc' }>`
-- `filter.query: Signal<string>`
-- `filter.order: Signal<'asc' | 'desc'>`
+- `books: Signal&lt;Book[]&gt;`
+- `isLoading: Signal&lt;boolean&gt;`
+- `filter: DeepSignal&lt;{ query: string; order: 'asc' | 'desc' }&gt;`
+- `filter.query: Signal&lt;string&gt;`
+- `filter.order: Signal&lt;'asc' | 'desc'&gt;`
+
+<ngrx-docs-alert type="help">
+
+When a state slice's type is a union, `signalStore` creates a `DeepSignal` for each object literal member. The remaining members (primitives, dynamic records, etc.) stay a regular `Signal`.
+
+```ts
+type Book = { id: number; title: string };
+type Status =
+  | { type: 'success'; data: string }
+  | { type: 'error'; message: string };
+
+const BookStore = signalStore(
+  withState<{ book: Book | null; status: Status }>({
+    book: null,
+    status: { type: 'success', data: '' },
+  })
+);
+const store = inject(BookStore);
+
+// 👇 object literal + null: store.book is DeepSignal<Book> | Signal<null>
+if ('title' in store.book) {
+  const title = store.book.title; // Signal<string>
+  console.log(title());
+}
+
+// 👇 union of object literals: a DeepSignal is created for each member
+// store.status: DeepSignal<{ type: 'success'; data: string }> | DeepSignal<{ type: 'error'; message: string }>
+if ('message' in store.status) {
+  const message = store.status.message; // Signal<string>
+  console.log(message());
+}
+```
+
+</ngrx-docs-alert>
 
 <ngrx-docs-alert type="help">
 
@@ -124,7 +158,7 @@ Signals generated for state slices can be utilized to access state values, as de
 <ngrx-code-example header="book-search.ts">
 
 ```ts
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { BookSearchStore } from './book-search-store';
 
@@ -142,7 +176,6 @@ import { BookSearchStore } from './book-search-store';
     <p>Order: {{ store.filter.order() }}</p>
   `,
   providers: [BookSearchStore],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookSearch {
   readonly store = inject(BookSearchStore);
@@ -477,18 +510,18 @@ export const BookSearchStore = signalStore(
 The `BookSearchStore` instance will contain the following properties and methods:
 
 - State signals:
-  - `books: Signal<Book[]>`
-  - `isLoading: Signal<boolean>`
-  - `filter: DeepSignal<{ query: string; order: 'asc' | 'desc' }>`
-  - `filter.query: Signal<string>`
-  - `filter.order: Signal<'asc' | 'desc'>`
+  - `books: Signal&lt;Book[]&gt;`
+  - `isLoading: Signal&lt;boolean&gt;`
+  - `filter: DeepSignal&lt;{ query: string; order: 'asc' | 'desc' }&gt;`
+  - `filter.query: Signal&lt;string&gt;`
+  - `filter.order: Signal&lt;'asc' | 'desc'&gt;`
 - Computed signals:
-  - `booksCount: Signal<number>`
-  - `sortedBooks: Signal<Book[]>`
+  - `booksCount: Signal&lt;number&gt;`
+  - `sortedBooks: Signal&lt;Book[]&gt;`
 - Methods:
   - `updateQuery(query: string): void`
   - `updateOrder(order: 'asc' | 'desc'): void`
-  - `loadByQuery: RxMethod<string>`
+  - `loadByQuery: RxMethod&lt;string&gt;`
 
 <ngrx-docs-alert type="help">
 
@@ -502,11 +535,7 @@ The `BookSearch` component can use the `BookSearchStore` to manage the state, as
 <ngrx-code-example header="book-search.ts">
 
 ```ts
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BookFilter } from './book-filter';
 import { BookList } from './book-list';
 import { BooksStore } from './books.store';
@@ -529,7 +558,6 @@ import { BooksStore } from './books.store';
     />
   `,
   providers: [BookSearchStore],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookSearch {
   readonly store = inject(BookSearchStore);

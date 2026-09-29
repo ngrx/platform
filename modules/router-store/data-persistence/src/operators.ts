@@ -18,22 +18,42 @@ import {
   switchMap,
 } from 'rxjs/operators';
 
+/**
+ * @deprecated The `@ngrx/router-store/data-persistence` APIs are deprecated and
+ * will be removed in one of the upcoming major versions. Use core RxJS operators
+ * instead.
+ */
 export interface PessimisticUpdateOpts<T extends Array<unknown>, A> {
   run(a: A, ...slices: [...T]): Observable<Action> | Action | void;
   onError(a: A, e: any): Observable<any> | any;
 }
 
+/**
+ * @deprecated The `@ngrx/router-store/data-persistence` APIs are deprecated and
+ * will be removed in one of the upcoming major versions. Use core RxJS operators
+ * instead.
+ */
 export interface OptimisticUpdateOpts<T extends Array<unknown>, A> {
   run(a: A, ...slices: [...T]): Observable<Action> | Action | void;
   undoAction(a: A, e: any): Observable<Action> | Action;
 }
 
+/**
+ * @deprecated The `@ngrx/router-store/data-persistence` APIs are deprecated and
+ * will be removed in one of the upcoming major versions. Use core RxJS operators
+ * instead.
+ */
 export interface FetchOpts<T extends Array<unknown>, A> {
   id?(a: A, ...slices: [...T]): any;
   run(a: A, ...slices: [...T]): Observable<Action> | Action | void;
   onError?(a: A, e: any): Observable<any> | any;
 }
 
+/**
+ * @deprecated The `@ngrx/router-store/data-persistence` APIs are deprecated and
+ * will be removed in one of the upcoming major versions. Use core RxJS operators
+ * instead.
+ */
 export interface HandleNavigationOpts<T extends Array<unknown>> {
   run(
     a: ActivatedRouteSnapshot,
@@ -42,18 +62,42 @@ export interface HandleNavigationOpts<T extends Array<unknown>> {
   onError?(a: ActivatedRouteSnapshot, e: any): Observable<any> | any;
 }
 
+/**
+ * @deprecated The `@ngrx/router-store/data-persistence` APIs are deprecated and
+ * will be removed in one of the upcoming major versions. Use core RxJS operators
+ * instead.
+ */
 export type ActionOrActionWithStates<T extends Array<unknown>, A> =
   | A
   | [A, ...T];
+/**
+ * @deprecated The `@ngrx/router-store/data-persistence` APIs are deprecated and
+ * will be removed in one of the upcoming major versions. Use core RxJS operators
+ * instead.
+ */
 export type ActionOrActionWithState<T, A> = ActionOrActionWithStates<[T], A>;
+/**
+ * @deprecated The `@ngrx/router-store/data-persistence` APIs are deprecated and
+ * will be removed in one of the upcoming major versions. Use core RxJS operators
+ * instead.
+ */
 export type ActionStatesStream<T extends Array<unknown>, A> = Observable<
   ActionOrActionWithStates<T, A>
 >;
+/**
+ * @deprecated The `@ngrx/router-store/data-persistence` APIs are deprecated and
+ * will be removed in one of the upcoming major versions. Use core RxJS operators
+ * instead.
+ */
 export type ActionStateStream<T, A> = Observable<
   ActionOrActionWithStates<[T], A>
 >;
 
 /**
+ * @deprecated The `@ngrx/router-store/data-persistence` APIs are deprecated and
+ * will be removed in one of the upcoming major versions. Use core RxJS operators
+ * instead.
+ *
  * @description
  * Handles pessimistic updates (updating the server first).
  *
@@ -122,6 +166,9 @@ export function pessimisticUpdate<T extends Array<unknown>, A extends Action>(
 }
 
 /**
+ * @deprecated The `@ngrx/router-store/data-persistence` APIs are deprecated and
+ * will be removed in one of the upcoming major versions. Use core RxJS operators
+ * instead.
  *
  * @description
  *
@@ -193,6 +240,9 @@ export function optimisticUpdate<T extends Array<unknown>, A extends Action>(
 }
 
 /**
+ * @deprecated The `@ngrx/router-store/data-persistence` APIs are deprecated and
+ * will be removed in one of the upcoming major versions. Use core RxJS operators
+ * instead.
  *
  * @description
  *
@@ -276,11 +326,12 @@ export function fetch<T extends Array<unknown>, A extends Action>(
   opts: FetchOpts<T, A>
 ) {
   return (source: ActionStatesStream<T, A>): Observable<Action> => {
-    if (opts.id) {
+    const id = opts.id;
+    if (id) {
       const groupedFetches = source.pipe(
         mapActionAndState(),
         groupBy(([action, ...store]) => {
-          return opts.id(action, ...store);
+          return id(action, ...store);
         })
       );
 
@@ -299,6 +350,10 @@ export function fetch<T extends Array<unknown>, A extends Action>(
 }
 
 /**
+ * @deprecated The `@ngrx/router-store/data-persistence` APIs are deprecated and
+ * will be removed in one of the upcoming major versions. Use core RxJS operators
+ * instead.
+ *
  * @description
  *
  * Handles data fetching as part of router navigation.
@@ -361,8 +416,7 @@ export function navigation<T extends Array<unknown>, A extends Action>(
         if (!isStateSnapshot(action)) {
           // Because of the above filter we'll never get here,
           // but this properly type narrows `action`
-          // @ts-ignore
-          return;
+          return [];
         }
 
         return [
@@ -370,7 +424,7 @@ export function navigation<T extends Array<unknown>, A extends Action>(
           ...slices,
         ] as [ActivatedRouteSnapshot, ...T];
       }),
-      filter(([snapshot]) => !!snapshot)
+      filter((result): result is [ActivatedRouteSnapshot, ...T] => !!result[0])
     );
 
     return nav.pipe(switchMap(runWithErrorHandling(opts.run, opts.onError)));
@@ -421,7 +475,7 @@ function normalizeActionAndState<T extends Array<unknown>, A>(
   if (args instanceof Array) {
     [action, ...slices] = args;
   } else {
-    slices = [] as T;
+    slices = [] as unknown as T;
     action = args;
   }
 
@@ -431,7 +485,7 @@ function normalizeActionAndState<T extends Array<unknown>, A>(
 function findSnapshot(
   component: Type<any>,
   s: ActivatedRouteSnapshot
-): ActivatedRouteSnapshot {
+): ActivatedRouteSnapshot | null {
   if (s.routeConfig && s.routeConfig.component === component) {
     return s;
   }

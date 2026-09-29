@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { Observable } from 'rxjs';
+import { cold, getTestScheduler, hot } from '../../testing/marbles';
 
-import { FindBookPageActions } from '@example-app/books/actions/find-book-page.actions';
 import { BooksApiActions } from '@example-app/books/actions/books-api.actions';
+import { FindBookPageActions } from '@example-app/books/actions/find-book-page.actions';
 import { BookEffects } from '@example-app/books/effects';
 import { Book } from '@example-app/books/models';
 import { GoogleBooksService } from '@example-app/core/services';
@@ -22,7 +22,7 @@ describe('BookEffects', () => {
         BookEffects,
         {
           provide: GoogleBooksService,
-          useValue: { searchBooks: jest.fn() },
+          useValue: { searchBooks: vi.fn() },
         },
         provideMockActions(() => actions$),
       ],
@@ -44,7 +44,7 @@ describe('BookEffects', () => {
       actions$ = hot('-a---', { a: action });
       const response = cold('-a|', { a: books });
       const expected = cold('-----b', { b: completion });
-      googleBooksService.searchBooks = jest.fn(() => response);
+      googleBooksService.searchBooks = vi.fn(() => response);
 
       expect(
         effects.search$({
@@ -64,7 +64,7 @@ describe('BookEffects', () => {
       actions$ = hot('-a---', { a: action });
       const response = cold('-#|', {}, error);
       const expected = cold('-----b', { b: completion });
-      googleBooksService.searchBooks = jest.fn(() => response);
+      googleBooksService.searchBooks = vi.fn(() => response);
 
       expect(
         effects.search$({
@@ -78,7 +78,7 @@ describe('BookEffects', () => {
       const action = FindBookPageActions.searchBooks({ query: '' });
 
       actions$ = hot('-a---', { a: action });
-      const expected = cold('---');
+      const expected = cold<never>('---');
 
       expect(
         effects.search$({

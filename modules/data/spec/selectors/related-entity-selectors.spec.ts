@@ -89,116 +89,123 @@ describe('Related-entity Selectors', () => {
 
     // Note: async done() callback ensures test passes only if subscribe(successCallback()) called.
 
-    it('should get Alpha Hero sidekick', (done: any) => {
-      createHeroSidekickSelector$(1).subscribe((sk) => {
-        expect(sk.name).toBe('Bob');
-        done();
-      });
-    });
-
-    it('should get Alpha Hero updated sidekick', (done: any) => {
-      // Skip the initial sidekick and check the one after update
-      createHeroSidekickSelector$(1)
-        .pipe(skip(1))
-        .subscribe((sk) => {
-          expect(sk.name).toBe('Robert');
-          done();
-        });
-
-      // update the related sidekick
-      const action = eaFactory.create<Update<Sidekick>>(
-        'Sidekick',
-        EntityOp.UPDATE_ONE,
-        { id: 1, changes: { id: 1, name: 'Robert' } }
-      );
-      store.dispatch(action);
-    });
-
-    it('should get Alpha Hero changed sidekick', (done: any) => {
-      // Skip the initial sidekick and check the one after update
-      createHeroSidekickSelector$(1)
-        .pipe(skip(1))
-        .subscribe((sk) => {
-          expect(sk.name).toBe('Sally');
-          done();
-        });
-
-      // update the hero's sidekick from fk=1 to fk=2
-      const action = eaFactory.create<Update<Hero>>(
-        'Hero',
-        EntityOp.UPDATE_ONE,
-        { id: 1, changes: { id: 1, sidekickFk: 2 } } // Sally
-      );
-      store.dispatch(action);
-    });
-
-    it('changing a different hero should NOT trigger first hero selector', (done: any) => {
-      let alphaCount = 0;
-
-      createHeroSidekickSelector$(1).subscribe((sk) => {
-        alphaCount += 1;
-      });
-
-      // update a different hero's sidekick from fk=2 (Sally) to fk=1 (Bob)
-      createHeroSidekickSelector$(2)
-        .pipe(skip(1))
-        .subscribe((sk) => {
+    it('should get Alpha Hero sidekick', () =>
+      new Promise<void>((done) => {
+        createHeroSidekickSelector$(1).subscribe((sk) => {
           expect(sk.name).toBe('Bob');
-          expect(alphaCount).toEqual(1);
           done();
         });
+      }));
 
-      const action = eaFactory.create<Update<Hero>>(
-        'Hero',
-        EntityOp.UPDATE_ONE,
-        { id: 2, changes: { id: 2, sidekickFk: 1 } } // Bob
-      );
-      store.dispatch(action);
-    });
+    it('should get Alpha Hero updated sidekick', () =>
+      new Promise<void>((done) => {
+        // Skip the initial sidekick and check the one after update
+        createHeroSidekickSelector$(1)
+          .pipe(skip(1))
+          .subscribe((sk) => {
+            expect(sk.name).toBe('Robert');
+            done();
+          });
 
-    it('should get undefined sidekick if hero not found', (done: any) => {
-      createHeroSidekickSelector$(1234).subscribe((sk) => {
-        expect(sk).toBeUndefined();
-        done();
-      });
-    });
+        // update the related sidekick
+        const action = eaFactory.create<Update<Sidekick>>(
+          'Sidekick',
+          EntityOp.UPDATE_ONE,
+          { id: 1, changes: { id: 1, name: 'Robert' } }
+        );
+        store.dispatch(action);
+      }));
 
-    it('should get undefined sidekick from Gamma because it has no sidekickFk', (done: any) => {
-      createHeroSidekickSelector$(3).subscribe((sk) => {
-        expect(sk).toBeUndefined();
-        done();
-      });
-    });
+    it('should get Alpha Hero changed sidekick', () =>
+      new Promise<void>((done) => {
+        // Skip the initial sidekick and check the one after update
+        createHeroSidekickSelector$(1)
+          .pipe(skip(1))
+          .subscribe((sk) => {
+            expect(sk.name).toBe('Sally');
+            done();
+          });
 
-    it('should get Gamma sidekick after creating and assigning one', (done: any) => {
-      // Skip(1), the initial state in which Gamma has no sidekick
-      // Note that BOTH dispatches complete synchronously, before the selector updates
-      // so we only have to skip one.
-      createHeroSidekickSelector$(3)
-        .pipe(skip(1))
-        .subscribe((sk) => {
-          expect(sk.name).toBe('Robin');
-          done();
+        // update the hero's sidekick from fk=1 to fk=2
+        const action = eaFactory.create<Update<Hero>>(
+          'Hero',
+          EntityOp.UPDATE_ONE,
+          { id: 1, changes: { id: 1, sidekickFk: 2 } } // Sally
+        );
+        store.dispatch(action);
+      }));
+
+    it('changing a different hero should NOT trigger first hero selector', () =>
+      new Promise<void>((done) => {
+        let alphaCount = 0;
+
+        createHeroSidekickSelector$(1).subscribe((sk) => {
+          alphaCount += 1;
         });
 
-      // create a new sidekick
-      let action: EntityAction = eaFactory.create<Sidekick>(
-        'Sidekick',
-        EntityOp.ADD_ONE,
-        {
-          id: 42,
-          name: 'Robin',
-        }
-      );
-      store.dispatch(action);
+        // update a different hero's sidekick from fk=2 (Sally) to fk=1 (Bob)
+        createHeroSidekickSelector$(2)
+          .pipe(skip(1))
+          .subscribe((sk) => {
+            expect(sk.name).toBe('Bob');
+            expect(alphaCount).toEqual(1);
+            done();
+          });
 
-      // assign new sidekick to Gamma
-      action = eaFactory.create<Update<Hero>>('Hero', EntityOp.UPDATE_ONE, {
-        id: 3,
-        changes: { id: 3, sidekickFk: 42 },
-      });
-      store.dispatch(action);
-    });
+        const action = eaFactory.create<Update<Hero>>(
+          'Hero',
+          EntityOp.UPDATE_ONE,
+          { id: 2, changes: { id: 2, sidekickFk: 1 } } // Bob
+        );
+        store.dispatch(action);
+      }));
+
+    it('should get undefined sidekick if hero not found', () =>
+      new Promise<void>((done) => {
+        createHeroSidekickSelector$(1234).subscribe((sk) => {
+          expect(sk).toBeUndefined();
+          done();
+        });
+      }));
+
+    it('should get undefined sidekick from Gamma because it has no sidekickFk', () =>
+      new Promise<void>((done) => {
+        createHeroSidekickSelector$(3).subscribe((sk) => {
+          expect(sk).toBeUndefined();
+          done();
+        });
+      }));
+
+    it('should get Gamma sidekick after creating and assigning one', () =>
+      new Promise<void>((done) => {
+        // Skip(1), the initial state in which Gamma has no sidekick
+        // Note that BOTH dispatches complete synchronously, before the selector updates
+        // so we only have to skip one.
+        createHeroSidekickSelector$(3)
+          .pipe(skip(1))
+          .subscribe((sk) => {
+            expect(sk.name).toBe('Robin');
+            done();
+          });
+
+        // create a new sidekick
+        let action: EntityAction = eaFactory.create<Sidekick>(
+          'Sidekick',
+          EntityOp.ADD_ONE,
+          {
+            id: 42,
+            name: 'Robin',
+          }
+        );
+        store.dispatch(action);
+
+        // assign new sidekick to Gamma
+        action = eaFactory.create<Update<Hero>>('Hero', EntityOp.UPDATE_ONE, {
+          id: 3,
+          changes: { id: 3, sidekickFk: 42 },
+        });
+        store.dispatch(action);
+      }));
   });
 
   describe('hero -> battles (1-m)', () => {
@@ -257,37 +264,40 @@ describe('Related-entity Selectors', () => {
     // TODO: more tests
     // Note: async done() callback ensures test passes only if subscribe(successCallback()) called.
 
-    it('should get Alpha Hero battles', (done: any) => {
-      createHeroBattlesSelector$(1).subscribe((battles) => {
-        expect(battles.length).toBe(3);
-        done();
-      });
-    });
-
-    it('should get Alpha Hero battles again after updating one of its battles', (done: any) => {
-      // Skip the initial sidekick and check the one after update
-      createHeroBattlesSelector$(1)
-        .pipe(skip(1))
-        .subscribe((battles) => {
-          expect(battles[0].name).toBe('Scalliwag');
+    it('should get Alpha Hero battles', () =>
+      new Promise<void>((done) => {
+        createHeroBattlesSelector$(1).subscribe((battles) => {
+          expect(battles.length).toBe(3);
           done();
         });
+      }));
 
-      // update the first of the related battles
-      const action = eaFactory.create<Update<Battle>>(
-        'Battle',
-        EntityOp.UPDATE_ONE,
-        { id: 100, changes: { id: 100, name: 'Scalliwag' } }
-      );
-      store.dispatch(action);
-    });
+    it('should get Alpha Hero battles again after updating one of its battles', () =>
+      new Promise<void>((done) => {
+        // Skip the initial sidekick and check the one after update
+        createHeroBattlesSelector$(1)
+          .pipe(skip(1))
+          .subscribe((battles) => {
+            expect(battles[0].name).toBe('Scalliwag');
+            done();
+          });
 
-    it('Gamma Hero should have no battles', (done: any) => {
-      createHeroBattlesSelector$(3).subscribe((battles) => {
-        expect(battles.length).toBe(0);
-        done();
-      });
-    });
+        // update the first of the related battles
+        const action = eaFactory.create<Update<Battle>>(
+          'Battle',
+          EntityOp.UPDATE_ONE,
+          { id: 100, changes: { id: 100, name: 'Scalliwag' } }
+        );
+        store.dispatch(action);
+      }));
+
+    it('Gamma Hero should have no battles', () =>
+      new Promise<void>((done) => {
+        createHeroBattlesSelector$(3).subscribe((battles) => {
+          expect(battles.length).toBe(0);
+          done();
+        });
+      }));
   });
 
   describe('hero -> heropower <- power (m-m)', () => {
@@ -357,44 +367,48 @@ describe('Related-entity Selectors', () => {
     // TODO: more tests
     // Note: async done() callback ensures test passes only if subscribe(successCallback()) called.
 
-    it('should get Alpha Hero powers', (done: any) => {
-      createHeroPowersSelector$(1).subscribe((powers) => {
-        expect(powers.length).toBe(3);
-        done();
-      });
-    });
+    it('should get Alpha Hero powers', () =>
+      new Promise<void>((done) => {
+        createHeroPowersSelector$(1).subscribe((powers) => {
+          expect(powers.length).toBe(3);
+          done();
+        });
+      }));
 
-    it('should get Beta Hero power', (done: any) => {
-      createHeroPowersSelector$(2).subscribe((powers) => {
-        expect(powers.length).toBe(1);
-        expect(powers[0].name).toBe('Invisibility');
-        done();
-      });
-    });
+    it('should get Beta Hero power', () =>
+      new Promise<void>((done) => {
+        createHeroPowersSelector$(2).subscribe((powers) => {
+          expect(powers.length).toBe(1);
+          expect(powers[0].name).toBe('Invisibility');
+          done();
+        });
+      }));
 
-    it('Beta Hero should have no powers after delete', (done: any) => {
-      createHeroPowersSelector$(2)
-        .pipe(skip(1))
-        .subscribe((powers) => {
+    it('Beta Hero should have no powers after delete', () =>
+      new Promise<void>((done) => {
+        createHeroPowersSelector$(2)
+          .pipe(skip(1))
+          .subscribe((powers) => {
+            expect(powers.length).toBe(0);
+            done();
+          });
+
+        // delete Beta's one power via the HeroPowerMap
+        const action: EntityAction = eaFactory.create<number>(
+          'HeroPowerMap',
+          EntityOp.REMOVE_ONE,
+          96
+        );
+        store.dispatch(action);
+      }));
+
+    it('Gamma Hero should have no powers', () =>
+      new Promise<void>((done) => {
+        createHeroPowersSelector$(3).subscribe((powers) => {
           expect(powers.length).toBe(0);
           done();
         });
-
-      // delete Beta's one power via the HeroPowerMap
-      const action: EntityAction = eaFactory.create<number>(
-        'HeroPowerMap',
-        EntityOp.REMOVE_ONE,
-        96
-      );
-      store.dispatch(action);
-    });
-
-    it('Gamma Hero should have no powers', (done: any) => {
-      createHeroPowersSelector$(3).subscribe((powers) => {
-        expect(powers.length).toBe(0);
-        done();
-      });
-    });
+      }));
   });
 });
 

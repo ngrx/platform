@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { fakeAsync, tick } from '@angular/core/testing';
 import {
   BehaviorSubject,
@@ -15,10 +16,10 @@ import { createRenderEventManager } from '../../../src/core/render-event/manager
 
 describe('createRenderEventManager', () => {
   function setup<T>() {
-    const suspenseHandler = jest.fn();
-    const nextHandler = jest.fn();
-    const errorHandler = jest.fn();
-    const completeHandler = jest.fn();
+    const suspenseHandler = vi.fn();
+    const nextHandler = vi.fn();
+    const errorHandler = vi.fn();
+    const completeHandler = vi.fn();
     const renderEventManager = createRenderEventManager<Observable<T>>({
       suspense: suspenseHandler,
       next: nextHandler,

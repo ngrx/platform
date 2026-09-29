@@ -64,6 +64,37 @@ For enhanced performance, deeply nested signals are generated lazily and initial
 
 </ngrx-docs-alert>
 
+<ngrx-docs-alert type="help">
+
+When a property's type is a union, `signalState` creates a `DeepSignal` for each object literal member. The remaining members (primitives, dynamic records, etc.) stay a regular `Signal`.
+
+```ts
+type User = { id: number; firstName: string };
+type Status =
+  | { type: 'success'; data: string }
+  | { type: 'error'; message: string };
+
+const state = signalState<{ user: User | null; status: Status }>({
+  user: null,
+  status: { type: 'success', data: '' },
+});
+
+// 👇 object literal + null: state.user is DeepSignal<User> | Signal<null>
+if ('firstName' in state.user) {
+  const firstName = state.user.firstName; // Signal<string>
+  console.log(firstName());
+}
+
+// 👇 union of object literals: a DeepSignal is created for each member
+// state.status: DeepSignal<{ type: 'success'; data: string }> | DeepSignal<{ type: 'error'; message: string }>
+if ('message' in state.status) {
+  const message = state.status.message; // Signal<string>
+  console.log(message());
+}
+```
+
+</ngrx-docs-alert>
+
 ## Updating State
 
 The `patchState` function provides a type-safe way to perform updates on pieces of state.
@@ -128,7 +159,7 @@ patchState(userState, setFirstName('Stevie'), setAdmin());
 <ngrx-code-example header="counter.ts">
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { signalState, patchState } from '@ngrx/signals';
 
 @Component({
@@ -140,7 +171,6 @@ import { signalState, patchState } from '@ngrx/signals';
     <button (click)="decrement()">Decrement</button>
     <button (click)="reset()">Reset</button>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Counter {
   readonly state = signalState({ count: 0 });
@@ -213,12 +243,7 @@ export class BookListStore {
 <ngrx-code-example header="book-list.ts">
 
 ```ts
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnInit,
-} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BookListStore } from './book-list-store';
 
 @Component({
@@ -237,7 +262,6 @@ import { BookListStore } from './book-list-store';
     }
   `,
   providers: [BookListStore],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookList {
   readonly store = inject(BookListStore);

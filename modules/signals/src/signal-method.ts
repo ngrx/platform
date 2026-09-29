@@ -59,6 +59,7 @@ export function signalMethod<Input>(
   ): EffectRef => {
     if (isReactiveComputation(input)) {
       const callerInjector = getCallerInjector();
+
       if (
         typeof ngDevMode !== 'undefined' &&
         ngDevMode &&
@@ -66,11 +67,12 @@ export function signalMethod<Input>(
         callerInjector === undefined
       ) {
         console.warn(
-          '@ngrx/signals: The function returned by signalMethod was called',
-          'outside the injection context with a signal. This may lead to',
-          'a memory leak. Make sure to call it within the injection context',
-          '(e.g. in a constructor or field initializer) or pass an injector',
-          'explicitly via the config parameter.\n\nFor more information, see:',
+          '@ngrx/signals: Calling signalMethod outside of an injection',
+          'context with a signal is deprecated. In a future version,',
+          'this will throw an error. Either call it within an injection',
+          'context (e.g. in a constructor or field initializer) or pass',
+          'an injector explicitly via the config parameter.',
+          '\n\nFor more information, see:',
           'https://ngrx.io/guide/signals/signal-method#automatic-cleanup'
         );
       }

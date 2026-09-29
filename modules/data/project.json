@@ -8,7 +8,7 @@
   "generators": {},
   "targets": {
     "build-package": {
-      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "executor": "@angular/build:ng-packagr",
       "options": {
         "tsConfig": "modules/data/tsconfig.build.json",
         "project": "modules/data/ng-package.json"
@@ -26,11 +26,23 @@
             "command": "pnpm exec tsc -p modules/data/tsconfig.schematics.json"
           },
           {
+            "command": "pnpm exec rimraf node_modules/@ngrx/data"
+          },
+          {
+            "command": "pnpm exec mkdirp node_modules/@ngrx/data"
+          },
+          {
+            "command": "ncp dist/modules/data node_modules/@ngrx/data"
+          },
+          {
             "command": "cpy LICENSE dist/modules/data"
           }
         ]
       },
-      "outputs": ["{workspaceRoot}/dist/modules/data"]
+      "outputs": [
+        "{workspaceRoot}/dist/modules/data",
+        "{workspaceRoot}/node_modules/@ngrx/data"
+      ]
     },
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -43,12 +55,8 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "options": {
-        "jestConfig": "modules/data/jest.config.ts",
-        "runInBand": true,
-        "passWithNoTests": false
-      },
+      "executor": "@analogjs/vitest-angular:test",
+      "dependsOn": ["build"],
       "outputs": ["{workspaceRoot}/coverage/modules/data"]
     }
   }

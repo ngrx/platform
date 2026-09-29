@@ -227,6 +227,26 @@ describe('updateEntity', () => {
     expect(store.ids()).toEqual([101, 2, 303]);
   });
 
+  it('updates a numeric entity id to the equivalent string id', () => {
+    type Entity = { id: string | number; name: string };
+    const Store = signalStore(
+      { protectedState: false },
+      withEntities<Entity>()
+    );
+    const store = new Store();
+
+    patchState(
+      store,
+      addEntities<Entity>([{ id: 1, name: 'Ada' }]),
+      updateEntity<Entity>({ id: 1, changes: { id: '1' } })
+    );
+
+    const updatedEntity = { id: '1', name: 'Ada' };
+    expect(store.entityMap()).toEqual({ 1: updatedEntity });
+    expect(store.ids()).toEqual(['1']);
+    expect(store.entities()).toEqual([updatedEntity]);
+  });
+
   it('updates a custom entity id', () => {
     const Store = signalStore({ protectedState: false }, withEntities<Todo>());
     const store = new Store();

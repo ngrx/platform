@@ -7,15 +7,15 @@ import { Contributor } from '../services/contributors.service';
   imports: [ContributorCardComponent],
   template: `
     @if (contributors() && contributors().length > 0) {
-    <div class="contributor-list">
-      @for (contributor of contributors(); track contributor.name) {
-      <ngrx-contributor-card
-        [contributor]="contributor"
-      ></ngrx-contributor-card>
-      }
-    </div>
+      <div class="contributor-list">
+        @for (contributor of contributors(); track contributor.name) {
+          <ngrx-contributor-card
+            [contributor]="contributor"
+          ></ngrx-contributor-card>
+        }
+      </div>
     } @else {
-    <p>No contributors found</p>
+      <p>No contributors found</p>
     }
   `,
   styles: [

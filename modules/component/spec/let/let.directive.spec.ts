@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   Directive,
@@ -36,6 +37,7 @@ import { LetDirective } from '../..';
     }}</ng-container>
   `,
   imports: [JsonPipe, LetDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
 })
 class LetDirectiveTestComponent {
   value$: unknown;
@@ -48,6 +50,7 @@ class LetDirectiveTestComponent {
     }}</ng-container>
   `,
   imports: [LetDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
 })
 class LetDirectiveTestErrorComponent {
   value$ = of(42);
@@ -60,6 +63,7 @@ class LetDirectiveTestErrorComponent {
     }}</ng-container>
   `,
   imports: [LetDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
 })
 class LetDirectiveTestCompleteComponent {
   value$ = of(42);
@@ -70,6 +74,7 @@ class LetDirectiveTestCompleteComponent {
     <ng-container *ngrxLet="value$ as value">{{ value }}</ng-container>
   `,
   imports: [LetDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
 })
 class LetDirectiveTestSuspenseComponent {
   value$ = of(42);
@@ -83,6 +88,7 @@ class LetDirectiveTestSuspenseComponent {
     <ng-template #loading>Loading...</ng-template>
   `,
   imports: [LetDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
 })
 class LetDirectiveTestSuspenseTplComponent {
   value$ = of(42);
@@ -104,6 +110,7 @@ export class RecursiveDirective {
     }}</ng-container>
   `,
   imports: [RecursiveDirective, LetDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
 })
 class LetDirectiveTestRecursionComponent {
   constructor(public subject: BehaviorSubject<number>) {}

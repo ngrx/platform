@@ -27,7 +27,7 @@ describe('RouterEffects', () => {
             { selector: fromRoot.selectRouteData, value: { title: 'Search' } },
           ],
         }),
-        { provide: Title, useValue: { setTitle: jest.fn() } },
+        { provide: Title, useValue: { setTitle: vi.fn() } },
       ],
     });
 

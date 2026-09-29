@@ -9,7 +9,7 @@ import { createWorkspace } from '@ngrx/schematics-core/testing';
 describe('Entity ng-add Schematic', () => {
   const schematicRunner = new SchematicTestRunner(
     '@ngrx/entity',
-    path.join(__dirname, '../collection.json')
+    path.join(process.cwd(), 'dist/modules/entity/schematics/collection.json')
   );
   const defaultOptions: EntityOptions = {
     skipPackageJson: false,

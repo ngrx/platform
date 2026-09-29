@@ -105,18 +105,18 @@ export const BooksStore = signalStore(
 The `BooksStore` instance will contain the following properties and methods:
 
 - State signals from `withEntities` feature:
-  - `entityMap: Signal<EntityMap<Book>>`
-  - `ids: Signal<EntityId[]>`
+  - `entityMap: Signal&lt;EntityMap&lt;Book&gt;&gt;`
+  - `ids: Signal&lt;EntityId[]&gt;`
 - Computed signals from `withEntities` feature:
-  - `entities: Signal<Book[]>`
+  - `entities: Signal&lt;Book[]&gt;`
 - State signals from `withRequestStatus` feature:
-  - `requestStatus: Signal<RequestStatus>`
+  - `requestStatus: Signal&lt;RequestStatus&gt;`
 - Computed signals from `withRequestStatus` feature:
-  - `isPending: Signal<boolean>`
-  - `isFulfilled: Signal<boolean>`
-  - `error: Signal<string | null>`
+  - `isPending: Signal&lt;boolean&gt;`
+  - `isFulfilled: Signal&lt;boolean&gt;`
+  - `error: Signal&lt;string | null&gt;`
 - Methods:
-  - `loadAll(): Promise<void>`
+  - `loadAll(): Promise&lt;void&gt;`
 
 <ngrx-docs-alert type="help">
 
@@ -249,14 +249,14 @@ export const BooksStore = signalStore(
 The `BooksStore` instance will contain the following properties:
 
 - State signals from `withEntities` feature:
-  - `entityMap: Signal<EntityMap<Book>>`
-  - `ids: Signal<EntityId[]>`
+  - `entityMap: Signal&lt;EntityMap&lt;Book&gt;&gt;`
+  - `ids: Signal&lt;EntityId[]&gt;`
 - Computed signals from `withEntities` feature:
-  - `entities: Signal<Book[]>`
+  - `entities: Signal&lt;Book[]&gt;`
 - State signals from `withSelectedEntity` feature:
-  - `selectedEntityId: Signal<EntityId | null>`
+  - `selectedEntityId: Signal&lt;EntityId | null&gt;`
 - Computed signals from `withSelectedEntity` feature:
-  - `selectedEntity: Signal<Book | null>`
+  - `selectedEntity: Signal&lt;Book | null&gt;`
 
 The `@ngrx/signals` package offers high-level type safety.
 Therefore, if `BooksStore` does not contain state properties from the `EntityState` type, the compilation error will occur.
@@ -306,6 +306,50 @@ export function withBaz<Foo extends string | number>() {
 </ngrx-code-example>
 
 The `withBaz` feature can only be used in a store where the property `foo` and the method `bar` are defined.
+
+## Using `SignalStoreFeatureType`
+
+`SignalStoreFeatureType` can extract the state and members from a custom feature factory, and reuse it as the input type of another custom feature.
+
+<ngrx-code-example header="with-request-status.ts">
+
+```ts
+import { SignalStoreFeatureType } from '@ngrx/signals';
+
+export type RequestStatusFeature = SignalStoreFeatureType<
+  typeof withRequestStatus
+>;
+```
+
+</ngrx-code-example>
+
+<ngrx-code-example header="with-status-message.ts">
+
+```ts
+import {
+  signalStoreFeature,
+  type,
+  withComputed,
+} from '@ngrx/signals';
+import { RequestStatusFeature } from './with-request-status';
+
+export function withStatusMessage() {
+  return signalStoreFeature(
+    type<RequestStatusFeature>(),
+    withComputed(({ isPending, error }) => ({
+      statusMessage: () => {
+        if (isPending()) {
+          return 'Loading...';
+        }
+
+        return error() ?? 'Ready';
+      },
+    }))
+  );
+}
+```
+
+</ngrx-code-example>
 
 ## Using `withFeature`
 

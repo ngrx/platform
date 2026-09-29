@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Action Schematic api should create api actions 1`] = `
+exports[`Action Schematic > api > should create api actions 1`] = `
 "import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
 export const FooActions = createActionGroup({
@@ -14,7 +14,7 @@ export const FooActions = createActionGroup({
 "
 `;
 
-exports[`Action Schematic should create an action with the defined prefix 1`] = `
+exports[`Action Schematic > should create an action with the defined prefix 1`] = `
 "import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
 export const FooActions = createActionGroup({
@@ -28,7 +28,7 @@ export const FooActions = createActionGroup({
 "
 `;
 
-exports[`Action Schematic should create api actions (load, success, error) when the api flag is set 1`] = `
+exports[`Action Schematic > should create api actions (load, success, error) when the api flag is set 1`] = `
 "import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
 export const FooActions = createActionGroup({
@@ -42,7 +42,7 @@ export const FooActions = createActionGroup({
 "
 `;
 
-exports[`Action Schematic should define actions using createActionGroup 1`] = `
+exports[`Action Schematic > should define actions using createActionGroup 1`] = `
 "import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
 export const FooActions = createActionGroup({

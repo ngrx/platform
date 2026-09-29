@@ -1,18 +1,20 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   ApiMemberSummary,
   CanonicalReference,
   MinimizedApiPackageReport,
   ParsedCanonicalReference,
 } from '@ngrx-io/shared';
-import { packageNames, packages } from './api-report.min.json';
+import { API_REPORT_DATA } from '@ngrx-io/app/reference/api-report.token';
 
 const modules = import.meta.glob('./**/*.json');
 
 @Injectable({ providedIn: 'root' })
 export class ReferenceService {
+  private readonly apiReportData = inject(API_REPORT_DATA);
+
   getMinifiedApiReport(): MinimizedApiPackageReport {
-    return { packageNames, packages } as unknown as MinimizedApiPackageReport;
+    return this.apiReportData;
   }
 
   loadReferenceData(pkg: string, symbol: string): Promise<ApiMemberSummary> {

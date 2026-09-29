@@ -28,9 +28,13 @@ export class ZonelessTickScheduler extends TickScheduler {
   private readonly appRef = inject(ApplicationRef);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isServer = isPlatformServer(this.platformId);
-  private readonly scheduleFn = this.isServer
-    ? setTimeout
-    : requestAnimationFrame;
+  private readonly scheduleFn = (callback: () => void): void => {
+    if (this.isServer) {
+      setTimeout(callback);
+    } else {
+      requestAnimationFrame(callback);
+    }
+  };
   private isScheduled = false;
 
   schedule(): void {

@@ -4,7 +4,7 @@ import { compilerOptions } from './utils';
 describe('StoreModule', () => {
   const expectSnippet = expecter(
     (code) => `
-      import { StoreModule, ActionReducerMap, Action, createReducer } from '@ngrx/store';
+      import { StoreModule, ActionReducer, ActionReducerMap, Action, createReducer } from '@ngrx/store';
 
       interface State {
         featureA: object;
@@ -16,8 +16,8 @@ describe('StoreModule', () => {
         Action
       >;
 
-      function metaReducer(reducer) {
-        return (state, action) => {
+      function metaReducer(reducer: ActionReducer<State>) {
+        return (state: State | undefined, action: Action) => {
           return reducer(state, action);
         };
       }

@@ -19,6 +19,10 @@ html {
   );
 }
 
+body.light-theme {
+  color-scheme: light;
+}
+
 *,
 *::before,
 *::after {
@@ -103,7 +107,11 @@ body {
 body.mat-app-background {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: #17111a;
+  background-color: var(--ngrx-bg);
+  color: var(--ngrx-text);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
 code {
@@ -113,8 +121,25 @@ code {
 
 a {
   text-decoration: none;
-  color: #fface6;
+  color: var(--ngrx-link);
   cursor: pointer;
+}
+
+// Visible focus indicator for keyboard navigation
+:focus-visible {
+  outline: 2px solid var(--ngrx-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 // Set up Angular Material
@@ -122,6 +147,77 @@ a {
 
 :root {
   @include mat.all-component-themes(theme.$dark-theme);
+
+  // Theme CSS variables (dark theme defaults)
+  --ngrx-bg: #17111a;
+  --ngrx-bg-surface: #17111a;
+  --ngrx-bg-elevated: #241b28;
+  --ngrx-bg-elevated-hover: #2b1f31;
+  --ngrx-bg-overlay: #0d0a0f;
+  --ngrx-bg-content-menu: #201a23;
+  --ngrx-bg-content-menu-hover: #262029;
+  --ngrx-text: #fff;
+  --ngrx-text-primary: rgba(255, 255, 255, 0.87);
+  --ngrx-text-secondary: rgba(255, 255, 255, 0.72);
+  --ngrx-text-muted: rgba(255, 255, 255, 0.56);
+  --ngrx-text-faint: rgba(255, 255, 255, 0.54);
+  --ngrx-border-color: rgba(255, 255, 255, 0.12);
+  --ngrx-link: #fface6;
+  --ngrx-accent: #cf8fc5;
+  /* Accent for small text on accent-tinted backgrounds; both values keep
+     4.5:1 (WCAG AA) on tints up to rgba(170, 27, 182, 0.2) */
+  --ngrx-accent-strong: #fface6;
+  --ngrx-active-border: rgba(207, 143, 197, 0.54);
+  --ngrx-table-header-bg: rgba(0, 0, 0, 0.36);
+}
+
+body.light-theme {
+  @include mat.all-component-colors(theme.$light-theme);
+
+  --ngrx-bg: #f5f3f4;
+  --ngrx-bg-surface: #f5f3f4;
+  --ngrx-bg-elevated: #dcdadb;
+  --ngrx-bg-elevated-hover: #cfccce;
+  --ngrx-bg-overlay: #e5e3e4;
+  --ngrx-bg-content-menu: #e0dedf;
+  --ngrx-bg-content-menu-hover: #d5d3d4;
+  --ngrx-text: #1f1a1d;
+  --ngrx-text-primary: rgba(0, 0, 0, 0.87);
+  --ngrx-text-secondary: rgba(0, 0, 0, 0.72);
+  --ngrx-text-muted: rgba(0, 0, 0, 0.64);
+  --ngrx-text-faint: rgba(0, 0, 0, 0.6);
+  --ngrx-border-color: #dbdbdb;
+  --ngrx-link: #a91794;
+  --ngrx-accent: #a91794;
+  --ngrx-accent-strong: #94147f;
+  --ngrx-active-border: rgba(169, 23, 148, 0.54);
+  --ngrx-table-header-bg: rgba(0, 0, 0, 0.06);
+  --ngrx-code-bg: rgba(241, 241, 241, 0.5);
+
+  // Light theme code blocks
+  .shiki,
+  pre code.shiki,
+  ngrx-code-example pre code {
+    background-color: #f6f8fa !important;
+  }
+
+  ngrx-code-example {
+    border-color: #d0d7de !important;
+  }
+
+  ngrx-code-example .header {
+    background-color: #f6f8fa !important;
+    color: #1f2328 !important;
+    border-color: #d0d7de !important;
+  }
+
+  // Shiki renders both palettes (see ngrx-shiki-theme.ts): the dark color is
+  // inlined and the light color is carried in the --shiki-light custom
+  // property on each token. !important is required to beat the inline style.
+  .shiki,
+  .shiki span {
+    color: var(--shiki-light) !important;
+  }
 }
 
 h1,

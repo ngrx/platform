@@ -32,8 +32,8 @@ pnpm exec nx test <module-name> --watchAll
 ### Testing for a specific schematic unit test
 
 ```shell
-pnpm exec jest modules/schematics/src/effect/index.spec.ts --watch
-pnpm exec jest <relative path> --watch
+pnpm exec vitest modules/schematics/src/effect/index.spec.ts --watch
+pnpm exec vitest <relative path> --watch
 ```
 
 ## Submitting Pull Requests

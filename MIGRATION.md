@@ -1,3 +1,3 @@
-# V21 Migration guide
+# V22 Migration guide
 
-This document has been moved to https://ngrx.io/guide/migration/v21.
+This document has been moved to https://ngrx.io/guide/migration/v22.

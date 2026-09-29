@@ -1,4 +1,9 @@
-import { Component, Type, Injectable } from '@angular/core';
+import {
+  Component,
+  Type,
+  Injectable,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ComponentStore } from '../src';
 import {
   TestBed,
@@ -11,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { interval, Observable, of, EMPTY } from 'rxjs';
 import { tap, concatMap, catchError } from 'rxjs/operators';
 import { By } from '@angular/platform-browser';
+import { Mock, vi } from 'vitest';
 
 describe('ComponentStore integration', () => {
   // The same set of tests is run against different versions of how
@@ -196,7 +202,7 @@ describe('ComponentStore integration', () => {
     prop2Changes: Array<number | undefined>;
     propChangesDebounce: Array<string | undefined>;
     destroy: () => void;
-    componentStoreDestroySpy: jest.SpyInstance;
+    componentStoreDestroySpy: Mock;
   }
 
   @Component({
@@ -205,6 +211,7 @@ describe('ComponentStore integration', () => {
       <child></child>
     }`,
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
   })
   class ParentComponent implements Parent {
     isChildVisible = true;
@@ -289,7 +296,7 @@ describe('ComponentStore integration', () => {
     }
 
     const setup = await setupTestBed(ChildComponent);
-    const componentStoreDestroySpy = jest.spyOn(
+    const componentStoreDestroySpy = vi.spyOn(
       setup.child.componentStore,
       'ngOnDestroy'
     );
@@ -334,7 +341,7 @@ describe('ComponentStore integration', () => {
     }
 
     const setup = await setupTestBed(ChildComponent);
-    const componentStoreDestroySpy = jest.spyOn(setup.child, 'ngOnDestroy');
+    const componentStoreDestroySpy = vi.spyOn(setup.child, 'ngOnDestroy');
     return {
       ...setup,
       destroy: () => setup.child.ngOnDestroy(),
@@ -430,12 +437,12 @@ describe('ComponentStore integration', () => {
     }
 
     const setup = await setupTestBed(ChildComponent);
-    const componentStoreDestroySpy = jest.spyOn(
+    const componentStoreDestroySpy = vi.spyOn(
       setup.child.propsStore,
       'ngOnDestroy'
     );
 
-    const serviceCallSpy = jest.spyOn(TestBed.inject(Service), 'call');
+    const serviceCallSpy = vi.spyOn(TestBed.inject(Service), 'call');
     return {
       ...setup,
       destroy: () => setup.child.propsStore.ngOnDestroy(),
@@ -488,7 +495,7 @@ describe('ComponentStore integration', () => {
     }
 
     const setup = await setupTestBed(ChildComponent);
-    const componentStoreDestroySpy = jest.spyOn(setup.child, 'ngOnDestroy');
+    const componentStoreDestroySpy = vi.spyOn(setup.child, 'ngOnDestroy');
     return {
       ...setup,
       destroy: () => setup.child.ngOnDestroy(),

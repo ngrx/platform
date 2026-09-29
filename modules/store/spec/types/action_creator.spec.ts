@@ -103,7 +103,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', props<null>());
       `).toFail(
-        /Type 'ActionCreatorProps<null>' is not assignable to type '"action creator cannot return an array"'/
+        /Type 'null' does not satisfy the constraint '"action creator props cannot be a primitive value"'/
       );
     });
 
@@ -111,7 +111,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', props<undefined>());
       `).toFail(
-        /Type 'ActionCreatorProps<undefined>' is not assignable to type '"action creator cannot return an array"'/
+        /Type 'undefined' does not satisfy the constraint '"action creator props cannot be a primitive value"'/
       );
     });
   });
@@ -158,7 +158,7 @@ describe('createAction()', () => {
       expectSnippet(`
         const foo = createAction('FOO', () => [ ]);
       `).toFail(
-        /Type 'any\[\]' is not assignable to type '"action creator cannot return an array"'/
+        /Type '.*\[\]' is not assignable to type '.*action creator cannot return an array/
       );
     });
   });

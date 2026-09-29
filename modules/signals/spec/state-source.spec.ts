@@ -414,6 +414,33 @@ describe('StateSource', () => {
           /NG0203: watchState\(\) can only be used within an injection context/
         );
       });
+
+      it('does not track signals read in the watcher within a reactive context', () => {
+        const state = signalState({ count: 0 });
+        const trigger = signal(0);
+        let effectRuns = 0;
+
+        TestBed.runInInjectionContext(() => {
+          effect(() => {
+            effectRuns++;
+            patchState(state, (state) => ({ ...state }));
+          });
+
+          watchState(state, () => {
+            // Reading a signal in the watcher must not leak into the
+            // effect's reactive context that triggered `patchState`.
+            trigger();
+          });
+        });
+
+        TestBed.tick();
+        expect(effectRuns).toBe(1);
+
+        trigger.update((value) => value + 1);
+        TestBed.tick();
+
+        expect(effectRuns).toBe(1);
+      });
     });
 
     describe('with signalStore', () => {

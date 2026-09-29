@@ -1,27 +1,27 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`LoginPageReducer LOGIN should make pending to true 1`] = `
+exports[`LoginPageReducer > LOGIN > should make pending to true 1`] = `
 {
   "error": null,
   "pending": true,
 }
 `;
 
-exports[`LoginPageReducer LOGIN_FAILURE should have an error and no pending state 1`] = `
+exports[`LoginPageReducer > LOGIN_FAILURE > should have an error and no pending state 1`] = `
 {
   "error": "login failed",
   "pending": false,
 }
 `;
 
-exports[`LoginPageReducer LOGIN_SUCCESS should have no error and no pending state 1`] = `
+exports[`LoginPageReducer > LOGIN_SUCCESS > should have no error and no pending state 1`] = `
 {
   "error": null,
   "pending": false,
 }
 `;
 
-exports[`LoginPageReducer undefined action should return the default state 1`] = `
+exports[`LoginPageReducer > undefined action > should return the default state 1`] = `
 {
   "error": null,
   "pending": false,

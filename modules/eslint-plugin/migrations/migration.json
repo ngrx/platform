@@ -1,3 +1,10 @@
 {
-  "schematics": {}
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "22_0_0-beta_0-rename-eslint-plugin-v9-imports": {
+      "description": "Rename @ngrx/eslint-plugin/v9 imports to @ngrx/eslint-plugin.",
+      "version": "22.0.0-beta.0",
+      "factory": "./22_0_0-beta_0-rename-eslint-plugin-v9-imports/index"
+    }
+  }
 }

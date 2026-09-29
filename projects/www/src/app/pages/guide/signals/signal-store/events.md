@@ -337,11 +337,7 @@ Therefore, components can access state and computed signals by using the store i
 <ngrx-code-example header="book-search.ts">
 
 ```ts
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BookSearchStore } from './book-search-store';
 
@@ -364,7 +360,6 @@ import { BookSearchStore } from './book-search-store';
     </ul>
   `,
   providers: [BookSearchStore],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookSearch {
   readonly store = inject(BookSearchStore);

@@ -1,5 +1,5 @@
 import * as ngCore from '@angular/core';
-import { cold } from 'jasmine-marbles';
+import { cold } from './marbles';
 import {
   createSelector,
   createFeatureSelector,
@@ -287,12 +287,14 @@ describe('Selectors', () => {
   });
 
   describe('createFeatureSelector', () => {
+    type FeatureValue = { first: string } | { secondValue: string };
+
     const featureName = 'featureA';
-    let featureSelector: (state: any) => number;
+    let featureSelector: (state: any) => FeatureValue;
     let warnSpy: Mock;
 
     beforeEach(() => {
-      featureSelector = createFeatureSelector<number>(featureName);
+      featureSelector = createFeatureSelector<FeatureValue>(featureName);
       warnSpy = vi.spyOn(console, 'warn');
     });
 

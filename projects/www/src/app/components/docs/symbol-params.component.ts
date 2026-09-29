@@ -30,7 +30,7 @@ import { InlineMarkdownPipe } from './inline-markdown.pipe';
     `
       :host {
         display: block;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
       }
 
       .param {
@@ -48,7 +48,7 @@ import { InlineMarkdownPipe } from './inline-markdown.pipe';
 
       .paramSymbol {
         font-weight: 700;
-        color: #fface6;
+        color: var(--ngrx-link);
       }
 
       code {

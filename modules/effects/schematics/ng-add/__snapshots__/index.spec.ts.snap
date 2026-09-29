@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Effects ng-add Schematic Effects ng-add Schematic for standalone application provides full effects setup 1`] = `
+exports[`Effects ng-add Schematic > Effects ng-add Schematic for standalone application > provides full effects setup 1`] = `
 "import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideEffects } from '@ngrx/effects';
 import { FooEffects } from './foo/foo.effects';
@@ -14,7 +14,7 @@ export const appConfig: ApplicationConfig = {
 "
 `;
 
-exports[`Effects ng-add Schematic Effects ng-add Schematic for standalone application provides minimal effects setup 1`] = `
+exports[`Effects ng-add Schematic > Effects ng-add Schematic for standalone application > provides minimal effects setup 1`] = `
 "import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideEffects } from '@ngrx/effects';
 

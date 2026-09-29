@@ -67,7 +67,7 @@ import { SymbolUsageNotesComponent } from './symbol-usage-notes.component';
       }
 
       .symbol-call-signature {
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid var(--ngrx-border-color);
         border-radius: 8px;
         margin: 16px 0;
         max-width: 100%;

@@ -22,14 +22,14 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
       a {
         display: block;
-        color: rgba(255, 255, 255, 0.56);
+        color: var(--ngrx-text-muted);
         transition: color 0.2s;
         font-size: 14px;
       }
 
       a.active,
       a:hover {
-        color: rgba(255, 255, 255, 0.87);
+        color: var(--ngrx-text-primary);
       }
     `,
   ],

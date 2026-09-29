@@ -10,9 +10,12 @@ import { FlattenedLink } from '../services/guide-menu.service';
   template: `
     <div class="linkWrapper previous">
       @if (previousLink(); as previousLink) {
-        <a [routerLink]="previousLink.url">
+        <a
+          [routerLink]="previousLink.url"
+          [attr.aria-label]="'Previous page: ' + previousLink.text"
+        >
           <mat-icon>chevron_left</mat-icon>
-          <div class="parents">
+          <div class="parents" aria-hidden="true">
             @for (parent of previousLink.parents; track $index) {
               <span>{{ parent }}</span>
               @if ($index < previousLink.parents.length - 1) {
@@ -20,14 +23,19 @@ import { FlattenedLink } from '../services/guide-menu.service';
               }
             }
           </div>
-          <span class="linkText">{{ previousLink.text }}</span>
+          <span class="linkText" aria-hidden="true">{{
+            previousLink.text
+          }}</span>
         </a>
       }
     </div>
     <div class="linkWrapper next">
       @if (nextLink(); as nextLink) {
-        <a [routerLink]="nextLink.url">
-          <div class="parents">
+        <a
+          [routerLink]="nextLink.url"
+          [attr.aria-label]="'Next page: ' + nextLink.text"
+        >
+          <div class="parents" aria-hidden="true">
             @for (parent of nextLink.parents; track $index) {
               <span>{{ parent }}</span>
               @if ($index < nextLink.parents.length - 1) {
@@ -35,12 +43,16 @@ import { FlattenedLink } from '../services/guide-menu.service';
               }
             }
           </div>
-          <span class="linkText">{{ nextLink.text }}</span>
+          <span class="linkText" aria-hidden="true">{{ nextLink.text }}</span>
           <mat-icon>chevron_right</mat-icon>
         </a>
       }
     </div>
   `,
+  host: {
+    role: 'navigation',
+    'aria-label': 'Previous and next pages',
+  },
   styles: [
     `
       :host {
@@ -50,7 +62,7 @@ import { FlattenedLink } from '../services/guide-menu.service';
         width: 960px;
         padding-top: 24px;
         margin-top: 24px;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
         @media only screen and (max-width: 1280px) {
           width: 100%;
         }
@@ -65,7 +77,7 @@ import { FlattenedLink } from '../services/guide-menu.service';
         width: 100%;
         padding: 16px;
         border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid var(--ngrx-border-color);
         align-items: center;
         transition: border-color 200ms;
         height: 100%;
@@ -88,7 +100,7 @@ import { FlattenedLink } from '../services/guide-menu.service';
 
       .parents {
         grid-area: parents;
-        color: rgba(255, 255, 255, 0.54);
+        color: var(--ngrx-text-faint);
         font-weight: 600;
         font-size: 12px;
       }
@@ -98,7 +110,7 @@ import { FlattenedLink } from '../services/guide-menu.service';
         font-size: 32px;
         position: relative;
         top: -2px;
-        color: rgba(255, 255, 255, 0.54);
+        color: var(--ngrx-text-faint);
         transition: color 200ms;
       }
 
@@ -107,11 +119,11 @@ import { FlattenedLink } from '../services/guide-menu.service';
       }
 
       .linkWrapper a:hover {
-        border-color: rgba(207, 143, 197, 1);
+        border-color: var(--ngrx-accent);
       }
 
       .linkWrapper a:hover mat-icon {
-        color: rgba(207, 143, 197, 1);
+        color: var(--ngrx-accent);
       }
     `,
   ],

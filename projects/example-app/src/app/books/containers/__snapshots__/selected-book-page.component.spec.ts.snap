@@ -1,12 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Selected Book Page should compile 1`] = `
-<bc-selected-book-page
-  book$={[Function _Store]}
-  isSelectedBookInCollection$={[Function _Store]}
-  store={[Function _MockStore]}
->
-  <bc-book-detail>
+exports[`Selected Book Page > should compile 1`] = `
+<bc-selected-book-page>
+  <bc-book-detail
+    _nghost-a-c973509077=""
+  >
+    <!--container-->
   </bc-book-detail>
 </bc-selected-book-page>
 `;

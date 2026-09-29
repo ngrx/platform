@@ -94,10 +94,9 @@ function addStateToComponent(options: Partial<ContainerOptions>) {
     const componentClass = source.statements.find(
       (stm) => stm.kind === ts.SyntaxKind.ClassDeclaration
     ) as ts.ClassDeclaration;
-    const constructorUpdate = new ReplaceChange(
+    const constructorUpdate = new InsertChange(
       componentPath,
       componentClass.members.pos,
-      '\n',
       `\n  constructor(private store: Store) {}`
     );
 

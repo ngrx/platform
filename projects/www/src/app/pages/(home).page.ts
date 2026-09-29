@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { BannerAnimationComponent } from '../components/banner-animation.component';
 import { StyledBoxComponent } from '../components/styled-box.component';
-import { MatIconModule } from '@angular/material/icon';
+import { SponsorsComponent } from '../components/sponsors.component';
 
 @Component({
   selector: 'ngrx-home-page',
-  standalone: true,
   imports: [
     BannerAnimationComponent,
     MatButtonModule,
     StyledBoxComponent,
     MatIconModule,
     RouterLink,
+    SponsorsComponent,
   ],
   template: `
     <div class="banner">
@@ -32,7 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
     <div class="content">
       <ngrx-styled-box>
         <mat-icon inline>school</mat-icon>
-        <h3>Learn</h3>
+        <h2>Learn</h2>
         <p>
           Dive into NgRx with our getting started guide. You will learn how to
           think reactively and architect your Angular apps for success.
@@ -56,16 +57,18 @@ import { MatIconModule } from '@angular/material/icon';
       <!--      </ngrx-styled-box>-->
       <ngrx-styled-box>
         <mat-icon inline>volunteer_activism</mat-icon>
-        <h3>Support the team</h3>
+        <h2>Support the team</h2>
         <p>Support the development of NgRx by sponsoring us.</p>
         <a
           href="https://github.com/sponsors/ngrx"
           target="_blank"
+          rel="noopener noreferrer"
           mat-flat-button
           >Sponsor</a
         >
       </ngrx-styled-box>
     </div>
+    <ngrx-sponsors />
   `,
   styles: [
     `
@@ -84,7 +87,7 @@ import { MatIconModule } from '@angular/material/icon';
         align-items: center;
         width: 100%;
         height: 100lvh;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom: 1px solid var(--ngrx-border-color);
         position: relative;
       }
 
@@ -150,18 +153,20 @@ import { MatIconModule } from '@angular/material/icon';
       }
 
       ngrx-styled-box mat-icon {
-        color: #cf8fc5;
+        color: var(--ngrx-accent);
         font-size: 32px;
       }
 
-      ngrx-styled-box h3 {
+      ngrx-styled-box h2 {
         font-weight: 500;
+        font-size: 24px;
         font-family: 'Oxanium', sans-serif;
+        margin: 0;
       }
 
       ngrx-styled-box p {
         padding-bottom: 16px;
-        color: rgba(255, 255, 255, 0.72);
+        color: var(--ngrx-text-secondary);
       }
 
       ngrx-styled-box button {

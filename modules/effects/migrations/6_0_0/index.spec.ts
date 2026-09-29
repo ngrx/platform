@@ -13,8 +13,6 @@ import {
   versionPrefixes,
 } from '@ngrx/schematics-core/testing/update';
 
-const collectionPath = path.join(__dirname, '../migration.json');
-
 describe('Effects Migration 6_0_0', () => {
   let appTree;
   const pkgName = 'effects';
@@ -22,6 +20,10 @@ describe('Effects Migration 6_0_0', () => {
   versionPrefixes.forEach((prefix) => {
     it(`should install version ${prefix}6.0.0`, async () => {
       appTree = new UnitTestTree(Tree.empty());
+      const collectionPath = path.join(
+        process.cwd(),
+        'dist/modules/effects/migrations/migration.json'
+      );
       const runner = new SchematicTestRunner('schematics', collectionPath);
       const tree = createPackageJson(prefix, pkgName, appTree);
 

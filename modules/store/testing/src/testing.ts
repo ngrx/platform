@@ -156,7 +156,7 @@ export function createMockStore<T>(
   config: MockStoreConfig<T> = {}
 ): MockStore<T> {
   const injector = Injector.create({ providers: provideMockStore(config) });
-  return injector.get(MockStore);
+  return injector.get<MockStore<T>>(MockStore);
 }
 
 export { MockReducerManager } from './mock_reducer_manager';

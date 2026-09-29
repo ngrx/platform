@@ -1,7 +1,6 @@
-import { computed, effect, isSignal } from '@angular/core';
+import { computed, effect, isSignal, WritableSignal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { patchState, signalState } from '../src';
-import { SignalsDictionary } from '../src/signal-store-models';
 import { STATE_SOURCE } from '../src/state-source';
 
 vi.mock('@angular/core', { spy: true });
@@ -23,7 +22,9 @@ describe('signalState', () => {
 
   it('creates its properties as Signals', () => {
     const state = signalState({ foo: 'bar' });
-    const stateSource: SignalsDictionary = state[STATE_SOURCE];
+    const stateSource: Record<string | symbol, WritableSignal<unknown>> = state[
+      STATE_SOURCE
+    ];
 
     expect(isSignal(state)).toBe(true);
     for (const key of Reflect.ownKeys(stateSource)) {
@@ -36,6 +37,25 @@ describe('signalState', () => {
     const state = signalState(initialState);
     expect(state()).not.toBe(initialState);
     expect(state()).toEqual(initialState);
+  });
+
+  it('supports a state slice that is a union of an object, null, and a primitive', () => {
+    const state = signalState<{ slice: { s: string } | null | string }>({
+      slice: { s: 'ngrx' },
+    });
+
+    expect(isSignal(state.slice)).toBe(true);
+    expect(state.slice()).toEqual({ s: 'ngrx' });
+    expect('s' in state.slice).toBe(true);
+    expect('s' in state.slice && state.slice.s()).toBe('ngrx');
+
+    patchState(state, { slice: null });
+    expect(state.slice()).toBe(null);
+    expect('s' in state.slice).toBe(false);
+
+    patchState(state, { slice: 'signals' });
+    expect(state.slice()).toBe('signals');
+    expect('s' in state.slice).toBe(false);
   });
 
   it('creates signals for nested state slices', () => {

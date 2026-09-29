@@ -29,7 +29,7 @@
       ],
       "options": {
         "main": "projects/www/src/main.ts",
-        "configFile": "projects/www/vite.config.ts",
+        "configFile": "projects/www/vitest.config.mts",
         "outputPath": "dist/projects/www/client",
         "tsConfig": "projects/www/tsconfig.app.json"
       }
@@ -53,7 +53,8 @@
     },
     "test": {
       "executor": "@analogjs/vitest-angular:test",
-      "outputs": ["{projectRoot}/coverage"]
+      "outputs": ["{projectRoot}/coverage"],
+      "dependsOn": [{ "target": "collect-docs" }]
     },
     "lint": {
       "executor": "@nx/eslint:lint",

@@ -62,7 +62,7 @@ describe('getRouterSelectors', () => {
       );
     `).toInfer(
       'selector',
-      'MemoizedSelector<State, string | string[], (s1: string | string[]) => string | string[]>'
+      'MemoizedSelector<State, string | string[] | undefined, (s1: string | string[] | undefined) => string | string[] | undefined>'
     );
   });
 
@@ -87,7 +87,7 @@ describe('getRouterSelectors', () => {
       );
     `).toInfer(
       'selector',
-      'MemoizedSelector<State, string, (s1: string) => string>'
+      'MemoizedSelector<State, string | undefined, (s1: string | undefined) => string | undefined>'
     );
   });
 
@@ -120,7 +120,7 @@ describe('getRouterSelectors', () => {
       );
     `).toInfer(
       'selector',
-      'MemoizedSelector<State, string, (s1: string) => string>'
+      'MemoizedSelector<State, string | undefined, (s1: string | undefined) => string | undefined>'
     );
   });
 }, 8_000);

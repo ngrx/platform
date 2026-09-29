@@ -18,16 +18,21 @@ Usage:
 ```ts
 import { TestBed } from '@angular/core/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { cold } from 'jasmine-marbles';
+import { TestScheduler } from 'rxjs/testing';
 
 import { AuthGuard } from '../guards/auth.guard';
 
 describe('Auth Guard', () => {
   let guard: AuthGuard;
   let store: MockStore;
+  let testScheduler: TestScheduler;
   const initialState = { loggedIn: false };
 
   beforeEach(() => {
+    testScheduler = new TestScheduler((actual, expected) => {
+      expect(actual).toEqual(expected);
+    });
+
     TestBed.configureTestingModule({
       imports: [
         // any modules needed
@@ -44,17 +49,17 @@ describe('Auth Guard', () => {
   });
 
   it('should return false if the user state is not logged in', () => {
-    const expected = cold('(a|)', { a: false });
-
-    expect(guard.canActivate()).toBeObservable(expected);
+    testScheduler.run(({ expectObservable }) => {
+      expectObservable(guard.canActivate()).toBe('(a|)', { a: false });
+    });
   });
 
   it('should return true if the user state is logged in', () => {
     store.setState({ loggedIn: true });
 
-    const expected = cold('(a|)', { a: true });
-
-    expect(guard.canActivate()).toBeObservable(expected);
+    testScheduler.run(({ expectObservable }) => {
+      expectObservable(guard.canActivate()).toBe('(a|)', { a: true });
+    });
   });
 });
 ```
@@ -75,7 +80,7 @@ Usage:
 
 </ngrx-code-example>
 
-<ngrx-code-example header="src/app/app.component.spec.ts (Using Mock Selectors) " path="store-walkthrough/src/app/tests/app.component.1.spec.ts" region="mockSelector">
+<ngrx-code-example header="src/app/app.component.spec.ts (Using Mock Selectors)" path="testing-store/src/app/app.component.spec.ts" region="mockSelector">
 
 </ngrx-code-example>
 
@@ -83,23 +88,21 @@ In this example based on the [walkthrough](guide/store/walkthrough), we mock the
 
 You can reset selectors by calling the `MockStore.resetSelectors()` method in the `afterEach()` hook.
 
-<ngrx-code-example header="src/app/app.component.spec.ts (Reset Mock Selector) " path="store-walkthrough/src/app/tests/app.component.1.spec.ts" region="resetMockSelector">
+<ngrx-code-example header="src/app/app.component.spec.ts (Reset Mock Selector)" path="testing-store/src/app/app.component.spec.ts" region="resetMockSelector">
 
 </ngrx-code-example>
-
-Try the <ngrx-docs-stackblitz name="testing-store"></ngrx-docs-stackblitz>.
 
 ### Integration Testing
 
 An integration test should verify that the `Store` coherently works together with our components and services that inject `Store`. An integration test will not mock the store or individual selectors, as unit tests do, but will instead integrate a `Store` by using `StoreModule.forRoot` in your `TestBed` configuration. Here is part of an integration test for the `AppComponent` introduced in the [walkthrough](guide/store/walkthrough).
 
-<ngrx-code-example header="src/app/tests/integration.spec.ts (Integrate Store)" path="store-walkthrough/src/app/tests/integration.spec.ts" region="integrate">
+<ngrx-code-example header="src/app/tests/integration.spec.ts (Integrate Store)" path="testing-store/src/app/integration.spec.ts" region="integrate">
 
 </ngrx-code-example>
 
 The integration test sets up the dependent `Store` by importing the `StoreModule`. In this part of the example, we assert that clicking the `add` button dispatches the corresponding action and is correctly emitted by the `collection` selector.
 
-<ngrx-code-example header="src/app/tests/integration.spec.ts (addButton Test)" path="store-walkthrough/src/app/tests/integration.spec.ts" region="addTest">
+<ngrx-code-example header="src/app/tests/integration.spec.ts (addButton Test)" path="testing-store/src/app/integration.spec.ts" region="addTest">
 
 </ngrx-code-example>
 

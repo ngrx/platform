@@ -4,6 +4,7 @@ export const compilerOptions = () => ({
   module: 'preserve',
   moduleResolution: 'bundler',
   baseUrl: '.',
+  ignoreDeprecations: '6.0',
   experimentalDecorators: true,
   strict: true,
   paths: {

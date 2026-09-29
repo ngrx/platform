@@ -23,9 +23,16 @@ export async function copySchematicsCore(config: Config) {
       pkgConfig.schematics ||
       (pkgConfig['ng-update'] && pkgConfig['ng-update'].migrations)
     ) {
+      const destDir = `${modulesDir}/${pkg}/schematics-core`;
+
+      // Remove the destination directory if it exists to ensure clean copy
+      if (fs.existsSync(destDir)) {
+        fs.rmSync(destDir, { recursive: true });
+      }
+
       ncp(
         `${modulesDir}/schematics-core`,
-        `${modulesDir}/${pkg}/schematics-core`,
+        destDir,
         { filter },
         function (err: any) {
           if (err) {

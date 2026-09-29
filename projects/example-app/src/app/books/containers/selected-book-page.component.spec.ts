@@ -10,12 +10,13 @@ import {
 } from '@example-app/books/components';
 import { SelectedBookPageComponent } from '@example-app/books/containers';
 import { Book, generateMockBook } from '@example-app/books/models';
+import * as fromBooks from '@example-app/books/reducers';
 import { AddCommasPipe } from '@example-app/shared/pipes/add-commas.pipe';
 import { MaterialModule } from '@example-app/material';
 
 describe('Selected Book Page', () => {
   let fixture: ComponentFixture<SelectedBookPageComponent>;
-  let store: MockStore;
+  let store: MockStore<fromBooks.State>;
   let instance: SelectedBookPageComponent;
 
   beforeEach(() => {
@@ -27,14 +28,21 @@ describe('Selected Book Page', () => {
         BookAuthorsComponent,
         AddCommasPipe,
       ],
-      providers: [provideMockStore()],
+      providers: [
+        provideMockStore({
+          selectors: [
+            { selector: fromBooks.selectSelectedBook, value: null },
+            { selector: fromBooks.isSelectedBookInCollection, value: false },
+          ],
+        }),
+      ],
     });
 
     fixture = TestBed.createComponent(SelectedBookPageComponent);
     instance = fixture.componentInstance;
-    store = TestBed.inject(MockStore);
+    store = TestBed.inject<MockStore<fromBooks.State>>(MockStore);
 
-    jest.spyOn(store, 'dispatch');
+    vi.spyOn(store, 'dispatch');
   });
 
   it('should compile', () => {

@@ -16,6 +16,7 @@ import {
   EntitySelectors$,
   EntitySelectors,
 } from '../../';
+import { vi } from 'vitest';
 
 describe('EntitySelectors$', () => {
   /** HeroMetadata identifies extra collection state properties */
@@ -82,9 +83,9 @@ describe('EntitySelectors$', () => {
 
       // EntitySelectors
       collectionCreator = {
-        create: jasmine.createSpy('create'),
+        create: vi.fn().mockName('create'),
       };
-      collectionCreator.create.and.returnValue(emptyHeroCollection);
+      collectionCreator.create.mockReturnValue(emptyHeroCollection);
       const entitySelectorsFactory = new EntitySelectorsFactory(
         collectionCreator
       );
@@ -190,7 +191,7 @@ describe('EntitySelectors$', () => {
         bar: 42,
       });
 
-      collectionCreator.create.and.returnValue(defaultHeroState);
+      collectionCreator.create.mockReturnValue(defaultHeroState);
       const selectors$ = factory.create<Hero, HeroSelectors$>(
         'Hero',
         heroCollectionSelectors

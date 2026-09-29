@@ -26,7 +26,7 @@ export interface Schema {
   /**
    * Specifies the change detection strategy.
    */
-  changeDetection?: 'Default' | 'OnPush';
+  changeDetection?: 'Eager' | 'OnPush';
   /**
    * The prefix to apply to generated selectors.
    */

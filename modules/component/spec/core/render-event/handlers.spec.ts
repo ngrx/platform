@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { combineRenderEventHandlers } from '../../../src/core/render-event/handlers';
 import {
   CompleteRenderEvent,
@@ -11,7 +12,7 @@ describe('combineRenderEventHandlers', () => {
   function testRenderEvent<T>(event: RenderEvent<T>): void {
     describe(`when ${event.type} is emitted`, () => {
       it(`should call ${event.type} handler`, () => {
-        const mockHandler = jest.fn();
+        const mockHandler = vi.fn();
         const handleRenderEvent = combineRenderEventHandlers({
           [event.type]: mockHandler,
         });

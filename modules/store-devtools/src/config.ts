@@ -1,4 +1,4 @@
-import { ActionReducer, Action } from '@ngrx/store';
+import { ActionCreator, ActionReducer, Action } from '@ngrx/store';
 import { InjectionToken } from '@angular/core';
 
 export type ActionSanitizer = (action: Action, id: number) => Action;
@@ -120,6 +120,12 @@ export class StoreDevtoolsConfig {
    * Angular zone or not. It is set to `false` by default.
    */
   connectInZone?: boolean;
+
+  /**
+   * Action creators to make available in the extension's dispatcher,
+   * so actions can be dispatched manually from the extension.
+   */
+  actionCreators?: ActionCreator[] | Record<string, ActionCreator>;
 }
 
 export const STORE_DEVTOOLS_CONFIG = new InjectionToken<StoreDevtoolsConfig>(
@@ -151,6 +157,7 @@ export function createConfig(
     monitor: noMonitor,
     actionSanitizer: undefined,
     stateSanitizer: undefined,
+    actionCreators: undefined,
     name: DEFAULT_NAME,
     serialize: false,
     logOnly: false,

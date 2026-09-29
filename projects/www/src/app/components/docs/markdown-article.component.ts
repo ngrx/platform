@@ -21,15 +21,21 @@ type Heading = { level: number; text: string; id: string; url: string };
     <article #article>
       <ng-content></ng-content>
     </article>
-    <menu>
-      <div class="content-menu" (click)="isMenuOpen.set(!isMenuOpen())">
+    <nav class="page-menu" aria-label="On this page">
+      <button
+        type="button"
+        class="content-menu"
+        (click)="isMenuOpen.set(!isMenuOpen())"
+        aria-label="Table of contents"
+        [attr.aria-expanded]="isMenuOpen()"
+      >
         <mat-icon>library_books</mat-icon>
         @if (isMenuOpen()) {
           <mat-icon>keyboard_arrow_up</mat-icon>
         } @else {
           <mat-icon>keyboard_arrow_down</mat-icon>
         }
-      </div>
+      </button>
       <div class="content-menu-holder" [class.open]="isMenuOpen()">
         @for (heading of headings(); track $index) {
           <a
@@ -42,7 +48,7 @@ type Heading = { level: number; text: string; id: string; url: string };
           </a>
         }
       </div>
-    </menu>
+    </nav>
   `,
   styles: [
     `
@@ -59,38 +65,39 @@ type Heading = { level: number; text: string; id: string; url: string };
         }
       }
 
-      menu {
+      .page-menu {
         display: flex;
         width: 240px;
         flex-direction: column;
         gap: 6px;
         position: fixed;
-        top: 24px;
+        top: calc(var(--top-banner-height, 0px) + 24px);
         right: 24px;
         margin: 0;
         padding: 0;
-        border-left: 1px solid rgba(255, 255, 255, 0.12);
+        border-left: 1px solid var(--ngrx-border-color);
         @media only screen and (max-width: 1280px) {
           position: relative;
+          top: 0;
           width: 100%;
-          padding: 24px;
+          padding: 24px 24px 0;
           right: 0px;
         }
       }
 
-      menu a {
-        color: rgba(255, 255, 255, 0.56);
+      .page-menu a {
+        color: var(--ngrx-text-muted);
         font-size: 13px;
         border-left: 2px solid transparent;
       }
 
-      menu a:hover {
-        color: rgba(255, 255, 255, 0.87);
+      .page-menu a:hover {
+        color: var(--ngrx-text-primary);
       }
 
-      menu a.active {
-        color: rgba(255, 255, 255, 0.87);
-        border-color: rgba(207, 143, 197, 0.96);
+      .page-menu a.active {
+        color: var(--ngrx-text-primary);
+        border-color: var(--ngrx-accent);
       }
 
       .content-menu-holder {
@@ -109,8 +116,10 @@ type Heading = { level: number; text: string; id: string; url: string };
         align-items: center;
         justify-content: space-between;
         padding: 5px 10px;
-        background: #201a23;
+        background: var(--ngrx-bg-content-menu);
+        border: none;
         border-radius: 5px;
+        color: inherit;
         display: flex;
         margin-bottom: 10px;
         cursor: pointer;
@@ -119,7 +128,7 @@ type Heading = { level: number; text: string; id: string; url: string };
           display: flex;
         }
         &:hover {
-          background: #262029;
+          background: var(--ngrx-bg-content-menu-hover);
         }
       }
 
@@ -142,9 +151,11 @@ type Heading = { level: number; text: string; id: string; url: string };
         font-size: 32px;
       }
 
+      /* Dim body copy via color instead of opacity so links and code keep
+         their full-contrast colors (opacity dropped links below WCAG AA) */
       article ::ng-deep p:not(ngrx-alert p),
       article ::ng-deep li {
-        opacity: 0.8;
+        color: var(--ngrx-text-secondary);
       }
 
       article ::ng-deep code:not(pre code) {
@@ -153,9 +164,9 @@ type Heading = { level: number; text: string; id: string; url: string };
 
       article ::ng-deep table {
         border-collapse: collapse;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
-        border-left: 1px solid rgba(255, 255, 255, 0.12);
-        border-right: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
+        border-left: 1px solid var(--ngrx-border-color);
+        border-right: 1px solid var(--ngrx-border-color);
         margin: 14px 0;
         @media only screen and (max-width: 1280px) {
           display: block;
@@ -164,12 +175,12 @@ type Heading = { level: number; text: string; id: string; url: string };
       }
 
       article ::ng-deep table thead {
-        background-color: rgba(0, 0, 0, 0.36);
+        background-color: var(--ngrx-table-header-bg);
         font-family: 'Oxanium', sans-serif;
       }
 
       article ::ng-deep table tr {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom: 1px solid var(--ngrx-border-color);
       }
 
       article ::ng-deep table th,
@@ -222,15 +233,30 @@ export class MarkdownArticleComponent implements OnDestroy {
     this.router.navigate([], { fragment: heading.id }).then(() => {
       const element = document.getElementById(heading.id);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        const prefersReducedMotion = window?.matchMedia(
+          '(prefers-reduced-motion: reduce)'
+        )?.matches;
+        element.scrollIntoView({
+          behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        });
       }
     });
   }
 
   private collectHeadings() {
-    const headingElements = this.articleRef().nativeElement.querySelectorAll(
-      'h1, h2, h3, h4, h5, h6'
-    );
+    const article = this.articleRef().nativeElement;
+    const currentUrlWithoutHash = this.router.url.split('#')[0];
+    const fragmentLinks =
+      article.querySelectorAll<HTMLAnchorElement>('a[href^="#"]');
+
+    for (const link of Array.from(fragmentLinks)) {
+      link.setAttribute(
+        'href',
+        `${currentUrlWithoutHash}${link.getAttribute('href')}`
+      );
+    }
+
+    const headingElements = article.querySelectorAll('h1, h2, h3, h4, h5, h6');
     const headings: Heading[] = [];
 
     for (const heading of Array.from(headingElements)) {
@@ -243,8 +269,6 @@ export class MarkdownArticleComponent implements OnDestroy {
         .replaceAll('/', '-');
       heading.id = id;
 
-      const currentUrl = this.router.url;
-      const currentUrlWithoutHash = currentUrl.split('#')[0];
       const url = `${currentUrlWithoutHash}#${id}`;
 
       headings.push({

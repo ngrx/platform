@@ -19,7 +19,7 @@ import { SymbolExcerptComponent } from './symbol-excerpt.component';
     `
       :host {
         display: block;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid var(--ngrx-border-color);
       }
 
       .param {
@@ -31,12 +31,12 @@ import { SymbolExcerptComponent } from './symbol-excerpt.component';
       }
 
       .param:last-child {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom: 1px solid var(--ngrx-border-color);
       }
 
       .paramSymbol {
         font-weight: 700;
-        color: #fface6;
+        color: var(--ngrx-link);
       }
 
       code {

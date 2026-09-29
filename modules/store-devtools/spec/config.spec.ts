@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { Action, createAction } from '@ngrx/store';
 
 import { createConfig, DEFAULT_NAME, noMonitor } from '../src/config';
 
@@ -41,6 +41,7 @@ describe('StoreDevtoolsOptions', () => {
     function actionSanitizer(action: Action, id: number): Action {
       return action;
     }
+    const actionCreators = [createAction('[Counter] Increment')];
     const config = createConfig({
       maxAge: 20,
       actionSanitizer,
@@ -53,6 +54,7 @@ describe('StoreDevtoolsOptions', () => {
       features: {
         test: true,
       },
+      actionCreators,
     });
     expect(config).toEqual({
       maxAge: 20,
@@ -69,6 +71,7 @@ describe('StoreDevtoolsOptions', () => {
         test: true,
       },
       connectInZone: false,
+      actionCreators,
     });
   });
 

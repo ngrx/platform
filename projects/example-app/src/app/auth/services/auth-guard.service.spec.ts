@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { MemoizedSelector } from '@ngrx/store';
-import { cold } from 'jasmine-marbles';
+import { cold } from '../../testing/marbles';
 import { authGuard } from '@example-app/auth/services';
 import * as fromAuth from '@example-app/auth/reducers';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 
 describe('Auth Guard', () => {
   let guard: Observable<boolean>;
-  let store: MockStore;
+  let store: MockStore<fromAuth.State>;
   let loggedIn: MemoizedSelector<fromAuth.State, boolean>;
 
   beforeEach(() => {
@@ -16,7 +16,7 @@ describe('Auth Guard', () => {
       providers: [provideMockStore()],
     });
 
-    store = TestBed.inject(MockStore);
+    store = TestBed.inject<MockStore<fromAuth.State>>(MockStore);
     guard = TestBed.runInInjectionContext(authGuard);
     loggedIn = store.overrideSelector(fromAuth.selectLoggedIn, false);
   });

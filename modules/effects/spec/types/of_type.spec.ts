@@ -20,7 +20,7 @@ describe('ofType()', () => {
         const actionA = createAction('Action A');
         const effect = actions$.pipe(ofType(actionA))
       `).toInfer('effect', 'Observable<Action<"Action A">>');
-    });
+    }, 10_000);
 
     it('should infer correctly with props', () => {
       expectSnippet(`

@@ -41,6 +41,7 @@ const COLOR_PAIRS: ColorPairs = [
       fill="none"
       preserveAspectRatio="xMidYMid slice"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
     >
       <g filter="url(#filter0_f_232_269)" transform="translate(0 40)">
         <path
@@ -362,6 +363,10 @@ export class BannerAnimationComponent implements AfterViewInit, OnDestroy {
 
   startCircleAnimation() {
     if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
+    if (window?.matchMedia('(prefers-reduced-motion: reduce)')?.matches) {
       return;
     }
 

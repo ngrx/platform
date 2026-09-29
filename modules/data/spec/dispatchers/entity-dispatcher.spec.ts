@@ -15,6 +15,7 @@ import {
   EntityOp,
   MergeStrategy,
 } from '../..';
+import { Mock, vi } from 'vitest';
 
 class Hero {
   id!: number;
@@ -66,15 +67,15 @@ export function commandDispatchTest(
   setup: () => { dispatcher: EntityDispatcher<Hero>; store: any }
 ) {
   let dispatcher: EntityDispatcher<Hero>;
-  let testStore: { dispatch: jasmine.Spy };
+  let testStore: { dispatch: Mock };
 
   function dispatchedAction() {
-    return <EntityAction>testStore.dispatch.calls.argsFor(0)[0];
+    return <EntityAction>testStore.dispatch.mock.calls.at(0)?.[0];
   }
 
   beforeEach(() => {
     const s = setup();
-    spyOn(s.store, 'dispatch').and.callThrough();
+    vi.spyOn(s.store, 'dispatch');
     dispatcher = s.dispatcher;
     testStore = s.store;
   });
@@ -165,7 +166,7 @@ export function commandDispatchTest(
         expect(isOptimistic).toBe(false);
         expect(data).toBe(hero);
 
-        testStore.dispatch.calls.reset();
+        testStore.dispatch.mockClear();
 
         dispatcher.add(hero, { isOptimistic: false });
         const specificallyPessimistic = dispatchedAction().payload;

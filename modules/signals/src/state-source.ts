@@ -194,7 +194,7 @@ export function watchState<State extends object>(
   const destroyRef = injector.get(DestroyRef);
 
   addWatcher(stateSource, watcher);
-  watcher(getState(stateSource));
+  executeWatcher(stateSource, watcher);
 
   const destroy = () => removeWatcher(stateSource, watcher);
   destroyRef.onDestroy(destroy);
@@ -214,9 +214,18 @@ function notifyWatchers<State extends object>(
   const watchers = getWatchers(stateSource);
 
   for (const watcher of watchers) {
-    const state = untracked(() => getState(stateSource));
-    watcher(state);
+    executeWatcher(stateSource, watcher);
   }
+}
+
+function executeWatcher<State extends object>(
+  stateSource: StateSource<State>,
+  stateWatcher: StateWatcher<State>
+): void {
+  untracked(() => {
+    const state = getState(stateSource);
+    stateWatcher(state);
+  });
 }
 
 function addWatcher<State extends object>(
