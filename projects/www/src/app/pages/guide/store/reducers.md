@@ -132,8 +132,8 @@ export const scoreboardReducer = createReducer(
   on(ScoreboardPageActions.homeScore, (state) => ({
     ...state,
     home: state.home + 1,
-    // TS error: 'on()' callback return type must exactly match
-    // the state type. Remove excess properties.
+    // TS error: callback return type must exactly match the state
+    // type. Remove excess properties. Excess property: extra
     extra: true,
   }))
 );
@@ -143,7 +143,7 @@ export const scoreboardReducer = createReducer(
 
 <ngrx-docs-alert type="inform">
 
-**Note:** When `on` is used inside a generic reducer factory where the state type is an unresolved generic parameter (e.g., `function createGenericReducer<TState>()`), TypeScript cannot fully resolve the excess property check. In those cases, callbacks that spread state and override known properties may produce a false type error. Return `state` directly or use a type assertion (`as TState`) as a workaround.
+**Note:** When `on` is used inside a generic reducer factory (e.g., `function createLoadingReducer<TState extends { loading: boolean }>()`), properties guaranteed by the constraint can be overridden (`{ ...state, loading: true }`), while properties the constraint doesn't guarantee are reported as excess.
 
 </ngrx-docs-alert>
 

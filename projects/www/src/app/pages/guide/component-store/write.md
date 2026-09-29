@@ -59,8 +59,8 @@ export class MoviesStore extends ComponentStore<MoviesState> {
 
   readonly addMovie = this.updater((state, movie: Movie) => ({
     movies: [...state.movies, movie],
-    // TS error: 'updater()' callback return type must exactly match
-    // the state type. Remove excess properties.
+    // TS error: updater callback return type must exactly match the
+    // state type. Remove excess properties. Excess property: extra
     extra: true,
   }));
 }
@@ -70,7 +70,7 @@ export class MoviesStore extends ComponentStore<MoviesState> {
 
 <ngrx-docs-alert type="inform">
 
-**Note:** When `ComponentStore` is extended with a generic state type parameter (e.g., `class MyStore<T extends object> extends ComponentStore<T>`), TypeScript cannot fully resolve the excess property check. In those cases, callbacks that spread state and override known properties may produce a false type error. Return `state` directly or use a type assertion (`as T`) as a workaround.
+**Note:** When `ComponentStore` is extended with a generic state type parameter (e.g., `class MyStore<T extends { loading: boolean }> extends ComponentStore<T>`), properties guaranteed by the constraint can be overridden (`{ ...state, loading: true }`), while properties the constraint doesn't guarantee are reported as excess.
 
 </ngrx-docs-alert>
 
