@@ -188,8 +188,8 @@ export function migrateSelectCalls(): Rule {
           const indent = lineText.match(/^\s*/)?.[0] ?? '';
 
           const todoComment =
-            `${indent}// TODO: @ngrx/store v21 migration - convert to a factory selector.` +
-            ` See https://ngrx.io/guide/migration/v21\n`;
+            `${indent}// TODO: @ngrx/store v23 migration - convert to a factory selector.` +
+            ` See https://ngrx.io/guide/migration/v23\n`;
 
           changes.push(
             new InsertChange(sourceFile.fileName, lineStart, todoComment)
@@ -198,7 +198,7 @@ export function migrateSelectCalls(): Rule {
           ctx.logger.warn(
             `[@ngrx/store] ${sourceFile.fileName}:${line + 1}: ` +
               `Found ${name}(selector, props) call that requires manual migration. ` +
-              `Convert to a factory selector pattern. See https://ngrx.io/guide/migration/v21`
+              `Convert to a factory selector pattern. See https://ngrx.io/guide/migration/v23`
           );
         }
       });

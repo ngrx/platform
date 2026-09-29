@@ -41,10 +41,10 @@
       "version": "18-beta",
       "factory": "./18_0_0-beta/index"
     },
-    "ngrx-store-migration-21": {
-      "description": "As of NgRx v21, `SelectorWithProps` and `MemoizedSelectorWithProps` have been removed. Use factory selectors instead.",
-      "version": "21",
-      "factory": "./21_0_0/index"
+    "23_0_0-beta_0-remove-selectors-with-props": {
+      "description": "As of NgRx v23, `SelectorWithProps` and `MemoizedSelectorWithProps` have been removed. Use factory selectors instead.",
+      "version": "23.0.0-beta.0",
+      "factory": "./23_0_0-beta_0-remove-selectors-with-props/index"
     }
   }
 }

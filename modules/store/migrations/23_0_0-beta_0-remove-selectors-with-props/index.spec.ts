@@ -7,7 +7,7 @@ import * as path from 'path';
 import { tags } from '@angular-devkit/core';
 import { logging } from '@angular-devkit/core';
 
-describe('Store Migration to 21.0.0', () => {
+describe('23_0_0-beta_0-remove-selectors-with-props', () => {
   const collectionPath = path.join(
     process.cwd(),
     'dist/modules/store/migrations/migration.json'
@@ -27,7 +27,7 @@ describe('Store Migration to 21.0.0', () => {
     schematicRunner.logger.subscribe((e) => logs.push(e));
 
     const tree = await schematicRunner.runSchematic(
-      'ngrx-store-migration-21',
+      '23_0_0-beta_0-remove-selectors-with-props',
       {},
       appTree
     );
@@ -241,7 +241,7 @@ class MyComponent {
 import { Store, select } from '@ngrx/store';
 
 class MyComponent {
-  // TODO: @ngrx/store v21 migration - convert to a factory selector. See https://ngrx.io/guide/migration/v21
+  // TODO: @ngrx/store v23 migration - convert to a factory selector. See https://ngrx.io/guide/migration/v23
   data$ = this.store.pipe(select(mySelector, { id: 1 }));
   constructor(private store: Store) {}
 }
@@ -266,7 +266,7 @@ class MyComponent {
 import { Store } from '@ngrx/store';
 
 class MyComponent {
-  // TODO: @ngrx/store v21 migration - convert to a factory selector. See https://ngrx.io/guide/migration/v21
+  // TODO: @ngrx/store v23 migration - convert to a factory selector. See https://ngrx.io/guide/migration/v23
   data$ = this.store.select(mySelector, { id: 1 });
   constructor(private store: Store) {}
 }
