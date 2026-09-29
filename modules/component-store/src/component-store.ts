@@ -44,6 +44,29 @@ const excessPropertiesAreNotAllowedMsg =
   'updater callback return type must exactly match the state type. Remove excess properties.';
 type ExcessPropertiesAreNotAllowed = typeof excessPropertiesAreNotAllowedMsg;
 
+type KeysOfUnion<T> = T extends unknown ? keyof T : never;
+// Keys a returned object may carry: any key of any union member, plus numeric keys for string index signatures.
+type AllowedStateKeys<S> =
+  keyof S | KeysOfUnion<S> | (string extends keyof S ? number : never);
+// `K` is inferred from the returned object's keys and constrained to AllowedStateKeys<S>. Constraint checks use
+// assignability, which respects generic constraints (e.g. `T extends { loading: boolean }`). When a key is not
+// allowed, inference falls back to the constraint and the leftover keys are typed as the error message.
+type ExactStateReturn<R, S, K, Msg extends string> = [R] extends [
+  null | undefined,
+]
+  ? unknown
+  : // Fast path: no key outside the state's keys (also resolves for identical generic types, e.g. `return state`)
+    [Exclude<KeysOfUnion<R>, AllowedStateKeys<S>>] extends [never]
+    ? unknown
+    : { [P in K & PropertyKey]?: unknown } & {
+        [
+          P in Exclude<
+            KeysOfUnion<R>,
+            K | AllowedStateKeys<S>
+          > as `${Msg} Excess property: ${P & string}`
+        ]: never;
+      };
+
 export interface SelectConfig<T = unknown> {
   debounce?: boolean;
   equal?: ValueEqualityFn<T>;
@@ -138,14 +161,13 @@ export class ComponentStore<T extends object> implements OnDestroy {
       : (observableOrValue: ValueType | Observable<ValueType>) => Subscription,
     // Captures the actual return type to enforce exact state shape
     R extends T = T,
+    // Keys of the returned object, vetted against the state's keys via the constraint
+    K extends AllowedStateKeys<T> = never,
   >(
     updaterFn: (
       state: T,
       value: OriginType
-    ) => R &
-      (Exclude<keyof R, keyof T> extends never
-        ? unknown
-        : ExcessPropertiesAreNotAllowed)
+    ) => R & ExactStateReturn<R, T, K, ExcessPropertiesAreNotAllowed>
   ): ReturnType {
     return ((
       observableOrValue?: OriginType | Observable<OriginType>
@@ -224,9 +246,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
    */
   patchState(
     partialStateOrUpdaterFn:
-      | Partial<T>
-      | Observable<Partial<T>>
-      | ((state: T) => Partial<T>)
+      Partial<T> | Observable<Partial<T>> | ((state: T) => Partial<T>)
   ): void {
     const patchedState =
       typeof partialStateOrUpdaterFn === 'function'

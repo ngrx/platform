@@ -453,35 +453,93 @@ describe('ComponentStore types', () => {
     });
 
     describe('with a generic state type parameter', () => {
-      // When `ComponentStore` is extended with an unresolved generic state
-      // type, TypeScript cannot fully resolve the excess-property check, so
-      // spreading state and overriding a known property reports a false
-      // positive. Returning `state` directly, or asserting `as T`, is the
-      // documented workaround.
       class GenericStore<T extends { id: string }> extends ComponentStore<T> {
-        // Spreading state and overriding a known property reports a false
-        // positive here: while `T` is unresolved the excess-property check is
-        // deferred and cannot collapse to `never`, so the callback is rejected.
-        readonly setIdViaSpread = this.updater(
-          // @ts-expect-error known limitation: the excess-property check is
-          // deferred for an unresolved generic state type
-          (state, id: string) => ({ ...state, id })
-        );
+        // Keys guaranteed by the constraint can be overridden via spread.
+        readonly setIdViaSpread = this.updater((state, id: string) => ({
+          ...state,
+          id,
+        }));
 
-        // Workaround 1: assert the return value as `T`.
-        readonly setIdViaAssertion = this.updater(
-          (state, id: string) => ({ ...state, id } as T)
-        );
+        readonly returnState = this.updater((state) => state);
 
-        // Workaround 2: return a full `T` (or `state`) directly.
+        readonly copyState = this.updater((state) => ({ ...state }));
+
         readonly replaceViaDirectReturn = this.updater(
           (_state, next: T) => next
         );
+
+        readonly setIdViaAssertion = this.updater(
+          (state, id: string) => ({ ...state, id }) as T
+        );
+
+        // Keys not guaranteed by the constraint are excess properties.
+        readonly setExtra = this.updater(
+          // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+          (state, extra: string) => ({ ...state, extra })
+        );
       }
 
-      it('documents the generic-state limitation and its workarounds', () => {
+      class ListStore<Item> extends ComponentStore<{
+        items: Item[];
+        loading: boolean;
+      }> {
+        readonly setItems = this.updater((state, items: Item[]) => ({
+          ...state,
+          items,
+          loading: false,
+        }));
+      }
+
+      class ExtendableStore<T extends object> extends ComponentStore<
+        { loading: boolean } & T
+      > {
+        readonly setLoading = this.updater((state) => ({
+          ...state,
+          loading: true,
+        }));
+      }
+
+      it('allows overriding known keys and catches excess keys', () => {
         expectTypeOf(GenericStore).toBeConstructibleWith({ id: '1' });
+        expectTypeOf(ListStore).toBeConstructibleWith({
+          items: [],
+          loading: false,
+        });
+        expectTypeOf(ExtendableStore).toBeConstructibleWith({ loading: false });
       });
+    });
+
+    describe('with union state', () => {
+      type FetchState =
+        { status: 'idle' } | { status: 'loaded'; data: string[] };
+
+      it('allows switching to a union member with its own keys', () => {
+        const componentStore = new ComponentStore<FetchState>({
+          status: 'idle',
+        });
+        componentStore.updater((_, data: string[]) => ({
+          status: 'loaded' as const,
+          data,
+        }));
+      });
+
+      it('catches keys that exist on no union member', () => {
+        const componentStore = new ComponentStore<FetchState>({
+          status: 'idle',
+        });
+        componentStore.updater(
+          // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+          () => ({ status: 'idle' as const, bogus: true })
+        );
+      });
+    });
+
+    it('catches excess properties returned from one branch of a conditional', () => {
+      const componentStore = new ComponentStore({ prop: 'init' });
+      componentStore.updater(
+        // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+        (state, flag: boolean) => (flag ? { ...state, extra: true } : state)
+      );
     });
   });
 });

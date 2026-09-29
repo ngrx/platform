@@ -4,6 +4,8 @@ import {
   ActionType,
   Action,
   ExcessPropertiesAreNotAllowed,
+  AllowedStateKeys,
+  ExactStateReturn,
 } from './models';
 
 // Goes over the array of ActionCreators, pulls the action type out of each one
@@ -72,6 +74,9 @@ export function on<
   EffectiveState = unknown extends State ? InferredState : State,
   // Captures the actual return type to enforce exact state shape — excess properties produce a descriptive type error
   R extends EffectiveState = EffectiveState,
+  // Keys of the returned object, vetted against the state's keys via the constraint
+  K extends AllowedStateKeys<unknown extends State ? InferredState : State> =
+    never,
 >(
   ...args: [
     ...creators: Creators,
@@ -79,9 +84,12 @@ export function on<
       state: unknown extends State ? InferredState : State,
       action: ActionType<Creators[number]>
     ) => R &
-      (Exclude<keyof R, keyof EffectiveState> extends never
-        ? unknown
-        : ExcessPropertiesAreNotAllowed),
+      ExactStateReturn<
+        R,
+        unknown extends State ? InferredState : State,
+        K,
+        ExcessPropertiesAreNotAllowed
+      >,
   ]
 ): ReducerTypes<unknown extends State ? InferredState : State, Creators> {
   const reducer = args.pop() as unknown as OnReducer<
