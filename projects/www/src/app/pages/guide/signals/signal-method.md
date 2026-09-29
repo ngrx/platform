@@ -23,7 +23,7 @@ export class Numbers {
 
 </ngrx-code-example>
 
-`logDoubledNumber` can be called with a static value of type `number` or a `Signal<number>`.
+`logDoubledNumber` can be called with a static value of type `number` or a `Signal&lt;number&gt;`.
 
 ```ts
 @Component({

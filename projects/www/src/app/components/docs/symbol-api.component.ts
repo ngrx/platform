@@ -1,9 +1,4 @@
-import {
-  Component,
-  computed,
-  input,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import {
   ApiExcerptToken,
   ApiExcerptTokenKind,
@@ -33,7 +28,6 @@ import { SymbolExcerptGroupComponent } from './symbol-excerpt-group.component';
       }
     </ngrx-symbol-excerpt-group>
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {

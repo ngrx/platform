@@ -3,7 +3,6 @@
 exports[`component-store > should import into a specified module when the module provided 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { App } from './app';
 import { FooStore } from './foo/foo.store';
 
@@ -40,7 +39,6 @@ describe('FooStore', () => {
 exports[`component-store > should not be provided into the module by default 1`] = `
 "import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { App } from './app';
 
 @NgModule({
@@ -65,10 +63,10 @@ import { FooStore } from './foo/foo.store';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.html',
   standalone: false,
   styleUrl: './app.css',
-  providers: [FooStore]
+  templateUrl: './app.html',
+  providers: [FooStore],
 })
 export class App {
   protected readonly title = signal('bar');

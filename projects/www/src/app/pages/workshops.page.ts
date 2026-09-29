@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { StyledBoxComponent } from '../components/styled-box.component';
 
@@ -333,7 +333,6 @@ import { StyledBoxComponent } from '../components/styled-box.component';
       </p>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {
@@ -424,7 +423,7 @@ import { StyledBoxComponent } from '../components/styled-box.component';
 
       .agenda h4 {
         text-transform: uppercase;
-        color: var(--ngrx-link);
+        color: var(--ngrx-accent-strong);
         margin: 0 0 6px;
         font-size: 0.75rem;
         letter-spacing: 0.08em;

@@ -1,28 +1,28 @@
 // Using marble testing
 import { TestBed } from '@angular/core/testing';
 
-import { cold, hot, getTestScheduler } from './marbles';
 import { Observable } from 'rxjs';
+import { cold, getTestScheduler, hot } from './marbles';
 
 import { Actions } from '@ngrx/effects';
-import { Update } from '@ngrx/entity';
 import { provideMockActions } from '@ngrx/effects/testing';
+import { Update } from '@ngrx/entity';
+import { Mock, vi } from 'vitest';
 import {
-  EntityEffects,
+  DataServiceError,
+  DefaultPersistenceResultHandler,
+  EntityAction,
+  EntityActionDataServiceError,
   EntityActionFactory,
   EntityDataService,
-  PersistenceResultHandler,
-  DefaultPersistenceResultHandler,
+  EntityEffects,
   EntityOp,
   HttpMethods,
-  DataServiceError,
-  EntityAction,
-  makeErrorOp,
-  EntityActionDataServiceError,
   Logger,
+  makeErrorOp,
+  PersistenceResultHandler,
 } from '../..';
 import { ENTITY_EFFECTS_SCHEDULER } from '../../src/effects/entity-effects-scheduler';
-import { Mock, vi } from 'vitest';
 
 //////// Tests begin ////////
 describe('EntityEffects (marble testing)', () => {
@@ -448,7 +448,7 @@ describe('EntityEffects (marble testing)', () => {
     const action = entityActionFactory.create('Hero', EntityOp.REMOVE_ALL);
 
     actions = hot('-a---', { a: action });
-    const expected = cold('---');
+    const expected = cold<never>('---');
 
     expect(effects.persist$).toBeObservable(expected);
   });

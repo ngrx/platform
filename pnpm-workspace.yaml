@@ -1,0 +1,10 @@
+allowBuilds:
+  '@parcel/watcher': false
+  core-js: false
+  esbuild: false
+  less: false
+  lmdb: false
+  msgpackr-extract: false
+  nx: true
+  protobufjs: false
+  unrs-resolver: false

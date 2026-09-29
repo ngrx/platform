@@ -1,14 +1,12 @@
 import { Signal } from '@angular/core';
-import { DeepSignal } from './deep-signal';
+import { DeepSignalOf } from './deep-signal';
 import { WritableStateSource } from './state-source';
 import { IsKnownRecord, Prettify } from './ts-helpers';
 
 export type StateSignals<State> =
   IsKnownRecord<Prettify<State>> extends true
     ? {
-        [Key in keyof State]: IsKnownRecord<State[Key]> extends true
-          ? DeepSignal<State[Key]>
-          : Signal<State[Key]>;
+        [Key in keyof State]: DeepSignalOf<State[Key]>;
       }
     : {};
 
@@ -46,3 +44,39 @@ export type SignalStoreFeature<
 > = (
   store: InnerSignalStore<Input['state'], Input['props'], Input['methods']>
 ) => InnerSignalStore<Output['state'], Output['props'], Output['methods']>;
+
+/**
+ * @description
+ *
+ * Extracts the state and members from a feature factory, allowing
+ * them to be reused as input in another `signalStoreFeature`.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * function withFeatureA() {
+ *   return signalStoreFeature(withState({ foo: 'bar' }));
+ * }
+ *
+ * type FeatureA = SignalStoreFeatureType<typeof withFeatureA>;
+ *
+ * function withFeatureB() {
+ *   return signalStoreFeature(
+ *     type<FeatureA>(),
+ *     withMethods(({ foo }) => ({
+ *       logFoo(): void {
+ *         console.log(foo());
+ *       },
+ *     }))
+ *   );
+ * }
+ * ```
+ */
+export type SignalStoreFeatureType<
+  Feature extends (...params: never[]) => unknown,
+> =
+  ReturnType<Feature> extends SignalStoreFeature<infer Input, infer Output>
+    ? SignalStoreFeatureResult extends Input
+      ? Output
+      : Input & Output
+    : never;

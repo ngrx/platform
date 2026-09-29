@@ -1,9 +1,4 @@
-import {
-  Component,
-  computed,
-  input,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -11,9 +6,13 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'ngrx-symbol-code-link',
   standalone: true,
   imports: [MatIconModule, MatButtonModule],
-  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
-    <a mat-stroked-button [href]="url()" target="_blank">
+    <a
+      mat-stroked-button
+      [href]="url()"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       <mat-icon>code</mat-icon>
       View Source on Github
     </a>

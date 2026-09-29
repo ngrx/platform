@@ -1,13 +1,10 @@
 /// <reference types="vitest" />
-import {
-  defaultClientConditions,
-  defaultServerConditions,
-} from 'vite';
+import { defaultClientConditions, defaultServerConditions } from 'vite';
 import { defineConfig } from 'vitest/config';
 import analog from '@analogjs/platform';
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
+import tsconfigPaths from 'vite-tsconfig-paths';
 import ngrxStackblitzPlugin from './src/tools/vite-ngrx-stackblitz.plugin';
-import { ngrxTheme } from './src/shared/ngrx-shiki-theme';
+import { ngrxTheme, ngrxThemeLight } from './src/shared/ngrx-shiki-theme';
 import { configDefaults } from 'vitest/config';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -55,11 +52,12 @@ export default defineConfig(({ mode }) => ({
         highlighter: 'shiki',
         shikiOptions: {
           highlight: {
-            theme: 'ngrx-theme',
+            themes: { light: 'ngrx-theme-light', dark: 'ngrx-theme' },
+            defaultColor: 'dark',
           },
           highlighter: {
             additionalLangs: ['sh'],
-            themes: [ngrxTheme],
+            themes: [ngrxTheme, ngrxThemeLight],
           },
         },
       },
@@ -67,7 +65,9 @@ export default defineConfig(({ mode }) => ({
         inlineStylesExtension: 'scss',
       },
     }),
-    nxViteTsPaths(),
+    // The workspace root tsconfig holds the path aliases for all projects,
+    // so resolve it explicitly instead of crawling the project root.
+    tsconfigPaths({ projects: [join(wwwRoot, '../../tsconfig.json')] }),
     ngrxStackblitzPlugin(),
   ],
 
@@ -77,7 +77,13 @@ export default defineConfig(({ mode }) => ({
     setupFiles: ['src/test-setup.ts'],
     include: ['**/*.spec.ts'],
     exclude: [...configDefaults.exclude, 'src/app/examples/**'],
-    typecheck: { enabled: true, ignoreSourceErrors: true },
+    typecheck: {
+      enabled: true,
+      ignoreSourceErrors: true,
+      include: ['**/*.spec.ts', '**/*.test-d.ts'],
+      exclude: [...configDefaults.exclude, 'src/app/examples/**'],
+      tsconfig: './tsconfig.spec.json',
+    },
   },
 
   define: {

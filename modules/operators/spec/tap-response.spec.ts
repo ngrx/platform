@@ -5,7 +5,7 @@ import { vi } from 'vitest';
 
 describe('tapResponse', () => {
   it('should invoke next callback on next', () => {
-    const nextCallback = vi.fn<(value: [number]) => void>();
+    const nextCallback = vi.fn<(value: number) => void>();
 
     of(1, 2, 3)
       .pipe(tapResponse({ next: nextCallback, error: noop }))

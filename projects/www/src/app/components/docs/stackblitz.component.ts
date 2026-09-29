@@ -9,7 +9,6 @@ import {
   inject,
   input,
   viewChild,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
 
@@ -20,13 +19,17 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
     @if (isEmbedded()) {
       <div [attr.title]="name()" #example></div>
     } @else {
-      <a (click)="openStackblitz()" [attr.title]="name()"
-        ><ng-content>StackBlitz example</ng-content></a
+      <button
+        type="button"
+        class="stackblitz-link"
+        (click)="openStackblitz()"
+        [attr.title]="name()"
       >
+        <ng-content>StackBlitz example</ng-content>
+      </button>
     }
   `,
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       ngrx-docs-stackblitz iframe {
@@ -34,6 +37,15 @@ import { ExamplesService } from '@ngrx-io/app/examples/examples.service';
         width: 100%;
         height: 800px;
         border: none;
+      }
+
+      ngrx-docs-stackblitz .stackblitz-link {
+        background: none;
+        border: none;
+        padding: 0;
+        font: inherit;
+        color: var(--ngrx-link);
+        cursor: pointer;
       }
     `,
   ],

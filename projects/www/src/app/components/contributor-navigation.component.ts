@@ -1,9 +1,4 @@
-import {
-  Component,
-  input,
-  output,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { GroupNav } from '../services/contributors.service';
 
 @Component({
@@ -11,16 +6,17 @@ import { GroupNav } from '../services/contributors.service';
   template: `
     <div class="groups-navigation">
       @for (group of groupNames(); track group.name) {
-        <p
+        <button
+          type="button"
           (click)="selectGroup(group.name)"
           [class.selected]="selectedGroup() === group.name"
+          [attr.aria-pressed]="selectedGroup() === group.name"
         >
           {{ group.name }}
-        </p>
+        </button>
       }
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .groups-navigation {
@@ -33,7 +29,9 @@ import { GroupNav } from '../services/contributors.service';
         margin-bottom: 50px;
         border-radius: 5px;
       }
-      .groups-navigation p {
+      .groups-navigation button {
+        background: none;
+        border: none;
         color: var(--ngrx-text-muted);
         padding: 2px 10px;
         cursor: pointer;
@@ -41,7 +39,7 @@ import { GroupNav } from '../services/contributors.service';
         border-radius: 2px;
         font-size: 18px;
       }
-      .groups-navigation p.selected {
+      .groups-navigation button.selected {
         background: var(--ngrx-bg-overlay);
         color: var(--ngrx-text);
       }

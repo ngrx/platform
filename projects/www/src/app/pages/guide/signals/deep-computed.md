@@ -32,3 +32,36 @@ console.log(pagination.totalPages()); // logs: 4
 For enhanced performance, deeply nested signals are generated lazily and initialized only upon first access.
 
 </ngrx-docs-alert>
+
+<ngrx-docs-alert type="help">
+
+When the computation result is a union, `deepComputed` creates a `DeepSignal` for each object literal member. The remaining members (primitives, dynamic records, etc.) stay a regular `Signal`.
+
+```ts
+type ValidationResult =
+  | { status: 'valid'; value: number }
+  | { status: 'invalid'; error: string };
+
+const age = signal<number | null>(null);
+
+// 👇 a DeepSignal is created for each object literal member; null is combined into a Signal
+// validationResult: DeepSignal<{ status: 'valid'; value: number }> | DeepSignal<{ status: 'invalid'; error: string }> | Signal<null>
+const validationResult = deepComputed((): ValidationResult | null => {
+  const value = age();
+
+  if (value === null) {
+    return null;
+  }
+
+  return value >= 21
+    ? { status: 'valid', value }
+    : { status: 'invalid', error: 'Must be at least 21' };
+});
+
+if ('error' in validationResult) {
+  const error = validationResult.error; // Signal<string>
+  console.log(error());
+}
+```
+
+</ngrx-docs-alert>

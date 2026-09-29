@@ -8,7 +8,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@angular/animations": "<angular-version>",
     "@angular/cdk": "<angular-version>",
     "@angular/common": "<angular-version>",
     "@angular/compiler": "<angular-version>",
@@ -17,7 +16,6 @@
     "@angular/forms": "<angular-version>",
     "@angular/material": "<angular-version>",
     "@angular/platform-browser": "<angular-version>",
-    "@angular/platform-browser-dynamic": "<angular-version>",
     "@angular/platform-server": "<angular-version>",
     "@angular/router": "<angular-version>",
     "@ngrx/store": "<ngrx-version>",

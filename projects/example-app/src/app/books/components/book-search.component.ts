@@ -1,10 +1,4 @@
-import {
-  Component,
-  Output,
-  Input,
-  EventEmitter,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, Output, Input, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'bc-book-search',
@@ -66,7 +60,6 @@ import {
       }
     `,
   ],
-  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class BookSearchComponent {

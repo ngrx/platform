@@ -1,11 +1,11 @@
 import './polyfills';
 
 import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { platformBrowser } from '@angular/platform-browser';
 
 import { AppModule } from './app/app.module';
 
-platformBrowserDynamic()
+platformBrowser()
   .bootstrapModule(AppModule)
   .then((ref) => {
     // Ensure Angular destroys itself on hot reloads.

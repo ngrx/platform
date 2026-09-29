@@ -1,9 +1,4 @@
-import {
-  Component,
-  computed,
-  input,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { ApiMember, ApiMemberKind } from '@ngrx-io/shared';
 import { SymbolExcerptComponent } from './symbol-excerpt.component';
@@ -68,7 +63,6 @@ import { SymbolUsageNotesComponent } from './symbol-usage-notes.component';
       </div>
     }
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .methods {

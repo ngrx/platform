@@ -8,7 +8,6 @@ import {
   inject,
   input,
   viewChild,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
@@ -27,11 +26,12 @@ import { ReferenceService } from '@ngrx-io/app/reference/reference.service';
   template: `@if (isPrivate()) {
       {{ name() }}
     } @else if (shouldUseExternalLink()) {
-      <a [href]="url()" target="_blank">{{ name() }}</a>
+      <a [href]="url()" target="_blank" rel="noopener noreferrer">{{
+        name()
+      }}</a>
     } @else {
       <a [routerLink]="url()" #internalSymbolLink>{{ name() }}</a>
     }`,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       a {

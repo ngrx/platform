@@ -1,11 +1,4 @@
-import {
-  Component,
-  input,
-  signal,
-  computed,
-  inject,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, input, signal, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Location } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
@@ -22,7 +15,7 @@ import { Section } from '../services/guide-menu.service';
     <section>
       @if (collapsible()) {
         <header>
-          <button (click)="toggleSection()">
+          <button (click)="toggleSection()" [attr.aria-expanded]="isOpen()">
             <mat-icon>chevron_right</mat-icon>
             <span>{{ section().title }}</span>
           </button>
@@ -50,7 +43,6 @@ import { Section } from '../services/guide-menu.service';
     '[class.collapsible]': 'collapsible()',
     '[class.hasActiveUrl]': 'hasActiveUrl()',
   },
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .section-content {
@@ -83,7 +75,6 @@ import { Section } from '../services/guide-menu.service';
         gap: 4px;
         align-items: center;
         padding: 0;
-        outline: none;
         border: none;
         background: none;
         color: var(--ngrx-text-secondary);

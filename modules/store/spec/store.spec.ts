@@ -30,7 +30,7 @@ import {
   counterReducer2,
 } from './fixtures/counter';
 import { take } from 'rxjs/operators';
-import type { Mock } from 'vitest';
+import type { Mock, MockInstance } from 'vitest';
 
 interface TestAppSchema {
   counter1: number;
@@ -455,8 +455,8 @@ describe('ngRx Store', () => {
 
   describe('Meta Reducers', () => {
     let metaReducerContainer: any;
-    let metaReducerSpy1: Mock;
-    let metaReducerSpy2: Mock;
+    let metaReducerSpy1: MockInstance;
+    let metaReducerSpy2: MockInstance;
 
     beforeEach(() => {
       metaReducerContainer = (function () {

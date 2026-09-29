@@ -1,6 +1,6 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ngrxTheme } from '@ngrx-io/shared/ngrx-shiki-theme';
+import { ngrxTheme, ngrxThemeLight } from '@ngrx-io/shared/ngrx-shiki-theme';
 import {
   BundledLanguage,
   BundledTheme,
@@ -11,7 +11,7 @@ import {
 let highlighter: HighlighterGeneric<BundledLanguage, BundledTheme>;
 getHighlighter({
   langs: ['typescript', 'sh', 'html'],
-  themes: [ngrxTheme],
+  themes: [ngrxTheme, ngrxThemeLight],
 }).then((h) => (highlighter = h));
 
 @Pipe({
@@ -25,7 +25,8 @@ export class CodeHighlightPipe implements PipeTransform {
   transform(code: string, language = 'typescript'): SafeHtml {
     const html = highlighter?.codeToHtml(code, {
       lang: language,
-      theme: 'ngrx-theme',
+      themes: { light: 'ngrx-theme-light', dark: 'ngrx-theme' },
+      defaultColor: 'dark',
     });
 
     return this.sanitizer.bypassSecurityTrustHtml(html);

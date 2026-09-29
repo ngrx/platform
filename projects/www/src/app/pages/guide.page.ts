@@ -1,9 +1,4 @@
-import {
-  Component,
-  computed,
-  inject,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { MarkdownArticleComponent } from '../components/docs/markdown-article.component';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -24,7 +19,6 @@ import { GuideFooterComponent } from '../components/guide-footer.component';
       ></ngrx-guide-footer>
     </ngrx-markdown-article>
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {

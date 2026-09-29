@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Book } from '@example-app/books/models';
 
@@ -17,7 +17,6 @@ import { Book } from '@example-app/books/models';
       }
     `,
   ],
-  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class BookAuthorsComponent {

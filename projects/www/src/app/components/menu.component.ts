@@ -6,7 +6,6 @@ import {
   inject,
   signal,
   viewChild,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -29,13 +28,28 @@ import { ThemeToggleComponent } from './theme-toggle.component';
   ],
   template: `
     <div class="mobile-nav-bar">
-      <button class="menu-toggle" #toggleBtnRef (click)="toggleMenu()">
-        <img src="/ngrx-logo-pink.svg" alt="ngrx logo" />
+      <button
+        class="menu-toggle"
+        #toggleBtnRef
+        (click)="toggleMenu()"
+        aria-label="Open navigation menu"
+        [attr.aria-expanded]="isMenuOpen()"
+      >
+        <img src="/ngrx-logo-pink.svg" alt="" />
         <mat-icon>menu</mat-icon>
       </button>
     </div>
-    <nav class="sidebar" #sidebarRef [class.open]="isMenuOpen()">
-      <button class="close-menu" (click)="closeMenu()">
+    <nav
+      class="sidebar"
+      #sidebarRef
+      [class.open]="isMenuOpen()"
+      aria-label="Main"
+    >
+      <button
+        class="close-menu"
+        (click)="closeMenu()"
+        aria-label="Close navigation menu"
+      >
         <mat-icon class="close-menu-icon">close</mat-icon>
       </button>
       <div class="sidebar-header">
@@ -68,6 +82,7 @@ import { ThemeToggleComponent } from './theme-toggle.component';
       <a
         href="https://github.com/sponsors/ngrx"
         target="_blank"
+        rel="noopener noreferrer"
         class="menu-link"
       >
         <mat-icon>volunteer_activism</mat-icon>
@@ -75,21 +90,21 @@ import { ThemeToggleComponent } from './theme-toggle.component';
       </a>
       <a
         href="https://github.com/ngrx/platform"
-        target="__blank"
+        target="_blank"
+        rel="noopener noreferrer"
         class="menu-link"
       >
         <mat-icon>code</mat-icon>
         GitHub
       </a>
       <hr />
-      <span class="guideHeader">Guide</span>
+      <h2 class="guideHeader">Guide</h2>
       <ngrx-guide-section
         [section]="guideMenu.getMenu()"
         [collapsible]="false"
       ></ngrx-guide-section>
     </nav>
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .mobile-nav-bar {
@@ -270,6 +285,14 @@ export class MenuComponent {
 
   closeMenu() {
     this.isMenuOpen.set(false);
+  }
+
+  @HostListener('document:keydown.escape')
+  closeSidebarOnEscape() {
+    if (this.isMenuOpen()) {
+      this.closeMenu();
+      this.toggleBtnRef().nativeElement.focus();
+    }
   }
 
   @HostListener('document:click', ['$event'])

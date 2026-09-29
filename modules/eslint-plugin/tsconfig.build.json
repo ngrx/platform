@@ -5,7 +5,6 @@
     "experimentalDecorators": true,
     "moduleResolution": "nodenext",
     "module": "NodeNext",
-    "downlevelIteration": true,
     "ignoreDeprecations": "6.0",
     "esModuleInterop": true,
     "isolatedModules": true,

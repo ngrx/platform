@@ -1,9 +1,4 @@
-import {
-  Component,
-  computed,
-  input,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { SymbolExcerptComponent } from './symbol-excerpt.component';
 import { InlineMarkdownPipe } from './inline-markdown.pipe';
 import { ApiMember } from '@ngrx-io/shared';
@@ -21,7 +16,6 @@ import { ApiMember } from '@ngrx-io/shared';
       </div>
     }
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .returns {

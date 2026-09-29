@@ -132,6 +132,29 @@ describe('signalStore', () => {
       expect(store.x.y.z()).toBe(10);
     });
 
+    it('supports a state slice that is a union of an object, undefined, and a primitive', () => {
+      const Store = signalStore(
+        { protectedState: false },
+        withState<{ slice: { n: number } | undefined | number }>({
+          slice: { n: 1 },
+        })
+      );
+      const store = new Store();
+
+      expect(isSignal(store.slice)).toBe(true);
+      expect(store.slice()).toEqual({ n: 1 });
+      expect('n' in store.slice).toBe(true);
+      expect('n' in store.slice && store.slice.n()).toBe(1);
+
+      patchState(store, { slice: undefined });
+      expect(store.slice()).toBe(undefined);
+      expect('n' in store.slice).toBe(false);
+
+      patchState(store, { slice: 42 });
+      expect(store.slice()).toBe(42);
+      expect('n' in store.slice).toBe(false);
+    });
+
     it('overrides Function properties if nested state keys have the same name', () => {
       const Store = signalStore(
         withState({ name: { length: { name: false } } })

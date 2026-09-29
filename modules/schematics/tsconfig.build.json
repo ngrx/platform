@@ -5,7 +5,6 @@
     "experimentalDecorators": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "downlevelIteration": true,
     "ignoreDeprecations": "6.0",
     "outDir": "../../dist/modules/schematics",
     "paths": {
@@ -16,7 +15,8 @@
     "lib": ["es2022", "dom"],
     "skipLibCheck": true,
     "strict": true,
-    "types": ["node"]
+    "types": ["node"],
+    "target": "es2022"
   },
   "include": ["**/*.ts"],
   "exclude": ["**/*.spec.ts", "test-setup.ts"],

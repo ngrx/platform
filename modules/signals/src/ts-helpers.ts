@@ -35,6 +35,18 @@ export type IsKnownRecord<T> =
       : true
     : false;
 
+export type HasKnownRecordMember<T> = true extends (
+  T extends unknown ? IsKnownRecord<T> : never
+)
+  ? true
+  : false;
+
+export type NonRecordMembers<T> = T extends unknown
+  ? IsKnownRecord<T> extends true
+    ? never
+    : T
+  : never;
+
 export type OmitPrivate<T> = {
   [K in keyof T as K extends `_${string}` ? never : K]: T[K];
 };

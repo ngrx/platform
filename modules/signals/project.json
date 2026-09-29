@@ -8,7 +8,7 @@
   "generators": {},
   "targets": {
     "build-package": {
-      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "executor": "@angular/build:ng-packagr",
       "options": {
         "tsConfig": "modules/signals/tsconfig.build.json",
         "project": "modules/signals/ng-package.json"
@@ -52,6 +52,8 @@
           "modules/signals/*/**/*.html",
           "modules/signals/entities/**/*.ts",
           "modules/signals/entities/**/*.html",
+          "modules/signals/resource/**/*.ts",
+          "modules/signals/resource/**/*.html",
           "modules/signals/rxjs-interop/**/*.ts",
           "modules/signals/rxjs-interop/**/*.html"
         ]

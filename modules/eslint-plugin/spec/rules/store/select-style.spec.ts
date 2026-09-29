@@ -8,7 +8,7 @@ import rule, { SelectStyle } from '../../../src/rules/store/select-style';
 import { ruleTester, fromFixture } from '../../utils';
 
 type MessageIds = ESLintUtils.InferMessageIdsTypeFromRule<typeof rule>;
-type Options = readonly ESLintUtils.InferOptionsTypeFromRule<typeof rule>[0][];
+type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
 
 const validConstructor: () => (string | ValidTestCase<Options>)[] = () => [
   `

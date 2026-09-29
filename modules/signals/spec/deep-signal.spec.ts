@@ -77,6 +77,53 @@ describe('toDeepSignal', () => {
     expect('m' in deepSig && deepSig.m.s()).toBe('ngrx');
   });
 
+  it('creates a deep signal on the fly for a union of an object and a primitive', () => {
+    const sig = signal<{ m: { s: string } } | number>(1);
+    const deepSig = toDeepSignal(sig);
+
+    expect('m' in deepSig).toBe(false);
+    expect(deepSig()).toBe(1);
+
+    sig.set({ m: { s: 'ngrx' } });
+
+    expect('m' in deepSig).toBe(true);
+    expect('m' in deepSig && deepSig.m()).toEqual({ s: 'ngrx' });
+    expect('m' in deepSig && deepSig.m.s()).toBe('ngrx');
+  });
+
+  it('creates a deep signal on the fly for a union of an object and undefined', () => {
+    const sig = signal<{ m: { s: string } } | undefined>(undefined);
+    const deepSig = toDeepSignal(sig);
+
+    expect('m' in deepSig).toBe(false);
+    expect(deepSig()).toBe(undefined);
+
+    sig.set({ m: { s: 'ngrx' } });
+
+    expect('m' in deepSig).toBe(true);
+    expect('m' in deepSig && deepSig.m()).toEqual({ s: 'ngrx' });
+    expect('m' in deepSig && deepSig.m.s()).toBe('ngrx');
+  });
+
+  it('creates a deep signal on the fly for a union of an object, a primitive, and null', () => {
+    const sig = signal<{ m: { s: string } } | number | null>(null);
+    const deepSig = toDeepSignal(sig);
+
+    expect('m' in deepSig).toBe(false);
+    expect(deepSig()).toBe(null);
+
+    sig.set({ m: { s: 'ngrx' } });
+
+    expect('m' in deepSig).toBe(true);
+    expect('m' in deepSig && deepSig.m()).toEqual({ s: 'ngrx' });
+    expect('m' in deepSig && deepSig.m.s()).toBe('ngrx');
+
+    sig.set(1);
+
+    expect('m' in deepSig).toBe(false);
+    expect(deepSig()).toBe(1);
+  });
+
   it('does not affect signals with primitives as values', () => {
     const num = signal(0);
     const str = signal('str');

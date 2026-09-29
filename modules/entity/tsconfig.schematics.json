@@ -6,7 +6,6 @@
     "experimentalDecorators": true,
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "downlevelIteration": true,
     "ignoreDeprecations": "6.0",
     "outDir": "../../dist/modules/entity",
     "paths": {
@@ -17,7 +16,8 @@
     "lib": ["ES2022", "dom"],
     "skipLibCheck": true,
     "strict": true,
-    "types": ["node"]
+    "types": ["node"],
+    "target": "es2022"
   },
   "include": ["migrations/**/*.ts", "schematics/**/*.ts"],
   "exclude": ["**/*.spec.ts"],
