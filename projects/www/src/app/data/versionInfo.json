@@ -36,42 +36,6 @@
     {
       "title": "v13",
       "url": "https://v13.ngrx.io"
-    },
-    {
-      "title": "v12",
-      "url": "https://v12.ngrx.io"
-    },
-    {
-      "title": "v11",
-      "url": "https://v11.ngrx.io"
-    },
-    {
-      "title": "v10",
-      "url": "https://v10.ngrx.io"
-    },
-    {
-      "title": "v9",
-      "url": "https://v9.ngrx.io"
-    },
-    {
-      "title": "v8",
-      "url": "https://v8.ngrx.io"
-    },
-    {
-      "title": "v7",
-      "url": "https://v7.ngrx.io"
-    },
-    {
-      "title": "v6",
-      "url": "https://github.com/ngrx/platform/tree/6.1.2/docs"
-    },
-    {
-      "title": "v5",
-      "url": "https://github.com/ngrx/platform/tree/v5.2.0/docs"
-    },
-    {
-      "title": "v4",
-      "url": "https://github.com/ngrx/platform/tree/v4.1.1/docs"
     }
   ]
 }
