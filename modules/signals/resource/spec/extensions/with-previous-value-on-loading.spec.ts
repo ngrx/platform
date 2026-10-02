@@ -1,3 +1,4 @@
+import { computed } from '@angular/core';
 import { LOADING_EXTENSION_TYPE, withPreviousValueOnLoading } from '../../src';
 import { createTestResource } from '../helpers';
 
@@ -70,6 +71,41 @@ describe('withPreviousValueOnLoading', () => {
     await resolveWithValue([4, 5]);
     expect(resource.value()).toEqual([4, 5]);
     expect(resource.hasValue()).toBe(true);
+  });
+
+  it('notifies computed signals first read while loading once the value resolves', async () => {
+    const { resource, initLoading, resolveWithValue } =
+      createTestResource<number[]>();
+    withPreviousValueOnLoading().apply(resource);
+    const value = computed(() => resource.value());
+
+    initLoading();
+    expect(value()).toBeUndefined();
+
+    await resolveWithValue([1, 2, 3]);
+    expect(value()).toEqual([1, 2, 3]);
+  });
+
+  it('does not recompute consumers when only the loading state changes', async () => {
+    const { resource, initLoading, reload, resolveWithValue } =
+      createTestResource<number[]>();
+    withPreviousValueOnLoading().apply(resource);
+
+    initLoading();
+    await resolveWithValue([1, 2, 3]);
+    const readValue = vi.fn(() => resource.value());
+    const value = computed(readValue);
+    expect(value()).toEqual([1, 2, 3]);
+    expect(readValue).toHaveBeenCalledTimes(1);
+
+    reload();
+    expect(resource.isLoading()).toBe(true);
+    expect(value()).toEqual([1, 2, 3]);
+    expect(readValue).toHaveBeenCalledTimes(1);
+
+    await resolveWithValue([4, 5]);
+    expect(value()).toEqual([4, 5]);
+    expect(readValue).toHaveBeenCalledTimes(2);
   });
 
   it('does not swallow errors when the load fails', async () => {
