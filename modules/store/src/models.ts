@@ -94,13 +94,7 @@ export type Creator<
 > = FunctionWithParametersType<P, R>;
 
 export type Primitive =
-  | string
-  | number
-  | bigint
-  | boolean
-  | symbol
-  | null
-  | undefined;
+  string | number | bigint | boolean | symbol | null | undefined;
 
 export type NotAllowedCheck<T extends object> = T extends any[]
   ? ArraysAreNotAllowed
@@ -174,5 +168,33 @@ export interface SelectSignalOptions<T> {
    */
   equal?: ValueEqualityFn<T>;
 }
+
+export const excessPropertiesAreNotAllowedMsg =
+  'callback return type must exactly match the state type. Remove excess properties.';
+export type ExcessPropertiesAreNotAllowed =
+  typeof excessPropertiesAreNotAllowedMsg;
+
+type KeysOfUnion<T> = T extends unknown ? keyof T : never;
+// Keys a returned object may carry: any key of any union member, plus numeric keys for string index signatures.
+export type AllowedStateKeys<S> =
+  keyof S | KeysOfUnion<S> | (string extends keyof S ? number : never);
+// `K` is inferred from the returned object's keys and constrained to AllowedStateKeys<S>. Constraint checks use
+// assignability, which respects generic constraints (e.g. `T extends { loading: boolean }`). When a key is not
+// allowed, inference falls back to the constraint and the leftover keys are typed as the error message.
+export type ExactStateReturn<R, S, K, Msg extends string> = [R] extends [
+  null | undefined,
+]
+  ? unknown
+  : // Fast path: no key outside the state's keys (also resolves for identical generic types, e.g. `return state`)
+    [Exclude<KeysOfUnion<R>, AllowedStateKeys<S>>] extends [never]
+    ? unknown
+    : { [P in K & PropertyKey]?: unknown } & {
+        [
+          P in Exclude<
+            KeysOfUnion<R>,
+            K | AllowedStateKeys<S>
+          > as `${Msg} Excess property: ${P & string}`
+        ]: never;
+      };
 
 export type Prettify<T> = { [K in keyof T]: T[K] } & {};

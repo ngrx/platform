@@ -1,4 +1,12 @@
-import { ActionCreator, ActionReducer, ActionType, Action } from './models';
+import {
+  ActionCreator,
+  ActionReducer,
+  ActionType,
+  Action,
+  ExcessPropertiesAreNotAllowed,
+  AllowedStateKeys,
+  ExactStateReturn,
+} from './models';
 
 // Goes over the array of ActionCreators, pulls the action type out of each one
 // and returns the array of these action types.
@@ -62,14 +70,26 @@ export function on<
   // is created outside of `createReducer` and state type is either explicitly set OR inferred by return type.
   // For example: `const onFn = on(action, (state: State, {prop}) => ({ ...state, name: prop }));`
   InferredState = State,
+  // Compute the effective state type: either State (when known from createReducer) or InferredState (when standalone)
+  EffectiveState = unknown extends State ? InferredState : State,
+  // Captures the actual return type to enforce exact state shape — excess properties produce a descriptive type error
+  R extends EffectiveState = EffectiveState,
+  // Keys of the returned object, vetted against the state's keys via the constraint
+  K extends AllowedStateKeys<unknown extends State ? InferredState : State> =
+    never,
 >(
   ...args: [
     ...creators: Creators,
-    reducer: OnReducer<
-      State extends infer S ? S : never,
-      Creators,
-      InferredState
-    >,
+    reducer: (
+      state: unknown extends State ? InferredState : State,
+      action: ActionType<Creators[number]>
+    ) => R &
+      ExactStateReturn<
+        R,
+        unknown extends State ? InferredState : State,
+        K,
+        ExcessPropertiesAreNotAllowed
+      >,
   ]
 ): ReducerTypes<unknown extends State ? InferredState : State, Creators> {
   const reducer = args.pop() as unknown as OnReducer<

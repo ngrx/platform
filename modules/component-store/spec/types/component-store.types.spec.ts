@@ -345,5 +345,201 @@ describe('ComponentStore types', () => {
         componentStore.updater((state, v: string) => ({ ...state }))(number$);
       });
     });
+
+    describe('catches excess properties', () => {
+      it('when extra property is returned with spread', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        componentStore.updater(
+          // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+          (state, v: string) => ({ ...state, extraProp: 'bad' })
+        );
+      });
+
+      it('when extra property is returned with explicit object', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        componentStore.updater(
+          // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+          (state, v: string) => ({
+            prop: v,
+            prop2: state.prop2,
+            extraProp: 'bad',
+          })
+        );
+      });
+
+      it('when extra property is returned from void updater', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        componentStore.updater(
+          // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+          (state) => ({ ...state, extraProp: true })
+        );
+      });
+
+      it('when required property is missing', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        componentStore.updater(
+          // @ts-expect-error Property 'prop2' is missing in type '{ prop: string; }'
+          (state, v: string) => ({ prop: v })
+        );
+      });
+
+      it('when property has wrong type', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        componentStore.updater(
+          // @ts-expect-error Type 'number' is not assignable to type 'string'
+          (state, v: string) => ({ ...state, prop: 123 })
+        );
+      });
+
+      it('allows spread with override', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        const sub = componentStore.updater((state, v: string) => ({
+          ...state,
+          prop: v,
+        }))('test');
+        expectTypeOf(sub).toEqualTypeOf<Subscription>();
+      });
+
+      it('allows full explicit return matching all state keys', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        const sub = componentStore.updater((state, v: string) => ({
+          prop: v,
+          prop2: state.prop2,
+        }))('test');
+        expectTypeOf(sub).toEqualTypeOf<Subscription>();
+      });
+
+      it('allows void updater with spread return', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        const v = componentStore.updater((state) => ({
+          ...state,
+          prop: 'updated',
+        }))();
+        expectTypeOf(v).toBeVoid();
+      });
+
+      it('allows direct state return', () => {
+        const componentStore = new ComponentStore({
+          prop: 'init',
+          prop2: 'yeah!',
+        });
+        const v = componentStore.updater((state) => state)();
+        expectTypeOf(v).toBeVoid();
+      });
+    });
+
+    describe('with a generic state type parameter', () => {
+      class GenericStore<T extends { id: string }> extends ComponentStore<T> {
+        // Keys guaranteed by the constraint can be overridden via spread.
+        readonly setIdViaSpread = this.updater((state, id: string) => ({
+          ...state,
+          id,
+        }));
+
+        readonly returnState = this.updater((state) => state);
+
+        readonly copyState = this.updater((state) => ({ ...state }));
+
+        readonly replaceViaDirectReturn = this.updater(
+          (_state, next: T) => next
+        );
+
+        readonly setIdViaAssertion = this.updater(
+          (state, id: string) => ({ ...state, id }) as T
+        );
+
+        // Keys not guaranteed by the constraint are excess properties.
+        readonly setExtra = this.updater(
+          // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+          (state, extra: string) => ({ ...state, extra })
+        );
+      }
+
+      class ListStore<Item> extends ComponentStore<{
+        items: Item[];
+        loading: boolean;
+      }> {
+        readonly setItems = this.updater((state, items: Item[]) => ({
+          ...state,
+          items,
+          loading: false,
+        }));
+      }
+
+      class ExtendableStore<T extends object> extends ComponentStore<
+        { loading: boolean } & T
+      > {
+        readonly setLoading = this.updater((state) => ({
+          ...state,
+          loading: true,
+        }));
+      }
+
+      it('allows overriding known keys and catches excess keys', () => {
+        expectTypeOf(GenericStore).toBeConstructibleWith({ id: '1' });
+        expectTypeOf(ListStore).toBeConstructibleWith({
+          items: [],
+          loading: false,
+        });
+        expectTypeOf(ExtendableStore).toBeConstructibleWith({ loading: false });
+      });
+    });
+
+    describe('with union state', () => {
+      type FetchState =
+        { status: 'idle' } | { status: 'loaded'; data: string[] };
+
+      it('allows switching to a union member with its own keys', () => {
+        const componentStore = new ComponentStore<FetchState>({
+          status: 'idle',
+        });
+        componentStore.updater((_, data: string[]) => ({
+          status: 'loaded' as const,
+          data,
+        }));
+      });
+
+      it('catches keys that exist on no union member', () => {
+        const componentStore = new ComponentStore<FetchState>({
+          status: 'idle',
+        });
+        componentStore.updater(
+          // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+          () => ({ status: 'idle' as const, bogus: true })
+        );
+      });
+    });
+
+    it('catches excess properties returned from one branch of a conditional', () => {
+      const componentStore = new ComponentStore({ prop: 'init' });
+      componentStore.updater(
+        // @ts-expect-error updater callback return type must exactly match the state type. Remove excess properties.
+        (state, flag: boolean) => (flag ? { ...state, extra: true } : state)
+      );
+    });
   });
 });

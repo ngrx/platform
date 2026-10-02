@@ -40,6 +40,33 @@ import {
 import { isOnStateInitDefined, isOnStoreInitDefined } from './lifecycle_hooks';
 import { toSignal } from '@angular/core/rxjs-interop';
 
+const excessPropertiesAreNotAllowedMsg =
+  'updater callback return type must exactly match the state type. Remove excess properties.';
+type ExcessPropertiesAreNotAllowed = typeof excessPropertiesAreNotAllowedMsg;
+
+type KeysOfUnion<T> = T extends unknown ? keyof T : never;
+// Keys a returned object may carry: any key of any union member, plus numeric keys for string index signatures.
+type AllowedStateKeys<S> =
+  keyof S | KeysOfUnion<S> | (string extends keyof S ? number : never);
+// `K` is inferred from the returned object's keys and constrained to AllowedStateKeys<S>. Constraint checks use
+// assignability, which respects generic constraints (e.g. `T extends { loading: boolean }`). When a key is not
+// allowed, inference falls back to the constraint and the leftover keys are typed as the error message.
+type ExactStateReturn<R, S, K, Msg extends string> = [R] extends [
+  null | undefined,
+]
+  ? unknown
+  : // Fast path: no key outside the state's keys (also resolves for identical generic types, e.g. `return state`)
+    [Exclude<KeysOfUnion<R>, AllowedStateKeys<S>>] extends [never]
+    ? unknown
+    : { [P in K & PropertyKey]?: unknown } & {
+        [
+          P in Exclude<
+            KeysOfUnion<R>,
+            K | AllowedStateKeys<S>
+          > as `${Msg} Excess property: ${P & string}`
+        ]: never;
+      };
+
 export interface SelectConfig<T = unknown> {
   debounce?: boolean;
   equal?: ValueEqualityFn<T>;
@@ -132,7 +159,16 @@ export class ComponentStore<T extends object> implements OnDestroy {
     ReturnType = OriginType extends void
       ? () => void
       : (observableOrValue: ValueType | Observable<ValueType>) => Subscription,
-  >(updaterFn: (state: T, value: OriginType) => T): ReturnType {
+    // Captures the actual return type to enforce exact state shape
+    R extends T = T,
+    // Keys of the returned object, vetted against the state's keys via the constraint
+    K extends AllowedStateKeys<T> = never,
+  >(
+    updaterFn: (
+      state: T,
+      value: OriginType
+    ) => R & ExactStateReturn<R, T, K, ExcessPropertiesAreNotAllowed>
+  ): ReturnType {
     return ((
       observableOrValue?: OriginType | Observable<OriginType>
     ): Subscription => {
@@ -210,9 +246,7 @@ export class ComponentStore<T extends object> implements OnDestroy {
    */
   patchState(
     partialStateOrUpdaterFn:
-      | Partial<T>
-      | Observable<Partial<T>>
-      | ((state: T) => Partial<T>)
+      Partial<T> | Observable<Partial<T>> | ((state: T) => Partial<T>)
   ): void {
     const patchedState =
       typeof partialStateOrUpdaterFn === 'function'
@@ -379,9 +413,8 @@ export class ComponentStore<T extends object> implements OnDestroy {
     // This type quickly became part of effect 'API'
     ProvidedType = void,
     // The actual origin$ type, which could be unknown, when not specified
-    OriginType extends
-      | Observable<ProvidedType>
-      | unknown = Observable<ProvidedType>,
+    OriginType extends Observable<ProvidedType> | unknown =
+      Observable<ProvidedType>,
     // Unwrapped actual type of the origin$ Observable, after default was applied
     ObservableType = OriginType extends Observable<infer A> ? A : never,
     // Return either an optional callback or a function requiring specific types as inputs

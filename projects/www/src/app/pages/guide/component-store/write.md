@@ -46,6 +46,34 @@ export class MoviesStore extends ComponentStore<MoviesState> {
 
 </ngrx-code-example>
 
+The `updater` method enforces that callbacks return an object matching the state type exactly. Returning an object with extra properties that don't exist on the state type produces a TypeScript compilation error:
+
+<ngrx-code-example header="movies.store.ts">
+
+```ts
+@Injectable()
+export class MoviesStore extends ComponentStore<MoviesState> {
+  constructor() {
+    super({ movies: [] });
+  }
+
+  readonly addMovie = this.updater((state, movie: Movie) => ({
+    movies: [...state.movies, movie],
+    // TS error: updater callback return type must exactly match the
+    // state type. Remove excess properties. Excess property: extra
+    extra: true,
+  }));
+}
+```
+
+</ngrx-code-example>
+
+<ngrx-docs-alert type="inform">
+
+**Note:** When `ComponentStore` is extended with a generic state type parameter (e.g., `class MyStore<T extends { loading: boolean }> extends ComponentStore<T>`), properties guaranteed by the constraint can be overridden (`{ ...state, loading: true }`), while properties the constraint doesn't guarantee are reported as excess.
+
+</ngrx-docs-alert>
+
 Updater then can be called with the values imperatively or could take an Observable.
 
 <ngrx-code-example header="movies-page.component.ts">
