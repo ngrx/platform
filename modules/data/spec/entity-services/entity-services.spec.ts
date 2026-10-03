@@ -184,7 +184,6 @@ function entityServicesSetup() {
         entityMetadata: entityMetadata,
       }),
     ],
-    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
     providers: [
       { provide: EntityCacheEffects, useValue: {} },
       { provide: EntityDataService, useValue: null },

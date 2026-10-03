@@ -47,7 +47,7 @@ function counterWithBug(state = 0, action: Action) {
 function counterWithAnotherBug(state = 0, action: Action) {
   switch (action.type) {
     case 'INCREMENT':
-      return mistake + 1; // eslint-disable-line no-undef
+      return mistake + 1;
     case 'DECREMENT':
       return state - 1;
     case 'SET_UNDEFINED':

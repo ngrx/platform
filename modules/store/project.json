@@ -16,6 +16,10 @@
     },
     "build": {
       "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/modules/store",
+        "{workspaceRoot}/node_modules/@ngrx/store"
+      ],
       "options": {
         "parallel": false,
         "commands": [
@@ -38,21 +42,7 @@
             "command": "cpy LICENSE dist/modules/store"
           }
         ]
-      },
-      "outputs": [
-        "{workspaceRoot}/dist/modules/store",
-        "{workspaceRoot}/node_modules/@ngrx/store"
-      ]
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "modules/store/*/**/*.ts",
-          "modules/store/*/**/*.html"
-        ]
-      },
-      "outputs": ["{options.outputFile}"]
+      }
     },
     "test": {
       "executor": "@analogjs/vitest-angular:test",

@@ -21,8 +21,7 @@ type OnlyMemoized<T, Result> = T extends string | MemoizedSelector<any, any>
     : never;
 
 type Memoized<Result> =
-  | MemoizedSelector<any, Result>
-  | MemoizedSelectorWithProps<any, any, Result>;
+  MemoizedSelector<any, Result> | MemoizedSelectorWithProps<any, any, Result>;
 
 @Injectable()
 export class MockStore<T = object> extends Store<T> {
@@ -69,7 +68,9 @@ export class MockStore<T = object> extends Store<T> {
     const resultSelector: Memoized<Result> =
       typeof selector === 'string'
         ? createSelector(
-            () => {},
+            () => {
+              // noop input selector; the result is overridden below
+            },
             (): Result => value
           )
         : selector;

@@ -9,6 +9,8 @@
   "targets": {
     "build": {
       "executor": "@angular/build:application",
+      "defaultConfiguration": "production",
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/projects/example-app",
         "index": "projects/example-app/src/index.html",
@@ -38,12 +40,12 @@
           "sourceMap": true,
           "namedChunks": true
         }
-      },
-      "defaultConfiguration": "production",
-      "outputs": ["{options.outputPath}"]
+      }
     },
     "serve": {
       "executor": "@angular/build:dev-server",
+      "defaultConfiguration": "development",
+      "continuous": true,
       "configurations": {
         "production": {
           "buildTarget": "example-app:build:production"
@@ -51,25 +53,13 @@
         "development": {
           "buildTarget": "example-app:build:development"
         }
-      },
-      "defaultConfiguration": "development",
-      "continuous": true
+      }
     },
     "extract-i18n": {
       "executor": "@angular/build:extract-i18n",
       "options": {
         "buildTarget": "example-app:build"
       }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "projects/example-app/*/**/*.ts",
-          "projects/example-app/*/**/*.html"
-        ]
-      },
-      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@analogjs/vitest-angular:test"

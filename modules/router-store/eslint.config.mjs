@@ -8,9 +8,9 @@ export default tseslint.config(
   {
     ignores: [
       '**/dist',
-      '**/router-store/data-persistence/index.ts',
-      '**/router-store/data-persistence/src/operators.ts',
-      '**/router-store/data-persistence/src/public_api.ts',
+      '**/data-persistence/index.ts',
+      '**/data-persistence/src/operators.ts',
+      '**/data-persistence/src/public_api.ts',
       '**/schematics-core/**/*.ts',
     ],
   },
