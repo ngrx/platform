@@ -1,33 +1,16 @@
 {
+  "extends": "../../tsconfig.build.json",
   "compilerOptions": {
-    "baseUrl": "../../",
-    "declaration": true,
-    "stripInternal": true,
-    "experimentalDecorators": true,
-    "ignoreDeprecations": "6.0",
-    "module": "preserve",
-    "moduleResolution": "bundler",
     "outDir": "../../dist/modules/signals",
-    "paths": {},
-    "rootDir": ".",
-    "sourceMap": true,
-    "inlineSources": true,
-    "lib": ["ES2022", "dom"],
-    "target": "ES2022",
-    "skipLibCheck": true,
-    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
   "files": ["index.ts"],
   "include": ["**/*.ts"],
   "exclude": ["**/*.spec.ts"],
   "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "compilationMode": "partial",
     "flatModuleOutFile": "index.js",
     "flatModuleId": "@ngrx/signals"
   }
