@@ -82,24 +82,24 @@ export function patchState<State extends object>(
     Partial<NoInfer<State>> | PartialStateUpdater<NoInfer<State>>
   >
 ): void {
-  const currentState = untracked(() => getState(stateSource));
-  const newState = updaters.reduce(
-    (nextState: State, updater) => ({
-      ...nextState,
-      ...(typeof updater === 'function' ? updater(nextState) : updater),
-    }),
-    currentState
-  );
-
   const signals = stateSource[STATE_SOURCE];
   const stateKeys = Reflect.ownKeys(stateSource[STATE_SOURCE]);
+  const draftState = untracked(() => getSafeState(stateSource));
+  const touchedKeys = new Set<keyof State>();
 
-  for (const key of Reflect.ownKeys(newState)) {
-    if (stateKeys.includes(key)) {
-      const signalKey = key as keyof State;
-      if (currentState[signalKey] !== newState[signalKey]) {
-        signals[signalKey].set(newState[signalKey]);
-      }
+  for (const updater of updaters) {
+    const partial =
+      typeof updater === 'function' ? updater(draftState) : updater;
+
+    for (const key of Reflect.ownKeys(partial) as Array<keyof State>) {
+      touchedKeys.add(key);
+      draftState[key] = partial[key] as State[keyof State];
+    }
+  }
+
+  for (const key of touchedKeys) {
+    if (stateKeys.includes(key as string | symbol)) {
+      signals[key].set(draftState[key]);
     } else if (typeof ngDevMode !== 'undefined' && ngDevMode) {
       console.warn(
         `@ngrx/signals: patchState was called with an unknown state slice '${String(
@@ -112,6 +112,34 @@ export function patchState<State extends object>(
   }
 
   notifyWatchers(stateSource);
+}
+
+function getSafeState<State extends object>(
+  stateSource: StateSource<State>
+): State {
+  const signals: Record<string | symbol, Signal<unknown>> = stateSource[
+    STATE_SOURCE
+  ];
+  const state = {} as State;
+
+  for (const key of Reflect.ownKeys(signals)) {
+    try {
+      (state as Record<string | symbol, unknown>)[key] = signals[key]();
+    } catch (error) {
+      Object.defineProperty(state, key, {
+        get() {
+          throw error;
+        },
+        set() {
+          throw error;
+        },
+        enumerable: true,
+        configurable: true,
+      });
+    }
+  }
+
+  return state;
 }
 
 /**
