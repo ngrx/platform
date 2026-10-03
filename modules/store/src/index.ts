@@ -13,7 +13,6 @@ export {
   RuntimeChecks,
   SelectSignalOptions,
   Selector,
-  SelectorWithProps,
 } from './models';
 export { createAction, props, union } from './action_creator';
 export { createActionGroup, emptyProps } from './action_group_creator';
@@ -38,7 +37,6 @@ export {
   MemoizeFn,
   MemoizedProjection,
   MemoizedSelector,
-  MemoizedSelectorWithProps,
   resultMemoize,
   DefaultProjectorFn,
 } from './selector';

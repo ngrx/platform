@@ -7,26 +7,18 @@ import {
   ReducerManager,
   Store,
   createSelector,
-  MemoizedSelectorWithProps,
   MemoizedSelector,
 } from '@ngrx/store';
 import { MockState } from './mock_state';
 import { MockSelector } from './mock_selector';
 import { MOCK_SELECTORS } from './tokens';
 
-type OnlyMemoized<T, Result> = T extends string | MemoizedSelector<any, any>
-  ? MemoizedSelector<any, Result>
-  : T extends MemoizedSelectorWithProps<any, any, any>
-    ? MemoizedSelectorWithProps<any, any, Result>
-    : never;
-
-type Memoized<Result> =
-  | MemoizedSelector<any, Result>
-  | MemoizedSelectorWithProps<any, any, Result>;
-
 @Injectable()
 export class MockStore<T = object> extends Store<T> {
-  private readonly selectors = new Map<Memoized<any> | string, any>();
+  private readonly selectors = new Map<
+    MemoizedSelector<any, any> | string,
+    any
+  >();
 
   readonly scannedActions$: Observable<Action>;
   private lastState?: T;
@@ -53,20 +45,13 @@ export class MockStore<T = object> extends Store<T> {
   }
 
   overrideSelector<
-    Selector extends Memoized<Result>,
+    Selector extends MemoizedSelector<any, Result>,
     Value extends Result,
-    Result = Selector extends MemoizedSelector<any, infer T>
-      ? T
-      : Selector extends MemoizedSelectorWithProps<any, any, infer U>
-        ? U
-        : Value,
-  >(
-    selector: Selector | string,
-    value: Value
-  ): OnlyMemoized<typeof selector, Result> {
+    Result = Selector extends MemoizedSelector<any, infer T> ? T : Value,
+  >(selector: Selector | string, value: Value): MemoizedSelector<any, Result> {
     this.selectors.set(selector, value);
 
-    const resultSelector: Memoized<Result> =
+    const resultSelector: MemoizedSelector<any, Result> =
       typeof selector === 'string'
         ? createSelector(
             () => {},
@@ -76,7 +61,7 @@ export class MockStore<T = object> extends Store<T> {
 
     resultSelector.setResult(value);
 
-    return resultSelector as OnlyMemoized<typeof selector, Result>;
+    return resultSelector;
   }
 
   resetSelectors() {
@@ -90,14 +75,14 @@ export class MockStore<T = object> extends Store<T> {
     this.selectors.clear();
   }
 
-  override select(selector: any, prop?: any) {
+  override select(selector: any) {
     if (typeof selector === 'string' && this.selectors.has(selector)) {
       return new BehaviorSubject<any>(
         this.selectors.get(selector)
       ).asObservable();
     }
 
-    return super.select(selector, prop);
+    return super.select(selector);
   }
 
   override addReducer() {

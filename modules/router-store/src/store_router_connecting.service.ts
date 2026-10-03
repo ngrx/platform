@@ -94,8 +94,13 @@ export class StoreRouterConnectingService {
   }
 
   private setUpStoreStateListener(): void {
+    const selector: (state: any) => RouterReducerState =
+      typeof this.stateKey === 'string'
+        ? (state) => state[this.stateKey as string]
+        : this.stateKey;
+
     this.store
-      .pipe(select(this.stateKey as any), withLatestFrom(this.store))
+      .pipe(select(selector), withLatestFrom(this.store))
       .subscribe(([routerStoreState, storeState]) => {
         this.navigateIfNeeded(routerStoreState, storeState);
       });
