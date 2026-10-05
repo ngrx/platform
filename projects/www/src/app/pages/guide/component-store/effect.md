@@ -116,3 +116,23 @@ readonly getAllMovies = this.effect<void>(
 ```
 
 </ngrx-code-example>
+
+## Choosing a flattening operator
+
+The examples above use different policies for overlapping calls:
+
+- `switchMap` in `getMovie` unsubscribes from the previous inner
+  Observable when a new ID arrives. Only results from the latest
+  subscription can reach `addMovie`.
+- `exhaustMap` in `getAllMovies` ignores new triggers while the current
+  inner Observable is active. Ignored triggers are not queued; a new
+  trigger is needed after that Observable completes.
+
+If every call must be processed, consider `concatMap` to queue them or
+`mergeMap` to run them concurrently. With `mergeMap`, results can arrive
+in a different order from the calls. Unsubscribing stops observing the
+previous stream; aborting the underlying operation depends on its
+teardown logic and does not undo work already performed by a server.
+
+For more examples, see this
+[comparison of the four flattening operators](https://frontendatlas.com/angular/trivia/rxjs-switchmap-mergemap-exhaustmap-concatmap-angular-when-to-use).
