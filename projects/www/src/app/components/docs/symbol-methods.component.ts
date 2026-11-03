@@ -38,9 +38,10 @@ import { SymbolUsageNotesComponent } from './symbol-usage-notes.component';
                 class="methodName"
                 [ngClass]="{ deprecated: method.docs.deprecated }"
               >
-                <code
+                <div
+                  class="code"
                   [innerHTML]="getMethodSignature(method) | ngrxCodeHighlight"
-                ></code>
+                ></div>
               </div>
               @if (method.docs.deprecated) {
                 <ngrx-deprecated-chip [reason]="method.docs.deprecated" />
@@ -116,9 +117,15 @@ import { SymbolUsageNotesComponent } from './symbol-usage-notes.component';
         font-style: italic;
       }
 
-      code {
+      .code {
         font-family: 'Oxanium', sans-serif;
         font-size: 18px;
+      }
+
+      /* Reset the global pre styles for the pre rendered by the highlighter */
+      .code ::ng-deep pre {
+        margin: 0;
+        border: none;
       }
 
       ngrx-deprecated-chip {
