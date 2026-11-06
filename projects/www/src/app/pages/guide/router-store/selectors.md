@@ -6,7 +6,7 @@ The default behavior of `getRouterSelectors` selects the router state for the `r
 If the default router state config is overwritten with a different router state key, the `getRouterSelectors` method takes a selector function to select the piece of state where the router state is being stored.
 The example below shows how to provide a selector for the top level `router` key in your state object.
 
-**Note:** The `getRouterSelectors` method works with the `routerReducer` provided by `@ngrx/router-store`. If you use a [custom serializer](guide/router-store/configuration#custom-router-state-serializer), you'll need to provide your own selectors.
+**Note:** The `getRouterSelectors` method works with the `routerReducer` provided by `@ngrx/router-store`. If you use a [custom serializer](guide/router-store/configuration#custom-router-state-serializer), you'll need to provide your own selectors. See [Selecting custom router state](guide/router-store/configuration#selecting-custom-router-state) for a typed example.
 
 Usage:
 

@@ -41,9 +41,7 @@ export interface RouterStateUrl {
   queryParams: Params;
 }
 
-export class CustomSerializer
-  implements RouterStateSerializer<RouterStateUrl>
-{
+export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
   serialize(routerState: RouterStateSnapshot): RouterStateUrl {
     let route = routerState.root;
 
@@ -71,12 +69,19 @@ export class CustomSerializer
 <ngrx-code-example header="index.ts">
 
 ```ts
+import { ActionReducerMap } from '@ngrx/store';
+import {
+  RouterReducerState,
+  routerReducer,
+} from '@ngrx/router-store';
+import { RouterStateUrl } from './custom-route-serializer';
+
 export interface State {
-  router: RouterReducerState<any>;
+  router: RouterReducerState<RouterStateUrl>;
 }
 
 export const reducers: ActionReducerMap<State> = {
-  router: routerReducer,
+  router: routerReducer<RouterStateUrl>,
 };
 ```
 
@@ -96,7 +101,10 @@ import {
 } from '@ngrx/router-store';
 
 import { AppComponent } from './app.component';
-import { CustomSerializer } from './custom-serializer';
+import {
+  CustomSerializer,
+  RouterStateUrl,
+} from './custom-route-serializer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -104,7 +112,7 @@ export const appConfig: ApplicationConfig = {
       // routes
     ]),
     provideStore({
-      router: routerReducer,
+      router: routerReducer<RouterStateUrl>,
     }),
     provideRouterStore({
       serializer: CustomSerializer,
@@ -114,6 +122,62 @@ export const appConfig: ApplicationConfig = {
 ```
 
 </ngrx-code-example>
+
+### Selecting custom router state
+
+The custom serializer above returns a flat object containing `url`, `params`, and
+`queryParams`. The built-in parameter selectors from `getRouterSelectors` expect
+a router state with a `root` route, so they cannot read parameters from this
+custom state. Define selectors that match the serialized state instead.
+
+Use `RouterReducerState<RouterStateUrl>` to retain the custom state type when
+selecting the router feature. The optional access handles the initial state before
+the first router navigation action has populated it.
+
+<ngrx-code-example header="router.selectors.ts">
+
+```ts
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { RouterReducerState } from '@ngrx/router-store';
+import { RouterStateUrl } from './custom-route-serializer';
+
+export const selectRouter =
+  createFeatureSelector<RouterReducerState<RouterStateUrl>>('router');
+
+export const selectRouterState = createSelector(
+  selectRouter,
+  (router) => router?.state
+);
+
+export const selectUrl = createSelector(
+  selectRouterState,
+  (state) => state?.url
+);
+
+export const selectRouteParams = createSelector(
+  selectRouterState,
+  (state) => state?.params
+);
+
+export const selectQueryParams = createSelector(
+  selectRouterState,
+  (state) => state?.queryParams
+);
+
+export const selectRouteParam = (name: string) =>
+  createSelector(selectRouteParams, (params) => params?.[name]);
+
+export const selectQueryParam = (name: string) =>
+  createSelector(selectQueryParams, (params) => params?.[name]);
+```
+
+</ngrx-code-example>
+
+The feature key `'router'` must match the key used in `provideStore`. For example,
+when navigating to `/books/42?tab=details` with a route path of `books/:id`,
+`store.select(selectRouteParam('id'))` emits `'42'` and
+`store.select(selectQueryParam('tab'))` emits `'details'`.
+The parameter values retain the types provided by Angular's `Params` type.
 
 ## Navigation action timing
 
