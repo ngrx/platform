@@ -242,6 +242,29 @@ describe('Unsorted State Adapter', () => {
     });
   });
 
+  it.each([
+    { update: { id: 4, changes: { id: 0 } }, other: { id: 3 } },
+    { update: { id: 'first', changes: { id: '' } }, other: { id: 'second' } },
+  ])(
+    'should keep the entity with id $update.id selectable after changing its id',
+    ({ update, other }) => {
+      const idAdapter = createEntityAdapter<{ id: string | number }>();
+      const initial = idAdapter.setAll(
+        [{ id: update.id }, other],
+        idAdapter.getInitialState()
+      );
+
+      const updated = idAdapter.updateOne(update, initial);
+      const id = update.changes.id;
+
+      expect(updated.ids).toEqual([id, other.id]);
+      expect(idAdapter.getSelectors().selectAll(updated)).toEqual([
+        { id },
+        other,
+      ]);
+    }
+  );
+
   it('should let you update many entities by id in the state', () => {
     const firstChange = { title: 'First Change' };
     const secondChange = { title: 'Second Change' };
