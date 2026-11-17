@@ -125,14 +125,9 @@ export const appConfig: ApplicationConfig = {
 
 ### Selecting custom router state
 
-The custom serializer above returns a flat object containing `url`, `params`, and
-`queryParams`. The built-in parameter selectors from `getRouterSelectors` expect
-a router state with a `root` route, so they cannot read parameters from this
-custom state. Define selectors that match the serialized state instead.
+The custom serializer above returns a flat object with `url`, `params`, and `queryParams`. Apart from `selectUrl`, the selectors returned by `getRouterSelectors` read from the `root` route of the default serialized state, so they return `undefined` with this custom state. Define selectors that match your serialized state instead.
 
-Use `RouterReducerState<RouterStateUrl>` to retain the custom state type when
-selecting the router feature. The optional access handles the initial state before
-the first router navigation action has populated it.
+Type the feature selector with `RouterReducerState<RouterStateUrl>` to keep the custom state type. The optional access handles the initial state before the first router navigation action has populated it.
 
 <ngrx-code-example header="router.selectors.ts">
 
@@ -173,11 +168,9 @@ export const selectQueryParam = (name: string) =>
 
 </ngrx-code-example>
 
-The feature key `'router'` must match the key used in `provideStore`. For example,
-when navigating to `/books/42?tab=details` with a route path of `books/:id`,
-`store.select(selectRouteParam('id'))` emits `'42'` and
-`store.select(selectQueryParam('tab'))` emits `'details'`.
-The parameter values retain the types provided by Angular's `Params` type.
+The feature key `'router'` must match the key used in `provideStore`.
+
+For example, with a route path of `books/:id`, navigating to `/books/42?tab=details` makes `selectRouteParam('id')` emit `'42'` and `selectQueryParam('tab')` emit `'details'`.
 
 ## Navigation action timing
 
