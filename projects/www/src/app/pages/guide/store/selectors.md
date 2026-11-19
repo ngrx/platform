@@ -436,7 +436,7 @@ store
 
 #### Solution: Extracting a pipeable operator
 
-To make the `select()` and `filter()` behaviour a reusable piece of code, we extract a [pipeable operator](https://github.com/ReactiveX/rxjs/blob/master/doc/pipeable-operators.md) using the RxJS `pipe()` utility function:
+To make the `select()` and `filter()` behaviour a reusable piece of code, we extract a [pipeable operator](https://rxjs.dev/guide/operators) using the RxJS `pipe()` utility function:
 
 <ngrx-code-example header="app.component.ts">
 
