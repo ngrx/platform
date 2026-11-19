@@ -99,9 +99,7 @@ describe('createReducer()', () => {
       `).toInfer(
         'onFn',
         `
-      ReducerTypes<{
-        name: string;
-    }, [ActionCreator<"FOO", (props: {
+      ReducerTypes<State, [ActionCreator<"FOO", (props: {
         foo: string;
     }) => {
         foo: string;
@@ -118,11 +116,390 @@ describe('createReducer()', () => {
       `).toInfer(
         'onFn',
         `
-      ReducerTypes<{
-        name: string;
-    }, [ActionCreator<"FOO", () => Action<"FOO">>]>
+      ReducerTypes<State, [ActionCreator<"FOO", () => Action<"FOO">>]>
     `
       );
+    });
+
+    describe('valid patterns', () => {
+      it('should allow spread with property override inside createReducer', () => {
+        expectSnippet(`
+          interface State { name: string; count: number };
+          const initialState: State = { name: 'test', count: 0 };
+          const setName = createAction('setName', props<{ name: string }>());
+
+          const reducer = createReducer(
+            initialState,
+            on(setName, (state, { name }) => ({ ...state, name })),
+          );
+        `).toSucceed();
+      });
+
+      it('should allow returning initialState inside createReducer', () => {
+        expectSnippet(`
+          interface State { name: string; count: number };
+          const initialState: State = { name: 'test', count: 0 };
+          const reset = createAction('reset');
+
+          const reducer = createReducer(
+            initialState,
+            on(reset, () => initialState),
+          );
+        `).toSucceed();
+      });
+
+      it('should allow returning state directly inside createReducer', () => {
+        expectSnippet(`
+          interface State { name: string; count: number };
+          const initialState: State = { name: 'test', count: 0 };
+          const noop = createAction('noop');
+
+          const reducer = createReducer(
+            initialState,
+            on(noop, (state) => state),
+          );
+        `).toSucceed();
+      });
+
+      it('should allow standalone on() with explicit state type', () => {
+        expectSnippet(`
+          interface State { name: string; count: number };
+          const setName = createAction('setName', props<{ name: string }>());
+
+          const onFn = on(setName, (state: State, { name }) => ({ ...state, name }));
+        `).toSucceed();
+      });
+
+      it('should allow explicit return of all properties inside createReducer', () => {
+        expectSnippet(`
+          interface State { name: string; count: number };
+          const initialState: State = { name: 'test', count: 0 };
+          const setName = createAction('setName', props<{ name: string }>());
+
+          const reducer = createReducer(
+            initialState,
+            on(setName, (state, { name }) => ({ name, count: state.count })),
+          );
+        `).toSucceed();
+      });
+
+      it('should allow on() with multiple action creators', () => {
+        expectSnippet(`
+          interface State { name: string; count: number };
+          const initialState: State = { name: 'test', count: 0 };
+          const action1 = createAction('action1');
+          const action2 = createAction('action2');
+
+          const reducer = createReducer(
+            initialState,
+            on(action1, action2, (state) => ({ ...state, count: state.count + 1 })),
+          );
+        `).toSucceed();
+      });
+    });
+
+    describe('catches excess properties', () => {
+      it('should catch excess properties in on() callback inside createReducer', () => {
+        expectSnippet(`
+          interface State { name: string; count: number };
+          const initialState: State = { name: 'test', count: 0 };
+          const setName = createAction('setName', props<{ name: string }>());
+
+          const reducer = createReducer(
+            initialState,
+            on(setName, (state, { name }) => ({ ...state, name, extra: true })),
+          );
+        `).toFail(/Remove excess properties/);
+      });
+
+      it('should catch excess properties in standalone on() with explicit state type', () => {
+        expectSnippet(`
+          interface State { name: string; count: number };
+          const setName = createAction('setName', props<{ name: string }>());
+
+          const onFn = on(setName, (state: State, { name }) => ({ ...state, name, extra: true }));
+        `).toFail(/Remove excess properties/);
+      });
+
+      it('should catch excess properties when returning explicit object', () => {
+        expectSnippet(`
+          interface State { name: string; count: number };
+          const initialState: State = { name: 'test', count: 0 };
+          const setName = createAction('setName', props<{ name: string }>());
+
+          const reducer = createReducer(
+            initialState,
+            on(setName, (state, { name }) => ({ name, count: state.count, extra: 'bad' })),
+          );
+        `).toFail(/Remove excess properties/);
+      });
+
+      it('should catch excess properties when explicit return type annotation is used', () => {
+        expectSnippet(`
+          interface State { name: string; count: number };
+          const initialState: State = { name: 'test', count: 0 };
+          const setName = createAction('setName', props<{ name: string }>());
+
+          const reducer = createReducer(
+            initialState,
+            on(setName, (state, { name }): State => ({ ...state, name, extra: true })),
+          );
+        `).toFail(/does not exist in type/);
+      });
+
+      it('should catch excess properties from void on() callback', () => {
+        expectSnippet(`
+          interface State { name: string; count: number };
+          const initialState: State = { name: 'test', count: 0 };
+          const noop = createAction('noop');
+
+          const reducer = createReducer(
+            initialState,
+            on(noop, (state) => ({ ...state, extra: true })),
+          );
+        `).toFail(/Remove excess properties/);
+      });
+    });
+
+    describe('edge cases', () => {
+      it('should work with state containing optional properties', () => {
+        expectSnippet(`
+          interface State { req: string; opt?: number };
+          const initialState: State = { req: 'a' };
+          const update = createAction('update');
+
+          const reducer = createReducer(
+            initialState,
+            on(update, (state) => ({ req: 'b' })),
+          );
+        `).toSucceed();
+      });
+
+      it('should work with state containing index signature', () => {
+        expectSnippet(`
+          const initialState: { [key: string]: number } = {};
+          const add = createAction('add', props<{ key: string; value: number }>());
+
+          const reducer = createReducer(
+            initialState,
+            on(add, (state, { key, value }) => ({ ...state, [key]: value })),
+          );
+        `).toSucceed();
+      });
+
+      it('should catch excess properties with index signature state', () => {
+        expectSnippet(`
+          interface State { name: string };
+          const initialState: State = { name: 'test' };
+          const update = createAction('update');
+
+          const reducer = createReducer(
+            initialState,
+            on(update, (state) => ({ ...state, extra: true })),
+          );
+        `).toFail(/Remove excess properties/);
+      });
+    });
+
+    describe('already enforced type checks', () => {
+      it('should catch missing required properties inside createReducer', () => {
+        expectSnippet(`
+          interface State { name: string; count: number };
+          const initialState: State = { name: 'test', count: 0 };
+          const setName = createAction('setName', props<{ name: string }>());
+
+          const reducer = createReducer(
+            initialState,
+            on(setName, (state, { name }) => ({ name })),
+          );
+        `).toFail(/is missing in type/);
+      });
+
+      it('should catch wrong property types inside createReducer', () => {
+        expectSnippet(`
+          interface State { name: string; count: number };
+          const initialState: State = { name: 'test', count: 0 };
+          const setName = createAction('setName', props<{ name: string }>());
+
+          const reducer = createReducer(
+            initialState,
+            on(setName, (state, { name }) => ({ ...state, name: 123 })),
+          );
+        `).toFail(/not assignable to type/);
+      });
+    });
+
+    describe('union, nullable and record state', () => {
+      it('should allow switching to a discriminated union member with its own keys', () => {
+        expectSnippet(`
+          type State = { status: 'idle' } | { status: 'loaded'; data: string[] };
+          const load = createAction('load');
+          const loaded = createAction('loaded', props<{ data: string[] }>());
+
+          const reducer = createReducer<State>(
+            { status: 'idle' },
+            on(load, () => ({ status: 'idle' as const })),
+            on(loaded, (_, { data }) => ({ status: 'loaded' as const, data })),
+          );
+        `).toSucceed();
+      });
+
+      it('should catch keys that exist on no union member', () => {
+        expectSnippet(`
+          type State = { status: 'idle' } | { status: 'loaded'; data: string[] };
+          const load = createAction('load');
+
+          const reducer = createReducer<State>(
+            { status: 'idle' },
+            on(load, () => ({ status: 'idle' as const, bogus: true })),
+          );
+        `).toFail(/Remove excess properties/);
+      });
+
+      it('should allow nullable state', () => {
+        expectSnippet(`
+          interface User { id: string; name: string };
+          const login = createAction('login', props<{ user: User }>());
+          const logout = createAction('logout');
+
+          const reducer = createReducer<User | null>(
+            null,
+            on(login, (_, { user }) => user),
+            on(logout, () => null),
+          );
+        `).toSucceed();
+      });
+
+      it('should catch excess properties with nullable state', () => {
+        expectSnippet(`
+          interface User { id: string; name: string };
+          const login = createAction('login');
+
+          const reducer = createReducer<User | null>(
+            null,
+            on(login, () => ({ id: '1', name: 'a', extra: true })),
+          );
+        `).toFail(/Remove excess properties/);
+      });
+
+      it('should allow Record state with computed keys', () => {
+        expectSnippet(`
+          const set = createAction('set', props<{ key: string; value: number }>());
+
+          const reducer = createReducer<Record<string, number>>(
+            {},
+            on(set, (state, { key, value }) => ({ ...state, [key]: value })),
+          );
+        `).toSucceed();
+      });
+
+      it('should catch excess properties returned from one branch of a conditional', () => {
+        expectSnippet(`
+          interface State { name: string };
+          const initialState: State = { name: 'test' };
+          const update = createAction('update', props<{ flag: boolean }>());
+
+          const reducer = createReducer(
+            initialState,
+            on(update, (state, { flag }) => (flag ? { ...state, extra: true } : state)),
+          );
+        `).toFail(/Remove excess properties/);
+      });
+
+      it('should name the excess property in the error', () => {
+        expectSnippet(`
+          interface State { name: string };
+          const initialState: State = { name: 'test' };
+          const update = createAction('update');
+
+          const reducer = createReducer(
+            initialState,
+            on(update, (state) => ({ ...state, extra: true })),
+          );
+        `).toFail(/Excess property: extra/);
+      });
+    });
+
+    describe('generic state', () => {
+      it('should allow overriding a key guaranteed by the constraint', () => {
+        expectSnippet(`
+          const load = createAction('load');
+
+          export function createLoadingReducer<TState extends { loading: boolean }>(initialState: TState) {
+            return createReducer(
+              initialState,
+              on(load, (state) => ({ ...state, loading: true })),
+            );
+          }
+        `).toSucceed();
+      });
+
+      it('should allow returning state with an unconstrained state type', () => {
+        expectSnippet(`
+          const noop = createAction('noop');
+
+          export function createNoopReducer<TState>(initialState: TState) {
+            return createReducer(
+              initialState,
+              on(noop, (state) => state),
+            );
+          }
+        `).toSucceed();
+      });
+
+      it('should allow a generic item type inside a concrete state shape', () => {
+        expectSnippet(`
+          interface ListState<T> { items: T[]; loading: boolean };
+          const load = createAction('load');
+
+          export function createListReducer<T>(initialState: ListState<T>) {
+            return createReducer(
+              initialState,
+              on(load, (state) => ({ ...state, loading: true })),
+            );
+          }
+        `).toSucceed();
+      });
+
+      it('should allow overriding a base key of an intersected generic state', () => {
+        expectSnippet(`
+          interface BaseState { loading: boolean };
+          const load = createAction('load');
+
+          export function createExtendableReducer<TExtra extends object>(initialState: BaseState & TExtra) {
+            return createReducer(
+              initialState,
+              on(load, (state) => ({ ...state, loading: true })),
+            );
+          }
+        `).toSucceed();
+      });
+
+      it('should allow asserting the return value as the generic state type', () => {
+        expectSnippet(`
+          const load = createAction('load');
+
+          export function createLoadingReducer<TState extends { loading: boolean }>(initialState: TState) {
+            return createReducer(
+              initialState,
+              on(load, (state) => ({ ...state, loading: true }) as TState),
+            );
+          }
+        `).toSucceed();
+      });
+
+      it('should catch keys not guaranteed by the constraint', () => {
+        expectSnippet(`
+          const load = createAction('load');
+
+          export function createLoadingReducer<TState extends { loading: boolean }>(initialState: TState) {
+            return createReducer(
+              initialState,
+              on(load, (state) => ({ ...state, extra: true })),
+            );
+          }
+        `).toFail(/Remove excess properties/);
+      });
     });
   });
 }, 8_000);
