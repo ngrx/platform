@@ -1,6 +1,8 @@
 import {
   Directive,
+  EnvironmentInjector,
   ErrorHandler,
+  inject,
   Input,
   OnDestroy,
   OnInit,
@@ -107,6 +109,7 @@ export interface LetViewContext<PO> {
   providers: [RenderScheduler],
 })
 export class LetDirective<PO> implements OnInit, OnDestroy {
+  private readonly environmentInjector = inject(EnvironmentInjector);
   private isMainViewCreated = false;
   private isSuspenseViewCreated = false;
   private readonly viewContext: LetViewContext<PO | undefined> = {
@@ -195,6 +198,11 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
   }
 
   private renderMainView(isSyncEvent: boolean): void {
+    // Services may emit during injector destruction before the view is destroyed.
+    if (this.environmentInjector.destroyed) {
+      return;
+    }
+
     if (this.isSuspenseViewCreated) {
       this.isSuspenseViewCreated = false;
       this.viewContainerRef.clear();
