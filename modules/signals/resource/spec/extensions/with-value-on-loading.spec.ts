@@ -1,3 +1,4 @@
+import { computed } from '@angular/core';
 import { LOADING_EXTENSION_TYPE, withValueOnLoading } from '../../src';
 import { createTestResource } from '../helpers';
 
@@ -82,5 +83,18 @@ describe('withValueOnLoading', () => {
     expect(resource.error()).toBe(error);
     expect(resource.hasValue()).toBe(false);
     expect(() => resource.value()).toThrow();
+  });
+
+  it('notifies computed signals first read while loading once the value resolves', async () => {
+    const { resource, initLoading, resolveWithValue } =
+      createTestResource<number[]>();
+    withValueOnLoading([]).apply(resource);
+    const value = computed(() => resource.value());
+
+    initLoading();
+    expect(value()).toEqual([]);
+
+    await resolveWithValue([1, 2, 3]);
+    expect(value()).toEqual([1, 2, 3]);
   });
 });
