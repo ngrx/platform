@@ -29,7 +29,7 @@ export const persistOps: EntityOp[] = [
 
 @Injectable()
 export class EntityEffects {
-  // See https://github.com/ReactiveX/rxjs/blob/master/doc/marble-testing.md
+  // See https://rxjs.dev/guide/testing/marble-testing
   /** Delay for error and skip observables. Must be multiple of 10 for marble testing. */
   private responseDelay = 10;
 
