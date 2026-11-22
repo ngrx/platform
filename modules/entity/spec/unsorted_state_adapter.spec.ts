@@ -246,7 +246,7 @@ describe('Unsorted State Adapter', () => {
     { update: { id: 4, changes: { id: 0 } }, other: { id: 3 } },
     { update: { id: 'first', changes: { id: '' } }, other: { id: 'second' } },
   ])(
-    'should keep the entity with id $update.id selectable after changing its id',
+    'should let you update the id of an entity to the falsy id $update.changes.id',
     ({ update, other }) => {
       const idAdapter = createEntityAdapter<{ id: string | number }>();
       const initial = idAdapter.setAll(
