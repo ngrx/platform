@@ -81,6 +81,7 @@ jobs:
           cache-dependency-path: '**/pnpm-lock.yaml'
       - run: pnpm install --frozen-lockfile --prefer-offline
       - uses: nrwl/nx-set-shas@v5
+      - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm exec nx run-many -t e2e --exclude=www --parallel=1
 
   schematics-core-check:

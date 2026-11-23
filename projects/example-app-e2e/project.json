@@ -6,21 +6,6 @@
   "tags": [],
   "implicitDependencies": ["example-app"],
   "targets": {
-    "e2e": {
-      "executor": "@nx/playwright:playwright",
-      "options": {
-        "config": "projects/example-app-e2e/playwright.config.ts"
-      },
-      "configurations": {
-        "production": {
-          "config": "projects/example-app-e2e/playwright.config.ts"
-        },
-        "development": {
-          "config": "projects/example-app-e2e/playwright.config.ts"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
