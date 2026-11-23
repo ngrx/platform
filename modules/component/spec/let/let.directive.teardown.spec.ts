@@ -1,4 +1,5 @@
 import {
+  ApplicationRef,
   Component,
   createComponent,
   createEnvironmentInjector,
@@ -64,44 +65,63 @@ describe('LetDirective environment injector teardown', () => {
   });
 
   for (const event of ['complete', 'error', 'next'] as const) {
-    it(`should not create a view on ${event} during injector destruction`, async () => {
-      const unhandled: unknown[] = [];
-      const previousHandler = config.onUnhandledError;
-      config.onUnhandledError = (error) => unhandled.push(error);
-      const errorHandler = { handleError: vi.fn() };
-      const injector = createEnvironmentInjector(
-        [Source, ChildDep, { provide: ErrorHandler, useValue: errorHandler }],
-        TestBed.inject(EnvironmentInjector)
-      );
-      const ref = createComponent(HostComponent, {
-        environmentInjector: injector,
-      });
+    it.each(['root', 'route'] as const)(
+      `should not create a view on ${event} during %s injector destruction`,
+      async (scope) => {
+        const unhandled: unknown[] = [];
+        const previousHandler = config.onUnhandledError;
+        const errorHandler = { handleError: vi.fn() };
+        const root = createEnvironmentInjector(
+          [
+            ApplicationRef,
+            Source,
+            ChildDep,
+            { provide: ErrorHandler, useValue: errorHandler },
+          ],
+          TestBed.inject(EnvironmentInjector)
+        );
+        const route = createEnvironmentInjector(
+          scope === 'route' ? [Source] : [],
+          root
+        );
+        // Initialize the source before ApplicationRef so it emits while the view is subscribed.
+        const source = route.get(Source);
+        const ref = createComponent(HostComponent, {
+          environmentInjector: route,
+        });
 
-      try {
-        const source = injector.get(Source);
-        source.event = event;
-        ref.changeDetectorRef.detectChanges();
-        expect(ref.location.nativeElement.textContent).toBe('');
-        expect(source.value$.observed).toBe(true);
+        try {
+          config.onUnhandledError = (error) => unhandled.push(error);
+          source.event = event;
+          ref.changeDetectorRef.detectChanges();
+          expect(ref.location.nativeElement.textContent).toBe('');
+          expect(source.value$.observed).toBe(true);
 
-        injector.destroy();
-        await new Promise((resolve) => setTimeout(resolve));
-
-        expect(unhandled).toEqual([]);
-        expect(
-          ref.location.nativeElement.querySelector('teardown-child')
-        ).toBeNull();
-        if (event === 'error') {
-          expect(errorHandler.handleError).toHaveBeenCalledWith(source.error);
-        }
-      } finally {
-        ref.destroy();
-        if (!injector.destroyed) {
+          const injector = scope === 'root' ? root : route;
           injector.destroy();
+          expect(route.destroyed).toBe(scope === 'route');
+          expect(root.destroyed).toBe(scope === 'root');
+          await new Promise((resolve) => setTimeout(resolve));
+
+          expect(unhandled).toEqual([]);
+          expect(
+            ref.location.nativeElement.querySelector('teardown-child')
+          ).toBeNull();
+          if (event === 'error') {
+            expect(errorHandler.handleError).toHaveBeenCalledWith(source.error);
+          }
+        } finally {
+          ref.destroy();
+          if (!route.destroyed) {
+            route.destroy();
+          }
+          if (!root.destroyed) {
+            root.destroy();
+          }
+          config.onUnhandledError = previousHandler;
         }
-        config.onUnhandledError = previousHandler;
       }
-    });
+    );
 
     it(`should create a view on ${event} before injector destruction`, () => {
       const injector = createEnvironmentInjector(

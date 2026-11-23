@@ -1,4 +1,5 @@
 import {
+  ApplicationRef,
   Directive,
   EnvironmentInjector,
   ErrorHandler,
@@ -110,6 +111,7 @@ export interface LetViewContext<PO> {
 })
 export class LetDirective<PO> implements OnInit, OnDestroy {
   private readonly environmentInjector = inject(EnvironmentInjector);
+  private readonly rootInjector = inject(ApplicationRef).injector;
   private isMainViewCreated = false;
   private isSuspenseViewCreated = false;
   private readonly viewContext: LetViewContext<PO | undefined> = {
@@ -198,8 +200,8 @@ export class LetDirective<PO> implements OnInit, OnDestroy {
   }
 
   private renderMainView(isSyncEvent: boolean): void {
-    // Services may emit during injector destruction before the view is destroyed.
-    if (this.environmentInjector.destroyed) {
+    // During SSR teardown, the route injector can outlive the root injector.
+    if (this.environmentInjector.destroyed || this.rootInjector.destroyed) {
       return;
     }
 
