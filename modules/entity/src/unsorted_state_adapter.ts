@@ -165,7 +165,7 @@ export function createUnsortedStateAdapter<T>(selectId: IdSelector<T>): any {
         0;
 
       if (didMutateIds) {
-        state.ids = state.ids.map((id: any) => newKeys[id] || id);
+        state.ids = state.ids.map((id: any) => newKeys[id] ?? id);
         return DidMutate.Both;
       } else {
         return DidMutate.EntitiesOnly;
