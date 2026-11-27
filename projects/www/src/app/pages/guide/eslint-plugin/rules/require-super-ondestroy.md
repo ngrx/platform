@@ -1,6 +1,6 @@
 # require-super-ondestroy
 
-Overriden ngOnDestroy method in component stores require a call to super.ngOnDestroy().
+Overridden ngOnDestroy method in component stores require a call to super.ngOnDestroy().
 
 - **Type**: problem
 - **Fixable**: No
