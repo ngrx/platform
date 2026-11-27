@@ -231,7 +231,7 @@ describe('DevtoolsExtension', () => {
 
   it('should connect with custom serializer', () => {
     const customSerializer = {
-      replacer: (key: {}, value: any) => value,
+      replacer: (key: string, value: any) => value,
     };
 
     const { devtoolsExtension, reduxDevtoolsExtension } = testSetup({

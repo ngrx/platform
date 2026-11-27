@@ -16,6 +16,10 @@
     },
     "build": {
       "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/modules/signals",
+        "{workspaceRoot}/node_modules/@ngrx/signals"
+      ],
       "options": {
         "parallel": false,
         "commands": [
@@ -38,27 +42,7 @@
             "command": "cpy LICENSE dist/modules/signals"
           }
         ]
-      },
-      "outputs": [
-        "{workspaceRoot}/dist/modules/signals",
-        "{workspaceRoot}/node_modules/@ngrx/signals"
-      ]
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "modules/signals/*/**/*.ts",
-          "modules/signals/*/**/*.html",
-          "modules/signals/entities/**/*.ts",
-          "modules/signals/entities/**/*.html",
-          "modules/signals/resource/**/*.ts",
-          "modules/signals/resource/**/*.html",
-          "modules/signals/rxjs-interop/**/*.ts",
-          "modules/signals/rxjs-interop/**/*.html"
-        ]
-      },
-      "outputs": ["{options.outputFile}"]
+      }
     },
     "test": {
       "executor": "@analogjs/vitest-angular:test",

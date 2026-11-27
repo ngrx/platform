@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   ComponentStore,
@@ -25,7 +25,7 @@ import { TestPipe } from './test.pipe';
     { provide: INITIAL_STATE_TOKEN, useValue: { test: true } },
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'ngrx-standalone-app';
   cs = inject(ComponentStore<{ test: number }>);
   num = signal(1);

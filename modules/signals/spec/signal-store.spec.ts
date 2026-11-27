@@ -180,7 +180,7 @@ describe('signalStore', () => {
       );
       const store = new Store();
 
-      expect(store.x!()).toBe(10);
+      expect(store.x?.()).toBe(10);
       expect(store.y).toBe(undefined);
 
       patchState(store, { y: { z: 100 } });

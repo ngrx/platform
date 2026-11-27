@@ -531,7 +531,6 @@ function entityServicesSetup() {
     ],
     providers: [
       { provide: EntityCacheEffects, useValue: {} },
-      /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
       { provide: EntityDataService, useClass: TestDataService },
       { provide: Logger, useValue: logger },
     ],

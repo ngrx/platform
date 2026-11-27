@@ -266,7 +266,7 @@ function _addSymbolToNgModuleMetadata(
   importPath: string
 ): Change[] {
   const nodes = getDecoratorMetadata(source, 'NgModule', '@angular/core');
-  let node: any = nodes[0]; // eslint-disable-line @typescript-eslint/no-explicit-any
+  let node: any = nodes[0];
 
   // Find the decorator declaration.
   if (!node) {
@@ -355,7 +355,7 @@ function _addSymbolToNgModuleMetadata(
   }
 
   if (Array.isArray(node)) {
-    const nodeArray = node as {} as Array<ts.Node>;
+    const nodeArray = node as unknown as Array<ts.Node>;
     const symbolsArray = nodeArray.map((node) => node.getText());
     if (symbolsArray.includes(symbolName)) {
       return [];
@@ -463,7 +463,7 @@ function _addSymbolToComponentMetadata(
   importPath: string
 ): Change[] {
   const nodes = getDecoratorMetadata(source, 'Component', '@angular/core');
-  let node: any = nodes[0]; // eslint-disable-line @typescript-eslint/no-explicit-any
+  let node: any = nodes[0];
 
   // Find the decorator declaration.
   if (!node) {
@@ -552,7 +552,7 @@ function _addSymbolToComponentMetadata(
   }
 
   if (Array.isArray(node)) {
-    const nodeArray = node as {} as Array<ts.Node>;
+    const nodeArray = node as unknown as Array<ts.Node>;
     const symbolsArray = nodeArray.map((node) => node.getText());
     if (symbolsArray.includes(symbolName)) {
       return [];

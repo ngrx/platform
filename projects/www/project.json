@@ -7,20 +7,15 @@
   "targets": {
     "build": {
       "dependsOn": [
-        { "target": "collect-docs" },
-        { "target": "prepare-examples" }
+        {
+          "target": "collect-docs"
+        },
+        {
+          "target": "prepare-examples"
+        }
       ],
       "executor": "@analogjs/platform:vite",
       "defaultConfiguration": "production",
-      "configurations": {
-        "development": {
-          "mode": "development"
-        },
-        "production": {
-          "sourcemap": false,
-          "mode": "production"
-        }
-      },
       "outputs": [
         "{options.outputPath}",
         "{workspaceRoot}/dist/projects/www/.nitro",
@@ -32,6 +27,15 @@
         "configFile": "projects/www/vitest.config.mts",
         "outputPath": "dist/projects/www/client",
         "tsConfig": "projects/www/tsconfig.app.json"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "sourcemap": false,
+          "mode": "production"
+        }
       }
     },
     "serve": {
@@ -54,20 +58,14 @@
     "test": {
       "executor": "@analogjs/vitest-angular:test",
       "outputs": ["{projectRoot}/coverage"],
-      "dependsOn": [{ "target": "collect-docs" }]
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["projects/www/**/*.ts", "projects/www/**/*.html"],
-        "config": "eslint.config.mjs"
-      }
+      "dependsOn": [
+        {
+          "target": "collect-docs"
+        }
+      ]
     },
     "collect-docs": {
       "executor": "nx:run-script",
-      "options": {
-        "script": "collect-docs"
-      },
       "dependsOn": [
         {
           "projects": [
@@ -84,7 +82,10 @@
           ],
           "target": "build"
         }
-      ]
+      ],
+      "options": {
+        "script": "collect-docs"
+      }
     },
     "prepare-examples": {
       "executor": "nx:run-script",

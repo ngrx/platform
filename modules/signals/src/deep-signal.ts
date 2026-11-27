@@ -32,7 +32,7 @@ type DeepSignalNonRecordMembers<T> = [NonRecordMembers<T>] extends [never]
 export function toDeepSignal<T>(signal: Signal<T>): DeepSignalOf<T> {
   return new Proxy(signal, {
     has(target: any, prop) {
-      return !!this.get!(target, prop, undefined);
+      return !!this.get?.(target, prop, undefined);
     },
     get(target: any, prop) {
       const value = untracked(target);
