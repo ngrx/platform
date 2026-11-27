@@ -34,14 +34,16 @@ describe('ngRx Store', () => {
         let todosNextCount = 0;
         let todosCountNextCount = 0;
 
-        store.pipe(select('todos')).subscribe((todos) => {
+        store.pipe(select((state: any) => state.todos)).subscribe((todos) => {
           todosNextCount++;
           store.dispatch({ type: 'SET_COUNT', payload: todos.length });
         });
 
-        store.pipe(select('todoCount')).subscribe((count) => {
-          todosCountNextCount++;
-        });
+        store
+          .pipe(select((state: any) => state.todoCount))
+          .subscribe((count) => {
+            todosCountNextCount++;
+          });
 
         store.dispatch({ type: 'ADD_TODO', payload: { name: 'test' } });
         expect(todosNextCount).toBe(2);

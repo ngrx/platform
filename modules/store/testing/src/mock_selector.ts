@@ -1,9 +1,6 @@
-import { MemoizedSelector, MemoizedSelectorWithProps } from '@ngrx/store';
+import { MemoizedSelector } from '@ngrx/store';
 
 export interface MockSelector {
-  selector:
-    | string
-    | MemoizedSelector<any, any>
-    | MemoizedSelectorWithProps<any, any, any>;
+  selector: string | MemoizedSelector<any, any>;
   value: any;
 }

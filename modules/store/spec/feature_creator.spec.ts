@@ -225,7 +225,7 @@ describe('createFeature()', () => {
       });
 
       TestBed.inject(Store)
-        .select(fooFeature.name)
+        .select((state: any) => state[fooFeature.name])
         .pipe(take(1))
         .subscribe((fooState) => {
           expect(fooState).toEqual(initialFooState);

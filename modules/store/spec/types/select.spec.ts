@@ -17,36 +17,6 @@ describe('select()', () => {
   );
 
   describe('as property', () => {
-    describe('with strings', () => {
-      it('should enforce that properties exists on state (root)', () => {
-        expectSnippet(`const selector = store.select('mia');`).toFail(
-          /Argument of type '"mia"' is not assignable to parameter of type '"foo"'/
-        );
-      });
-
-      it('should enforce that properties exists on state (nested)', () => {
-        expectSnippet(
-          `const selector = store.select('foo', 'bar', 'mia');`
-        ).toFail(
-          /Argument of type '"mia"' is not assignable to parameter of type '"baz"'/
-        );
-      });
-
-      it('should infer correctly (root)', () => {
-        expectSnippet(`const selector = store.select('foo');`).toInfer(
-          'selector',
-          'Observable<{ bar: { baz: []; }; }>'
-        );
-      });
-
-      it('should infer correctly (nested)', () => {
-        expectSnippet(`const selector = store.select('foo', 'bar');`).toInfer(
-          'selector',
-          'Observable<{ baz: []; }>'
-        );
-      });
-    });
-
     describe('with functions', () => {
       it('should enforce that properties exists on state (root)', () => {
         expectSnippet(`const selector = store.select(s => s.mia);`).toFail(
@@ -91,35 +61,6 @@ describe('select()', () => {
   });
 
   describe('as operator', () => {
-    describe('with strings', () => {
-      it('should enforce that properties exists on state (root)', () => {
-        expectSnippet(`const selector = store.pipe(select('mia'));`).toFail(
-          /Argument of type '"mia"' is not assignable to parameter of type '"foo"'/
-        );
-      });
-
-      it('should enforce that properties exists on state (nested)', () => {
-        expectSnippet(
-          `const selector = store.pipe(select('foo', 'bar', 'mia'));`
-        ).toFail(
-          /Argument of type '"mia"' is not assignable to parameter of type '"baz"'/
-        );
-      });
-
-      it('should infer correctly (root)', () => {
-        expectSnippet(`const selector = store.pipe(select('foo'));`).toInfer(
-          'selector',
-          'Observable<{ bar: { baz: []; }; }>'
-        );
-      });
-
-      it('should infer correctly (nested)', () => {
-        expectSnippet(
-          `const selector = store.pipe(select('foo', 'bar'));`
-        ).toInfer('selector', 'Observable<{ baz: []; }>');
-      });
-    });
-
     describe('with functions', () => {
       it('should enforce that properties exists on state (root)', () => {
         expectSnippet(

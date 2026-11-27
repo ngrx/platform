@@ -51,7 +51,10 @@ describe('Router Store Module', () => {
       new Promise<void>((done) => {
         let logs: any[] = [];
         store
-          .pipe(select(customStateKey), withLatestFrom(store))
+          .pipe(
+            select((state: State) => state[customStateKey]),
+            withLatestFrom(store)
+          )
           .subscribe(([routerStoreState, storeState]) => {
             logs.push([routerStoreState, storeState]);
           });

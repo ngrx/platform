@@ -15,7 +15,7 @@ type Options = ESLintUtils.InferOptionsTypeFromRule<typeof rule>;
 
 const valid: () => (string | ValidTestCase<Options>)[] = () => [
   `export const selectFeature: MemoizedSelector<any, any> = (state: AppState) => state.feature`,
-  `export const selectFeature: MemoizedSelectorWithProps<any, any> = ({ feature }) => feature`,
+  `export const selectFeature: Selector<any, any> = ({ feature }) => feature`,
   `export const selectFeature = createSelector((state: AppState) => state.feature)`,
   `export const selectFeature = createFeatureSelector<FeatureState>(featureKey)`,
   `export const selectFeature = createFeatureSelector<AppState, FeatureState>(featureKey)`,

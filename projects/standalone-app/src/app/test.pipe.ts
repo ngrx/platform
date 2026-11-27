@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 export class TestPipe implements PipeTransform {
   store = inject(Store);
   transform(s: number) {
-    this.store.select('count');
+    this.store.select((state: any) => state['count']);
     return s * 2;
   }
 }
