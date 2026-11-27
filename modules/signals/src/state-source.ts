@@ -150,13 +150,12 @@ export function getState<State extends object>(
   const signals: Record<string | symbol, Signal<unknown>> = stateSource[
     STATE_SOURCE
   ];
-  return Reflect.ownKeys(stateSource[STATE_SOURCE]).reduce((state, key) => {
-    const value = signals[key]();
-    return {
-      ...state,
-      [key]: value,
-    };
-  }, {} as State);
+  const state: Record<string | symbol, unknown> = {};
+  for (const key of Reflect.ownKeys(signals)) {
+    state[key] = signals[key]();
+  }
+
+  return state as State;
 }
 
 /**
