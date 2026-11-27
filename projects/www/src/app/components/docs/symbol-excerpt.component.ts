@@ -9,21 +9,25 @@ import { CodeHighlightPipe } from './code-highlight.pipe';
   standalone: true,
   imports: [NgClass, forwardRef(() => SymbolLinkComponent), CodeHighlightPipe],
   /**
-   * The lack of spacing in the template is intentional. The template is
-   * formatted this way to ensure that the generated code is as compact as
-   * possible, with no spaces between blocks.
+   * The transparent links are laid over the highlighted code, so both must
+   * render the exact same characters. Content tokens are wrapped in an
+   * ng-container to prevent the template's whitespace from being rendered.
    */
   template: `
     <div class="links">
       @for (excerpt of simplifiedExcerptTokens(); track $index) {
         @if (excerpt.kind === 'Content') {
-          {{ excerpt.text }}
+          <ng-container>{{ excerpt.text }}</ng-container>
         } @else if (excerpt.kind === 'Reference') {
           <ngrx-symbol-link [reference]="excerpt.canonicalReference" />
         }
       }
     </div>
-    <pre><code [ngClass]="{deprecated: deprecated()}" [innerHTML]="joinedContent() | ngrxCodeHighlight"></code></pre>
+    <div
+      class="code"
+      [ngClass]="{ deprecated: deprecated() }"
+      [innerHTML]="joinedContent() | ngrxCodeHighlight"
+    ></div>
   `,
   styles: [
     `
@@ -40,7 +44,7 @@ import { CodeHighlightPipe } from './code-highlight.pipe';
       }
 
       .links,
-      code {
+      .code {
         font-family: 'Space Mono', monospace;
         font-variant-ligatures: none;
         font-size: 12px;
@@ -59,7 +63,8 @@ import { CodeHighlightPipe } from './code-highlight.pipe';
         left: 0;
       }
 
-      pre {
+      /* Reset the global pre styles for the pre rendered by the highlighter */
+      .code ::ng-deep pre {
         margin: 0;
         overflow-x: initial;
         border: none;

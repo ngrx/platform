@@ -11,8 +11,20 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { CanonicalReference, ParsedCanonicalReference } from '@ngrx-io/shared';
-import { EMPTY, Observable, fromEvent, switchMap, takeUntil } from 'rxjs';
+import {
+  ApiMemberSummary,
+  CanonicalReference,
+  ParsedCanonicalReference,
+} from '@ngrx-io/shared';
+import {
+  EMPTY,
+  Observable,
+  from,
+  fromEvent,
+  merge,
+  switchMap,
+  takeUntil,
+} from 'rxjs';
 import {
   SYMBOl_POPOVER_REF,
   SymbolPopoverComponent,
@@ -22,9 +34,9 @@ import { ReferenceService } from '@ngrx-io/app/reference/reference.service';
 @Component({
   selector: 'ngrx-symbol-link',
   imports: [RouterLink, SymbolPopoverComponent],
-  // Spacing is intentional to avoid unnecessary whitespace in the output
+  // The name is always wrapped to prevent the template's whitespace from being rendered
   template: `@if (isPrivate()) {
-      {{ name() }}
+      <ng-container>{{ name() }}</ng-container>
     } @else if (shouldUseExternalLink()) {
       <a [href]="url()" target="_blank" rel="noopener noreferrer">{{
         name()
@@ -84,7 +96,8 @@ export class SymbolLinkComponent {
   name = computed(() => {
     const parsed = this.parsedReference();
 
-    if (parsed.isPrivate) {
+    // Global types (e.g. Omit) are also private, but aren't prefixed with ~
+    if (parsed.name.startsWith('~')) {
       return parsed.name.slice(1);
     }
 
@@ -101,47 +114,21 @@ export class SymbolLinkComponent {
 
           return fromEvent(link, 'mouseenter').pipe(
             switchMap(() =>
-              this.referenceService.loadFromCanonicalReference(
-                this.parsedReference().referenceString
+              from(
+                this.referenceService.loadFromCanonicalReference(
+                  this.parsedReference().referenceString
+                )
+              ).pipe(
+                switchMap((apiMemberSummary) =>
+                  this.openPopover(link, apiMemberSummary)
+                ),
+                // Also cancels the popover when the mouse leaves the link
+                // before the reference is loaded
+                takeUntil(
+                  merge(fromEvent(link, 'mouseleave'), fromEvent(link, 'click'))
+                )
               )
-            ),
-            switchMap((apiMemberSummary) => {
-              const overlay = this.overlay.create({
-                positionStrategy: this.overlay
-                  .position()
-                  .flexibleConnectedTo(link)
-                  .withPositions([
-                    {
-                      originX: 'center',
-                      originY: 'bottom',
-                      overlayX: 'center',
-                      overlayY: 'top',
-                    },
-                  ]),
-                hasBackdrop: false,
-                scrollStrategy: this.overlay.scrollStrategies.close(),
-              });
-              const injector = Injector.create({
-                parent: this.injector,
-                providers: [
-                  {
-                    provide: SYMBOl_POPOVER_REF,
-                    useValue: apiMemberSummary,
-                  },
-                ],
-              });
-              const componentPortal = new ComponentPortal(
-                SymbolPopoverComponent,
-                null,
-                injector
-              );
-
-              return new Observable(() => {
-                overlay.attach(componentPortal);
-
-                return () => overlay.detach();
-              }).pipe(takeUntil(fromEvent(link, 'mouseleave')));
-            })
+            )
           );
         }),
         takeUntilDestroyed()
@@ -149,5 +136,43 @@ export class SymbolLinkComponent {
       .subscribe({
         error: console.error,
       });
+  }
+
+  private openPopover(
+    link: HTMLAnchorElement,
+    apiMemberSummary: ApiMemberSummary
+  ): Observable<never> {
+    return new Observable<never>(() => {
+      const overlayRef = this.overlay.create({
+        positionStrategy: this.overlay
+          .position()
+          .flexibleConnectedTo(link)
+          .withPositions([
+            {
+              originX: 'center',
+              originY: 'bottom',
+              overlayX: 'center',
+              overlayY: 'top',
+            },
+          ]),
+        hasBackdrop: false,
+        scrollStrategy: this.overlay.scrollStrategies.close(),
+      });
+      const injector = Injector.create({
+        parent: this.injector,
+        providers: [
+          {
+            provide: SYMBOl_POPOVER_REF,
+            useValue: apiMemberSummary,
+          },
+        ],
+      });
+
+      overlayRef.attach(
+        new ComponentPortal(SymbolPopoverComponent, null, injector)
+      );
+
+      return () => overlayRef.dispose();
+    });
   }
 }
