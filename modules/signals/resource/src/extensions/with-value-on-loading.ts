@@ -32,10 +32,11 @@ export function withValueOnLoading<R extends Resource<unknown>>(
       Object.defineProperty(resource, 'value', {
         value: new Proxy(resource.value, {
           apply(target, thisArg, args) {
+            const currentValue = Reflect.apply(target, thisArg, args);
             if (untracked(resource.isLoading)) {
               return value;
             }
-            return Reflect.apply(target, thisArg, args);
+            return currentValue;
           },
         }),
         configurable: true,

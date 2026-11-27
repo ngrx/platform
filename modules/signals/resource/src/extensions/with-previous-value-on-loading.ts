@@ -38,8 +38,9 @@ export function withPreviousValueOnLoading<
       Object.defineProperty(resource, 'value', {
         value: new Proxy(resource.value, {
           apply(target, thisArg, args) {
+            const currentValue = Reflect.apply(target, thisArg, args);
             if (!untracked(resource.isLoading)) {
-              value = Reflect.apply(target, thisArg, args);
+              value = currentValue;
             }
             return value;
           },
