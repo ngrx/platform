@@ -83,5 +83,14 @@
   },
   "nxCloudAccessToken": "NTlmOGIxYmItZjM0OC00YzAxLTgzZTgtZDNiZmExMzcwZTA4fHJlYWQ=",
   "defaultBase": "main",
-  "analytics": false
+  "analytics": false,
+  "plugins": [
+    {
+      "plugin": "@nx/playwright/plugin",
+      "options": {
+        "targetName": "e2e",
+        "ciTargetName": "e2e-ci"
+      }
+    }
+  ]
 }

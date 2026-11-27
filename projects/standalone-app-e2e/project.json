@@ -6,17 +6,6 @@
   "tags": [],
   "implicitDependencies": ["standalone-app"],
   "targets": {
-    "e2e": {
-      "executor": "@nx/playwright:playwright",
-      "options": {
-        "config": "projects/standalone-app-e2e/playwright.config.ts"
-      },
-      "configurations": {
-        "production": {
-          "config": "projects/standalone-app-e2e/playwright.config.ts"
-        }
-      }
-    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],

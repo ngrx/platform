@@ -122,7 +122,7 @@
     "@nx/vitest": "23.1.0",
     "@nx/workspace": "23.1.0",
     "@octokit/rest": "^15.17.0",
-    "@playwright/test": "1.58.1",
+    "@playwright/test": "1.65.1",
     "@schematics/angular": "22.1.6",
     "@stackblitz/sdk": "^1.11.0",
     "@types/ncp": "^2.0.8",
